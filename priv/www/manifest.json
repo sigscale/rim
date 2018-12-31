@@ -1,0 +1,31 @@
+{
+	"name": "Inventory Management",
+	"short_name": "im",
+	"description": "SigScale Inventory Management (IM)",
+	"icons": [
+		{
+			"src": "images/manifest/sigscale-icon-16x16.png",
+			"sizes": "16x16",
+			"type": "image/png"
+		},
+		{
+			"src": "images/manifest/sigscale-icon-32x32.png",
+			"sizes": "32x32",
+			"type": "image/png"
+		},
+		{
+			"src": "images/manifest/sigscale-icon-64x64.png",
+			"sizes": "64x64",
+			"type": "image/png"
+		},
+		{
+			"src": "images/manifest/sigscale-logo-232x132.png",
+			"sizes": "232x132",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/index.html",
+	"display": "standalone",
+	"theme_color": "#f57f17",
+	"background_color": "#ffffff"
+}

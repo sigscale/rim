@@ -1,0 +1,397 @@
+@copyright 2018 SigScale Global Inc.
+@version %VERSION%
+@title %DESCRIPTION%
+@doc This application implements 3GPP Fault Management (FM).
+
+==Introduction==
+
+==Installation==
+Before starting the application for the first time, {@link //mnesia/mnesia. mnesia}
+should be initialized. Create a schema and start mnesia on all nodes
+where the application {@link //sigscale_fm. sigscale_fm} application will run.
+
+The following command will initialize {@link //sigscale_fm. sigscale_fm}
+on the current node and create a default REST user
+"admin" with password "admin".
+
+e.g &#058;
+ 	```
+	(fm@h)1> fm_app:install().
+	{ok, [httpd_group, httpd_user, alarm]}
+	'''
+
+===HTTP Authentication===
+To use the {@link //inets/mod_auth. mod_auth} module for authentication
+you should create necessary users in the {@link //mnesia/mnesia. mnesia}
+tables it uses. All users will be added to groups specified in `require_group'
+option in inets httpd confifuration.
+e.g &#058;
+	```
+	1> fm:add_user("john", "g2k7hyeh6qa", "en").
+	{ok,{1501829429047,149}}
+	2> fm:add_user("bss", "nfc9xgp32xha", "en").
+	{ok,{1501829458220,157}}
+
+	'''
+
+===Internationalization (i18n)===
+The web user interface (UI) may be internationalized by specifying `Locale' in 
+{@link //fm/fm:add_user/3. fm:add_user/3} where `Locale'
+is a two letter ISO-639-1 language code. A corresponding message file
+should be provided in `priv/www/locales'.
+	```
+	3> fm:add_user("alejandro", "sjjymz5prtcd", "es").
+	{ok,{1500544430723584044,90}}
+	'''
+==Operation==
+
+==REST API==
+The {@link //fm. fm} application provides a
+<a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">RESTful</a>
+API built on the <a href="http://tools.ietf.org/html/rfc2616">HTTP</a> protocol
+and using <a href="http://tools.ietf.org/html/rfc4627">JSON</a> data encoding.
+
+The following <a href="https://www.tmforum.org/open-apis/">TM Forum Open APIs</a>
+are used:
+
+<p><table id="mt">
+   <thead>
+      <tr id="mt">
+         <th id="mt">Document Number</th>
+         <th id="mt">TM Forum Open API</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr id="mt">
+         <td id="mt">TMF632</td>
+         <td id="mt">Party Management</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">TMF642</td>
+         <td id="mt">Alarm Management</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">TMF639</td>
+         <td id="mt">Resource Inventory</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">TMF000</td>
+         <td id="mt">Event Management</td>
+      </tr>
+   </tbody>
+</table></p>
+
+===HTTP Methods===
+The <a href="http://tools.ietf.org/html/rfc2616">HTTP</a> methods used in
+this API include
+<a href="http://tools.ietf.org/html/rfc2616#section-9.3">`GET'</a>,
+<a href="http://tools.ietf.org/html/rfc2616#section-9.5">`POST'</a>,
+<a href="https://tools.ietf.org/html/rfc2068#section-19.6.1">`PATCH'</a> and
+<a href="http://tools.ietf.org/html/rfc2616#section-9.7">`DELETE'</a>.
+
+===Media Types===
+The media types used in this application are described below.
+
+<p><table id="mt">
+   <thead>
+      <tr id="mt">
+         <th id="mt">Type Name</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr id="mt">
+         <td id="mt"><a href="http://tools.ietf.org/html/rfc4627">application/json</a></td>
+      </tr>
+      <tr id="mt">
+         <td id="mt"><a href="http://tools.ietf.org/html/rfc7396">text/x-yaml</a></td>
+      </tr>
+   </tbody>
+</table></p>
+
+===Advanced Attribute Filtering Pattern===
+Complex queries are supported using a `filter' attribute as described in issue
+<a href="https://projects.tmforum.org/jira/browse/AP-832">AP-832</a> of TM Forum
+<a href="https://projects.tmforum.org/wiki/display/AP/">API Project</a>.
+
+<p>Example:</p>
+```
+   filter="[{eventCharacteristic.contains=[{name=reportingEntityName,value.like=[h%25]}]}]"
+'''
+<p>The right hand side (RHS) of the `filter' attribute should be enclosed
+in double quotes (`""'). Query values seperated by a comma (`,') and treated as AND.
+A complex value should be enclosed in `{}'.</p>
+
+<p><table id="mt">
+   <thead>
+      <tr id="mt">
+         <th id="mt">Operation</th>
+         <th id="mt">Description</th>
+         <th id="mt">LHS Data Type</th>
+         <th id="mt">RHS Data Type</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr id="mt">
+         <td id="mt">.exact OR =</td>
+         <td id="mt">Equals (Case-sensitive)</td>
+         <td id="mt">String, Number, Date, Boolean</td>
+         <td id="mt">String, Number, Date, Boolean</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">.notexact OR &lt;&gt;</td>
+         <td id="mt">Not equal to (Case-sensitive)</td>
+         <td id="mt">String, Number, Date, Boolean</td>
+         <td id="mt">String, Number, Date, Boolean</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">.like</td>
+         <td id="mt">Match the patterns in the argument array,
+            where "%" matches zero or more characters.</td>
+         <td id="mt">String</td>
+         <td id="mt">Array of String</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">.contains</td>
+         <td id="mt">Match LHS elements with RHS</td>
+         <td id="mt">Collection/Array</td>
+         <td id="mt">Array of String</td>
+      </tr>
+   </tbody>
+</table></p>
+
+===Resources &amp; Operations===
+The resources, their URIs, the methods available on them and expected
+responses, are described in this section.  Only the headers, and responses,
+relevant to the function being described are included.  Any valid HTTP
+headers may be included in requests and responses.
+
+<p><table>
+   <caption class="op"><b>Operations</b></caption>
+   <tbody>
+      <tr>
+         <td><a href="#Get-User">Get a User</a></td>
+      </tr>
+      <tr>
+         <td><a href="#Get-Users">Get all Users</a></td>
+      </tr>
+      <tr>
+         <td><a href="#Get-Alarms">Get all Alarms</a></td>
+      </tr>
+   </tbody>
+</table></p>
+
+
+==Configuration==
+
+<table id="Get-User" class="op">
+   <caption class="op"><b>Get user</b></caption>
+   <tr class="op">
+      <td id="opl">Resource URI</td>
+      <td id="opr">/partyManagement/v1/individual/{id}</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Methods</td>
+      <td id="opr">Get</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Headers</td>
+      <td id="opr">Accept</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Message Body</td>
+      <td id="opr">none</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Headers</td>
+      <td id="opr">Location, Content-Type, Content-Length, Etag</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Body</td>
+      <td id="opr">Representation of fault management entity</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Status</td>
+      <td id="opr">200 OK, 404 Not Found</td>
+   </tr>
+</table>
+<p>Example request:<pre>
+GET /partyManagement/v1/individual/{id}
+Accept: application/json
+</pre></p>
+<p>Example response:<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 184
+
+[
+ {
+  "id": "admin",
+  "href": "/partyManagement/v1/individual/admin",
+  "characteristic": [
+                     {
+                      "value": "en",
+                      "name": "locale"
+                     },
+                     {
+                      "value": "admin",
+                      "name": "username"
+                     },
+                     {
+                      "value": "admin",
+                      "name": "password"
+                     }
+                   ],
+ }
+]
+</pre></p>
+
+<table id="Get-Users" class="op">
+   <caption class="op"><b>Get all users</b></caption>
+   <tr class="op">
+      <td id="opl">Resource URI</td>
+      <td id="opr">/partyManagement/v1/individual</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Methods</td>
+      <td id="opr">Get</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Headers</td>
+      <td id="opr">Accept</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Message Body</td>
+      <td id="opr">none</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Headers</td>
+      <td id="opr">Location, Content-Type, Content-Length, Etag</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Body</td>
+      <td id="opr">Representation of fault management entity</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Status</td>
+      <td id="opr">200 OK, 404 Not Found</td>
+   </tr>
+</table>
+<p>Example request:<pre>
+GET /partyManagement/v1/individual
+Accept: application/json
+</pre></p>
+<p>Example response:<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 552
+
+[
+ {
+  "id": "admin",
+  "href": "/partyManagement/v1/individual/admin",
+  "characteristic": [
+                     {
+                      "value": "en",
+                      "name": "locale"
+                     },
+                     {
+                      "value": "admin",
+                      "name": "username"
+                     },
+                     {
+                      "value": "admin",
+                      "name": "password"
+                     }
+                   ],
+ }
+ {
+  "id": "sigscale",
+  "href": "/partyManagement/v1/individual/sigscale",
+  "characteristic": [
+                     {
+                      "value": "en",
+                      "name": "locale"
+                     },
+                     {
+                      "value": "sigscale",
+                      "name": "username"
+                     },
+                     {
+                      "value": "bucky",
+                      "name": "password"
+                     }
+                   ],
+ }
+]
+</pre></p>
+
+<table id="Get-Alarms" class="op">
+   <caption class="op"><b>Get all alarms</b></caption>
+   <tr class="op">
+      <td id="opl">Resource URI</td>
+      <td id="opr">/alarmManagement/v3/alarms</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Methods</td>
+      <td id="opr">Get</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Headers</td>
+      <td id="opr">Accept</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Request Message Body</td>
+      <td id="opr">none</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Headers</td>
+      <td id="opr">Location, Content-Type, Content-Length, Etag</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Body</td>
+      <td id="opr">Representation of fault management entity</td>
+   </tr>
+   <tr class="op">
+      <td id="opl">Response Status</td>
+      <td id="opr">200 OK, 404 Not Found</td>
+   </tr>
+</table>
+<p>Example request:<pre>
+GET /alarmManagement/v3/alarms
+Accept: application/json
+</pre></p>
+<p>Example response:<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+etag: 1544595110347-90
+Content-Length: 618706
+
+[
+ {
+  "specificProblem": " ",
+  "sourceSystemName": "BSPR01-BAR_X0180",
+  "sourceSystemId": "NE=528,BTS=88",
+  "site": {
+           "id": "DHK2066",
+           "latitude": "23.54294",
+           "longitude": "90.60755",
+           "municiplaity": "Gazaria",
+           "province": "Dhaka",
+           "region": "Munshiganj",
+          }
+  "probableCause": "Monitoring Device Hardware Fault",
+  "perceivedSeverity": "critical",
+  "name": "186409917",
+  "id": "huawei-ran-2-186409917",
+  "externalAlarmId": "1538648493759-965235",
+  "alarmedObjectType": "19",
+  "alarmType": "fault",
+  "alarmRaisedTime": "2018-10-04T10:21:30.000Z",
+  "alarmDetails": "Cabinet No.=0, Subrack No.=40, Slot No.=0, Board Type=EMU, Site No.=88, Site Type=BTS3900 GSM, Site Name=BAR_X0180",
+  "@type": "ExtendedAlarm",
+  "@schemaLocation": "/alarmManagement/v3/schema/ExtendedAlarm.yml",
+  "@baseType": "Alarm"
+ }
+]
+</pre></p>
+

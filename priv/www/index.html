@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Inventory Management</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#f57f17">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="application-name" content="Inventory Mangaement">
+		<link rel="icon" href="/images/favicon.ico">
+		<link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+		<script>
+			window.MyAppGlobals = { rootPath: '/' };
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('service-worker.js', {
+					scope: '/',
+					});
+				});
+			}
+		</script>
+		<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+		<script type="module" src="src/inventory-management.js" crossorigin="use-credentials"></script>
+	</head>
+	<body>
+		<inventory-management></inventory-management>
+	<noscript>
+		Please enable JavaScript to view this website.
+	</noscript>
+	</body>
+</html>
