@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://source.developers.google.com/p/sigscale-oss/r/sigscale-fm"
+    "url": "https://source.developers.google.com/p/sigscale-oss/r/sigscale-im"
   },
   "scripts": {
     "build": "yarn run build:static",

@@ -3,8 +3,8 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-erl_DATA = fm_rest_query_scanner.erl \
-		fm_rest_query_parser.erl
+erl_DATA = im_rest_query_scanner.erl \
+		im_rest_query_parser.erl
 
 %.erl:%.xrl
 	$(ERLC) $<

@@ -28,9 +28,9 @@ Note:
 	5. autoreconf                (remakes above files after changes)
 
 ## Building
-	1. mkdir ../sigscale_fm.build  (create build directory)
-	2. cd ../sigscale_fm.build     (change working directory for build)
-	3. ../sigscale_fm/configure    (creates Makefiles)
+	1. mkdir ../sigscale_im.build  (create build directory)
+	2. cd ../sigscale_im.build     (change working directory for build)
+	3. ../sigscale_im/configure    (creates Makefiles)
 	4. make                        (builds entire package)
 	5. make check                  (run dialyzer and common_test)
 
@@ -42,6 +42,6 @@ Note:
 	2. make distclean            (removes files created with configure also)
 
 ## Options
-	../sigscale_fm/configure --enable-debug
-	../sigscale_fm/configure --with-ssl=/opt/local
+	../sigscale_im/configure --enable-debug
+	../sigscale_im/configure --with-ssl=/opt/local
 

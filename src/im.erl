@@ -16,7 +16,7 @@
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This library module implements the public API for the
-%%%   {@link //sigscale_fm. sigscale_fm} application.
+%%%   {@link //sigscale_im. sigscale_im} application.
 %%%
 -module(im).
 -copyright('Copyright (c) 2018 SigScale Global Inc.').
