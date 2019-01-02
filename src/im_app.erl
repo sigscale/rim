@@ -58,24 +58,16 @@ start(normal = _StartType, _Args) ->
 	Tables = [alarm],
 	case mnesia:wait_for_tables(Tables, 60000) of
 		ok ->
-			start1();
+			supervisor:start_link(im_sup, []);
 		{timeout, BadTabList} ->
 			case force(BadTabList) of
 				ok ->
-					start1();
+					supervisor:start_link(im_sup, []);
 				{error, Reason} ->
 					error_logger:error_report(["sigscale_im application failed to start",
 							{reason, Reason}, {module, ?MODULE}]),
 					{error, Reason}
 			end;
-		{error, Reason} ->
-			{error, Reason}
-	end.
-%% @hidden
-start1() ->
-	case im_log:fault_open() of
-		ok ->
-			supervisor:start_link(im_sup, []);
 		{error, Reason} ->
 			{error, Reason}
 	end.
