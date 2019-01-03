@@ -1,7 +1,7 @@
 %% im.hrl
 
 -record(resource_spec,
-		{id :: string(),
+		{id :: string() | '_',
 		href :: string(),
 		name :: string(),
 		description :: string(),
@@ -51,18 +51,18 @@
 -type resource_char() :: #resource_char{}.
 
 -record(resource,
-		{id :: string(),
-		href :: string(),
-		name :: string(),
-		description :: string(),
-		category :: string(),
-		type :: string(),
-		base_type :: string(),
-		schema :: string(),
-		status :: string(),
-		version :: string(),
-		specification :: resource_spec(),
-		characteristic = [] :: [{Name :: string(), Value :: term()}]}).
+		{id :: string() | '_' | '$1' | {'_' | nonempty_improper_list(any(),'_'),'_'} | {[any(),...],'_'},
+		href :: string() | '_',
+		name :: string() | '_' | '$2',
+		description :: string() | '_',
+		category :: string() | '_',
+		type :: string() | '_' | '$3',
+		base_type :: string() | '_',
+		schema :: string() | '_',
+		status :: string() | '_',
+		version :: string() | '_',
+		specification :: resource_spec() | '_',
+		characteristic = [] :: [{Name :: string(), Value :: term()}] | '_'}).
 -type resource() :: #resource{}.
 
 -record(sites,

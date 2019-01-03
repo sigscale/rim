@@ -113,8 +113,7 @@ query_resource(Cont, Size, Sort, {like, [String]} = _MatchId, MatchName, MatchTy
 			{Mh, []};
 		_ ->
 			Mh1 = #resource{id = {String, '_'}, _ = '_'},
-			{Mh1, []},
-			#resource{id = String}
+			{Mh1, []}
 	end,
 erlang:display({?MODULE, ?LINE, MatchHead, MatchConditions}),
 	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
@@ -234,7 +233,7 @@ query_resource4({Resource, undefined}, Sort, '_', true) when is_list(Resource) -
 	Total = length(Resource),
 erlang:display({?MODULE, ?LINE}),
 	query_resource5(eof, Resource, Total, lists:reverse(Sort));
-query_resource4({{Resource, Cont}, Total}, _Sort, '_', true) when is_integer(Resource) ->
+query_resource4({{Resource, Cont}, Total}, _Sort, '_', true) when is_list(Resource) ->
 erlang:display({?MODULE, ?LINE}),
 	{Cont, length(Resource), Total};
 query_resource4({{Resource, Cont}, Total}, Sort, '_', false) ->
@@ -269,7 +268,7 @@ erlang:display({?MODULE, ?LINE}),
 query_resource5(Cont, Resource, Total, [H | T]) when H > 0 ->
 	query_resource5(Cont, lists:keysort(H, Resource), Total, T);
 query_resource5(Cont, Resource, Total, [H | T]) when H < 0 ->
-	query_resource5(Cont, lsts:reverse(ists:keysort(H, Resource)), Total, T);
+	query_resource5(Cont, lists:reverse(lists:keysort(H, Resource)), Total, T);
 query_resource5(Cont, Resource, undefined, []) ->
 	{Cont, Resource};
 query_resource5(Cont, Resource, Total, []) ->
@@ -726,25 +725,25 @@ parse(Other, _Location, State) ->
    erlang:display(Other),
    State.
 
-strip(Char) ->
-	strip1(Char, []).
-%% @hidden
-strip1([$_, $B | T], Acc) ->
-	strip1(T, Acc);
-strip1([$_, $G | T], Acc) ->
-	strip1(T, Acc);
-strip1([$_, $M | T], Acc) ->
-	strip1(T, Acc);
-strip1([$_, $R | T], Acc) ->
-	strip1(T, Acc);
-strip1([$_, $W | T], Acc) ->
-	strip1(T, Acc);
-strip1([$_, $X | T], Acc) ->
-	strip1(T, Acc);
-strip1([$_ | T], Acc) ->
-	strip1(T, Acc);
-strip1([H | T], Acc) ->
-	strip1(T, [H | Acc]);
-strip1([], Acc) ->
-   lists:reverse(Acc).
+%strip(Char) ->
+%	strip1(Char, []).
+
+%strip1([$_, $B | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([$_, $G | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([$_, $M | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([$_, $R | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([$_, $W | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([$_, $X | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([$_ | T], Acc) ->
+%	strip1(T, Acc);
+%strip1([H | T], Acc) ->
+%	strip1(T, [H | Acc]);
+%strip1([], Acc) ->
+%   lists:reverse(Acc).
 
