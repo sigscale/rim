@@ -1,6 +1,6 @@
 @doc This {@link //stdlib/supervisor. supervisor} behaviour callback
 	module implements a supervisor in the
-	{@link //sigscale_fm. sigscale_fm} application.
+	{@link //sigscale_im. sigscale_im} application.
 
 The supervision heirachy is depicted in
 <a href="supervision.png">Figure 1-1</a> as a directed graph starting
@@ -16,6 +16,6 @@ implementing the behaviour.  For supervisors the <tt>sup_flags()</tt> are
 also provided as
 <tt>{RestartStrategy::strategy(), Intensity::integer(), Period::integer()}</tt>.
 
-<a href="https://docs.google.com/drawings/d/1lQj0WddkATEfl5QTo0wixIpfOIFeLJqzHvrduKhyI-U/edit?usp=sharing"><img alt="supervision heirachy" src="supervision.png" /></a><br />
+<a href="https://docs.google.com/drawings/d/1nLKcmZN8q0yj8H0rw-r_Xpx5NRFzD_oYXaB0m11WDjw/edit?usp=sharing"><img alt="supervision heirachy" src="supervision.png" /></a><br />
 <a href="supervision.png">Figure 1-1</a>
 
