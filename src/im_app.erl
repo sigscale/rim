@@ -55,7 +55,7 @@
 %% @see //kernel/application:start/2
 %%
 start(normal = _StartType, _Args) ->
-	Tables = [alarm],
+	Tables = [catalog, inventory],
 	case mnesia:wait_for_tables(Tables, 60000) of
 		ok ->
 			supervisor:start_link(im_sup, []);
@@ -180,7 +180,7 @@ install3(Nodes, Acc) ->
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, inventory}} ->
-			error_logger:info_msg("Found existing alarm table.~n"),
+			error_logger:info_msg("Found existing inventory table.~n"),
 			install4(Nodes, [inventory | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
@@ -219,8 +219,10 @@ install5(Nodes, Acc) ->
 install6(Nodes, Acc) ->
 	case application:get_env(inets, services) of
 		{ok, InetsServices} ->
+erlang:display({?MODULE, ?LINE, InetsServices}),
 			install7(Nodes, Acc, InetsServices);
 		undefined ->
+erlang:display({?MODULE, ?LINE, undefined}),
 			error_logger:info_msg("Inets services not defined. "
 					"User table not created~n"),
 			install11(Nodes, Acc)
@@ -397,8 +399,6 @@ config_change(_Changed, _New, _Removed) ->
 		TableName :: atom(),
 		Reason :: term().
 %% @doc Try to force load bad tables.
-force([alarm | T]) ->
-	force(T);
 force([H | T]) ->
 	case mnesia:force_load_table(H) of
 		yes ->

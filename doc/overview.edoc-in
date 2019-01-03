@@ -17,7 +17,7 @@ on the current node and create a default REST user
 e.g &#058;
  	```
 	(fm@h)1> fm_app:install().
-	{ok, [httpd_group, httpd_user, alarm]}
+	{ok, [httpd_group, httpd_user, inventory, catalog]}
 	'''
 
 ===HTTP Authentication===
@@ -321,76 +321,6 @@ Content-Length: 552
                       "name": "password"
                      }
                    ],
- }
-]
-</pre></p>
-
-<table id="Get-Alarms" class="op">
-   <caption class="op"><b>Get all alarms</b></caption>
-   <tr class="op">
-      <td id="opl">Resource URI</td>
-      <td id="opr">/alarmManagement/v3/alarms</td>
-   </tr>
-   <tr class="op">
-      <td id="opl">Request Methods</td>
-      <td id="opr">Get</td>
-   </tr>
-   <tr class="op">
-      <td id="opl">Request Headers</td>
-      <td id="opr">Accept</td>
-   </tr>
-   <tr class="op">
-      <td id="opl">Request Message Body</td>
-      <td id="opr">none</td>
-   </tr>
-   <tr class="op">
-      <td id="opl">Response Headers</td>
-      <td id="opr">Location, Content-Type, Content-Length, Etag</td>
-   </tr>
-   <tr class="op">
-      <td id="opl">Response Body</td>
-      <td id="opr">Representation of fault management entity</td>
-   </tr>
-   <tr class="op">
-      <td id="opl">Response Status</td>
-      <td id="opr">200 OK, 404 Not Found</td>
-   </tr>
-</table>
-<p>Example request:<pre>
-GET /alarmManagement/v3/alarms
-Accept: application/json
-</pre></p>
-<p>Example response:<pre>
-HTTP/1.1 200 OK
-Content-Type: application/json
-etag: 1544595110347-90
-Content-Length: 618706
-
-[
- {
-  "specificProblem": " ",
-  "sourceSystemName": "BSPR01-BAR_X0180",
-  "sourceSystemId": "NE=528,BTS=88",
-  "site": {
-           "id": "DHK2066",
-           "latitude": "23.54294",
-           "longitude": "90.60755",
-           "municiplaity": "Gazaria",
-           "province": "Dhaka",
-           "region": "Munshiganj",
-          }
-  "probableCause": "Monitoring Device Hardware Fault",
-  "perceivedSeverity": "critical",
-  "name": "186409917",
-  "id": "huawei-ran-2-186409917",
-  "externalAlarmId": "1538648493759-965235",
-  "alarmedObjectType": "19",
-  "alarmType": "fault",
-  "alarmRaisedTime": "2018-10-04T10:21:30.000Z",
-  "alarmDetails": "Cabinet No.=0, Subrack No.=40, Slot No.=0, Board Type=EMU, Site No.=88, Site Type=BTS3900 GSM, Site Name=BAR_X0180",
-  "@type": "ExtendedAlarm",
-  "@schemaLocation": "/alarmManagement/v3/schema/ExtendedAlarm.yml",
-  "@baseType": "Alarm"
  }
 ]
 </pre></p>

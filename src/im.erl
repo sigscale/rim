@@ -85,7 +85,7 @@ query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType, MatchChar) ->
 		Cont1 :: eof | any(),
 		Total :: non_neg_integer(),
 		Reason :: term().
-%% @doc Query the alarm table.
+%% @doc Query the resource table.
 %%
 %%    The result list will be sorted by the record elements listed in `Sort', in order.
 query_resource(Cont, undefined, Sort, MatchId, MatchName, MatchType, MatchChar,
