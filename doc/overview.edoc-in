@@ -1,22 +1,22 @@
 @copyright 2018 SigScale Global Inc.
 @version %VERSION%
 @title %DESCRIPTION%
-@doc This application implements 3GPP Fault Management (FM).
+@doc This application implements (Resource) Inventory Management (IM).
 
 ==Introduction==
 
 ==Installation==
 Before starting the application for the first time, {@link //mnesia/mnesia. mnesia}
 should be initialized. Create a schema and start mnesia on all nodes
-where the application {@link //sigscale_fm. sigscale_fm} application will run.
+where the application {@link //sigscale_im. sigscale_im} application will run.
 
-The following command will initialize {@link //sigscale_fm. sigscale_fm}
+The following command will initialize {@link //sigscale_im. sigscale_im}
 on the current node and create a default REST user
 "admin" with password "admin".
 
 e.g &#058;
  	```
-	(fm@h)1> fm_app:install().
+	(im@h)1> im_app:install().
 	{ok, [httpd_group, httpd_user, inventory, catalog]}
 	'''
 
@@ -27,26 +27,26 @@ tables it uses. All users will be added to groups specified in `require_group'
 option in inets httpd confifuration.
 e.g &#058;
 	```
-	1> fm:add_user("john", "g2k7hyeh6qa", "en").
+	1> im:add_user("john", "g2k7hyeh6qa", "en").
 	{ok,{1501829429047,149}}
-	2> fm:add_user("bss", "nfc9xgp32xha", "en").
+	2> im:add_user("bss", "nfc9xgp32xha", "en").
 	{ok,{1501829458220,157}}
 
 	'''
 
 ===Internationalization (i18n)===
 The web user interface (UI) may be internationalized by specifying `Locale' in 
-{@link //fm/fm:add_user/3. fm:add_user/3} where `Locale'
+{@link //im/im:add_user/3. im:add_user/3} where `Locale'
 is a two letter ISO-639-1 language code. A corresponding message file
 should be provided in `priv/www/locales'.
 	```
-	3> fm:add_user("alejandro", "sjjymz5prtcd", "es").
+	3> im:add_user("alejandro", "sjjymz5prtcd", "es").
 	{ok,{1500544430723584044,90}}
 	'''
 ==Operation==
 
 ==REST API==
-The {@link //fm. fm} application provides a
+The {@link //im. im} application provides a
 <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">RESTful</a>
 API built on the <a href="http://tools.ietf.org/html/rfc2616">HTTP</a> protocol
 and using <a href="http://tools.ietf.org/html/rfc4627">JSON</a> data encoding.
@@ -67,16 +67,8 @@ are used:
          <td id="mt">Party Management</td>
       </tr>
       <tr id="mt">
-         <td id="mt">TMF642</td>
-         <td id="mt">Alarm Management</td>
-      </tr>
-      <tr id="mt">
          <td id="mt">TMF639</td>
          <td id="mt">Resource Inventory</td>
-      </tr>
-      <tr id="mt">
-         <td id="mt">TMF000</td>
-         <td id="mt">Event Management</td>
       </tr>
    </tbody>
 </table></p>
@@ -173,9 +165,6 @@ headers may be included in requests and responses.
       </tr>
       <tr>
          <td><a href="#Get-Users">Get all Users</a></td>
-      </tr>
-      <tr>
-         <td><a href="#Get-Alarms">Get all Alarms</a></td>
       </tr>
    </tbody>
 </table></p>
