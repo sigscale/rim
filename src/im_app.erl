@@ -219,10 +219,8 @@ install5(Nodes, Acc) ->
 install6(Nodes, Acc) ->
 	case application:get_env(inets, services) of
 		{ok, InetsServices} ->
-erlang:display({?MODULE, ?LINE, InetsServices}),
 			install7(Nodes, Acc, InetsServices);
 		undefined ->
-erlang:display({?MODULE, ?LINE, undefined}),
 			error_logger:info_msg("Inets services not defined. "
 					"User table not created~n"),
 			install11(Nodes, Acc)
