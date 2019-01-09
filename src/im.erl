@@ -115,7 +115,6 @@ query_resource(Cont, Size, Sort, {like, [String]} = _MatchId, MatchName, MatchTy
 			Mh1 = #resource{id = {String, '_'}, _ = '_'},
 			{Mh1, []}
 	end,
-erlang:display({?MODULE, ?LINE, MatchHead, MatchConditions}),
 	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
 		MatchChar, CountOnly);
 query_resource(Cont, Size, Sort, {notexact, String} = _MatchId, MatchName, MatchType,
@@ -147,7 +146,6 @@ query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, {Op, [String]} = _
 			Mh1 = MatchHead#resource{name = String},
 			{Mh1, MatchConditions}
 	end,
-erlang:display({?MODULE, ?LINE, MatchHead1, MatchConditions1}),
 	query_resource2(Cont, Size, Sort, MatchHead1, MatchConditions1, MatchType, MatchChar,
 			CountOnly);
 query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String} = _MatchName,
@@ -175,7 +173,6 @@ query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {Op, [String]} = _
 		_ ->
 			MatchHead#resource{type = String}
 	end,
-erlang:display({?MODULE, ?LINE, MatchHead1}),
 	query_resource3(Cont, Size, Sort, MatchHead1, MatchConditions, MatchChar, CountOnly);
 query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String} = _MatchType,
 		MatchChar, CountOnly) when is_list(String) ->
@@ -185,7 +182,6 @@ query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String}
 			MatchChar, CountOnly).
 %% @hidden
 query_resource3(start, Size, [], #resource{_ = '_'}, [], '_', true) ->
-erlang:display({?MODULE, ?LINE}),
 	{eof, Size, mnesia:table_info(inventory, size)};
 query_resource3(start, Size, [], #resource{_ = '_'} = MatchHead, [] = MatchConditions,
 	'_', false) ->
@@ -194,19 +190,15 @@ query_resource3(start, Size, [], #resource{_ = '_'} = MatchHead, [] = MatchCondi
 			{mnesia:select(inventory, MatchSpec, Size, read),
 					mnesia:table_info(inventory, size)}
 	end,
-erlang:display({?MODULE, ?LINE}),
 	query_resource4(mnesia:ets(F), [], '_', false);
 query_resource3(start, Size, [], MatchHead, MatchConditions, MatchChar, false) ->
 	MatchSpec = [{MatchHead, MatchConditions, ['$_']}],
 	F = fun() ->
 		{mnesia:select(inventory, MatchSpec, Size, read), undefined}
 	end,
-erlang:display({?MODULE, ?LINE}),
 	query_resource4(mnesia:ets(F), [], MatchChar, false);
 query_resource3(start, _Size, Sort, MatchHead, MatchConditions, MatchChar, CountOnly) ->
-erlang:display({?MODULE, ?LINE, MatchHead, MatchConditions, MatchChar, CountOnly}),
 	MatchSpec = [{MatchHead, MatchConditions, ['$_']}],
-erlang:display({?MODULE, ?LINE, MatchSpec}),
 	F = fun() ->
 		{mnesia:select(inventory, MatchSpec, read), undefined}
 	end,
@@ -215,7 +207,6 @@ query_resource3(Cont, _Size, Sort, #resource{_ = '_'}, [], '_' = MatchChar, Coun
 	F = fun() ->
 		{mnesia:select(Cont), mnesia:table_info(inventory, size)}
 	end,
-erlang:display({?MODULE, ?LINE}),
 	query_resource4(mnesia:ets(F), Sort, MatchChar, CountOnly);
 query_resource3(Cont, _Size, Sort, _MatchHead, _MatchConditions, MatchChar, CountOnly) ->
 	F = fun() ->
@@ -227,42 +218,33 @@ query_resource4({Resource, Cont}, '_', '_', '_') ->
 	{Cont, Resource};
 query_resource4({Resource, undefined}, _Sort, '_', true) when is_list(Resource) ->
 	Total = length(Resource),
-erlang:display({?MODULE, ?LINE}),
 	{eof, Total, Total};
 query_resource4({Resource, undefined}, Sort, '_', true) when is_list(Resource) ->
 	Total = length(Resource),
-erlang:display({?MODULE, ?LINE}),
 	query_resource5(eof, Resource, Total, lists:reverse(Sort));
 query_resource4({{Resource, Cont}, Total}, _Sort, '_', true) when is_list(Resource) ->
-erlang:display({?MODULE, ?LINE}),
 	{Cont, length(Resource), Total};
 query_resource4({{Resource, Cont}, Total}, Sort, '_', false) ->
-erlang:display({?MODULE, ?LINE}),
 	query_resource5(Cont, Resource, Total, lists:reverse(Sort));
 query_resource4({Resource, undefined}, _Sort, {Op, [String]}, true) when is_list(Resource),
 		is_list(String), ((Op == exact) orelse (Op == like)) ->
 	Fun = count_source(Op, String),
 	Total = lists:foldl(Fun, 0, Resource),
-erlang:display({?MODULE, ?LINE}),
 	{eof, Total, Total};
 query_resource4({Resource, Total}, Sort, {Op, [String]}, false) when is_list(Resource),
 		is_list(String), ((Op == exact) orelse (Op == like)) ->
 	Fun = filter_source(Op, String),
-erlang:display({?MODULE, ?LINE}),
 	query_resource5(eof, lists:filter(Fun, Resource), Total, lists:reverse(Sort));
 query_resource4({{Resource, Cont}, _Total}, _Sort, {Op, [String]}, true)
 		when is_list(String), ((Op == exact) orelse (Op == like)) ->
 	Fun = count_source(Op, String),
 	Total = lists:foldl(Fun, 0, Resource),
-erlang:display({?MODULE, ?LINE}),
 	{Cont, Total, Total};
-query_resource4({{Resource, Cont}, _Total}, Sort, {Op, [String]}, false)
+query_resource4({{Resource, _Cont}, _Total}, Sort, {Op, [String]}, false)
 		when is_list(String), ((Op == exact) orelse (Op == like)) ->
 	Fun = filter_source(Op, String),
-erlang:display({?MODULE, ?LINE}),
 	query_resource5(eof, lists:filter(Fun, Resource), undefined, lists:reverse(Sort));
 query_resource4({'$end_of_table', _Total}, _Sort, _MatchChar, _CountOnly) ->
-erlang:display({?MODULE, ?LINE}),
 	{eof, []}.
 %% @hidden
 query_resource5(Cont, Resource, Total, [H | T]) when H > 0 ->
@@ -691,7 +673,6 @@ filter_source(Op, String) ->
 
 %% @hidden
 parse(startDocument = _Event, _Location, State) ->
-   erlang:display(startDocument),
    State;
 parse({startElement, _, "MO", _, [{_, _, "className", Class}, {_, _, "fdn", Fdn}]}, _, _State) ->
    #state{resource = #resource{id = Fdn, description = Class, type = "EQUIPMENT", base_type = "PhysicalResource"}};
@@ -719,10 +700,8 @@ parse({endElement, _, "MO", _}, _, #state{resource = R}) ->
 parse({ignorableWhitespace, _}, _, State) ->
    State;
 parse(endDocument, _, State) ->
-   erlang:display(endDocument),
    State;
-parse(Other, _Location, State) ->
-   erlang:display(Other),
+parse(_Other, _Location, State) ->
    State.
 
 %strip(Char) ->
