@@ -257,7 +257,7 @@
 	<!-- Antenna coverae configuration List -->
 	<complexType name="AntennaCovConfigListType">
 		<sequence>
-			<element name="AntennaCovConfig" type="sp:AntennaCovConfigType"/ maxOccurs="16"/>
+			<element name="AntennaCovConfig" type="sp:AntennaCovConfigType" maxOccurs="16"/>
 		</sequence>
 	</complexType>
 
