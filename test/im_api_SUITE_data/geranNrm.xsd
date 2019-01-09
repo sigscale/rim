@@ -1,0 +1,237 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.656 GERAN NRM IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	geranNrm.xsd
+-->
+<schema
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+		xmlns:gr="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		elementFormDefault="qualified" >
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm" />
+
+	<simpleType name="isESCoveredByEnumType">
+		<restriction base="string">
+			<enumeration value="no"/>
+			<enumeration value="partial"/>
+			<enumeration value="yes"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="MA">
+		<sequence>
+			<element name="rfSelected" type="boolean" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="HoppingSequence">
+		<sequence>
+			<element name="ma" type="gn:MA" minOccurs="0"/>
+			<element name="hsn" type="short" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="HoppingSequenceList">
+		<sequence>
+			<element name="hoppingSequence" type="gn:HoppingSequence" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<!-- GERAN Network Resources IRP NRM class associated XML elements -->
+
+	<element name="BssFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gn:BtsSiteMgr"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="BtsSiteMgr">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element ref="gr:latitude" minOccurs="0"/>
+									<element ref="gr:longitude" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0" />
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gn:GsmCell"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:InterRatEsPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="GsmCell">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cellIdentity"/>
+									<element name="cellAllocation"/>
+									<element name="ncc"/>
+									<element name="bcc"/>
+									<element name="lac"/>
+									<element name="mcc"/>
+									<element name="mnc"/>
+									<element name="rac" minOccurs="0"/>
+									<element name="racc" minOccurs="0"/> 
+									<element name="tsc" minOccurs="0"/>
+									<element name="rxLevAccessMin"/>
+									<element name="msTxPwrMaxCCH"/>
+									<element name="rfHoppingEnabled"/>
+									<element name="hoppingSequenceList"/>
+									<element name="plmnPermitted"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranRelation"/>
+							<element ref="en:EUtranRelation"/>
+							<element ref="xn:VsDataContainer"/>
+							<element ref="gn:GsmCellOptionallyContainedNrmClass"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:InterRatEsPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="GsmRelation">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="adjacentCell"/>
+									<element name="bcchFrequency" minOccurs="0"/>
+									<element name="ncc" minOccurs="0"/>
+									<element name="bcc" minOccurs="0"/>
+									<element name="lac" minOccurs="0"/>
+									<element name="isRemoveAllowed" type="boolean" minOccurs="0"/>
+									<element name="isHOAllowed" type="boolean" minOccurs="0"/>
+									<element name="isESCoveredBy" type="gn:isESCoveredByEnumType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalGsmCell" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cellIdentity"/>
+									<element name="bcchFrequency"/>
+									<element name="ncc"/>
+									<element name="bcc"/>
+									<element name="lac"/>
+									<element name="mcc"/>
+									<element name="mnc"/>
+									<element name="rac" minOccurs="0"/>
+									<element name="racc" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element> 
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:InterRatEsPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalBssFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gn:ExternalGsmCell"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+<element name="GsmCellOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+
+</schema>

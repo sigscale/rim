@@ -1,0 +1,273 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.623 Generic Network Resources IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	genericNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm" >
+
+<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"/>
+	<!-- Base XML type for all NRM class associated XML elements -->
+	<complexType name="NrmClass">
+		<attribute name="id" type="string" use="required"/>
+		<attribute name="modifier" use="optional">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="create"/>
+					<enumeration value="delete"/>
+					<enumeration value="update"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+
+	<!-- Generic Network Resources IRP NRM attribute related XML types -->
+
+	<simpleType name="dn">
+		<restriction base="string">
+			<maxLength value="400"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="dnList">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="dn" type="xn:dn"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="linkType">
+		<list>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="Signalling"/>
+					<enumeration value="Bearer"/>
+					<enumeration value="OAM_AND_P"/>
+					<enumeration value="Other"/>
+				</restriction>
+			</simpleType>
+		</list>
+	</simpleType>
+
+	<complexType name="linkListType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="dn" type="xn:dn"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="managedElementTypeListType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="managedElementType" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="vnfParametersListType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element name="vnfInstanceId" type="string"/>
+			<element name="vnfdId" type="string" minOccurs="0"/> 
+			<element name="flavourId" type="string" minOccurs="0"/>
+			<element name="autoScalable" type="boolean"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="latitude">
+		<restriction base="decimal">
+			<fractionDigits value="4"/>
+			<minInclusive value="-90.0000"/>
+			<maxInclusive value="90.0000"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="longitude">
+		<restriction base="decimal">
+			<fractionDigits value="4"/>
+			<minInclusive value="-180.0000"/>
+			<maxInclusive value="180.0000"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="peeParametersListType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element name="siteIdentification" type="string"/>
+			<element name="siteLatitude" type="latitude" minOccurs="0"/>
+			<element name="siteLongitude" type="longitude" minOccurs="0"/>
+			<element name="siteDescription" type="string"/>
+			<element name="equipmentType" type="string"/>
+			<element name="environmentType" type="string"/>
+			<element name="powerInterface" type="string"/>
+		</sequence>
+	</complexType>
+
+	<!-- Generic Network Resources IRP NRM class associated XML elements -->
+	<element name="SubNetwork">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="dnPrefix" minOccurs="0"/>
+									<element name="userLabel"/>
+									<element name="userDefinedNetworkType"/>
+									<element name="setOfMcc" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:SubNetwork"/>
+							<element ref="xn:ManagedElement"/>
+							<element ref="xn:MeContext"/>
+							<element ref="xn:ManagementNode"/>
+							<element ref="xn:IRPAgent"/>
+							<element ref="xn:SubNetworkOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:ESPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ManagedElement">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0"> 
+							<complexType>
+								<all>
+									<element name="dnPrefix"/>
+									<element name="managedElementTypeList" type="xn:managedElementTypeListType" minOccurs="0"/>
+									<element name="userLabel"/>
+									<element name="vendorName"/>
+									<element name="userDefinedState"/>
+									<element name="locationName"/>
+									<element name="swVersion"/>
+									<element name="managedBy" type="xn:dnList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:IRPAgent"/>
+							<element ref="xn:ManagedElementOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MeContext">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="dnPrefix" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:ManagedElement"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ManagementNode">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vendorName"/>
+									<element name="locationName"/>
+									<element name="managedElements" type="xn:dnList" minOccurs="0"/>
+									<element name="swVersion"/>
+									<element name="userDefinedState"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:IRPAgent"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="IRPAgent">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0"> 
+							<complexType>
+								<all>
+									<element ref="xn:systemDN" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="VsDataContainer">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="vsDataType"/>
+									<element name="vsDataFormatVersion"/>
+									<element ref="xn:vsData"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<!-- IRPAgent IOC attributes -->
+	<element name="systemDN" type="xn:dn"/>
+
+	<!-- VsDataContainer NRM class vsData attribute associated empty XML element -->
+	<complexType name="vsData"/>
+
+	<element name="vsData" type="xn:vsData"/>
+
+	<!-- Abstract head XML element for all XML elements associated to further NRM classes optionally contained under SubNetwork NRM class -->
+	<element name="SubNetworkOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true" />
+
+	<!-- Abstract head XML element for all XML elements associated to further NRM classes optionally contained under ManagedElement NRM class -->
+	<element name="ManagedElementOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true" />
+
+</schema>

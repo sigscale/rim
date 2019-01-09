@@ -1,0 +1,1260 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.659 E-UTRAN Network Resource Model IRP
+	XML schema definition
+	eutranNrm.xsd
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:nr="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		elementFormDefault="qualified">
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"/>
+
+	<complexType name="IpAddressList">
+		<sequence>
+			<element name="ipAddress" type="string" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="EnbId">
+		<restriction base="unsignedLong">
+			<maxInclusive value="268435455"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="Eci">
+		<restriction base="unsignedLong">
+			<maxInclusive value="268435455"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="CellLocalId">
+		<restriction base="unsignedShort">
+			<maxInclusive value="255"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="CellLocalIdList">
+		<sequence>
+			<element name="cellLocalId" type="en:CellLocalId" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="cellSize">
+		<restriction base="string">
+			<enumeration value="verysmall"/>
+			<enumeration value="small"/>
+			<enumeration value="medium"/>
+			<enumeration value="large"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="allowedAccessClassesElementType">
+		<restriction base="string">
+			<enumeration value="EmergencyCall"/>
+			<enumeration value="ForPLMNUse"/>
+			<enumeration value="SecurityServices"/>
+			<enumeration value="PublicUtilities"/>
+			<enumeration value="EmergencyServices"/>
+			<enumeration value="PLMNStaff"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="allowedAccessClassesType">
+		<sequence minOccurs="0" maxOccurs="6">
+			<element name="allowedAccessClassesElement" type="en:allowedAccessClassesElementType"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="PLMNId"> 
+		<sequence>
+			<element name="mcc" type="short"/>
+			<element name="mnc" type="short"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="PLMNIdList">
+		<sequence>
+			<element name="pLMNId" type="en:PLMNId" maxOccurs="6"/>
+			<!-- The first pLMNId of the pLMNIdList is primary PLMN id -->
+		</sequence>
+	</complexType>
+
+	<complexType name="CellAccessInfo">
+		<sequence>
+			<element name="plmnId" type="en:PLMNId"/>
+			<element name="tac" type="long"/>
+			<element name="cellId" type="long"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="CellAccessInfoList">
+		<sequence>
+			<element name="cellAccessInfo" type="en:CellAccessInfo" maxOccurs="5"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="EcgiList">
+		<sequence>
+			<element name="plmnId" type="en:PLMNId" minOccurs="0"/>
+			<element name="eci" type="en:Eci" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="Pci">
+		<restriction base="unsignedShort">
+			<maxInclusive value="503"/>
+			<!-- Minimum value is 0, maximum value is 3x167+2=503 -->
+		</restriction>
+	</simpleType>
+
+	<complexType name="PciList">
+		<sequence>
+			<element name="pci" type="en:Pci" maxOccurs="504"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="cellResvInfoType">
+		<restriction base="string">
+			<enumeration value="reservedCell"/>
+			<enumeration value="nonReservedCell"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="mbsfnAreaIdType">
+		<restriction base="unsignedLong">
+			<maxInclusive value="255"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="QciDscpMappingType">
+		<sequence>
+			<element name="qci" type="short"/>
+			<element name="dscp" type="short"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="QciDscpMappingListType">
+		<sequence>
+			<element name="QciDscpMappingPair" type="en:QciDscpMappingType"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="isEsCoveredByEnumType">
+		<restriction base="string">
+			<enumeration value="no"/>
+			<enumeration value="partial"/>
+			<enumeration value="yes"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="yesNoType">
+		<restriction base="string">
+			<enumeration value="yes"/>
+			<enumeration value="no"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QOffsetEnumType"> 
+		<restriction base="string">
+			<enumeration value="dB-24"/>
+			<enumeration value="dB-22"/>
+			<enumeration value="dB-20"/>
+			<enumeration value="dB-18"/>
+			<enumeration value="dB-16"/>
+			<enumeration value="dB-14"/>
+			<enumeration value="dB-12"/>
+			<enumeration value="dB-10"/>
+			<enumeration value="dB-8"/>
+			<enumeration value="dB-6"/>
+			<enumeration value="dB-5"/>
+			<enumeration value="dB-4"/>
+			<enumeration value="dB-3"/>
+			<enumeration value="dB-2"/>
+			<enumeration value="dB-1"/>
+			<enumeration value="dB0"/>
+			<enumeration value="dB1"/>
+			<enumeration value="dB2"/>
+			<enumeration value="dB3"/>
+			<enumeration value="dB4"/>
+			<enumeration value="dB5"/>
+			<enumeration value="dB6"/>
+			<enumeration value="dB8"/>
+			<enumeration value="dB10"/>
+			<enumeration value="dB12"/>
+			<enumeration value="dB14"/>
+			<enumeration value="dB16"/>
+			<enumeration value="dB18"/>
+			<enumeration value="dB20"/>
+			<enumeration value="dB22"/>
+			<enumeration value="dB24"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ContentionResolutionTimerEnumType">
+		<restriction base="string">
+			<enumeration value="sf8"/>
+			<enumeration value="sf16"/>
+			<enumeration value="sf24"/>
+			<enumeration value="sf32"/>
+			<enumeration value="sf40"/>
+			<enumeration value="sf48"/>
+			<enumeration value="sf56"/>
+			<enumeration value="sf64"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="NumberOfRaPreamblesEnumType">
+		<restriction base="string">
+			<enumeration value="n4"/>
+			<enumeration value="n8"/>
+			<enumeration value="n12"/>
+			<enumeration value="n16"/>
+			<enumeration value="n20"/>
+			<enumeration value="n24"/>
+			<enumeration value="n28"/>
+			<enumeration value="n32"/>
+			<enumeration value="n36"/>
+			<enumeration value="n40"/>
+			<enumeration value="n44"/>
+			<enumeration value="n48"/>
+			<enumeration value="n52"/>
+			<enumeration value="n56"/>
+			<enumeration value="n60"/>
+			<enumeration value="n64"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PreambleInitialReceivedTargetPowerEnumType">
+		<restriction base="string">
+			<enumeration value="dBm-120"/>
+			<enumeration value="dBm-118"/>
+			<enumeration value="dBm-116"/>
+			<enumeration value="dBm-114"/>
+			<enumeration value="dBm-112"/>
+			<enumeration value="dBm-110"/>
+			<enumeration value="dBm-108"/>
+			<enumeration value="dBm-106"/>
+			<enumeration value="dBm-104"/>
+			<enumeration value="dBm-102"/> 
+			<enumeration value="dBm-100"/>
+			<enumeration value="dBm-98"/>
+			<enumeration value="dBm-96"/>
+			<enumeration value="dBm-94"/>
+			<enumeration value="dBm-92"/>
+			<enumeration value="dBm-90"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PreambleTransMaxEnumType">
+		<restriction base="string">
+			<enumeration value="n3"/>
+			<enumeration value="n4"/>
+			<enumeration value="n5"/>
+			<enumeration value="n6"/>
+			<enumeration value="n7"/>
+			<enumeration value="n8"/>
+			<enumeration value="n10"/>
+			<enumeration value="n20"/>
+			<enumeration value="n50"/>
+			<enumeration value="n100"/>
+			<enumeration value="n200"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PowerRampingStepEnumType">
+		<restriction base="string">
+			<enumeration value="dB0"/>
+			<enumeration value="dB2"/>
+			<enumeration value="dB4"/>
+			<enumeration value="dB6"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QHystEnumType">
+		<restriction base="string">
+			<enumeration value="dB0"/>
+			<enumeration value="dB1"/>
+			<enumeration value="dB2"/>
+			<enumeration value="dB3"/>
+			<enumeration value="dB4"/>
+			<enumeration value="dB5"/>
+			<enumeration value="dB6"/>
+			<enumeration value="dB8"/>
+			<enumeration value="dB10"/>
+			<enumeration value="dB12"/>
+			<enumeration value="dB14"/>
+			<enumeration value="dB16"/>
+			<enumeration value="dB18"/>
+			<enumeration value="dB20"/>
+			<enumeration value="dB22"/>
+			<enumeration value="dB24"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ResponseWindowSizeEnumType">
+		<restriction base="string">
+			<enumeration value="sf2"/>
+			<enumeration value="sf3"/>
+			<enumeration value="sf4"/>
+			<enumeration value="sf5"/>
+			<enumeration value="sf6"/>
+			<enumeration value="sf7"/>
+			<enumeration value="sf8"/>
+			<enumeration value="sf10"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="SizeOfRAPreambleGroupAEnumType">
+		<restriction base="string">
+			<enumeration value="n4"/>
+			<enumeration value="n8"/>
+			<enumeration value="n12"/>
+			<enumeration value="n16"/>
+			<enumeration value="n20"/>
+			<enumeration value="n24"/>
+			<enumeration value="n28"/>
+			<enumeration value="n32"/>
+			<enumeration value="n36"/>
+			<enumeration value="n40"/>
+			<enumeration value="n44"/>
+			<enumeration value="n48"/>
+			<enumeration value="n52"/> 
+			<enumeration value="n56"/>
+			<enumeration value="n60"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TimeToTriggerEUtraEnumType">
+		<restriction base="string">
+			<enumeration value="ms0"/>
+			<enumeration value="ms40"/>
+			<enumeration value="ms64"/>
+			<enumeration value="ms80"/>
+			<enumeration value="ms100"/>
+			<enumeration value="ms128"/>
+			<enumeration value="ms160"/>
+			<enumeration value="ms256"/>
+			<enumeration value="ms320"/>
+			<enumeration value="ms480"/>
+			<enumeration value="ms512"/>
+			<enumeration value="ms640"/>
+			<enumeration value="ms1024"/>
+			<enumeration value="ms1280"/>
+			<enumeration value="ms2560"/>
+			<enumeration value="ms5120"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ThresholdRsrpRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="97"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ThresholdRsrqRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="34"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="OffsetRangeType">
+		<restriction base="short">
+			<minInclusive value="-30"/>
+			<maxInclusive value="30"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ThresholdUtraRscpRangeType">
+		<restriction base="short">
+			<minInclusive value="-5"/>
+			<maxInclusive value="91"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ThresholdUtraEcN0RangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="49"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ThresholdGeranRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="63"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ThresholdCDMA2000RangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="63"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="CommonChannelPowerOffsetRangeType">
+		<restriction base="short">
+			<minInclusive value="-350"/>
+			<maxInclusive value="150"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ConfigurationIndexRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="63"/>
+		</restriction>
+	</simpleType> 
+
+	<simpleType name="HysteresisRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="30"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PMaxRangeType">
+		<restriction base="short">
+			<minInclusive value="-30"/>
+			<maxInclusive value="33"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QOffsetRangeType">
+		<restriction base="short">
+			<minInclusive value="-15"/>
+			<maxInclusive value="15"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QQualMinUtraRangeType">
+		<restriction base="short">
+			<minInclusive value="-24"/>
+			<maxInclusive value="0"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QRxLevMinEUtraRangeType">
+		<restriction base="short">
+			<minInclusive value="-77"/>
+			<maxInclusive value="-22"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QRxLevMinGeranRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="63"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="QRxLevMinUtraRangeType">
+		<restriction base="short">
+			<minInclusive value="-60"/>
+			<maxInclusive value="-13"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="RootSequenceIndexRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="837"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="SIntraSearchRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="31"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TReselectionRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="7"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TStoreUeContextRangeType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="1023"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="TceIDMappingInfo">
+		<sequence>
+			<element name="tceID" type="short"/>
+			<element name="tceIPAddr" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="TceIDMappingInfoList">
+		<sequence>
+			<element name="tceIDMappingInfo" type="en:TceIDMappingInfo" minOccurs="0"/>
+		</sequence>
+	</complexType> 
+
+	<complexType name="SharNetTceMappingInfo">
+		<sequence>
+			<element name="pLMNId" type="long"/>
+			<element name="tceID" type="short"/>
+			<element name="tceIPAddr" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="SharNetTceMappingInfoList">
+		<sequence>
+			<element name="sharNetTceMappingInfo" type="en:SharNetTceMappingInfo" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="cellOutageCompensationState">
+		<restriction base="string">
+			<enumeration value="cOCActivating"/>
+			<enumeration value="cOCActive"/>
+			<enumeration value="cOCDeactivating"/>
+			<enumeration value="cOCDeactive"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="cellOutageCompensationStatus">
+		<sequence>
+			<element name="cellOutageCompensationState" type="en:cellOutageCompensationState"/>
+			<element name="errorList" type="xn:dnList"/>
+		</sequence>
+	</complexType>
+
+	<element name="CellOutageCompensationInformation">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="cellOutageCompensationStatus" type="en:cellOutageCompensationStatus"/>
+									<element name="isCOCAllowed" type="boolean"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<simpleType name="NumOfCRSPorts">
+		<restriction base="unsignedShort">
+			<minInclusive value="1"/>
+			<maxInclusive value="2"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="ReferenceSignalPattern">
+		<sequence>
+			<element name="prsSupported" type="en:yesNoType"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="ReferenceSignalPeriodicity">
+		<restriction base="string">
+			<enumeration value="ms1280"/>
+			<enumeration value="ms2560"/>
+			<enumeration value="ms5120"/>
+			<enumeration value="ms10240"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ReferenceSignalOffset">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="10239"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="NetListeningRefSignalType"> 
+		<sequence>
+			<element name="referenceSignalPattern" type="en:ReferenceSignalPattern"/>
+			<element name="numOfCRSPorts" type="en:NumOfCRSPorts"/>
+			<element name="referenceSignalPeriodicity" type="en:ReferenceSignalPeriodicity"/>
+			<element name="referenceSignalOffset" type="en:ReferenceSignalOffset"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="NetListeningRSForRIBS">
+		<sequence>
+			<element name="netListeningRefSignal" type="en:NetListeningRefSignalType" maxOccurs="4"/>
+		</sequence>
+	</complexType>
+
+	<element name="EUtranCellNMCentralizedSON">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="a1ThresholdRsrp" type="en:ThresholdRsrpRangeType" minOccurs="0"/>
+									<element name="a1ThresholdRsrq" type="en:ThresholdRsrqRangeType" minOccurs="0"/>
+									<element name="a2ThresholdRsrp" type="en:ThresholdRsrpRangeType" minOccurs="0"/>
+									<element name="a2ThresholdRsrq" type="en:ThresholdRsrqRangeType" minOccurs="0"/>
+									<element name="a3Offset" type="en:OffsetRangeType" minOccurs="0"/>
+									<element name="a4ThresholdRsrp" type="en:ThresholdRsrpRangeType" minOccurs="0"/>
+									<element name="a4ThresholdRsrq" type="en:ThresholdRsrqRangeType" minOccurs="0"/>
+									<element name="a5Threshold1Rsrp" type="en:ThresholdRsrpRangeType" minOccurs="0"/>
+									<element name="a5Threshold1Rsrq" type="en:ThresholdRsrqRangeType" minOccurs="0"/>
+									<element name="b1ThresholdUtraRscp" type="en:ThresholdUtraRscpRangeType" minOccurs="0"/>
+									<element name="b1ThresholdUtraEcN0" type="en:ThresholdUtraEcN0RangeType" minOccurs="0"/>
+									<element name="b1ThresholdGeran" type="en:ThresholdGeranRangeType" minOccurs="0"/>
+									<element name="b1ThresholdCdma2000" type="en:ThresholdCDMA2000RangeType" minOccurs="0"/>
+									<element name="b2Threshold1Rsrp" type="en:ThresholdRsrpRangeType" minOccurs="0"/>
+									<element name="b2Threshold1Rsrq" type="en:ThresholdRsrqRangeType" minOccurs="0"/>
+									<element name="b2Threshold2UtraRscp" type="en:ThresholdUtraRscpRangeType" minOccurs="0"/>
+									<element name="b2Threshold2UtraEcN0" type="en:ThresholdUtraEcN0RangeType" minOccurs="0"/>
+									<element name="b2Threshold2Geran" type="en:ThresholdGeranRangeType" minOccurs="0"/>
+									<element name="b2Threshold2Cdma2000" type="en:ThresholdCDMA2000RangeType" minOccurs="0"/>
+									<element name="commonChannelPowerOffset" type="en:CommonChannelPowerOffsetRangeType" minOccurs="0"/>
+									<element name="configurationIndex" type="en:ConfigurationIndexRangeType" minOccurs="0"/>
+									<element name="contentionResolutionTimer" type="en:ContentionResolutionTimerEnumType" minOccurs="0"/>
+									<element name="hysteresisEutraA1" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="hysteresisEutraA2" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="hysteresisEutraA3" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="hysteresisEutraA4" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="hysteresisEutraA5" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="hysteresisIratB1" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="hysteresisIratB2" type="en:HysteresisRangeType" minOccurs="0"/>
+									<element name="numberOfRaPreambles" type="en:NumberOfRaPreamblesEnumType" minOccurs="0"/>
+									<element name="preambleInitialReceivedTargetPower" type="en:PreambleInitialReceivedTargetPowerEnumType" minOccurs="0"/>
+									<element name="preambleTransMax" type="en:PreambleTransMaxEnumType" minOccurs="0"/>
+									<element name="pMax" type="en:PMaxRangeType" minOccurs="0"/>
+									<element name="powerRampingStep" type="en:PowerRampingStepEnumType" minOccurs="0"/>
+									<element name="qHyst" type="en:PreambleInitialReceivedTargetPowerEnumType" minOccurs="0"/>
+									<element name="qOffsetUtra" type="en:QOffsetRangeType" minOccurs="0"/>
+									<element name="qOffsetGeran" type="en:QOffsetRangeType" minOccurs="0"/>
+									<element name="qOffsetCdma2000" type="en:QOffsetRangeType" minOccurs="0"/>
+									<element name="qQualMinUtra" type="en:QQualMinUtraRangeType" minOccurs="0"/> 
+									<element name="qRxLevMinEUtraSib1" type="en:QRxLevMinEUtraRangeType" minOccurs="0"/>
+									<element name="qRxLevMinEUtraSib3" type="en:QRxLevMinEUtraRangeType" minOccurs="0"/>
+									<element name="qRxLevMinGeran" type="en:QRxLevMinGeranRangeType" minOccurs="0"/>
+									<element name="qRxLevMinUtra" type="en:QRxLevMinUtraRangeType" minOccurs="0"/>
+									<element name="responseWindowSize" type="en:ResponseWindowSizeEnumType" minOccurs="0"/>
+									<element name="rootSequenceIndex" type="en:RootSequenceIndexRangeType" minOccurs="0"/>
+									<element name="sIntraSearch" type="en:SIntraSearchRangeType" minOccurs="0"/>
+									<element name="sizeOfRAPreamblesGroupA" type="en:SizeOfRAPreambleGroupAEnumType" minOccurs="0"/>
+									<element name="timeToTriggerEutraA1" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="timeToTriggerEutraA2" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="timeToTriggerEutraA3" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="timeToTriggerEutraA4" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="timeToTriggerEutraA5" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="timeToTriggerIratB1" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="timeToTriggerIratB2" type="en:TimeToTriggerEUtraEnumType" minOccurs="0"/>
+									<element name="tReselectionCdma2000" type="en:TReselectionRangeType" minOccurs="0"/>
+									<element name="tReselectionEUtra" type="en:TReselectionRangeType" minOccurs="0"/>
+									<element name="tReselectionGeran" type="en:TReselectionRangeType" minOccurs="0"/>
+									<element name="tReselectionUtra" type="en:TReselectionRangeType" minOccurs="0"/>
+									<element name="tStoreUeContext" type="en:TStoreUeContextRangeType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ENBFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
+									<element name="intraANRSwitch" type="boolean" minOccurs="0"/>
+									<element name="iRATANRSwitch" type="boolean" minOccurs="0"/>
+									<element name="enbId" type="en:EnbId" minOccurs="0"/>
+									<element name="x2BlackList" type="xn:dnList" minOccurs="0"/>
+									<element name="x2WhiteList" type="xn:dnList" minOccurs="0"/>
+									<element name="x2HOBlackList" type="xn:dnList" minOccurs="0"/>
+									<element name="x2IpAddressList" type="string" minOccurs="0"/>
+									<element name="tceIDMappingInfoList" type="en:TceIDMappingInfoList" minOccurs="0"/>
+									<element name="sharNetTceMappingInfoList" type="en:SharNetTceMappingInfoList" minOccurs="0"/>
+									<element name="netListeningRSForRIBS" type="en:NetListeningRSForRIBS" minOccurs="0"/>
+									<!-- linkList attribute is to be added when defined in the IS -->
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:EUtranCellFDD"/>
+							<element ref="en:EUtranCellTDD"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="nn:EP_X2C"/>
+							<element ref="nn:EP_X2U"/>
+							<element ref="nn:EP_NgC"/>
+							<element ref="nn:EP_NgU"/> 
+							<element ref="nn:EP_XnC"/>
+							<element ref="nn:EP_XnU"/>
+							<element ref="en:ENBFunctionOptionallyContainedNrmClass"/>
+							<element ref="en:DeNBCapability"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:ESPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="RNFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
+									<element name="servingCell" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="en:RNFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="DeNBCapability">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
+									<element name="servedRN" type="xn:dnList" minOccurs="0"/>
+									<element name="maxNbrRNAllowed" type="unsignedShort"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalRNFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="candidateDeNBCells" type="en:EcgiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="en:ExternalRNFunctionOptionallyContainedNrmClass"/> 
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalENBFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="enbId" type="en:EnbId" minOccurs="0"/>
+									<!-- Attributes are to be added when defined in the IS -->
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:ExternalEUtranCellFDD"/>
+							<element ref="en:ExternalEUtranCellTDD"/>
+							<element ref="en:ExternalENBFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:InterRatEsPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EUtranCellFDD">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EUtranGenericCell-->
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cellLocalId" type="en:CellLocalId"/>
+									<element name="cellLocalIdList" type="en:CellLocalIdList" minOccurs="0"/>
+									<element name="cellSize" type="en:cellSize"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="cellAccessInfoList" type="en:CellAccessInfoList"/>
+									<element name="tac" type="long"/>
+									<element name="pci" type="en:Pci"/>
+									<element name="pciList" type="en:PciList" minOccurs="0"/>
+									<element name="maximumTransmissionPower" type="short"/>
+									<element name="partOfSectorPower" type="short" minOccurs="0"/>
+									<element name="referenceSignalPower" type="short"/>
+									<element name="pb" type="short"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedSector" type="xn:dn" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="administrativeState" type="sm:administrativeStateType" minOccurs="0"/>
+									<element name="availabilityStatus" type="sm:availabilityStatusType" minOccurs="0"/>
+									<element name="allowedAccessClasses" type="en:allowedAccessClassesType"/>
+									<element name="cellResvInfo" type="en:cellResvInfoType" minOccurs="0"/>
+									<element name="nbIoTcellFlag" type="en:yesNoType" minOccurs="0"/>
+									<element name="isChangeForEnergySavingAllowed" type="en:yesNoType" minOccurs="0"/>
+									<element name="ngranCellFlag" type="en:yesNoType" minOccurs="0"/>
+									<element name="nSSAI" type="nr:nSSAI" minOccurs="0"/>
+									<!-- End of inherited attributes from EUtranGenericCell -->
+									<element name="earfcnDl" type="short"/>
+									<element name="earfcnUl" type="short"/>
+								</all> 
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:EUtranRelation"/>
+							<element ref="en:Cdma2000Relation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranRelation"/>
+							<element ref="en:EUtranCellFDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:EnergySavingProperties"/>
+							<element ref="sp:ESPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalEUtranCellFDD" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from ExternalEUtranGenericCell-->
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pci" type="en:Pci"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="cellAccessInfoList" type="en:CellAccessInfoList"/>
+									<element name="cellLocalId" type="en:CellLocalId"/>
+									<element name="enbId" type="en:EnbId" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalEUtranGenericCell -->
+									<element name="earfcnDl" type="short"/>
+									<element name="earfcnUl" type="short"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:ExternalEUtranCellFDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0">
+							<element ref="en:CellOutageCompensationInformation"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:InterRatEsPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EUtranCellTDD">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EUtranGenericCell-->
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cellLocalId" type="en:CellLocalId"/>
+									<element name="cellLocalIdList" type="en:CellLocalIdList" minOccurs="0"/>
+									<element name="cellSize" type="en:cellSize"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="cellAccessInfoList" type="en:CellAccessInfoList"/>
+									<element name="tac" type="long"/>
+									<element name="pci" type="en:Pci" />
+									<element name="pciList" type="en:PciList" minOccurs="0"/> 
+									<element name="maximumTransmissionPower" type="short"/>
+									<element name="partOfSectorPower" type="short" minOccurs="0"/>
+									<element name="referenceSignalPower" type="short"/>
+									<element name="pb" type="short"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedSector" type="xn:dn" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="administrativeState" type="sm:administrativeStateType" minOccurs="0"/>
+									<element name="availabilityStatus" type="sm:availabilityStatusType" minOccurs="0"/>
+									<element name="allowedAccessClasses" type="en:allowedAccessClassesType"/>
+									<element name="cellResvInfo" type="en:cellResvInfoType" minOccurs="0"/>
+									<element name="nbIoTcellFlag" type="en:yesNoType" minOccurs="0"/>
+									<element name="isChangeForEnergySavingAllowed" type="en:yesNoType" minOccurs="0"/>
+									<element name="ngranCellFlag" type="en:yesNoType" minOccurs="0"/>
+									<element name="nSSAI" type="nr:nSSAI" minOccurs="0"/>
+									<!-- End of inherited attributes from EUtranGenericCell -->
+									<element name="earfcn" type="short"/>
+									<element name="sfAssignment" type="short"/>
+									<element name="specialSfPatterns" type="short"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:EUtranRelation"/>
+							<element ref="en:Cdma2000Relation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranRelation"/>
+							<element ref="en:EUtranCellTDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:EnergySavingProperties"/>
+							<element ref="sp:ESPolicies"/>
+						</choice>
+						<choice minOccurs="0">
+							<element ref="en:CellOutageCompensationInformation"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalEUtranCellTDD" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from ExternalEUtranGenericCell-->
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pci" type="en:Pci"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="cellLocalId" type="en:CellLocalId"/>
+									<element name="enbId" type="en:EnbId" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalEUtranGenericCell -->
+									<element name="earfcn" type="short"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:ExternalEUtranCellTDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+						<choice minOccurs="0" maxOccurs="1">
+							<element ref="sp:InterRatEsPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType> 
+	</element>
+
+	<element name="EUtranRelation">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="tCI" type="long" minOccurs="0"/>
+									<element name="isRemoveAllowed" type="boolean" minOccurs="0"/>
+									<element name="isHOAllowed" type="boolean" minOccurs="0"/>
+									<element name="isICICInformationSendAllowed" type="boolean" minOccurs="0"/>
+									<element name="isLBAllowed" type="boolean" minOccurs="0"/>
+									<element name="adjacentCell" type="xn:dn"/>
+									<element name="isEsCoveredBy" type="en:isEsCoveredByEnumType" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="en:QOffsetEnumType" minOccurs="0"/>
+									<element name="qOffset" type="en:QOffsetEnumType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:EUtranRelationOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Cdma2000Relation">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="adjacentSector" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:Cdma2000RelationOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ENB_ENB" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from Link -->
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+									<!-- End of inherited attributes from Link -->
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:Link_ENB_ENBOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType> 
+	</element>
+
+	<element name="MCEFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
+									<!-- Attributes are to be added when defined in the IS -->
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:MCEFunctionOptionallyContainedNrmClass"/>
+							<element ref="en:MBSFNArea"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MBSFNArea" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="mbsfnAreaId" type="en:mbsfnAreaIdType" minOccurs="0"/>
+									<element name="cellIdList" type="xn:dnList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:MBSFNAreaOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MCE_ENB" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from Link -->
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from Link -->
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:Link_MCE_ENBOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MCE_MME" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType> 
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from Link -->
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from Link -->
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="en:Link_MCE_MMEOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="QciDscpMapping" substitutionGroup="en:RNFunctionOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="QciDscpMappingList" type="en:QciDscpMappingListType"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<!-- The element definition for EP_RP_EPS is available through
+	the epcNrm.xsd (3GPP TS 28.709), by using epc:EP_RP_EPS -->
+	<element name="ENBFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalENBFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EUtranCellFDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalEUtranCellFDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EUtranCellTDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalEUtranCellTDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EUtranRelationOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Cdma2000RelationOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ENB_ENBOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MCEFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MCE_ENBOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MCE_MMEOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MBSFNAreaOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="RNFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalRNFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+
+</schema> 

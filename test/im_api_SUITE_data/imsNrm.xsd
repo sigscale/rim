@@ -1,0 +1,1098 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.706 IMS NRM IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	imsNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:im="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm" >
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+
+	<!--IMS NRM IRP IS class associated XML elements -->
+
+	<element name="ASFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:ASFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="CAMELIMSSFASFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:ASFunctionOptionallyContainedNrmClass"/>
+							<element ref="im:CAMELIMSSFASFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType> 
+	</element>
+
+	<element name="OSASCSASFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:ASFunctionOptionallyContainedNrmClass"/>
+							<element ref="im:OSASCSASFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="SIPASFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:ASFunctionOptionallyContainedNrmClass"/>
+							<element ref="im:SIPASFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="BGCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:BGCFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/> 
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ICSCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:ICSCFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="IMSMGWFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:IMSMGWFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MGCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element> 
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:MGCFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MRFCFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:MRFCFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MRFPFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:MRFPFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="PCSCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/> 
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:PCSCFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="SCSCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:SCSCFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ECSCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:ECSCFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="SLFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all> 
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:SLFFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_AS_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_AS_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_AS_SLF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_AS_SLFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_BGCF_BGCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType> 
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_BGCF_BGCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_BGCF_MGCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_BGCF_MGCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_BGCF_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_BGCF_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ICSCF_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType> 
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_ICSCF_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ICSCF_MGCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_ICSCF_MGCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ICSCF_PCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_ICSCF_PCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension> 
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_PCSCF_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_PCSCF_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ICSCF_SLF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_ICSCF_SLFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_IMSMGW_MGCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_IMSMGW_MGCFOptionallyContainedNrmClass"/> 
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MGCF_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_MGCF_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MRFC_MRFP" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_MRFC_MRFPOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MRFC_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType> 
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_MRFC_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_SCSCF_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_SCSCF_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_SCSCF_SLF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_SCSCF_SLFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="HSSFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/> 
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:HSSFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_HSS_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_HSS_SCSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_HSS_ICSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_HSS_ICSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_HSS_SIPAS" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/> 
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_HSS_SIPASOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_HSS_OSASCSAS" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_HSS_OSASCSASOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_CAMELIMSSFAS_HSS" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_AS_ICSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0"> 
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_AS_ICSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_PCSCF_ECSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_PCSCF_ECSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_BGCF_ECSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_BGCF_ECSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element> 
+
+	<element name="Link_MGCF_ECSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="zEnd" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="im:Link_MGCF_ECSCFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ASFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="SIPASFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="OSASCSASFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="CAMELIMSSFASFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="BGCFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ICSCFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="IMSMGWFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MGCFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MRFCFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MRFPFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="PCSCFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="SCSCFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="SLFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ECSCFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_AS_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_AS_SLFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_BGCF_BGCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_BGCF_MGCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_BGCF_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ICSCF_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ICSCF_MGCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ICSCF_PCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_PCSCF_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ICSCF_SLFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_IMSMGW_MGCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MGCF_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MRFC_MRFPOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MRFC_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_SCSCF_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_SCSCF_SLFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="HSSFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_HSS_SCSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_HSS_ICSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_HSS_SIPASOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_HSS_OSASCSASOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_AS_ICSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_PCSCF_ECSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_BGCF_ECSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MGCF_ECSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+
+</schema> 

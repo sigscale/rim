@@ -1,0 +1,1432 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.653 UTRAN NRM IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	utranNrm.xsd
+-->
+<schema
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		elementFormDefault="qualified">
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm" />
+	<import namespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP" />
+
+	<!-- UTRAN Network Resources IRP NRM attribute related XML types -->
+
+	<simpleType name="localCellId">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="268435455"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="cId">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="65535"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="uarfcnAnyMode">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="16383"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="primaryScramblingCode">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="511"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="primaryCpichPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-10"/>
+			<maxInclusive value="+50"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="maximumTransmissionPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="0"/>
+			<maxInclusive value="50"/>
+		</restriction> 
+	</simpleType>
+
+	<simpleType name="primarySchPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-35"/>
+			<maxInclusive value="+15"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="secondarySchPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-35"/>
+			<maxInclusive value="+15"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="bchPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-35"/>
+			<maxInclusive value="+15"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="aichPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-22"/>
+			<maxInclusive value="+5"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="fpachPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-150"/>
+			<maxInclusive value="+400"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="pichPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-10"/>
+			<maxInclusive value="+5"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="pchPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-350"/>
+			<maxInclusive value="+150"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="fachPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-350"/>
+			<maxInclusive value="+150"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="lac">
+		<union>
+			<simpleType>
+				<restriction base="integer">
+					<minInclusive value="1"/>
+					<maxInclusive value="65533"/>
+				</restriction>
+			</simpleType>
+			<simpleType>
+				<restriction base="integer">
+					<minInclusive value="65535"/>
+					<maxInclusive value="65535"/> 
+				</restriction>
+			</simpleType>
+		</union>
+	</simpleType>
+
+	<simpleType name="rac">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="255"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="sac">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="65535"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="uraList">
+		<sequence>
+			<element name="ura" maxOccurs="8">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="0"/>
+						<maxInclusive value="65535"/>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="cellMode">
+		<restriction base="string">
+			<enumeration value="FDDMode"/>
+			<enumeration value="3-84McpsTDDMode"/>
+			<enumeration value="1-28McpsTDDMode"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="cellParameterId">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="127"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="primaryCcpchPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-15"/>
+			<maxInclusive value="+40"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="dwPchPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-15"/>
+			<maxInclusive value="+40"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="schPower">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-35"/>
+			<maxInclusive value="+15"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="timeSlotLCRList">
+		<sequence>
+			<element name="timeSlot" maxOccurs="7">
+				<complexType>
+					<all>
+						<element name="timeSlotId" minOccurs="1">
+							<simpleType> 
+								<restriction base="integer">
+									<minInclusive value="0"/>
+									<maxInclusive value="6"/>
+								</restriction>
+							</simpleType>
+						</element>
+						<element name="timeSlotDirection" minOccurs="1">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="UL"/>
+									<enumeration value="DL"/>
+								</restriction>
+							</simpleType>
+						</element>
+						<element name="timeSlotStatus" minOccurs="1">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="Active"/>
+									<enumeration value="Not-Active"/>
+								</restriction>
+							</simpleType>
+						</element>
+					</all>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="timeSlotHCRList">
+		<sequence>
+			<element name="timeSlot" maxOccurs="15">
+				<complexType>
+					<all>
+						<element name="timeSlotId" minOccurs="1">
+							<simpleType>
+								<restriction base="integer">
+									<minInclusive value="0"/>
+									<maxInclusive value="14"/>
+								</restriction>
+							</simpleType>
+						</element>
+						<element name="timeSlotDirection" minOccurs="1">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="UL"/>
+									<enumeration value="DL"/>
+								</restriction>
+							</simpleType>
+						</element>
+						<element name="timeSlotStatus" minOccurs="1">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="Active"/>
+									<enumeration value="Not-Active"/>
+								</restriction>
+							</simpleType>
+						</element>
+					</all>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="restrictionStateIndicator">
+		<restriction base="string">
+			<enumeration value="cellReservedForOperatorUse"/>
+			<enumeration value="cellAccessible"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="dpcModeChangeSupport">
+		<restriction base="string">
+			<enumeration value="dpcModeChangeSupported"/>
+			<enumeration value="dpcModeChangeNotSupported"/>
+		</restriction>
+	</simpleType> 
+
+	<simpleType name="sttdSupport">
+		<restriction base="string">
+			<enumeration value="active"/>
+			<enumeration value="inactive"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="closedLoopMode1">
+		<restriction base="string">
+			<enumeration value="closedLoopMode1Supported"/>
+			<enumeration value="closedLoopMode1NotSupported"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="frameOffset">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="255"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="cellIndividualOffset">
+		<restriction base="decimal">
+			<fractionDigits value="1"/>
+			<minInclusive value="-10"/>
+			<maxInclusive value="10"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="hcsPrio">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="7"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="maximumAllowedUlTxPower">
+		<restriction base="integer">
+			<minInclusive value="-50"/>
+			<maxInclusive value="33"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="qrxlevMin">
+		<restriction base="integer">
+			<minInclusive value="-115"/>
+			<maxInclusive value="-25"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="deltaQrxlevmin">
+		<restriction base="integer">
+			<minInclusive value="-4"/>
+			<maxInclusive value="-2"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="qhcs">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="99"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="penaltyTime">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="60"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="referenceTimeDifferenceToCell">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="38400"/>
+		</restriction>
+	</simpleType> 
+
+	<simpleType name="readSFNIndicator">
+		<restriction base="string">
+			<enumeration value="TRUE"/>
+			<enumeration value="FALSE"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="snaList">
+		<sequence>
+			<element name="snac" maxOccurs="65535">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="1"/>
+						<maxInclusive value="65536"/>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="snaInformation">
+		<sequence>
+			<element name="mcc">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="0"/>
+						<maxInclusive value="999"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="mnc">
+				<simpleType>
+					<restriction base="integer">
+						<enumeration value="0"/>
+						<enumeration value="999"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="snaList" type="un:snaList"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="qqualMin">
+		<restriction base="integer">
+			<minInclusive value="-24"/>
+			<maxInclusive value="0"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="temporaryOffset1">
+		<restriction base="integer">
+			<minInclusive value="3"/>
+			<maxInclusive value="21"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="temporaryOffset2">
+		<restriction base="integer">
+			<minInclusive value="2"/>
+			<maxInclusive value="12"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="txDiversityIndicator">
+		<restriction base="string">
+			<enumeration value="none"/>
+			<enumeration value="PrimaryCpichBroadcastFrom2Antennas"/>
+			<enumeration value="SttdAppliedToPrimaryCCPCH"/>
+			<enumeration value="TstdAppliedToPrimarySchAndSecondarySch"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="cellCapabilityContainerFDD">
+		<complexContent>
+			<extension base="xn:NrmClass">
+				<sequence>
+					<element name="attributes" minOccurs="0">
+						<complexType> 
+							<all>
+								<element name="Flexible_Hard_Split_Support_Indicator" minOccurs="0"/>
+								<element name="Delayed_Activation_Support_Indicator" minOccurs="0"/>
+								<element name="HS_DSCH_Support_Indicator" minOccurs="0"/>
+								<element name="DSCH_Support_Indicator" minOccurs="0"/>
+								<element name="F_DPCH_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_TTI2ms_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_2sf2_and_all_inferior_SFs_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_2sf4_and_all_inferior_SFs_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_sf4_and_all_inferior_SFs_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_sf8_and_all_inferior_SFs_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_HARQ_IR_Combining_Support_Indicator" minOccurs="0"/>
+								<element name="E_DCH_HARQ_Chase_Combining_Support_Indicator" minOccurs="0"/>
+							</all>
+						</complexType>
+					</element>
+					<choice minOccurs="0" maxOccurs="unbounded">
+						<element ref="xn:VsDataContainer"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="sctdIndicator">
+		<restriction base="string">
+			<enumeration value="active"/>
+			<enumeration value="inactive"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="dpchConstantValue">
+		<restriction base="integer">
+			<minInclusive value="-10"/>
+			<maxInclusive value="10"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="cellCapabilityContainerTDD">
+		<complexContent>
+			<extension base="xn:NrmClass">
+				<sequence>
+					<element name="attributes" minOccurs="0">
+						<complexType>
+							<all>
+								<element name="Delayed_Activation_Support_Indicator" minOccurs="0"/>
+								<element name="HS_DSCH_Support_Indicator" minOccurs="0"/>
+								<element name="DSCH_Support_Indicator" minOccurs="0"/>
+							</all>
+						</complexType>
+					</element>
+					<choice minOccurs="0" maxOccurs="unbounded">
+						<element ref="xn:VsDataContainer"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="tstdIndicator">
+		<restriction base="string">
+			<enumeration value="active"/>
+			<enumeration value="inactive"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="timeSlotForSch">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="14"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="schTimeSlot">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="6"/> 
+		</restriction>
+	</simpleType>
+
+	<simpleType name="syncCase">
+		<restriction base="string">
+			<enumeration value="SCH and PCCPCH allocated in a single TS"/>
+			<enumeration value="SCH and PCCPCH allocated in two TS, TS#k and TS#k+8"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="hsFlag">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="1"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="hsEnable">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="1"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="numOfHspdschs">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="95"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="NsPlmnId">
+		<sequence>
+			<element name="mcc" type="short"/>
+			<element name="mnc" type="short"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="NsPlmnIdListType">
+		<sequence>
+			<element name="nsPlmnId" type="un:NsPlmnId" minOccurs="0" maxOccurs="5"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="numOfHsscchs">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+			<maxInclusive value="32"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="eightOctets">
+		<restriction base="hexBinary">
+			<length value="8"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="uarfcnLCRList">
+		<sequence>
+			<element name="uarfcnLCR" maxOccurs="11">
+				<complexType>
+					<all>
+						<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="1"/>
+						<element name="timeSlotLCRList" type="un:timeSlotLCRList" minOccurs="0"/>
+					</all>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="siptoSupported">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="1"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="TceIDMappingInfo"> 
+		<sequence>
+			<element name="tceID" type="short"/>
+			<element name="tceIPAddr" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="TceIDMappingInfoList">
+		<sequence>
+			<element name="tceIDMappingInfo" type="un:TceIDMappingInfo" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="SharNetTceMappingInfo">
+		<sequence>
+			<element name="pLMNId" type="long"/>
+			<element name="tceID" type="short"/>
+			<element name="tceIPAddr" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="SharNetTceMappingInfoList">
+		<sequence>
+			<element name="sharNetTceMappingInfo" type="un:SharNetTceMappingInfo" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<!-- UTRAN Network Resources IRP NRM class associated XML elements -->
+
+	<element name="RncFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="siptoSupported" type="un:siptoSupported" minOccurs="0"/>
+									<element name="tceIDMappingInfoList" type="un:TceIDMappingInfoList" minOccurs="0"/>
+									<element name="sharNetTceMappingInfoList" type="un:SharNetTceMappingInfoList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranCellFDD"/>
+							<element ref="un:UtranCellTDDLcr"/>
+							<element ref="un:UtranCellTDDHcr"/>
+							<element ref="un:IubLink"/>
+							<element ref="un:RncFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="NodeBFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/> 
+									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
+									<element name="nodeBFunctionIubLink" type="string" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:NodeBFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="UtranGenericCell" abstract="true">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="localCellId" type="un:localCellId" minOccurs="0"/>
+									<element name="maximumTransmissionPower" type="un:maximumTransmissionPower" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="pichPower" type="un:pichPower" minOccurs="0"/>
+									<element name="pchPower" type="un:pchPower" minOccurs="0"/>
+									<element name="fachPower" type="un:fachPower" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="sac" type="un:sac" minOccurs="0"/>
+									<element name="uraList" type="un:uraList" minOccurs="0"/>
+									<element name="utranCellIubLink" type="xn:dn" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="hsEnable" type="un:hsEnable" minOccurs="0"/>
+									<element name="numOfHspdschs" type="un:numOfHspdschs" minOccurs="0"/>
+									<element name="numOfHsscchs" type="un:numOfHsscchs" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="nsPlmnIdList" type="un:NsPlmnIdListType" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModechangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<element name="relatedSectorEquipment" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranRelation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranGenericCellOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent> 
+		</complexType>
+	</element>
+
+	<element name="UtranCellFDD">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from UtranGenericCell -->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="localCellId" type="un:localCellId" minOccurs="0"/>
+									<element name="maximumTransmissionPower" type="un:maximumTransmissionPower" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="pichPower" type="un:pichPower" minOccurs="0"/>
+									<element name="pchPower" type="un:pchPower" minOccurs="0"/>
+									<element name="fachPower" type="un:fachPower" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="sac" type="un:sac" minOccurs="0"/>
+									<element name="uraList" type="un:uraList" minOccurs="0"/>
+									<element name="utranCellIubLink" type="xn:dn" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="hsEnable" type="un:hsEnable" minOccurs="0"/>
+									<element name="numOfHspdschs" type="un:numOfHspdschs" minOccurs="0"/>
+									<element name="numOfHsscchs" type="un:numOfHsscchs" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="nsPlmnIdList" type="un:NsPlmnIdListType" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModechangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<element name="relatedSectorEquipment" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from UtranGenericCell -->
+									<element name="uarfcnUl" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="uarfcnDl" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="primaryScramblingCode" type="un:primaryScramblingCode" minOccurs="0"/>
+									<element name="primaryCpichPower" type="un:primaryCpichPower" minOccurs="0"/>
+									<element name="primarySchPower" type="un:primarySchPower" minOccurs="0"/>
+									<element name="secondarySchPower" type="un:secondarySchPower" minOccurs="0"/>
+									<element name="bchPower" type="un:bchPower" minOccurs="0"/>
+									<element name="aichPower" type="un:aichPower" minOccurs="0"/>
+									<element name="qqualMin" type="un:qqualMin" minOccurs="0"/>
+									<element name="cellCapabilityContainerFDD" type="un:cellCapabilityContainerFDD" minOccurs="0"/>
+									<element name="txDiversityIndicator" type="un:txDiversityIndicator" minOccurs="0"/>
+									<element name="temporaryOffset1" type="un:temporaryOffset1" minOccurs="0"/>
+									<element name="temporaryOffset2" type="un:temporaryOffset2" minOccurs="0"/>
+									<element name="sttdSupportIndicator" type="un:sttdSupport" minOccurs="0"/>
+									<element name="closedLoopModelSupportIndicator" type="un:closedLoopMode1" minOccurs="0"/> 
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranRelation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranCellFDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="UtranCellTDD" abstract="true">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from UtranGenericCell -->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="localCellId" type="un:localCellId" minOccurs="0"/>
+									<element name="maximumTransmissionPower" type="un:maximumTransmissionPower" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="pichPower" type="un:pichPower" minOccurs="0"/>
+									<element name="pchPower" type="un:pchPower" minOccurs="0"/>
+									<element name="fachPower" type="un:fachPower" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="sac" type="un:sac" minOccurs="0"/>
+									<element name="uraList" type="un:uraList" minOccurs="0"/>
+									<element name="utranCellIubLink" type="xn:dn" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="hsEnable" type="un:hsEnable" minOccurs="0"/>
+									<element name="numOfHspdschs" type="un:numOfHspdschs" minOccurs="0"/>
+									<element name="numOfHsscchs" type="un:numOfHsscchs" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="nsPlmnIdList" type="un:NsPlmnIdListType" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModechangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<element name="relatedSectorEquipment" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from UtranGenericCell -->
+									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
+									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
+									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/> 
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranRelation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranCellTDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="UtranCellTDDLcr">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from UtranGenericCell via UtranCellTDD -->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="localCellId" type="un:localCellId" minOccurs="0"/>
+									<element name="maximumTransmissionPower" type="un:maximumTransmissionPower" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="pichPower" type="un:pichPower" minOccurs="0"/>
+									<element name="pchPower" type="un:pchPower" minOccurs="0"/>
+									<element name="fachPower" type="un:fachPower" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="sac" type="un:sac" minOccurs="0"/>
+									<element name="uraList" type="un:uraList" minOccurs="0"/>
+									<element name="utranCellIubLink" type="xn:dn" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="hsEnable" type="un:hsEnable" minOccurs="0"/>
+									<element name="numOfHspdschs" type="un:numOfHspdschs" minOccurs="0"/>
+									<element name="numOfHsscchs" type="un:numOfHsscchs" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="nsPlmnIdList" type="un:NsPlmnIdListType" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModechangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<element name="relatedSectorEquipment" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from UtranGenericCell via UtranCellTDD -->
+									<!-- Inherited attributes from UtranCellTDD -->
+									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
+									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
+									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/> 
+									<!-- End of inherited attributes from UtranCellTDD -->
+									<element name="uarfcnLCRList" type="un:uarfcnLCRList" minOccurs="0"/>
+									<element name="fpachPower" type="un:fpachPower" minOccurs="0"/>
+									<element name="dwPchPower" type="un:dwPchPower" minOccurs="0"/>
+									<element name="tstdIndicator" type="un:tstdIndicator" minOccurs="0"/>
+									<element name="timeSlotLCRList" type="un:timeSlotLCRList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranRelation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranCellTDDLcrOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="UtranCellTDDHcr">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from UtranGenericCell via UtranCellTDD -->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="localCellId" type="un:localCellId" minOccurs="0"/>
+									<element name="maximumTransmissionPower" type="un:maximumTransmissionPower" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="pichPower" type="un:pichPower" minOccurs="0"/>
+									<element name="pchPower" type="un:pchPower" minOccurs="0"/>
+									<element name="fachPower" type="un:fachPower" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="sac" type="un:sac" minOccurs="0"/>
+									<element name="uraList" type="un:uraList" minOccurs="0"/>
+									<element name="utranCellIubLink" type="xn:dn" minOccurs="0"/>
+									<element name="relatedAntennaList" type="xn:dnList" minOccurs="0"/>
+									<element name="relatedTmaList" type="xn:dnList" minOccurs="0"/>
+									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="hsEnable" type="un:hsEnable" minOccurs="0"/>
+									<element name="numOfHspdschs" type="un:numOfHspdschs" minOccurs="0"/>
+									<element name="numOfHsscchs" type="un:numOfHsscchs" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="nsPlmnIdList" type="un:NsPlmnIdListType" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModechangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<element name="relatedSectorEquipment" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from UtranGenericCell via UtranCellTDD -->
+									<!-- Inherited attributes from UtranCellTDD --> 
+									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
+									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
+									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
+									<!-- End of inherited attributes from UtranCellTDD -->
+									<element name="schPower" type="un:schPower" minOccurs="0"/>
+									<element name="temporaryOffset1" type="un:temporaryOffset1" minOccurs="0"/>
+									<element name="syncCase" type="un:syncCase" minOccurs="0"/>
+									<element name="timeSlotForSch" type="un:timeSlotForSch" minOccurs="0"/>
+									<element name="schTimeSlot" type="un:schTimeSlot" minOccurs="0"/>
+									<element name="timeSlotHCRList" type="un:timeSlotHCRList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranRelation"/>
+							<element ref="gn:GsmRelation"/>
+							<element ref="un:UtranCellTDDHcrOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="IubLink">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="iubLinkUtranCell" type="xn:dnList" minOccurs="0"/>
+									<element name="iubLinkATMChannelTerminationPoint" type="xn:dn" minOccurs="0"/>
+									<element name="iubLinkNodeBFunction" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:IubLinkOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="UtranRelation">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="adjacentCell" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:UtranRelationOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element> 
+
+	<element name="ExternalUtranGenericCell" abstract="true" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="controllingRnc" type="xn:dn" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModeChangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:ExternalUtranGenericCellOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalUtranCellFDD" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from ExternalUtranGenericCell -->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="controllingRnc" type="xn:dn" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModeChangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalUtranGenericCell -->
+									<element name="uarfcnUl" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="uarfcnDl" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="primaryScramblingCode" type="un:primaryScramblingCode" minOccurs="0"/>
+									<element name="primaryCpichPower" type="un:primaryCpichPower" minOccurs="0"/>
+									<element name="aichPower" type="un:aichPower" minOccurs="0"/>
+									<element name="qqualMin" type="un:qqualMin" minOccurs="0"/>
+									<element name="cellCapabilityContainerFDD" type="un:cellCapabilityContainerFDD" minOccurs="0"/>
+									<element name="txDiversityIndicator" type="un:txDiversityIndicator" minOccurs="0"/>
+									<element name="temporaryOffset1" type="un:temporaryOffset1" minOccurs="0"/>
+									<element name="temporaryOffset2" type="un:temporaryOffset2" minOccurs="0"/>
+									<element name="sttdSupportIndicator" type="un:sttdSupport" minOccurs="0"/>
+									<element name="closedLoopMode1SupportIndicator" type="un:closedLoopMode1" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:ExternalUtranCellFDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalUtranCellTDD" abstract="true" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from ExternalUtranGenericCell -->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="controllingRnc" type="xn:dn" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/> 
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModeChangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalUtranGenericCell -->
+									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
+									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
+									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:ExternalUtranCellTDDOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalUtranCellTDDHcr" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!--Inherited attributes from ExternalUtranGenericCell via ExternalUtranCellTDD-->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="controllingRnc" type="xn:dn" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModeChangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalUtranGenericCell -->
+									<!-- Inherited attributes from ExternalUtranCellTDD --> 
+									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
+									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
+									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalUtranCellTDD -->
+									<element name="temporaryOffset1" type="un:temporaryOffset1" minOccurs="0"/>
+									<element name="syncCase" type="un:syncCase" minOccurs="0"/>
+									<element name="timeSlotForSch" type="un:timeSlotForSch" minOccurs="0"/>
+									<element name="schTimeSlot" type="un:schTimeSlot" minOccurs="0"/>
+									<element name="timeSlotHCRList" type="un:timeSlotHCRList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:ExternalUtranCellTDDHcrOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalUtranCellTDDLcr" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!--Inherited attributes from ExternalUtranGenericCell via ExternalUtranCellTDD-->
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="cId" type="un:cId" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
+									<element name="lac" type="un:lac" minOccurs="0"/>
+									<element name="rac" type="un:rac" minOccurs="0"/>
+									<element name="controllingRnc" type="xn:dn" minOccurs="0"/>
+									<element name="hsFlag" type="un:hsFlag" minOccurs="0"/>
+									<element name="frameOffset" type="un:frameOffset" minOccurs="0"/>
+									<element name="cellIndividualOffset" type="un:cellIndividualOffset" minOccurs="0"/>
+									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
+									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
+									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
+									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
+									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
+									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
+									<element name="referenceTimeDifferenceToCell" type="un:referenceTimeDifferenceToCell" minOccurs="0"/>
+									<element name="readSFNIndicator" type="un:readSFNIndicator" minOccurs="0"/>
+									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
+									<element name="dpcModeChangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalUtranGenericCell -->
+									<!-- Inherited attributes from ExternalUtranCellTDD -->
+									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
+									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
+									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
+									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/> 
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
+									<!-- End of inherited attributes from ExternalUtranCellTDD -->
+									<element name="tstdIndicator" type="un:tstdIndicator" minOccurs="0"/>
+									<element name="timeSlotLCRList" type="un:timeSlotLCRList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:ExternalUtranCellTDDLcrOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalRncFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="mcc" type="string" minOccurs="0"/>
+									<element name="mnc" type="string" minOccurs="0"/>
+									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="controlledCellList" type="xn:dnList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="un:ExternalUtranCellFDD"/>
+							<element ref="un:ExternalUtranCellTDDHcr"/>
+							<element ref="un:ExternalUtranCellTDDLcr"/>
+							<element ref="un:ExternalRncFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_Iur">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="connectedRncId" type="string" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="RncFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="NodeBFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="UtranGenericCellOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="UtranCellFDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="UtranCellTDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="UtranCellTDDLcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="UtranCellTDDHcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="IubLinkOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="UtranRelationOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/> 
+	<element name="ExternalUtranGenericCellOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalUtranCellFDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalUtranCellTDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalUtranCellTDDHcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalUtranCellTDDLcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalRncFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+
+</schema> 

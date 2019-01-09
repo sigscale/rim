@@ -1,0 +1,1265 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.709 EPC Network Resource Model IRP
+	XML schema definition
+	epcNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm" >
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+
+	<!--EPC NRM IRP IS class associated XML elements -->
+
+	<complexType name="PLMNId">
+		<sequence>
+			<element name="mcc" type="short" minOccurs="0"/>
+			<element name="mNc" type="short" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="PLMNIdList">
+		<sequence>
+			<element name="pLMNId" type="epc:PLMNId" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="TACList">
+		<sequence>
+			<element name="tAC" type="long" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="QCIType">
+		<sequence>
+			<element name="qci" type="short" minOccurs="0"/>
+			<element name="resourceType" type="boolean" minOccurs="0"/>
+			<!-- True is GBR, and False is Non-GBR -->
+			<element name="priority" type="short" minOccurs="0"/>
+			<element name="packetDelayBudget" type="short" minOccurs="0"/>
+			<element name="packetErrorLossRate" type="decimal" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="QCIListType">
+		<sequence>
+			<element name="qCIInfo" type="epc:QCIType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<element name="EPDGFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EPDGFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/> 
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MMEFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+									<element name="mMEC" type="long" minOccurs="0"/>
+									<element name="mMEPool" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:MMEFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="ngc:EP_N26"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="PCRFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:PCRFFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="PGWFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/> 
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:PGWFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="PGWCFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:PGWCFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="PGWUFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:PGWUFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalPGWCFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0"> 
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalPGWUFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ServingGWFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+									<element name="tACList" type="epc:TACList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:ServingGWFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ServingGwCFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass"> 
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+									<element name="tACList" type="epc:TACList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:ServingGwCFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ServingGwUFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:ServingGwUFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalServingGWFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+									<element name="tACList" type="epc:TACList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalServingGwCFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+									<element name="tACList" type="epc:TACList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalServingGwUFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ExternalMMEFunction" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+									<element name="mMEC" type="long" minOccurs="0"/>
+									<element name="mMEPool" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element> 
+
+	<element name="MMEPool" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="mMEGI" type="long" minOccurs="0"/>
+									<element name="mMEPoolMemberList" type="xn:dnList" minOccurs="0"/>
+									<element name="mMEPoolArea" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:MMEPoolOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MMEPoolArea" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="mMEPool" type="xn:dn" minOccurs="0"/>
+									<element name="tACList" type="epc:TACList" minOccurs="0"/>
+									<element name="pLMNIdList" type="epc:PLMNIdList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:MMEPoolAreaOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ENB_MME" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType> 
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_ENB_MMEOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_ENB_ServingGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_ENB_ServingGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_EPDG_PCRF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_EPDG_PCRFOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_EPDG_PGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType> 
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_EPDG_PGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_HSS_MME" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_HSS_MMEOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MME_MME" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_MME_MMEOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element> 
+
+	<element name="Link_MME_SGSN" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_MME_SGSNOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MME_ServingGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_MME_ServingGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_PCRF_ServingGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded"> 
+							<element ref="epc:Link_PCRF_ServingGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_PCRF_PGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_PCRF_PGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_PGW_ServingGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_PGW_ServingGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_SGSN_ServingGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/> 
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_SGSN_ServingGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_RP_EPS">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="farEndNeIpAddr" type="string" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_RP_EPSOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="QCISet" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="qCIList" type="epc:QCIListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:QCISetOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="MBMSGWFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0"> 
+							<complexType>
+								<all>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:MBMSGWFunctionOptionallyContainedNrmClass"/>
+							<element ref="epc:EP_RP_EPS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_MBMSGW_ENB" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:Link_MBMSGW_ENBOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_Sxa" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_SxaOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_Sxb" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" > 
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_SxbOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S4c" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S4cOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S4u" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S4uOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice> 
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S11c" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S11cOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S11u" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S11uOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S1u" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/> 
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S1uOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S2bc" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S2bcOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_PGWC_SGWC" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_PGWC_SGWCOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_PGWU_SGWU" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent> 
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_PGWU_SGWUOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_S2bu" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_S2buOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EP_Gx" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epc:EP_GxOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension> 
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EPDGFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MMEFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="PCRFFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="PGWFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="PGWCFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="PGWUFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalPGWCFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalPGWUFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ServingGWFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ServingGwCFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ServingGwUFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalServingGwCFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="ExternalServingGwUFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MMEPoolOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MMEPoolAreaOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ENB_MMEOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_ENB_ServingGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_EPDG_PCRFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_EPDG_PGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_HSS_MMEOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MME_MMEOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MME_SGSNOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MME_ServingGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_PCRF_ServingGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_PCRF_PGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_PGW_ServingGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_SGSN_ServingGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_SxaOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_SxbOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S4cOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S4uOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S11cOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S11uOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S1uOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S2bcOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_PGWC_SGWCOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_PGWU_SGWUOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_S2buOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_GxOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="EP_RP_EPSOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="QCISetOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="MBMSGWFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_MBMSGW_ENBOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+
+</schema>

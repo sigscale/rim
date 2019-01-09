@@ -1,0 +1,125 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.626 State Management IRP
+	Bulk CM Configuration data file XML schema
+	stateManagementIRP.xsd
+-->
+<schema
+	targetNamespace= "http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+	elementFormDefault="qualified"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sm= "http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP" >
+
+	<!-- State Management IRP related XML types -->
+
+	<simpleType name="operationalStateType">
+		<restriction base="string">
+			<enumeration value="enabled"/>
+			<enumeration value="disabled"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="usageStateType">
+		<restriction base="string">
+			<enumeration value="idle"/>
+			<enumeration value="active"/>
+			<enumeration value="busy"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="administrativeStateType">
+		<restriction base="string">
+			<enumeration value="locked"/>
+			<enumeration value="unlocked"/>
+			<enumeration value="shuttingDown"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="alarmStatusType">
+		<restriction base="string">
+			<enumeration value="cleared"/>
+			<enumeration value="indeterminate"/>
+			<enumeration value="warning"/>
+			<enumeration value="minor"/>
+			<enumeration value="major"/>
+			<enumeration value="critical"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="proceduralStatusElementType">
+		<restriction base="string">
+			<enumeration value="initializationRequired"/>
+			<enumeration value="notInitialized "/>
+			<enumeration value="initializing"/>
+			<enumeration value="reporting"/>
+			<enumeration value="terminating"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="proceduralStatusType">
+		<sequence minOccurs="0" maxOccurs="5">
+			<element name="proceduralStatusElement" type="sm:proceduralStatusElementType"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="availabilityStatusElementType">
+		<restriction base="string">
+			<enumeration value="inTest"/>
+			<enumeration value="failed"/>
+			<enumeration value="powerOff"/>
+			<enumeration value="offLine"/>
+			<enumeration value="offDuty"/>
+			<enumeration value="dependency"/>
+			<enumeration value="degraded"/>
+			<enumeration value="notInstalled"/>
+			<enumeration value="logFull"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="availabilityStatusType">
+		<sequence minOccurs="0" maxOccurs="9">
+			<element name="availabilityStatusElement" type="sm:availabilityStatusElementType"/> 
+		</sequence>
+	</complexType>
+
+	<simpleType name="controlStatusElementType">
+		<restriction base="string">
+			<enumeration value="subjectToTest"/>
+			<enumeration value="partOfServicesLocked"/>
+			<enumeration value="reservedForTest"/>
+			<enumeration value="suspended"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="controlStatusType">
+		<sequence minOccurs="0" maxOccurs="4">
+			<element name="controlStatusElement" type="sm:controlStatusElementType"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="standbyStatusType">
+		<restriction base="string">
+			<enumeration value="hotStandby"/>
+			<enumeration value="coldStandby"/>
+			<enumeration value="providingService"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="unknownStatusType">
+		<restriction base="boolean">
+			<pattern value="true"/>
+			<pattern value="false"/>
+		</restriction>
+	</simpleType>
+
+	<element name="operationalState" type="sm:operationalStateType"/>
+	<element name="usageState" type="sm:usageStateType"/>
+	<element name="administrativeState" type="sm:administrativeStateType"/>
+	<element name="alarmStatus" type="sm:alarmStatusType"/>
+	<element name="proceduralStatus" type="sm:proceduralStatusType"/>
+	<element name="availabilityStatus" type="sm:availabilityStatusType"/>
+	<element name="controlStatus" type="sm:controlStatusType"/>
+	<element name="standbyStatus" type="sm:standbyStatusType"/>
+	<element name="unknownStatus" type="sm:unknownStatusType"/>
+
+</schema> 

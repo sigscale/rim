@@ -1,0 +1,474 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.629 SON Policy Network Resource Model IRP
+	XML schema definition
+	sonPolicyNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm" >
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+
+	<!--SON Policy NRM IRP IS class associated XML elements -->
+	<!-- CAC Range: 0~10000 -->
+	<simpleType name="cacRange">
+		<restriction base="unsignedShort">
+			<maxInclusive value="10000"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Relative Cell Load Range: 0~10000 -->
+	<simpleType name="relativeCellLoadRange">
+		<restriction base="unsignedShort">
+			<maxInclusive value="10000"/>
+		</restriction>
+	</simpleType>
+
+	<!--time duration Range: 0-900 -->
+	<simpleType name="timeDurationRange">
+		<restriction base="unsignedShort">
+			<maxInclusive value="900"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Rate: representing a percentage -->
+	<simpleType name="rateRange">
+		<restriction base="unsignedShort">
+			<maxInclusive value="100"/>
+		</restriction>
+	</simpleType>
+
+	<!-- RACH Optimization Probability -->
+	<simpleType name="ROProbability">
+		<restriction base="unsignedShort">
+			<enumeration value="25"/>
+			<enumeration value="50"/>
+			<enumeration value="75"/>
+			<enumeration value="90"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="WeekDay">
+		<restriction base="string">
+			<enumeration value="Monday"/>
+			<enumeration value="Tuesday"/>
+			<enumeration value="Wednesday"/>
+			<enumeration value="Thursday"/>
+			<enumeration value="Friday"/> 
+			<enumeration value="Saturday"/>
+			<enumeration value="Sunday"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="WeekDays">
+		<sequence>
+			<element name="day" type="sp:WeekDay" maxOccurs="7"/>
+		</sequence>
+	</complexType>
+
+	<!-- Weight: 1~N. Higher the number, higher the weight -->
+	<complexType name="LBOTarget">
+		<sequence>
+			<element name="lowerEndOfCacRange" type="sp:cacRange" minOccurs="0"/>
+			<element name="upperEndOfCacRange" type="sp:cacRange" minOccurs="0"/>
+			<element name="Rate" type="sp:rateRange" minOccurs="0"/>
+			<element name="Weight" type="unsignedShort" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="LBOLinkTarget">
+		<sequence>
+			<element name="UplinkTarget" type="sp:LBOTarget" minOccurs="0"/>
+			<element name="DownlinkTarget" type="sp:LBOTarget" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="HooTarget">
+		<sequence>
+			<element name="Rate" type="sp:rateRange" minOccurs="0"/>
+			<element name="Weight" type="unsignedShort" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="CellLoadParameters">
+		<sequence>
+			<element name="LoadThreshold" type="sp:rateRange" minOccurs="0"/>
+			<element name="TimeDuration" type="unsignedShort" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="RelativeCellLoadParameters">
+		<sequence>
+			<element name="LoadThreshold" type="sp:relativeCellLoadRange"/>
+			<element name="TimeDuration" type="sp:timeDurationRange"/>
+		</sequence>
+	</complexType>
+
+<!-- Time shall be specified in UTC format -->
+	<complexType name="DailyPeriod">
+		<sequence>
+			<element name="StartTime" type="time"/>
+			<element name="EndTime" type="time"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="TimePeriod">
+		<sequence>
+			<element name="Day" type="sp:WeekDays"/>
+			<element name="PeriodOfDay" type="sp:DailyPeriod"/>
+		</sequence>
+	</complexType>
+
+<!--Time period type in which energy saving is not allowed-->
+	<complexType name="ESNotAllowedTimePeriod">
+		<sequence>
+			<element name="TimePeriodList" type="sp:TimePeriod"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="AccessDelayRange">
+		<restriction base="unsignedShort">
+			<minInclusive value="10"/> 
+			<maxInclusive value="560"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="AccessDelayProbabilityROTarget">
+		<sequence>
+			<element name="Probability" type="sp:ROProbability"/>
+			<element name="AccessDelay" type="sp:AccessDelayRange"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="AccessDelayProbabilityTargetSet">
+		<sequence>
+			<element name="AccessDelayProbabilityTarget" type="sp:AccessDelayProbabilityROTarget" maxOccurs="4"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="AccessNumberAttemptRange">
+		<restriction base="unsignedShort">
+			<minInclusive value="1"/>
+			<maxInclusive value="200"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="AccessProbabilityROTarget">
+		<sequence>
+			<element name="Probability" type="sp:ROProbability"/>
+			<element name="AccessNumber" type="sp:AccessNumberAttemptRange"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="AccessProbabilityTargetSet">
+		<sequence>
+			<element name="AccessProbabilityTarget" type="sp:AccessProbabilityROTarget" maxOccurs="4"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="rachOptTarget">
+		<choice maxOccurs="4">
+			<element name="rachOptAccessProbability" type="sp:AccessProbabilityTargetSet"/>
+			<element name="rachOptAccessDelayProbability" type="sp:AccessDelayProbabilityTargetSet"/>
+		</choice>
+	</complexType>
+
+	<!-- Weight: 1~N. Higher the number, higher the weight -->
+	<complexType name="AasTarget">
+		<sequence>
+			<element name="TargetLowerThreshold" type="sp:rateRange" minOccurs="0"/>
+			<element name="TargetUpperThreshold" type="sp:rateRange" minOccurs="0"/>
+			<element name="Weight" type="unsignedShort" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="MaximumDeviationHoTriggerType">
+		<restriction base="unsignedShort">
+			<minInclusive value="1"/>
+			<maxInclusive value="96"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="MinimumTimeBetweenHoTriggerChangeType">
+		<restriction base="unsignedShort">
+			<maxInclusive value="1440"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Cell Local ID Range: 0-255 -->
+	<simpleType name="CellLocalIDType">
+		<restriction base="unsignedShort">
+			<maxInclusive value="255"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Cell Local ID List -->
+	<complexType name="CellLocalIDListType"> 
+		<sequence>
+			<element name="CellLocalID" type="sp:CellLocalIDType"/>
+		</sequence>
+	</complexType>
+
+	<!-- Cell Coverage State Range: 0-15 -->
+	<simpleType name="CellCovStateType">
+		<restriction base="unsignedShort">
+			<maxInclusive value="15"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Beamwidth Range: 0-360 -->
+	<simpleType name="Beamwidth">
+		<restriction base="unsignedShort">
+			<maxInclusive value="360"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Antenna transmission Power Range: -60..50 -->
+	<simpleType name="AntennaPowerType">
+		<restriction base="unsignedShort">
+			<minInclusive value="-60"/>
+			<maxInclusive value="50"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="AntennaPowerRangeType">
+		<sequence>
+			<element name="AntennaPowerLowerThreshold" type="sp:AntennaPowerType"/>
+			<element name="AntennaPowerUpperThreshold" type="sp:AntennaPowerType"/>
+		</sequence>
+	</complexType>
+
+	<!-- Antenna coverae configuration -->
+	<complexType name="AntennaCovConfigType">
+		<sequence>
+			<element name="SateID" type="sp:CellCovStateType "/>
+			<element name="HorizontalHBW" type="sp:Beanwidth"/>
+			<element name="VerticalHBW" type="sp:Beanwidth"/>
+			<element name="MaxTransmissionPowerRange" type="sp:AntennaPowerRangeType"/>
+			<element name="ReferenceSignalPowerRange" type="sp:AntennaPowerRangeType"/>
+		</sequence>
+	</complexType>
+
+	<!-- Antenna coverae configuration List -->
+	<complexType name="AntennaCovConfigListType">
+		<sequence>
+			<element name="AntennaCovConfig" type="sp:AntennaCovConfigType"/ maxOccurs="16"/>
+		</sequence>
+	</complexType>
+
+	<simpleType name="energySavingStateEnumType">
+		<restriction base="string">
+			<enumeration value="isEnergySaving"/>
+			<enumeration value="isNotEnergySaving"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="energySavingControlEnumType">
+		<restriction base="string">
+			<enumeration value="toBeEnergySaving"/>
+			<enumeration value="toBeNotEnergySaving"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="SonFuncNameType">
+		<restriction base="string">
+			<enumeration value="anr"/>
+			<enumeration value="hoo"/>
+			<enumeration value="lbo"/>
+			<enumeration value="es"/>
+			<enumeration value="coc"/>
+			<enumeration value="cco"/>
+			<enumeration value="aas"/>
+		</restriction>
+	</simpleType> 
+
+	<simpleType name="SonCoordPoliciesType">
+		<restriction base="string">
+			<enumeration value="baseOnPriority"/>
+			<enumeration value="baseOnState"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="SonFuncNameListType">
+		<sequence>
+			<element name="SonFuncName" type="sp:SonFuncNameType" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<element name="SONTarget">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="hoFailureRate" type="sp:HooTarget" minOccurs="0"/>
+									<element name="rrcConnectionEstablishmentFailureRate" type="sp:LBOLinkTarget" minOccurs="0"/>
+									<element name="rrcConnectionAbnormalReleaseRate" type="sp:LBOLinkTarget" minOccurs="0"/>
+									<element name="eRabSetupFailureRate" type="sp:LBOLinkTarget" minOccurs="0"/>
+									<element name="eRabAbnormalReleaseRate" type="sp:LBOLinkTarget" minOccurs="0"/>
+									<element name="rachOpt" type="sp:rachOptTarget" minOccurs="0"/>
+									<element name="pDCPDataVolumeLoadRate" type="sp:Aas Target" minOccurs="0"/>
+									<element name="iPThroughputLoadRate" type="sp:AasTarget" minOccurs="0"/>
+									<element name="activeUEAmountLoadRate" type="sp:Aas Target" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="SONControl">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!--Switch:ON/OFF-->
+									<element name="hooSwitch" type="boolean" minOccurs="0"/>
+									<element name="lboSwitch" type="boolean" minOccurs="0"/>
+									<element name="cocSwitch" type="boolean" minOccurs="0"/>
+									<element name="esSwitch" type="boolean" minOccurs="0"/>
+									<element name="roSwitch" type="boolean" minOccurs="0"/>
+									<element name="aasSplit Switch" type="boolean" minOccurs="0"/>
+									<element name="aasMergeSwitch" type="boolean" minOccurs="0"/>
+									<element name="aasShapeSwitch" type="boolean" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="ESPolicies">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all> 
+									<element name="esActivationOriginalCellLoadParameters" type="sp:CellLoadParameters" minOccurs="0"/>
+									<element name="esActivationCandidateCellsLoadParameters" type="sp:CellLoadParameters" minOccurs="0"/>
+									<element name="esDeactivationCandidateCellsLoadParameters" type="sp:CellLoadParameters" minOccurs="0"/>
+									<element name="esNotAllowedTimePeriod" type="sp:ESNotAllowedTimePeriod"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="InterRatEsPolicies">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="interRatEsActivationOriginalCellParameters" type="sp:RelativeCellLoadParameters" minOccurs="0"/>
+									<element name="interRatEsActivationCandidateCellParameters" type="sp:RelativeCellLoadParameters" minOccurs="0"/>
+									<element name="interRatEsDeactivationCandidateCellParameters" type="sp:RelativeCellLoadParameters" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EUtranCellSON">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="maximumDeviationHoTrigger" type="sp:MaximumDeviationHoTriggerType" minOccurs="0"/>
+									<element name="minimumTimeBetweenHoTriggerChange" type="sp:MinimumTimeBetweenHoTriggerChangeType" minOccurs="0"/>
+									<element name="alterCovConfig" type="sp:AntennaCovConfigListType" minOccurs="0"/>
+									<element name="replacedCells" type="sp:CellLocalIDListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="EnergySavingProperties">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="energySavingState" type="sp:energySavingStateEnumType"/>
+									<element name="energySavingControl" type="sp:energySavingControlEnumType" minOccurs="0"/>
+									<element name="isProbingCapable" type="boolean" minOccurs="0"/>
+								</all>
+							</complexType> 
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="SONFuncInfo">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="sonFuncCapabilityBelowItfN" type="sp:SonFuncNameListType"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="SONCoordinationPolicies">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="selectedSonCoordPolicy" type="sp:SonCoordPoliciesType" minOccurs="0"/>
+									<element name="sonFuncPriorityOrder" type="sp:SonFuncNameListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+</schema> 

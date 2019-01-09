@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 32.616 Bulk CM IRP Configuration data file
+	base XML schema configData.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+   	xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:cn="http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm"
+		xmlns:un= "http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		xmlns:gn= "http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		xmlns:stn= "http://www.3gpp.org/ftp/specs/archive/32_series/32.746#stnNrm"
+		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
+		xmlns:tn="http://www.3gpp.org/ftp/specs/archive/28_series/28.733#transportNrm"
+		xmlns:im="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"
+		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+		xmlns:sn="http://www.3gpp.org/ftp/specs/archive/32_series/32.176#sumNrm"
+		xmlns:hn="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm"
+		xmlns:hen="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm"
+		xmlns:gr="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm">
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm" />
+   <import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/32_series/32.746#stnNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.733#transportNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/32_series/32.176#sumNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm" />
+
+	<!-- Configuration data file root XML element -->
+	<element name="bulkCmConfigDataFile">
+		<complexType>
+			<sequence>
+				<element name="fileHeader">
+					<complexType>
+						<attribute name="fileFormatVersion"
+								type="string" use="required"/>
+						<attribute name="senderName"
+								type="string" use="optional"/>
+						<attribute name="vendorName"
+								type="string" use="optional"/>
+					</complexType>
+				</element>
+				<element name="configData" maxOccurs="unbounded">
+					<complexType>
+						<choice>
+							<element ref="xn:SubNetwork"/>
+							<element ref="xn:MeContext"/>
+							<element ref="xn:ManagedElement"/>
+						</choice>
+						<attribute name="dnPrefix"
+								type="string" use="optional"/>
+					</complexType>
+				</element>
+				<element name="fileFooter">
+					<complexType>
+						<attribute name="dateTime" type="dateTime" use="required"/>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>
