@@ -1,0 +1,109 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.663 Generic RAN Network Resources IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	repeaterNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#repeaterNrm"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:rn="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#repeaterNrm">
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+
+	<!-- Repeater Network Resources IRP NRM attribute related XML types -->
+	<simpleType name="priority">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="268435455"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="dLAttenuation">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="268435455"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="uLAttenuation">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+			<maxInclusive value="268435455"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="latitude">
+		<restriction base="decimal">
+			<fractionDigits value="4"/>
+			<minInclusive value="-90.0000"/>
+			<maxInclusive value="90.0000"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="longitude">
+		<restriction base="decimal">
+			<fractionDigits value="4"/>
+			<minInclusive value="-180.0000"/>
+			<maxInclusive value="180.0000"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ctrlConnMode">
+		<restriction base="string">
+			<enumeration value="GSM_SMS"/>
+			<enumeration value="WCDMA_SMS"/>
+			<enumeration value="CIRCLE_SWITCH_DATA_CSD"/>
+			<enumeration value="PACKAGE_SWITCH_DAT_IP"/>
+			<enumeration value="SERIAL_PORT"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="powerSwitch">
+		<restriction base="string">
+			<enumeration value="ON"/>
+			<enumeration value="OFF"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="repeaterType">
+		<restriction base="string">
+			<enumeration value="WideBandReptFunction"/>
+			<enumeration value="FreqSelReptFunction"/>
+			<enumeration value="FiberReptFunction"/>
+			<enumeration value="IndoorReptFunction"/>
+			<enumeration value="FreqShiftReptFunction"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Repeater Network Resources IRP NRM class associated XML elements -->
+	<element name="RepeaterFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="priority" type="rn:priority"/>
+									<element name="latitude" type="rn:latitude"/>
+									<element name="longitude" type="rn:longitude"/>
+									<element name="ctrlConnMode" type="rn:ctrlConnMode"/>
+									<element name="environmentInfo" type="string"/>
+									<element name="powerSwitch" type="rn:powerSwitch"/>
+									<element name="dLAttenuation" type="rn:dLAttenuation"/>
+									<element name="uLattenuation" type="rn:uLAttenuation"/>
+									<element name="firmwareVer" type="string"/>
+									<element name="repeaterType" type="rn:repeaterType"/>
+									<element name="repeaterFunctionExternalUtranCell" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>

@@ -1,0 +1,240 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.663 Generic RAN Network Resources IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	genericRanNrm.xsd
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		xmlns:gr="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm"
+		elementFormDefault="qualified">
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"/>
+
+	<!-- Generic RAN Network Resources IRP NRM attribute related XML types -->
+	<simpleType name="angleValue">
+		<restriction base="short">
+			<minInclusive value="0"/>
+			<maxInclusive value="3600"/>
+		</restriction>
+		</simpleType>
+	<simpleType name="retGroupName">
+		<restriction base="string">
+			<maxLength value="80"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="bearing">
+		<restriction base="short">
+			<minInclusive value="0"/>
+			<maxInclusive value="360"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="tmaFunctionFlag">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="tmaStateFlag">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="fourOctets">
+		<restriction base="hexBinary">
+			<length value="4"/>
+		</restriction>
+	</simpleType>
+	<complexType name="FqBandsList">
+		<sequence>
+			<element name="fqBand" type="string" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<!-- Generic RAN Network Resources IRP NRM class associated XML elements -->
+	<element name="SectorEquipmentFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="fqBand" type="short" />
+									<element name="eUTRANFqBands" type="gr:FqBandsList" />
+									<element name="uTRANFDDFqBands" type="gr:FqBandsList" />
+									<element name="uTRANTDDFqBands" type="gr:FqBandsList" />
+									<element name="confOutputPower" type="short" />
+									<element name="relatedTmaList" type="xn:dnList" />
+									<element name="relatedAntennaList" type="xn:dnList" />
+									<element name="relatedCellList" type="xn:dnList" />
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gr:SectorEquipmentFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="AntennaFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="retTiltValue"
+											type="gr:angleValue" minOccurs="0"/>
+									<element name="bearing" type="gr:bearing" minOccurs="0"/>
+									<element name="retGroupName"
+											type="gr:retGroupName" minOccurs="0"/>
+									<element name="height" type="short" minOccurs="0"/>
+									<element name="maxAzimuthValue"
+											type="gr:angleValue" minOccurs="0"/>
+									<element name="minAzimuthValue"
+											type="gr:angleValue" minOccurs="0"/>
+									<element name="horizBeamwidth"
+											type="gr:angleValue" minOccurs="0"/>
+									<element name="vertBeamwidth"
+											type="gr:angleValue" minOccurs="0"/>
+									<element name="relatedCellList" type="xn:dnList" />
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gr:AntennaFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="TmaFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="tmaSubunitNumber" type="unsignedShort" />
+									<element name="tmaStateFlag" type="gr:tmaStateFlag" />
+									<element name="tmaFunctionFlag" type="gr:tmaFunctionFlag" />
+									<element name="tmaMinGain" type="unsignedShort" />
+									<element name="tmaMaxGain" type="unsignedShort" />
+									<element name="tmaResolution" type="unsignedShort" />
+									<element name="tmaGainFigure" type="unsignedShort" />
+									<element name="tmaNumberOfSubunits" type="unsignedShort" />
+									<element name="tmaBaseStationId" type="string" minOccurs="0"/>
+									<element name="tmaSectorId" type="string" minOccurs="0"/>
+									<element name="tmaAntennaBearing"
+											type="unsignedShort" minOccurs="0"/>
+									<element name="tmaInstalledMechanicalTilt"
+											type="short" minOccurs="0"/>
+									<element name="tmaSubunitType"
+											type="unsignedShort" minOccurs="0"/>
+									<element name="tmaSubunitRxFrequencyBand"
+											type="gr:fourOctets" minOccurs="0"/>
+									<element name="tmaSubunitTxFrequencyBand"
+											type="gr:fourOctets" minOccurs="0"/>
+									<element name="tmaGainResolution"
+											type="unsignedShort" minOccurs="0"/>
+									<element name="relatedCellList" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gr:TmaFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="GSMCellPart"
+			substitutionGroup="gn:GsmCellOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="aRFCN" type="string"/>
+									<element name="tsc" type="long"/>
+									<element name="aTA" type="short"/>
+									<element name="relatedSectorEquipment" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gr:GSMCellPartOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="CommonBSFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="sharedTechnologies" type="short"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="gr:CommonBSFunctionOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SectorEquipmentFunctionOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true"/>
+	<element name="AntennaFunctionOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true"/>
+	<element name="TmaFunctionOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true"/>
+	<element name="GSMCellPartOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true"/>
+	<element name="CommonBSFunctionOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true"/>
+</schema>
