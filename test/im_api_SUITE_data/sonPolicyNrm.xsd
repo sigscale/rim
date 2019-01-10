@@ -246,9 +246,9 @@
 	<!-- Antenna coverae configuration -->
 	<complexType name="AntennaCovConfigType">
 		<sequence>
-			<element name="SateID" type="sp:CellCovStateType "/>
-			<element name="HorizontalHBW" type="sp:Beanwidth"/>
-			<element name="VerticalHBW" type="sp:Beanwidth"/>
+			<element name="SateID" type="sp:CellCovStateType"/>
+			<element name="HorizontalHBW" type="sp:Beamwidth"/>
+			<element name="VerticalHBW" type="sp:Beamwidth"/>
 			<element name="MaxTransmissionPowerRange" type="sp:AntennaPowerRangeType"/>
 			<element name="ReferenceSignalPowerRange" type="sp:AntennaPowerRangeType"/>
 		</sequence>
@@ -314,9 +314,9 @@
 									<element name="eRabSetupFailureRate" type="sp:LBOLinkTarget" minOccurs="0"/>
 									<element name="eRabAbnormalReleaseRate" type="sp:LBOLinkTarget" minOccurs="0"/>
 									<element name="rachOpt" type="sp:rachOptTarget" minOccurs="0"/>
-									<element name="pDCPDataVolumeLoadRate" type="sp:Aas Target" minOccurs="0"/>
+									<element name="pDCPDataVolumeLoadRate" type="sp:AasTarget" minOccurs="0"/>
 									<element name="iPThroughputLoadRate" type="sp:AasTarget" minOccurs="0"/>
-									<element name="activeUEAmountLoadRate" type="sp:Aas Target" minOccurs="0"/>
+									<element name="activeUEAmountLoadRate" type="sp:AasTarget" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
