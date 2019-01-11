@@ -23,6 +23,7 @@
 		xmlns:hen="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm"
 		xmlns:gr="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm">
 
+<!--  use all.xsd to handle circular imports in all schemas
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm" />
    <import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm" />
@@ -38,6 +39,7 @@
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm" />
+-->
 
 	<!-- Configuration data file root XML element -->
 	<element name="bulkCmConfigDataFile">

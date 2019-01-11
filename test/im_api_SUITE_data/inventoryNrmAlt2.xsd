@@ -11,7 +11,7 @@
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrmAlt2"
 		elementFormDefault="qualified">
 
-<!--
+<!--  use all.xsd to handle circular imports in all schemas
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
 -->
 

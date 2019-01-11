@@ -14,7 +14,7 @@
 		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm">
 
-<!--
+<!--  use all.xsd to handle circular imports in all schemas
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#genericNrm" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm" />
