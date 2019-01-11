@@ -130,13 +130,13 @@
 
 	<simpleType name="lac">
 		<union>
-			<simpleType name="low">
+			<simpleType>
 				<restriction base="integer">
 					<minInclusive value="1"/>
 					<maxInclusive value="65533"/>
 				</restriction>
 			</simpleType>
-			<simpleType name="high">
+			<simpleType>
 				<restriction base="integer">
 					<minInclusive value="65535"/>
 					<maxInclusive value="65535"/> 
