@@ -1,4 +1,4 @@
-## 3GPP Network Resoure Model Schemas
+## 3GPP Network Resource Model (NRM) Schemas
 ##
     |Description |Schema              |3GPP TS|
     |------------|--------------------|-------|
@@ -26,7 +26,7 @@
     |State Mgmt  |stateManagementIRP  | 28.626|
 
 ## Validating XML against the schemas
-	1> {ok, State} = xmerl_xsd:process_schemas("all.xsd).
+	1> {ok, State} = xmerl_xsd:process_schema("all.xsd").
 	2> {XmlElement, _} = xmerl_scan:file("configData.xml").
 	3> xmerl_xsd:validate(XmlElement, State).
 
