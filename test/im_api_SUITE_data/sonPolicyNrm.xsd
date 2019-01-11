@@ -342,7 +342,7 @@
 									<element name="cocSwitch" type="boolean" minOccurs="0"/>
 									<element name="esSwitch" type="boolean" minOccurs="0"/>
 									<element name="roSwitch" type="boolean" minOccurs="0"/>
-									<element name="aasSplit Switch" type="boolean" minOccurs="0"/>
+									<element name="aasSplitSwitch" type="boolean" minOccurs="0"/>
 									<element name="aasMergeSwitch" type="boolean" minOccurs="0"/>
 									<element name="aasShapeSwitch" type="boolean" minOccurs="0"/>
 								</all>

@@ -85,7 +85,7 @@
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
-	`				<sequence>
+					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
