@@ -12,7 +12,8 @@
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm" >
 
-<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"/>
+
 	<!-- Base XML type for all NRM class associated XML elements -->
 	<complexType name="NrmClass">
 		<attribute name="id" type="string" use="required"/>
@@ -94,8 +95,8 @@
 	<complexType name="peeParametersListType">
 		<sequence minOccurs="1" maxOccurs="unbounded">
 			<element name="siteIdentification" type="string"/>
-			<element name="siteLatitude" type="latitude" minOccurs="0"/>
-			<element name="siteLongitude" type="longitude" minOccurs="0"/>
+			<element name="siteLatitude" type="xn:latitude" minOccurs="0"/>
+			<element name="siteLongitude" type="xn:longitude" minOccurs="0"/>
 			<element name="siteDescription" type="string"/>
 			<element name="equipmentType" type="string"/>
 			<element name="environmentType" type="string"/>
