@@ -1,0 +1,1492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.541 5GC Network Resource Model XML schema definition
+	ngcNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm" />
+-->
+
+	<!--NGC NRM IM class associated XML elements -->
+	<complexType name="aMFIdentifier">
+		<sequence>
+			<element name="amfRegionId" type="ngc:AmfRegionId"/>
+			<element name="amfSetId" type="ngc:AmfSetId"/>
+			<element name="amfPointer" type="ngc:AmfPointer"/>
+		</sequence>
+	</complexType>
+	<simpleType name="AmfRegionId">
+		<restriction base="integer">
+			<maxInclusive value="255"/>
+			<!-- The AMF Region ID is 8-bitslength, defined in 23.003 -->
+		</restriction>
+	</simpleType>
+	<simpleType name="AmfSetId">
+		<restriction base="integer">
+			<maxInclusive value="1023"/>
+			<!-- The AMF Region ID is 10-bits length, defined in 23.003 -->
+		</restriction> </simpleType>
+	<simpleType name="AmfPointer">
+		<restriction base="integer">
+			<maxInclusive value="63"/>
+			<!-- The AMF Pointer is 6-bits length, defined in 23.003 -->
+		</restriction>
+	</simpleType>
+	<complexType name="NgTACList">
+		<sequence>
+			<element name="tac" type="nn:NgTac" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<complexType name="NFProfileList">
+		<sequence>
+			<element name="nfProfile" type="ngc:NfProfile"/>
+		</sequence>
+	</complexType>
+	<complexType name="NfProfile">
+		<sequence>
+			<element name="nfInstanceId" type="string"/>
+			<!-- nfInstanceId is uuid of NF instance -->
+			<element name="nfType" type="ngc:NfType"/>
+			<element name="nfStatus" type="ngc:NfStatus"/>
+			<element name="plmn" type="en:PLMNId"/>
+			<element name="nfType" type="ngc:NfType"/>
+			<element name="sNssais" type="ngc:NssaiList"/>
+			<element name="fqdn" type="string"/>
+			<element name="interPlmnFqdn" type="string"/>
+			<element name="fqdn" type="string"/>
+			<element name="ipv4Addresses" type="string"/>
+			<element name="ipv6Addresses" type="string"/>
+			<element name="ipv6Prefixes" type="string"/>
+			<element name="capacity" type="string"/>
+			<element name="udrInfo" type="ngc:UdrInfo"/>
+			<element name="amfInfo" type="ngc:AmfInfo"/>
+			<element name="smfInfo" type="ngc:SmfInfo"/>
+			<element name="upfInfo" type="ngc:UpfInfo"/>
+			<element name="nfServices" type="ngc:NfServices"/>
+		</sequence>
+	</complexType>
+	<complexType name="NfServices">
+		<sequence>
+			<element name="serviceInstanceId" type="string"/>
+			<element name="serviceName" type="string"/>
+			<element name="version" type="string"/>
+			<element name="schema" type="string"/>
+			<element name="fqdn" type="string"/>
+			<element name="interPlmnFqdn" type="string"/>
+			<element name="ipEndPoints" type="ngc:IpEndpoints"/>
+			<element name="apiPrefix" type="string"/>
+			<element name="defaultNotificationSubscription"
+					type="ngc:DefaultNotificationSubscription"/>
+			<element name="allowedPlmns" type="en:PLMNIdList"/>
+			<element name="allowedNfTypes" type="ngc:NFTypeList"/>
+			<element name="allowedNssais" type="ngc:NssaiList"/>
+			<element name="capacity" type="string"/>
+			<element name="supportedFeatures" type="string"/>
+		</sequence>
+	</complexType>
+	<simpleType name="NfType">
+		<restriction base="string">
+			<!-- NF name is defined in TS 23.501 -->
+			<enumeration value="NRF"/>
+			<enumeration value="UDM"/>
+			<enumeration value="AMF"/>
+			<enumeration value="SMF"/>
+			<enumeration value="AUSF"/>
+			<enumeration value="NEF"/>
+			<enumeration value="PCF"/>
+			<enumeration value="SMSF"/>
+			<enumeration value="NSSF"/>
+			<enumeration value="UDR"/>
+			<enumeration value="LMF"/>
+			<enumeration value="GMLC"/>
+			<enumeration value="5GEIR"/>
+			<enumeration value="SEPP"/>
+			<enumeration value="UPF"/>
+			<enumeration value="N3IWF"/>
+			<enumeration value="AF"/>
+			<enumeration value="UDSF"/>
+			<enumeration value="DN"/>
+		</restriction>
+	</simpleType>
+	<complexType name="NFTypeList">
+		<sequence>
+			<element name="NFType" type="ngc:NfType"/>
+		</sequence>
+	</complexType>
+	<complexType name="IpEndpoints">
+		<sequence>
+			<element name="ipEndPoint" type="nn:IpEndPoint"/>
+		</sequence>
+	</complexType>
+	<complexType name="UdrInfo">
+		<sequence>
+			<element name="supiRange" type="ngc:SupiRange"/>
+		</sequence>
+	</complexType>
+	<complexType name="SupiRange">
+		<sequence>
+			<element name="start" type="string"/>
+			<element name="end" type="string"/>
+			<element name="pattern" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="AmfInfo">
+		<sequence>
+			<element name="amfSetId" type="ngc:AmfSetId"/>
+		</sequence>
+	</complexType>
+	<complexType name="SmfInfo">
+		<sequence>
+			<element name="dnn" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="UpfInfo">
+		<sequence>
+			<element name="snssaiUpfInfo" type="ngc:SnssaiUpfInfo"/>
+		</sequence>
+	</complexType>
+	<complexType name="SnssaiUpfInfo">
+		<sequence>
+			<element name="sNssai" type="ngc:SNssai"/>
+			<element name="dnnUpfInfoList" type="ngc:DnnUpfInfoList"/>
+		</sequence>
+	</complexType>
+	<complexType name="DnnUpfInfoList">
+		<sequence>
+			<element name="dnn" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="DefaultNotificationSubscription">
+		<sequence>
+			<element name="notificationType" type="ngc:NotificationType"/>
+			<element name="callbackUri" type="string"/>
+			<element name="n1MessageClass" type="string"/>
+			<element name="n2InformationClass" type="string"/>
+		</sequence>
+	</complexType>
+	<simpleType name="NotificationType">
+		<restriction base="string">
+			<enumeration value="N1_MESSAGES"/>
+			<enumeration value="N2_INFORMATION"/>
+			<enumeration value="LOCATION_NOTIFICATION"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="TransportProtocol">
+		<restriction base="string">
+			<enumeration value="TCP"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NfStatus">
+		<restriction base="string">
+			<enumeration value="REGISTERED"/>
+			<enumeration value="SUSPENDED"/>
+		</restriction>
+	</simpleType>
+	<complexType name="NfRegistrationData">
+		<sequence>
+			<element name="heartBeatTimer" type="integer"/>
+			<element name="nfProfile" type="ngc:NfProfile"/>
+		</sequence>
+	</complexType>
+	<complexType name="NSIIdList">
+		<sequence>
+			<element name="nSIId" type="string"/>
+			<!-- NSI Id is defined in TS 29.531 -->
+		</sequence>
+	</complexType>
+	<complexType name="NssaiList">
+		<sequence>
+			<element name="sNssai" type="ngc:SNssai"/>
+		</sequence>
+	</complexType>
+	<complexType name="SNssai">
+		<sequence>
+			<element name="sst" type="ngc:Sst" minOccurs="0"/>
+			<element name="sd" type="ngc:Sd"/>
+		</sequence>
+	</complexType>
+	<simpleType name="Sst">
+		<restriction base="integer">
+			<maxInclusive value="255"/>
+			<!-- SST is 1-octets length and defined in TS 23.003 -->
+		</restriction>
+	</simpleType>
+	<simpleType name="Sd">
+		<restriction base="integer">
+			<maxInclusive value="65535"/>
+			<!-- SST is 2-octets length and defined in TS 23.003 -->
+		</restriction>
+	</simpleType>
+	<complexType name="SBIServiceList">
+		<sequence>
+			<element name="nfServices" type="ngc:NfServices"/>
+		</sequence>
+	</complexType>
+	<simpleType name="WeightFactor">
+		<restriction base="integer">
+		</restriction>
+	</simpleType>
+	<element name="AMFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="aMFIdentifier" type="ngc:aMFIdentifier"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="weightFactor" type="ngc:WeightFactor"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="aMFSet" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N2"/>
+							<element ref="ngc:EP_N8"/>
+							<element ref="ngc:EP_N11"/>
+							<element ref="ngc:EP_N12"/>
+							<element ref="ngc:EP_N14"/>
+							<element ref="ngc:EP_N15"/>
+							<element ref="ngc:EP_N17"/>
+							<element ref="ngc:EP_N22"/>
+							<element ref="ngc:EP_N26"/>
+							<element ref="ngc:EP_N20"/>
+							<element ref="ngc:EP_NLS"/>
+							<element ref="ngc:EP_NLG"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SMFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="tACList" type="ngc:NgTACList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N4"/>
+							<element ref="ngc:EP_N10"/>
+							<element ref="ngc:EP_N11"/>
+							<element ref="ngc:EP_N7"/>
+							<element ref="ngc:EP_N16"/>
+							<element ref="ngc:EP_S5C"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="UPFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="tACList" type="ngc:NgTACList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N4"/>
+							<element ref="ngc:EP_N3"/>
+							<element ref="ngc:EP_N9"/>
+							<element ref="ngc:EP_S5U"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="ngc:EP_N6"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="N3IWFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N2"/>
+							<element ref="ngc:EP_N3"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="PCFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList" />
+									<element name="sBIFqdn" type="string" />
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N7"/>
+							<element ref="ngc:EP_N15"/>
+							<element ref="ngc:EP_N16"/>
+							<element ref="ngc:EP_N5"/>
+							<element ref="ngc:EP_Rx"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="AUSFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N12"/>
+							<element ref="ngc:EP_N13"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="UDMFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N8"/>
+							<element ref="ngc:EP_N10"/>
+							<element ref="ngc:EP_N13"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="UDRFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="UDSFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="NRFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="nSIIdList" type="ngc:NSIIdList" minOccurs="0"/>
+									<element name="nFProfileList" type="ngc:NFProfileList" minOccurs="0"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N27"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="NSSFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="nSIIdList" type="ngc:NSIIdList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N27"/>
+							<element ref="ngc:EP_N31"/>
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SMSFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N20"/>
+							<element ref="ngc:EP_N21"/>
+							<element ref="ngc:EP_MAP_SMSC"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="LMFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_NLS"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="NGEIRFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N17"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SEPPFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_N32"/>
+							<element ref="ngc:EP_SBI_IPX"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="NWDAFFunction"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="pLMNIdList" type="en:PLMNIdList"/>
+									<element name="sBIFqdn" type="string"/>
+									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
+									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="ngc:EP_SBI_X"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N2">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N3">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N4">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N5">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N6">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N7">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N8">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N9">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N10">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N11">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N12">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N13">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N14">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N15">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N16">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N17">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N20">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N21">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N22">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N26">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N27">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N31">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_N32">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_SBI_X">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_SBI_IPX">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_S5C">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_S5U">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_Rx">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_MAP_SMSC">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_NLS">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EP_NLG">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from EP_RP -->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP -->
+									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>

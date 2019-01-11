@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?> <!--
+	3GPP TS 28.541 network slice Network Resource Model XML schema definition
+	sliceNrm.xsd
+-->
+<schema
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:sl="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#sliceNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#sliceNrm"
+		elementFormDefault="qualified">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"/>
+-->
+
+	<simpleType name="MobilityLevel">
+		<restriction base="string">
+			<enumeration value="STATIONARY"/>
+			<enumeration value="NOMADIC"/>
+			<enumeration value="RESTRICTED MOBILITY"/>
+			<enumeration value="FULLY MOBILITY"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="SharingLevel">
+		<restriction base="string">
+			<enumeration value="SHARED"/>
+			<enumeration value="NON-SHARED"/>
+		</restriction>
+	</simpleType>
+	<complexType name="PerfReq">
+		<!-- Refer to definitions in TS 22.261-->
+		<sequence>
+			<choice minOccurs="0" maxOccurs="1">
+				<element name="perfReqEMBB" type="sl:PerfReqEmbb"/>
+				<element name="perfReqUrllc" type="sl:PerfReqUrllc"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<complexType name="PerfReqEmbb">
+		<sequence>
+			<element name="expDataRateDL" type="integer" minOccurs="0"/>
+			<element name="expDataRateUL" type="integer" minOccurs="0"/>
+			<element name="areaTrafficCapDL" type="integer" minOccurs="0"/>
+			<element name="areaTrafficCapUL" type="integer" minOccurs="0"/>
+			<element name="userDensity" type="integer" minOccurs="0"/>
+			<element name="activityFactor" type="integer" minOccurs="0"/>
+			<element name="uESpeed" type="integer" minOccurs="0"/>
+			<element name="coverage" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="PerfReqUrllc">
+		<sequence>
+			<element name="e2eKatency" type="integer" minOccurs="0"/>
+			<element name="jitter" type="integer" minOccurs="0"/>
+			<element name="survivalTime" type="integer" minOccurs="0"/>
+			<element name="cSAvailability" type="float" minOccurs="0"/>
+			<element name="reliability" type="float" minOccurs="0"/>
+			<element name="expDataRate" type="integer" minOccurs="0"/>
+			<element name="payloadSize" type="integer" minOccurs="0"/>
+			<element name="trafficDensity" type="string" minOccurs="0"/>
+			<element name="connDensity" type="float" minOccurs="0"/>
+			<element name="serviceDimension" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ServiceProfile">
+		<sequence>
+			<element name="serviceProfileId" type="string"/>
+			<element name="nSSAI" type="ngc:NssaiList"/>
+			<element name="pLMNId" type="en:PLMNId"/>
+			<element name="perfReq" type="sl:PerfReq"/>
+			<element name="maxNumberofUEs" type="long" minOccurs="0"/>
+			<element name="coverageAreaTAList" type="ngc:NgTACList" minOccurs="0"/>
+			<element name="latency" type="integer" minOccurs="0"/>
+			<element name="uEMobilityLevel" type="integer" minOccurs="0"/>
+			<element name="resourceSharingLevel" type="integer" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ServiceProfileList">
+		<sequence>
+			<element name="serviceProfile" type="sl:ServiceProfile"/>
+		</sequence>
+	</complexType>
+	<complexType name="SliceProfile">
+		<sequence>
+			<element name="sliceProfileId" type="string"/>
+			<element name="nSSAI" type="ngc:NssaiList"/>
+			<element name="pLMNId" type="en:PLMNId"/>
+			<element name="perfReq" type="sl:PerfReq"/>
+			<element name="maxNumberofUEs" type="long" minOccurs="0"/>
+			<element name="coverageAreaTAList" type="ngc:NgTACList" minOccurs="0"/>
+			<element name="latency" type="integer" minOccurs="0"/>
+			<element name="uEMobilityLevel" type="sl:MobilityLevel" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="SliceProfileList">
+		<sequence>
+			<element name="sliceProfile" type="sl:SliceProfile"/>
+		</sequence>
+	</complexType>
+	<complexType name="NsInfo">
+		<!-- Refer to definitions in subclause 8.3.3.2.2 of ETSI NFV IFA013 -->
+		<sequence>
+			<element name="nsInstanceId" type="string"/>
+			<element name="nsName" type="string"/>
+			<element name="description" type="string"/>
+			<element name="resourceSharingLevel" type="integer" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="NetworkSlice"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from SubNetwork -->
+									<element name="dnPrefix" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="userDefinedNetworkType" type="string"/>
+									<element name="setOfMcc" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from SubNetwork -->
+									<element name="nSSIId" type="xn:dn"/>
+									<element name="operationalState" type="sm:operationalStateType"/>
+									<element name="administrativeState" type="sm:administrativeStateType"/>
+									<element name="serviceProfileList" type="sl:ServiceProfileList"/>
+									<element name="sst" type="ngc:Sst"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="sl:NetworkSliceSubnet"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="NetworkSliceSubnet"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from SubNetwork -->
+									<element name="dnPrefix" type="string" minOccurs="0"/> <element name="userLabel" type="string"/>
+									<element name="userDefinedNetworkType" type="string"/> <element name="setOfMcc" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from SubNetwork --> <element name="mFIdList" type="xn:dnList"/>
+									<element name="ConstituentNSSIIdList" type="xn:dnList"/>
+									<element name="State" type="sm:operationalStateType"/>
+									<element name="nsInfo" type="sl:NsInfo" minOccurs="0"/>
+									<element name="sliceProfileList" type="sl:SliceProfileList"/>
+									<element name="sst" type="ngc:Sst"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="sl:NetworkSliceSubnet"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>
