@@ -1,0 +1,1144 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.753 SuM Network Resource Model IRP
+	SuM NRM-specific XML schema
+	sumNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#sumNrm"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:sn="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#sumNrm"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#genericNrm"/>
+-->
+
+	<!-- SuM Network Resources IRP NRM class associated XML elements -->
+	<element name="SubscriptionFunction"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="theUser" type="xn:dnList"/>
+									<element name="theSubscriberProfile" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMSubscriberProfile"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="suMSubscriberProfileInfo"/>
+									<element name="theUser" type="xn:dnList"/>
+									<element name="theSubscribedService" type="xn:dnList"/>
+									<element name="theMobileUserData" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="MobileUserData"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theServiceProfile" type="xn:dnList"/>
+									<element name="iMSI" type="string"/>
+									<element name="mSISDN" type="string"/>
+									<element name="multinumberingMSISDNs" type="sn:multinumberingMSISDNList"/>
+									<element name="iMEISV" type="string" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMUser"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+	`				<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theMobileUserData" type="xn:dnList"/>
+									<element name="theSubscriber" type="xn:dnList" minOccurs="0"/>
+									<element name="theCredentials" type="xn:dnList"/>
+									<element name="theServiceProfile" type="xn:dnList"/>
+									<element name="theIdentity" type="xn:dnList" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMCredentials"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="thePublicId" type="xn:dnList"/>
+									<element name="theServiceProfile" type="xn:dnList"/>
+									<element name="iMSPrivateUserIdentity" type="string"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMService" type="xn:NrmClass" abstract="true"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass"/>
+	<element name="CSService" substitutionGroup="sn:SuMService" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theContract" minOccurs="0"/>
+									<element name="networkAccessMode"/>
+									<element name="basicMSISDNIndicator" minOccurs="0"/>
+									<element name="mSISDNAlertIndicator" minOccurs="0"/>
+									<element name="subscriptionRestriction" minOccurs="0"/>
+									<element name="rSZIlists" minOccurs="0"/>
+									<element name="lSAIdentity" minOccurs="0"/>
+									<element name="lSAPriority" minOccurs="0"/>
+									<element name="lSAPreferentialAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeSupportIndicator" minOccurs="0"/>
+									<element name="lSAOnlyAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeIndicator" minOccurs="0"/>
+									<element name="vPLMNIdentifier" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="mobileStationCategory" minOccurs="0"/>
+									<element name="lMUIdentifier" minOccurs="0"/>
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="gsmSCFaddresslistForODB"/>
+									<element name="provisionOfBearerService"/>
+									<element name="provisionOfTeleservice"/>
+									<element name="bCAllocation" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfIncomingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="barringOfPremiumRateCalls" minOccurs="0"/>
+									<element name="barringOfSupplementaryServiceManagement" minOccurs="0" />
+									<element name="barringOfRegistrationOfCallForwarding" minOccurs="0" />
+									<element name="barringOfInvocationOfCallTransfer" minOccurs="0" />
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0" />
+									<element name="vGCSGroupMembershipList" minOccurs="0"/>
+									<element name="vBSGroupMembershipList" minOccurs="0"/>
+									<element name="broadcastCallInitiationAllowedList" minOccurs="0" />
+									<element name="originatingCAMELSubscriptionInformationOCSI" minOccurs="0" />
+									<element name="terminatingCAMELSubscriptionInformationTCSI" minOccurs="0" />
+									<element name="vMSCTerminatingCAMELSubscriptionInformationVTCSI" minOccurs="0" />
+									<element name="locationInformationSubscriberStateInformation" minOccurs="0" />
+									<element name="uSSDCAMELSubscriptionInformationUCSI" minOccurs="0" />
+									<element name="sSInvocationNotificationSSCSI" minOccurs="0"/>
+									<element name="translationInformationFlagTIFCSI" minOccurs="0" />
+									<element name="dialledServiceCAMELSubscriptionInformationDCSI" minOccurs="0" />
+									<element name="uSSDGeneralCAMELServiceInformationUGCSI" minOccurs="0" />
+									<element name="shortMessageServiceCAMELSubscriptionInformationMOSMSCSI" minOccurs="0" />
+									<element name="shortMessageServiceCAMELSubscriptionInformationMTSMSCSI" minOccurs="0" />
+									<element name="mTSMSCSIVLRNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="gsmSCFaddressforCSI" minOccurs="0"/>
+									<element name="iSTAlertTimer" minOccurs="0"/>
+									<element name="cSAllocationRetentionpriority" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="theCSSupplServiceForCS" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMCSSupplService"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="sS-Code"/>
+									<element name="provisioningState"/>
+									<element name="activationState"/>
+									<element name="registrationState" minOccurs="0"/>
+									<element name="overrideCategory" minOccurs="0"/>
+									<element name="cLIRestrictionOption" minOccurs="0"/>
+									<element name="forwarded-toNumber" minOccurs="0"/>
+									<element name="forwarded-toSubaddress" minOccurs="0"/>
+									<element name="noReplyConditionTimer" minOccurs="0"/>
+									<element name="maximumEntitledPriority" minOccurs="0"/>
+									<element name="defaultPriority" minOccurs="0"/>
+									<element name="nbrUser" minOccurs="0"/>
+									<element name="nbrSB" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="GPRSService" substitutionGroup="sn:SuMService" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theContract" minOccurs="0"/>
+									<element name="networkAccessMode" minOccurs="0"/>
+									<element name="basicMSISDNIndicator" minOccurs="0"/>
+									<element name="mSISDNAlertIndicator" minOccurs="0"/>
+									<element name="rSZIlists" minOccurs="0"/>
+									<element name="lSAIdentity" minOccurs="0"/>
+									<element name="lSAPriority" minOccurs="0"/>
+									<element name="lSAPreferentialAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeSupportIndicator" minOccurs="0"/>
+									<element name="lSAOnlyAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeIndicator" minOccurs="0"/>
+									<element name="vPLMNIdentifier" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="gGSNNumber" minOccurs="0"/>
+									<element name="provisionofTeleservice" minOccurs="0"/>
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="transferofSMoption" minOccurs="0"/>
+									<element name="barringofPacketOrientedServices" minOccurs="0" />
+									<element name="pDPType" minOccurs="0"/>
+									<element name="pDPAddress" minOccurs="0"/>
+									<element name="accessPointName" minOccurs="0"/>
+									<element name="vPLMNAddressAllowed" minOccurs="0"/>
+									<element name="qualityofServiceSubscribed" minOccurs="0"/>
+									<element name="pDPContextChargingCharacteristics" minOccurs="0" />
+									<element name="gPRSCAMELSubscriptionInformationGPRSCSI" minOccurs="0" />
+									<element name="mOShortMessageServiceCAMELSubscriptionInformationMOSMSCSI" minOccurs="0" />
+									<element name="mTShortMessageServiceCAMELSubscriptionInformationMTSMSCSI" minOccurs="0" />
+									<element name="mOSMSCSISGSNNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mTSMSCSISGSNNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mobilityManagementforGPRSeventnotificationMGCSI" minOccurs="0" />
+									<element name="mGCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="gsmSCFaddressforCSI" minOccurs="0"/>
+									<element name="subscribedChargingCharacteristics" minOccurs="0" />
+									<element name="closedSubscriberGroupInformation" minOccurs="0"/>
+									<element name="gSMSCFaddresslistForODB" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0"/>
+									<element name="sTNSR" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="listofauthorizedvisitednetworkidentifiers" minOccurs="0" />
+									<element name="wLANUERemoteIPaddress" minOccurs="0"/>
+									<element name="staticWLANUERemoteIPAddressList" minOccurs="0"/>
+									<element name="w-APNBarringTypeList" minOccurs="0"/>
+									<element name="w-APNChargingDataList" minOccurs="0"/>
+									<element name="accessDependenceFlag" minOccurs="0"/>
+									<element name="chargingCharacteristics" minOccurs="0"/>
+									<element name="primaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="secondaryOCSChargingFunctionName" minOccurs="0" />
+									<element name="primaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="w-APNIdentifierList" minOccurs="0"/>
+									<element name="maxNumberAccessesList" minOccurs="0"/>
+									<element name="subscribed3GPPWLANQoSProfile" minOccurs="0"/>
+									<element name="maxSubscribedBandwidth" minOccurs="0"/>
+									<element name="theGPRSSupplServiceForGPRS" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMGPRSSupplService"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="sS-Code" minOccurs="0"/>
+									<element name="provisioningState" minOccurs="0"/>
+									<element name="activationState" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EPSService" substitutionGroup="sn:SuMService">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theContract" minOccurs="0"/>
+									<element name="accessPointName" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0"/>
+									<element name="aPNAMBR" minOccurs="0"/>
+									<element name="barringofPacketOrientedServices" minOccurs="0"/>
+									<element name="contextIdentifier" minOccurs="0"/>
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0"/>
+									<element name="pDNAddress" minOccurs="0"/>
+									<element name="rSZILists" minOccurs="0"/>
+									<element name="sTNSR" minOccurs="0"/>
+									<element name="subscribedChargingCharacteristics" minOccurs="0"/>
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="networkAccessMode" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="aPNOIReplacement" minOccurs="0"/>
+									<element name="subscribedUEAMBR" minOccurs="0"/>
+									<element name="aPNConfigurationProfile" minOccurs="0"/>
+									<element name="rFSP" minOccurs="0"/>
+									<element name="vPLMNAddressAllowed-EPS" minOccurs="0"/>
+									<element name="pDNGWIdentity" minOccurs="0"/>
+									<element name="ePSPDNConnectedChargingCharacteristics" minOccurs="0"/>
+									<element name="pDNGWAllocationType" minOccurs="0"/>
+									<element name="aPNLevelAPNOIReplacement" minOccurs="0"/>
+									<element name="closedSubscriberUserGroupInformation" minOccurs="0"/>
+									<element name="listofAuthorizedvisitednetowrkidentifiers" minOccurs="0"/>
+									<element name="staticWLANUERemoteIPAddressList" minOccurs="0"/>
+									<element name="w-APONBarringTypeList" minOccurs="0"/>
+									<element name="w-APNChargingDataList" minOccurs="0"/>
+									<element name="wLANUERemoteIPAddress" minOccurs="0"/>
+									<element name="accessDependenceFlag" minOccurs="0"/>
+									<element name="chargingCharacteristics" minOccurs="0"/>
+									<element name="primaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="secondaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="primaryChargingCollectionFunctionName" minOccurs="0"/>
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0"/>
+									<element name="w-APNIdentifierList" minOccurs="0"/>
+									<element name="maxNumberAccessesList" minOccurs="0"/>
+									<element name="maxSubscribedBandwidth" minOccurs="0"/>
+									<element name="subscribed3GPPWLANQoSProfile" minOccurs="0"/>
+									<element name="permanentUserIdentity" minOccurs="0"/>
+									<element name="mIPSubscriberProfile" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="IMSService" substitutionGroup="sn:SuMService">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theContract" minOccurs="0"/>
+									<element name="listofauthorizedvisitednetworkidentifiers"/>
+									<element name="registrationStatus"/>
+									<element name="sCSCFName" minOccurs="0"/>
+									<element name="diameterClientAddressofSCSCF" minOccurs="0"/>
+									<element name="theServerCapabilities" type="xn:dn" minOccurs="0"/>
+									<element name="subscribedMediaProfileIdentifier" minOccurs="0" />
+									<element name="initialFilterCriteriaList" minOccurs="0">
+										<complexType>
+											<sequence>
+												<element name="initialFilterCriteria" minOccurs="1" maxOccurs="unbounded"/>
+											</sequence>
+										</complexType>
+									</element>
+									<element name="applicationServerInformation" minOccurs="0"/>
+									<element name="serviceIndicationList" minOccurs="0">
+										<complexType>
+											<sequence>
+												<element name="serviceIndication" minOccurs="1" maxOccurs="unbounded"/>
+											</sequence>
+										</complexType>
+									</element>
+									<element name="primaryEventChargingFunctionName" minOccurs="0" />
+									<element name="secondaryEventChargingFunctionName" minOccurs="0" />
+									<element name="primaryChargingCollectionFunctionName"/>
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="gsmSCFaddressforIMCSI" minOccurs="0"/>
+									<element name="oIMCSI" minOccurs="0"/>
+									<element name="vTIMCSI" minOccurs="0"/>
+									<element name="dIMCS" minOccurs="0"/>
+									<element name="gAAServiceType" minOccurs="0"/>
+									<element name="gAAServiceIdentifier" minOccurs="0"/>
+									<element name="gBAUserSecuritySettings" minOccurs="0"/>
+									<element name="userSecuritySetting" minOccurs="0"/>
+									<element name="userPublicIdentity" minOccurs="0"/>
+									<element name="gAAAuthorizationflag" minOccurs="0"/>
+									<element name="keyLifetime" minOccurs="0"/>
+									<element name="uICCSecurityType" minOccurs="0"/>
+									<element name="nAFGroupIdentity" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMSubscribedService"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true"/>
+	<element name="CSSubscribedService" substitutionGroup="sn:SuMSubscribedService" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theService" minOccurs="0"/>
+									<element name="theOffer" minOccurs="0"/>
+									<element name="networkAccessMode"/>
+									<element name="basicMSISDNIndicator" minOccurs="0"/>
+									<element name="mSISDNAlertIndicator" minOccurs="0"/>
+									<element name="subscriptionRestriction" minOccurs="0"/>
+									<element name="rSZIlists" minOccurs="0"/>
+									<element name="lSAIdentity" minOccurs="0"/>
+									<element name="lSAPriority" minOccurs="0"/>
+									<element name="lSAPreferentialAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeSupportIndicator" minOccurs="0"/>
+									<element name="lSAOnlyAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeIndicator" minOccurs="0"/>
+									<element name="vPLMNIdentifier" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="mobileStationCategory" minOccurs="0"/>
+									<element name="lMUIdentifier" minOccurs="0"/>
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="gsmSCFaddresslistForODB"/>
+									<element name="provisionOfBearerService"/>
+									<element name="provisionOfTeleservice"/>
+									<element name="bCAllocation" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfIncomingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="barringOfPremiumRateCalls" minOccurs="0"/>
+									<element name="barringOfSupplementaryServiceManagement" minOccurs="0" />
+									<element name="barringOfRegistrationOfCallForwarding" minOccurs="0" />
+									<element name="barringOfInvocationOfCallTransfer" minOccurs="0" />
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0" />
+									<element name="vGCSGroupMembershipList" minOccurs="0"/>
+									<element name="vBSGroupMembershipList" minOccurs="0"/>
+									<element name="broadcastCallInitiationAllowedList" minOccurs="0" />
+									<element name="originatingCAMELSubscriptionInformationOCSI" minOccurs="0" />
+									<element name="terminatingCAMELSubscriptionInformationTCSI" minOccurs="0" />
+									<element name="vMSCTerminatingCAMELSubscriptionInformationVTCSI" minOccurs="0" />
+									<element name="locationInformationSubscriberStateInformation" minOccurs="0" />
+									<element name="uSSDCAMELSubscriptionInformationUCSI" minOccurs="0" />
+									<element name="sSInvocationNotificationSSCSI" minOccurs="0"/>
+									<element name="translationInformationFlagTIFCSI" minOccurs="0" />
+									<element name="dialledServiceCAMELSubscriptionInformationDCSI" minOccurs="0" />
+									<element name="uSSDGeneralCAMELServiceInformationUGCSI" minOccurs="0" />
+									<element name="shortMessageServiceCAMELSubscriptionInformationMOSMSCSI" minOccurs="0" />
+									<element name="shortMessageServiceCAMELSubscriptionInformationMTSMSCSI" minOccurs="0" />
+									<element name="mTSMSCSIVLRNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="gsmSCFaddressforCSI" minOccurs="0"/>
+									<element name="iSTAlertTimer" minOccurs="0"/>
+									<element name="cSAllocationRetentionpriority" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="theCSSupplServiceForCSSS" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="GPRSSubscribedService" substitutionGroup="sn:SuMSubscribedService">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theService" minOccurs="0"/>
+									<element name="theOffer" minOccurs="0"/>
+									<element name="networkAccessMode" minOccurs="0"/>
+									<element name="basicMSISDNIndicator" minOccurs="0"/>
+									<element name="mSISDNAlertIndicator" minOccurs="0"/>
+									<element name="rSZIlists" minOccurs="0"/>
+									<element name="lSAIdentity" minOccurs="0"/>
+									<element name="lSAPriority" minOccurs="0"/>
+									<element name="lSAPreferentialAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeSupportIndicator" minOccurs="0"/>
+									<element name="lSAOnlyAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeIndicator" minOccurs="0"/>
+									<element name="vPLMNIdentifier" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="gGSNNumber" minOccurs="0"/>
+									<element name="provisionofTeleservice" minOccurs="0"/>
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="transferofSMoption" minOccurs="0"/>
+									<element name="barringofPacketOrientedServices" minOccurs="0" />
+									<element name="pDPType" minOccurs="0"/>
+									<element name="pDPAddress" minOccurs="0"/>
+									<element name="accessPointName" minOccurs="0"/>
+									<element name="vPLMNAddressAllowed" minOccurs="0"/>
+									<element name="qualityofServiceSubscribed" minOccurs="0"/>
+									<element name="pDPContextChargingCharacteristics" minOccurs="0" />
+									<element name="gPRSCAMELSubscriptionInformationGPRSCSI" minOccurs="0" />
+									<element name="mOShortMessageServiceCAMELSubscriptionInformationMOSMSCSI" minOccurs="0" />
+									<element name="mTShortMessageServiceCAMELSubscriptionInformationMTSMSCSI" minOccurs="0" />
+									<element name="mOSMSCSISGSNNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mTSMSCSISGSNNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mobilityManagementforGPRSeventnotificationMGCSI" minOccurs="0" />
+									<element name="mGCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="gsmSCFaddressforCSI" minOccurs="0"/>
+									<element name="closedSubscriberGroupInformation" minOccurs="0"/>
+									<element name="gSMSCFaddresslistForODB" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0"/>
+									<element name="sTNSR" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="subscribedChargingCharacteristics" minOccurs="0" />
+									<element name="listofauthorizedvisitednetworkidentifiers" minOccurs="0" />
+									<element name="wLANUERemoteIPaddress" minOccurs="0"/>
+									<element name="staticWLANUERemoteIPAddressList" minOccurs="0"/>
+									<element name="w-APNBarringTypeList" minOccurs="0"/>
+									<element name="w-APNChargingDataList" minOccurs="0"/>
+									<element name="accessDependenceFlag" minOccurs="0"/>
+									<element name="chargingData" minOccurs="0"/>
+									<element name="chargingCharacteristics" minOccurs="0"/>
+									<element name="primaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="secondaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="w-APNIdentifierList" minOccurs="0"/>
+									<element name="maxNumberAccessesList" minOccurs="0"/>
+									<element name="maxSubscribedBandwidth" minOccurs="0"/>
+									<element name="subscribed3GPPWLANQoSProfile" minOccurs="0"/>
+									<element name="primaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="theGPRSSupplServiceForGPRSSS" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EPSSubscribedService" substitutionGroup="sn:SuMSubscribedService">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theService" minOccurs="0"/>
+									<element name="theOffer" minOccurs="0"/>
+									<element name="accessPointName" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0"/>
+									<element name="aPNAMBR" minOccurs="0"/>
+									<element name="barringofPacketOrientedServices" minOccurs="0"/>
+									<element name="contextIdentifier" minOccurs="0"/>
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0"/>
+									<element name="pDNAddress" minOccurs="0"/>
+									<element name="rSZILists" minOccurs="0"/>
+									<element name="sTNSR" minOccurs="0"/>
+									<element name="subscribedChargingCharacteristics" minOccurs="0"/>
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="networkAccessMode" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="aPNOIReplacement" minOccurs="0"/>
+									<element name="subscribedUEAMBR" minOccurs="0"/>
+									<element name="aPNConfigurationProfile" minOccurs="0"/>
+									<element name="rFSP" minOccurs="0"/>
+									<element name="vPLMNAddressAllowed-EPS" minOccurs="0"/>
+									<element name="pDNGWIdentity" minOccurs="0"/>
+									<element name="ePSPDNConnectedChargingCharacteristics" minOccurs="0"/>
+									<element name="pDNGWAllocationType" minOccurs="0"/>
+									<element name="aPNLevelAPNOIReplacement" minOccurs="0"/>
+									<element name="closedSubscriberUserGroupInformation" minOccurs="0"/>
+									<element name="listofAuthorizedvisitednetowrkidentifiers" minOccurs="0"/>
+									<element name="staticWLANUERemoteIPAddressList" minOccurs="0"/>
+									<element name="w-APONBarringTypeList" minOccurs="0"/>
+									<element name="w-APNChargingDataList" minOccurs="0"/>
+									<element name="wLANUERemoteIPAddress" minOccurs="0"/>
+									<element name="accessDependenceFlag" minOccurs="0"/>
+									<element name="chargingCharacteristics" minOccurs="0"/>
+									<element name="primaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="secondaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="primaryChargingCollectionFunctionName" minOccurs="0"/>
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0"/>
+									<element name="w-APNIdentifierList" minOccurs="0"/>
+									<element name="maxNumberAccessesList" minOccurs="0"/>
+									<element name="maxSubscribedBandwidth" minOccurs="0"/>
+									<element name="subscribed3GPPWLANQoSProfile" minOccurs="0"/>
+									<element name="permanentUserIdentity" minOccurs="0"/>
+									<element name="mIPSubscriberProfile" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="IMSSubscribedService" substitutionGroup="sn:SuMSubscribedService" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theService" minOccurs="0"/>
+									<element name="theOffer" minOccurs="0"/>
+									<element name="listofauthorizedvisitednetworkidentifiers"/>
+									<element name="registrationStatus"/>
+									<element name="sCSCFName" minOccurs="0"/>
+									<element name="diameterClientAddressofSCSCF" minOccurs="0"/>
+									<element name="theServerCapabilities" type="xn:dn" minOccurs="0"/>
+									<element name="subscribedMediaProfileIdentifier" minOccurs="0" />
+									<element name="initialFilterCriteriaList" minOccurs="0">
+										<complexType>
+											<sequence>
+												<element name="initialFilterCriteria" minOccurs="1" maxOccurs="unbounded"/>
+											</sequence>
+										</complexType>
+									</element>
+									<element name="applicationServerInformation" minOccurs="0"/>
+									<element name="serviceIndication" minOccurs="0">
+										<complexType>
+											<sequence>
+												<element name="serviceIndication" minOccurs="1" maxOccurs="unbounded"/>
+											</sequence>
+										</complexType>
+									</element>
+									<element name="primaryEventChargingFunctionName" minOccurs="0" />
+									<element name="secondaryEventChargingFunctionName" minOccurs="0" />
+									<element name="primaryChargingCollectionFunctionName"/>
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="gsmSCFaddressforIMCSI" minOccurs="0"/>
+									<element name="oIMCSI" minOccurs="0"/>
+									<element name="vTIMCSI" minOccurs="0"/>
+									<element name="dIMCS" minOccurs="0"/>
+									<element name="gAAServiceType" minOccurs="0"/>
+									<element name="gAAServiceIdentifier" minOccurs="0"/>
+									<element name="gBAUserSecuritySettings" minOccurs="0"/>
+									<element name="userSecuritySetting" minOccurs="0"/>
+									<element name="userPublicIdentity" minOccurs="0"/>
+									<element name="gAAAuthorizationflag" minOccurs="0"/>
+									<element name="keyLifetime" minOccurs="0"/>
+									<element name="uICCSecurityType" minOccurs="0"/>
+									<element name="nAFGroupIdentity" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SuMServiceProfile"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass"
+			type="xn:NrmClass" abstract="true" />
+	<element name="CSServiceProfile" substitutionGroup="sn:SuMServiceProfile">
+		<complexType>
+			<complexContent>
+				<extension base="sn:Common3GPPAccessServiceProfile">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theSpecification" minOccurs="0"/>
+									<element name="basicMSISDNIndicator" minOccurs="0"/>
+									<element name="mSISDNAlertIndicator" minOccurs="0"/>
+									<element name="vLRNumber"/>
+									<element name="mSCNumber"/>
+									<element name="subscriptionRestriction" minOccurs="0"/>
+									<element name="mSCAreaRestrictedFlag"/>
+									<element name="oDBinducedBarringData" minOccurs="0"/>
+									<element name="roamingRestrictionDueToUnsupportedFeature"/>
+									<element name="lSAIdentity" minOccurs="0"/>
+									<element name="lSAPriority" minOccurs="0"/>
+									<element name="lSAPreferentialAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeSupportIndicator" minOccurs="0"/>
+									<element name="lSAOnlyAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeIndicator" minOccurs="0"/>
+									<element name="vPLMNIdentifier" minOccurs="0"/>
+									<element name="ageIndicator" minOccurs="0"/>
+									<element name="lMSI"/>
+									<element name="mobileStationCategory"/>
+									<element name="lMUIdentifier" minOccurs="0"/>
+									<element name="mNRRMSC"/>
+									<element name="notificationToCSEFlagForODB" minOccurs="0"/>
+									<element name="gsmSCFaddresslistForODB" minOccurs="0"/>
+									<element name="messagesWaitingData" minOccurs="0"/>
+									<element name="mobileStationNotReachableFlag" minOccurs="0"/>
+									<element name="memoryCapacityExceededFlag"/>
+									<element name="traceReference" minOccurs="0"/>
+									<element name="traceType" minOccurs="0"/>
+									<element name="operationsSystemsIdentity" minOccurs="0"/>
+									<element name="hLRTraceType" minOccurs="0"/>
+									<element name="mAPErrorOnTrace" minOccurs="0"/>
+									<element name="traceActivatedInVLR" minOccurs="0"/>
+									<element name="provisionOfBearerService"/>
+									<element name="provisionOfTeleservice"/>
+									<element name="bCAllocation" minOccurs="0"/>
+									<element name="checkSSIndicator"/>
+									<element name="mSPurgedForNonGPRSFlag"/>
+									<element name="barringOfIncomingCalls" minOccurs="0"/>
+									<element name="barringOfPremiumRateCalls" minOccurs="0"/>
+									<element name="barringOfSupplementaryServiceManagement" minOccurs="0" />
+									<element name="barringOfRegistrationOfCallForwarding" minOccurs="0" />
+									<element name="barringOfInvocationOfCallTransfer" minOccurs="0" />
+									<element name="vGCSGroupMembershipList" minOccurs="0"/>
+									<element name="vBSGroupMembershipList" minOccurs="0"/>
+									<element name="broadcastCallInitiationAllowedList" minOccurs="0" />
+									<element name="originatingCAMELSubscriptionInformationOCSI" minOccurs="0" />
+									<element name="terminatingCAMELSubscriptionInformationTCSI" minOccurs="0" />
+									<element name="vMSCTerminatingCAMELSubscriptionInformationVTCSI" minOccurs="0" />
+									<element name="locationInformationSubscriberStateInformation" minOccurs="0" />
+									<element name="uSSDCAMELSubscriptionInformationUCSI" minOccurs="0" />
+									<element name="sSInvocationNotificationSSCSI" minOccurs="0"/>
+									<element name="translationInformationFlagTIFCSI" minOccurs="0" />
+									<element name="dialledServiceCAMELSubscriptionInformationDCSI" minOccurs="0" />
+									<element name="uSSDGeneralCAMELServiceInformationUGCSI" minOccurs="0" />
+									<element name="oCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="sSCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="vTCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="shortMessageServiceCAMELSubscriptionInformationMOSMSCSI" minOccurs="0" />
+									<element name="shortMessageServiceCAMELSubscriptionInformationMTSMSCSI" minOccurs="0" />
+									<element name="mOSMSCSIVLRNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mTSMSCSIVLRNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="vLRSupportedCAMELPhases" minOccurs="0"/>
+									<element name="gsmSCFaddressforCSI" minOccurs="0"/>
+									<element name="vLROfferedCAMEL4CSIs" minOccurs="0"/>
+									<element name="iSTAlertTimer" minOccurs="0"/>
+									<element name="cSAllocationRetentionpriority" minOccurs="0"/>
+									<element name="theCSSupplServiceForCSSP" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="GPRSServiceProfile" substitutionGroup="sn:SuMServiceProfile">
+		<complexType>
+			<complexContent>
+				<extension base="sn:PSCommonServiceProfile">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theSpecification" minOccurs="0"/>
+									<element name="basicMSISDNIndicator" minOccurs="0"/>
+									<element name="mSISDNAlertIndicator" minOccurs="0"/>
+									<element name="vLRNumber" minOccurs="0"/>
+									<element name="lSAIdentity" minOccurs="0"/>
+									<element name="lSAPriority" minOccurs="0"/>
+									<element name="lSAPreferentialAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeSupportIndicator" minOccurs="0"/>
+									<element name="lSAOnlyAccessIndicator" minOccurs="0"/>
+									<element name="lSAActiveModeIndicator" minOccurs="0"/>
+									<element name="vPLMNIdentifier" minOccurs="0"/>
+									<element name="ageIndicator" minOccurs="0"/>
+									<element name="sGSNNumber" minOccurs="0"/>
+									<element name="gGSNNumber" minOccurs="0"/>
+									<element name="mNRG" minOccurs="0"/>
+									<element name="provisionofTeleservice" minOccurs="0"/>
+									<element name="transferofSMoption" minOccurs="0"/>
+									<element name="mSpurgedforGPRSflag" minOccurs="0"/>
+									<element name="pDPType" minOccurs="0"/>
+									<element name="pDPAddress" minOccurs="0"/>
+									<element name="vPLMNAddressAllowed" minOccurs="0"/>
+									<element name="gGSNlist" minOccurs="0"/>
+									<element name="qualityofServiceSubscribed" minOccurs="0"/>
+									<element name="pDPContextIdentifier" minOccurs="0"/>
+									<element name="pDPContextChargingCharacteristics" minOccurs="0" />
+									<element name="gPRSCAMELSubscriptionInformationGPRSCSI" minOccurs="0" />
+									<element name="mOShortMessageServiceCAMELSubscriptionInformationMOSMSCSI" minOccurs="0" />
+									<element name="mTShortMessageServiceCAMELSubscriptionInformationMTSMSCSI" minOccurs="0" />
+									<element name="mOSMSCSISGSNNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mTSMSCSISGSNNegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="mobilityManagementforGPRSeventnotificationMGCSI" minOccurs="0" />
+									<element name="mGCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="gPRSCSINegotiatedCAMELCapabilityHandling" minOccurs="0" />
+									<element name="sGSNSupportedCAMELPhases" minOccurs="0"/>
+									<element name="sGSNOfferedCAMEL4CSIs" minOccurs="0"/>
+									<element name="gsmSCFaddressforCSI" minOccurs="0"/>
+									<element name="gSMSCFaddresslistForODB" minOccurs="0"/>
+									<element name="iPSMGWNumber" minOccurs="0"/>
+									<element name="mNRR-SGSN" minOccurs="0"/>
+									<element name="notificationToCSEFlagForODB" minOccurs="0"/>
+									<element name="theGPRSSupplServiceForGPRSSP" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="EPSServiceProfile" substitutionGroup="sn:SuMServiceProfile">
+		<complexType>
+			<complexContent>
+				<extension base="sn:PSCommonServiceProfile">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theSpecification" minOccurs="0"/>
+									<element name="aPNAMBR" minOccurs="0"/>
+									<element name="contextIdentifier" minOccurs="0"/>
+									<element name="pDNAddress" minOccurs="0"/>
+									<element name="aPNOIReplacement" minOccurs="0"/>
+									<element name="subscribedUEAMBR" minOccurs="0"/>
+									<element name="aPNConfigurationProfile" minOccurs="0"/>
+									<element name="rFSP" minOccurs="0"/>
+									<element name="pDNGWIdentity" minOccurs="0"/>
+									<element name="ePSPDNConnectionChargingCharacteristics" minOccurs="0"/>
+									<element name="pDNGWAllocationType" minOccurs="0"/>
+									<element name="aPNLevelAPNOIReplacement" minOccurs="0"/>
+									<element name="roamingRestrictionsDueToUnsupportedFeatureMME" minOccurs="0"/>
+									<element name="roamingRestrictionsDueToUnsupportedFeatureSGSN" minOccurs="0"/>
+									<element name="mSPurgedForEPSFlag" minOccurs="0"/>
+									<element name="uRRPMME" minOccurs="0"/>
+									<element name="mMEName" minOccurs="0"/>
+									<element name="sGSNName" minOccurs="0"/>
+									<element name="iWFNumber" minOccurs="0"/>
+									<element name="sGSNAreaRestrictedFlag" minOccurs="0"/>
+									<element name="permanentUserIdentity" minOccurs="0"/>
+									<element name="vPLMNAddressAllowed-EPS" minOccurs="0"/>
+									<element name="theOptHandover3GPP2Par" type="xn:dn"/>
+									<element name="theNon3GPPAccessPar" type="xn:dn"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="PSCommonServiceProfile" abstract="true" substitutionGroup="sn:SuMServiceProfile">
+		<complexType>
+			<complexContent>
+				<extension base="sn:Common3GPPAccessServiceProfile">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="roamingRestrictedintheSGSNduetounsupportedfeature" minOccurs="0"/>
+									<element name="barringofPacketOrientedServices" minOccurs="0"/>
+									<element name="traceActivatedinSGSN" minOccurs="0"/>
+									<element name="iPAddressOfTraceCollectionEntity" minOccurs="0"/>
+									<element name="accessPointName" minOccurs="0"/>
+									<element name="subscribedChargingCharacteristics" minOccurs="0"/>
+									<element name="sTNSR" minOccurs="0"/>
+									<element name="closedSubscriberGroupInformation" minOccurs="0"/>
+									<element name="theIWANPar" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="Common3GPPAccessServiceProfile"
+			abstract="true" substitutionGroup="sn:SuMServiceProfile">
+		<complexType>
+			<complexContent>
+				<extension base="sn:SuMServiceProfile">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="rSZILists" minOccurs="0"/>
+									<element name="accessRestrictionData" minOccurs="0" />
+									<element name="subscriberStatus" minOccurs="0"/>
+									<element name="barringOfOutgoingCalls" minOccurs="0"/>
+									<element name="barringOfRoaming" minOccurs="0"/>
+									<element name="operatorDeterminedBarringPLMNspecificData" minOccurs="0"/>
+									<element name="traceReference2" minOccurs="0"/>
+									<element name="traceDepth" minOccurs="0"/>
+									<element name="listOfNETypestoTrace" minOccurs="0"/>
+									<element name="triggeringEvents" minOccurs="0"/>
+									<element name="listOfInterfacesToTrace" minOccurs="0"/>
+									<element name="privacyExceptionList" minOccurs="0"/>
+									<element name="gMLCNumbers" minOccurs="0"/>
+									<element name="iCSIndicator" minOccurs="0"/>
+									<element name="mOLRList" minOccurs="0"/>
+									<element name="serviceTypes" minOccurs="0"/>
+									<element name="networkAccessMode" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="IWANParameters"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="w-APN" minOccurs="0"/>
+									<element name="listofauthorizedvisitednetworkidentifiers" minOccurs="0"/>
+									<element name="threeGPPAAAServerName" minOccurs="0" />
+									<element name="threeGPPAAAProxyName" minOccurs="0"/>
+									<element name="wLANUERemoteIPaddress" minOccurs="0"/>
+									<element name="statisWLANUERemoteIPAddressList" minOccurs="0"/>
+									<element name="w-APNBarringTypeList" minOccurs="0"/>
+									<element name="w-APNChargingDataList" minOccurs="0"/>
+									<element name="accessDependenceFlag" minOccurs="0"/>
+									<element name="i-WLANAccessType" minOccurs="0"/>
+									<element name="wLANIdentifierList" minOccurs="0"/>
+									<element name="maxNumberAccessesList" minOccurs="0"/>
+									<element name="maxSubscribedBandwidth" minOccurs="0"/>
+									<element name="subscribed3GPPWLANQoSProfile" minOccurs="0"/>
+									<element name="chargingChracteristics" minOccurs="0"/>
+									<element name=" primaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="secondaryOCSChargingFunctionName" minOccurs="0"/>
+									<element name="primaryChargingCollectionFunctionName" minOccurs="0"/>
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0"/>
+									<element name="userStatus" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="OptHandover3GPP2Parameters"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="rATType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="Non3GPPAccessParameters"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="rATType" minOccurs="0"/>
+									<element name="visitedNetworkIdentifier" minOccurs="0"/>
+									<element name="mIPSubscriberProfile" minOccurs="0"/>
+									<element name="permanentUserIdentity" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="IMSServiceProfile" substitutionGroup="sn:SuMServiceProfile" >
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="theSpecification" minOccurs="0"/>
+									<element name="listofauthorizedvisitednetworkidentifiers"/>
+									<element name="registrationStatus"/>
+									<element name="sCSCFName" minOccurs="0"/>
+									<element name="diameterClientAddressofSCSCF" minOccurs="0"/>
+									<element name="theServerCapabilities" type="xn:dn" minOccurs="0"/>
+									<element name="subscribedMediaProfileIdentifier" minOccurs="0" />
+									<element name="initialFilterCriteriaList" minOccurs="0">
+										<complexType>
+											<sequence>
+												<element name="initialFilterCriteria" minOccurs="1" maxOccurs="unbounded"/>
+											</sequence>
+										</complexType>
+									</element>
+									<element name="applicationServerInformation" minOccurs="0"/>
+									<element name="serviceIndicationList" minOccurs="0">
+										<complexType>
+											<sequence>
+												<element name="serviceIndication" minOccurs="1" maxOccurs="unbounded"/>
+											</sequence>
+										</complexType>
+									</element>
+									<element name="primaryEventChargingFunctionName" minOccurs="0" />
+									<element name="secondaryEventChargingFunctionName" minOccurs="0" />
+									<element name="primaryChargingCollectionFunctionName"/>
+									<element name="secondaryChargingCollectionFunctionName" minOccurs="0" />
+									<element name="gsmSCFaddressforIMCSI" minOccurs="0"/>
+									<element name="iMSSFaddressforIMCSI" minOccurs="0"/>
+									<element name="oIMCSI" minOccurs="0"/>
+									<element name="vTIMCSI" minOccurs="0"/>
+									<element name="dIMCS" minOccurs="0"/>
+									<element name="gAAServiceType" minOccurs="0"/>
+									<element name="gAAServiceIdentifier" minOccurs="0"/>
+									<element name="gBAUserSecuritySettings" minOccurs="0"/>
+									<element name="userSecuritySetting" minOccurs="0"/>
+									<element name="userPublicIdentity" minOccurs="0"/>
+									<element name="gAAAuthorizationflag" minOccurs="0"/>
+									<element name="keyLifetime" minOccurs="0"/>
+									<element name="uICCSecurityType" minOccurs="0"/>
+									<element name="nAFGroupIdentity" minOccurs="0"/>
+									<element name="thePublicId" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<complexType name="IMSPublicIdentificationType">
+		<complexContent>
+			<extension base="sn:SuMIdentityType">
+				<all>
+					<element name="publicUserIdentity" type="string" minOccurs="0"/>
+					<element name="barringIndication" type="sn:binEnum" minOccurs="0"/>
+				</all>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="IMSPublicIdentification"
+			type="sn:IMSPublicIdentificationType"
+			substitutionGroup="sn:SuMIdentity"/>
+	<simpleType name="binEnum">
+		<restriction base="string">
+			<enumeration value="FALSE"/>
+			<enumeration value="TRUE"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="multinumberingMSISDNIndicator">
+		<restriction base="string">
+			<enumeration value="BASIC"/>
+			<enumeration value="ALERT"/>
+		</restriction>
+	</simpleType>
+	<complexType name="multinumberingMSISDNList">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="mSISDN" type="string"/>
+			<element name="indicator" type="sn:multinumberingMSISDNIndicator"/>
+		</sequence>
+	</complexType>
+	<complexType name="ServerCapabilitiesType">
+		<complexContent>
+			<extension base="sn:SuMServiceParameterType">
+				<all>
+					<element name="serverCapabilities"/>
+				</all>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="ServerCapabilities"
+			type="sn:ServerCapabilitiesType"
+			substitutionGroup="sn:SuMServiceParameter"/>
+	<complexType name="SuMIdentityType">
+		<complexContent>
+			<restriction base="xn:NrmClass"/>
+		</complexContent>
+	</complexType>
+	<complexType name="SuMServiceParameterType">
+		<complexContent>
+			<restriction base="xn:NrmClass"/>
+		</complexContent>
+	</complexType>
+	<element name="SuMIdentity" type="sn:SuMIdentityType"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" abstract="true"/>
+	<element name="SuMServiceParameter" type="sn:SuMServiceParameterType"
+			substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" abstract="true"/>
+</schema>
