@@ -6,7 +6,7 @@
 -->
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:nr="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
 		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
 		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
@@ -869,7 +869,7 @@
 									<element name="nbIoTcellFlag" type="en:yesNoType" minOccurs="0"/>
 									<element name="isChangeForEnergySavingAllowed" type="en:yesNoType" minOccurs="0"/>
 									<element name="ngranCellFlag" type="en:yesNoType" minOccurs="0"/>
-									<element name="nSSAI" type="nr:nSSAI" minOccurs="0"/>
+									<element name="nSSAI" type="ngc:NssaiList" minOccurs="0"/>
 									<!-- End of inherited attributes from EUtranGenericCell -->
 									<element name="earfcnDl" type="short"/>
 									<element name="earfcnUl" type="short"/>
@@ -966,7 +966,7 @@
 									<element name="nbIoTcellFlag" type="en:yesNoType" minOccurs="0"/>
 									<element name="isChangeForEnergySavingAllowed" type="en:yesNoType" minOccurs="0"/>
 									<element name="ngranCellFlag" type="en:yesNoType" minOccurs="0"/>
-									<element name="nSSAI" type="nr:nSSAI" minOccurs="0"/>
+									<element name="nSSAI" type="ngc:NssaiList" minOccurs="0"/>
 									<!-- End of inherited attributes from EUtranGenericCell -->
 									<element name="earfcn" type="short"/>
 									<element name="sfAssignment" type="short"/>
