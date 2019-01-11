@@ -1,0 +1,211 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.733 Transport Network Interface NRM IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	transportNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.733#transportNrm"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:tn="http://www.3gpp.org/ftp/specs/archive/28_series/28.733#transportNrm">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+-->
+
+	<!--Transport Network Interface Resources IRP NRM attribute related XML types -->
+	<simpleType name="transportNetworkType">
+		<restriction base="string">
+			<enumeration value="ATM"/>
+			<enumeration value="IP"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="serviceCategoryIn">
+		<restriction base="string">
+			<enumeration value="CBR"/>
+			<enumeration value="RT-VBR"/>
+			<enumeration value="NRT-VBR"/>
+			<enumeration value="ABR"/>
+			<enumeration value="UBR"/>
+			<enumeration value="GFR"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="serviceCategoryEg">
+		<restriction base="string">
+			<enumeration value="CBR"/>
+			<enumeration value="RT-VBR"/>
+			<enumeration value="NRT-VBR"/>
+			<enumeration value="ABR"/>
+			<enumeration value="UBR"/>
+			<enumeration value="GFR"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="usedAAL">
+		<restriction base="string">
+			<enumeration value="Null"/>
+			<enumeration value="AAL1"/>
+			<enumeration value="AAL2"/>
+			<enumeration value="AAL3"/>
+			<enumeration value="AAL4"/>
+			<enumeration value="AAL5"/>
+			</restriction>
+		</simpleType>
+	<simpleType name="virtualPathId">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="virtualChannelId">
+		<restriction base="integer">
+			<minInclusive value="0"/>
+		</restriction>
+	</simpleType>
+	<complexType name="physicalPortIdList">
+		<sequence>
+			<element name="physicalPortId" type="string" minOccurs="1" maxOccurs="unbounded">
+			</element>
+		</sequence>
+	</complexType>
+	<simpleType name="peakCellRateIn">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="peakCellRateEg">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="sustainableCellRateIn">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="sustainableCellRateEg">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="maximumBurstSizeIn">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="maximumBurstSizeEg">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="minimumCellRateIn">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="minimumCellRateEg">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="minimumDesiredCellRateIn">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+		<simpleType name="minimumDesiredCellRateEg">
+			<restriction base="integer">
+			<minInclusive value="1"/>
+		</restriction>
+	</simpleType>
+
+	<!-- Transport Network Interface Resources IRP NRM class associated XML elements -->
+	<element name="TransportNetworkInterface"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="transportNetworkType" type="tn:transportNetworkType" />
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="tn:ATMPathTerminationPoint"/>
+							<element ref="tn:ATMChannelTerminationPoint"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="ATMChannelTerminationPoint">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="usageChannel" type="string"/>
+									<element name="virtualPathId" type="tn:virtualPathId" />
+									<element name="virtualChannelId" type="tn:virtualChannelId" />
+									<element name="physicalPortId" type="string" />
+									<element name="physicalInterfaceType" type="string" minOccurs="0"/>
+									<element name="serviceCategoryIn" type="tn:serviceCategoryIn" />
+									<element name="serviceCategoryEg" type="tn:serviceCategoryEg" />
+									<element name="usedAAL" type="tn:usedAAL" />
+									<element name="peakCellRateIn" type="tn:peakCellRateIn" />
+									<element name="peakCellRateEg" type="tn:peakCellRateEg" />
+									<element name="sustainableCellRateIn" type="tn:sustainableCellRateIn" minOccurs="0" />
+									<element name="sustainableCellRateEg" type="tn:sustainableCellRateEg" minOccurs="0" />
+									<element name="maximumBurstSizeIn" type="tn:maximumBurstSizeIn" />
+									<element name="maximumBurstSizeEg" type="tn:maximumBurstSizeEg" />
+									<element name="minimumDesiredCellRateIn" type="tn:minimumDesiredCellRateIn" minOccurs="0" />
+									<element name="minimumDesiredCellRateEg" type="tn:minimumDesiredCellRateEg" minOccurs="0" />
+									<element name="minimumCellRateIn" type="tn:minimumCellRateIn" minOccurs="0" />
+									<element name="minimumCellRateEg" type="tn:minimumCellRateEg" minOccurs="0" />
+									<element name="aTMChannelTerminationPointATMPathTerminationPoint" type="xn:dn"/>
+									<element name="aTMChannelTerminationPointIubLink" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice>
+							<element ref="xn:VsDataContainer" minOccurs="0" maxOccurs="unbounded"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="ATMPathTerminationPoint">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="virtualPathId" type="tn:virtualPathId" />
+									<element name="physicalPortIdList" type="tn:physicalPortIdList" />
+									<element name="peakCellRateIn" type="tn:peakCellRateIn" />
+									<element name="peakCellRateEg" type="tn:peakCellRateEg" />
+									<element name="aTMPathTerminationPointATMChannelTerminationPoint" type="xn:dnList"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>
