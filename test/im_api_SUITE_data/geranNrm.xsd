@@ -87,8 +87,10 @@
 								<all>
 									<element name="userLabel"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+<!-- fixme!
 									<element ref="xn:latitude" minOccurs="0"/>
 									<element ref="xn:longitude" minOccurs="0"/>
+-->
 									<element name="operationalState" type="sm:operationalStateType" minOccurs="0" />
 								</all>
 							</complexType>
