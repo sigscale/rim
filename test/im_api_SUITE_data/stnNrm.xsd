@@ -1,0 +1,361 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.736 STN Network Resources IRP
+	Bulk CM Configuration data file NRM-specific XML schema
+	stnNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.736#stnNrm"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:stn="http://www.3gpp.org/ftp/specs/archive/28_series/28.736#stnNrm">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+-->
+
+	<!-- STN Network Resources IRP NRM attribute related XML types -->
+	<simpleType name="networkIndicator">
+		<restriction base="string">
+			<enumeration value="International"/>
+			<enumeration value="Spare"/>
+			<enumeration value="National"/>
+			<enumeration value="NationalSpare"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="pointCodeLength">
+		<restriction base="string">
+			<enumeration value="BITS_24"/>
+			<enumeration value="BITS_14"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="spType">
+		<restriction base="string">
+			<enumeration value="SEP"/>
+			<enumeration value="STP"/>
+			<enumeration value="STEP"/>
+		</restriction>
+	</simpleType>
+	<complexType name="slsCodeList">
+		<sequence>
+			<element name="slsCode" minOccurs="0" maxOccurs="16">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="0"/>
+						<maxInclusive value="15"/>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+	</complexType>
+	<simpleType name="linkTpStatusElementType">
+		<restriction base="string">
+			<enumeration value="deactivated"/>
+			<enumeration value="failed"/>
+			<enumeration value="localBlocked"/>
+			<enumeration value="remoteBlocked"/>
+			<enumeration value="localInhibited"/>
+			<enumeration value="remoteInhibited"/>
+		</restriction>
+	</simpleType>
+	<complexType name="linkTpStatusType">
+		<sequence minOccurs="0" maxOccurs="6">
+			<element name="linkTpStatusElement" type="stn:linkTpStatusElementType"/>
+		</sequence>
+	</complexType>
+	<simpleType name="signLinkType">
+		<restriction base="string">
+			<enumeration value="ST_64K"/>
+			<enumeration value="ST_2M"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="m3UAEntityTypeType">
+		<restriction base="string">
+			<enumeration value="M3UA_AS"/>
+			<enumeration value="SG"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="m3UALinkTPStateType">
+		<restriction base="string">
+			<enumeration value="UNESTABLISH"/>
+			<enumeration value="ESTABLISHED"/>
+			<enumeration value="INACTIVE"/>
+			<enumeration value="ACTIVE"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="IPAddrTypeType">
+		<restriction base="string">
+			<enumeration value="IPv4"/>
+			<enumeration value="IPv6"/>
+		</restriction>
+	</simpleType>
+	<complexType name="sCTPAssocAddrType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="IPAddrType" type="stn:IPAddrTypeType"/>
+			<element name="IPAddr" type="string"/>
+		</sequence>
+	</complexType>
+	<simpleType name="trafficModeType">
+		<restriction base="string">
+			<enumeration value="Override"/>
+			<enumeration value="LoadShare"/>
+			<enumeration value="Broadcast"/>
+		</restriction>
+	</simpleType>
+
+	<!-- STN Network Resources IRP NRM class associated XML elements -->
+	<element name="MtpSignPoint"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="pointCode" type="unsignedLong"/>
+									<element name="networkIndicator" type="stn:networkIndicator"/>
+									<element name="pointCodeLength" type="stn:pointCodeLength"/>
+									<element name="spType" type="stn:spType"/>
+									<element name="userLabel" type="string"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="stn:SignLinkSetTp"/>
+							<element ref="stn:SignRouteSetNePart"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SignLinkSetTp">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="adjPc" type="unsignedLong"/>
+									<element name="userLabel" type="string"/>
+									<element name="maxCapacityLS" type="float"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="stn:SignLinkTp"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SignLinkTp">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="slCode" type="integer"/>
+									<element name="slsCodeNormalList" type="stn:slsCodeList" minOccurs="0"/>
+									<element name="slsCodeCurrentList" type="stn:slsCodeList"/>
+									<element name="linkTpStatus" type="stn:linkTpStatusType"/>
+									<element name="maxCapacitySL" type="integer"/>
+									<element name="userLabel" type="string"/>
+									<element name="signLinkType" type="stn:signLinkType"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SignRouteSetNePart">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="destinationPc" type="unsignedLong"/>
+									<element name="userLabel" type="string"/>
+									<element name="loadsharingInformationRouteSetNePart" type="string"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="stn:SignRouteNePart"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="SignRouteNePart">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="signLinkSetTpPointer" type="xn:dn"/>
+									<element name="fixedPriority" type="unsignedLong"/>
+									<element name="userLabel" type="string"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<!-- M3UA Network Resources IRP NRM class associated XML elements -->
+	<element name="M3UAEntity"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<sequence>
+									<element name="m3UAEntityPointCode" type="unsignedLong"/>
+									<element name="m3UAEntityType" type="stn:m3UAEntityTypeType"/>
+									<element name="networkIndicator" type="stn:networkIndicator"/>
+									<element name="pointCodeLength" type="stn:pointCodeLength"/>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</sequence>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="stn:M3UALinkSetTp"/>
+							<element ref="stn:M3UALinkTp"/>
+							<element ref="stn:M3UARouteSetNePart"/>
+							<element ref="stn:M3UARouteNePart"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="M3UALinkSetTp">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="adjPc" type="unsignedLong"/>
+									<element name="trafficMode" type="stn:trafficModeType"/>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="stn:M3UALinkTp"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="M3UALinkTp">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="m3UALinkTPState" type="stn:m3UALinkTPStateType"/>
+									<element name="sCTPAssocLocalAddr" type="stn:sCTPAssocAddrType"/>
+									<element name="sCTPAssocRemoteAddr"
+											type="stn:sCTPAssocAddrType" minOccurs="0"/>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="M3UARouteSetNePart">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="destinationPc" type="unsignedLong"/>
+									<element name="m3UARouteNePartm3UALinkSetTP" type="xn:dn"/>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="stn:M3UARouteNePart"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="M3UARouteNePart">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="m3UALinkSetTPId" type="string"/>
+									<element name="fixedPriority" type="unsignedLong"/>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList"
+											type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>
