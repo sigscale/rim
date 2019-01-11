@@ -1,0 +1,147 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.633 Inventory Management NRM IRP
+	Inventory data file NRM-specific XML schema
+	inventoryNrmAlt2.xsd
+-->
+<schema
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrmAlt2"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrmAlt2"
+		elementFormDefault="qualified">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+-->
+
+	<!-- Inventory Management Alternative 2 NRM IRP NRM class associated XML elements -->
+	<element name="InventoryUnitNE"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="neId" type="string"/>
+									<element name="customerIdentifier" type="string" minOccurs="0"/>
+									<element name="productName" type="string"/>
+									<element name="vendorName" type="string"/>
+									<element name="productType" type="string" minOccurs="0"/>
+									<element name="salesUniqueId" type="string" minOccurs="0"/>
+									<element name="operatorUniqueName" type="string" minOccurs="0"/>
+									<element name="siteId" type="integer" minOccurs="0"/>
+									<element name="additionalInformation" type="string" minOccurs="0"/>
+									<element name="hWList" type="xn:dnList" minOccurs="0"/>
+									<element name="sWList" type="xn:dnList" minOccurs="0"/>
+									<element name="lICList" type="xn:dnList" minOccurs="0"/>
+									<element name="mFunction" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<element ref="in:InventoryUnitNE" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="InventoryUnitHw"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="hwId" type="string"/>
+									<element name="hwType" type="string"/>
+									<element name="hwName" type="string" minOccurs="0"/>
+									<element name="vendorName" type="string" minOccurs="0"/>
+									<element name="hwVersion" type="string"/>
+									<element name="salesUniqueId" type="string" minOccurs="0"/>
+									<element name="hwUnitLocation" type="string"/>
+									<element name="model" type="string" minOccurs="0"/>
+									<element name="hwCapability" type="string" minOccurs="0"/>
+									<element name="modificationDate" type="string" minOccurs="0"/>
+									<element name="manualDataEntry" type="string" minOccurs="0"/>
+									<element name="additionalInformation" type="string" minOccurs="0"/>
+									<element name="nEList" type="xn:dnList" minOccurs="0"/>
+									<element name="sWList" type="xn:dnList" minOccurs="0"/>
+									<element name="lICList" type="xn:dnList" minOccurs="0"/>
+									<element name="mFunction" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<element ref="in:InventoryUnitHw" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="InventoryUnitSw"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="swId" type="string"/>
+									<element name="swName" type="string" minOccurs="0"/>
+									<element name="vendorName" type="string" minOccurs="0"/>
+									<element name="swVersion" type="string" minOccurs="0"/>
+									<element name="salesUniqueId" type="string" minOccurs="0"/>
+									<element name="classification" type="string"/>
+									<element name="swInstallationTime" type="dateTime" minOccurs="0"/>
+									<element name="swActivationTime" type="dateTime" minOccurs="0"/>
+									<element name="swStatus" type="string" minOccurs="0"/>
+									<element name="additionalInformation" type="string" minOccurs="0"/>
+									<element name="nEList" type="xn:dnList" minOccurs="0"/>
+									<element name="hWList" type="xn:dnList" minOccurs="0"/>
+									<element name="lICList" type="xn:dnList" minOccurs="0"/>
+									<element name="mFunction" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<element ref="in:InventoryUnitSw" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="InventoryUnitLic"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="licId" type="string"/>
+									<element name="licType" type="string" minOccurs="0"/>
+									<element name="vendorName" type="string" minOccurs="0"/>
+									<element name="validity" type="string" minOccurs="0"/>
+									<element name="key" type="string" minOccurs="0"/>
+									<element name="licActivationTime" type="dateTime" minOccurs="0"/>
+									<element name="licStatus" type="string" minOccurs="0"/>
+									<element name="salesUniqueId" type="string" minOccurs="0"/>
+									<element name="additionalInformation" type="string" minOccurs="0"/>
+									<element name="nEList" type="xn:dnList" minOccurs="0"/>
+									<element name="hWList" type="xn:dnList" minOccurs="0"/>
+									<element name="sWList" type="xn:dnList" minOccurs="0"/>
+									<element name="mFunction" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<element ref="in:InventoryUnitLic" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>

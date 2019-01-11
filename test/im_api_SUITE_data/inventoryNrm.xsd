@@ -1,0 +1,157 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.633 Inventory Management NRM IRP
+	Inventory data file NRM-specific XML schema
+	inventoryNrm.xsd
+-->
+<schema
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm">
+
+<!--
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+-->
+
+	<!-- Inventory Management Alternative 1 NRM IRP NRM class associated XML elements -->
+	<simpleType name="eightOctetsType">
+		<restriction base="hexBinary">
+			<length value="8"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="fourOctetsType">
+		<restriction base="hexBinary">
+			<length value="4"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="angleValueType">
+		<restriction base="short">
+			<minInclusive value="0"/>
+			<maxInclusive value="3600"/>
+		</restriction>
+	</simpleType>
+	<element name="InventoryUnit"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="inventoryUnitType" type="string" />
+									<element name="vendorUnitFamilyType" type="string" minOccurs="0" />
+									<element name="vendorUnitTypeNumber" type="string" minOccurs="0" />
+									<element name="vendorName" type="string"/>
+									<element name="serialNumber" type="string" minOccurs="0"/>
+									<element name="dateOfManufacture" type="date" minOccurs="0"/>
+									<element name="dateOfLastService" type="date" minOccurs="0"/>
+									<element name="unitPosition" type="string" minOccurs="0"/>
+									<element name="manufacturerData" type="string" minOccurs="0"/>
+									<element name="versionNumber" type="string" minOccurs="0"/>
+									<element name="relatedFunction" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="in:InventoryUnit"/>
+							<element ref="xn:VsDataContainer"/>
+							<element ref="in:TmaInventoryUnit"/>
+							<element ref="in:AntennaInventoryUnit"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="TmaInventoryUnit"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from InventoryUnit-->
+									<element name="inventoryUnitType" type="string"/>
+									<element name="vendorUnitFamilyType" type="string" minOccurs="0"/>
+									<element name="vendorUnitTypeNumber" type="string" minOccurs="0"/>
+									<element name="vendorName" type="string"/>
+									<element name="serialNumber" type="string" minOccurs="0"/>
+									<element name="dateOfManufacture" type="date" minOccurs="0"/>
+									<element name="dateOfLastService" type="date" minOccurs="0"/>
+									<element name="unitPosition" type="string" minOccurs="0"/>
+									<element name="manufacturerData" type="string" minOccurs="0"/>
+									<element name="versionNumber" type="string" minOccurs="0"/>
+									<element name="relatedFunction" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from InventoryUnit -->
+									<element name="tmaNumberOfNonLinearGainValues" type="short" minOccurs="0"/>
+									<element name="tmaNonLinearGainValue" type="short" minOccurs="0"/>
+									<element name="tmaAdditionalDataFieldNumber" type="short" minOccurs="0"/>
+									<element name="tmaAntennaModelNumber" type="string" minOccurs="0"/>
+									<element name="tmaAntennaOperatingBands" type="short" minOccurs="0"/>
+									<element name="tmaBeamwidthForEachOpBandInBandOrder"
+											type="in:eightOctetsType" minOccurs="0"/>
+									<element name="tmaGainForEachOpBandInBandOrder"
+											type="in:fourOctetsType" minOccurs="0"/>
+									<element name="tmaInstallationDate" type="string" minOccurs="0"/>
+									<element name="tmaInstallersId" type="string" minOccurs="0"/>
+									<element name="tmaMaxSupportedGain" type="short" minOccurs="0"/>
+									<element name="tmaMinSupportedGain" type="short" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="in:InventoryUnit"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<element name="AntennaInventoryUnit"
+			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<!-- Inherited attributes from InventoryUnit-->
+									<element name="inventoryUnitType" type="string"/>
+									<element name="vendorUnitFamilyType" type="string" minOccurs="0"/>
+									<element name="vendorUnitTypeNumber" type="string" minOccurs="0"/>
+									<element name="vendorName" type="string"/>
+									<element name="serialNumber" type="string" minOccurs="0"/>
+									<element name="dateOfManufacture" type="date" minOccurs="0"/>
+									<element name="dateOfLastService" type="date" minOccurs="0"/>
+									<element name="unitPosition" type="string" minOccurs="0"/>
+									<element name="manufacturerData" type="string" minOccurs="0"/>
+									<element name="versionNumber" type="string" minOccurs="0"/>
+									<element name="relatedFunction" type="xn:dn" minOccurs="0"/>
+									<!-- End of inherited attributes from InventoryUnit-->
+									<element name="maxTiltValue" type="in:angleValueType" minOccurs="0"/>
+									<element name="minTiltValue" type="in:angleValueType" minOccurs="0"/>
+									<element name="mechanicalOffset" type="in:angleValueType" minOccurs="0"/>
+									<element name="baseElevation" type="integer" minOccurs="0"/>
+									<element name="latitude" type="decimal" minOccurs="0"/>
+									<element name="longitude" type="decimal" minOccurs="0"/>
+									<element name="patternLabel" type="string" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="in:InventoryUnit"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>
