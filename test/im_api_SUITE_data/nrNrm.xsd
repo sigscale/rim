@@ -16,7 +16,7 @@
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
 		elementFormDefault="qualified">
 
-<!--  use all.xsd to handle circular imports in all schemas
+<!--
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"/>
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"/>

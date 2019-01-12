@@ -13,10 +13,8 @@
 		xmlns:cn="http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm"
 		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP">
 
-<!--  use all.xsd to handle circular imports in all schemas
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"/>
--->
 
 	<!-- Core Network NRM IRP class associated XML elements -->
 	<complexType name="longList">
@@ -933,7 +931,7 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="racList" type="cn:longList"/>
+									<element name="racList" type="cn:longList "/>
 									<element name="pLMNIdList" type="cn:PLMNIdList" minOccurs="0"/>
 									<element name="sgsnPoolAreaSgsnPool" type="xn:dnList"/>
 									<element name="vnfParametersList"

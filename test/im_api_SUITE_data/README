@@ -25,9 +25,3 @@
     |Inventory   |inventoryNrmAlt2.xsd| 28.633|
     |State Mgmt  |stateManagementIRP  | 28.626|
 
-## Validating XML against the schemas
-	1> rr("/usr/lib/erlang/lib/xmerl-*/include/*").
-	2> {ok, State} = xmerl_xsd:process_schema("all.xsd").
-	3> {XmlElement, _} = xmerl_scan:file("configData.xml").
-	4> xmerl_xsd:validate(XmlElement, State).
-
