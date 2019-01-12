@@ -933,7 +933,7 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="racList" type="cn:longList "/>
+									<element name="racList" type="cn:longList"/>
 									<element name="pLMNIdList" type="cn:PLMNIdList" minOccurs="0"/>
 									<element name="sgsnPoolAreaSgsnPool" type="xn:dnList"/>
 									<element name="vnfParametersList"
