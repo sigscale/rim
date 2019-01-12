@@ -231,7 +231,7 @@
 
 	<!-- Antenna transmission Power Range: -60..50 -->
 	<simpleType name="AntennaPowerType">
-		<restriction base="unsignedShort">
+		<restriction base="short">
 			<minInclusive value="-60"/>
 			<maxInclusive value="50"/>
 		</restriction>
