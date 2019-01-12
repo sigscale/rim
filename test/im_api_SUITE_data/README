@@ -25,3 +25,7 @@
     |Inventory   |inventoryNrmAlt2.xsd| 28.633|
     |State Mgmt  |stateManagementIRP  | 28.626|
 
+## Validating XML against the schemas
+	$ xmllint --noout -schema configData.xsd genericNrm.xml
+	genericNrm.xml validates
+
