@@ -713,7 +713,7 @@
 	<element name="CSServiceProfile" substitutionGroup="sn:SuMServiceProfile">
 		<complexType>
 			<complexContent>
-				<extension base="sn:Common3GPPAccessServiceProfile">
+				<extension base="xn:NrmClass">
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
@@ -797,7 +797,7 @@
 	<element name="GPRSServiceProfile" substitutionGroup="sn:SuMServiceProfile">
 		<complexType>
 			<complexContent>
-				<extension base="sn:PSCommonServiceProfile">
+				<extension base="xn:NrmClass">
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
@@ -854,7 +854,7 @@
 	<element name="EPSServiceProfile" substitutionGroup="sn:SuMServiceProfile">
 		<complexType>
 			<complexContent>
-				<extension base="sn:PSCommonServiceProfile">
+				<extension base="xn:NrmClass">
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
@@ -894,7 +894,7 @@
 	<element name="PSCommonServiceProfile" abstract="true" substitutionGroup="sn:SuMServiceProfile">
 		<complexType>
 			<complexContent>
-				<extension base="sn:Common3GPPAccessServiceProfile">
+				<extension base="xn:NrmClass">
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
@@ -920,7 +920,7 @@
 			abstract="true" substitutionGroup="sn:SuMServiceProfile">
 		<complexType>
 			<complexContent>
-				<extension base="sn:SuMServiceProfile">
+				<extension base="xn:NrmClass">
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
