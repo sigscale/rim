@@ -12,10 +12,10 @@
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:im="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm" >
 
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd" />
 
 	<!--IMS NRM IRP IS class associated XML elements -->
-
 	<element name="ASFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
 		<complexType>
 			<complexContent>

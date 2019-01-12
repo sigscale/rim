@@ -11,9 +11,8 @@
 		xmlns:sn="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#sumNrm"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm">
 
-<!--
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#genericNrm"/>
--->
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd" />
 
 	<!-- SuM Network Resources IRP NRM class associated XML elements -->
 	<element name="SubscriptionFunction"

@@ -11,9 +11,8 @@
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrmAlt2"
 		elementFormDefault="qualified">
 
-<!--
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
--->
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd" />
 
 	<!-- Inventory Management Alternative 2 NRM IRP NRM class associated XML elements -->
 	<element name="InventoryUnitNE"

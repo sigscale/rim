@@ -17,14 +17,22 @@
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
 		elementFormDefault="qualified">
 
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"/>
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+			schemaLocation="nrNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+			schemaLocation="ngcNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+			schemaLocation="epcNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+			schemaLocation="utranNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+			schemaLocation="geranNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+			schemaLocation="stateManagementIRP.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+			schemaLocation="sonPolicyNrm.xsd" />
 
 	<complexType name="IpAddressList">
 		<sequence>

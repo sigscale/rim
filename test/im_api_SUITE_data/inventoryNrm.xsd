@@ -11,9 +11,8 @@
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm">
 
-<!--
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
--->
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd" />
 
 	<!-- Inventory Management Alternative 1 NRM IRP NRM class associated XML elements -->
 	<simpleType name="eightOctetsType">

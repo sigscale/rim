@@ -16,13 +16,18 @@
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
 		elementFormDefault="qualified">
 
-<!--
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"/>
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"/>
--->
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+			schemaLocation="eutranNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+			schemaLocation="epcNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+			schemaLocation="stateManagementIRP.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+			schemaLocation="ngcNrm.xsd" />
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+			schemaLocation="sonPolicyNrm.xsd" />
 
 	<simpleType name="GnbId">
 		<restriction base="unsignedLong">
