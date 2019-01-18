@@ -5,12 +5,12 @@
 	imsNrm.xsd
 -->
 <schema
-		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"
-		elementFormDefault="qualified"
-		attributeFormDefault="unqualified"
 		xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:im="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm" >
+		xmlns:im="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified">
 
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 			schemaLocation="genericNrm.xsd" />
