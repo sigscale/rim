@@ -5,11 +5,11 @@
 	inventoryNrm.xsd
 -->
 <schema
-		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
-		elementFormDefault="qualified"
 		xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm">
+		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
+		elementFormDefault="qualified">
 
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 			schemaLocation="genericNrm.xsd" />

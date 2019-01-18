@@ -5,10 +5,10 @@
 	stateManagementIRP.xsd
 -->
 <schema
-	targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
-	elementFormDefault="qualified"
 	xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP" >
+	xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+	targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+	elementFormDefault="qualified">
 
 	<!-- State Management IRP related XML types -->
 

@@ -5,13 +5,13 @@
 	hnsNrm.xsd
 -->
 <schema
-		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm"
-		elementFormDefault="qualified"
 		xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm"
 		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
-		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP">
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm"
+		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.673#hnsNrm"
+		elementFormDefault="qualified">
 
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 			schemaLocation="genericNrm.xsd" />

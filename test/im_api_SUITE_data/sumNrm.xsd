@@ -5,11 +5,11 @@
 	sumNrm.xsd
 -->
 <schema
-		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#sumNrm"
-		elementFormDefault="qualified"
 		xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:sn="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#sumNrm"
-		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm">
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.753#sumNrm"
+		elementFormDefault="qualified">
 
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 			schemaLocation="genericNrm.xsd" />

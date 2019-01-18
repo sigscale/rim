@@ -5,14 +5,14 @@
 	hensNrm.xsd
 -->
 <schema
-		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm"
-		elementFormDefault="qualified"
 		xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm"
 		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
+		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm"
 		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
-		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm">
+		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.676#hensNrm"
+		elementFormDefault="qualified">
 
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 			schemaLocation="genericNrm.xsd" />
