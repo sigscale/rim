@@ -62,63 +62,6 @@ end_per_suite(_Config) ->
 -spec init_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> Config :: [tuple()].
 %% Initiation before each test case.
 %%
-init_per_testcase(bulk_cm_generic, Config) ->
-	NumResources = 10,
-	Newline = #xmlText{value = "\n",type = text},
-	Indent1 = #xmlText{value = "\n\t",type = text},
-	Indent2 = #xmlText{value = "\n\t\t",type = text},
-	Indent3 = #xmlText{value = "\n\t\t\t",type = text},
-	Indent4 = #xmlText{value = "\n\t\t\t\t",type = text},
-	Indent5 = #xmlText{value = "\n\t\t\t\t\t",type = text},
-	Indent6 = #xmlText{value = "\n\t\t\t\t\t\t",type = text},
-	F = fun F(0, Acc) ->
-				[Indent3, {'xn:ManagementNode', [{id, "1"}],
-						[Indent4, {'xn:attributes', [],
-								[Indent5, {'xn:userLabel', ["Paris MN1"]},
-								Indent5, {'xn:vendorName', ["Company NN"]},
-								Indent5, {'xn:userDefinedState', ["commercial"]},
-								Indent5, {'xn:locationName', ["Montparnasse"]},
-								Indent5, {'xn:managedElements', [],
-										[Indent6, {'xn:dn', ["ManagementNode=1,managedElement=1"]},
-										Indent6, {'xn:dn', ["ManagementNode=1,managedElement=2"]}, Indent6]},
-								Indent5, {'xn:swVersion', ["1.0"]}, Indent4]}, Indent3]} | Acc];
-			F(N, Acc) ->
-				Resource = {'xn:ManagedElement', [{id, integer_to_list(N)}],
-						[Indent4, {'xn:attributes', [],
-								[Indent5, {'xn:dnPrefix', ["SubNetwork=1,ManagedElement=" ++ integer_to_list(N)]},
-								Indent5, {'xn:managedElementTypeList', [],
-										[Indent6, {'xn:managedElementType', ["RNC"]}, Indent6]},
-								Indent5, {'xn:userLabel', [generate_identity(10)]},
-								Indent5, {'xn:vendorName', [generate_identity(10)]},
-								Indent5, {'xn:userDefinedState', ["commercial"]},
-								Indent5, {'xn:locationName', [generate_identity(10)]},
-								Indent5, {'xn:swVersion', ["1.0"]},
-								Indent5, {'xn:managedBy', [],
-										[Indent6, {'xn:dn', ["ManagementNode=1,ManagementElement=" ++
-												integer_to_list(N)]}, Indent5]}, Indent4]}, Indent3]},
-				F(N - 1, [Indent3, Resource | Acc])
-	end,
-	Resources = F(NumResources, []),
-	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
-			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"}],
-	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1"},
-			{vendorName, "Company NN"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=a1.companyNN.com"}],
-			[Indent2, {'xn:SubNetwork', [{id, "1"}],
-					[Indent3, {'xn:attributes', [],
-							[Indent4, {'xn:dnPrefix', ["SubNetwork=1"]},
-							Indent4, {'xn:userLabel', ["Paris SN1"]},
-							Indent4, {'xn:userDefinedNetworkType', ["UMTS"]},
-							Indent4, {'xn:setOfMcc', []}, Indent3]} | Resources] ++ [Indent2]}, Indent1]},
-	FileFooter = {fileFooter, [{dateTime, "2018-12-15T12:00:00Z"}], []},
-	Simple = [Newline, {bulkCmConfigDataFile, FileAttributes,
-			[Indent1, FileHeader, Indent1, ConfigData, Indent1, FileFooter, Newline]}],
-	GenericNrmXML = lists:flatten(xmerl:export_simple(Simple, xmerl_xml, [])),
-	PrivDir = ?config(priv_dir, Config),
-	XMLPath = PrivDir ++ "/" ++ "genericNrm.xml",
-	file:write_file(XMLPath, GenericNrmXML),
-	Config;
 init_per_testcase(bulk_cm_geran, Config) ->
 	Newline = #xmlText{value = "\n",type = text},
 	Tabs6 = #xmlText{value = "\t\t\t\t\t\t",type = text},
@@ -524,6 +467,173 @@ init_per_testcase(bulk_cm_epc, Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	XMLPath = PrivDir ++ "/" ++ "epc.xml",
 	file:write_file(XMLPath, EpcNrmXML),
+	Config;
+init_per_testcase(bulk_cm_core, Config) ->
+	Newline = #xmlText{value = "\n",type = text},
+	Tabs6 = #xmlText{value = "\t\t\t\t\t\t",type = text},
+	Indent1 = #xmlText{value = "\n\t",type = text},
+	Indent2 = #xmlText{value = "\n\t\t",type = text},
+	Indent3 = #xmlText{value = "\n\t\t\t",type = text},
+	Indent4 = #xmlText{value = "\n\t\t\t\t",type = text},
+	Indent5 = #xmlText{value = "\n\t\t\t\t\t",type = text},
+	Indent6 = #xmlText{value = "\n\t\t\t\t\t\t",type = text},
+	Indent7 = #xmlText{value = "\n\t\t\t\t\t\t\t",type = text},
+	Indent8 = #xmlText{value = "\n\t\t\t\t\t\t\t\t",type = text},
+	F = fun F(0, Acc) ->
+				Acc;
+			F(N, Acc) ->
+				IucsLink = {'cn:IucsLink', [{id, integer_to_list(N)}],
+						[Indent6, {'cn:attributes', [],
+								[Indent7, {'cn:userLabel', [generate_identity(7)]},
+								Indent7, {'cn:vnfParametersList', [],
+										[Indent8, {'xn:vnfInstanceId', [generate_identity(7)]},
+										Indent8, {'xn:autoScalable', ["true"]}, Indent7]},
+								Indent7, {'cn:numOfHspdschs', ["0"]}, Indent6]}, Tabs6] ++
+						[Indent6, {'xn:VsDataContainer', [{id, "1"}],
+								[Indent7, {'xn:attributes', [],
+										[Indent8, {'xn:vsDataType', ["DataType=" ++ integer_to_list(N)]},
+										Indent8, {'xn:vsDataFormatVersion', [generate_identity(5) ++ ".1.1"]},
+										Indent8, {'xn:vsData', []}, Indent7]}, Indent6]}, Indent5]},
+				F(N - 1, [Indent5, IucsLink | Acc])
+	end,
+	IucsLink = F(10, []),
+	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
+			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
+			{'xmlns:cn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm"}],
+	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
+			{senderName, "DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1"},
+			{vendorName, "Company NN"}], []},
+	ConfigData = {configData, [{dnPrefix, "DC=a1.companyNN.com"}],
+			[Indent2, {'xn:SubNetwork', [{id, "1"}],
+					[Indent3, {'xn:attributes', [],
+							[Indent4, {'xn:userLabel', [generate_identity(7)]},
+							Indent4, {'xn:userDefinedNetworkType', ["GSM"]},
+							Indent4, {'xn:setOfMcc', ["999"]}, Indent3]},
+					Indent3, {'xn:ManagementNode', [{id, "1"}],
+							[Indent4, {'xn:attributes', [],
+									[Indent5, {'xn:userLabel', [generate_identity(7)]},
+									Indent5, {'xn:vendorName', [generate_identity(7)]},
+									Indent5, {'xn:userDefinedState', ["commercial"]},
+									Indent5, {'xn:locationName', [generate_identity(7)]},
+									Indent5, {'xn:managedElements', [],
+											[Indent6, {'xn:dn', ["SubNetwork=1,BssFunction=1"]}, Indent5]},
+									Indent5, {'xn:swVersion', ["1.0"]}, Indent4]}, Indent3]},
+					Indent3, {'xn:ManagedElement', [{id, "1"}],
+							[Indent4, {'xn:attributes', [],
+									[Indent5, {'xn:dnPrefix', []},
+									Indent5, {'xn:managedElementTypeList', [],
+											[Indent6, {'xn:managedElementType', ["BSS"]}, Indent5]},
+									Indent5, {'xn:userLabel', ["BSC " ++ generate_identity(5)]},
+									Indent5, {'xn:vendorName', [generate_identity(7)]},
+									Indent5, {'xn:userDefinedState', ["commercial"]},
+									Indent5, {'xn:locationName', [generate_identity(7)]},
+									Indent5, {'xn:swVersion', ["1.0"]},
+									Indent5, {'xn:managedBy', [],
+											[Indent6, {'xn:dn', ["SubNetwork=1,ManagementNode=1"]}, Indent5]}, Indent4]},
+							Indent4, {'cn:MscServerFunction', [{id, "1"}],
+									[Indent5, {'cn:attributes', [],
+											[Indent6, {'cn:userLabel', ["BSC " ++ generate_identity(5)]},
+											Indent6, {'cn:mccList', [],
+													[Indent7, {'cn:em', ["8564132"]}, Indent6]},
+											Indent6, {'cn:mncList', [],
+													[Indent7, {'cn:em', ["9365425"]}, Indent6]},
+											Indent6, {'cn:lacList', [],
+													[Indent7, {'cn:em', ["518567"]}, Indent6]},
+											Indent6, {'cn:sacList', [],
+													[Indent7, {'cn:em', ["3879476"]}, Indent6]},
+											Indent6, {'cn:mscId', ["9613247"]},
+											Indent6, {'cn:mscServerFunctionGsmCell', [],
+													[Indent7, {'xn:dn', ["ENBFunction=1,mscServerFunctionGsmCell"]},
+															Indent6]},
+											Indent6, {'cn:mscServerFunctionExternalGsmCell', [],
+													[Indent7, {'xn:dn', ["ENBFunction=1,mscServerFunctionExternalGsmCell"]},
+															Indent6]},
+											Indent6, {'cn:mscServerFunctionCsMgwFunction', [],
+													[Indent7, {'xn:dn', ["ENBFunction=1,mscServerFunctionCsMgwFunction"]},
+															Indent6]},
+											Indent6, {'cn:nriList', [],
+													[Indent7, {'cn:em', ["1565372"]}]}, Indent5]} | IucsLink]},
+							Indent4, {'xn:VsDataContainer', [{id, "1"}],
+									[Indent5, {'xn:attributes', [],
+											[Indent6, {'xn:vsDataType', ["DataType=6"]},
+											Indent6, {'xn:vsDataFormatVersion', [generate_identity(5) ++ ".1.1"]},
+											Indent6, {'xn:vsData', []}, Indent5]}, Indent4]}, Indent3]},
+													Indent2]}, Indent1]},
+	FileFooter = {fileFooter, [{dateTime, "2019-01-05T12:00:00Z"}], []},
+	Simple = [Newline, {bulkCmConfigDataFile, FileAttributes,
+         [Indent1, FileHeader, Indent1, ConfigData, Indent1, FileFooter, Newline]}],
+	CoreNrmXML = lists:flatten(xmerl:export_simple(Simple, xmerl_xml, [])),
+	PrivDir = ?config(priv_dir, Config),
+	XMLPath = PrivDir ++ "/" ++ "core.xml",
+	file:write_file(XMLPath, CoreNrmXML),
+	Config;
+init_per_testcase(bulk_cm_ims, Config) ->
+	Newline = #xmlText{value = "\n",type = text},
+	Indent1 = #xmlText{value = "\n\t",type = text},
+	Indent2 = #xmlText{value = "\n\t\t",type = text},
+	Indent3 = #xmlText{value = "\n\t\t\t",type = text},
+	Indent4 = #xmlText{value = "\n\t\t\t\t",type = text},
+	Indent5 = #xmlText{value = "\n\t\t\t\t\t",type = text},
+	Indent6 = #xmlText{value = "\n\t\t\t\t\t\t",type = text},
+	Indent7 = #xmlText{value = "\n\t\t\t\t\t\t\t",type = text},
+	F = fun F(0, Acc) ->
+				Acc;
+			F(N, Acc) ->
+				AsFunction = {'im:ASFunction', [{id, integer_to_list(N)}],
+						[Indent5, {'im:attributes', [],
+								[Indent6, {'im:userLabel', ["BSC " ++ generate_identity(5)]},
+								Indent6, {'im:vnfParametersList', [],
+										[Indent7, {'xn:vnfInstanceId', [generate_identity(7)]},
+										Indent7, {'xn:autoScalable', ["true"]}]}, Indent5]}]},
+				F(N - 1, [Indent4, AsFunction | Acc])
+	end,
+	AsFunction = F(10, []),
+	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
+			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
+			{'xmlns:im', "http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"}],
+	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
+			{senderName, "DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1"},
+			{vendorName, "Company NN"}], []},
+	ConfigData = {configData, [{dnPrefix, "DC=a1.companyNN.com"}],
+			[Indent2, {'xn:SubNetwork', [{id, "1"}],
+					[Indent3, {'xn:attributes', [],
+							[Indent4, {'xn:userLabel', [generate_identity(7)]},
+							Indent4, {'xn:userDefinedNetworkType', ["GSM"]},
+							Indent4, {'xn:setOfMcc', ["999"]}, Indent3]},
+					Indent3, {'xn:ManagementNode', [{id, "1"}],
+							[Indent4, {'xn:attributes', [],
+									[Indent5, {'xn:userLabel', [generate_identity(7)]},
+									Indent5, {'xn:vendorName', [generate_identity(7)]},
+									Indent5, {'xn:userDefinedState', ["commercial"]},
+									Indent5, {'xn:locationName', [generate_identity(7)]},
+									Indent5, {'xn:managedElements', [],
+											[Indent6, {'xn:dn', ["SubNetwork=1,BssFunction=1"]}, Indent5]},
+									Indent5, {'xn:swVersion', ["1.0"]}, Indent4]}, Indent3]},
+					Indent3, {'xn:ManagedElement', [{id, "1"}],
+							[Indent4, {'xn:attributes', [],
+									[Indent5, {'xn:dnPrefix', []},
+									Indent5, {'xn:managedElementTypeList', [],
+											[Indent6, {'xn:managedElementType', ["BSS"]}, Indent5]},
+									Indent5, {'xn:userLabel', ["BSC " ++ generate_identity(5)]},
+									Indent5, {'xn:vendorName', [generate_identity(7)]},
+									Indent5, {'xn:userDefinedState', ["commercial"]},
+									Indent5, {'xn:locationName', [generate_identity(7)]},
+									Indent5, {'xn:swVersion', ["1.0"]},
+									Indent5, {'xn:managedBy', [],
+											[Indent6, {'xn:dn', ["SubNetwork=1,ManagementNode=1"]},
+													Indent5]}, Indent4]}] ++ AsFunction ++
+							[Indent4, {'xn:VsDataContainer', [{id, "1"}],
+									[Indent5, {'xn:attributes', [],
+											[Indent6, {'xn:vsDataType', ["DataType=6"]},
+											Indent6, {'xn:vsDataFormatVersion', [generate_identity(5) ++ ".1.1"]},
+											Indent6, {'xn:vsData', []}, Indent5]}, Indent4]}]}]}]},
+	FileFooter = {fileFooter, [{dateTime, "2019-01-05T12:00:00Z"}], []},
+	Simple = [Newline, {bulkCmConfigDataFile, FileAttributes,
+         [Indent1, FileHeader, Indent1, ConfigData, Indent1, FileFooter, Newline]}],
+	ImsNrmXML = lists:flatten(xmerl:export_simple(Simple, xmerl_xml, [])),
+	PrivDir = ?config(priv_dir, Config),
+	XMLPath = PrivDir ++ "/" ++ "ims.xml",
+	file:write_file(XMLPath, ImsNrmXML),
 	Config.
 
 -spec end_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> any().
@@ -542,30 +652,19 @@ sequences() ->
 %% Returns a list of all test cases in this test suite.
 %%
 all() ->
-	[bulk_cm_generic, bulk_cm_geran, bulk_cm_utran, bulk_cm_eutran, bulk_cm_epc].
+	[bulk_cm_geran, bulk_cm_utran, bulk_cm_eutran, bulk_cm_epc, bulk_cm_core,
+			bulk_cm_ims].
 
 %%---------------------------------------------------------------------
 %%  Test cases
 %%---------------------------------------------------------------------
-
-bulk_cm_generic() ->
-	[{userdata, [{doc, "Import bulk CM for generic network resources"}]}].
-
-bulk_cm_generic(Config) ->
-	PrivDir = ?config(priv_dir, Config),
-	GenericXML = PrivDir ++ "/" ++ "genericNrm.xml",
-	ok = cm:import(GenericXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(GenericXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
 
 bulk_cm_geran() ->
 	[{userdata, [{doc, "Import bulk CM for geran network resources"}]}].
 
 bulk_cm_geran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
-	GeranXML = PrivDir ++ "/" ++ "geranNrm.xml",
+	GeranXML = PrivDir ++ "/" ++ "geran.xml",
 	ok = cm:import(GeranXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(GeranXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
@@ -577,7 +676,7 @@ bulk_cm_utran() ->
 
 bulk_cm_utran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
-	UtranXML = PrivDir ++ "/" ++ "utranNrm.xml",
+	UtranXML = PrivDir ++ "/" ++ "utran.xml",
 	ok = cm:import(UtranXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(UtranXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
@@ -589,7 +688,7 @@ bulk_cm_eutran() ->
 
 bulk_cm_eutran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
-	EutranXML = PrivDir ++ "/" ++ "eutranNrm.xml",
+	EutranXML = PrivDir ++ "/" ++ "eutran.xml",
 	ok = cm:import(EutranXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(EutranXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
@@ -604,6 +703,30 @@ bulk_cm_epc(Config) ->
 	EpcXML = PrivDir ++ "/" ++ "epcNrm.xml",
 	ok = cm:import(EpcXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(EpcXML)),
+	Resources = get_resources(ConfigData#xmlElement.content),
+	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
+	ok = check_resources(ResourceNames).
+
+bulk_cm_core() ->
+	[{userdata, [{doc, "Import bulk CM for core network resources"}]}].
+
+bulk_cm_core(Config) ->
+	PrivDir = ?config(priv_dir, Config),
+	CoreXML = PrivDir ++ "/" ++ "core.xml",
+	ok = cm:import(CoreXML),
+	[ConfigData] = decode_xml(xmerl_scan:file(CoreXML)),
+	Resources = get_resources(ConfigData#xmlElement.content),
+	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
+	ok = check_resources(ResourceNames).
+
+bulk_cm_ims() ->
+	[{userdata, [{doc, "Import bulk CM for ims network resources"}]}].
+
+bulk_cm_ims(Config) ->
+	PrivDir = ?config(priv_dir, Config),
+	ImsXML = PrivDir ++ "/" ++ "ims.xml",
+	ok = cm:import(ImsXML),
+	[ConfigData] = decode_xml(xmerl_scan:file(ImsXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
 	ok = check_resources(ResourceNames).
@@ -662,25 +785,3 @@ check_resources([ResourceName | T]) ->
 check_resources([]) ->
 	ok.
 
-%				[{'gn:BtsSiteMgr', [{id, "1"}],
-%						[{'gn:attributes', [],
-%								[{'gn:userLabel', ["Paris MN2"]},
-%								{'gn:operationalState', ["disabled"]}]},
-%						{'gn:GsmCell', [{id, "1"}],
-%								[{'gn:attributes', [],
-%										[{'gn:userLabel', ["Cell " ++ generate_identity(5)]},
-%										{'gn:cellIdentity', ["42"]},
-%										{'gn:cellAllocation', ["963"]},
-%										{'gn:ncc', ["365"]},
-%										{'gn:bcc', ["756"]},
-%										{'gn:lac', ["425"]},
-%										{'gn:mcc', ["999"]},
-%										{'gn:mnc', ["159"]},
-%										{'gn:rxLevAccessMin', ["78954"]},
-%										{'gn:msTxPwrMaxCCH', ["8564"]},
-%										{'gn:rfHoppingEnabled', ["true"]},
-%										{'gn:hoppingSequenceList', ["132564"]},
-%										{'gn:plmnPermitted', ["true"]}]},
-%								{'gn:GsmRelation', [{id, "1"}],
-%										[{'gn:attributes', [],
-%												[{'gn:adjacentCell', ["SubNetwork=1,BtsSiteMgr=1,GsmCell=2"]}]}]}]}]} | Acc];
