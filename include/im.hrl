@@ -51,7 +51,7 @@
 -type resource_char() :: #resource_char{}.
 
 -record(resource,
-		{id :: string() | '_' | '$1' | {'_' | nonempty_improper_list(any(),'_'),'_'} | {[any(),...],'_'},
+		{id :: string() | '_' | '$1',
 		href :: string() | '_',
 		name :: string() | '_' | '$2',
 		description :: string() | '_',
