@@ -75,3 +75,14 @@
 		countryCity :: string()}).
 -type sites() :: #sites{}.
 
+-record(gsm_relation,
+		adjacent_cell :: string(),
+		bcch_requency :: integer(),
+		ncc :: integer(),
+		bcc :: integer(),
+		lac :: integer(),
+		is_remove_allowed :: boolean(),
+		is_hoa_allowed :: boolean(),
+		is_covered_by :: no | yes | partial,
+		vs_data_container :: [term()]}).
+
