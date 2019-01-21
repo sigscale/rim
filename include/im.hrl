@@ -76,7 +76,7 @@
 -type sites() :: #sites{}.
 
 -record(gsm_relation,
-		adjacent_cell :: string(),
+		{adjacent_cell :: string(),
 		bcch_requency :: integer(),
 		ncc :: integer(),
 		bcc :: integer(),
