@@ -1,4 +1,4 @@
-%% im.hrl
+l
 
 -record(resource_spec,
 		{id :: string() | '_',
@@ -76,6 +76,7 @@
 -type sites() :: #sites{}.
 
 -record(gsm_relation,
+		{id :: string(),
 		adjacent_cell :: string(),
 		bcch_requency :: integer(),
 		ncc :: integer(),
@@ -85,4 +86,32 @@
 		is_hoa_allowed :: boolean(),
 		is_covered_by :: no | yes | partial,
 		vs_data_container :: [term()]}).
+
+-record(utran_relation,
+		{id :: string(),
+		adjacent_cell :: string(),
+		vs_data_container :: [term()]}).
+
+-record(eutran_relation,
+		{id :: string(),
+		tci :: integer(),
+		is_remove_allowed :: boolean(),
+		is_hoa_allowed :: boolean(),
+		is_icic_information_send_allowed :: boolean(),
+		is_lb_allowed :: boolean(),
+		adjacent_cell :: string(),
+		is_es_covered_by :: no | yes | partial,
+		cell_individual_offset :: string(),
+		q_offset :: string(),
+		vs_data_container :: [term()]}).
+
+-record(inter_rat_es_policies,
+		{id :: string(),
+		act_original_cell_params :: relative_cell_load_parameters(),
+		act_candidate_cell_params :: relative_cell_load_parameters(),
+		deact_candidate_cell_params :: relative_cell_load_parameters()}).
+
+-record(rel_cell_load_params,
+		{load_threshold :: 0..10000,
+		time_duration :: 0..900}).
 
