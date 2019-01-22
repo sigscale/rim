@@ -114,4 +114,5 @@
 -record(rel_cell_load_params,
 		{load_threshold :: 0..10000,
 		time_duration :: 0..900}).
+-type relative_cell_load_parameters() :: #inter_rat_es_policies{}.
 
