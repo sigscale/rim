@@ -1,7 +1,7 @@
 %%% im.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018 SigScale Global Inc.
+%%% @copyright 2018-2019 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 %%%   {@link //sigscale_im. sigscale_im} application.
 %%%
 -module(im).
--copyright('Copyright (c) 2018 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% export the im public API
 -export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).

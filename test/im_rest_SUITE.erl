@@ -1,6 +1,6 @@
 %%% im_rest_SUITE.erl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018 SigScale Global Inc.
+%%% @copyright 2018-2019 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 %%% Test suite for the REST API of the
 %%% {@link //sigscale_im. sigscale_im} application.
 -module(im_rest_SUITE).
--copyright('Copyright (c) 2018 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% common_test required callbacks
 -export([suite/0, sequences/0, all/0]).
