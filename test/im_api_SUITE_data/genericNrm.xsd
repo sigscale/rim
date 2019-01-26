@@ -243,8 +243,8 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="vsDataType"/>
-									<element name="vsDataFormatVersion"/>
+									<element name="vsDataType" type="string"/>
+									<element name="vsDataFormatVersion" type="string"/>
 									<element ref="xn:vsData"/>
 								</all>
 							</complexType>
