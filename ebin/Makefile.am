@@ -15,7 +15,6 @@ beam_DATA = im_app.beam \
 			mod_im_rest_get.beam \
 			im_rest.beam \
 			im_rest_res_user.beam \
-			im_rest_res_inventory.beam \
 			im_rest_query_scanner.beam \
 			im_rest_query_parser.beam \
 			im_rest_pagination_sup.beam \
