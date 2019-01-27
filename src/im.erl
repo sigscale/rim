@@ -22,8 +22,9 @@
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% export the im public API
--export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).
+-export([add_catalog/1, get_catalogs/0, get_catalog/1, delete_catalog/1]).
 -export([get_resource/0, query_resource/7, query_resource/8]).
+-export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
 -export([import/1]).
 
@@ -44,10 +45,103 @@
 %%  The im public API
 %%----------------------------------------------------------------------
 
-import(File) when is_list(File) ->
-	Options = [{event_fun, fun parse/3},
-		{event_state, #state{}}],
-	xmerl_sax_parser:file(File, Options).
+-spec add_catalog(Catalog) -> Result
+	when
+		Result :: {ok, Catalog} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Catalog.
+add_catalog(#resource_catalog{id = undefined,
+		last_modified = undefined} = Catalog) ->
+	F = fun() ->
+			TS = erlang:system_time(?MILLISECOND),
+			N = erlang:unique_integer([positive]),
+			Id = integer_to_list(TS) ++ integer_to_list(N),
+			NewCatalog = Catalog#resource_catalog{id = Id, last_modified = TS},
+			ok = mnesia:write(NewCatalog),
+			NewCatalog
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCatalog} ->
+			{ok, NewCatalog}
+	end.
+
+-spec get_catalogs() -> Result
+	when
+		Result :: {ok, CatalogIDs} | {error, Reason},
+		CatalogIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Catalog identifiers.
+get_catalogs() ->
+	F = fun() ->
+			mnesia:all_keys(catalog)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CatalogIDs} ->
+			CatalogIDs
+	end.
+
+-spec delete_catalog(CatalogID) -> Result
+	when
+		CatalogID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Catalog.
+delete_catalog(CatalogID) when is_list(CatalogID) ->
+	F = fun() ->
+			mnesia:delete(catalog, CatalogID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec get_catalog(CatalogID) -> Result
+	when
+		CatalogID :: string(),
+		Result :: {ok, Catalog} | {error, Reason},
+		Catalog :: catalog(),
+		Reason :: term().
+%% @doc Get a Resource Catalog.
+get_catalog(CatalogID) when is_list(CatalogID) ->
+	F = fun() ->
+			mnesia:read(catalog, CatalogID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Catalog]} ->
+			{ok, Catalog}
+	end.
+
+-spec get_resource() -> Result
+	when
+		Result :: [#resource{}] | {error, Reason},
+		Reason :: term().
+%% @doc Get all resources.
+get_resource() ->
+	MatchSpec = [{'_', [], ['$_']}],
+	F = fun(F, start, Acc) ->
+		F(F, mnesia:select(inventory, MatchSpec,
+				?CHUNKSIZE, read), Acc);
+		(_F, '$end_of_table', Acc) ->
+			lists:flatten(lists:reverse(Acc));
+		(_F, {error, Reason}, _Acc) ->
+				{error, Reason};
+		(F, {Resource, Cont}, Acc) ->
+				F(F, mnesia:select(Cont), [Resource | Acc])
+	end,
+	case mnesia:transaction(F, [F, start, []]) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, Result} ->
+			Result
+	end.
 
 -spec query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType,
 		MatchChar) -> Result
@@ -257,30 +351,6 @@ query_resource5(Cont, Resource, Total, []) ->
 	{Cont, Resource, Total}.
 
 
-
--spec get_resource() -> Result
-	when
-		Result :: [#resource{}] | {error, Reason},
-		Reason :: term().
-%% @doc Get all resources.
-get_resource() ->
-	MatchSpec = [{'_', [], ['$_']}],
-	F = fun(F, start, Acc) ->
-		F(F, mnesia:select(inventory, MatchSpec,
-				?CHUNKSIZE, read), Acc);
-		(_F, '$end_of_table', Acc) ->
-			lists:flatten(lists:reverse(Acc));
-		(_F, {error, Reason}, _Acc) ->
-				{error, Reason};
-		(F, {Resource, Cont}, Acc) ->
-				F(F, mnesia:select(Cont), [Resource | Acc])
-	end,
-	case mnesia:transaction(F, [F, start, []]) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, Result} ->
-			Result
-	end.
 
 -spec add_user(Username, Password, Locale) -> Result
 	when
@@ -511,6 +581,16 @@ generate_password() ->
 %% @equiv generate_identity(7)
 generate_identity() ->
 	generate_identity(7).
+
+-spec import(File) -> Result
+	when
+		File :: file:filename(),
+		Result :: term().
+%% @doc Import 3GPP Bulk Configuration Management (CM) `ConfigData' file.
+import(File) when is_list(File) ->
+	Options = [{event_fun, fun parse/3},
+		{event_state, #state{}}],
+	xmerl_sax_parser:file(File, Options).
 
 %%----------------------------------------------------------------------
 %%  internal functions
