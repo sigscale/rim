@@ -23,7 +23,6 @@
 
 -export([date/1, iso8601/1, etag/1]).
 -export([parse_query/1, range/1]).
--export([millionths_in/1, millionths_out/1]).
 
 % calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}})
 -define(EPOCH, 62167219200).
@@ -165,56 +164,6 @@ range(Range) when is_list(Range) ->
 	end;
 range({Start, End}) when is_integer(Start), is_integer(End) ->
 	{ok, "items=" ++ integer_to_list(Start) ++ "-" ++ integer_to_list(End)}.
-
--type millionths() :: non_neg_integer().
-%% Internal representation 1:1000000 for six decimal places maximum.
--spec millionths_in(In) -> Out
-	when
-		In :: string() | integer() | float(),
-		Out :: millionths().
-%% @doc Convert value from JSON to internal value.
-%%
-millionths_in(In) when is_list(In) ->
-	case string:tokens(In, [$.]) of
-		[M] ->
-			list_to_integer(M) * 1000000;
-		[M, D] when length(D) =< 6 ->
-			D1 = list_to_integer(D ++ lists:duplicate(6 - length(D), $0)),
-			case list_to_integer(M) of
-				M1 when M1 < 0 ->
-					M1 * 1000000 - D1;
-				M1 ->
-					M1 * 1000000 + D1
-			end
-	end;
-millionths_in(In) when is_integer(In) ->
-	In * 1000000;
-millionths_in(In) when is_float(In) ->
-	millionths_in(float_to_list(In, [{decimals, 7}, compact])).
-
--spec millionths_out(In) -> Out
-	when
-		In :: millionths(),
-		Out :: string().
-%% @doc Convert internal value to string() for JSON.
-%%
-millionths_out(In) when is_integer(In), In < 0 ->
-	N1 = 0 - In,
-	M = N1 div 1000000,
-	D = N1 rem 1000000,
-	SD = integer_to_list(D),
-	S1 = [$-] ++ integer_to_list(M) ++ [$.]
-			++ lists:duplicate(6 - length(SD), $0) ++ SD,
-	S2 = string:strip(S1, right, $0),
-	string:strip(S2, right, $.);
-millionths_out(In) when is_integer(In) ->
-	M = In div 1000000,
-	D = In rem 1000000,
-	SD = integer_to_list(D),
-	S1 = integer_to_list(M) ++ [$.]
-			++ lists:duplicate(6 - length(SD), $0) ++ SD,
-	S2 = string:strip(S1, right, $0),
-	string:strip(S2, right, $.).
 
 %%----------------------------------------------------------------------
 %%  internal functions
