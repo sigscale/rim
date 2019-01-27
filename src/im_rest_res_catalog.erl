@@ -1,4 +1,4 @@
-%%% im_rest_res_inventory.erl
+%%% im_rest_res_catalog.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @copyright 2019 SigScale Global Inc.
@@ -18,19 +18,18 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
-%%% 	Handle `ResourceInventory' collection.
+%%% 	Handle `ResourceCatalog' collection.
 %%%
--module(im_rest_res_inventory).
+-module(im_rest_res_catalog).
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_inventory/2, get_resource/2, post_resource/1, delete_resource/1]).
--export([resource/1]).
+-export([get_catalogs/2, get_catalog/2, post_catalog/1, delete_catalog/1]).
+-export([catalog/1]).
  
 -include("im.hrl").
 
--define(PathInventory, "/resourceInventoryManagement/v3/").
--define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
+-define(PathCatalog, "/resourceCatalogManagement/v3/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -50,22 +49,22 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec get_inventory(Query, Headers) -> Result
+-spec get_catalogs(Query, Headers) -> Result
 	when
 		Query :: [{Key :: string(), Value :: string()}],
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on `Resource' collection.
-get_inventory(Query, Headers) ->
+%% @doc Handle `GET' request on `ResourceCatalog' collection.
+get_catalogs(Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
-			get_inventory(NewQuery, Filters, Headers);
+			get_catalogs(NewQuery, Filters, Headers);
 		false ->
-			get_inventory(Query, [], Headers)
+			get_catalogs(Query, [], Headers)
 	end.
 %% @hidden
-get_inventory(Query, Filters, Headers) ->
+get_catalogs(Query, Filters, Headers) ->
 	case {lists:keyfind("if-match", 1, Headers),
 			lists:keyfind("if-range", 1, Headers),
 			lists:keyfind("range", 1, Headers)} of
@@ -120,48 +119,48 @@ get_inventory(Query, Filters, Headers) ->
 			query_start(Query, Filters, undefined, undefined)
 	end.
 
--spec get_resource(Id, Query) -> Result
+-spec get_catalog(Id, Query) -> Result
 	when
 		Id :: string(),
 		Query :: [{Key :: string(), Value :: string()}],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on a `Resource' resource.
-get_resource(Id, Query) ->
+%% @doc Handle `GET' request on a `ResourceCatalog' resource.
+get_catalog(Id, Query) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, L}, NewQuery} ->
-			get_resource(Id, NewQuery, string:tokens(L, ","));
+			get_catalog(Id, NewQuery, string:tokens(L, ","));
 		false ->
-			get_resource(Id, Query, [])
+			get_catalog(Id, Query, [])
 	end.
 %% @hidden
-get_resource(Id, [] = _Query, _Filters) ->
-	case im:get_resource(Id) of
-		{ok, #resource{last_modified = LM} = Resource} ->
+get_catalog(Id, [] = _Query, _Filters) ->
+	case im:get_catalog(Id) of
+		{ok, #catalog{last_modified = LastModified} = Catalog} ->
 			Headers = [{content_type, "application/json"},
-					{etag, im_rest:etag(LM)}],
-			Body = zj:encode(resource(Resource)),
+					{etag, im_rest:etag(LastModified)}],
+			Body = zj:encode(catalog(Catalog)),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
 	end;
-get_resource(_, _, _) ->
+get_catalog(_, _, _) ->
 	{error, 400}.
 
--spec post_resource(RequestBody) -> Result
+-spec post_catalog(RequestBody) -> Result
 	when
 		RequestBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()}.
-%% @doc Handle `POST' request on `Resource' collection.
-post_resource(RequestBody) ->
+%% @doc Handle `POST' request on `ResourceCatalog' collection.
+post_catalog(RequestBody) ->
 	try
-		Resource = resource(zj:decode(RequestBody)),
-		case im:add_resource(Resource) of
-			{ok, #resource{id = Id, last_modified = LM} = Resource} ->
-				Location = "/resourceInventoryManagement/v3/resource/" ++ Id,
+		Catalog = catalog(zj:decode(RequestBody)),
+		case im:add_catalog(Catalog) of
+			{ok, #catalog{id = Id, last_modified = LM} = Catalog} ->
+				Body = zj:encode(catalog(Catalog)),
+				Location = ?PathCatalog ++ "catalog/" ++ Id,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
-				Body = zj:encode(resource(Resource)),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -171,90 +170,88 @@ post_resource(RequestBody) ->
 			{error, 400}
 	end.
 
--spec delete_resource(Id) -> Result
+-spec delete_catalog(Id) -> Result
 	when
 		Id :: string(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()} .
-%% @doc Handle `DELETE' request on a `Resource' resource.
-delete_resource(Id) ->
-	case im:delete_resource(Id) of
+%% @doc Handle `DELETE' request on a `ResourceCatalog' resource.
+delete_catalog(Id) ->
+	case im:delete_catalog(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
 	end.
 
--spec resource(Resource) -> Resource
+-spec catalog(Catalog) -> Catalog
 	when
-		Resource :: #resource{} | map().
-%% @doc CODEC for `Resource'.
-resource(#resource{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #{});
-resource(#{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #resource{}).
+		Catalog :: #catalog{} | map().
+%% @doc CODEC for `ResourceCatalog'.
+catalog(#catalog{} = Catalog) ->
+	catalog(record_info(fields, catalog), Catalog, #{});
+catalog(#{} = Catalog) ->
+	catalog(record_info(fields, catalog), Catalog, #catalog{}).
 %% @hidden
-resource([id | T], #resource{id = Id} = R, Acc) ->
-	resource(T, R, Acc#{"id" => Id});
-resource([id | T], #{"id" := Id} = M, Acc) ->
-	resource(T, M, Acc#resource{id = Id});
-resource([href | T], #resource{href = Href} = R, Acc) ->
-	resource(T, R, Acc#{"href" => Href});
-resource([href | T], #{"href" := Href} = M, Acc) ->
-	resource(T, M, Acc#resource{href = Href});
-resource([name | T], #resource{name = Name} = R, Acc) ->
-	resource(T, R, Acc#{"name" => Name});
-resource([name | T], #{"name" := Name} = M, Acc) ->
-	resource(T, M, Acc#resource{name = Name});
-resource([description| T],
-		#resource{description = Description} = R, Acc) ->
-	resource(T, R, Acc#{"description" => Description});
-resource([description| T], #{"description" := Description} = M, Acc) ->
-	resource(T, M, Acc#resource{description = Description});
-resource([version | T], #resource{version = Version} = R, Acc) ->
-	resource(T, R, Acc#{"version" => Version});
-resource([version | T], #{"version" := Version} = M, Acc) ->
-	resource(T, M, Acc#resource{version = Version});
-resource([start_date | T], #resource{start_date = StartDate} = R, Acc)
+catalog([id | T], #catalog{id = Id} = R, Acc) ->
+	catalog(T, R, Acc#{"id" => Id});
+catalog([id | T], #{"id" := Id} = M, Acc) ->
+	catalog(T, M, Acc#catalog{id = Id});
+catalog([href | T], #catalog{href = Href} = R, Acc) ->
+	catalog(T, R, Acc#{"href" => Href});
+catalog([href | T], #{"href" := Href} = M, Acc) ->
+	catalog(T, M, Acc#catalog{href = Href});
+catalog([name | T], #catalog{name = Name} = R, Acc) ->
+	catalog(T, R, Acc#{"name" => Name});
+catalog([name | T], #{"name" := Name} = M, Acc) ->
+	catalog(T, M, Acc#catalog{name = Name});
+catalog([description| T],
+		#catalog{description = Description} = R, Acc) ->
+	catalog(T, R, Acc#{"description" => Description});
+catalog([description| T], #{"description" := Description} = M, Acc) ->
+	catalog(T, M, Acc#catalog{description = Description});
+catalog([version | T], #catalog{version = Version} = R, Acc) ->
+	catalog(T, R, Acc#{"version" => Version});
+catalog([version | T], #{"version" := Version} = M, Acc) ->
+	catalog(T, M, Acc#catalog{version = Version});
+catalog([start_date | T], #catalog{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	resource(T, R, Acc#{"validFor" => ValidFor});
-resource([start_date | T],
+	catalog(T, R, Acc#{"validFor" => ValidFor});
+catalog([start_date | T],
 		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
-	resource(T, M, Acc#resource{start_date = im_rest:iso8601(Start)});
-resource([end_date | T], #resource{end_date = End} = R,
+	catalog(T, M, Acc#catalog{start_date = im_rest:iso8601(Start)});
+catalog([end_date | T], #catalog{end_date = End} = R,
 		#{validFor := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	resource(T, R, Acc#{"validFor" := NewValidFor});
-resource([end_date | T], #resource{end_date = End} = R, Acc)
+	catalog(T, R, Acc#{"validFor" := NewValidFor});
+catalog([end_date | T], #catalog{end_date = End} = R, Acc)
 		when is_integer(End) ->
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	resource(T, R, Acc#{"validFor" := ValidFor});
-resource([end_date | T],
+	catalog(T, R, Acc#{"validFor" := ValidFor});
+catalog([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
-	resource(T, M, Acc#resource{end_date = im_rest:iso8601(End)});
-resource([last_modified | T], #resource{last_modified = LM} = R, Acc) ->
-	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-resource([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
-	resource(T, M, Acc#resource{last_modified = im_rest:iso8601(LM)});
-resource([status | T], #resource{status = Status} = R, Acc)
-		when Status /= undefined ->
-	resource(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-resource([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
-	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
-resource([category | T], #resource{category = CatRef} = R, Acc)
-		when is_record(CatRef, related) ->
-	resource(T, R, Acc#{"category" => im_rest:related_category(CatRef)});
-resource([category | T], #{"category" := CatRef} = M, Acc) ->
-	resource(T, M, Acc#resource{category = im_rest:related_category(CatRef)});
-resource([specification | T], #resource{specification = Spec} = R, Acc)
-		when is_record(Spec, related) ->
-	resource(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
-resource([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
-	resource(T, M, Acc#resource{specification = im_rest:related(Spec)});
-resource([_ | T], R, Acc) ->
-	resource(T, R, Acc);
-resource([], _, Acc) ->
+	catalog(T, M, Acc#catalog{end_date = im_rest:iso8601(End)});
+catalog([last_modified | T], #catalog{last_modified = LM} = R, Acc) ->
+	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
+catalog([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
+	catalog(T, M, Acc#catalog{last_modified = im_rest:iso8601(LM)});
+catalog([status | T], #catalog{status = Status} = R, Acc)
+		when status /= undefined ->
+	catalog(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
+catalog([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+	catalog(T, M, Acc#catalog{status = im_rest:lifecycle_status(Status)});
+catalog([related_party | T], #catalog{related_party = RP} = R, Acc) ->
+	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party(RP)});
+catalog([related_party | T], #{"relatedParty" := RP} = M, Acc) ->
+	catalog(T, M, Acc#catalog{related_party = im_rest:related_party(RP)});
+catalog([category | T], #catalog{category = Category} = R, Acc) ->
+	catalog(T, R, Acc#{"category" => im_rest:related_category(Category)});
+catalog([category | T], #{"category" := Category} = M, Acc) ->
+	catalog(T, M, Acc#catalog{category = im_rest:related_category(Category)});
+catalog([_ | T], R, Acc) ->
+	catalog(T, R, Acc);
+catalog([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
@@ -276,7 +273,7 @@ query_start(Query, Filters, RangeStart, RangeEnd) ->
 		end
 	of
 		{MatchId, MatchLocale} ->
-			MFA = [im, query_inventory, [MatchId, MatchLocale]],
+			MFA = [im, query_catalog, [MatchId, MatchLocale]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
@@ -294,8 +291,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 		{error, Status} ->
 			{error, Status};
 		{Events, ContentRange} ->
-			Resources = lists:map(fun resource/1, Events),
-			Body = zj:encode(Resources),
+			Catalogs = lists:map(fun catalog/1, Events),
+			Body = zj:encode(Catalogs),
 			Headers = [{content_type, "application/json"},
 					{etag, Etag}, {accept_ranges, "items"},
 					{content_range, ContentRange}],

@@ -18,6 +18,8 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
+%%% 	Handle `Individual' collection.
+%%%
 -module(im_rest_res_user).
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
@@ -30,14 +32,14 @@
 -spec content_types_accepted() -> ContentTypes
 	when
 		ContentTypes :: list().
-%% @doc Provides list of resource representations accepted.
+%% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
 	["application/json", "application/json-patch+json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
 		ContentTypes :: list().
-%% @doc Provides list of resource representations available.
+%% @doc Returns list of resource representations available.
 content_types_provided() ->
 	["application/json"].
 
@@ -47,8 +49,7 @@ content_types_provided() ->
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Body producing function for `GET /partyManagement/v1/individual'
-%% requests.
+%% @doc Handle `GET' request on `Individual' collection.
 get_users(Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
@@ -118,8 +119,7 @@ get_users1(Query, Filters, Headers) ->
 		Query :: [{Key :: string(), Value :: string()}],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Body producing function for `GET /partyManagement/v1/individual/{id}'
-%% requests.
+%% @doc Handle `GET' request on a `Individual' resource.
 get_user(Id, Query) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, L}, NewQuery} ->
@@ -160,8 +160,7 @@ get_user(_, _, _) ->
 		RequestBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()}.
-%% @doc Respond to `POST /partyManagement/v1/individual' and add a new `User'
-%% resource.
+%% @doc Handle `POST' request on `Individual' collection.
 post_user(RequestBody) ->
 	try
 		User = user(zj:decode(RequestBody)),
@@ -192,8 +191,7 @@ post_user(RequestBody) ->
 		Id :: string(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()} .
-%% @doc Respond to `DELETE /im/v1/subscriber/{id}' request and deletes
-%% a `subscriber' resource. If the deletion is succeeded return true.
+%% @doc Handle `DELETE' request on a `Individual' resource.
 delete_user(Id) ->
 	case im:delete_user(Id) of
 		ok ->
@@ -227,7 +225,7 @@ get_params() ->
 -spec user(User) -> User
 	when
 		User :: #httpd_user{} | map().
-%% @doc CODEC for HTTP server users.
+%% @doc CODEC for `Individual'.
 user(#httpd_user{username = {ID, _, _, _}} = HttpdUser) ->
 	user(HttpdUser#httpd_user{username  = ID});
 user(#httpd_user{username = ID, password = Password, user_data = Chars})

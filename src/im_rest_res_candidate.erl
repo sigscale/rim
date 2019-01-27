@@ -1,4 +1,4 @@
-%%% im_rest_res_inventory.erl
+%%% im_rest_res_candidate.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @copyright 2019 SigScale Global Inc.
@@ -18,19 +18,19 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
-%%% 	Handle `ResourceInventory' collection.
+%%% 	Handle `ResourceCandidate' collection.
 %%%
--module(im_rest_res_inventory).
+-module(im_rest_res_candidate).
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_inventory/2, get_resource/2, post_resource/1, delete_resource/1]).
--export([resource/1]).
+-export([get_candidates/2, get_candidate/2, post_candidate/1,
+		delete_candidate/1]).
+-export([candidate/1]).
  
 -include("im.hrl").
 
--define(PathInventory, "/resourceInventoryManagement/v3/").
--define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
+-define(PathCatalog, "/resourceCatalogManagement/v3/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -50,22 +50,22 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec get_inventory(Query, Headers) -> Result
+-spec get_candidates(Query, Headers) -> Result
 	when
 		Query :: [{Key :: string(), Value :: string()}],
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on `Resource' collection.
-get_inventory(Query, Headers) ->
+%% @doc Handle `GET' request on `ResourceCandidate' collection.
+get_candidates(Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
-			get_inventory(NewQuery, Filters, Headers);
+			get_candidates(NewQuery, Filters, Headers);
 		false ->
-			get_inventory(Query, [], Headers)
+			get_candidates(Query, [], Headers)
 	end.
 %% @hidden
-get_inventory(Query, Filters, Headers) ->
+get_candidates(Query, Filters, Headers) ->
 	case {lists:keyfind("if-match", 1, Headers),
 			lists:keyfind("if-range", 1, Headers),
 			lists:keyfind("range", 1, Headers)} of
@@ -120,48 +120,48 @@ get_inventory(Query, Filters, Headers) ->
 			query_start(Query, Filters, undefined, undefined)
 	end.
 
--spec get_resource(Id, Query) -> Result
+-spec get_candidate(Id, Query) -> Result
 	when
 		Id :: string(),
 		Query :: [{Key :: string(), Value :: string()}],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on a `Resource' resource.
-get_resource(Id, Query) ->
+%% @doc Handle `GET' request on a `ResourceCandidate' resource.
+get_candidate(Id, Query) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, L}, NewQuery} ->
-			get_resource(Id, NewQuery, string:tokens(L, ","));
+			get_candidate(Id, NewQuery, string:tokens(L, ","));
 		false ->
-			get_resource(Id, Query, [])
+			get_candidate(Id, Query, [])
 	end.
 %% @hidden
-get_resource(Id, [] = _Query, _Filters) ->
-	case im:get_resource(Id) of
-		{ok, #resource{last_modified = LM} = Resource} ->
+get_candidate(Id, [] = _Query, _Filters) ->
+	case im:get_candidate(Id) of
+		{ok, #candidate{last_modified = LastModified} = Candidate} ->
 			Headers = [{content_type, "application/json"},
-					{etag, im_rest:etag(LM)}],
-			Body = zj:encode(resource(Resource)),
+					{etag, im_rest:etag(LastModified)}],
+			Body = zj:encode(candidate(Candidate)),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
 	end;
-get_resource(_, _, _) ->
+get_candidate(_, _, _) ->
 	{error, 400}.
 
--spec post_resource(RequestBody) -> Result
+-spec post_candidate(RequestBody) -> Result
 	when
 		RequestBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()}.
-%% @doc Handle `POST' request on `Resource' collection.
-post_resource(RequestBody) ->
+%% @doc Handle `POST' request on `ResourceCandidate' collection.
+post_candidate(RequestBody) ->
 	try
-		Resource = resource(zj:decode(RequestBody)),
-		case im:add_resource(Resource) of
-			{ok, #resource{id = Id, last_modified = LM} = Resource} ->
-				Location = "/resourceInventoryManagement/v3/resource/" ++ Id,
+		Candidate = candidate(zj:decode(RequestBody)),
+		case im:add_candidate(Candidate) of
+			{ok, #candidate{id = Id, last_modified = LM} = NewCandidate} ->
+				Body = zj:encode(candidate(NewCandidate)),
+				Location = ?PathCatalog ++ "candidate/" ++ Id,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
-				Body = zj:encode(resource(Resource)),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -171,90 +171,89 @@ post_resource(RequestBody) ->
 			{error, 400}
 	end.
 
--spec delete_resource(Id) -> Result
+-spec delete_candidate(Id) -> Result
 	when
 		Id :: string(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()} .
-%% @doc Handle `DELETE' request on a `Resource' resource.
-delete_resource(Id) ->
-	case im:delete_resource(Id) of
+%% @doc Handle `DELETE' request on a `ResourceCandidate' resource.
+delete_candidate(Id) ->
+	case im:delete_candidate(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
 	end.
 
--spec resource(Resource) -> Resource
+-spec candidate(ResourceCandidate) -> ResourceCandidate
 	when
-		Resource :: #resource{} | map().
-%% @doc CODEC for `Resource'.
-resource(#resource{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #{});
-resource(#{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #resource{}).
+		ResourceCandidate :: #candidate{} | map().
+%% @doc CODEC for `ResourceCandidate'.
+candidate(#candidate{} = ResourceCandidate) ->
+	candidate(record_info(fields, candidate), ResourceCandidate, #{});
+candidate(#{} = ResourceCandidate) ->
+	candidate(record_info(fields, candidate), ResourceCandidate, #candidate{}).
 %% @hidden
-resource([id | T], #resource{id = Id} = R, Acc) ->
-	resource(T, R, Acc#{"id" => Id});
-resource([id | T], #{"id" := Id} = M, Acc) ->
-	resource(T, M, Acc#resource{id = Id});
-resource([href | T], #resource{href = Href} = R, Acc) ->
-	resource(T, R, Acc#{"href" => Href});
-resource([href | T], #{"href" := Href} = M, Acc) ->
-	resource(T, M, Acc#resource{href = Href});
-resource([name | T], #resource{name = Name} = R, Acc) ->
-	resource(T, R, Acc#{"name" => Name});
-resource([name | T], #{"name" := Name} = M, Acc) ->
-	resource(T, M, Acc#resource{name = Name});
-resource([description| T],
-		#resource{description = Description} = R, Acc) ->
-	resource(T, R, Acc#{"description" => Description});
-resource([description| T], #{"description" := Description} = M, Acc) ->
-	resource(T, M, Acc#resource{description = Description});
-resource([version | T], #resource{version = Version} = R, Acc) ->
-	resource(T, R, Acc#{"version" => Version});
-resource([version | T], #{"version" := Version} = M, Acc) ->
-	resource(T, M, Acc#resource{version = Version});
-resource([start_date | T], #resource{start_date = StartDate} = R, Acc)
+candidate([id | T], #candidate{id = Id} = R, Acc) ->
+	candidate(T, R, Acc#{"id" => Id});
+candidate([id | T], #{"id" := Id} = M, Acc) ->
+	candidate(T, M, Acc#candidate{id = Id});
+candidate([href | T], #candidate{href = Href} = R, Acc) ->
+	candidate(T, R, Acc#{"href" => Href});
+candidate([href | T], #{"href" := Href} = M, Acc) ->
+	candidate(T, M, Acc#candidate{href = Href});
+candidate([name | T], #candidate{name = Name} = R, Acc) ->
+	candidate(T, R, Acc#{"name" => Name});
+candidate([name | T], #{"name" := Name} = M, Acc) ->
+	candidate(T, M, Acc#candidate{name = Name});
+candidate([description| T],
+		#candidate{description = Description} = R, Acc) ->
+	candidate(T, R, Acc#{"description" => Description});
+candidate([description| T], #{"description" := Description} = M, Acc) ->
+	candidate(T, M, Acc#candidate{description = Description});
+candidate([version | T], #candidate{version = Version} = R, Acc) ->
+	candidate(T, R, Acc#{"version" => Version});
+candidate([version | T], #{"version" := Version} = M, Acc) ->
+	candidate(T, M, Acc#candidate{version = Version});
+candidate([start_date | T], #candidate{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	resource(T, R, Acc#{"validFor" => ValidFor});
-resource([start_date | T],
+	candidate(T, R, Acc#{"validFor" => ValidFor});
+candidate([start_date | T],
 		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
-	resource(T, M, Acc#resource{start_date = im_rest:iso8601(Start)});
-resource([end_date | T], #resource{end_date = End} = R,
+	candidate(T, M, Acc#candidate{start_date = im_rest:iso8601(Start)});
+candidate([end_date | T], #candidate{end_date = End} = R,
 		#{validFor := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	resource(T, R, Acc#{"validFor" := NewValidFor});
-resource([end_date | T], #resource{end_date = End} = R, Acc)
+	candidate(T, R, Acc#{"validFor" := NewValidFor});
+candidate([end_date | T], #candidate{end_date = End} = R, Acc)
 		when is_integer(End) ->
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	resource(T, R, Acc#{"validFor" := ValidFor});
-resource([end_date | T],
+	candidate(T, R, Acc#{"validFor" := ValidFor});
+candidate([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
-	resource(T, M, Acc#resource{end_date = im_rest:iso8601(End)});
-resource([last_modified | T], #resource{last_modified = LM} = R, Acc) ->
-	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-resource([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
-	resource(T, M, Acc#resource{last_modified = im_rest:iso8601(LM)});
-resource([status | T], #resource{status = Status} = R, Acc)
+	candidate(T, M, Acc#candidate{end_date = im_rest:iso8601(End)});
+candidate([last_modified | T], #candidate{last_modified = LM} = R, Acc) ->
+	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
+candidate([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
+	candidate(T, M, Acc#candidate{last_modified = im_rest:iso8601(LM)});
+candidate([status | T], #candidate{status = Status} = R, Acc)
 		when Status /= undefined ->
-	resource(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-resource([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
-	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
-resource([category | T], #resource{category = CatRef} = R, Acc)
-		when is_record(CatRef, related) ->
-	resource(T, R, Acc#{"category" => im_rest:related_category(CatRef)});
-resource([category | T], #{"category" := CatRef} = M, Acc) ->
-	resource(T, M, Acc#resource{category = im_rest:related_category(CatRef)});
-resource([specification | T], #resource{specification = Spec} = R, Acc)
+	candidate(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
+candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
+candidate([category | T], #candidate{category = CatRefs} = R, Acc) ->
+	candidate(T, R, Acc#{"category" => im_rest:related_category(CatRefs)});
+candidate([category | T], #{"category" := CatRefs} = M, Acc) ->
+	candidate(T, M, Acc#candidate{category = im_rest:related_category(CatRefs)});
+candidate([specification | T], #candidate{specification = Spec} = R, Acc)
 		when is_record(Spec, related) ->
-	resource(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
-resource([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
-	resource(T, M, Acc#resource{specification = im_rest:related(Spec)});
-resource([_ | T], R, Acc) ->
-	resource(T, R, Acc);
-resource([], _, Acc) ->
+	candidate(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
+candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
+	candidate(T, M, Acc#candidate{specification = im_rest:related(Spec)});
+candidate([_ | T], R, Acc) ->
+	candidate(T, R, Acc);
+candidate([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
@@ -276,7 +275,7 @@ query_start(Query, Filters, RangeStart, RangeEnd) ->
 		end
 	of
 		{MatchId, MatchLocale} ->
-			MFA = [im, query_inventory, [MatchId, MatchLocale]],
+			MFA = [im, query_candidate, [MatchId, MatchLocale]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
@@ -294,8 +293,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 		{error, Status} ->
 			{error, Status};
 		{Events, ContentRange} ->
-			Resources = lists:map(fun resource/1, Events),
-			Body = zj:encode(Resources),
+			Candidates = lists:map(fun candidate/1, Events),
+			Body = zj:encode(Candidates),
 			Headers = [{content_type, "application/json"},
 					{etag, Etag}, {accept_ranges, "items"},
 					{content_range, ContentRange}],

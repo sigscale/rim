@@ -23,7 +23,10 @@
 
 -export([date/1, iso8601/1, etag/1]).
 -export([parse_query/1, range/1]).
--export([related_party/1]).
+-export([lifecycle_status/1]).
+-export([related/1, related_party/1, related_category/1]).
+
+-include("im.hrl").
 
 % calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}})
 -define(EPOCH, 62167219200).
@@ -166,20 +169,96 @@ range(Range) when is_list(Range) ->
 range({Start, End}) when is_integer(Start), is_integer(End) ->
 	{ok, "items=" ++ integer_to_list(Start) ++ "-" ++ integer_to_list(End)}.
 
+-spec lifecycle_status(LifeCycleStatus) -> LifeCycleStatus
+	when
+		LifeCycleStatus :: string() | in_study | in_design | in_test
+				| rejected | active | launched | retired | obsolete.
+%% @doc CODEC for Resource Catalog life cycle status.
+lifecycle_status(in_study = _Status) ->
+	"In Study";
+lifecycle_status(in_design) ->
+	"In Design";
+lifecycle_status(in_test) ->
+	"In Test";
+lifecycle_status(rejected) ->
+	"Rejected";
+lifecycle_status(active) ->
+	"Active";
+lifecycle_status(launched) ->
+	"Launched";
+lifecycle_status(retired) ->
+	"Retired";
+lifecycle_status(obsolete) ->
+	"Obsolete";
+lifecycle_status("In Study") ->
+	in_study;
+lifecycle_status("In Design") ->
+	in_design;
+lifecycle_status("In Test") ->
+	in_test;
+lifecycle_status("Rejected") ->
+	rejected;
+lifecycle_status("Active") ->
+	active;
+lifecycle_status("Launched") ->
+	launched;
+lifecycle_status("Retired") ->
+	retired;
+lifecycle_status("Obsolete") ->
+	obsolete.
+
+-spec related(RelatedRef) -> RelatedRef
+	when
+		RelatedRef :: [related()] | [map()]
+				| related() | map().
+%% @doc CODEC for simple relationships.
+related(#related{} = RelatedRef) ->
+	related(record_info(fields, related), RelatedRef, #{});
+related(#{} = RelatedRef) ->
+	related(record_info(fields, related), RelatedRef, #related{});
+related([#related{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related(Fields, R, #{}) || R <- List];
+related([#{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related(Fields, R, #related{}) || R <- List].
+%% @hidden
+related([id | T], #related{id = Id} = R, Acc) ->
+	related(T, R, Acc#{"id" => Id});
+related([id | T], #{"id" := Id} = M, Acc) ->
+	related(T, M, Acc#related{id = Id});
+related([href | T], #related{href = Href} = R, Acc) ->
+	related(T, R, Acc#{"href" => Href});
+related([href | T], #{"href" := Href} = M, Acc) ->
+	related(T, M, Acc#related{href = Href});
+related([name | T], #related{name = Name} = R, Acc) ->
+	related(T, R, Acc#{"name" => Name});
+related([name | T], #{"name" := Name} = M, Acc) ->
+	related(T, M, Acc#related{name = Name});
+related([version | T], #related{version = Version} = R, Acc)
+		when is_list(Version) ->
+	related(T, R, Acc#{"version" => Version});
+related([version | T], #{"version" := Version} = M, Acc) ->
+	related(T, M, Acc#related{version = Version});
+related([_ | T], R, Acc) ->
+	related(T, R, Acc);
+related([], _, Acc) ->
+	Acc.
+
 -spec related_party(RelatedPartyRef) -> RelatedPartyRef
 	when
-		RelatedPartRef :: [related_party()] | [map()]
+		RelatedPartyRef :: [related_party()] | [map()]
 				| related_party() | map().
 %% @doc CODEC for `RelatedPartyRef'.
-related_party(#related_party{} = RelatedPartRef) ->
-	related_party(record_fields(related_party), RelatedPartRef, #{}).
-related_party(#{} = RelatedPartRef) ->
-	related_party(record_fields(related_party), RelatedPartRef, #_related_party{}).
+related_party(#related_party{} = RelatedPartyRef) ->
+	related_party(record_info(fields, related_party), RelatedPartyRef, #{});
+related_party(#{} = RelatedPartyRef) ->
+	related_party(record_info(fields, related_party), RelatedPartyRef, #related_party{});
 related_party([#related_party{} | _] = List) ->
-	Fields = record_fields(related_party),
+	Fields = record_info(fields, related_party),
 	[related_party(Fields, RP, #{}) || RP <- List];
 related_party([#{} | _] = List) ->
-	Fields = record_fields(related_party),
+	Fields = record_info(fields, related_party),
 	[related_party(Fields, RP, #related_party{}) || RP <- List].
 %% @hidden
 related_party([id | T], #related_party{id = Id} = R, Acc) ->
@@ -220,6 +299,42 @@ related_party([end_date | T],
 related_party([_ | T], R, Acc) ->
 	related_party(T, R, Acc);
 related_party([], _, Acc) ->
+	Acc.
+
+-spec related_category(CategoryRef) -> CategoryRef
+	when
+		CategoryRef :: #related{} | map().
+%% @doc CODEC for `CategoryRef'.
+related_category(#related{} = CategoryRef) ->
+	related_category(record_info(fields, related), CategoryRef, #{});
+related_category(#{} = CategoryRef) ->
+	related_category(record_info(fields, related), CategoryRef, #related{});
+related_category([#related{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related_category(Fields, R, #{}) || R <- List];
+related_category([#{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related_category(Fields, R, #related{}) || R <- List].
+%% @hidden
+related_category([id | T], #related{id = Id} = R, Acc) ->
+	related_category(T, R, Acc#{"id" => Id});
+related_category([id | T], #{"id" := Id} = M, Acc) ->
+	related_category(T, M, Acc#related{id = Id});
+related_category([href | T], #related{href = Href} = R, Acc) ->
+	related_category(T, R, Acc#{"href" => Href});
+related_category([href | T], #{"href" := Href} = M, Acc) ->
+	related_category(T, M, Acc#related{href = Href});
+related_category([name | T], #related{name = Name} = R, Acc) ->
+	related_category(T, R, Acc#{"name" => Name});
+related_category([name | T], #{"name" := Name} = M, Acc) ->
+	related_category(T, M, Acc#related{name = Name});
+related_category([version | T], #related{version = Version} = R, Acc) ->
+	related_category(T, R, Acc#{"version" => Version});
+related_category([version | T], #{"version" := Version} = M, Acc) ->
+	related_category(T, M, Acc#related{version = Version});
+related_category([_ | T], R, Acc) ->
+	related_category(T, R, Acc);
+related_category([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------

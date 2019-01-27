@@ -50,13 +50,13 @@
 		Result :: {ok, Catalog} | {error, Reason},
 		Reason :: term().
 %% @doc Create a new Resource Catalog.
-add_catalog(#resource_catalog{id = undefined,
+add_catalog(#catalog{id = undefined,
 		last_modified = undefined} = Catalog) ->
 	F = fun() ->
 			TS = erlang:system_time(?MILLISECOND),
 			N = erlang:unique_integer([positive]),
 			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewCatalog = Catalog#resource_catalog{id = Id, last_modified = TS},
+			NewCatalog = Catalog#catalog{id = Id, last_modified = TS},
 			ok = mnesia:write(NewCatalog),
 			NewCatalog
 	end,

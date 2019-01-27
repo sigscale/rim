@@ -1,4 +1,4 @@
-%%% im_rest_res_inventory.erl
+%%% im_rest_res_specification.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @copyright 2019 SigScale Global Inc.
@@ -18,19 +18,19 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
-%%% 	Handle `ResourceInventory' collection.
+%%% 	Handle `ResourceSpecification' collection.
 %%%
--module(im_rest_res_inventory).
+-module(im_rest_res_specification).
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_inventory/2, get_resource/2, post_resource/1, delete_resource/1]).
--export([resource/1]).
+-export([get_specifications/2, get_specification/2, post_specification/1,
+		delete_specification/1]).
+-export([specification/1]).
  
 -include("im.hrl").
 
--define(PathInventory, "/resourceInventoryManagement/v3/").
--define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
+-define(PathCatalog, "/resourceCatalogManagement/v3/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -50,22 +50,22 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec get_inventory(Query, Headers) -> Result
+-spec get_specifications(Query, Headers) -> Result
 	when
 		Query :: [{Key :: string(), Value :: string()}],
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on `Resource' collection.
-get_inventory(Query, Headers) ->
+%% @doc Handle `GET' request on `ResourceSpecification' collection.
+get_specifications(Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
-			get_inventory(NewQuery, Filters, Headers);
+			get_specifications(NewQuery, Filters, Headers);
 		false ->
-			get_inventory(Query, [], Headers)
+			get_specifications(Query, [], Headers)
 	end.
 %% @hidden
-get_inventory(Query, Filters, Headers) ->
+get_specifications(Query, Filters, Headers) ->
 	case {lists:keyfind("if-match", 1, Headers),
 			lists:keyfind("if-range", 1, Headers),
 			lists:keyfind("range", 1, Headers)} of
@@ -120,48 +120,48 @@ get_inventory(Query, Filters, Headers) ->
 			query_start(Query, Filters, undefined, undefined)
 	end.
 
--spec get_resource(Id, Query) -> Result
+-spec get_specification(Id, Query) -> Result
 	when
 		Id :: string(),
 		Query :: [{Key :: string(), Value :: string()}],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on a `Resource' resource.
-get_resource(Id, Query) ->
+%% @doc Handle `GET' request on a `ResourceSpecification' resource.
+get_specification(Id, Query) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, L}, NewQuery} ->
-			get_resource(Id, NewQuery, string:tokens(L, ","));
+			get_specification(Id, NewQuery, string:tokens(L, ","));
 		false ->
-			get_resource(Id, Query, [])
+			get_specification(Id, Query, [])
 	end.
 %% @hidden
-get_resource(Id, [] = _Query, _Filters) ->
-	case im:get_resource(Id) of
-		{ok, #resource{last_modified = LM} = Resource} ->
+get_specification(Id, [] = _Query, _Filters) ->
+	case im:get_specification(Id) of
+		{ok, #specification{last_modified = LastModified} = Specification} ->
 			Headers = [{content_type, "application/json"},
-					{etag, im_rest:etag(LM)}],
-			Body = zj:encode(resource(Resource)),
+					{etag, im_rest:etag(LastModified)}],
+			Body = zj:encode(specification(Specification)),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
 	end;
-get_resource(_, _, _) ->
+get_specification(_, _, _) ->
 	{error, 400}.
 
--spec post_resource(RequestBody) -> Result
+-spec post_specification(RequestBody) -> Result
 	when
 		RequestBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()}.
-%% @doc Handle `POST' request on `Resource' collection.
-post_resource(RequestBody) ->
+%% @doc Handle `POST' request on `ResourceSpecification' collection.
+post_specification(RequestBody) ->
 	try
-		Resource = resource(zj:decode(RequestBody)),
-		case im:add_resource(Resource) of
-			{ok, #resource{id = Id, last_modified = LM} = Resource} ->
-				Location = "/resourceInventoryManagement/v3/resource/" ++ Id,
+		Specification = specification(zj:decode(RequestBody)),
+		case im:add_specification(Specification) of
+			{ok, #specification{id = Id, last_modified = LM} = NewSpecification} ->
+				Body = zj:encode(specification(NewSpecification)),
+				Location = ?PathCatalog ++ "specification/" ++ Id,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
-				Body = zj:encode(resource(Resource)),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -171,90 +171,89 @@ post_resource(RequestBody) ->
 			{error, 400}
 	end.
 
--spec delete_resource(Id) -> Result
+-spec delete_specification(Id) -> Result
 	when
 		Id :: string(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()} .
-%% @doc Handle `DELETE' request on a `Resource' resource.
-delete_resource(Id) ->
-	case im:delete_resource(Id) of
+%% @doc Handle `DELETE' request on a `ResourceSpecification' resource.
+delete_specification(Id) ->
+	case im:delete_specification(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
 	end.
 
--spec resource(Resource) -> Resource
+-spec specification(ResourceSpecification) -> ResourceSpecification
 	when
-		Resource :: #resource{} | map().
-%% @doc CODEC for `Resource'.
-resource(#resource{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #{});
-resource(#{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #resource{}).
+		ResourceSpecification :: #specification{} | map().
+%% @doc CODEC for `ResourceSpecification'.
+specification(#specification{} = ResourceSpecification) ->
+	specification(record_info(fields, specification), ResourceSpecification, #{});
+specification(#{} = ResourceSpecification) ->
+	specification(record_info(fields, specification), ResourceSpecification, #specification{}).
 %% @hidden
-resource([id | T], #resource{id = Id} = R, Acc) ->
-	resource(T, R, Acc#{"id" => Id});
-resource([id | T], #{"id" := Id} = M, Acc) ->
-	resource(T, M, Acc#resource{id = Id});
-resource([href | T], #resource{href = Href} = R, Acc) ->
-	resource(T, R, Acc#{"href" => Href});
-resource([href | T], #{"href" := Href} = M, Acc) ->
-	resource(T, M, Acc#resource{href = Href});
-resource([name | T], #resource{name = Name} = R, Acc) ->
-	resource(T, R, Acc#{"name" => Name});
-resource([name | T], #{"name" := Name} = M, Acc) ->
-	resource(T, M, Acc#resource{name = Name});
-resource([description| T],
-		#resource{description = Description} = R, Acc) ->
-	resource(T, R, Acc#{"description" => Description});
-resource([description| T], #{"description" := Description} = M, Acc) ->
-	resource(T, M, Acc#resource{description = Description});
-resource([version | T], #resource{version = Version} = R, Acc) ->
-	resource(T, R, Acc#{"version" => Version});
-resource([version | T], #{"version" := Version} = M, Acc) ->
-	resource(T, M, Acc#resource{version = Version});
-resource([start_date | T], #resource{start_date = StartDate} = R, Acc)
+specification([id | T], #specification{id = Id} = R, Acc) ->
+	specification(T, R, Acc#{"id" => Id});
+specification([id | T], #{"id" := Id} = M, Acc) ->
+	specification(T, M, Acc#specification{id = Id});
+specification([href | T], #specification{href = Href} = R, Acc) ->
+	specification(T, R, Acc#{"href" => Href});
+specification([href | T], #{"href" := Href} = M, Acc) ->
+	specification(T, M, Acc#specification{href = Href});
+specification([name | T], #specification{name = Name} = R, Acc) ->
+	specification(T, R, Acc#{"name" => Name});
+specification([name | T], #{"name" := Name} = M, Acc) ->
+	specification(T, M, Acc#specification{name = Name});
+specification([description| T],
+		#specification{description = Description} = R, Acc) ->
+	specification(T, R, Acc#{"description" => Description});
+specification([description| T], #{"description" := Description} = M, Acc) ->
+	specification(T, M, Acc#specification{description = Description});
+specification([version | T], #specification{version = Version} = R, Acc) ->
+	specification(T, R, Acc#{"version" => Version});
+specification([version | T], #{"version" := Version} = M, Acc) ->
+	specification(T, M, Acc#specification{version = Version});
+specification([start_date | T], #specification{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	resource(T, R, Acc#{"validFor" => ValidFor});
-resource([start_date | T],
+	specification(T, R, Acc#{"validFor" => ValidFor});
+specification([start_date | T],
 		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
-	resource(T, M, Acc#resource{start_date = im_rest:iso8601(Start)});
-resource([end_date | T], #resource{end_date = End} = R,
+	specification(T, M, Acc#specification{start_date = im_rest:iso8601(Start)});
+specification([end_date | T], #specification{end_date = End} = R,
 		#{validFor := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	resource(T, R, Acc#{"validFor" := NewValidFor});
-resource([end_date | T], #resource{end_date = End} = R, Acc)
+	specification(T, R, Acc#{"validFor" := NewValidFor});
+specification([end_date | T], #specification{end_date = End} = R, Acc)
 		when is_integer(End) ->
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	resource(T, R, Acc#{"validFor" := ValidFor});
-resource([end_date | T],
+	specification(T, R, Acc#{"validFor" := ValidFor});
+specification([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
-	resource(T, M, Acc#resource{end_date = im_rest:iso8601(End)});
-resource([last_modified | T], #resource{last_modified = LM} = R, Acc) ->
-	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-resource([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
-	resource(T, M, Acc#resource{last_modified = im_rest:iso8601(LM)});
-resource([status | T], #resource{status = Status} = R, Acc)
+	specification(T, M, Acc#specification{end_date = im_rest:iso8601(End)});
+specification([last_modified | T], #specification{last_modified = LM} = R, Acc) ->
+	specification(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
+specification([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
+	specification(T, M, Acc#specification{last_modified = im_rest:iso8601(LM)});
+specification([status | T], #specification{status = Status} = R, Acc)
 		when Status /= undefined ->
-	resource(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-resource([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
-	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
-resource([category | T], #resource{category = CatRef} = R, Acc)
-		when is_record(CatRef, related) ->
-	resource(T, R, Acc#{"category" => im_rest:related_category(CatRef)});
-resource([category | T], #{"category" := CatRef} = M, Acc) ->
-	resource(T, M, Acc#resource{category = im_rest:related_category(CatRef)});
-resource([specification | T], #resource{specification = Spec} = R, Acc)
-		when is_record(Spec, related) ->
-	resource(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
-resource([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
-	resource(T, M, Acc#resource{specification = im_rest:related(Spec)});
-resource([_ | T], R, Acc) ->
-	resource(T, R, Acc);
-resource([], _, Acc) ->
+	specification(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
+specification([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+	specification(T, M, Acc#specification{status = im_rest:lifecycle_status(Status)});
+specification([bundle | T], #specification{bundle = Bundle} = R, Acc) ->
+	specification(T, R, Acc#{"isBundle" => Bundle});
+specification([bundle | T], #{"isBundle" := Bundle} = M, Acc) ->
+	specification(T, M, Acc#specification{bundle = Bundle});
+specification([related_party | T], #specification{related_party = PartyRefs} = R, Acc) ->
+	specification(T, R, Acc#{"relatedParty" => im_rest:related_party(PartyRefs)});
+specification([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc) ->
+	specification(T, M, Acc#specification{category = im_rest:related_party(PartyRefs)});
+%% @todo resourceSpecCharacteristic and resourceSpecRelationship
+specification([_ | T], R, Acc) ->
+	specification(T, R, Acc);
+specification([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
@@ -276,7 +275,7 @@ query_start(Query, Filters, RangeStart, RangeEnd) ->
 		end
 	of
 		{MatchId, MatchLocale} ->
-			MFA = [im, query_inventory, [MatchId, MatchLocale]],
+			MFA = [im, query_specification, [MatchId, MatchLocale]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
@@ -294,8 +293,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 		{error, Status} ->
 			{error, Status};
 		{Events, ContentRange} ->
-			Resources = lists:map(fun resource/1, Events),
-			Body = zj:encode(Resources),
+			Specifications = lists:map(fun specification/1, Events),
+			Body = zj:encode(Specifications),
 			Headers = [{content_type, "application/json"},
 					{etag, Etag}, {accept_ranges, "items"},
 					{content_range, ContentRange}],
