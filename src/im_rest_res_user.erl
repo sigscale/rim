@@ -326,8 +326,10 @@ char([{complex, L1} | T], Chars) ->
 		false ->
 			throw({error, 400})
 	end;
-char([], Chars) ->
-	rev(Chars).
+char([], '_') ->
+	'_';
+char([], Attributes) when is_list(Attributes) ->
+	lists:reverse(Attributes).
 %% @hidden
 char({"name", exact, "language"}, {"value", exact, Lang}, T, Chars)
 			when is_list(Lang) ->
@@ -343,10 +345,4 @@ add_char('_', AttributeMatch) ->
 	[AttributeMatch];
 add_char(Attributes, AttributeMatch) when is_list(Attributes) ->
 	[AttributeMatch | Attributes].
-
-%% @hidden
-rev('_') ->
-	'_';
-rev(Attributes) when is_list(Attributes) ->
-	lists:reverse(Attributes).
 
