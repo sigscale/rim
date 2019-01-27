@@ -23,6 +23,7 @@
 
 -export([date/1, iso8601/1, etag/1]).
 -export([parse_query/1, range/1]).
+-export([related_party/1]).
 
 % calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}})
 -define(EPOCH, 62167219200).
@@ -164,6 +165,62 @@ range(Range) when is_list(Range) ->
 	end;
 range({Start, End}) when is_integer(Start), is_integer(End) ->
 	{ok, "items=" ++ integer_to_list(Start) ++ "-" ++ integer_to_list(End)}.
+
+-spec related_party(RelatedPartyRef) -> RelatedPartyRef
+	when
+		RelatedPartRef :: [related_party()] | [map()]
+				| related_party() | map().
+%% @doc CODEC for `RelatedPartyRef'.
+related_party(#related_party{} = RelatedPartRef) ->
+	related_party(record_fields(related_party), RelatedPartRef, #{}).
+related_party(#{} = RelatedPartRef) ->
+	related_party(record_fields(related_party), RelatedPartRef, #_related_party{}).
+related_party([#related_party{} | _] = List) ->
+	Fields = record_fields(related_party),
+	[related_party(Fields, RP, #{}) || RP <- List];
+related_party([#{} | _] = List) ->
+	Fields = record_fields(related_party),
+	[related_party(Fields, RP, #related_party{}) || RP <- List].
+%% @hidden
+related_party([id | T], #related_party{id = Id} = R, Acc) ->
+	related_party(T, R, Acc#{"id" => Id});
+related_party([id | T], #{"id" := Id} = M, Acc) ->
+	related_party(T, M, Acc#related_party{id = Id});
+related_party([href | T], #related_party{href = Href} = R, Acc) ->
+	related_party(T, R, Acc#{"href" => Href});
+related_party([href | T], #{"href" := Href} = M, Acc) ->
+	related_party(T, M, Acc#related_party{href = Href});
+related_party([name | T], #related_party{name = Name} = R, Acc) ->
+	related_party(T, R, Acc#{"name" => Name});
+related_party([name | T], #{"name" := Name} = M, Acc) ->
+	related_party(T, M, Acc#related_party{name = Name});
+related_party([role | T], #related_party{role = Role} = R, Acc)
+		when is_list(Role) ->
+	related_party(T, R, Acc#{"role" => Role});
+related_party([role | T], #{"role" := Role} = M, Acc) ->
+	related_party(T, M, Acc#related_party{role = Role});
+related_party([start_date | T], #related_party{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	related_party(T, R, Acc#{"validFor" => ValidFor});
+related_party([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+	related_party(T, M, Acc#related_party{start_date = im_rest:iso8601(Start)});
+related_party([end_date | T], #related_party{end_date = End} = R,
+		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	related_party(T, R, Acc#{"validFor" := NewValidFor});
+related_party([end_date | T], #related_party{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	related_party(T, R, Acc#{"validFor" := ValidFor});
+related_party([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+	related_party(T, M, Acc#related_party{end_date = im_rest:iso8601(End)});
+related_party([_ | T], R, Acc) ->
+	related_party(T, R, Acc);
+related_party([], _, Acc) ->
+	Acc.
 
 %%----------------------------------------------------------------------
 %%  internal functions
