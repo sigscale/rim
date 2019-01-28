@@ -197,7 +197,7 @@
 -record(gsm_relation,
 		{id :: string(),
 		adjacent_cell :: string(),
-		bcch_requency :: integer(),
+		bcch_frequency :: integer(),
 		ncc :: integer(),
 		bcc :: integer(),
 		lac :: integer(),
