@@ -231,9 +231,10 @@
 		start_date :: pos_integer() | '_',
 		end_date :: pos_integer() | '_',
 		last_modified :: pos_integer() | '_',
-		related = [] :: [resource_rel()] | '_',
 		place = [] :: [place_ref()] | '_',
 		note = [] ::[note()] | '_',
+		attachment = [] ::[attachment()] | '_',
+		related = [] :: [resource_rel()] | '_',
 		specification :: specification_ref() | '_',
 		related_party = [] :: [related_party_ref()] | '_',
 		characteristic = [] :: [resource_char()] | '_'}).
@@ -241,9 +242,9 @@
 
 -record(resource_char,
 		{name :: string(),
-		value :: term(),
 		class_type :: string(),
-		schema :: string()}).
+		schema :: string(),
+		value :: term()}).
 -type resource_char() :: #resource_char{}.
 
 -record(sites,

@@ -331,6 +331,87 @@ specification_rel([_ | T], R, Acc) ->
 specification_rel([], _, Acc) ->
 	Acc.
 
+-spec spec_char_value(ResourceSpecCharacteristicValue) -> ResourceSpecCharacteristicValue
+	when
+		ResourceSpecCharacteristicValue :: [spec_char_value()] | [map()]
+				| spec_char_value() | map().
+%% @doc CODEC for `ResourceSpecCharacteristicValue'.
+%% @private
+spec_char_value(#spec_char_value{} = ResourceSpecCharacteristicValue) ->
+	spec_char_value(record_info(fields, spec_char_value), ResourceSpecCharacteristicValue, #{});
+spec_char_value(#{} = ResourceSpecCharacteristicValue) ->
+	spec_char_value(record_info(fields, spec_char_value), ResourceSpecCharacteristicValue, #spec_char_value{}).
+%% @hidden
+spec_char_value([value_type | T], #spec_char_value{value_type = Type} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"valueType" => Type});
+spec_char_value([value_type | T], #{"valueType" := Type} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{value_type = Type});
+spec_char_value([class_type | T], #spec_char_value{class_type = Type} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"@type" => Type});
+spec_char_value([class_type | T], #{"@type" := Type} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{class_type = Type});
+spec_char_value([schema | T], #spec_char_value{schema = Schema} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"@schemaLocation" => Schema});
+spec_char_value([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{schema = Schema});
+spec_char_value([default | T], #spec_char_value{default = Default} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"isDefault" => Default});
+spec_char_value([default | T], #{"isDefault" := Default} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{default = Default});
+spec_char_value([start_date | T], #spec_char_value{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	spec_char_value(T, R, Acc#{"validFor" => ValidFor});
+spec_char_value([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{start_date = im_rest:iso8601(Start)});
+spec_char_value([end_date | T], #spec_char_value{end_date = End} = R,
+		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	spec_char_value(T, R, Acc#{"validFor" := NewValidFor});
+spec_char_value([end_date | T], #spec_char_value{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	spec_char_value(T, R, Acc#{"validFor" := ValidFor});
+spec_char_value([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{end_date = im_rest:iso8601(End)});
+spec_char_value([unit | T], #spec_char_value{unit = Unit} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"unitOfMeasure" => Unit});
+spec_char_value([unit | T], #{"unitOfMeasure" := Unit} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{unit = Unit});
+spec_char_value([from | T], #spec_char_value{from = From} = R, Acc)
+		when is_integer(From) ->
+	spec_char_value(T, R, Acc#{"valueFrom" => From});
+spec_char_value([from | T], #{"valueFrom" := From} = M, Acc)
+		when is_integer(From) ->
+	spec_char_value(T, M, Acc#spec_char_value{from = From});
+spec_char_value([from | T], #spec_char_value{from = To} = R, Acc)
+		when is_integer(To) ->
+	spec_char_value(T, R, Acc#{"valueTo" => To});
+spec_char_value([from | T], #{"valueTo" := To} = M, Acc)
+		when is_integer(To) ->
+	spec_char_value(T, M, Acc#spec_char_value{from = To});
+spec_char_value([interval | T], #spec_char_value{interval = Interval} = R, Acc)
+		when is_integer(Interval) ->
+	spec_char_value(T, R, Acc#{"interval" => Interval});
+spec_char_value([interval | T], #{"interval" := Interval} = M, Acc)
+		when is_integer(Interval) ->
+	spec_char_value(T, M, Acc#spec_char_value{interval = Interval});
+spec_char_value([regex | T], #spec_char_value{regex = {_, RegEx}} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"regex" => RegEx});
+spec_char_value([regex | T], #{"regex" := Regex} = M, Acc) ->
+	{ok, MP} = re:compile(Regex),
+	spec_char_value(T, M, Acc#spec_char_value{regex = {MP, Regex}});
+spec_char_value([value | T], #spec_char_value{value = Value} = R, Acc) ->
+	spec_char_value(T, R, Acc#{"valueOfMeasure" => Value});
+spec_char_value([value | T], #{"valueOfMeasure" := Value} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{value = Value});
+spec_char_value([_ | T], R, Acc) ->
+	spec_char_value(T, R, Acc);
+spec_char_value([], _, Acc) ->
+	Acc.
+
 -spec specification_char(ResourceSpecCharacteristic) -> ResourceSpecCharacteristic
 	when
 		ResourceSpecCharacteristic :: [specification_char()] | [map()]
@@ -392,11 +473,11 @@ specification_char([regex | T], #specification_char{regex = {_, RegEx}} = R, Acc
 specification_char([regex | T], #{"regex" := Regex} = M, Acc) ->
 	{ok, MP} = re:compile(Regex),
 	specification_char(T, M, Acc#specification_char{regex = {MP, Regex}});
-specification_char([extensible | T], #specification_char{extensible = extensible} = R, Acc) ->
-	specification_char(T, R, Acc#{"extensible" => extensible});
-specification_char([extensible | T], #{"extensible" := extensible} = M, Acc)
-		when is_boolean(extensible) ->
-	specification_char(T, M, Acc#specification_char{extensible = extensible});
+specification_char([extensible | T], #specification_char{extensible = Ext} = R, Acc) ->
+	specification_char(T, R, Acc#{"extensible" => Ext});
+specification_char([extensible | T], #{"extensible" := Ext} = M, Acc)
+		when is_boolean(Ext) ->
+	specification_char(T, M, Acc#specification_char{extensible = Ext});
 specification_char([start_date | T], #specification_char{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
@@ -426,6 +507,58 @@ specification_char([char_value | T], #{"resourceSpecCharacteristicValue" := Char
 specification_char([_ | T], R, Acc) ->
 	specification_char(T, R, Acc);
 specification_char([], _, Acc) ->
+	Acc.
+
+-spec spec_char_rel(ResourceSpecCharRelationship) -> ResourceSpecCharRelationship
+	when
+		ResourceSpecCharRelationship :: [spec_char_rel()] | [map()]
+				| spec_char_rel() | map().
+%% @doc CODEC for `ResourceSpecCharRelationship'.
+%% @private
+spec_char_rel(#spec_char_rel{} = ResourceSpecCharRelationship) ->
+	spec_char_rel(record_info(fields, spec_char_rel), ResourceSpecCharRelationship, #{});
+spec_char_rel(#{} = ResourceSpecCharRelationship) ->
+	spec_char_rel(record_info(fields, spec_char_rel), ResourceSpecCharRelationship, #spec_char_rel{}).
+%% @hidden
+spec_char_rel([id | T], #{"id" := Id} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{id = Id});
+spec_char_rel([href | T], #spec_char_rel{href = Href} = R, Acc) ->
+	spec_char_rel(T, R, Acc#{"href" => Href});
+spec_char_rel([href | T], #{"href" := Href} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{href = Href});
+spec_char_rel([name | T], #spec_char_rel{name = Name} = R, Acc) ->
+	spec_char_rel(T, R, Acc#{"name" => Name});
+spec_char_rel([name | T], #{"name" := Name} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{name = Name});
+spec_char_rel([type | T], #spec_char_rel{type = Type} = R, Acc) ->
+	spec_char_rel(T, R, Acc#{"type" => Type});
+spec_char_rel([type | T], #{"type" := Type} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{type = Type});
+spec_char_rel([class_type | T], #spec_char_rel{class_type = Type} = R, Acc) ->
+	spec_char_rel(T, R, Acc#{"@type" => Type});
+spec_char_rel([class_type | T], #{"@type" := Type} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{class_type = Type});
+spec_char_rel([start_date | T], #spec_char_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	spec_char_rel(T, R, Acc#{"validFor" => ValidFor});
+spec_char_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{start_date = im_rest:iso8601(Start)});
+spec_char_rel([end_date | T], #spec_char_rel{end_date = End} = R,
+		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	spec_char_rel(T, R, Acc#{"validFor" := NewValidFor});
+spec_char_rel([end_date | T], #spec_char_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	spec_char_rel(T, R, Acc#{"validFor" := ValidFor});
+spec_char_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{end_date = im_rest:iso8601(End)});
+spec_char_rel([_ | T], R, Acc) ->
+	spec_char_rel(T, R, Acc);
+spec_char_rel([], _, Acc) ->
 	Acc.
 
 %% @hidden
