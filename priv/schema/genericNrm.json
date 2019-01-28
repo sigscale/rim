@@ -538,6 +538,12 @@
 				}
 			]
 		},
+		"VsDataContainers": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/VsDataContainer"
+			}
+		},
 		"systemDN": {
 			"$ref": "#/definitions/dn"
 		},

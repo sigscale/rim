@@ -260,34 +260,19 @@
 							}
 						},
 						"gsmRelation": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/GsmRelation"
-							}
+							"$ref": "#/definitions/GsmRelations"
 						},
 						"utranRelation": {
-							"type": "array",
-							"items": {
-								"$ref": "utranNrm#/definitions/UtranRelation"
-							}
+							"$ref": "utranNrm#/definitions/UtranRelations"
 						},
 						"eUtranRelation": {
-							"type": "array",
-							"items": {
-								"$ref": "eutranNrm#/definitions/EUtranRelation"
-							}
+							"$ref": "eutranNrm#/definitions/EUtranRelations"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "genericNrm#/definitions/VsDataContainer"
-							}
+							"$ref": "genericNrm#/definitions/VsDataContainers"
 						},
 						"gsmCellOptionallyContainedNrmClass": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/GsmCellOptionallyContainedNrmClass"
-							}
+							"$ref": "#/definitions/GsmCellOptionallyContainedNrmClasses"
 						},
 						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
@@ -398,6 +383,12 @@
 					}
 				}
 			]
+		},
+		"GsmRelations": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/GsmRelation"
+			}
 		},
 		"ExternalGsmCell": {
 			"allOf": [
@@ -541,6 +532,12 @@
 		},
 		"GsmCellOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"GsmCellOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/GsmCellOptionallyContainedNrmClass"
+			}
 		}
 	}
 }
