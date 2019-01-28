@@ -16,7 +16,6 @@
 					"type": "boolean"
 				}
 			}
-			
 		},
 		"HoppingSequence": {
 			"type": "object",
@@ -110,13 +109,13 @@
 									"$ref": "genericNrm#/definitions/vnfParametersListType"
 								},
 								"latitude": {
-									"$ref": "genericNrm#/definitions/latitude"
+									"$ref": "genericRanNrm#/definitions/latitude"
 								},
 								"longitude": {
-									"$ref": "genericNrm#/definitions/longitude"
+									"$ref": "genericRanNrm#/definitions/longitude"
 								},
 								"operationalState": {
-									"$ref": "sonPolicyNrm#/definitions/operationalStateType"
+									"$ref": "stateManagementIRP#/definitions/operationalStateType"
 								}
 							}
 						},
