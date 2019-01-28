@@ -104,6 +104,9 @@ do_get(Resource, #mod{parsed_header = Headers} = ModData,
 	do_response(ModData, Resource:get_users(Query, Headers));
 do_get(Resource, ModData, ["partyManagement", "v1", "individual", Id], Query) ->
 	do_response(ModData, Resource:get_user(Id, Query));
+do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
+			["resourceInventoryManagement", "v1", "logicalResource", Id], Query) ->
+   do_response(ModData, Resource:get_inventory(Method, Query, Headers));
 do_get(_, _, _, _) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",
 	{break, [{response, {404, Response}}]}.
