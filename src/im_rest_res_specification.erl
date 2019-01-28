@@ -211,6 +211,18 @@ specification([description| T],
 	specification(T, R, Acc#{"description" => Description});
 specification([description| T], #{"description" := Description} = M, Acc) ->
 	specification(T, M, Acc#specification{description = Description});
+specification([class_type | T], #specification{class_type = Type} = R, Acc) ->
+	specification(T, R, Acc#{"@baseType" => Type});
+specification([class_type | T], #{"@baseType" := Type} = M, Acc) ->
+	specification(T, M, Acc#specification{class_type = Type});
+specification([base_type | T], #specification{base_type = Type} = R, Acc) ->
+	specification(T, R, Acc#{"@type" => Type});
+specification([base_type | T], #{"@type" := Type} = M, Acc) ->
+	specification(T, M, Acc#specification{base_type = Type});
+specification([schema | T], #specification{schema = Schema} = R, Acc) ->
+	specification(T, R, Acc#{"@schemaLocation" => Schema});
+specification([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+	specification(T, M, Acc#specification{schema = Schema});
 specification([version | T], #specification{version = Version} = R, Acc) ->
 	specification(T, R, Acc#{"version" => Version});
 specification([version | T], #{"version" := Version} = M, Acc) ->
@@ -247,10 +259,17 @@ specification([bundle | T], #specification{bundle = Bundle} = R, Acc) ->
 specification([bundle | T], #{"isBundle" := Bundle} = M, Acc) ->
 	specification(T, M, Acc#specification{bundle = Bundle});
 specification([related_party | T], #specification{related_party = PartyRefs} = R, Acc) ->
-	specification(T, R, Acc#{"relatedParty" => im_rest:related_party(PartyRefs)});
+	specification(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
 specification([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc) ->
-	specification(T, M, Acc#specification{category = im_rest:related_party(PartyRefs)});
-%% @todo resourceSpecCharacteristic and resourceSpecRelationship
+	specification(T, M, Acc#specification{category = im_rest:related_party_ref(PartyRefs)});
+specification([characteristic | T], #specification{characteristic = SpecChars} = R, Acc) ->
+	specification(T, R, Acc#{"resourceSpecCharacteristic" => specification_char(SpecChars)});
+specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars} = M, Acc) ->
+	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
+specification([related | T], #specification{related = SpecRels} = R, Acc) ->
+	specification(T, R, Acc#{"resourceSpecRelationship" => specification_rel(SpecRels)});
+specification([related | T], #{"resourceSpecRelationship" := SpecRels} = M, Acc) ->
+	specification(T, M, Acc#specification{related = specification_rel(SpecRels)});
 specification([_ | T], R, Acc) ->
 	specification(T, R, Acc);
 specification([], _, Acc) ->
@@ -259,6 +278,155 @@ specification([], _, Acc) ->
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
+
+-spec specification_rel(ResourceSpecRelationship) -> ResourceSpecRelationship
+	when
+		ResourceSpecRelationship :: [specification_rel()] | [map()]
+				| specification_rel() | map().
+%% @doc CODEC for `ResourceSpecRelationship'.
+%% @private
+specification_rel(#specification_rel{} = ResourceSpecRelationship) ->
+	specification_rel(record_info(fields, specification_rel), ResourceSpecRelationship, #{});
+specification_rel(#{} = ResourceSpecRelationship) ->
+	specification_rel(record_info(fields, specification_rel), ResourceSpecRelationship, #specification_rel{}).
+%% @hidden
+specification_rel([id | T], #{"id" := Id} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{id = Id});
+specification_rel([href | T], #specification_rel{href = Href} = R, Acc) ->
+	specification_rel(T, R, Acc#{"href" => Href});
+specification_rel([href | T], #{"href" := Href} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{href = Href});
+specification_rel([name | T], #specification_rel{name = Name} = R, Acc) ->
+	specification_rel(T, R, Acc#{"name" => Name});
+specification_rel([name | T], #{"name" := Name} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{name = Name});
+specification_rel([type | T], #specification_rel{type = Type} = R, Acc) ->
+	specification_rel(T, R, Acc#{"type" => Type});
+specification_rel([type | T], #{"type" := Type} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{type = Type});
+specification_rel([role | T], #specification_rel{role = Role} = R, Acc) ->
+	specification_rel(T, R, Acc#{"role" => Role});
+specification_rel([role | T], #{"role" := Role} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{role = Role});
+specification_rel([start_date | T], #specification_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	specification_rel(T, R, Acc#{"validFor" => ValidFor});
+specification_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{start_date = im_rest:iso8601(Start)});
+specification_rel([end_date | T], #specification_rel{end_date = End} = R,
+		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	specification_rel(T, R, Acc#{"validFor" := NewValidFor});
+specification_rel([end_date | T], #specification_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	specification_rel(T, R, Acc#{"validFor" := ValidFor});
+specification_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+	specification_rel(T, M, Acc#specification_rel{end_date = im_rest:iso8601(End)});
+specification_rel([_ | T], R, Acc) ->
+	specification_rel(T, R, Acc);
+specification_rel([], _, Acc) ->
+	Acc.
+
+-spec specification_char(ResourceSpecCharacteristic) -> ResourceSpecCharacteristic
+	when
+		ResourceSpecCharacteristic :: [specification_char()] | [map()]
+				| specification_char() | map().
+%% @doc CODEC for `ResourceSpecCharacteristic'.
+%% @private
+specification_char(#specification_char{} = ResourceSpecCharacteristic) ->
+	specification_char(record_info(fields, specification_char), ResourceSpecCharacteristic, #{});
+specification_char(#{} = ResourceSpecCharacteristic) ->
+	specification_char(record_info(fields, specification_char), ResourceSpecCharacteristic, #specification_char{}).
+%% @hidden
+specification_char([name | T], #specification_char{name = Name} = R, Acc) ->
+	specification_char(T, R, Acc#{"name" => Name});
+specification_char([name | T], #{"name" := Name} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{name = Name});
+specification_char([description | T], #specification_char{description = Description} = R, Acc) ->
+	specification_char(T, R, Acc#{"description" => Description});
+specification_char([description | T], #{"description" := Description} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{description = Description});
+specification_char([value_type | T], #specification_char{value_type = Type} = R, Acc) ->
+	specification_char(T, R, Acc#{"valueType" => Type});
+specification_char([value_type | T], #{"valueType" := Type} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{value_type = Type});
+specification_char([class_type | T], #specification_char{class_type = Type} = R, Acc) ->
+	specification_char(T, R, Acc#{"@type" => Type});
+specification_char([class_type | T], #{"@type" := Type} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{class_type = Type});
+specification_char([schema | T], #specification_char{schema = Schema} = R, Acc) ->
+	specification_char(T, R, Acc#{"@schemaLocation" => Schema});
+specification_char([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{schema = Schema});
+specification_char([value_schema | T], #specification_char{value_schema = Schema} = R, Acc) ->
+	specification_char(T, R, Acc#{"@valueSchemaLocation" => Schema});
+specification_char([value_schema | T], #{"@valueSchemaLocation" := Schema} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{value_schema = Schema});
+specification_char([configurable | T], #specification_char{configurable = Configurable} = R, Acc) ->
+	specification_char(T, R, Acc#{"configurable" => Configurable});
+specification_char([configurable | T], #{"configurable" := Configurable} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{configurable = Configurable});
+specification_char([min | T], #specification_char{min = Min} = R, Acc)
+		when is_integer(Min) ->
+	specification_char(T, R, Acc#{"minCardinality" => Min});
+specification_char([min | T], #{"minCardinality" := Min} = M, Acc)
+		when is_integer(Min) ->
+	specification_char(T, M, Acc#specification_char{min = Min});
+specification_char([max | T], #specification_char{max = Max} = R, Acc)
+		when is_integer(Max) ->
+	specification_char(T, R, Acc#{"maxCardinality" => Max});
+specification_char([max | T], #{"maxCardinality" := Max} = M, Acc)
+		when is_integer(Max) ->
+	specification_char(T, M, Acc#specification_char{max = Max});
+specification_char([unique | T], #specification_char{unique = Unique} = R, Acc) ->
+	specification_char(T, R, Acc#{"unique" => Unique});
+specification_char([unique | T], #{"unique" := Unique} = M, Acc)
+		when is_boolean(Unique) ->
+	specification_char(T, M, Acc#specification_char{unique = Unique});
+specification_char([regex | T], #specification_char{regex = {_, RegEx}} = R, Acc) ->
+	specification_char(T, R, Acc#{"regex" => RegEx});
+specification_char([regex | T], #{"regex" := Regex} = M, Acc) ->
+	{ok, MP} = re:compile(Regex),
+	specification_char(T, M, Acc#specification_char{regex = {MP, Regex}});
+specification_char([extensible | T], #specification_char{extensible = extensible} = R, Acc) ->
+	specification_char(T, R, Acc#{"extensible" => extensible});
+specification_char([extensible | T], #{"extensible" := extensible} = M, Acc)
+		when is_boolean(extensible) ->
+	specification_char(T, M, Acc#specification_char{extensible = extensible});
+specification_char([start_date | T], #specification_char{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	specification_char(T, R, Acc#{"validFor" => ValidFor});
+specification_char([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{start_date = im_rest:iso8601(Start)});
+specification_char([end_date | T], #specification_char{end_date = End} = R,
+		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	specification_char(T, R, Acc#{"validFor" := NewValidFor});
+specification_char([end_date | T], #specification_char{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	specification_char(T, R, Acc#{"validFor" := ValidFor});
+specification_char([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{end_date = im_rest:iso8601(End)});
+specification_char([char_relation | T], #specification_char{char_relation = CharRels} = R, Acc) ->
+	specification_char(T, R, Acc#{"resourceSpecCharRelationship" => spec_char_rel(CharRels)});
+specification_char([char_relation | T], #{"resourceSpecCharRelationship" := CharRels} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{char_relation = spec_char_rel(CharRels)});
+specification_char([char_value | T], #specification_char{char_value = CharVals} = R, Acc) ->
+	specification_char(T, R, Acc#{"resourceSpecCharacteristicValue" => spec_char_value(CharVals)});
+specification_char([char_value | T], #{"resourceSpecCharacteristicValue" := CharVals} = M, Acc) ->
+	specification_char(T, M, Acc#specification_char{char_value = spec_char_value(CharVals)});
+specification_char([_ | T], R, Acc) ->
+	specification_char(T, R, Acc);
+specification_char([], _, Acc) ->
+	Acc.
 
 %% @hidden
 query_start(Query, Filters, RangeStart, RangeEnd) ->

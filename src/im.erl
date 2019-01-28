@@ -254,7 +254,7 @@ query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, '_' = _MatchType, 
 	query_resource3(Cont, Size, Sort, MatchHead, MatchConditions, MatchChar, CountOnly);
 query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {exact, String} = _MatchType,
 		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{type = '$3'},
+		MatchHead1 = MatchHead#resource{class_type = '$3'},
 		MatchCondition = {'==', '$3', String},
 	query_resource3(Cont, Size, Sort, MatchHead1, [MatchCondition | MatchConditions],
 			MatchChar, CountOnly);
@@ -263,14 +263,14 @@ query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {Op, [String]} = _
 	MatchHead1 = case lists:last(String) of
 		$% ->
 			Prefix = lists:droplast(String),
-			MatchHead#resource{type = Prefix ++ '_'};
+			MatchHead#resource{class_type = Prefix ++ '_'};
 		_ ->
-			MatchHead#resource{type = String}
+			MatchHead#resource{class_type = String}
 	end,
 	query_resource3(Cont, Size, Sort, MatchHead1, MatchConditions, MatchChar, CountOnly);
 query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String} = _MatchType,
 		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{type = '$3'},
+		MatchHead1 = MatchHead#resource{class_type = '$3'},
 		MatchCondition = {'/=', '$3', String},
 	query_resource3(Cont, Size, Sort, MatchHead1, [MatchCondition | MatchConditions],
 			MatchChar, CountOnly).
@@ -755,7 +755,7 @@ filter_source(Op, String) ->
 parse(startDocument = _Event, _Location, State) ->
    State;
 parse({startElement, _, "MO", _, [{_, _, "className", Class}, {_, _, "fdn", Fdn}]}, _, _State) ->
-   #state{resource = #resource{id = Fdn, description = Class, type = "EQUIPMENT", base_type = "PhysicalResource"}};
+   #state{resource = #resource{id = Fdn, description = Class, class_type = "EQUIPMENT", base_type = "PhysicalResource"}};
 parse({startElement, _, "MO", _, _}, _, #state{}) ->
    #state{};
 parse({startElement, _, "attr", _, [{_, _, "name", Name}]}, _, State) ->

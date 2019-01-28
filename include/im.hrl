@@ -3,23 +3,37 @@
 -type catalog_status() :: in_study | in_design | in_test
 		| rejected | active | launched | retired | obsolete.
 
--record(related,
+-record(category_ref,
 		{id :: string(),
 		href :: string(),
 		name :: string(),
 		version :: string()}).
--type related() :: #related{}.
+-type category_ref() :: #category_ref{}.
 
--record(related_party,
+-record(candidate_ref,
+		{id :: string(),
+		href :: string(),
+		name :: string(),
+		version :: string()}).
+-type candidate_ref() :: #candidate_ref{}.
+
+-record(related_party_ref,
 		{id :: string(),
 		href :: string(),
 		name :: string(),
 		role :: string(),
 		start_date :: pos_integer(),
 		end_date :: pos_integer()}).
--type related_party() :: #related_party{}.
+-type related_party_ref() :: #related_party_ref{}.
 
--record(related_spec,
+-record(specification_ref,
+		{id :: string(),
+		href :: string(),
+		name :: string(),
+		version :: string()}).
+-type specification_ref() :: #specification_ref{}.
+
+-record(specification_rel,
 		{id :: string(),
 		href :: string(),
 		name :: string(),
@@ -27,18 +41,37 @@
 		role :: string(),
 		start_date :: pos_integer(),
 		end_date :: pos_integer()}).
--type spec_relationship() :: #related_spec{}.
+-type specification_rel() :: #specification_rel{}.
 
--record(related_spec_char,
+-record(spec_char_rel,
 		{id :: string(),
 		href :: string(),
 		name :: string(),
 		type :: string(),
-		role :: string(),
 		class_type :: string(),
 		start_date :: pos_integer(),
 		end_date :: pos_integer()}).
--type char_relationship() :: #related_spec_char{}.
+-type spec_char_rel() :: #spec_char_rel{}.
+
+-record(resource_rel,
+		{id :: string(),
+		href :: string(),
+		type :: string(),
+		start_date :: pos_integer(),
+		end_date :: pos_integer()}).
+-type resource_rel() :: #resource_rel{}.
+
+-record(place_ref,
+		{id :: string(),
+		href :: string(),
+		name :: string(),
+		role :: string()}).
+-type place_ref() :: #place_ref{}.
+
+-record(target_schema_ref,
+		{class_type :: string(),
+		schema :: string()}).
+-type target_schema_ref() :: #target_schema_ref{}.
 
 -record(feature,
 		{id :: string(),
@@ -60,17 +93,26 @@
 		url :: string()}).
 -type attachment() :: #attachment{}.
 
+-record(note,
+		{author :: string(),
+		date :: pos_integer(),
+		text :: string()}).
+-type note() :: #note{}.
+
 -record(catalog,
 		{id :: string(),
 		href :: string(),
 		name :: string(),
 		description :: string(),
+		class_type :: string(),
+		base_type :: string(),
+		schema :: string(),
 		version :: string(),
 		start_date :: pos_integer(),
 		end_date :: pos_integer(),
 		last_modified :: pos_integer(),
 		status :: catalog_status(),
-		related_party = [] :: list(),
+		related_party = [] :: [related_party_ref()],
 		category = [] :: [string()]}).
 -type catalog() :: #catalog{}.
 
@@ -79,6 +121,9 @@
 		href :: string(),
 		name :: string(),
 		description :: string(),
+		class_type :: string(),
+		base_type :: string(),
+		schema :: string(),
 		version :: string(),
 		start_date :: pos_integer(),
 		end_date :: pos_integer(),
@@ -86,9 +131,9 @@
 		status :: catalog_status(),
 		parent :: string(),
 		root = false :: boolean(),
-		related_party = [] :: [related_party()],
-		category = [] :: [related()],
-		candidate = [] :: [related()]}).
+		related_party = [] :: [related_party_ref()],
+		category = [] :: [category_ref()],
+		candidate = [] :: [candidate_ref()]}).
 -type category() :: #category{}.
 
 -record(candidate,
@@ -96,13 +141,16 @@
 		href :: string(),
 		name :: string(),
 		description :: string(),
+		class_type :: string(),
+		base_type :: string(),
+		schema :: string(),
 		version :: string(),
 		start_date :: pos_integer(),
 		end_date :: pos_integer(),
 		last_modified :: pos_integer(),
 		status :: catalog_status(),
-		category = [] :: [related()],
-		specification = [] :: [related()]}).
+		category = [] :: [category_ref()],
+		specification = [] :: [specification_ref()]}).
 -type candidate() :: #candidate{}.
 
 -record(specification,
@@ -110,8 +158,7 @@
 		href :: string(),
 		name :: string(),
 		description :: string(),
-		category :: string(),
-		type :: string(),
+		class_type :: string(),
 		base_type :: string(),
 		schema :: string(),
 		status :: string(),
@@ -120,19 +167,22 @@
 		end_date :: pos_integer(),
 		last_modified :: pos_integer(),
 		bundle = false :: boolean(),
-		feature = [] :: [feature()],
-		attachment = [] :: [attachment()],
-		related_party = [] :: [related_party()],
-		characteristic = [] :: [characteristic()],
-		spec_relation = [] :: [spec_relationship()],
-		device_manufacture :: pos_integer(),
-		device_power :: string(),
+		category :: string(),
+		target_schema :: target_schema_ref(),
+		model :: string(),
+		part :: string(),
+		sku :: string(),
+		vendor :: string(),
 		device_serial :: string(),
 		device_version :: string(),
-		value :: string()}).
+		feature = [] :: [feature()],
+		attachment = [] :: [attachment()],
+		related_party = [] :: [related_party_ref()],
+		characteristic = [] :: [specification_char()],
+		related = [] :: [specification_rel()]}).
 -type specification() :: #specification{}.
 
--record(char_value,
+-record(spec_char_value,
 		{value_type :: string(),
 		default = false :: boolean(),
 		class_type :: string(),
@@ -145,13 +195,13 @@
 		interval :: open | closed | closed_bottom | closed_top,
 		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()},
 		value :: term()}).
--type char_value() :: #char_value{}.
+-type spec_char_value() :: #spec_char_value{}.
 
--record(characteristic,
+-record(specification_char,
 		{name :: string(),
 		description :: string(),
 		value_type :: string(),
-		type :: string(),
+		class_type :: string(),
 		schema :: string(),
 		value_schema :: string(),
 		configurable :: boolean(),
@@ -162,17 +212,18 @@
 		unique :: boolean(),
 		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()},
 		extensible :: boolean(),
-		char_relation = [] :: [char_relationship()],
-		char_value = [] :: [char_value()]}).
--type characteristic() :: #characteristic{}.
+		char_relation = [] :: [spec_char_rel()],
+		char_value = [] :: [spec_char_value()]}).
+-type specification_char() :: #specification_char{}.
 
 -record(resource,
 		{id :: string() | '_' | '$1',
 		href :: string() | '_',
+		public_id :: string() | '_',
 		name :: string() | '_' | '$2',
 		description :: string() | '_',
 		category :: string() | '_',
-		type :: string() | '_' | '$3',
+		class_type :: string() | '_' | '$3',
 		base_type :: string() | '_',
 		schema :: string() | '_',
 		status :: string() | '_',
@@ -180,9 +231,20 @@
 		start_date :: pos_integer() | '_',
 		end_date :: pos_integer() | '_',
 		last_modified :: pos_integer() | '_',
-		specification :: string() | '_',
-		characteristic = [] :: [{Name :: string(), Value :: term()}] | '_'}).
+		related = [] :: [resource_rel()] | '_',
+		place = [] :: [place_ref()] | '_',
+		note = [] ::[note()] | '_',
+		specification :: specification_ref() | '_',
+		related_party = [] :: [related_party_ref()] | '_',
+		characteristic = [] :: [resource_char()] | '_'}).
 -type resource() :: #resource{}.
+
+-record(resource_char,
+		{name :: string(),
+		value :: term(),
+		class_type :: string(),
+		schema :: string()}).
+-type resource_char() :: #resource_char{}.
 
 -record(sites,
 		{name :: string(),

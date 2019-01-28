@@ -210,6 +210,18 @@ category([description| T],
 	category(T, R, Acc#{"description" => Description});
 category([description| T], #{"description" := Description} = M, Acc) ->
 	category(T, M, Acc#category{description = Description});
+category([class_type | T], #category{class_type = Type} = R, Acc) ->
+	category(T, R, Acc#{"@baseType" => Type});
+category([class_type | T], #{"@baseType" := Type} = M, Acc) ->
+	category(T, M, Acc#category{class_type = Type});
+category([base_type | T], #category{base_type = Type} = R, Acc) ->
+	category(T, R, Acc#{"@type" => Type});
+category([base_type | T], #{"@type" := Type} = M, Acc) ->
+	category(T, M, Acc#category{base_type = Type});
+category([schema | T], #category{schema = Schema} = R, Acc) ->
+	category(T, R, Acc#{"@schemaLocation" => Schema});
+category([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+	category(T, M, Acc#category{schema = Schema});
 category([version | T], #category{version = Version} = R, Acc) ->
 	category(T, R, Acc#{"version" => Version});
 category([version | T], #{"version" := Version} = M, Acc) ->
@@ -254,13 +266,17 @@ category([root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
 	category(T, M, Acc#category{root = IsRoot});
 category([related_party | T], #category{related_party = RP} = R, Acc) ->
-	category(T, R, Acc#{"relatedParty" => im_rest:related_party(RP)});
+	category(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
 category([related_party | T], #{"relatedParty" := RP} = M, Acc) ->
-	category(T, M, Acc#category{related_party = im_rest:related_party(RP)});
+	category(T, M, Acc#category{related_party = im_rest:related_party_ref(RP)});
 category([category | T], #category{category = CatRefs} = R, Acc) ->
-	category(T, R, Acc#{"category" => im_rest:related_category(CatRefs)});
+	category(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
 category([category | T], #{"category" := CatRefs} = M, Acc) ->
-	category(T, M, Acc#category{category = im_rest:related_category(CatRefs)});
+	category(T, M, Acc#category{category = im_rest:category_ref(CatRefs)});
+category([candidate | T], #category{candidate = CanRefs} = R, Acc) ->
+	category(T, R, Acc#{"resourceCandidate" => im_rest:candidate_ref(CanRefs)});
+category([candidate | T], #{"resourceCandidate" := CanRefs} = M, Acc) ->
+	category(T, M, Acc#category{candidate = im_rest:candidate_ref(CanRefs)});
 category([_ | T], R, Acc) ->
 	category(T, R, Acc);
 category([], _, Acc) ->

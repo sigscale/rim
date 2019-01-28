@@ -211,6 +211,18 @@ candidate([description| T],
 	candidate(T, R, Acc#{"description" => Description});
 candidate([description| T], #{"description" := Description} = M, Acc) ->
 	candidate(T, M, Acc#candidate{description = Description});
+candidate([class_type | T], #candidate{class_type = Type} = R, Acc) ->
+	candidate(T, R, Acc#{"@baseType" => Type});
+candidate([class_type | T], #{"@baseType" := Type} = M, Acc) ->
+	candidate(T, M, Acc#candidate{class_type = Type});
+candidate([base_type | T], #candidate{base_type = Type} = R, Acc) ->
+	candidate(T, R, Acc#{"@type" => Type});
+candidate([base_type | T], #{"@type" := Type} = M, Acc) ->
+	candidate(T, M, Acc#candidate{base_type = Type});
+candidate([schema | T], #candidate{schema = Schema} = R, Acc) ->
+	candidate(T, R, Acc#{"@schemaLocation" => Schema});
+candidate([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+	candidate(T, M, Acc#candidate{schema = Schema});
 candidate([version | T], #candidate{version = Version} = R, Acc) ->
 	candidate(T, R, Acc#{"version" => Version});
 candidate([version | T], #{"version" := Version} = M, Acc) ->
@@ -247,7 +259,7 @@ candidate([category | T], #candidate{category = CatRefs} = R, Acc) ->
 candidate([category | T], #{"category" := CatRefs} = M, Acc) ->
 	candidate(T, M, Acc#candidate{category = im_rest:related_category(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
-		when is_record(Spec, related) ->
+		when is_record(Spec, candidate_ref) ->
 	candidate(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
 candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
 	candidate(T, M, Acc#candidate{specification = im_rest:related(Spec)});

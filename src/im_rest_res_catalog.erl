@@ -210,6 +210,18 @@ catalog([description| T],
 	catalog(T, R, Acc#{"description" => Description});
 catalog([description| T], #{"description" := Description} = M, Acc) ->
 	catalog(T, M, Acc#catalog{description = Description});
+catalog([class_type | T], #catalog{class_type = Type} = R, Acc) ->
+	catalog(T, R, Acc#{"@baseType" => Type});
+catalog([class_type | T], #{"@baseType" := Type} = M, Acc) ->
+	catalog(T, M, Acc#catalog{class_type = Type});
+catalog([base_type | T], #catalog{base_type = Type} = R, Acc) ->
+	catalog(T, R, Acc#{"@type" => Type});
+catalog([base_type | T], #{"@type" := Type} = M, Acc) ->
+	catalog(T, M, Acc#catalog{base_type = Type});
+catalog([schema | T], #catalog{schema = Schema} = R, Acc) ->
+	catalog(T, R, Acc#{"@schemaLocation" => Schema});
+catalog([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+	catalog(T, M, Acc#catalog{schema = Schema});
 catalog([version | T], #catalog{version = Version} = R, Acc) ->
 	catalog(T, R, Acc#{"version" => Version});
 catalog([version | T], #{"version" := Version} = M, Acc) ->
@@ -242,13 +254,13 @@ catalog([status | T], #catalog{status = Status} = R, Acc)
 catalog([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
 	catalog(T, M, Acc#catalog{status = im_rest:lifecycle_status(Status)});
 catalog([related_party | T], #catalog{related_party = RP} = R, Acc) ->
-	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party(RP)});
+	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
 catalog([related_party | T], #{"relatedParty" := RP} = M, Acc) ->
-	catalog(T, M, Acc#catalog{related_party = im_rest:related_party(RP)});
+	catalog(T, M, Acc#catalog{related_party = im_rest:related_party_ref(RP)});
 catalog([category | T], #catalog{category = Category} = R, Acc) ->
-	catalog(T, R, Acc#{"category" => im_rest:related_category(Category)});
+	catalog(T, R, Acc#{"category" => im_rest:category_ref(Category)});
 catalog([category | T], #{"category" := Category} = M, Acc) ->
-	catalog(T, M, Acc#catalog{category = im_rest:related_category(Category)});
+	catalog(T, M, Acc#catalog{category = im_rest:category_ref(Category)});
 catalog([_ | T], R, Acc) ->
 	catalog(T, R, Acc);
 catalog([], _, Acc) ->

@@ -18,7 +18,7 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
-%%% 	Handle `ResourceInventory' collection.
+%%% 	Handle `Resource' collection.
 %%%
 -module(im_rest_res_inventory).
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
@@ -243,15 +243,15 @@ resource([status | T], #resource{status = Status} = R, Acc)
 resource([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
 	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
 resource([category | T], #resource{category = CatRef} = R, Acc)
-		when is_record(CatRef, related) ->
-	resource(T, R, Acc#{"category" => im_rest:related_category(CatRef)});
+		when is_record(CatRef, category_ref) ->
+	resource(T, R, Acc#{"category" => im_rest:category_ref(CatRef)});
 resource([category | T], #{"category" := CatRef} = M, Acc) ->
-	resource(T, M, Acc#resource{category = im_rest:related_category(CatRef)});
+	resource(T, M, Acc#resource{category = im_rest:category_ref(CatRef)});
 resource([specification | T], #resource{specification = Spec} = R, Acc)
-		when is_record(Spec, related) ->
-	resource(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
+		when is_record(Spec, specification_rel) ->
+	resource(T, R, Acc#{"resourceSpecification" => im_rest:specification_rel(Spec)});
 resource([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
-	resource(T, M, Acc#resource{specification = im_rest:related(Spec)});
+	resource(T, M, Acc#resource{specification = im_rest:specification_rel(Spec)});
 resource([_ | T], R, Acc) ->
 	resource(T, R, Acc);
 resource([], _, Acc) ->
