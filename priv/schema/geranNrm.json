@@ -1,0 +1,543 @@
+{
+	"$id": "geranNrm", 
+	"definitions": {
+		"isESCoveredByEnumType": {
+			"type": "string",
+			"enum": [
+				"no",
+				"partial",
+				"yes"
+			]
+		},
+		"MA": {
+			"type": "object",
+			"properties": {
+				"rfSelected": {
+					"type": "boolean"
+				}
+			}
+			
+		},
+		"HoppingSequence": {
+			"type": "object",
+			"properties": {
+				"ma": {
+					"$ref": "#/definitions/MA"
+				},
+				"hsn": {
+					"type": "integer",
+					"minimum": -32767,
+					"maximum": 32767
+				}
+			}
+		},
+		"HoppingSequenceList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/HoppingSequence"
+			}
+		},
+		"BssFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"btsSiteMgr": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/BtsSiteMgr"
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "genericNrm#/definitions/VsDataContainer"
+							}
+						}
+					},
+					"dependencies": {
+						"btsSiteMgr": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": true 
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"gsmCell": true 
+							}
+						}
+					}
+				}
+			]
+		},
+		"BtsSiteMgr": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"latitude": {
+									"$ref": "genericNrm#/definitions/latitude"
+								},
+								"longitude": {
+									"$ref": "genericNrm#/definitions/longitude"
+								},
+								"operationalState": {
+									"$ref": "sonPolicyNrm#/definitions/operationalStateType"
+								}
+							}
+						},
+						"gsmCell": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/GsmCell"
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "genericNrm#/definitions/VsDataContainer"
+							}
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+						}
+					},
+					"dependencies": {
+						"gsmCell": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"gsmCell": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"GsmCell": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"cellIdentity",
+								"cellAllocation",
+								"ncc",
+								"bcc",
+								"lac",
+								"mcc",
+								"mnc",
+								"rxLevAccessMin",
+								"msTxPwrMaxCCH",
+								"rfHoppingEnabled",
+								"hoppingSequenceList",
+								"plmnPermitted"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"cellIdentity": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 65535
+								},
+								"cellAllocation": {
+									"type": "array",
+									"items": {
+										"type": "integer"
+									}
+								},
+								"ncc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"bcc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"lac": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 65533
+								},
+								"mcc": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 999
+								},
+								"mnc": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 999
+								},
+								"rac": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 255
+								},
+								"racc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"tsc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"rxLevAccessMin": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 63
+								},
+								"msTxPwrMaxCCH": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 31
+								},
+								"rfHoppingEnabled": {
+									"type": "boolean"
+								},
+								"hoppingSequenceList": {
+									"$ref": "#/definitions/HoppingSequenceList"
+								},
+								"plmnPermitted": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 255
+								}
+							}
+						},
+						"gsmRelation": {
+							"$ref": "#/definitions/GsmRelations"
+						},
+						"utranRelation": {
+							"$ref": "utranNrm#/definitions/UtranRelations"
+						},
+						"eUtranRelation": {
+							"$ref": "eutranNrm#/definitions/EUtranRelations"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"gsmCellOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/GsmCellOptionallyContainedNrmClasses"
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+						}
+					},
+					"dependencies": {
+						"gsmRelation": {
+							"type": "object",
+							"properties": {
+								"utranRelation": false,
+								"eUtranRelation": false,
+								"vsDataContainer": false,
+								"gsmCellOptionallyContainedNrmClass": false
+							}
+						},
+						"utranRelation": {
+							"type": "object",
+							"properties": {
+								"gsmRelation": false,
+								"eUtranRelation": false,
+								"vsDataContainer": false,
+								"gsmCellOptionallyContainedNrmClass": false
+							}
+						},
+						"eUtranRelation": {
+							"type": "object",
+							"properties": {
+								"gsmRelation": false,
+								"utranRelation": false,
+								"vsDataContainer": false,
+								"gsmCellOptionallyContainedNrmClass": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranRelation": false,
+								"gsmCellOptionallyContainedNrmClass": false
+							}
+						},
+						"gsmCellOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranRelation": false,
+								"vsDataContainer": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"GsmRelation": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"adjacentCell"
+							],
+							"properties": {
+								"adjacentCell": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"bcchFrequency": {
+									"type": "integer"
+								},
+								"ncc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"bcc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"lac": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 65533
+								},
+								"isRemoveAllowed": {
+									"type": "boolean"
+								},
+								"isHOAllowed": {
+									"type": "boolean"
+								},
+								"isESCoveredBy": {
+									"$ref": "#/definitions/isESCoveredByEnumType"
+								}
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "genericNrm#/definitions/VsDataContainer"
+							}
+						}
+					}
+				}
+			]
+		},
+		"GsmRelations": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/GsmRelation"
+			}
+		},
+		"ExternalGsmCell": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"cellIdentity",
+								"bcchFrequency",
+								"ncc",
+								"bcc",
+								"lac",
+								"mcc",
+								"mnc"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"cellIdentity": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 65535
+								},
+								"bcchFrequency": {
+									"type": "integer"
+								},
+								"ncc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"bcc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								},
+								"lac": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 65533
+								},
+								"mcc": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 999
+								},
+								"mnc": {
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 999
+								},
+								"rac": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 255
+								},
+								"racc": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 7
+								}
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "genericNrm#/definitions/VsDataContainer"
+							}
+						},
+						"interRatEsPolicies": {
+							"type": "object",
+							"items": {
+								"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+							}
+						}
+					}
+				}
+			]
+		},
+		"ExternalBssFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"externalGsmCell": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ExternalGsmCell"
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "genericNrm#/definitions/VsDataContainer"
+							}
+						}
+					},
+					"dependencies": {
+						"externalGsmCell": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": true 
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"externalGsmCell": true 
+							}
+						}
+					}
+				}
+			]
+		},
+		"GsmCellOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"GsmCellOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/GsmCellOptionallyContainedNrmClass"
+			}
+		}
+	}
+}

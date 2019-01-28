@@ -1,0 +1,559 @@
+{
+	"$id": "genericNrm",
+	"definitions": {
+		"NrmClass": {
+			"type": "object",
+			"title": "NrmClass",
+			"description": "Base type for all NRM class associated objects",
+			"required": [
+				"id"
+			],
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"modifier": {
+					"type": "string",
+					"enum": [
+						"create",
+						"delete",
+						"update"
+					]
+				}
+			}
+		},
+		"dn": {
+			"type": "string",
+			"maxLength": 400
+		},
+		"dnList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/dn"
+			}
+		},
+		"linkType": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"Signalling",
+					"Bearer",
+					"OAM_AND_P",
+					"Other"
+				]
+			}			
+		},
+		"linkListType": {
+			"type": "array",
+			"properties": {
+				"dn": {
+					"$ref": "#/definitions/dn"
+				}
+			}
+		},
+		"managedElementTypeListType": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"managedElementType"
+				],
+				"properties": {
+					"managedElementType": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"vnfParametersListType": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"vnfInstanceId",
+					"autoScalable"
+				],
+				"properties": {
+					"vnfInstanceId": {
+						"type": "string"
+					},
+					"vnfdId": {
+						"type": "string"
+					},
+					"flavourId": {
+						"type": "string"
+					},
+					"autoScalable": {
+						"type": "boolean"
+					}
+				}
+			},
+			"minItems": 1
+		},
+		"latitude": {
+			"type": "number",
+			"minimum": -90.0000,
+			"maximum": 90.0000
+		},
+		"longitude": {
+			"type": "number",
+			"minimum": -180.0000,
+			"maximum": 180.0000
+		},
+		"peeParametersListType": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"siteIdentification",
+					"siteDescription",
+					"equipmentType",
+					"environmentType",
+					"powerInterface"
+				],
+				"properties": {
+					"siteIdentification": {
+						"type": "string"
+					},
+					"siteLatitude": {
+						"$ref": "#/definitions/latitude"
+					},
+					"siteLongitude": {
+						"$ref": "#/definitions/longitude"
+					},
+					"siteDescription": {
+						"type": "string"
+					},
+					"equipmentType": {
+						"type": "string"
+					},
+					"environmentType": {
+						"type": "string"
+					},
+					"powerInterface": {
+						"type": "string"
+					}
+				}
+			},
+			"minItems": 1
+		},
+		"SubNetwork": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"userDefinedNetworkType"
+							],
+							"properties": {
+								"dnPrefix": {
+									"$ref": "#/definitions/dn"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"userDefinedNetworkType": {
+									"type": "string"
+								},
+								"setOfMcc": {
+									"type": "array",
+									"items": {
+										"type": "integer",
+										"minimum": 1,
+										"maximum": 999
+									}
+								}
+							}
+						},
+						"subNetwork": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/SubNetwork"
+							}
+						},
+						"managedElement": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ManagedElement"
+							}
+						},
+						"meContext": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/MeContext"
+							}
+						},
+						"managementNode": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ManagementNode"
+							}
+						},
+						"irpAgent": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IRPAgent"
+							}
+						},
+						"subNetworkOptionallyContainedNrmClass": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/SubNetworkOptionallyContainedNrmClass"
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/VsDataContainer"
+							}
+						},
+						"esPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						}
+					},
+					"dependencies": {
+						"subNetwork": {
+							"type": "object",
+							"properties": {
+								"managedElement": false,
+								"meContext": false,
+								"managementNode": false,
+								"irpAgent": false,
+								"subNetworkOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"managedElement": {
+							"type": "object",
+							"properties": {
+								"subNetwork": false,
+								"meContext": false,
+								"managementNode": false,
+								"irpAgent": false,
+								"subNetworkOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"meContext": {
+							"type": "object",
+							"properties": {
+								"subNetwork": false,
+								"managedElement": false,
+								"managementNode": false,
+								"irpAgent": false,
+								"subNetworkOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"managementNode": {
+							"type": "object",
+							"properties": {
+								"subNetwork": false,
+								"managedElement": false,
+								"meContext": false,
+								"irpAgent": false,
+								"subNetworkOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"irpAgent": {
+							"type": "object",
+							"properties": {
+								"subNetwork": false,
+								"managedElement": false,
+								"meContext": false,
+								"managementNode": false,
+								"subNetworkOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"subNetworkOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"subNetwork": false,
+								"managedElement": false,
+								"meContext": false,
+								"managementNode": false,
+								"irpAgent": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"subNetwork": false,
+								"managedElement": false,
+								"meContext": false,
+								"managementNode": false,
+								"irpAgent": false,
+								"subNetworkOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"ManagedElement": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"dnPrefix",
+								"userLabel",
+								"vendorName",
+								"userDefinedState",
+								"locationName",
+								"swVersion"
+							],
+							"properties": {
+								"dnPrefix": {
+									"$ref": "#/definitions/dn"
+								},
+								"managedElementTypeList": {
+									"$ref": "#/definitions/managedElementTypeListType"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"userDefinedState": {
+									"type": "string"
+								},
+								"locationName": {
+									"type": "string"
+								},
+								"swVersion": {
+									"type": "string"
+								},
+								"managedBy": {
+									"$ref": "#/definitions/dnList"
+								}
+							}
+						},
+						"irpAgent": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IRPAgent"
+							}
+						},
+						"managedElementOptionallyContainedNrmClass": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ManagedElementOptionallyContainedNrmClass"
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/VsDataContainer"
+							}
+						}
+					},
+					"dependencies": {
+						"irpAgent": {
+							"type": "object",
+							"properties": {
+								"managedElementOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"managedElementOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"irpAgent": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"irpAgent": false,
+								"managedElementOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"MeContext": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"dnPrefix": {
+									"$ref": "#/definitions/dn"
+								}
+							}
+						},
+						"managedElement": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ManagedElement"
+							}
+						}
+					}
+				}
+			]
+		},
+		"ManagementNode": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"vendorName",
+								"locationName",
+								"swVersion",
+								"userDefinedState"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vendorName": {
+									"type": "string"
+								},
+								"locationName": {
+									"type": "string"
+								},
+								"managedElements": {
+									"$ref": "#/definitions/dnList"
+								},
+								"swVersion": {
+									"type": "string"
+								},
+								"userDefinedState": {
+									"type": "string"
+								}
+							}
+						},
+						"irpAgent": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IRPAgent"
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/VsDataContainer"
+							}
+						}
+					},
+					"dependencies": {
+						"irpAgent": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"irpAgent": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"IRPAgent": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"systemDN": {
+									"$ref": "#/definitions/systemDN"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"VsDataContainer": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"vsDataType",
+								"vsDataFormatVersion",
+								"vsData"
+							],
+							"properties": {
+								"vsDataType": {
+									"type": "string"
+								},
+								"vsDataFormatVersion": {
+									"type": "string"
+								},
+								"vsData": {
+									"$ref": "#/definitions/vsData"
+								}
+							}
+						},
+						"vsDataContainer": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/VsDataContainer"
+							}
+						}
+					}
+				}
+			]
+		},
+		"VsDataContainers": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/VsDataContainer"
+			}
+		},
+		"systemDN": {
+			"$ref": "#/definitions/dn"
+		},
+		"vsData": {
+		},
+		"SubNetworkOptionallyContainedNrmClass": {
+			"$ref": "#/definitions/NrmClass"
+		},
+		"ManagedElementOptionallyContainedNrmClass": {
+			"$ref": "#/definitions/NrmClass"
+		}
+	}
+}

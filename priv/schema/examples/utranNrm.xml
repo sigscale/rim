@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 32.616 Bulk CM data file with
+	3GPP TS 28.653 UTRAN Network Resource Model (NRM)
+-->
+<bulkCmConfigDataFile
+		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm">
+
+	<fileHeader
+			fileFormatVersion="32.616 V15.0"
+			senderName="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1"
+			vendorName="Company NN" />
+
+	<configData dnPrefix="DC=a1.companyNN.com">
+		<xn:SubNetwork id="1">
+			<xn:attributes>
+				<xn:userLabel>Paris SN1</xn:userLabel>
+				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
+				<xn:setOfMcc>999</xn:setOfMcc>
+			</xn:attributes>
+			<xn:ManagementNode id="1">
+				<xn:attributes>
+					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
+					<xn:vendorName>Company NN</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Montparnasse</xn:locationName>
+					<xn:managedElements>
+						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
+					</xn:managedElements>
+					<xn:swVersion>1.0</xn:swVersion>
+				</xn:attributes>
+			</xn:ManagementNode>
+			<xn:ManagedElement id="1">
+				<xn:attributes>
+					<xn:dnPrefix></xn:dnPrefix>
+					<xn:managedElementTypeList>
+						<xn:managedElementType>BSS</xn:managedElementType>
+					</xn:managedElementTypeList>
+					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
+					<xn:vendorName>Company NN</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Champ de Mars</xn:locationName>
+					<xn:swVersion>1.0</xn:swVersion>
+					<xn:managedBy>
+						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
+					</xn:managedBy>
+				</xn:attributes>
+				<un:RncFunction id="1">
+					<un:attributes>
+						<un:userLabel>Paris SMN1</un:userLabel>
+						<un:vnfParametersList>
+							<xn:vnfInstanceId>lkajjfa</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</un:vnfParametersList>
+						<un:mcc>999</un:mcc>
+						<un:rncId>Uterlhgerw</un:rncId>
+					</un:attributes>
+					<!-- Multiple UtranCellFDD in a RNC-->
+					<un:UtranCellFDD id="1">
+						<un:attributes>
+							<un:userLabel>Paris MN7</un:userLabel>
+							<un:localCellId>268435455</un:localCellId>
+							<un:cellMode>3-84McpsTDDMode</un:cellMode>
+							<un:fachPower>150</un:fachPower>
+							<un:relatedAntennaList>
+								<xn:dn>RncFunction=1,UtranCellFDD=1</xn:dn>
+								<xn:dn>RncFunction=1,UtranCellFDD=2</xn:dn>
+							</un:relatedAntennaList>
+							<un:operationalState>disabled</un:operationalState>
+							<un:numOfHspdschs>0</un:numOfHspdschs>
+						</un:attributes>
+						<!-- Multiple UtranRelation in a UtranCellFDD  -->
+						<un:UtranRelation id="1">
+							<un:attributes>
+								<un:adjacentCell>SubNetwork=1,UtranCellFDD=1,UtranRelation=2</un:adjacentCell>
+							</un:attributes>
+							<!--  Vendor specific data for UtranRelation-->
+							<xn:VsDataContainer id="1">
+								<xn:attributes>
+									<xn:vsDataType>DataType=6</xn:vsDataType>
+									<xn:vsDataFormatVersion>DFV5</xn:vsDataFormatVersion>
+									<xn:vsData />
+								</xn:attributes>
+							</xn:VsDataContainer>
+						</un:UtranRelation>
+						<!--  Vendor specific data for UtranCellFDD -->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>abc</xn:vsDataType>
+								<xn:vsDataFormatVersion>abc.1.1</xn:vsDataFormatVersion>
+								<xn:vsData />
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</un:UtranCellFDD>
+				</un:RncFunction>
+				<!--  Vendor specific data for RNC-->
+				<xn:VsDataContainer id="1">
+					<xn:attributes>
+						<xn:vsDataType>abc</xn:vsDataType>
+						<xn:vsDataFormatVersion>abc.1.1</xn:vsDataFormatVersion>
+						<xn:vsData />
+					</xn:attributes>
+				</xn:VsDataContainer>
+			</xn:ManagedElement>
+		</xn:SubNetwork>
+	</configData>
+
+	<fileFooter dateTime="2018-12-15T12:00:00Z" />
+
+</bulkCmConfigDataFile>
