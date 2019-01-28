@@ -1,0 +1,4 @@
+## Validate the schema
+$ ajv compile -s geranNrm.json
+schema geranNrm.json is valid
+
