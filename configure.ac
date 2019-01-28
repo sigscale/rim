@@ -6,7 +6,7 @@
 ## Boilerplate:  standard boilerplate code
 ##
 AC_INIT([sigscale_im], [1.0.0], [issues@sigscale.org])
-AC_COPYRIGHT([Copyright (c) 2018 SigScale Global Inc.])
+AC_COPYRIGHT([Copyright (c) 2018-2019 SigScale Global Inc.])
 AC_PREREQ(2.63)
 AC_CONFIG_SRCDIR([src/im_app.erl])
 AC_CONFIG_HEADERS([config.h])
@@ -68,6 +68,7 @@ AC_ERLANG_CHECK_LIB([asn1], [], [AC_MSG_ERROR([asn1 was not found!])])
 AC_ERLANG_CHECK_LIB([public_key], [], [AC_MSG_ERROR([public_key was not found!])])
 AC_ERLANG_CHECK_LIB([ssl], [], [AC_MSG_ERROR([ssl was not found!])])
 AC_ERLANG_CHECK_LIB([inets], [], [AC_MSG_ERROR([inets was not found!])])
+AC_ERLANG_CHECK_LIB([zj], [], [AC_MSG_ERROR([zj was not found!])])
 
 
 ##

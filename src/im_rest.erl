@@ -1,7 +1,7 @@
 %%% im_rest.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018 SigScale Global Inc.
+%%% @copyright 2018-2019 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -19,11 +19,14 @@
 %%% 	for REST servers in the {@link //im. im} application.
 %%%
 -module(im_rest).
--copyright('Copyright (c) 2018 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 -export([date/1, iso8601/1, etag/1]).
 -export([parse_query/1, range/1]).
--export([millionths_in/1, millionths_out/1]).
+-export([lifecycle_status/1]).
+-export([related/1, related_party/1, related_category/1]).
+
+-include("im.hrl").
 
 % calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}})
 -define(EPOCH, 62167219200).
@@ -166,55 +169,173 @@ range(Range) when is_list(Range) ->
 range({Start, End}) when is_integer(Start), is_integer(End) ->
 	{ok, "items=" ++ integer_to_list(Start) ++ "-" ++ integer_to_list(End)}.
 
--type millionths() :: non_neg_integer().
-%% Internal representation 1:1000000 for six decimal places maximum.
--spec millionths_in(In) -> Out
+-spec lifecycle_status(LifeCycleStatus) -> LifeCycleStatus
 	when
-		In :: string() | integer() | float(),
-		Out :: millionths().
-%% @doc Convert value from JSON to internal value.
-%%
-millionths_in(In) when is_list(In) ->
-	case string:tokens(In, [$.]) of
-		[M] ->
-			list_to_integer(M) * 1000000;
-		[M, D] when length(D) =< 6 ->
-			D1 = list_to_integer(D ++ lists:duplicate(6 - length(D), $0)),
-			case list_to_integer(M) of
-				M1 when M1 < 0 ->
-					M1 * 1000000 - D1;
-				M1 ->
-					M1 * 1000000 + D1
-			end
-	end;
-millionths_in(In) when is_integer(In) ->
-	In * 1000000;
-millionths_in(In) when is_float(In) ->
-	millionths_in(float_to_list(In, [{decimals, 7}, compact])).
+		LifeCycleStatus :: string() | in_study | in_design | in_test
+				| rejected | active | launched | retired | obsolete.
+%% @doc CODEC for Resource Catalog life cycle status.
+lifecycle_status(in_study = _Status) ->
+	"In Study";
+lifecycle_status(in_design) ->
+	"In Design";
+lifecycle_status(in_test) ->
+	"In Test";
+lifecycle_status(rejected) ->
+	"Rejected";
+lifecycle_status(active) ->
+	"Active";
+lifecycle_status(launched) ->
+	"Launched";
+lifecycle_status(retired) ->
+	"Retired";
+lifecycle_status(obsolete) ->
+	"Obsolete";
+lifecycle_status("In Study") ->
+	in_study;
+lifecycle_status("In Design") ->
+	in_design;
+lifecycle_status("In Test") ->
+	in_test;
+lifecycle_status("Rejected") ->
+	rejected;
+lifecycle_status("Active") ->
+	active;
+lifecycle_status("Launched") ->
+	launched;
+lifecycle_status("Retired") ->
+	retired;
+lifecycle_status("Obsolete") ->
+	obsolete.
 
--spec millionths_out(In) -> Out
+-spec related(RelatedRef) -> RelatedRef
 	when
-		In :: millionths(),
-		Out :: string().
-%% @doc Convert internal value to string() for JSON.
-%%
-millionths_out(In) when is_integer(In), In < 0 ->
-	N1 = 0 - In,
-	M = N1 div 1000000,
-	D = N1 rem 1000000,
-	SD = integer_to_list(D),
-	S1 = [$-] ++ integer_to_list(M) ++ [$.]
-			++ lists:duplicate(6 - length(SD), $0) ++ SD,
-	S2 = string:strip(S1, right, $0),
-	string:strip(S2, right, $.);
-millionths_out(In) when is_integer(In) ->
-	M = In div 1000000,
-	D = In rem 1000000,
-	SD = integer_to_list(D),
-	S1 = integer_to_list(M) ++ [$.]
-			++ lists:duplicate(6 - length(SD), $0) ++ SD,
-	S2 = string:strip(S1, right, $0),
-	string:strip(S2, right, $.).
+		RelatedRef :: [related()] | [map()]
+				| related() | map().
+%% @doc CODEC for simple relationships.
+related(#related{} = RelatedRef) ->
+	related(record_info(fields, related), RelatedRef, #{});
+related(#{} = RelatedRef) ->
+	related(record_info(fields, related), RelatedRef, #related{});
+related([#related{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related(Fields, R, #{}) || R <- List];
+related([#{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related(Fields, R, #related{}) || R <- List].
+%% @hidden
+related([id | T], #related{id = Id} = R, Acc) ->
+	related(T, R, Acc#{"id" => Id});
+related([id | T], #{"id" := Id} = M, Acc) ->
+	related(T, M, Acc#related{id = Id});
+related([href | T], #related{href = Href} = R, Acc) ->
+	related(T, R, Acc#{"href" => Href});
+related([href | T], #{"href" := Href} = M, Acc) ->
+	related(T, M, Acc#related{href = Href});
+related([name | T], #related{name = Name} = R, Acc) ->
+	related(T, R, Acc#{"name" => Name});
+related([name | T], #{"name" := Name} = M, Acc) ->
+	related(T, M, Acc#related{name = Name});
+related([version | T], #related{version = Version} = R, Acc)
+		when is_list(Version) ->
+	related(T, R, Acc#{"version" => Version});
+related([version | T], #{"version" := Version} = M, Acc) ->
+	related(T, M, Acc#related{version = Version});
+related([_ | T], R, Acc) ->
+	related(T, R, Acc);
+related([], _, Acc) ->
+	Acc.
+
+-spec related_party(RelatedPartyRef) -> RelatedPartyRef
+	when
+		RelatedPartyRef :: [related_party()] | [map()]
+				| related_party() | map().
+%% @doc CODEC for `RelatedPartyRef'.
+related_party(#related_party{} = RelatedPartyRef) ->
+	related_party(record_info(fields, related_party), RelatedPartyRef, #{});
+related_party(#{} = RelatedPartyRef) ->
+	related_party(record_info(fields, related_party), RelatedPartyRef, #related_party{});
+related_party([#related_party{} | _] = List) ->
+	Fields = record_info(fields, related_party),
+	[related_party(Fields, RP, #{}) || RP <- List];
+related_party([#{} | _] = List) ->
+	Fields = record_info(fields, related_party),
+	[related_party(Fields, RP, #related_party{}) || RP <- List].
+%% @hidden
+related_party([id | T], #related_party{id = Id} = R, Acc) ->
+	related_party(T, R, Acc#{"id" => Id});
+related_party([id | T], #{"id" := Id} = M, Acc) ->
+	related_party(T, M, Acc#related_party{id = Id});
+related_party([href | T], #related_party{href = Href} = R, Acc) ->
+	related_party(T, R, Acc#{"href" => Href});
+related_party([href | T], #{"href" := Href} = M, Acc) ->
+	related_party(T, M, Acc#related_party{href = Href});
+related_party([name | T], #related_party{name = Name} = R, Acc) ->
+	related_party(T, R, Acc#{"name" => Name});
+related_party([name | T], #{"name" := Name} = M, Acc) ->
+	related_party(T, M, Acc#related_party{name = Name});
+related_party([role | T], #related_party{role = Role} = R, Acc)
+		when is_list(Role) ->
+	related_party(T, R, Acc#{"role" => Role});
+related_party([role | T], #{"role" := Role} = M, Acc) ->
+	related_party(T, M, Acc#related_party{role = Role});
+related_party([start_date | T], #related_party{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	related_party(T, R, Acc#{"validFor" => ValidFor});
+related_party([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+	related_party(T, M, Acc#related_party{start_date = im_rest:iso8601(Start)});
+related_party([end_date | T], #related_party{end_date = End} = R,
+		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	related_party(T, R, Acc#{"validFor" := NewValidFor});
+related_party([end_date | T], #related_party{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	related_party(T, R, Acc#{"validFor" := ValidFor});
+related_party([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+	related_party(T, M, Acc#related_party{end_date = im_rest:iso8601(End)});
+related_party([_ | T], R, Acc) ->
+	related_party(T, R, Acc);
+related_party([], _, Acc) ->
+	Acc.
+
+-spec related_category(CategoryRef) -> CategoryRef
+	when
+		CategoryRef :: #related{} | map().
+%% @doc CODEC for `CategoryRef'.
+related_category(#related{} = CategoryRef) ->
+	related_category(record_info(fields, related), CategoryRef, #{});
+related_category(#{} = CategoryRef) ->
+	related_category(record_info(fields, related), CategoryRef, #related{});
+related_category([#related{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related_category(Fields, R, #{}) || R <- List];
+related_category([#{} | _] = List) ->
+	Fields = record_info(fields, related),
+	[related_category(Fields, R, #related{}) || R <- List].
+%% @hidden
+related_category([id | T], #related{id = Id} = R, Acc) ->
+	related_category(T, R, Acc#{"id" => Id});
+related_category([id | T], #{"id" := Id} = M, Acc) ->
+	related_category(T, M, Acc#related{id = Id});
+related_category([href | T], #related{href = Href} = R, Acc) ->
+	related_category(T, R, Acc#{"href" => Href});
+related_category([href | T], #{"href" := Href} = M, Acc) ->
+	related_category(T, M, Acc#related{href = Href});
+related_category([name | T], #related{name = Name} = R, Acc) ->
+	related_category(T, R, Acc#{"name" => Name});
+related_category([name | T], #{"name" := Name} = M, Acc) ->
+	related_category(T, M, Acc#related{name = Name});
+related_category([version | T], #related{version = Version} = R, Acc) ->
+	related_category(T, R, Acc#{"version" => Version});
+related_category([version | T], #{"version" := Version} = M, Acc) ->
+	related_category(T, M, Acc#related{version = Version});
+related_category([_ | T], R, Acc) ->
+	related_category(T, R, Acc);
+related_category([], _, Acc) ->
+	Acc.
 
 %%----------------------------------------------------------------------
 %%  internal functions

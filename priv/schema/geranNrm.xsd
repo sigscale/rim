@@ -52,7 +52,7 @@
 
 	<complexType name="HoppingSequenceList">
 		<sequence>
-			<element name="hoppingSequence" type="gn:HoppingSequence" minOccurs="0"/>
+			<element name="hoppingSequence" type="gn:HoppingSequence" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
 
@@ -91,8 +91,10 @@
 								<all>
 									<element name="userLabel"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element ref="gr:latitude" minOccurs="0"/>
-									<element ref="gr:longitude" minOccurs="0"/>
+<!-- fixme!
+									<element ref="xn:latitude" minOccurs="0"/>
+									<element ref="xn:longitude" minOccurs="0"/>
+-->
 									<element name="operationalState" type="sm:operationalStateType" minOccurs="0" />
 								</all>
 							</complexType>
@@ -118,23 +120,23 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="userLabel"/>
+									<element name="userLabel" type"string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="cellIdentity"/>
+									<element name="cellIdentity" type="integer" minInclusive="0" maxInclusive="65535"/>
 									<element name="cellAllocation"/>
-									<element name="ncc"/>
-									<element name="bcc"/>
-									<element name="lac"/>
-									<element name="mcc"/>
-									<element name="mnc"/>
-									<element name="rac" minOccurs="0"/>
-									<element name="racc" minOccurs="0"/> 
-									<element name="tsc" minOccurs="0"/>
-									<element name="rxLevAccessMin"/>
-									<element name="msTxPwrMaxCCH"/>
-									<element name="rfHoppingEnabled"/>
-									<element name="hoppingSequenceList"/>
-									<element name="plmnPermitted"/>
+									<element name="ncc" type="integer" minInclusive="0" maxInclusive="7"/>
+									<element name="bcc" type="integer" minInclusive="0" maxInclusive="7"/>
+									<element name="lac" type="integer" minInclusive="1" maxInclusive="65533"/>
+									<element name="mcc" type="integer" minInclusive="1" maxInclusive="999"/>
+									<element name="mnc" type="integer" minInclusive="1" maxInclusive="999"/>
+									<element name="rac" type="integer" minInclusive="0" maxInclusive="255" minOccurs="0"/>
+									<element name="racc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
+									<element name="tsc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
+									<element name="rxLevAccessMin" type="integer" minInclusive="0" maxInclusive="63"/>
+									<element name="msTxPwrMaxCCH" type="integer" minInclusive="0" maxInclusive="31"/>
+									<element name="rfHoppingEnabled" type="boolean"/>
+									<element name="hoppingSequenceList" type="gn:HoppingSequenceList"/>
+									<element name="plmnPermitted" type="integer" minInclusive="0" maxInclusive="255"/>
 								</all>
 							</complexType>
 						</element>
@@ -162,11 +164,11 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="adjacentCell"/>
-									<element name="bcchFrequency" minOccurs="0"/>
-									<element name="ncc" minOccurs="0"/>
-									<element name="bcc" minOccurs="0"/>
-									<element name="lac" minOccurs="0"/>
+									<element name="adjacentCell" type="xn:dn"/>
+									<element name="bcchFrequency" type="integer" minOccurs="0"/>
+									<element name="ncc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
+									<element name="bcc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
+									<element name="lac" type="integer" minInclusive="1" maxInclusive="65533" minOccurs="0"/>
 									<element name="isRemoveAllowed" type="boolean" minOccurs="0"/>
 									<element name="isHOAllowed" type="boolean" minOccurs="0"/>
 									<element name="isESCoveredBy" type="gn:isESCoveredByEnumType" minOccurs="0"/>
@@ -190,17 +192,17 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="userLabel"/>
+									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="cellIdentity"/>
-									<element name="bcchFrequency"/>
-									<element name="ncc"/>
-									<element name="bcc"/>
-									<element name="lac"/>
-									<element name="mcc"/>
-									<element name="mnc"/>
-									<element name="rac" minOccurs="0"/>
-									<element name="racc" minOccurs="0"/>
+									<element name="cellIdentity" type="integer" minInclusive="0" maxInclusive="65535"/>
+									<element name="bcchFrequency" type="integer"/>
+									<element name="ncc" type="integer" minInclusive="0" maxInclusive="7"/>
+									<element name="bcc" type="integer" minInclusive="0" maxInclusive="7"/>
+									<element name="lac" type="integer" minInclusive="1" maxInclusive="65533"/>
+									<element name="mcc" type="integer" minInclusive="1" maxInclusive="999"/>
+									<element name="mnc" type="integer" minInclusive="1" maxInclusive="999"/>
+									<element name="rac" type="integer" minInclusive="0" maxInclusive="255" minOccurs="0"/>
+									<element name="racc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element> 

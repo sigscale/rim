@@ -1,7 +1,7 @@
 %%% mod_im_rest_accepted_content.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018 SigScale Global Inc.
+%%% @copyright 2018-2019 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
 -module(mod_im_rest_accepted_content).
--copyright('Copyright (c) 2018 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 -export([do/1]).
 
