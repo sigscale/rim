@@ -57,6 +57,9 @@ styleElement.innerHTML = `<template>
 				color: #78909C;
 				font-weight: bold;
 			}
+			.drawer-list iron-collapse#catalog {
+				padding-left: 36px;
+			}
 			#restError {
 				--paper-toast-background-color: var(--paper-red-a400);
 			}

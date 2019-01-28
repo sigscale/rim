@@ -60,6 +60,8 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
 						["partyManagement", "v1", "individual", _Id] ->
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
+						["resourceInventoryManagement", "v1", "logicalResource" | _] ->
+                     check_content_type_header(Headers, Method, im_rest_res_inventory, Data);
 						_ ->
 							{proceed, Data}
 					end;
