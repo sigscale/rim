@@ -10,7 +10,6 @@ EXTRA_DIST = sigscale_im.app
 beam_DATA = im_app.beam \
 			im_sup.beam \
 			im.beam \
-			im_xml.beam \
 			im_server.beam \
 			mod_im_rest_accepted_content.beam \
 			mod_im_rest_get.beam \
