@@ -177,9 +177,9 @@
 		schema :: string() | '_',
 		status :: string() | '_',
 		version :: string() | '_',
-		start_date :: pos_integer(),
-		end_date :: pos_integer(),
-		last_modified :: pos_integer(),
+		start_date :: pos_integer() | '_',
+		end_date :: pos_integer() | '_',
+		last_modified :: pos_integer() | '_',
 		specification :: string() | '_',
 		characteristic = [] :: [{Name :: string(), Value :: term()}] | '_'}).
 -type resource() :: #resource{}.
