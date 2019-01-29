@@ -283,7 +283,7 @@ resource([last_modified | T], #resource{last_modified = {TS, _}} = R, Acc)
 	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 resource([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	resource(T, M, Acc#resource{last_modified = LM});
 resource([status | T], #resource{status = Status} = R, Acc)
 		when Status /= undefined ->

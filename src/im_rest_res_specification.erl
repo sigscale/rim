@@ -268,7 +268,7 @@ specification([last_modified | T], #specification{last_modified = {TS, _}} = R, 
 	specification(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 specification([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	specification(T, M, Acc#specification{last_modified = LM});
 specification([status | T], #specification{status = Status} = R, Acc)
 		when Status /= undefined ->

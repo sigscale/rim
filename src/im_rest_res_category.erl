@@ -267,7 +267,7 @@ category([last_modified | T], #category{last_modified = {TS, _}} = R, Acc)
 	category(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 category([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	category(T, M, Acc#category{last_modified = LM});
 category([status | T], #category{status = Status} = R, Acc)
 		when Status /= undefined ->

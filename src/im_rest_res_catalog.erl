@@ -267,7 +267,7 @@ catalog([last_modified | T], #catalog{last_modified = {TS, _}} = R, Acc)
 	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 catalog([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	catalog(T, M, Acc#catalog{last_modified = LM});
 catalog([status | T], #catalog{status = Status} = R, Acc)
 		when status /= undefined ->

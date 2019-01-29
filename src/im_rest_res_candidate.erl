@@ -268,7 +268,7 @@ candidate([last_modified | T], #candidate{last_modified = {TS, _}} = R, Acc)
 	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 candidate([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	candidate(T, M, Acc#candidate{last_modified = LM});
 candidate([status | T], #candidate{status = Status} = R, Acc)
 		when Status /= undefined ->
