@@ -278,16 +278,16 @@ candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
 candidate([category | T], #candidate{category = CatRefs} = R, Acc)
 		when is_list(CatRefs) ->
-	candidate(T, R, Acc#{"category" => im_rest:related_category(CatRefs)});
+	candidate(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
 candidate([category | T], #{"category" := CatRefs} = M, Acc)
 		when is_list(CatRefs) ->
-	candidate(T, M, Acc#candidate{category = im_rest:related_category(CatRefs)});
+	candidate(T, M, Acc#candidate{category = im_rest:category_ref(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
 		when is_record(Spec, candidate_ref) ->
-	candidate(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
+	candidate(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(Spec)});
 candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc)
 		when is_tuple(Spec) ->
-	candidate(T, M, Acc#candidate{specification = im_rest:related(Spec)});
+	candidate(T, M, Acc#candidate{specification = im_rest:specification_ref(Spec)});
 candidate([_ | T], R, Acc) ->
 	candidate(T, R, Acc);
 candidate([], _, Acc) ->
