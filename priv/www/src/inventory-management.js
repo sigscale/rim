@@ -89,6 +89,11 @@ class InventoryManagement extends PolymerElement {
 								loading="{{catalogLoading}}"
 								name="catalogView">
 						</catalog-list>
+						<category-list
+								id="categoryList"
+								loading="{{categoryLoading}}"
+								name="categoryView">
+						</catalog-list>
 						<inventory-list
 								id="inventoryList"
 								loading="{{inventoryLoading}}"
@@ -114,7 +119,7 @@ class InventoryManagement extends PolymerElement {
 							attr-for-selected="name"
 							class="drawer-list"
 							role="navigation">
-						<a name="catalogView" href="[[rootPath]]catalogView">
+						<a name="catalogMenu">
 							<paper-icon-button
 									icon="my-icons:resourceCatalog"
 									on-click="_collapseLogs">
@@ -185,6 +190,14 @@ class InventoryManagement extends PolymerElement {
 					console.log('Have patience dude!');
 				}
 				break;
+			case "categoryView":
+				var category = this.shadowRoot.getElementById('categoryList');
+				if (!category.loading) {
+					category.shadowRoot.getElementById('categoryGrid').clearCache();
+				} else {
+					console.log('Have patience dude!');
+				}
+				break;
 			case "inventoryView":
 				var inventory = this.shadowRoot.getElementById('inventoryList');
 				if (!inventory.loading) {
@@ -223,6 +236,9 @@ class InventoryManagement extends PolymerElement {
 			catalogLoading: {
 				type: String
 			},
+			categoryLoading: {
+				type: String
+			},
 			inventoryLoading: {
 				type: String
 			},
@@ -235,7 +251,7 @@ class InventoryManagement extends PolymerElement {
 	static get observers() {
 		return [
 			'_routePageChanged(routeData.page)',
-			'_loadingChanged(userLoading, catalogLoading, inventoryLoading)'
+			'_loadingChanged(userLoading, catalogLoading, categoryLoading, inventoryLoading)'
 		];
 	}
 
@@ -245,8 +261,9 @@ class InventoryManagement extends PolymerElement {
 		// If no page was found in the route data, page will be an empty string.
 		// Show 'inventoryView' in that case. And if the page doesn't exist, show 'view404'.
 		if (!page) {
-			this.page = 'inventoryView';
-		} else if (['inventoryView', 'catalogView', 'userView'].indexOf(page) !== -1) {
+			this.page = 'catalogView';
+		} else if (['inventoryView', 'catalogView', 'categoryView', 'userView'].indexOf(page) !== -1) {
+console.log("alert");
 			this.page = page;
 		}
 		// Close a non-persistent drawer when the page & route are changed.
@@ -264,6 +281,10 @@ class InventoryManagement extends PolymerElement {
 			case 'catalogView':
 				import('./catalog-list.js');
 				break;
+			case 'categoryView':
+console.log("alert1");
+				import('./category-list.js');
+				break;
 			case 'inventoryView':
 				import('./inventory-list.js');
 				break;
@@ -274,7 +295,8 @@ class InventoryManagement extends PolymerElement {
 	}
 
 	_loadingChanged() {
-		if (this.userLoading || this.inventoryLoading || this.catalogLoading) {
+		if (this.userLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading) {
+console.log("alert2");
 			this.loading = true;
 		} else {
 			this.loading = false;
