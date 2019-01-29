@@ -262,12 +262,13 @@ category([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	category(T, M, Acc#category{end_date = im_rest:iso8601(End)});
-category([last_modified | T], #category{last_modified = LM} = R, Acc)
-		when is_integer(LM) ->
-	category(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-category([last_modified | T], #{"lastUpdate" := LM} = M, Acc)
-		when is_list(LM) ->
-	category(T, M, Acc#category{last_modified = im_rest:iso8601(LM)});
+category([last_modified | T], #category{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	category(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+category([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	category(T, M, Acc#category{last_modified = LM});
 category([status | T], #category{status = Status} = R, Acc)
 		when Status /= undefined ->
 	category(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});

@@ -278,12 +278,13 @@ resource([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	resource(T, M, Acc#resource{end_date = im_rest:iso8601(End)});
-resource([last_modified | T], #resource{last_modified = LM} = R, Acc)
-		when is_integer(LM) ->
-	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-resource([last_modified | T], #{"lastUpdate" := LM} = M, Acc)
-		when is_integer(LM) ->
-	resource(T, M, Acc#resource{last_modified = im_rest:iso8601(LM)});
+resource([last_modified | T], #resource{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+resource([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	resource(T, M, Acc#resource{last_modified = LM});
 resource([status | T], #resource{status = Status} = R, Acc)
 		when Status /= undefined ->
 	resource(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});

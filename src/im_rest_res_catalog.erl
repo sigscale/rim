@@ -262,12 +262,13 @@ catalog([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	catalog(T, M, Acc#catalog{end_date = im_rest:iso8601(End)});
-catalog([last_modified | T], #catalog{last_modified = LM} = R, Acc)
-		when is_integer(LM) ->
-	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-catalog([last_modified | T], #{"lastUpdate" := LM} = M, Acc)
-		when is_list(LM) ->
-	catalog(T, M, Acc#catalog{last_modified = im_rest:iso8601(LM)});
+catalog([last_modified | T], #catalog{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+catalog([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	catalog(T, M, Acc#catalog{last_modified = LM});
 catalog([status | T], #catalog{status = Status} = R, Acc)
 		when status /= undefined ->
 	catalog(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});

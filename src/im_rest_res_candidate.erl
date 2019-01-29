@@ -263,12 +263,13 @@ candidate([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	candidate(T, M, Acc#candidate{end_date = im_rest:iso8601(End)});
-candidate([last_modified | T], #candidate{last_modified = LM} = R, Acc)
-		when is_integer(LM) ->
-	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-candidate([last_modified | T], #{"lastUpdate" := LM} = M, Acc)
-		when is_list(LM) ->
-	candidate(T, M, Acc#candidate{last_modified = im_rest:iso8601(LM)});
+candidate([last_modified | T], #candidate{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+candidate([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	candidate(T, M, Acc#candidate{last_modified = LM});
 candidate([status | T], #candidate{status = Status} = R, Acc)
 		when Status /= undefined ->
 	candidate(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});

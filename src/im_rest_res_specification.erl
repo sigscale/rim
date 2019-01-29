@@ -263,12 +263,13 @@ specification([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	specification(T, M, Acc#specification{end_date = im_rest:iso8601(End)});
-specification([last_modified | T], #specification{last_modified = LM} = R, Acc)
-		when is_integer(LM) ->
-	specification(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-specification([last_modified | T], #{"lastUpdate" := LM} = M, Acc)
-		when is_list(LM) ->
-	specification(T, M, Acc#specification{last_modified = im_rest:iso8601(LM)});
+specification([last_modified | T], #specification{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	specification(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+specification([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	specification(T, M, Acc#specification{last_modified = LM});
 specification([status | T], #specification{status = Status} = R, Acc)
 		when Status /= undefined ->
 	specification(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});

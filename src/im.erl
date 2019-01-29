@@ -37,10 +37,10 @@
 -include_lib("inets/include/mod_auth.hrl").
 
 -define(CHUNKSIZE, 100).
-
 %% support deprecated_time_unit()
 -define(MILLISECOND, milli_seconds).
 %-define(MILLISECOND, millisecond).
+-define(IDOFFSET, 63681984000000).
 
 -record(state,
       {current :: string(),
@@ -58,10 +58,8 @@
 add_catalog(#catalog{id = undefined,
 		last_modified = undefined} = Catalog) ->
 	F = fun() ->
-			TS = erlang:system_time(?MILLISECOND),
-			N = erlang:unique_integer([positive]),
-			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewCatalog = Catalog#catalog{id = Id, last_modified = TS},
+			{Id, LM} = unique(),
+			NewCatalog = Catalog#catalog{id = Id, last_modified = LM},
 			ok = mnesia:write(NewCatalog),
 			NewCatalog
 	end,
@@ -132,10 +130,8 @@ delete_catalog(CatalogID) when is_list(CatalogID) ->
 add_category(#category{id = undefined,
 		last_modified = undefined} = Category) ->
 	F = fun() ->
-			TS = erlang:system_time(?MILLISECOND),
-			N = erlang:unique_integer([positive]),
-			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewCategory = Category#category{id = Id, last_modified = TS},
+			{Id, LM} = unique(),
+			NewCategory = Category#category{id = Id, last_modified = LM},
 			ok = mnesia:write(NewCategory),
 			NewCategory
 	end,
@@ -206,10 +202,8 @@ delete_category(CategoryID) when is_list(CategoryID) ->
 add_candidate(#candidate{id = undefined,
 		last_modified = undefined} = Candidate) ->
 	F = fun() ->
-			TS = erlang:system_time(?MILLISECOND),
-			N = erlang:unique_integer([positive]),
-			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewCandidate = Candidate#candidate{id = Id, last_modified = TS},
+			{Id, LM} = unique(),
+			NewCandidate = Candidate#candidate{id = Id, last_modified = LM},
 			ok = mnesia:write(NewCandidate),
 			NewCandidate
 	end,
@@ -280,10 +274,9 @@ delete_candidate(CandidateID) when is_list(CandidateID) ->
 add_specification(#specification{id = undefined,
 		last_modified = undefined} = Specification) ->
 	F = fun() ->
-			TS = erlang:system_time(?MILLISECOND),
-			N = erlang:unique_integer([positive]),
-			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewSpecification = Specification#specification{id = Id, last_modified = TS},
+			{Id, LM} = unique(),
+			NewSpecification = Specification#specification{id = Id,
+					last_modified = LM},
 			ok = mnesia:write(NewSpecification),
 			NewSpecification
 	end,
@@ -354,10 +347,8 @@ delete_specification(SpecificationID) when is_list(SpecificationID) ->
 add_resource(#resource{id = undefined,
 		last_modified = undefined} = Resource) ->
 	F = fun() ->
-			TS = erlang:system_time(?MILLISECOND),
-			N = erlang:unique_integer([positive]),
-			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewResource = Resource#resource{id = Id, last_modified = TS},
+			{Id, LM} = unique(),
+			NewResource = Resource#resource{id = Id, last_modified = LM},
 			ok = mnesia:write(NewResource),
 			NewResource
 	end,
@@ -627,8 +618,6 @@ query_resource5(Cont, Resource, undefined, []) ->
 query_resource5(Cont, Resource, Total, []) ->
 	{Cont, Resource, Total}.
 
-
-
 -spec add_user(Username, Password, Locale) -> Result
 	when
 		Username :: string(),
@@ -657,7 +646,7 @@ add_user1(_, _, _, {error, Reason}) ->
 %% @hidden
 add_user2(Username, Password, Locale,
 		Address, Port, Dir, Group, {error, no_such_user}) ->
-	LM = {erlang:system_time(?MILLISECOND), erlang:unique_integer([positive])},
+	{_, LM} = unique(),
 	NewUserData = [{last_modified, LM}, {locale, Locale}],
 	add_user3(Username, Address, Port, Dir, Group, LM,
 			mod_auth:add_user(Username, Password, NewUserData, Address, Port, Dir));
@@ -872,6 +861,21 @@ import(File) when is_list(File) ->
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
+
+-spec unique() -> Result
+	when
+		Result :: {ID, LM},
+		ID :: string(),
+		LM :: {TS, N},
+		TS :: pos_integer(),
+		N :: pos_integer().
+%% @doc Generate a unique identifier and timestamp.
+unique() ->
+	TS = erlang:system_time(?MILLISECOND),
+	N = erlang:unique_integer([positive]),
+	ID = integer_to_list(TS - ?IDOFFSET) ++ integer_to_list(N),
+	LM = {TS, N},
+	{ID, LM}.
 
 -spec match_condition(MatchVariable, Match) -> MatchCondition
    when
