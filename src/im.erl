@@ -203,10 +203,10 @@ query_resource(Cont, Size, Sort, {like, [String]} = _MatchId, MatchName, MatchTy
 	{MatchHead, MatchConditions} = case lists:last(String) of
 		$% ->
 			Prefix = lists:droplast(String),
-			Mh = #resource{id = {Prefix ++ '_', '_'}, _ = '_'},
+			Mh = #resource{id = Prefix ++ '_', _ = '_'},
 			{Mh, []};
 		_ ->
-			Mh1 = #resource{id = {String, '_'}, _ = '_'},
+			Mh1 = #resource{id = String, _ = '_'},
 			{Mh1, []}
 	end,
 	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
