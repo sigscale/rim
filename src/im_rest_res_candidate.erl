@@ -194,45 +194,62 @@ candidate(#candidate{} = ResourceCandidate) ->
 candidate(#{} = ResourceCandidate) ->
 	candidate(record_info(fields, candidate), ResourceCandidate, #candidate{}).
 %% @hidden
-candidate([id | T], #candidate{id = Id} = R, Acc) ->
+candidate([id | T], #candidate{id = Id} = R, Acc)
+		when is_list(Id) ->
 	candidate(T, R, Acc#{"id" => Id});
-candidate([id | T], #{"id" := Id} = M, Acc) ->
+candidate([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	candidate(T, M, Acc#candidate{id = Id});
-candidate([href | T], #candidate{href = Href} = R, Acc) ->
+candidate([href | T], #candidate{href = Href} = R, Acc)
+		when is_list(Href) ->
 	candidate(T, R, Acc#{"href" => Href});
-candidate([href | T], #{"href" := Href} = M, Acc) ->
+candidate([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	candidate(T, M, Acc#candidate{href = Href});
-candidate([name | T], #candidate{name = Name} = R, Acc) ->
+candidate([name | T], #candidate{name = Name} = R, Acc)
+		when is_list(Name) ->
 	candidate(T, R, Acc#{"name" => Name});
-candidate([name | T], #{"name" := Name} = M, Acc) ->
+candidate([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	candidate(T, M, Acc#candidate{name = Name});
 candidate([description| T],
-		#candidate{description = Description} = R, Acc) ->
+		#candidate{description = Description} = R, Acc)
+		when is_list(Description) ->
 	candidate(T, R, Acc#{"description" => Description});
-candidate([description| T], #{"description" := Description} = M, Acc) ->
+candidate([description| T], #{"description" := Description} = M, Acc)
+		when is_list(Description) ->
 	candidate(T, M, Acc#candidate{description = Description});
-candidate([class_type | T], #candidate{class_type = Type} = R, Acc) ->
+candidate([class_type | T], #candidate{class_type = Type} = R, Acc)
+		when is_list(Type) ->
 	candidate(T, R, Acc#{"@baseType" => Type});
-candidate([class_type | T], #{"@baseType" := Type} = M, Acc) ->
+candidate([class_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
 	candidate(T, M, Acc#candidate{class_type = Type});
-candidate([base_type | T], #candidate{base_type = Type} = R, Acc) ->
+candidate([base_type | T], #candidate{base_type = Type} = R, Acc)
+		when is_list(Type) ->
 	candidate(T, R, Acc#{"@type" => Type});
-candidate([base_type | T], #{"@type" := Type} = M, Acc) ->
+candidate([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
 	candidate(T, M, Acc#candidate{base_type = Type});
-candidate([schema | T], #candidate{schema = Schema} = R, Acc) ->
+candidate([schema | T], #candidate{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
 	candidate(T, R, Acc#{"@schemaLocation" => Schema});
-candidate([schema | T], #{"@schemaLocation" := Schema} = M, Acc) ->
+candidate([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
 	candidate(T, M, Acc#candidate{schema = Schema});
-candidate([version | T], #candidate{version = Version} = R, Acc) ->
+candidate([version | T], #candidate{version = Version} = R, Acc)
+		when is_list(Version) ->
 	candidate(T, R, Acc#{"version" => Version});
-candidate([version | T], #{"version" := Version} = M, Acc) ->
+candidate([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
 	candidate(T, M, Acc#candidate{version = Version});
 candidate([start_date | T], #candidate{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
 	candidate(T, R, Acc#{"validFor" => ValidFor});
 candidate([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
 	candidate(T, M, Acc#candidate{start_date = im_rest:iso8601(Start)});
 candidate([end_date | T], #candidate{end_date = End} = R,
 		#{validFor := ValidFor} = Acc) when is_integer(End) ->
@@ -243,25 +260,32 @@ candidate([end_date | T], #candidate{end_date = End} = R, Acc)
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
 	candidate(T, R, Acc#{"validFor" := ValidFor});
 candidate([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
 	candidate(T, M, Acc#candidate{end_date = im_rest:iso8601(End)});
-candidate([last_modified | T], #candidate{last_modified = LM} = R, Acc) ->
+candidate([last_modified | T], #candidate{last_modified = LM} = R, Acc)
+		when is_integer(LM) ->
 	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-candidate([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
+candidate([last_modified | T], #{"lastUpdate" := LM} = M, Acc)
+		when is_list(LM) ->
 	candidate(T, M, Acc#candidate{last_modified = im_rest:iso8601(LM)});
 candidate([status | T], #candidate{status = Status} = R, Acc)
 		when Status /= undefined ->
 	candidate(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc)
+		when is_list(Status) ->
 	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
-candidate([category | T], #candidate{category = CatRefs} = R, Acc) ->
+candidate([category | T], #candidate{category = CatRefs} = R, Acc)
+		when is_list(CatRefs) ->
 	candidate(T, R, Acc#{"category" => im_rest:related_category(CatRefs)});
-candidate([category | T], #{"category" := CatRefs} = M, Acc) ->
+candidate([category | T], #{"category" := CatRefs} = M, Acc)
+		when is_list(CatRefs) ->
 	candidate(T, M, Acc#candidate{category = im_rest:related_category(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
 		when is_record(Spec, candidate_ref) ->
 	candidate(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
-candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
+candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc)
+		when is_tuple(Spec) ->
 	candidate(T, M, Acc#candidate{specification = im_rest:related(Spec)});
 candidate([_ | T], R, Acc) ->
 	candidate(T, R, Acc);

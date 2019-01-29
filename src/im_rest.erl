@@ -223,29 +223,37 @@ related_party_ref([#{} | _] = List) ->
 	Fields = record_info(fields, related_party_ref),
 	[related_party_ref(Fields, RP, #related_party_ref{}) || RP <- List].
 %% @hidden
-related_party_ref([id | T], #related_party_ref{id = Id} = R, Acc) ->
+related_party_ref([id | T], #related_party_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
 	related_party_ref(T, R, Acc#{"id" => Id});
-related_party_ref([id | T], #{"id" := Id} = M, Acc) ->
+related_party_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	related_party_ref(T, M, Acc#related_party_ref{id = Id});
-related_party_ref([href | T], #related_party_ref{href = Href} = R, Acc) ->
+related_party_ref([href | T], #related_party_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
 	related_party_ref(T, R, Acc#{"href" => Href});
-related_party_ref([href | T], #{"href" := Href} = M, Acc) ->
+related_party_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	related_party_ref(T, M, Acc#related_party_ref{href = Href});
-related_party_ref([name | T], #related_party_ref{name = Name} = R, Acc) ->
+related_party_ref([name | T], #related_party_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
 	related_party_ref(T, R, Acc#{"name" => Name});
-related_party_ref([name | T], #{"name" := Name} = M, Acc) ->
+related_party_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	related_party_ref(T, M, Acc#related_party_ref{name = Name});
 related_party_ref([role | T], #related_party_ref{role = Role} = R, Acc)
 		when is_list(Role) ->
 	related_party_ref(T, R, Acc#{"role" => Role});
-related_party_ref([role | T], #{"role" := Role} = M, Acc) ->
+related_party_ref([role | T], #{"role" := Role} = M, Acc)
+		when is_list(Role) ->
 	related_party_ref(T, M, Acc#related_party_ref{role = Role});
 related_party_ref([start_date | T], #related_party_ref{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
 	related_party_ref(T, R, Acc#{"validFor" => ValidFor});
 related_party_ref([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
 	related_party_ref(T, M, Acc#related_party_ref{start_date = im_rest:iso8601(Start)});
 related_party_ref([end_date | T], #related_party_ref{end_date = End} = R,
 		#{validFor := ValidFor} = Acc) when is_integer(End) ->
@@ -256,7 +264,8 @@ related_party_ref([end_date | T], #related_party_ref{end_date = End} = R, Acc)
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
 	related_party_ref(T, R, Acc#{"validFor" := ValidFor});
 related_party_ref([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
 	related_party_ref(T, M, Acc#related_party_ref{end_date = im_rest:iso8601(End)});
 related_party_ref([_ | T], R, Acc) ->
 	related_party_ref(T, R, Acc);
@@ -279,21 +288,29 @@ category_ref([#{} | _] = List) ->
 	Fields = record_info(fields, category_ref),
 	[category_ref(Fields, R, #category_ref{}) || R <- List].
 %% @hidden
-category_ref([id | T], #category_ref{id = Id} = R, Acc) ->
+category_ref([id | T], #category_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
 	category_ref(T, R, Acc#{"id" => Id});
-category_ref([id | T], #{"id" := Id} = M, Acc) ->
+category_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	category_ref(T, M, Acc#category_ref{id = Id});
-category_ref([href | T], #category_ref{href = Href} = R, Acc) ->
+category_ref([href | T], #category_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
 	category_ref(T, R, Acc#{"href" => Href});
-category_ref([href | T], #{"href" := Href} = M, Acc) ->
+category_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	category_ref(T, M, Acc#category_ref{href = Href});
-category_ref([name | T], #category_ref{name = Name} = R, Acc) ->
+category_ref([name | T], #category_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
 	category_ref(T, R, Acc#{"name" => Name});
-category_ref([name | T], #{"name" := Name} = M, Acc) ->
+category_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	category_ref(T, M, Acc#category_ref{name = Name});
-category_ref([version | T], #category_ref{version = Version} = R, Acc) ->
+category_ref([version | T], #category_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
 	category_ref(T, R, Acc#{"version" => Version});
-category_ref([version | T], #{"version" := Version} = M, Acc) ->
+category_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
 	category_ref(T, M, Acc#category_ref{version = Version});
 category_ref([_ | T], R, Acc) ->
 	category_ref(T, R, Acc);
@@ -316,21 +333,29 @@ candidate_ref([#{} | _] = List) ->
 	Fields = record_info(fields, candidate_ref),
 	[candidate_ref(Fields, R, #candidate_ref{}) || R <- List].
 %% @hidden
-candidate_ref([id | T], #candidate_ref{id = Id} = R, Acc) ->
+candidate_ref([id | T], #candidate_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
 	candidate_ref(T, R, Acc#{"id" => Id});
-candidate_ref([id | T], #{"id" := Id} = M, Acc) ->
+candidate_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	candidate_ref(T, M, Acc#candidate_ref{id = Id});
-candidate_ref([href | T], #candidate_ref{href = Href} = R, Acc) ->
+candidate_ref([href | T], #candidate_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
 	candidate_ref(T, R, Acc#{"href" => Href});
-candidate_ref([href | T], #{"href" := Href} = M, Acc) ->
+candidate_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	candidate_ref(T, M, Acc#candidate_ref{href = Href});
-candidate_ref([name | T], #candidate_ref{name = Name} = R, Acc) ->
+candidate_ref([name | T], #candidate_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
 	candidate_ref(T, R, Acc#{"name" => Name});
-candidate_ref([name | T], #{"name" := Name} = M, Acc) ->
+candidate_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	candidate_ref(T, M, Acc#candidate_ref{name = Name});
-candidate_ref([version | T], #candidate_ref{version = Version} = R, Acc) ->
+candidate_ref([version | T], #candidate_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
 	candidate_ref(T, R, Acc#{"version" => Version});
-candidate_ref([version | T], #{"version" := Version} = M, Acc) ->
+candidate_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
 	candidate_ref(T, M, Acc#candidate_ref{version = Version});
 candidate_ref([_ | T], R, Acc) ->
 	candidate_ref(T, R, Acc);
