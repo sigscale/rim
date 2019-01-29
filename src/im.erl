@@ -23,7 +23,12 @@
 
 %% export the im public API
 -export([add_catalog/1, get_catalogs/0, get_catalog/1, delete_catalog/1]).
--export([get_resource/0, query_resource/7, query_resource/8]).
+-export([add_category/1, get_categories/0, get_category/1, delete_category/1]).
+-export([add_candidate/1, get_candidates/0, get_candidate/1, delete_candidate/1]).
+-export([add_specification/1, get_specifications/0, get_specification/1,
+		delete_specification/1]).
+-export([add_resource/1, get_resources/0, get_resource/1, delete_resource/1]).
+-export([query_resource/7, query_resource/8]).
 -export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
 -export([import/1]).
@@ -84,23 +89,6 @@ get_catalogs() ->
 			CatalogIDs
 	end.
 
--spec delete_catalog(CatalogID) -> Result
-	when
-		CatalogID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource Catalog.
-delete_catalog(CatalogID) when is_list(CatalogID) ->
-	F = fun() ->
-			mnesia:delete(catalog, CatalogID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
-	end.
-
 -spec get_catalog(CatalogID) -> Result
 	when
 		CatalogID :: string(),
@@ -119,28 +107,317 @@ get_catalog(CatalogID) when is_list(CatalogID) ->
 			{ok, Catalog}
 	end.
 
--spec get_resource() -> Result
+-spec delete_catalog(CatalogID) -> Result
 	when
-		Result :: [#resource{}] | {error, Reason},
+		CatalogID :: string(),
+		Result :: ok | {error, Reason},
 		Reason :: term().
-%% @doc Get all resources.
-get_resource() ->
-	MatchSpec = [{'_', [], ['$_']}],
-	F = fun(F, start, Acc) ->
-		F(F, mnesia:select(inventory, MatchSpec,
-				?CHUNKSIZE, read), Acc);
-		(_F, '$end_of_table', Acc) ->
-			lists:flatten(lists:reverse(Acc));
-		(_F, {error, Reason}, _Acc) ->
-				{error, Reason};
-		(F, {Resource, Cont}, Acc) ->
-				F(F, mnesia:select(Cont), [Resource | Acc])
+%% @doc Delete a Resource Catalog.
+delete_catalog(CatalogID) when is_list(CatalogID) ->
+	F = fun() ->
+			mnesia:delete(catalog, CatalogID, write)
 	end,
-	case mnesia:transaction(F, [F, start, []]) of
+	case mnesia:transaction(F) of
 		{aborted, Reason} ->
 			{error, Reason};
-		{atomic, Result} ->
-			Result
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_category(Category) -> Result
+	when
+		Result :: {ok, Category} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Category.
+add_category(#category{id = undefined,
+		last_modified = undefined} = Category) ->
+	F = fun() ->
+			TS = erlang:system_time(?MILLISECOND),
+			N = erlang:unique_integer([positive]),
+			Id = integer_to_list(TS) ++ integer_to_list(N),
+			NewCategory = Category#category{id = Id, last_modified = TS},
+			ok = mnesia:write(NewCategory),
+			NewCategory
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCategory} ->
+			{ok, NewCategory}
+	end.
+
+-spec get_categories() -> Result
+	when
+		Result :: {ok, CategoryIDs} | {error, Reason},
+		CategoryIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Category identifiers.
+get_categories() ->
+	F = fun() ->
+			mnesia:all_keys(category)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CategoryIDs} ->
+			CategoryIDs
+	end.
+
+-spec get_category(CategoryID) -> Result
+	when
+		CategoryID :: string(),
+		Result :: {ok, Category} | {error, Reason},
+		Category :: category(),
+		Reason :: term().
+%% @doc Get a Resource Category.
+get_category(CategoryID) when is_list(CategoryID) ->
+	F = fun() ->
+			mnesia:read(category, CategoryID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Category]} ->
+			{ok, Category}
+	end.
+
+-spec delete_category(CategoryID) -> Result
+	when
+		CategoryID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Category.
+delete_category(CategoryID) when is_list(CategoryID) ->
+	F = fun() ->
+			mnesia:delete(category, CategoryID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_candidate(Candidate) -> Result
+	when
+		Result :: {ok, Candidate} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Candidate.
+add_candidate(#candidate{id = undefined,
+		last_modified = undefined} = Candidate) ->
+	F = fun() ->
+			TS = erlang:system_time(?MILLISECOND),
+			N = erlang:unique_integer([positive]),
+			Id = integer_to_list(TS) ++ integer_to_list(N),
+			NewCandidate = Candidate#candidate{id = Id, last_modified = TS},
+			ok = mnesia:write(NewCandidate),
+			NewCandidate
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCandidate} ->
+			{ok, NewCandidate}
+	end.
+
+-spec get_candidates() -> Result
+	when
+		Result :: {ok, CandidateIDs} | {error, Reason},
+		CandidateIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Candidate identifiers.
+get_candidates() ->
+	F = fun() ->
+			mnesia:all_keys(candidate)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CandidateIDs} ->
+			CandidateIDs
+	end.
+
+-spec get_candidate(CandidateID) -> Result
+	when
+		CandidateID :: string(),
+		Result :: {ok, Candidate} | {error, Reason},
+		Candidate :: candidate(),
+		Reason :: term().
+%% @doc Get a Resource Candidate.
+get_candidate(CandidateID) when is_list(CandidateID) ->
+	F = fun() ->
+			mnesia:read(candidate, CandidateID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Candidate]} ->
+			{ok, Candidate}
+	end.
+
+-spec delete_candidate(CandidateID) -> Result
+	when
+		CandidateID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Candidate.
+delete_candidate(CandidateID) when is_list(CandidateID) ->
+	F = fun() ->
+			mnesia:delete(candidate, CandidateID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_specification(Specification) -> Result
+	when
+		Result :: {ok, Specification} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Specification.
+add_specification(#specification{id = undefined,
+		last_modified = undefined} = Specification) ->
+	F = fun() ->
+			TS = erlang:system_time(?MILLISECOND),
+			N = erlang:unique_integer([positive]),
+			Id = integer_to_list(TS) ++ integer_to_list(N),
+			NewSpecification = Specification#specification{id = Id, last_modified = TS},
+			ok = mnesia:write(NewSpecification),
+			NewSpecification
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewSpecification} ->
+			{ok, NewSpecification}
+	end.
+
+-spec get_specifications() -> Result
+	when
+		Result :: {ok, SpecificationIDs} | {error, Reason},
+		SpecificationIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Specification identifiers.
+get_specifications() ->
+	F = fun() ->
+			mnesia:all_keys(specification)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, SpecificationIDs} ->
+			SpecificationIDs
+	end.
+
+-spec get_specification(SpecificationID) -> Result
+	when
+		SpecificationID :: string(),
+		Result :: {ok, Specification} | {error, Reason},
+		Specification :: specification(),
+		Reason :: term().
+%% @doc Get a Resource Specification.
+get_specification(SpecificationID) when is_list(SpecificationID) ->
+	F = fun() ->
+			mnesia:read(specification, SpecificationID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Specification]} ->
+			{ok, Specification}
+	end.
+
+-spec delete_specification(SpecificationID) -> Result
+	when
+		SpecificationID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Specification.
+delete_specification(SpecificationID) when is_list(SpecificationID) ->
+	F = fun() ->
+			mnesia:delete(specification, SpecificationID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_resource(Resource) -> Result
+	when
+		Result :: {ok, Resource} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource.
+add_resource(#resource{id = undefined,
+		last_modified = undefined} = Resource) ->
+	F = fun() ->
+			TS = erlang:system_time(?MILLISECOND),
+			N = erlang:unique_integer([positive]),
+			Id = integer_to_list(TS) ++ integer_to_list(N),
+			NewResource = Resource#resource{id = Id, last_modified = TS},
+			ok = mnesia:write(NewResource),
+			NewResource
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewResource} ->
+			{ok, NewResource}
+	end.
+
+-spec get_resources() -> Result
+	when
+		Result :: {ok, ResourceIDs} | {error, Reason},
+		ResourceIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource identifiers.
+get_resources() ->
+	F = fun() ->
+			mnesia:all_keys(resource)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ResourceIDs} ->
+			ResourceIDs
+	end.
+
+-spec get_resource(ResourceID) -> Result
+	when
+		ResourceID :: string(),
+		Result :: {ok, Resource} | {error, Reason},
+		Resource :: resource(),
+		Reason :: term().
+%% @doc Get a Resource.
+get_resource(ResourceID) when is_list(ResourceID) ->
+	F = fun() ->
+			mnesia:read(resource, ResourceID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Resource]} ->
+			{ok, Resource}
+	end.
+
+-spec delete_resource(ResourceID) -> Result
+	when
+		ResourceID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource.
+delete_resource(ResourceID) when is_list(ResourceID) ->
+	F = fun() ->
+			mnesia:delete(resource, ResourceID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
 	end.
 
 -spec query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType,
