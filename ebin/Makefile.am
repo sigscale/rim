@@ -13,6 +13,7 @@ beam_DATA = im_app.beam \
 			im_server.beam \
 			mod_im_rest_accepted_content.beam \
 			mod_im_rest_get.beam \
+			mod_im_rest_post.beam \
 			im_rest.beam \
 			im_rest_res_user.beam \
 			im_rest_res_catalog.beam \

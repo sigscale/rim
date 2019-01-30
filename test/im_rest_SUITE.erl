@@ -42,7 +42,11 @@
 %% Require variables and set default values for the suite.
 %%
 suite() ->
-	[{timetrap, {minutes, 1}}].
+	[{userdata, [{doc, "Test suite for REST API"}]},
+	{timetrap, {minutes, 1}},
+	{require, rest_user}, {default_config, rest_user, "ct"},
+	{require, rest_pass}, {default_config, rest_pass, "tag0bpp53wsf"},
+	{require, rest_group}, {default_config, rest_group, "all"}].
 
 -spec init_per_suite(Config :: [tuple()]) -> Config :: [tuple()].
 %% Initiation before the whole suite.
@@ -52,7 +56,40 @@ init_per_suite(Config) ->
 	ok = application:set_env(mnesia, dir, PrivDir),
 	ok = im_test_lib:initialize_db(),
 	ok = im_test_lib:start(),
-	Config.
+	{ok, Services} = application:get_env(inets, services),
+	Fport = fun FPort([{httpd, L} | T]) ->
+				case lists:keyfind(server_name, 1, L) of
+					{server_name, "ct_rest"} ->
+						H1 = lists:keyfind(bind_address, 1, L),
+						P1 = lists:keyfind(port, 1, L),
+						{H1, P1};
+					_ ->
+						FPort(T)
+				end;
+			FPort([_ | T]) ->
+				FPort(T)
+	end,
+	RestUser = ct:get_config(rest_user),
+	RestPass = ct:get_config(rest_pass),
+	_RestGroup = ct:get_config(rest_group),
+	{Host, Port} = case Fport(Services) of
+		{{_, H2}, {_, P2}} when H2 == "localhost"; H2 == {127,0,0,1} ->
+			{ok, _} = im:add_user(RestUser, RestPass, "en"),
+			{"localhost", P2};
+		{{_, H2}, {_, P2}} ->
+			{ok, _} = im:add_user(RestUser, RestPass, "en"),
+			case H2 of
+				H2 when is_tuple(H2) ->
+					{inet:ntoa(H2), P2};
+				H2 when is_list(H2) ->
+					{H2, P2}
+			end;
+		{false, {_, P2}} ->
+			{ok, _} = im:add_user(RestUser, RestPass, "en"),
+			{"localhost", P2}
+	end,
+	HostUrl = "https://" ++ Host ++ ":" ++ integer_to_list(Port),
+	[{host_url, HostUrl}, {port, Port} | Config].
 
 -spec end_per_suite(Config :: [tuple()]) -> any().
 %% Cleanup after the whole suite.
@@ -190,7 +227,9 @@ catalog_to_map(_Config) ->
 post_catalog() ->
 	[{userdata, [{doc, "Post to Catalog collection"}]}].
 
-post_catalog(_Config) ->
+post_catalog(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "catalog",
 	CatalogName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -201,7 +240,7 @@ post_catalog(_Config) ->
 	CategoryId = random_string(10),
 	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
 	CategoryName = random_string(10),
-	Body = "{\n"
+	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ CatalogName ++ "\",\n"
 			++ "\t\"description\": \"" ++ Description ++ "\",\n"
 			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
@@ -212,30 +251,46 @@ post_catalog(_Config) ->
 			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
 			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
 			++ "\t},\n"
-			++ "\t\"lifecycleStatus\": \"Active\",\n"
+			++ "\t\"lifecycleStatus\": \"In Test\",\n"
 			++ "\t\"relatedParty\": [\n"
 			++ "\t\t{\n"
-			++ "\t\t\t\"id\": \"" ++ PartyId ++ ",\n"
-			++ "\t\t\t\"href\": \"" ++ PartyHref ++ ",\n"
+			++ "\t\t\t\"id\": \"" ++ PartyId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ PartyHref ++ "\",\n"
 			++ "\t\t\t\"role\": \"Supplier\",\n"
 			++ "\t\t\t\"name\": \"ACME Inc.\",\n"
 			++ "\t\t\t\"validFor\": {\n"
 			++ "\t\t\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
-			++ "\t\t\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t\t\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
 			++ "\t\t\t}\n"
 			++ "\t\t}\n"
 			++ "\t],\n"
 			++ "\t\"category\": [\n"
 			++ "\t\t{\n"
-			++ "\t\t\t\"id\": \"" ++ CategoryId ++ ",\n"
-			++ "\t\t\t\"href\": \"" ++ CategoryHref ++ ",\n"
-			++ "\t\t\t\"name\": \"" ++ CategoryName ++ ",\n"
-			++ "\t\t\t\"version\": \"" ++ Version ++ "\n"
+			++ "\t\t\t\"id\": \"" ++ CategoryId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ CategoryHref ++ "\",\n"
+			++ "\t\t\t\"name\": \"" ++ CategoryName ++ "\",\n"
+			++ "\t\t\t\"version\": \"" ++ Version ++ "\"\n"
 			++ "\t\t}\n"
 			++ "\t]\n"
 			++ "}\n",
-	true = is_list(Body),
-	{skip, unimplemented}.
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request1, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{_, URI} = lists:keyfind("location", 1, Headers),
+	{?PathCatalog ++ "catalog/" ++ ID, _} = httpd_util:split_path(URI),
+	{ok, #catalog{id = ID, name = CatalogName,
+			description = Description, version = Version,
+			class_type = ClassType, base_type = "Catalog",
+			schema = Schema, related_party = [RP],
+			category = [C]}} = im:get_catalog(ID),
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#category_ref{id = CategoryId, href = CategoryHref,
+			name = CategoryName, version = Version} = C.
 
 %%---------------------------------------------------------------------
 %%  Internal functions
@@ -252,4 +307,13 @@ random_string(<<N, Rest/binary>>, Charset, NumChars, Acc) ->
 	random_string(Rest, Charset, NumChars, NewAcc);
 random_string(<<>>, _Charset, _NumChars, Acc) ->
 	Acc.
+
+basic_auth() ->
+	RestUser = ct:get_config(rest_user),
+	RestPass = ct:get_config(rest_pass),
+	EncodeKey = base64:encode_to_string(RestUser ++ ":" ++ RestPass),
+	"Basic " ++ EncodeKey.
+
+auth_header() ->
+	{"authorization", basic_auth()}.
 
