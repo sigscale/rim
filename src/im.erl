@@ -672,12 +672,12 @@ add_user4(_, {error, Reason}) ->
 		Username :: string(),
 		Reason :: term().
 %% @doc List HTTP users.
-%% @equiv  mod_auth:get_users(Address, Port, Dir)
+%% @equiv  mod_auth:list_users(Address, Port, Dir)
 get_users() ->
 	get_users(get_params()).
 %% @hidden
 get_users({Port, Address, Dir, _}) ->
-	mod_auth:get_users(Address, Port, Dir);
+	mod_auth:get_user(Address, Port, Dir);
 get_users({error, Reason}) ->
 	{error, Reason}.
 
@@ -708,12 +708,12 @@ del_user(Username) ->
 %% @hidden
 del_user(Username, {Port, Address, Dir, GroupName}) ->
 	del_user(GroupName, Username, Address, Port, Dir,
-			mod_auth:del_user(Username, Address, Port, Dir));
+			mod_auth:delete_user(Username, Address, Port, Dir));
 del_user(_, {error, Reason}) ->
 	{error, Reason}.
 %% @hidden
 del_user(GroupName, Username, Address, Port, Dir, true) ->
-	case mod_auth:del_group_member(GroupName,
+	case mod_auth:delete_group_member(GroupName,
 			Username, Address, Port, Dir) of
 		true ->
 			ok;
