@@ -24,7 +24,8 @@
 -export([date/1, iso8601/1, etag/1]).
 -export([parse_query/1, range/1]).
 -export([lifecycle_status/1]).
--export([related_party_ref/1, category_ref/1, candidate_ref/1]).
+-export([related_party_ref/1, category_ref/1, candidate_ref/1,
+		specification_ref/1]).
 
 -include("im.hrl").
 
@@ -360,6 +361,53 @@ candidate_ref([version | T], #{"version" := Version} = M, Acc)
 candidate_ref([_ | T], R, Acc) ->
 	candidate_ref(T, R, Acc);
 candidate_ref([], _, Acc) ->
+	Acc.
+
+-spec specification_ref(ResourceSpecificationRef) -> ResourceSpecificationRef
+	when
+		ResourceSpecificationRef :: [specification_ref()] | [map()]
+				| specification_ref() | map().
+%% @doc CODEC for `ResourceSpecificationRef'.
+specification_ref(#specification_ref{} = ResourceSpecificationRef) ->
+	specification_ref(record_info(fields, specification_ref),
+			ResourceSpecificationRef, #{});
+specification_ref(#{} = ResourceSpecificationRef) ->
+	specification_ref(record_info(fields, specification_ref),
+			ResourceSpecificationRef, #specification_ref{});
+specification_ref([#specification_ref{} | _] = List) ->
+	Fields = record_info(fields, specification_ref),
+	[specification_ref(Fields, R, #{}) || R <- List];
+specification_ref([#{} | _] = List) ->
+	Fields = record_info(fields, specification_ref),
+	[specification_ref(Fields, R, #specification_ref{}) || R <- List].
+%% @hidden
+specification_ref([id | T], #specification_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	specification_ref(T, R, Acc#{"id" => Id});
+specification_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	specification_ref(T, M, Acc#specification_ref{id = Id});
+specification_ref([href | T], #specification_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	specification_ref(T, R, Acc#{"href" => Href});
+specification_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	specification_ref(T, M, Acc#specification_ref{href = Href});
+specification_ref([name | T], #specification_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	specification_ref(T, R, Acc#{"name" => Name});
+specification_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	specification_ref(T, M, Acc#specification_ref{name = Name});
+specification_ref([version | T], #specification_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	specification_ref(T, R, Acc#{"version" => Version});
+specification_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	specification_ref(T, M, Acc#specification_ref{version = Version});
+specification_ref([_ | T], R, Acc) ->
+	specification_ref(T, R, Acc);
+specification_ref([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
