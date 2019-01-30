@@ -220,14 +220,14 @@ catalog([description| T], #{"description" := Description} = M, Acc)
 	catalog(T, M, Acc#catalog{description = Description});
 catalog([class_type | T], #catalog{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	catalog(T, R, Acc#{"@baseType" => Type});
-catalog([class_type | T], #{"@baseType" := Type} = M, Acc)
+	catalog(T, R, Acc#{"@type" => Type});
+catalog([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	catalog(T, M, Acc#catalog{class_type = Type});
 catalog([base_type | T], #catalog{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	catalog(T, R, Acc#{"@type" => Type});
-catalog([base_type | T], #{"@type" := Type} = M, Acc)
+	catalog(T, R, Acc#{"@baseType" => Type});
+catalog([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	catalog(T, M, Acc#catalog{base_type = Type});
 catalog([schema | T], #catalog{schema = Schema} = R, Acc)
