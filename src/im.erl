@@ -43,7 +43,7 @@
 -define(IDOFFSET, 63681984000000).
 
 -record(state,
-      {current :: string(),
+      {current :: string() | undefined,
       resource = #resource{} :: resource()}).
 
 %%----------------------------------------------------------------------
