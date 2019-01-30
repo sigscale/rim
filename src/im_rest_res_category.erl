@@ -155,8 +155,8 @@ get_category(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCategory' collection.
 post_category(RequestBody) ->
 	try
-		Category = category(zj:decode(RequestBody)),
-		case im:add_category(Category) of
+		{ok, CategoryMap} = zj:decode(RequestBody),
+		case im:add_category(category(CategoryMap)) of
 			{ok, #category{id = Id, last_modified = LM} = NewCategory} ->
 				Body = zj:encode(category(NewCategory)),
 				Location = ?PathCatalog ++ "category/" ++ Id,

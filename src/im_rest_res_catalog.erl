@@ -155,8 +155,8 @@ get_catalog(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCatalog' collection.
 post_catalog(RequestBody) ->
 	try
-		Catalog = catalog(zj:decode(RequestBody)),
-		case im:add_catalog(Catalog) of
+		{ok, CatalogMap} = zj:decode(RequestBody),
+		case im:add_catalog(catalog(CatalogMap)) of
 			{ok, #catalog{id = Id, last_modified = LM} = Catalog} ->
 				Body = zj:encode(catalog(Catalog)),
 				Location = ?PathCatalog ++ "catalog/" ++ Id,

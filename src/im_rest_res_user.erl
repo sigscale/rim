@@ -163,7 +163,8 @@ get_user(_, _, _) ->
 %% @doc Handle `POST' request on `Individual' collection.
 post_user(RequestBody) ->
 	try
-		User = user(zj:decode(RequestBody)),
+		{ok, UserMap} = zj:decode(RequestBody),
+		User = user(UserMap),
 		{Username, _, _, _} = User#httpd_user.username,
 		Password = User#httpd_user.password,
 		Locale = case lists:keyfind(locale, 1, User#httpd_user.user_data) of

@@ -156,10 +156,10 @@ get_candidate(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCandidate' collection.
 post_candidate(RequestBody) ->
 	try
-		Candidate = candidate(zj:decode(RequestBody)),
-		case im:add_candidate(Candidate) of
-			{ok, #candidate{id = Id, last_modified = LM} = NewCandidate} ->
-				Body = zj:encode(candidate(NewCandidate)),
+		{ok, CandidateMap} = zj:decode(RequestBody),
+		case im:add_candidate(candidate(CandidateMap)) of
+			{ok, #candidate{id = Id, last_modified = LM} = Candidate} ->
+				Body = zj:encode(candidate(Candidate)),
 				Location = ?PathCatalog ++ "candidate/" ++ Id,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};

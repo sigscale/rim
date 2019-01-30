@@ -156,8 +156,8 @@ get_resource(_, _, _) ->
 %% @doc Handle `POST' request on `Resource' collection.
 post_resource(RequestBody) ->
 	try
-		Resource = resource(zj:decode(RequestBody)),
-		case im:add_resource(Resource) of
+		{ok, ResourceMap} = zj:decode(RequestBody),
+		case im:add_resource(resource(ResourceMap)) of
 			{ok, #resource{id = Id, last_modified = LM} = Resource} ->
 				Location = "/resourceInventoryManagement/v3/resource/" ++ Id,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],

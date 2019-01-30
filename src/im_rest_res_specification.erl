@@ -156,8 +156,8 @@ get_specification(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceSpecification' collection.
 post_specification(RequestBody) ->
 	try
-		Specification = specification(zj:decode(RequestBody)),
-		case im:add_specification(Specification) of
+		{ok, SpecificationMap} = zj:decode(RequestBody),
+		case im:add_specification(specification(SpecificationMap)) of
 			{ok, #specification{id = Id, last_modified = LM} = NewSpecification} ->
 				Body = zj:encode(specification(NewSpecification)),
 				Location = ?PathCatalog ++ "specification/" ++ Id,
