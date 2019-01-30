@@ -374,7 +374,7 @@ install15(Tables, false) ->
 	{ok, Tables}.
 %% @hidden
 install16(Tables) ->
-	case im:list_users() of
+	case im:get_users() of
 		{ok, []} ->
 			case im:add_user("admin", "admin", "en") of
 				{ok, _LastModified} ->

@@ -178,7 +178,7 @@ post_resource(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `Resource' resource.
 delete_resource(Id) ->
-	case im:delete_resource(Id) of
+	case im:del_resource(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->

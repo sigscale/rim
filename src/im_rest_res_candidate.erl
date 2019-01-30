@@ -178,7 +178,7 @@ post_candidate(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCandidate' resource.
 delete_candidate(Id) ->
-	case im:delete_candidate(Id) of
+	case im:del_candidate(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->

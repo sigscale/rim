@@ -177,7 +177,7 @@ post_catalog(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCatalog' resource.
 delete_catalog(Id) ->
-	case im:delete_catalog(Id) of
+	case im:del_catalog(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->

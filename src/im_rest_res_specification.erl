@@ -178,7 +178,7 @@ post_specification(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceSpecification' resource.
 delete_specification(Id) ->
-	case im:delete_specification(Id) of
+	case im:del_specification(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->

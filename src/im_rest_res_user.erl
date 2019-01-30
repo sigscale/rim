@@ -193,7 +193,7 @@ post_user(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `Individual' resource.
 delete_user(Id) ->
-	case im:delete_user(Id) of
+	case im:del_user(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->

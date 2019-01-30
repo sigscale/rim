@@ -177,7 +177,7 @@ post_category(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCategory' resource.
 delete_category(Id) ->
-	case im:delete_category(Id) of
+	case im:del_category(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
