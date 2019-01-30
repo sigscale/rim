@@ -113,7 +113,7 @@
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | '_',
 		status :: catalog_status(),
 		related_party = [] :: [related_party_ref()],
-		category = [] :: [string()]}).
+		category = [] :: [category_ref()]}).
 -type catalog() :: #catalog{}.
 
 -record(category,
