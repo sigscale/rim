@@ -29,6 +29,11 @@
 -include("im.hrl").
 -include_lib("common_test/include/ct.hrl").
 
+-define(PathCatalog, "/resourceCatalogManagement/v3/").
+-define(PathInventory, "/resourceInventoryManagement/v3/").
+-define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
+-define(PathParty, "/partyManagement/v2/").
+
 %%---------------------------------------------------------------------
 %%  Test server callback functions
 %%---------------------------------------------------------------------
@@ -44,10 +49,9 @@ suite() ->
 %%
 init_per_suite(Config) ->
 	PrivDir = ?config(priv_dir, Config),
-	application:load(mnesia),
 	ok = application:set_env(mnesia, dir, PrivDir),
-	{ok, []} = im_app:install(),
-	ok = application:start(sigscale_im),
+	ok = im_test_lib:initialize_db(),
+	ok = im_test_lib:start(),
 	Config.
 
 -spec end_per_suite(Config :: [tuple()]) -> any().
@@ -79,25 +83,124 @@ sequences() ->
 %% Returns a list of all test cases in this test suite.
 %%
 all() ->
-	[get_users, get_user].
+	[map_to_catalog, post_catalog].
 
 %%---------------------------------------------------------------------
 %%  Test cases
 %%---------------------------------------------------------------------
 
-get_users() ->
-	[{userdata, [{doc, "Get the user collection."}]}].
+map_to_catalog() ->
+	[{userdata, [{doc, "Decode Catalog map()"}]}].
 
-get_users(_Config) ->
-	{skip, unimplemented}.
+map_to_catalog(_Config) ->
+	CatalogId = random_string(12),
+	CatalogHref = ?PathCatalog ++ "catalog/" ++ CatalogId,
+	CatalogName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	Map = #{"id" => CatalogId,
+			"href" => CatalogHref,
+			"name" => CatalogName,
+			"description" => Description,
+			"@type" => ClassType,
+			"@schemaLocation" => Schema,
+			"@baseType" => "Catalog",
+			"version" => Version,
+			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+					"endDateTime" => "2019-12-31T23:59"},
+			"lifecycleStatus" => "Active",
+			"relatedParty" => [#{"id" => PartyId,
+					"href" => PartyHref,
+					"role" => "Supplier",
+					"name" => "ACME Inc.",
+					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+							"endDateTime" => "2019-12-31T23:59"}}],
+			"category" => [#{"id" => CategoryId,
+					"href" => CategoryHref,
+					"name" => CategoryName,
+					"version" => Version}]},
+	#catalog{id = CatalogId, href = CatalogHref,
+			description = Description, class_type = ClassType,
+			schema = Schema, base_type = "Catalog", version = Version,
+			start_date = StartDate, end_date = EndDate,
+			status = active, related_party = [RP],
+			category = [C]} = im_rest_res_catalog:catalog(Map),
+	true = is_integer(StartDate),
+	true = is_integer(EndDate),
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#category_ref{id = CategoryId, href = CategoryHref,
+			name = CategoryName, version = Version} = C.
 
-get_user() ->
-	[{userdata, [{doc, "Get a member of the user collection."}]}].
+post_catalog() ->
+	[{userdata, [{doc, "Post to Catalog collection"}]}].
 
-get_user(_Config) ->
+post_catalog(_Config) ->
+	CatalogName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	Body = "{\n"
+			++ "\t\"name\": \"" ++ CatalogName ++ "\",\n"
+			++ "\t\"description\": \"" ++ Description ++ "\",\n"
+			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
+			++ "\t\"@schemaLocation\": \"" ++ Schema ++ "\",\n"
+			++ "\t\"@baseType\": \"Catalog\",\n"
+			++ "\t\"version\": \"" ++ Version ++ "\",\n"
+			++ "\t\"validFor\": {\n"
+			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t},\n"
+			++ "\t\"lifecycleStatus\": \"Active\",\n"
+			++ "\t\"relatedParty\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ PartyId ++ ",\n"
+			++ "\t\t\t\"href\": \"" ++ PartyHref ++ ",\n"
+			++ "\t\t\t\"role\": \"Supplier\",\n"
+			++ "\t\t\t\"name\": \"ACME Inc.\",\n"
+			++ "\t\t\t\"validFor\": {\n"
+			++ "\t\t\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t\t\t}\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
+			++ "\t\"category\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ CategoryId ++ ",\n"
+			++ "\t\t\t\"href\": \"" ++ CategoryHref ++ ",\n"
+			++ "\t\t\t\"name\": \"" ++ CategoryName ++ ",\n"
+			++ "\t\t\t\"version\": \"" ++ Version ++ "\n"
+			++ "\t\t}\n"
+			++ "\t]\n"
+			++ "}\n",
+	true = is_list(Body),
 	{skip, unimplemented}.
 
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
+
+random_string(Length) ->
+	Charset = lists:seq($a, $z),
+	NumChars = length(Charset),
+	Random = crypto:strong_rand_bytes(Length),
+	random_string(Random, Charset, NumChars,[]).
+random_string(<<N, Rest/binary>>, Charset, NumChars, Acc) ->
+	CharNum = (N rem NumChars) + 1,
+	NewAcc = [lists:nth(CharNum, Charset) | Acc],
+	random_string(Rest, Charset, NumChars, NewAcc);
+random_string(<<>>, _Charset, _NumChars, Acc) ->
+	Acc.
 
