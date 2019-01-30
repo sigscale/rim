@@ -150,7 +150,7 @@
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | '_',
 		status :: catalog_status(),
 		category = [] :: [category_ref()],
-		specification = [] :: [specification_ref()]}).
+		specification :: specification_ref()}).
 -type candidate() :: #candidate{}.
 
 -record(specification,
