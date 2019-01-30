@@ -251,7 +251,7 @@ category([start_date | T],
 		when is_list(Start) ->
 	category(T, M, Acc#category{start_date = im_rest:iso8601(Start)});
 category([end_date | T], #category{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	category(T, R, Acc#{"validFor" := NewValidFor});
 category([end_date | T], #category{end_date = End} = R, Acc)

@@ -251,7 +251,7 @@ catalog([start_date | T],
 		when is_list(Start) ->
 	catalog(T, M, Acc#catalog{start_date = im_rest:iso8601(Start)});
 catalog([end_date | T], #catalog{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	catalog(T, R, Acc#{"validFor" := NewValidFor});
 catalog([end_date | T], #catalog{end_date = End} = R, Acc)

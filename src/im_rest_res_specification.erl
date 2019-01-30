@@ -252,7 +252,7 @@ specification([start_date | T],
 		when is_list(Start) ->
 	specification(T, M, Acc#specification{start_date = im_rest:iso8601(Start)});
 specification([end_date | T], #specification{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	specification(T, R, Acc#{"validFor" := NewValidFor});
 specification([end_date | T], #specification{end_date = End} = R, Acc)
@@ -362,7 +362,7 @@ specification_rel([start_date | T],
 		when is_list(Start) ->
 	specification_rel(T, M, Acc#specification_rel{start_date = im_rest:iso8601(Start)});
 specification_rel([end_date | T], #specification_rel{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	specification_rel(T, R, Acc#{"validFor" := NewValidFor});
 specification_rel([end_date | T], #specification_rel{end_date = End} = R, Acc)
@@ -424,7 +424,7 @@ spec_char_value([start_date | T],
 		when is_list(Start) ->
 	spec_char_value(T, M, Acc#spec_char_value{start_date = im_rest:iso8601(Start)});
 spec_char_value([end_date | T], #spec_char_value{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	spec_char_value(T, R, Acc#{"validFor" := NewValidFor});
 spec_char_value([end_date | T], #spec_char_value{end_date = End} = R, Acc)
@@ -577,7 +577,7 @@ specification_char([start_date | T],
 		when is_list(Start) ->
 	specification_char(T, M, Acc#specification_char{start_date = im_rest:iso8601(Start)});
 specification_char([end_date | T], #specification_char{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	specification_char(T, R, Acc#{"validFor" := NewValidFor});
 specification_char([end_date | T], #specification_char{end_date = End} = R, Acc)
@@ -666,7 +666,7 @@ spec_char_rel([start_date | T],
 		when is_list(Start) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{start_date = im_rest:iso8601(Start)});
 spec_char_rel([end_date | T], #spec_char_rel{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	spec_char_rel(T, R, Acc#{"validFor" := NewValidFor});
 spec_char_rel([end_date | T], #spec_char_rel{end_date = End} = R, Acc)

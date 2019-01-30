@@ -257,7 +257,7 @@ related_party_ref([start_date | T],
 		when is_list(Start) ->
 	related_party_ref(T, M, Acc#related_party_ref{start_date = im_rest:iso8601(Start)});
 related_party_ref([end_date | T], #related_party_ref{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	related_party_ref(T, R, Acc#{"validFor" := NewValidFor});
 related_party_ref([end_date | T], #related_party_ref{end_date = End} = R, Acc)

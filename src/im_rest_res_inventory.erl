@@ -261,7 +261,7 @@ resource([start_date | T],
 		when is_list(Start) ->
 	resource(T, M, Acc#resource{start_date = im_rest:iso8601(Start)});
 resource([end_date | T], #resource{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	resource(T, R, Acc#{"validFor" := NewValidFor});
 resource([end_date | T], #resource{end_date = End} = R, Acc)
@@ -493,7 +493,7 @@ resource_rel([start_date | T],
 		when is_list(Start) ->
 	resource_rel(T, M, Acc#resource_rel{start_date = im_rest:iso8601(Start)});
 resource_rel([end_date | T], #resource_rel{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	resource_rel(T, R, Acc#{"validFor" := NewValidFor});
 resource_rel([end_date | T], #resource_rel{end_date = End} = R, Acc)

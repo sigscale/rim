@@ -252,7 +252,7 @@ candidate([start_date | T],
 		when is_list(Start) ->
 	candidate(T, M, Acc#candidate{start_date = im_rest:iso8601(Start)});
 candidate([end_date | T], #candidate{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	candidate(T, R, Acc#{"validFor" := NewValidFor});
 candidate([end_date | T], #candidate{end_date = End} = R, Acc)
