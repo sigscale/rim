@@ -40,7 +40,7 @@
 %% support deprecated_time_unit()
 -define(MILLISECOND, milli_seconds).
 %-define(MILLISECOND, millisecond).
--define(IDOFFSET, 63681984000000).
+-define(IDOFFSET, 63681984000).
 
 -record(state,
       {current :: string() | undefined,
