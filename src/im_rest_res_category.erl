@@ -186,7 +186,7 @@ delete_category(Id) ->
 
 -spec category(Category) -> Category
 	when
-		Category :: #category{} | map().
+		Category :: category() | map().
 %% @doc CODEC for `ResourceCategory'.
 category(#category{} = Category) ->
 	category(record_info(fields, category), Category, #{});

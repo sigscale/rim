@@ -187,7 +187,7 @@ delete_candidate(Id) ->
 
 -spec candidate(ResourceCandidate) -> ResourceCandidate
 	when
-		ResourceCandidate :: #candidate{} | map().
+		ResourceCandidate :: candidate() | map().
 %% @doc CODEC for `ResourceCandidate'.
 candidate(#candidate{} = ResourceCandidate) ->
 	candidate(record_info(fields, candidate), ResourceCandidate, #{});

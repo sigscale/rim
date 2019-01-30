@@ -186,7 +186,7 @@ delete_catalog(Id) ->
 
 -spec catalog(Catalog) -> Catalog
 	when
-		Catalog :: #catalog{} | map().
+		Catalog :: catalog() | map().
 %% @doc CODEC for `ResourceCatalog'.
 catalog(#catalog{} = Catalog) ->
 	catalog(record_info(fields, catalog), Catalog, #{});
