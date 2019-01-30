@@ -283,7 +283,7 @@ candidate([category | T], #{"category" := CatRefs} = M, Acc)
 		when is_list(CatRefs) ->
 	candidate(T, M, Acc#candidate{category = im_rest:category_ref(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
-		when is_record(Spec, candidate_ref) ->
+		when is_record(Spec, specification_ref) ->
 	candidate(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(Spec)});
 candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc)
 		when is_tuple(Spec) ->
