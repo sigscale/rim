@@ -677,7 +677,7 @@ get_users() ->
 	get_users(get_params()).
 %% @hidden
 get_users({Port, Address, Dir, _}) ->
-	mod_auth:get_user(Address, Port, Dir);
+	mod_auth:list_users(Address, Port, Dir);
 get_users({error, Reason}) ->
 	{error, Reason}.
 
