@@ -29,7 +29,7 @@
 		delete_specification/1]).
 -export([add_resource/1, get_resources/0, get_resource/1, delete_resource/1]).
 -export([query_resource/7, query_resource/8]).
--export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).
+-export([add_user/3, get_users/0, get_user/1, delete_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
 -export([import/1]).
 
@@ -665,20 +665,20 @@ add_user4(LM, true) ->
 add_user4(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec list_users() -> Result
+-spec get_users() -> Result
 	when
 		Result :: {ok, Users} | {error, Reason},
 		Users :: [Username],
 		Username :: string(),
 		Reason :: term().
 %% @doc List HTTP users.
-%% @equiv  mod_auth:list_users(Address, Port, Dir)
-list_users() ->
-	list_users1(get_params()).
+%% @equiv  mod_auth:get_users(Address, Port, Dir)
+get_users() ->
+	get_users(get_params()).
 %% @hidden
-list_users1({Port, Address, Dir, _}) ->
-	mod_auth:list_users(Address, Port, Dir);
-list_users1({error, Reason}) ->
+get_users({Port, Address, Dir, _}) ->
+	mod_auth:get_users(Address, Port, Dir);
+get_users({error, Reason}) ->
 	{error, Reason}.
 
 -spec get_user(Username) -> Result
