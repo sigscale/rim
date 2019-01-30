@@ -83,7 +83,7 @@ sequences() ->
 %% Returns a list of all test cases in this test suite.
 %%
 all() ->
-	[map_to_catalog, post_catalog].
+	[map_to_catalog, catalog_to_map, post_catalog].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -137,6 +137,55 @@ map_to_catalog(_Config) ->
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
 	#category_ref{id = CategoryId, href = CategoryHref,
 			name = CategoryName, version = Version} = C.
+
+catalog_to_map() ->
+	[{userdata, [{doc, "Encode Catalog map()"}]}].
+
+catalog_to_map(_Config) ->
+	CatalogId = random_string(12),
+	CatalogHref = ?PathCatalog ++ "catalog/" ++ CatalogId,
+	CatalogName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	Record = #catalog{id = CatalogId,
+			href = CatalogHref,
+			name = CatalogName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Catalog",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			category = [#category_ref{id = CategoryId,
+					href = CategoryHref,
+					name = CategoryName,
+					version = Version}]},
+	#{"id" := CatalogId, "href" := CatalogHref,
+			"description" := Description, "@type" := ClassType,
+			"@schemaLocation" := Schema, "@baseType" := "Catalog", "version" := Version,
+			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
+			"lifecycleStatus" := "Active", "relatedParty" := [RP],
+			"category" := [C]} = im_rest_res_catalog:catalog(Record),
+	true = is_list(Start),
+	true = is_list(End),
+	#{"id" := PartyId, "href" := PartyHref} = RP,
+	#{"id" := CategoryId, "href" := CategoryHref,
+			"name" := CategoryName, "version" := Version} = C.
 
 post_catalog() ->
 	[{userdata, [{doc, "Post to Catalog collection"}]}].
