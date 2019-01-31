@@ -31,7 +31,6 @@
 -export([query_resource/7, query_resource/8]).
 -export([add_user/3, get_users/0, get_user/1, del_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
--export([import/1]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -848,15 +847,14 @@ generate_password() ->
 generate_identity() ->
 	generate_identity(7).
 
--spec import(File) -> Result
-	when
-		File :: file:filename(),
-		Result :: term().
-%% @doc Import 3GPP Bulk Configuration Management (CM) `ConfigData' file.
-import(File) when is_list(File) ->
-	Options = [{event_fun, fun parse/3},
-		{event_state, #state{}}],
-	xmerl_sax_parser:file(File, Options).
+%-spec import(File) -> Result
+%	when
+%		File :: file:filename(),
+%		Result :: term().
+%import(File) when is_list(File) ->
+%	Options = [{event_fun, fun parse/3},
+%		{event_state, #state{}}],
+%	xmerl_sax_parser:file(File, Options).
 
 %%----------------------------------------------------------------------
 %%  internal functions
@@ -1064,7 +1062,6 @@ parse(endDocument, _, State) ->
    State;
 parse(_Other, _Location, State) ->
    State.
-
 %strip(Char) ->
 %	strip1(Char, []).
 
