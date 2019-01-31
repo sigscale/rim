@@ -120,7 +120,7 @@ sequences() ->
 %% Returns a list of all test cases in this test suite.
 %%
 all() ->
-	[map_to_catalog, catalog_to_map, post_catalog].
+	[map_to_catalog, catalog_to_map, post_catalog, get_catalog].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -191,7 +191,7 @@ catalog_to_map(_Config) ->
 	CategoryId = random_string(10),
 	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
 	CategoryName = random_string(10),
-	Record = #catalog{id = CatalogId,
+	CatalogRecord = #catalog{id = CatalogId,
 			href = CatalogHref,
 			name = CatalogName,
 			description = Description,
@@ -217,7 +217,7 @@ catalog_to_map(_Config) ->
 			"@schemaLocation" := Schema, "@baseType" := "Catalog", "version" := Version,
 			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
 			"lifecycleStatus" := "Active", "relatedParty" := [RP],
-			"category" := [C]} = im_rest_res_catalog:catalog(Record),
+			"category" := [C]} = im_rest_res_catalog:catalog(CatalogRecord),
 	true = is_list(Start),
 	true = is_list(End),
 	#{"id" := PartyId, "href" := PartyHref} = RP,
@@ -225,7 +225,7 @@ catalog_to_map(_Config) ->
 			"name" := CategoryName, "version" := Version} = C.
 
 post_catalog() ->
-	[{userdata, [{doc, "Post to Catalog collection"}]}].
+	[{userdata, [{doc, "POST to Catalog collection"}]}].
 
 post_catalog(Config) ->
 	HostUrl = ?config(host_url, Config),
@@ -292,6 +292,76 @@ post_catalog(Config) ->
 	#category_ref{id = CategoryId, href = CategoryHref,
 			name = CategoryName, version = Version} = C.
 
+get_catalogs() ->
+	[{userdata, [{doc, "GET Catalog collection"}]}].
+
+get_catalogs(Config) ->
+	ok = fill_catalog(5),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "catalog",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, []},
+	{ok, Result} = httpc:request(get, Request1, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, Catalogs} = zj:decode(ResponseBody),
+	true = lists:all(fun is_catalog/1, Catalogs).
+
+get_catalog() ->
+	[{userdata, [{doc, "GET Catalog resource"}]}].
+
+get_catalog(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CatalogName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	CatalogRecord = #catalog{name = CatalogName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Catalog",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			category = [#category_ref{id = CategoryId,
+					href = CategoryHref,
+					name = CategoryName,
+					version = Version}]},
+	{ok, #catalog{id = Id, href = Href}} = im:add_catalog(CatalogRecord),
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {HostUrl ++ Href, [Accept, auth_header()], ContentType, []},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, CatalogMap} = zj:decode(ResponseBody),
+	#{"id" := Id, "href" := Href, "name" := CatalogName,
+			"description" := Description, "version" := Version,
+			"@type" := ClassType, "@baseType" := "Catalog",
+			"@schemaLocation" := Schema, "relatedParty" := [RP],
+			"category" := [C]} = CatalogMap,
+	true = is_related_party_ref(RP),
+	true = is_category_ref(C).
+
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
@@ -316,4 +386,76 @@ basic_auth() ->
 
 auth_header() ->
 	{"authorization", basic_auth()}.
+
+is_related_party_ref(#{"id" := Id, "href" := Href,
+		"name" := Name, "role" := Role,
+		"validFor" := #{"startEndDate" := Start,
+		"endDateTime" := End}}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Role),
+		is_integer(Start), is_integer(End) ->
+	true;
+is_related_party_ref(_) ->
+	false.
+
+is_category_ref(#{"id" := Id, "href" := Href,
+		"name" := Name, "version" := Version})
+		when is_list(Id), is_list(Href),
+		is_list(Name), is_list(Version) ->
+	true;
+is_category_ref(_) ->
+	false.
+
+is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "@baseType" := "Catalog",
+		"@schemaLocation" := Schema, "relatedParty" := RelatedParty,
+		"category" := Category}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Schema),
+		is_list(RelatedParty) ->
+	lists:all(fun is_related_party_ref/1, RelatedParty),
+	lists:all(fun is_category_ref/1, Category);
+is_catalog(_) ->
+	false.
+
+fill_catalog(0) ->
+	ok;
+fill_catalog(N) ->
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Catalog = #catalog{name = random_string(10),
+			description = random_string(25),
+			class_type = "ResourceCatalog",
+			schema = Schema,
+			base_type = "Catalog",
+			version = random_string(3),
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			related_party = fill_related_party(3),
+			category = fill_category(5)},
+	{ok, _} = im:add_catalog(Catalog),
+	fill_catalog(N - 1).
+
+fill_related_party(N) ->
+	fill_related_party(N, []).
+fill_related_party(0, Acc) ->
+	Acc;
+fill_related_party(N, Acc) ->
+	Id = random_string(10),
+	Href = ?PathParty ++ "organization/" ++ Id,
+	RelatedParty = #related_party_ref{id = Id, href = Href,
+			role = "Supplier", name = "ACME Inc.",
+	start_date = 1548720000000, end_date = 1577836740000},
+	fill_related_party(N - 1, [RelatedParty | Acc]).
+
+fill_category(N) ->
+	fill_category(N, []).
+fill_category(0, Acc) ->
+	Acc;
+fill_category(N, Acc) ->
+	Id = random_string(10),
+	Href = ?PathParty ++ "organization/" ++ Id,
+	Category = #category_ref{id = Id, href = Href,
+			name = random_string(10), version = random_string(3)},
+	fill_category(N - 1, [Category | Acc]).
 
