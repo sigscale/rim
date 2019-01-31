@@ -74,7 +74,6 @@ init_per_testcase(bulk_cm_geran, Config) ->
 	Indent7 = #xmlText{value = "\n\t\t\t\t\t\t\t",type = text},
 	Indent8 = #xmlText{value = "\n\t\t\t\t\t\t\t\t",type = text},
 	Indent9 = #xmlText{value = "\n\t\t\t\t\t\t\t\t\t",type = text},
-
 	F1 = fun F1(0, Acc) ->
 				Acc;
 			F1(N, Acc) ->
@@ -99,7 +98,6 @@ init_per_testcase(bulk_cm_geran, Config) ->
 												Indent8]}, Indent7]}, Indent6]},
 				F1(N - 1, [Indent6, GsmCell | Acc])
 	end,
-
 	F = fun F(0, Acc) ->
 				Acc;
 			F(N, Acc) ->
@@ -665,7 +663,7 @@ bulk_cm_geran() ->
 bulk_cm_geran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	GeranXML = PrivDir ++ "/" ++ "geran.xml",
-	ok = cm:import(GeranXML),
+	ok = im:import(GeranXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(GeranXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
@@ -677,7 +675,7 @@ bulk_cm_utran() ->
 bulk_cm_utran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	UtranXML = PrivDir ++ "/" ++ "utran.xml",
-	ok = cm:import(UtranXML),
+	ok = im:import(UtranXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(UtranXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
@@ -689,7 +687,7 @@ bulk_cm_eutran() ->
 bulk_cm_eutran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	EutranXML = PrivDir ++ "/" ++ "eutran.xml",
-	ok = cm:import(EutranXML),
+	ok = im:import(EutranXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(EutranXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
@@ -701,7 +699,7 @@ bulk_cm_epc() ->
 bulk_cm_epc(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	EpcXML = PrivDir ++ "/" ++ "epcNrm.xml",
-	ok = cm:import(EpcXML),
+	ok = im:import(EpcXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(EpcXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
@@ -713,7 +711,7 @@ bulk_cm_core() ->
 bulk_cm_core(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	CoreXML = PrivDir ++ "/" ++ "core.xml",
-	ok = cm:import(CoreXML),
+	ok = im:import(CoreXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(CoreXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
@@ -725,7 +723,7 @@ bulk_cm_ims() ->
 bulk_cm_ims(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	ImsXML = PrivDir ++ "/" ++ "ims.xml",
-	ok = cm:import(ImsXML),
+	ok = im:import(ImsXML),
 	[ConfigData] = decode_xml(xmerl_scan:file(ImsXML)),
 	Resources = get_resources(ConfigData#xmlElement.content),
 	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],

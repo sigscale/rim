@@ -156,8 +156,8 @@ get_resource(_, _, _) ->
 %% @doc Handle `POST' request on `Resource' collection.
 post_resource(RequestBody) ->
 	try
-		Resource = resource(zj:decode(RequestBody)),
-		case im:add_resource(Resource) of
+		{ok, ResourceMap} = zj:decode(RequestBody),
+		case im:add_resource(resource(ResourceMap)) of
 			{ok, #resource{id = Id, last_modified = LM} = Resource} ->
 				Location = "/resourceInventoryManagement/v3/resource/" ++ Id,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
@@ -178,7 +178,7 @@ post_resource(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `Resource' resource.
 delete_resource(Id) ->
-	case im:delete_resource(Id) of
+	case im:del_resource(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -187,18 +187,12 @@ delete_resource(Id) ->
 
 -spec resource(Resource) -> Resource
 	when
-		Resource :: #resource{} | map().
+		Resource :: resource() | map().
 %% @doc CODEC for `Resource'.
 resource(#resource{} = Resource) ->
 	resource(record_info(fields, resource), Resource, #{});
 resource(#{} = Resource) ->
-	resource(record_info(fields, resource), Resource, #resource{});
-resource([#resource{} | _] = List) ->
-	Fields = record_info(fields, resource),
-	[resource(Fields, R, #{}) || R <- List];
-resource([#{} | _] = List) ->
-	Fields = record_info(fields, resource),
-	[resource(Fields, M, #resource{}) || M <- List].
+	resource(record_info(fields, resource), Resource, #resource{}).
 %% @hidden
 resource([id | T], #resource{id = Id} = R, Acc)
 		when is_list(Id) ->
@@ -267,7 +261,7 @@ resource([start_date | T],
 		when is_list(Start) ->
 	resource(T, M, Acc#resource{start_date = im_rest:iso8601(Start)});
 resource([end_date | T], #resource{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	resource(T, R, Acc#{"validFor" := NewValidFor});
 resource([end_date | T], #resource{end_date = End} = R, Acc)
@@ -283,7 +277,7 @@ resource([last_modified | T], #resource{last_modified = {TS, _}} = R, Acc)
 	resource(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 resource([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	resource(T, M, Acc#resource{last_modified = LM});
 resource([status | T], #resource{status = Status} = R, Acc)
 		when Status /= undefined ->
@@ -332,20 +326,18 @@ resource([_ | T], R, Acc) ->
 resource([], _, Acc) ->
 	Acc.
 
--spec place_ref(PlaceRef) -> PlaceRef
+-spec place_ref(PlaceRefs) -> PlaceRefs
 	when
-		PlaceRef :: #place_ref{} | map().
+		PlaceRefs :: [place_ref()] | [map()].
 %% @doc CODEC for `PlaceRef'.
-place_ref(#place_ref{} = PlaceRef) ->
-	place_ref(record_info(fields, place_ref), PlaceRef, #{});
-place_ref(#{} = PlaceRef) ->
-	place_ref(record_info(fields, place_ref), PlaceRef, #place_ref{});
 place_ref([#place_ref{} | _] = List) ->
 	Fields = record_info(fields, place_ref),
 	[place_ref(Fields, R, #{}) || R <- List];
 place_ref([#{} | _] = List) ->
 	Fields = record_info(fields, place_ref),
-	[place_ref(Fields, M, #place_ref{}) || M <- List].
+	[place_ref(Fields, M, #place_ref{}) || M <- List];
+place_ref([]) ->
+	[].
 %% @hidden
 place_ref([id | T], #place_ref{id = Id} = R, Acc)
 		when is_list(Id) ->
@@ -378,18 +370,16 @@ place_ref([], _, Acc) ->
 
 -spec note(Note) -> Note
 	when
-		Note :: #note{} | map().
+		Note :: [note()] | [map()].
 %% @doc CODEC for `Note'.
-note(#note{} = Note) ->
-	note(record_info(fields, note), Note, #{});
-note(#{} = Note) ->
-	note(record_info(fields, note), Note, #note{});
 note([#note{} | _] = List) ->
 	Fields = record_info(fields, note),
 	[note(Fields, R, #{}) || R <- List];
 note([#{} | _] = List) ->
 	Fields = record_info(fields, note),
-	[note(Fields, M, #note{}) || M <- List].
+	[note(Fields, M, #note{}) || M <- List];
+note([]) ->
+	[].
 %% @hidden
 note([author | T], #note{author = Author} = R, Acc)
 		when is_list(Author) ->
@@ -416,18 +406,16 @@ note([], _, Acc) ->
 
 -spec attachment(ResourceAttachment) -> ResourceAttachment
 	when
-		ResourceAttachment :: #attachment{} | map().
+		ResourceAttachment :: [attachment()] | [map()].
 %% @doc CODEC for `ResourceAttachment'.
-attachment(#attachment{} = ResourceAttachment) ->
-	attachment(record_info(fields, attachment), ResourceAttachment, #{});
-attachment(#{} = ResourceAttachment) ->
-	attachment(record_info(fields, attachment), ResourceAttachment, #attachment{});
 attachment([#attachment{} | _] = List) ->
 	Fields = record_info(fields, attachment),
 	[attachment(Fields, R, #{}) || R <- List];
 attachment([#{} | _] = List) ->
 	Fields = record_info(fields, attachment),
-	[attachment(Fields, M, #attachment{}) || M <- List].
+	[attachment(Fields, M, #attachment{}) || M <- List];
+attachment([]) ->
+	[].
 %% @hidden
 attachment([id | T], #attachment{id = Id} = R, Acc)
 		when is_list(Id) ->
@@ -467,18 +455,16 @@ attachment([], _, Acc) ->
 
 -spec resource_rel(ResourceRelationship) -> ResourceRelationship
 	when
-		ResourceRelationship :: #resource_rel{} | map().
+		ResourceRelationship :: [resource_rel()] | [map()].
 %% @doc CODEC for `ResourceRelationship'.
-resource_rel(#resource_rel{} = ResourceRelationship) ->
-	resource_rel(record_info(fields, resource_rel), ResourceRelationship, #{});
-resource_rel(#{} = ResourceRelationship) ->
-	resource_rel(record_info(fields, resource_rel), ResourceRelationship, #resource_rel{});
 resource_rel([#resource_rel{} | _] = List) ->
 	Fields = record_info(fields, resource_rel),
 	[resource_rel(Fields, R, #{}) || R <- List];
 resource_rel([#{} | _] = List) ->
 	Fields = record_info(fields, resource_rel),
-	[resource_rel(Fields, M, #resource_rel{}) || M <- List].
+	[resource_rel(Fields, M, #resource_rel{}) || M <- List];
+resource_rel([]) ->
+	[].
 %% @hidden
 resource_rel([id | T], #resource_rel{id = Id} = R, Acc)
 		when is_list(Id) ->
@@ -507,7 +493,7 @@ resource_rel([start_date | T],
 		when is_list(Start) ->
 	resource_rel(T, M, Acc#resource_rel{start_date = im_rest:iso8601(Start)});
 resource_rel([end_date | T], #resource_rel{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	resource_rel(T, R, Acc#{"validFor" := NewValidFor});
 resource_rel([end_date | T], #resource_rel{end_date = End} = R, Acc)
@@ -525,18 +511,16 @@ resource_rel([], _, Acc) ->
 
 -spec resource_char(ResourceCharacteristic) -> ResourceCharacteristic
 	when
-		ResourceCharacteristic :: #resource_char{} | map().
+		ResourceCharacteristic :: [resource_char()] | [map()].
 %% @doc CODEC for `ResourceCharacteristic'.
-resource_char(#resource_char{} = ResourceCharacteristic) ->
-	resource_char(record_info(fields, resource_char), ResourceCharacteristic, #{});
-resource_char(#{} = ResourceCharacteristic) ->
-	resource_char(record_info(fields, resource_char), ResourceCharacteristic, #resource_char{});
 resource_char([#resource_char{} | _] = List) ->
 	Fields = record_info(fields, resource_char),
 	[resource_char(Fields, R, #{}) || R <- List];
 resource_char([#{} | _] = List) ->
 	Fields = record_info(fields, resource_char),
-	[resource_char(Fields, M, #resource_char{}) || M <- List].
+	[resource_char(Fields, M, #resource_char{}) || M <- List];
+resource_char([]) ->
+	[].
 %% @hidden
 resource_char([name | T], #resource_char{name = Name} = R, Acc)
 		when is_list(Name) ->

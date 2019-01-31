@@ -22,14 +22,14 @@
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% export the im public API
--export([add_catalog/1, get_catalogs/0, get_catalog/1, delete_catalog/1]).
--export([add_category/1, get_categories/0, get_category/1, delete_category/1]).
--export([add_candidate/1, get_candidates/0, get_candidate/1, delete_candidate/1]).
+-export([add_catalog/1, get_catalogs/0, get_catalog/1, del_catalog/1]).
+-export([add_category/1, get_categories/0, get_category/1, del_category/1]).
+-export([add_candidate/1, get_candidates/0, get_candidate/1, del_candidate/1]).
 -export([add_specification/1, get_specifications/0, get_specification/1,
-		delete_specification/1]).
--export([add_resource/1, get_resources/0, get_resource/1, delete_resource/1]).
+		del_specification/1]).
+-export([add_resource/1, get_resources/0, get_resource/1, del_resource/1]).
 -export([query_resource/7, query_resource/8]).
--export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).
+-export([add_user/3, get_users/0, get_user/1, del_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
 
 -include("im.hrl").
@@ -39,10 +39,10 @@
 %% support deprecated_time_unit()
 -define(MILLISECOND, milli_seconds).
 %-define(MILLISECOND, millisecond).
--define(IDOFFSET, 63681984000000).
+-define(IDOFFSET, 63681984000).
 
 -record(state,
-      {current :: string(),
+      {current :: string() | undefined,
       resource = #resource{} :: resource()}).
 
 %%----------------------------------------------------------------------
@@ -104,13 +104,13 @@ get_catalog(CatalogID) when is_list(CatalogID) ->
 			{ok, Catalog}
 	end.
 
--spec delete_catalog(CatalogID) -> Result
+-spec del_catalog(CatalogID) -> Result
 	when
 		CatalogID :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete a Resource Catalog.
-delete_catalog(CatalogID) when is_list(CatalogID) ->
+del_catalog(CatalogID) when is_list(CatalogID) ->
 	F = fun() ->
 			mnesia:delete(catalog, CatalogID, write)
 	end,
@@ -176,13 +176,13 @@ get_category(CategoryID) when is_list(CategoryID) ->
 			{ok, Category}
 	end.
 
--spec delete_category(CategoryID) -> Result
+-spec del_category(CategoryID) -> Result
 	when
 		CategoryID :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete a Resource Category.
-delete_category(CategoryID) when is_list(CategoryID) ->
+del_category(CategoryID) when is_list(CategoryID) ->
 	F = fun() ->
 			mnesia:delete(category, CategoryID, write)
 	end,
@@ -248,13 +248,13 @@ get_candidate(CandidateID) when is_list(CandidateID) ->
 			{ok, Candidate}
 	end.
 
--spec delete_candidate(CandidateID) -> Result
+-spec del_candidate(CandidateID) -> Result
 	when
 		CandidateID :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete a Resource Candidate.
-delete_candidate(CandidateID) when is_list(CandidateID) ->
+del_candidate(CandidateID) when is_list(CandidateID) ->
 	F = fun() ->
 			mnesia:delete(candidate, CandidateID, write)
 	end,
@@ -321,13 +321,13 @@ get_specification(SpecificationID) when is_list(SpecificationID) ->
 			{ok, Specification}
 	end.
 
--spec delete_specification(SpecificationID) -> Result
+-spec del_specification(SpecificationID) -> Result
 	when
 		SpecificationID :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete a Resource Specification.
-delete_specification(SpecificationID) when is_list(SpecificationID) ->
+del_specification(SpecificationID) when is_list(SpecificationID) ->
 	F = fun() ->
 			mnesia:delete(specification, SpecificationID, write)
 	end,
@@ -393,13 +393,13 @@ get_resource(ResourceID) when is_list(ResourceID) ->
 			{ok, Resource}
 	end.
 
--spec delete_resource(ResourceID) -> Result
+-spec del_resource(ResourceID) -> Result
 	when
 		ResourceID :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete a Resource.
-delete_resource(ResourceID) when is_list(ResourceID) ->
+del_resource(ResourceID) when is_list(ResourceID) ->
 	F = fun() ->
 			mnesia:delete(resource, ResourceID, write)
 	end,
@@ -664,7 +664,7 @@ add_user4(LM, true) ->
 add_user4(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec list_users() -> Result
+-spec get_users() -> Result
 	when
 		Result :: {ok, Users} | {error, Reason},
 		Users :: [Username],
@@ -672,12 +672,12 @@ add_user4(_, {error, Reason}) ->
 		Reason :: term().
 %% @doc List HTTP users.
 %% @equiv  mod_auth:list_users(Address, Port, Dir)
-list_users() ->
-	list_users1(get_params()).
+get_users() ->
+	get_users(get_params()).
 %% @hidden
-list_users1({Port, Address, Dir, _}) ->
+get_users({Port, Address, Dir, _}) ->
 	mod_auth:list_users(Address, Port, Dir);
-list_users1({error, Reason}) ->
+get_users({error, Reason}) ->
 	{error, Reason}.
 
 -spec get_user(Username) -> Result
@@ -696,30 +696,30 @@ get_user(Username, {Port, Address, Dir, _}) ->
 get_user(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec delete_user(Username) -> Result
+-spec del_user(Username) -> Result
 	when
 		Username :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete an existing HTTP user.
-delete_user(Username) ->
-	delete_user1(Username, get_params()).
+del_user(Username) ->
+	del_user(Username, get_params()).
 %% @hidden
-delete_user1(Username, {Port, Address, Dir, GroupName}) ->
-	delete_user2(GroupName, Username, Address, Port, Dir,
+del_user(Username, {Port, Address, Dir, GroupName}) ->
+	del_user(GroupName, Username, Address, Port, Dir,
 			mod_auth:delete_user(Username, Address, Port, Dir));
-delete_user1(_, {error, Reason}) ->
+del_user(_, {error, Reason}) ->
 	{error, Reason}.
 %% @hidden
-delete_user2(GroupName, Username, Address, Port, Dir, true) ->
-	delete_user3(mod_auth:delete_group_member(GroupName,
-			Username, Address, Port, Dir));
-delete_user2(_, _, _, _, _, {error, Reason}) ->
-	{error, Reason}.
-%% @hidden
-delete_user3(true) ->
-	ok;
-delete_user3({error, Reason}) ->
+del_user(GroupName, Username, Address, Port, Dir, true) ->
+	case mod_auth:delete_group_member(GroupName,
+			Username, Address, Port, Dir) of
+		true ->
+			ok;
+		{error, Reason} ->
+			{error, Reason}
+	end;
+del_user(_, _, _, _, _, {error, Reason}) ->
 	{error, Reason}.
 
 -spec query_users(Cont, Size, MatchId, MatchLocale) -> Result

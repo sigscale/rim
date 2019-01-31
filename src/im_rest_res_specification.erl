@@ -156,8 +156,8 @@ get_specification(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceSpecification' collection.
 post_specification(RequestBody) ->
 	try
-		Specification = specification(zj:decode(RequestBody)),
-		case im:add_specification(Specification) of
+		{ok, SpecificationMap} = zj:decode(RequestBody),
+		case im:add_specification(specification(SpecificationMap)) of
 			{ok, #specification{id = Id, last_modified = LM} = NewSpecification} ->
 				Body = zj:encode(specification(NewSpecification)),
 				Location = ?PathCatalog ++ "specification/" ++ Id,
@@ -178,7 +178,7 @@ post_specification(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceSpecification' resource.
 delete_specification(Id) ->
-	case im:delete_specification(Id) of
+	case im:del_specification(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -187,7 +187,7 @@ delete_specification(Id) ->
 
 -spec specification(ResourceSpecification) -> ResourceSpecification
 	when
-		ResourceSpecification :: #specification{} | map().
+		ResourceSpecification :: specification() | map().
 %% @doc CODEC for `ResourceSpecification'.
 specification(#specification{} = ResourceSpecification) ->
 	specification(record_info(fields, specification), ResourceSpecification, #{});
@@ -252,7 +252,7 @@ specification([start_date | T],
 		when is_list(Start) ->
 	specification(T, M, Acc#specification{start_date = im_rest:iso8601(Start)});
 specification([end_date | T], #specification{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	specification(T, R, Acc#{"validFor" := NewValidFor});
 specification([end_date | T], #specification{end_date = End} = R, Acc)
@@ -268,7 +268,7 @@ specification([last_modified | T], #specification{last_modified = {TS, _}} = R, 
 	specification(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 specification([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	specification(T, M, Acc#specification{last_modified = LM});
 specification([status | T], #specification{status = Status} = R, Acc)
 		when Status /= undefined ->
@@ -311,14 +311,17 @@ specification([], _, Acc) ->
 
 -spec specification_rel(ResourceSpecRelationship) -> ResourceSpecRelationship
 	when
-		ResourceSpecRelationship :: [specification_rel()] | [map()]
-				| specification_rel() | map().
+		ResourceSpecRelationship :: [specification_rel()] | [map()].
 %% @doc CODEC for `ResourceSpecRelationship'.
 %% @private
-specification_rel(#specification_rel{} = ResourceSpecRelationship) ->
-	specification_rel(record_info(fields, specification_rel), ResourceSpecRelationship, #{});
-specification_rel(#{} = ResourceSpecRelationship) ->
-	specification_rel(record_info(fields, specification_rel), ResourceSpecRelationship, #specification_rel{}).
+specification_rel([#specification_rel{} | _] = List) ->
+	Fields = record_info(fields, specification_rel),
+	[specification_rel(Fields, R, #{}) || R <- List];
+specification_rel([#{} | _] = List) ->
+	Fields = record_info(fields, specification_rel),
+	[specification_rel(Fields, M, #specification_rel{}) || M <- List];
+specification_rel([]) ->
+	[].
 %% @hidden
 specification_rel([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
@@ -359,7 +362,7 @@ specification_rel([start_date | T],
 		when is_list(Start) ->
 	specification_rel(T, M, Acc#specification_rel{start_date = im_rest:iso8601(Start)});
 specification_rel([end_date | T], #specification_rel{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	specification_rel(T, R, Acc#{"validFor" := NewValidFor});
 specification_rel([end_date | T], #specification_rel{end_date = End} = R, Acc)
@@ -376,14 +379,17 @@ specification_rel([], _, Acc) ->
 
 -spec spec_char_value(ResourceSpecCharacteristicValue) -> ResourceSpecCharacteristicValue
 	when
-		ResourceSpecCharacteristicValue :: [spec_char_value()] | [map()]
-				| spec_char_value() | map().
+		ResourceSpecCharacteristicValue :: [spec_char_value()] | [map()].
 %% @doc CODEC for `ResourceSpecCharacteristicValue'.
 %% @private
-spec_char_value(#spec_char_value{} = ResourceSpecCharacteristicValue) ->
-	spec_char_value(record_info(fields, spec_char_value), ResourceSpecCharacteristicValue, #{});
-spec_char_value(#{} = ResourceSpecCharacteristicValue) ->
-	spec_char_value(record_info(fields, spec_char_value), ResourceSpecCharacteristicValue, #spec_char_value{}).
+spec_char_value([#spec_char_value{} | _] = List) ->
+	Fields = record_info(fields, spec_char_value),
+	[spec_char_value(Fields, R, #{}) || R <- List];
+spec_char_value([#{} | _] = List) ->
+	Fields = record_info(fields, spec_char_value),
+	[spec_char_value(Fields, M, #spec_char_value{}) || M <- List];
+spec_char_value([]) ->
+	[].
 %% @hidden
 spec_char_value([value_type | T], #spec_char_value{value_type = Type} = R, Acc)
 		when is_list(Type) ->
@@ -418,7 +424,7 @@ spec_char_value([start_date | T],
 		when is_list(Start) ->
 	spec_char_value(T, M, Acc#spec_char_value{start_date = im_rest:iso8601(Start)});
 spec_char_value([end_date | T], #spec_char_value{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	spec_char_value(T, R, Acc#{"validFor" := NewValidFor});
 spec_char_value([end_date | T], #spec_char_value{end_date = End} = R, Acc)
@@ -448,11 +454,16 @@ spec_char_value([to | T], #{"valueTo" := To} = M, Acc)
 		when is_integer(To) ->
 	spec_char_value(T, M, Acc#spec_char_value{to = To});
 spec_char_value([interval | T], #spec_char_value{interval = Interval} = R, Acc)
-		when is_integer(Interval) ->
-	spec_char_value(T, R, Acc#{"interval" => Interval});
-spec_char_value([interval | T], #{"interval" := Interval} = M, Acc)
-		when is_integer(Interval) ->
-	spec_char_value(T, M, Acc#spec_char_value{interval = Interval});
+		when Interval /= undefined ->
+	spec_char_value(T, R, Acc#{"interval" => atom_to_list(Interval)});
+spec_char_value([interval | T], #{"interval" := "closed"} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{interval = closed});
+spec_char_value([interval | T], #{"interval" := "closed_bottom"} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{interval = closed_bottom});
+spec_char_value([interval | T], #{"interval" := "closed_top"} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{interval = closed_top});
+spec_char_value([interval | T], #{"interval" := "open"} = M, Acc) ->
+	spec_char_value(T, M, Acc#spec_char_value{interval = open});
 spec_char_value([regex | T], #spec_char_value{regex = {_, RegEx}} = R, Acc)
 		when is_list(RegEx) ->
 	spec_char_value(T, R, Acc#{"regex" => RegEx});
@@ -472,14 +483,17 @@ spec_char_value([], _, Acc) ->
 
 -spec specification_char(ResourceSpecCharacteristic) -> ResourceSpecCharacteristic
 	when
-		ResourceSpecCharacteristic :: [specification_char()] | [map()]
-				| specification_char() | map().
+		ResourceSpecCharacteristic :: [specification_char()] | [map()].
 %% @doc CODEC for `ResourceSpecCharacteristic'.
 %% @private
-specification_char(#specification_char{} = ResourceSpecCharacteristic) ->
-	specification_char(record_info(fields, specification_char), ResourceSpecCharacteristic, #{});
-specification_char(#{} = ResourceSpecCharacteristic) ->
-	specification_char(record_info(fields, specification_char), ResourceSpecCharacteristic, #specification_char{}).
+specification_char([#specification_char{} | _] = List) ->
+	Fields = record_info(fields, specification_char),
+	[specification_char(Fields, R, #{}) || R <- List];
+specification_char([#{} | _] = List) ->
+	Fields = record_info(fields, specification_char),
+	[specification_char(Fields, M, #specification_char{}) || M <- List];
+specification_char([]) ->
+	[].
 %% @hidden
 specification_char([name | T], #specification_char{name = Name} = R, Acc)
 		when is_list(Name) ->
@@ -563,7 +577,7 @@ specification_char([start_date | T],
 		when is_list(Start) ->
 	specification_char(T, M, Acc#specification_char{start_date = im_rest:iso8601(Start)});
 specification_char([end_date | T], #specification_char{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	specification_char(T, R, Acc#{"validFor" := NewValidFor});
 specification_char([end_date | T], #specification_char{end_date = End} = R, Acc)
@@ -601,14 +615,17 @@ specification_char([], _, Acc) ->
 
 -spec spec_char_rel(ResourceSpecCharRelationship) -> ResourceSpecCharRelationship
 	when
-		ResourceSpecCharRelationship :: [spec_char_rel()] | [map()]
-				| spec_char_rel() | map().
+		ResourceSpecCharRelationship :: [spec_char_rel()] | [map()].
 %% @doc CODEC for `ResourceSpecCharRelationship'.
 %% @private
-spec_char_rel(#spec_char_rel{} = ResourceSpecCharRelationship) ->
-	spec_char_rel(record_info(fields, spec_char_rel), ResourceSpecCharRelationship, #{});
-spec_char_rel(#{} = ResourceSpecCharRelationship) ->
-	spec_char_rel(record_info(fields, spec_char_rel), ResourceSpecCharRelationship, #spec_char_rel{}).
+spec_char_rel([#spec_char_rel{} | _] = List) ->
+	Fields = record_info(fields, spec_char_rel),
+	[spec_char_rel(Fields, R, #{}) || R <- List];
+spec_char_rel([#{} | _] = List) ->
+	Fields = record_info(fields, spec_char_rel),
+	[spec_char_rel(Fields, M, #spec_char_rel{}) || M <- List];
+spec_char_rel([]) ->
+	[].
 %% @hidden
 spec_char_rel([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
@@ -649,7 +666,7 @@ spec_char_rel([start_date | T],
 		when is_list(Start) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{start_date = im_rest:iso8601(Start)});
 spec_char_rel([end_date | T], #spec_char_rel{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	spec_char_rel(T, R, Acc#{"validFor" := NewValidFor});
 spec_char_rel([end_date | T], #spec_char_rel{end_date = End} = R, Acc)

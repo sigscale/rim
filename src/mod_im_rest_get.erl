@@ -100,12 +100,37 @@ parse_query(_R, _P, _Q) ->
 
 %% @hidden
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["partyManagement", "v1", "individual"], Query) ->
+		["partyManagement", "v2", "individual"], Query) ->
 	do_response(ModData, Resource:get_users(Query, Headers));
-do_get(Resource, ModData, ["partyManagement", "v1", "individual", Id], Query) ->
+do_get(Resource, ModData,
+		["partyManagement", "v2", "individual", Id], Query) ->
 	do_response(ModData, Resource:get_user(Id, Query));
+do_get(Resource, #mod{parsed_header = Headers} = ModData,
+		["resourceCatalogManagement", "v3", "catalog"], Query) ->
+	do_response(ModData, Resource:get_catalogs(Query, Headers));
+do_get(Resource, ModData,
+		["resourceCatalogManagement", "v3", "catalog", Id], Query) ->
+	do_response(ModData, Resource:get_catalog(Id, Query));
+do_get(Resource, #mod{parsed_header = Headers} = ModData,
+		["resourceCatalogManagement", "v3", "category"], Query) ->
+	do_response(ModData, Resource:get_categories(Query, Headers));
+do_get(Resource, ModData,
+		["resourceCatalogManagement", "v3", "category", Id], Query) ->
+	do_response(ModData, Resource:get_category(Id, Query));
+do_get(Resource, #mod{parsed_header = Headers} = ModData,
+		["resourceCatalogManagement", "v3", "candidate"], Query) ->
+	do_response(ModData, Resource:get_candidates(Query, Headers));
+do_get(Resource, ModData,
+		["resourceCatalogManagement", "v3", "candidate", Id], Query) ->
+	do_response(ModData, Resource:get_candidate(Id, Query));
+do_get(Resource, #mod{parsed_header = Headers} = ModData,
+		["resourceCatalogManagement", "v3", "specification"], Query) ->
+	do_response(ModData, Resource:get_specifications(Query, Headers));
+do_get(Resource, ModData,
+		["resourceCatalogManagement", "v3", "specification", Id], Query) ->
+	do_response(ModData, Resource:get_specification(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
-			["resourceInventoryManagement", "v1", "logicalResource", Id], Query) ->
+		["resourceInventoryManagement", "v3", "logicalResource", Id], Query) ->
    do_response(ModData, Resource:get_inventory(Method, Query, Headers));
 do_get(_, _, _, _) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",

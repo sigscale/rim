@@ -155,8 +155,8 @@ get_category(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCategory' collection.
 post_category(RequestBody) ->
 	try
-		Category = category(zj:decode(RequestBody)),
-		case im:add_category(Category) of
+		{ok, CategoryMap} = zj:decode(RequestBody),
+		case im:add_category(category(CategoryMap)) of
 			{ok, #category{id = Id, last_modified = LM} = NewCategory} ->
 				Body = zj:encode(category(NewCategory)),
 				Location = ?PathCatalog ++ "category/" ++ Id,
@@ -177,7 +177,7 @@ post_category(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCategory' resource.
 delete_category(Id) ->
-	case im:delete_category(Id) of
+	case im:del_category(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -186,7 +186,7 @@ delete_category(Id) ->
 
 -spec category(Category) -> Category
 	when
-		Category :: #category{} | map().
+		Category :: category() | map().
 %% @doc CODEC for `ResourceCategory'.
 category(#category{} = Category) ->
 	category(record_info(fields, category), Category, #{});
@@ -251,7 +251,7 @@ category([start_date | T],
 		when is_list(Start) ->
 	category(T, M, Acc#category{start_date = im_rest:iso8601(Start)});
 category([end_date | T], #category{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	category(T, R, Acc#{"validFor" := NewValidFor});
 category([end_date | T], #category{end_date = End} = R, Acc)
@@ -267,7 +267,7 @@ category([last_modified | T], #category{last_modified = {TS, _}} = R, Acc)
 	category(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 category([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	category(T, M, Acc#category{last_modified = LM});
 category([status | T], #category{status = Status} = R, Acc)
 		when Status /= undefined ->

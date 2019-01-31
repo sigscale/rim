@@ -155,8 +155,8 @@ get_catalog(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCatalog' collection.
 post_catalog(RequestBody) ->
 	try
-		Catalog = catalog(zj:decode(RequestBody)),
-		case im:add_catalog(Catalog) of
+		{ok, CatalogMap} = zj:decode(RequestBody),
+		case im:add_catalog(catalog(CatalogMap)) of
 			{ok, #catalog{id = Id, last_modified = LM} = Catalog} ->
 				Body = zj:encode(catalog(Catalog)),
 				Location = ?PathCatalog ++ "catalog/" ++ Id,
@@ -177,7 +177,7 @@ post_catalog(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCatalog' resource.
 delete_catalog(Id) ->
-	case im:delete_catalog(Id) of
+	case im:del_catalog(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -186,7 +186,7 @@ delete_catalog(Id) ->
 
 -spec catalog(Catalog) -> Catalog
 	when
-		Catalog :: #catalog{} | map().
+		Catalog :: catalog() | map().
 %% @doc CODEC for `ResourceCatalog'.
 catalog(#catalog{} = Catalog) ->
 	catalog(record_info(fields, catalog), Catalog, #{});
@@ -220,14 +220,14 @@ catalog([description| T], #{"description" := Description} = M, Acc)
 	catalog(T, M, Acc#catalog{description = Description});
 catalog([class_type | T], #catalog{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	catalog(T, R, Acc#{"@baseType" => Type});
-catalog([class_type | T], #{"@baseType" := Type} = M, Acc)
+	catalog(T, R, Acc#{"@type" => Type});
+catalog([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	catalog(T, M, Acc#catalog{class_type = Type});
 catalog([base_type | T], #catalog{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	catalog(T, R, Acc#{"@type" => Type});
-catalog([base_type | T], #{"@type" := Type} = M, Acc)
+	catalog(T, R, Acc#{"@baseType" => Type});
+catalog([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	catalog(T, M, Acc#catalog{base_type = Type});
 catalog([schema | T], #catalog{schema = Schema} = R, Acc)
@@ -251,7 +251,7 @@ catalog([start_date | T],
 		when is_list(Start) ->
 	catalog(T, M, Acc#catalog{start_date = im_rest:iso8601(Start)});
 catalog([end_date | T], #catalog{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	catalog(T, R, Acc#{"validFor" := NewValidFor});
 catalog([end_date | T], #catalog{end_date = End} = R, Acc)
@@ -267,7 +267,7 @@ catalog([last_modified | T], #catalog{last_modified = {TS, _}} = R, Acc)
 	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
 catalog([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
-	LM = {{im_rest:iso8601(DateTime), erlang:unique_integer([positive])}},
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	catalog(T, M, Acc#catalog{last_modified = LM});
 catalog([status | T], #catalog{status = Status} = R, Acc)
 		when status /= undefined ->
