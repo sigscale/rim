@@ -120,7 +120,7 @@ sequences() ->
 %% Returns a list of all test cases in this test suite.
 %%
 all() ->
-	[map_to_catalog, catalog_to_map, post_catalog, get_catalog].
+	[map_to_catalog, catalog_to_map, post_catalog, get_catalogs, get_catalog].
 
 %%---------------------------------------------------------------------
 %%  Test cases
