@@ -44,10 +44,6 @@
 -define(PathCatalog, "/resourceCatalogManagement/v3/").
 -define(PathInventory, "/resourceInventoryManagement/v3/").
 
--record(state,
-      {current :: string() | undefined,
-      resource = #resource{} :: resource()}).
-
 %%----------------------------------------------------------------------
 %%  The im public API
 %%----------------------------------------------------------------------
@@ -858,15 +854,6 @@ generate_password() ->
 %% @equiv generate_identity(7)
 generate_identity() ->
 	generate_identity(7).
-
-%-spec import(File) -> Result
-%	when
-%		File :: file:filename(),
-%		Result :: term().
-%import(File) when is_list(File) ->
-%	Options = [{event_fun, fun parse/3},
-%		{event_state, #state{}}],
-%	xmerl_sax_parser:file(File, Options).
 
 %%----------------------------------------------------------------------
 %%  internal functions
