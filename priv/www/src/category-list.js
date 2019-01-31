@@ -38,7 +38,7 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Class	
+						Class
 					</template>
 					<template>
 						[[item.classs]]
@@ -46,7 +46,7 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Status	
+						Status
 					</template>
 					<template>
 						[[item.stat]]
@@ -54,7 +54,7 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Parent	
+						Parent
 					</template>
 					<template>
 						[[item.parentt]]
@@ -62,7 +62,7 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Root	
+						Root
 					</template>
 					<template>
 						[[item.root]]
@@ -71,21 +71,21 @@ class categoryList extends PolymerElement {
 			</vaadin-grid>
 			<iron-ajax
 				id="getCategoryAjax"
-				url="resourceInventoryManagement/v1/logicalResource1"
+				url="resourceCatalogManagement/v3/category"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
 	}
 
 	static get properties() {
-      return {
-         etag: {
-            type: String,
-            value: null
-         }
-      }
-   }
-	
+		return {
+			etag: {
+				type: String,
+				value: null
+			}
+		}
+	}
+
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('categoryGrid');
@@ -100,19 +100,19 @@ class categoryList extends PolymerElement {
 			headers['If-Range'] = categoryList.etag;
 		}
 		var categoryList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
-      var handleAjaxResponse = function(request) {
+		var handleAjaxResponse = function(request) {
 			if(request) {
 				categoryList1.etag = request.xhr.getResponseHeader('ETag');
-            var range = request.xhr.getResponseHeader('Content-Range');
-            var range1 = range.split("/");
-            var range2 = range1[0].split("-");
-            if (range1[1] != "*") {
-               grid.size = Number(range1[1]);
-            } else {
-               grid.size = Number(range2[1]) + grid.pageSize * 2;
-            }
-            var vaadinItems = new Array();
-            callback(vaadinItems);
+				var range = request.xhr.getResponseHeader('Content-Range');
+				var range1 = range.split("/");
+				var range2 = range1[0].split("-");
+				if (range1[1] != "*") {
+					grid.size = Number(range1[1]);
+				} else {
+					grid.size = Number(range2[1]) + grid.pageSize * 2;
+				}
+				var vaadinItems = new Array();
+				callback(vaadinItems);
 			} else {
 				grid.size = 0;
 				callback([]);
@@ -120,36 +120,36 @@ class categoryList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			categoryList1.etag = null;
-      	var toast;
-      	toast.text = "error";
-      	toast.open();
-      	if(!grid.size) {
-         	grid.size = 0;
-      	}
-      	callback([]);
+			var toast;
+			toast.text = "error";
+			toast.open();
+			if(!grid.size) {
+				grid.size = 0;
+			}
+		callback([]);
 		}
 		if(categoryList.loading) {
-         categoryList.lastRequest.completes.then(function(request) {
-            var startRange = params.page * params.pageSize + 1;
-            categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-            if (categoryList1.etag && params.page > 0) {
-               categoryList.headers['If-Range'] = userList1.etag;
-            } else {
-               delete categoryList.headers['If-Range'];
-            }
-            return categoryList.generateRequest().completes;
-            }, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-         } else {
-            var startRange = params.page * params.pageSize + 1;
-            var endRange = startRange + params.pageSize - 1;
-            categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-            if (categoryList1.etag && params.page > 0) {
-               categoryList.headers['If-Range'] = userList1.etag;
-            } else {
-               delete categoryList.headers['If-Range'];
-            }
-            categoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
-         }
+			categoryList.lastRequest.completes.then(function(request) {
+			var startRange = params.page * params.pageSize + 1;
+			categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (categoryList1.etag && params.page > 0) {
+				categoryList.headers['If-Range'] = userList1.etag;
+			} else {
+				delete categoryList.headers['If-Range'];
+			}
+				return categoryList.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+			} else {
+				var startRange = params.page * params.pageSize + 1;
+				var endRange = startRange + params.pageSize - 1;
+				categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (categoryList1.etag && params.page > 0) {
+					categoryList.headers['If-Range'] = userList1.etag;
+				} else {
+					delete categoryList.headers['If-Range'];
+				}
+			categoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+		}
 	}
 }
 

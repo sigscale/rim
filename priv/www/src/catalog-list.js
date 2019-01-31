@@ -13,7 +13,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import './style-element.js';
 
-class	catalogList extends PolymerElement {
+class catalogList extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -38,7 +38,7 @@ class	catalogList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Class	
+						Class
 					</template>
 					<template>
 						[[item.classs]]
@@ -46,7 +46,7 @@ class	catalogList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Status	
+						Status
 					</template>
 					<template>
 						[[item.stat]]
@@ -55,20 +55,20 @@ class	catalogList extends PolymerElement {
 			</vaadin-grid>
 			<iron-ajax
 				id="getCatalogAjax"
-				url="resourceInventoryManagement/v1/logicalResource"
+				url="resourceCatalogManagement/v3/catalog"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
 	}
-	
+
 	static get properties() {
-      return {
-         etag: {
-            type: String,
-            value: null
-         }
-      }
-   }
+		return {
+			etag: {
+				type: String,
+				value: null
+			}
+		}
+	}
 
 	ready() {
 		super.ready();
@@ -105,36 +105,36 @@ class	catalogList extends PolymerElement {
 	var handleAjaxError = function(error) {
 		catalogList1.etag = null;
 		var toast;
-      toast.text = "error";
-      toast.open();
-      if(!grid.size) {
-      	grid.size = 0;
-      }
-      callback([]);
+		toast.text = "error";
+		toast.open();
+		if(!grid.size) {
+			grid.size = 0;
+		}
+		callback([]);
 	}
 	if(catalogList.loading) {
-         catalogList.lastRequest.completes.then(function(request) {
-            var startRange = params.page * params.pageSize + 1;
-            catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
-            if (catalogList1.etag && params.page > 0) {
-               catalogList.headers['If-Range'] = userList1.etag;
-            } else {
-               delete catalogList.headers['If-Range'];
-            }
-            return catalogList.generateRequest().completes;
-            }, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-         } else {
-            var startRange = params.page * params.pageSize + 1;
-            var endRange = startRange + params.pageSize - 1;
-            catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
-            if (catalogList1.etag && params.page > 0) {
-               catalogList.headers['If-Range'] = userList1.etag;
-            } else {
-               delete catalogList.headers['If-Range'];
-            }
-            catalogList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
-         }
-   }
+		catalogList.lastRequest.completes.then(function(request) {
+			var startRange = params.page * params.pageSize + 1;
+			catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (catalogList1.etag && params.page > 0) {
+					catalogList.headers['If-Range'] = userList1.etag;
+				} else {
+					delete catalogList.headers['If-Range'];
+				}
+				return catalogList.generateRequest().completes;
+				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+			} else {
+				var startRange = params.page * params.pageSize + 1;
+				var endRange = startRange + params.pageSize - 1;
+				catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (catalogList1.etag && params.page > 0) {
+					catalogList.headers['If-Range'] = userList1.etag;
+				} else {
+					delete catalogList.headers['If-Range'];
+				}
+			catalogList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+		}
+	}
 } 
 
 window.customElements.define('catalog-list', catalogList);
