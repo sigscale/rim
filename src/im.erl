@@ -1030,38 +1030,6 @@ filter_source(Op, String) ->
          end
    end.
 
-%% @hidden
-parse(startDocument = _Event, _Location, State) ->
-   State;
-parse({startElement, _, "MO", _, [{_, _, "className", Class}, {_, _, "fdn", Fdn}]}, _, _State) ->
-   #state{resource = #resource{id = Fdn, description = Class, class_type = "EQUIPMENT", base_type = "PhysicalResource"}};
-parse({startElement, _, "MO", _, _}, _, #state{}) ->
-   #state{};
-parse({startElement, _, "attr", _, [{_, _, "name", Name}]}, _, State) ->
-   State#state{current = Name};
-parse({characters, Chars}, _, #state{current = "fdn", resource = R} = State) ->
-   State#state{resource = R#resource{id = Chars}, current = undefined};
-parse({characters, Chars}, _, #state{current = "name", resource = R} = State) ->
-   State#state{resource = R#resource{name = Chars}, current = undefined};
-parse({characters, _Chars}, _, #state{current = "className"} = State) ->
-   State#state{current = undefined};
-parse({characters, Chars}, _, #state{current = Name, resource = R} = State) ->
-   Characteristics = [{Name, Chars} | R#resource.characteristic],
-   State#state{resource = R#resource{characteristic = Characteristics}, current = undefined};
-parse({endElement, _, "attr", _}, _, State) ->
-   State#state{current = undefined};
-parse({endElement, _, "MO", _}, _, #state{resource = R}) ->
-   F = fun() ->
-         mnesia:write(R)
-   end,
-   mnesia:transaction(F),
-   #state{};
-parse({ignorableWhitespace, _}, _, State) ->
-   State;
-parse(endDocument, _, State) ->
-   State;
-parse(_Other, _Location, State) ->
-   State.
 %strip(Char) ->
 %	strip1(Char, []).
 
