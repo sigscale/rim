@@ -158,9 +158,8 @@ post_resource(RequestBody) ->
 	try
 		{ok, ResourceMap} = zj:decode(RequestBody),
 		case im:add_resource(resource(ResourceMap)) of
-			{ok, #resource{id = Id, last_modified = LM} = Resource} ->
-				Location = "/resourceInventoryManagement/v3/resource/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+			{ok, #resource{href = Href, last_modified = LM} = Resource} ->
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				Body = zj:encode(resource(Resource)),
 				{ok, Headers, Body};
 			{error, _Reason} ->

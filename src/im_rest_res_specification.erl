@@ -158,10 +158,9 @@ post_specification(RequestBody) ->
 	try
 		{ok, SpecificationMap} = zj:decode(RequestBody),
 		case im:add_specification(specification(SpecificationMap)) of
-			{ok, #specification{id = Id, last_modified = LM} = NewSpecification} ->
+			{ok, #specification{href = Href, last_modified = LM} = NewSpecification} ->
 				Body = zj:encode(specification(NewSpecification)),
-				Location = ?PathCatalog ++ "specification/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

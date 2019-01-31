@@ -157,10 +157,9 @@ post_catalog(RequestBody) ->
 	try
 		{ok, CatalogMap} = zj:decode(RequestBody),
 		case im:add_catalog(catalog(CatalogMap)) of
-			{ok, #catalog{id = Id, last_modified = LM} = Catalog} ->
+			{ok, #catalog{href = Href, last_modified = LM} = Catalog} ->
 				Body = zj:encode(catalog(Catalog)),
-				Location = ?PathCatalog ++ "catalog/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

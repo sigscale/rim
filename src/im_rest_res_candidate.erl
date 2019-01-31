@@ -158,10 +158,9 @@ post_candidate(RequestBody) ->
 	try
 		{ok, CandidateMap} = zj:decode(RequestBody),
 		case im:add_candidate(candidate(CandidateMap)) of
-			{ok, #candidate{id = Id, last_modified = LM} = Candidate} ->
+			{ok, #candidate{href = Href, last_modified = LM} = Candidate} ->
 				Body = zj:encode(candidate(Candidate)),
-				Location = ?PathCatalog ++ "candidate/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

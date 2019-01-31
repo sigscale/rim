@@ -157,10 +157,9 @@ post_category(RequestBody) ->
 	try
 		{ok, CategoryMap} = zj:decode(RequestBody),
 		case im:add_category(category(CategoryMap)) of
-			{ok, #category{id = Id, last_modified = LM} = NewCategory} ->
+			{ok, #category{href = Href, last_modified = LM} = NewCategory} ->
 				Body = zj:encode(category(NewCategory)),
-				Location = ?PathCatalog ++ "category/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
