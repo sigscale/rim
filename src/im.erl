@@ -41,6 +41,9 @@
 %-define(MILLISECOND, millisecond).
 -define(IDOFFSET, 63681984000).
 
+-define(PathCatalog, "/resourceCatalogManagement/v3/").
+-define(PathInventory, "/resourceInventoryManagement/v3/").
+
 -record(state,
       {current :: string() | undefined,
       resource = #resource{} :: resource()}).
@@ -54,11 +57,13 @@
 		Result :: {ok, Catalog} | {error, Reason},
 		Reason :: term().
 %% @doc Create a new Resource Catalog.
-add_catalog(#catalog{id = undefined,
+add_catalog(#catalog{id = undefined, href = undefined,
 		last_modified = undefined} = Catalog) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			NewCatalog = Catalog#catalog{id = Id, last_modified = LM},
+			Href = ?PathCatalog ++ "catalog/" ++ Id,
+			NewCatalog = Catalog#catalog{id = Id,
+					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCatalog),
 			NewCatalog
 	end,
@@ -130,7 +135,9 @@ add_category(#category{id = undefined,
 		last_modified = undefined} = Category) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			NewCategory = Category#category{id = Id, last_modified = LM},
+			Href = ?PathCatalog ++ "category/" ++ Id,
+			NewCategory = Category#category{id = Id,
+					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCategory),
 			NewCategory
 	end,
@@ -202,7 +209,9 @@ add_candidate(#candidate{id = undefined,
 		last_modified = undefined} = Candidate) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			NewCandidate = Candidate#candidate{id = Id, last_modified = LM},
+			Href = ?PathCatalog ++ "candidate/" ++ Id,
+			NewCandidate = Candidate#candidate{id = Id,
+					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCandidate),
 			NewCandidate
 	end,
@@ -274,8 +283,9 @@ add_specification(#specification{id = undefined,
 		last_modified = undefined} = Specification) ->
 	F = fun() ->
 			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "specification/" ++ Id,
 			NewSpecification = Specification#specification{id = Id,
-					last_modified = LM},
+					href = Href, last_modified = LM},
 			ok = mnesia:write(NewSpecification),
 			NewSpecification
 	end,
@@ -347,7 +357,9 @@ add_resource(#resource{id = undefined,
 		last_modified = undefined} = Resource) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			NewResource = Resource#resource{id = Id, last_modified = LM},
+			Href = ?PathInventory ++ "resource/" ++ Id,
+			NewResource = Resource#resource{id = Id,
+					href = Href, last_modified = LM},
 			ok = mnesia:write(NewResource),
 			NewResource
 	end,
