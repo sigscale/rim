@@ -21,9 +21,6 @@
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
 
--record(state,
-		{current :: string(),
-		resource = #resource{} :: resource()}).
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -60,9 +57,9 @@ import(File) when is_list(File) ->
 %% @doc Parse xml.
 parse_xml(startDocument = _Event, _Location, State) ->
 	State;
-parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _, {undefined, Stack} = State) ->
+parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _, {undefined, Stack} = _State) ->
 	{parse_bulk_cm, Stack};
-parse_xml(endDocument = _Event, _Location, {F, Stack} = State) ->
+parse_xml(endDocument = _Event, _Location, State) ->
 	State;
 parse_xml(_Event, _Location, {undefined, _Stack} = State) ->
 	State;
@@ -74,7 +71,7 @@ parse_bulk_cm({startElement, _, "fileHeader", _, _}, State) ->
 	State;
 parse_bulk_cm({startElement, _, "configData", _, Attributes}, {_, Stack} = _State) ->
 	case lists:keyfind("dnPrefix", 3, Attributes) of
-		{_Uri, _Prefix, "dnPrefix", DnPrefix} ->
+		{_Uri, _Prefix, "dnPrefix", _DnPrefix} ->
 			{parse_generic, [{startElement, "configData", Attributes} | Stack]};
 		false ->
 			{parse_generic, [{startElement, "configData", Attributes} | Stack]}
@@ -85,7 +82,7 @@ parse_bulk_cm({endElement, _, "configData", _}, State) ->
 	State;
 parse_bulk_cm({ignorableWhitespace, _}, State) ->
 	State;
-parse_bulk_cm(Event, {parse_bulk_cm, _Stack} = State) ->
+parse_bulk_cm(_Event, {parse_bulk_cm, _Stack} = State) ->
 	State.
 
 %% @hidden
@@ -96,11 +93,11 @@ parse_generic({characters, Chars}, {F, Stack}) ->
 parse_generic({comment, _Comment}, State) ->
 	State;
 parse_generic({startElement,  _Uri, "BssFunction", QName,
-		Attributes}, {F, Stack}) ->
+		Attributes}, {_F, Stack}) ->
 	{parse_geran, [{startElement, QName, Attributes} | Stack]};
 parse_generic({startElement,  _, _, QName, Attributes}, {F, Stack}) ->
 	{F, [{startElement, QName, Attributes} | Stack]};
-parse_generic({endElement,  _Uri, "BssFunction", QName}, {F, Stack}) ->
+parse_generic({endElement,  _Uri, "BssFunction", _QName}, {_F, Stack}) ->
 %	{parse_geran, pop(QName, Stack)};
 	{parse_geran, Stack};
 parse_generic({endElement,  _Uri, _LocalName, QName}, {F, Stack}) ->
@@ -118,7 +115,7 @@ parse_geran({endPrefixMapping, _Prefix}, State) ->
 parse_geran({comment, _Comment}, State) ->
 	State;
 parse_geran({startElement,  _Uri, "GsmCell", QName,
-		Attributes}, {F, Stack}) ->
+		Attributes}, {_F, Stack}) ->
 	{parse_gsm_cell, [{startElement, QName, Attributes} | Stack]};
 parse_geran({startElement, _, _, QName, Attributes}, {F, Stack}) ->
 	{F, [{startElement, QName, Attributes} | Stack]};
@@ -134,7 +131,7 @@ parse_gsm_cell({comment, _Comment}, State) ->
 	State;
 parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes}, {F, Stack}) ->
 	{F, [{startElement, QName, Attributes} | Stack]};
-parse_gsm_cell({endElement,  _Uri, "GsmCell", QName}, {F, Stack}) ->
+parse_gsm_cell({endElement,  _Uri, "GsmCell", QName}, {_F, Stack}) ->
 	{Value, NewStack} = pop(startElement, QName, Stack),
 	[{startElement, {"gn", "GsmCell"}, Attributes1} | T1] = Value,
 	{_Uri1, _Prefix, "id", ID} = lists:keyfind("id", 3, Attributes1),
@@ -212,7 +209,7 @@ parse_gsm_cell_rels(GsmCellID, Characteristics,
 				Frels(T, Attr, Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
 			Frels([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
 				Frels(T, Attr, Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
-			Frels([{startElement, {"gn", Attr}, _} | T], _Attr, Acc) ->
+			Frels([{startElement, {"gn", _Attr}, _} | T], _Attr, Acc) ->
 				Frels(T, undefined, Acc)
 	end,
 	R = Frels(Attributes2, undefined, #gsm_relation{id = RelID}),
@@ -239,7 +236,7 @@ parse_gsm_cell_rels(GsmCellID, Characteristics,
 				Frels(T, Attr, Acc);
 			Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
 				Frels(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
-			Frels([{startElement, {"un", Attr}, _} | T], _Attr, Acc) ->
+			Frels([{startElement, {"un", _Attr}, _} | T], _Attr, Acc) ->
 				Frels(T, undefined, Acc)
 	end,
 	R = Frels(Attributes2, undefined, #utran_relation{id = RelID}),
@@ -279,7 +276,7 @@ parse_gsm_cell_rels(GsmCellID, Characteristics,
 			Frels(T, Attr, Acc#eutran_relation{cell_individual_offset = Chars});
 		Frels([{characters, Chars} | T], "qOffset" = Attr, Acc) ->
 			Frels(T, Attr, Acc#eutran_relation{q_offset = Chars});
-		Frels([{startElement, {"en", Attr}, _} | T], _Attr, Acc) ->
+		Frels([{startElement, {"en", _Attr}, _} | T], _Attr, Acc) ->
 			Frels(T, undefined, Acc)
 	end,
 	R = Frels(Attributes2, undefined, #eutran_relation{id = RelID}),
@@ -307,11 +304,11 @@ parse_gsm_cell_rels(GsmCellID, Characteristics, CellStack, Stack, Acc) ->
 	parse_gsm_cell_pol(GsmCellID, NewCharacteristics, CellStack, Stack).
 
 % @hidden
-parse_gsm_cell_pol(GsmCellID, Characteristics,
+parse_gsm_cell_pol(_GsmCellID, _Characteristics,
 		[{startElement, {"sp", "IneractEsPolicies"}, []} | T1] = _CellStack, Stack) ->
-	{[_ | Attributes], T2} = pop(endElement, {"sp", "IneractEsPolicies"}, T1),
+	{[_ | _Attributes], _T2} = pop(endElement, {"sp", "IneractEsPolicies"}, T1),
 	{parse_geran, Stack};
-parse_gsm_cell_pol(GsmCellID, Characteristics, _CellStack, Stack) ->
+parse_gsm_cell_pol(_GsmCellID, _Characteristics, _CellStack, Stack) ->
 	{parse_geran, Stack}.
 
 %%----------------------------------------------------------------------
