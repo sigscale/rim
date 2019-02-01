@@ -22,24 +22,27 @@
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% export the im public API
--export([add_catalog/1, get_catalogs/0, get_catalog/1, delete_catalog/1]).
--export([get_resource/0, query_resource/7, query_resource/8]).
--export([add_user/3, list_users/0, get_user/1, delete_user/1, query_users/4]).
+-export([add_catalog/1, get_catalogs/0, get_catalog/1, del_catalog/1]).
+-export([add_category/1, get_categories/0, get_category/1, del_category/1]).
+-export([add_candidate/1, get_candidates/0, get_candidate/1, del_candidate/1]).
+-export([add_specification/1, get_specifications/0, get_specification/1,
+		del_specification/1]).
+-export([add_resource/1, get_resources/0, get_resource/1, del_resource/1]).
+-export([query_resource/7, query_resource/8]).
+-export([add_user/3, get_users/0, get_user/1, del_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
--export([import/1]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
 
 -define(CHUNKSIZE, 100).
-
 %% support deprecated_time_unit()
 -define(MILLISECOND, milli_seconds).
 %-define(MILLISECOND, millisecond).
+-define(IDOFFSET, 63681984000).
 
--record(state,
-      {current :: string(),
-      resource = #resource{} :: resource()}).
+-define(PathCatalog, "/resourceCatalogManagement/v3/").
+-define(PathInventory, "/resourceInventoryManagement/v3/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -50,13 +53,13 @@
 		Result :: {ok, Catalog} | {error, Reason},
 		Reason :: term().
 %% @doc Create a new Resource Catalog.
-add_catalog(#catalog{id = undefined,
+add_catalog(#catalog{id = undefined, href = undefined,
 		last_modified = undefined} = Catalog) ->
 	F = fun() ->
-			TS = erlang:system_time(?MILLISECOND),
-			N = erlang:unique_integer([positive]),
-			Id = integer_to_list(TS) ++ integer_to_list(N),
-			NewCatalog = Catalog#catalog{id = Id, last_modified = TS},
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "catalog/" ++ Id,
+			NewCatalog = Catalog#catalog{id = Id,
+					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCatalog),
 			NewCatalog
 	end,
@@ -84,23 +87,6 @@ get_catalogs() ->
 			CatalogIDs
 	end.
 
--spec delete_catalog(CatalogID) -> Result
-	when
-		CatalogID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource Catalog.
-delete_catalog(CatalogID) when is_list(CatalogID) ->
-	F = fun() ->
-			mnesia:delete(catalog, CatalogID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
-	end.
-
 -spec get_catalog(CatalogID) -> Result
 	when
 		CatalogID :: string(),
@@ -119,28 +105,317 @@ get_catalog(CatalogID) when is_list(CatalogID) ->
 			{ok, Catalog}
 	end.
 
--spec get_resource() -> Result
+-spec del_catalog(CatalogID) -> Result
 	when
-		Result :: [#resource{}] | {error, Reason},
+		CatalogID :: string(),
+		Result :: ok | {error, Reason},
 		Reason :: term().
-%% @doc Get all resources.
-get_resource() ->
-	MatchSpec = [{'_', [], ['$_']}],
-	F = fun(F, start, Acc) ->
-		F(F, mnesia:select(inventory, MatchSpec,
-				?CHUNKSIZE, read), Acc);
-		(_F, '$end_of_table', Acc) ->
-			lists:flatten(lists:reverse(Acc));
-		(_F, {error, Reason}, _Acc) ->
-				{error, Reason};
-		(F, {Resource, Cont}, Acc) ->
-				F(F, mnesia:select(Cont), [Resource | Acc])
+%% @doc Delete a Resource Catalog.
+del_catalog(CatalogID) when is_list(CatalogID) ->
+	F = fun() ->
+			mnesia:delete(catalog, CatalogID, write)
 	end,
-	case mnesia:transaction(F, [F, start, []]) of
+	case mnesia:transaction(F) of
 		{aborted, Reason} ->
 			{error, Reason};
-		{atomic, Result} ->
-			Result
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_category(Category) -> Result
+	when
+		Result :: {ok, Category} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Category.
+add_category(#category{id = undefined,
+		last_modified = undefined} = Category) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "category/" ++ Id,
+			NewCategory = Category#category{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewCategory),
+			NewCategory
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCategory} ->
+			{ok, NewCategory}
+	end.
+
+-spec get_categories() -> Result
+	when
+		Result :: {ok, CategoryIDs} | {error, Reason},
+		CategoryIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Category identifiers.
+get_categories() ->
+	F = fun() ->
+			mnesia:all_keys(category)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CategoryIDs} ->
+			CategoryIDs
+	end.
+
+-spec get_category(CategoryID) -> Result
+	when
+		CategoryID :: string(),
+		Result :: {ok, Category} | {error, Reason},
+		Category :: category(),
+		Reason :: term().
+%% @doc Get a Resource Category.
+get_category(CategoryID) when is_list(CategoryID) ->
+	F = fun() ->
+			mnesia:read(category, CategoryID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Category]} ->
+			{ok, Category}
+	end.
+
+-spec del_category(CategoryID) -> Result
+	when
+		CategoryID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Category.
+del_category(CategoryID) when is_list(CategoryID) ->
+	F = fun() ->
+			mnesia:delete(category, CategoryID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_candidate(Candidate) -> Result
+	when
+		Result :: {ok, Candidate} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Candidate.
+add_candidate(#candidate{id = undefined,
+		last_modified = undefined} = Candidate) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "candidate/" ++ Id,
+			NewCandidate = Candidate#candidate{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewCandidate),
+			NewCandidate
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCandidate} ->
+			{ok, NewCandidate}
+	end.
+
+-spec get_candidates() -> Result
+	when
+		Result :: {ok, CandidateIDs} | {error, Reason},
+		CandidateIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Candidate identifiers.
+get_candidates() ->
+	F = fun() ->
+			mnesia:all_keys(candidate)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CandidateIDs} ->
+			CandidateIDs
+	end.
+
+-spec get_candidate(CandidateID) -> Result
+	when
+		CandidateID :: string(),
+		Result :: {ok, Candidate} | {error, Reason},
+		Candidate :: candidate(),
+		Reason :: term().
+%% @doc Get a Resource Candidate.
+get_candidate(CandidateID) when is_list(CandidateID) ->
+	F = fun() ->
+			mnesia:read(candidate, CandidateID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Candidate]} ->
+			{ok, Candidate}
+	end.
+
+-spec del_candidate(CandidateID) -> Result
+	when
+		CandidateID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Candidate.
+del_candidate(CandidateID) when is_list(CandidateID) ->
+	F = fun() ->
+			mnesia:delete(candidate, CandidateID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_specification(Specification) -> Result
+	when
+		Result :: {ok, Specification} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Specification.
+add_specification(#specification{id = undefined,
+		last_modified = undefined} = Specification) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "specification/" ++ Id,
+			NewSpecification = Specification#specification{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewSpecification),
+			NewSpecification
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewSpecification} ->
+			{ok, NewSpecification}
+	end.
+
+-spec get_specifications() -> Result
+	when
+		Result :: {ok, SpecificationIDs} | {error, Reason},
+		SpecificationIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Specification identifiers.
+get_specifications() ->
+	F = fun() ->
+			mnesia:all_keys(specification)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, SpecificationIDs} ->
+			SpecificationIDs
+	end.
+
+-spec get_specification(SpecificationID) -> Result
+	when
+		SpecificationID :: string(),
+		Result :: {ok, Specification} | {error, Reason},
+		Specification :: specification(),
+		Reason :: term().
+%% @doc Get a Resource Specification.
+get_specification(SpecificationID) when is_list(SpecificationID) ->
+	F = fun() ->
+			mnesia:read(specification, SpecificationID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Specification]} ->
+			{ok, Specification}
+	end.
+
+-spec del_specification(SpecificationID) -> Result
+	when
+		SpecificationID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Specification.
+del_specification(SpecificationID) when is_list(SpecificationID) ->
+	F = fun() ->
+			mnesia:delete(specification, SpecificationID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec add_resource(Resource) -> Result
+	when
+		Result :: {ok, Resource} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource.
+add_resource(#resource{id = undefined,
+		last_modified = undefined} = Resource) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathInventory ++ "resource/" ++ Id,
+			NewResource = Resource#resource{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewResource),
+			NewResource
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewResource} ->
+			{ok, NewResource}
+	end.
+
+-spec get_resources() -> Result
+	when
+		Result :: {ok, ResourceIDs} | {error, Reason},
+		ResourceIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource identifiers.
+get_resources() ->
+	F = fun() ->
+			mnesia:all_keys(resource)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ResourceIDs} ->
+			ResourceIDs
+	end.
+
+-spec get_resource(ResourceID) -> Result
+	when
+		ResourceID :: string(),
+		Result :: {ok, Resource} | {error, Reason},
+		Resource :: resource(),
+		Reason :: term().
+%% @doc Get a Resource.
+get_resource(ResourceID) when is_list(ResourceID) ->
+	F = fun() ->
+			mnesia:read(resource, ResourceID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Resource]} ->
+			{ok, Resource}
+	end.
+
+-spec del_resource(ResourceID) -> Result
+	when
+		ResourceID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource.
+del_resource(ResourceID) when is_list(ResourceID) ->
+	F = fun() ->
+			mnesia:delete(resource, ResourceID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
 	end.
 
 -spec query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType,
@@ -203,10 +478,10 @@ query_resource(Cont, Size, Sort, {like, [String]} = _MatchId, MatchName, MatchTy
 	{MatchHead, MatchConditions} = case lists:last(String) of
 		$% ->
 			Prefix = lists:droplast(String),
-			Mh = #resource{id = {Prefix ++ '_', '_'}, _ = '_'},
+			Mh = #resource{id = Prefix ++ '_', _ = '_'},
 			{Mh, []};
 		_ ->
-			Mh1 = #resource{id = {String, '_'}, _ = '_'},
+			Mh1 = #resource{id = String, _ = '_'},
 			{Mh1, []}
 	end,
 	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
@@ -254,7 +529,7 @@ query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, '_' = _MatchType, 
 	query_resource3(Cont, Size, Sort, MatchHead, MatchConditions, MatchChar, CountOnly);
 query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {exact, String} = _MatchType,
 		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{type = '$3'},
+		MatchHead1 = MatchHead#resource{class_type = '$3'},
 		MatchCondition = {'==', '$3', String},
 	query_resource3(Cont, Size, Sort, MatchHead1, [MatchCondition | MatchConditions],
 			MatchChar, CountOnly);
@@ -263,14 +538,14 @@ query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {Op, [String]} = _
 	MatchHead1 = case lists:last(String) of
 		$% ->
 			Prefix = lists:droplast(String),
-			MatchHead#resource{type = Prefix ++ '_'};
+			MatchHead#resource{class_type = Prefix ++ '_'};
 		_ ->
-			MatchHead#resource{type = String}
+			MatchHead#resource{class_type = String}
 	end,
 	query_resource3(Cont, Size, Sort, MatchHead1, MatchConditions, MatchChar, CountOnly);
 query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String} = _MatchType,
 		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{type = '$3'},
+		MatchHead1 = MatchHead#resource{class_type = '$3'},
 		MatchCondition = {'/=', '$3', String},
 	query_resource3(Cont, Size, Sort, MatchHead1, [MatchCondition | MatchConditions],
 			MatchChar, CountOnly).
@@ -350,8 +625,6 @@ query_resource5(Cont, Resource, undefined, []) ->
 query_resource5(Cont, Resource, Total, []) ->
 	{Cont, Resource, Total}.
 
-
-
 -spec add_user(Username, Password, Locale) -> Result
 	when
 		Username :: string(),
@@ -380,7 +653,7 @@ add_user1(_, _, _, {error, Reason}) ->
 %% @hidden
 add_user2(Username, Password, Locale,
 		Address, Port, Dir, Group, {error, no_such_user}) ->
-	LM = {erlang:system_time(?MILLISECOND), erlang:unique_integer([positive])},
+	{_, LM} = unique(),
 	NewUserData = [{last_modified, LM}, {locale, Locale}],
 	add_user3(Username, Address, Port, Dir, Group, LM,
 			mod_auth:add_user(Username, Password, NewUserData, Address, Port, Dir));
@@ -399,7 +672,7 @@ add_user4(LM, true) ->
 add_user4(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec list_users() -> Result
+-spec get_users() -> Result
 	when
 		Result :: {ok, Users} | {error, Reason},
 		Users :: [Username],
@@ -407,12 +680,12 @@ add_user4(_, {error, Reason}) ->
 		Reason :: term().
 %% @doc List HTTP users.
 %% @equiv  mod_auth:list_users(Address, Port, Dir)
-list_users() ->
-	list_users1(get_params()).
+get_users() ->
+	get_users(get_params()).
 %% @hidden
-list_users1({Port, Address, Dir, _}) ->
+get_users({Port, Address, Dir, _}) ->
 	mod_auth:list_users(Address, Port, Dir);
-list_users1({error, Reason}) ->
+get_users({error, Reason}) ->
 	{error, Reason}.
 
 -spec get_user(Username) -> Result
@@ -431,30 +704,30 @@ get_user(Username, {Port, Address, Dir, _}) ->
 get_user(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec delete_user(Username) -> Result
+-spec del_user(Username) -> Result
 	when
 		Username :: string(),
 		Result :: ok | {error, Reason},
 		Reason :: term().
 %% @doc Delete an existing HTTP user.
-delete_user(Username) ->
-	delete_user1(Username, get_params()).
+del_user(Username) ->
+	del_user(Username, get_params()).
 %% @hidden
-delete_user1(Username, {Port, Address, Dir, GroupName}) ->
-	delete_user2(GroupName, Username, Address, Port, Dir,
+del_user(Username, {Port, Address, Dir, GroupName}) ->
+	del_user(GroupName, Username, Address, Port, Dir,
 			mod_auth:delete_user(Username, Address, Port, Dir));
-delete_user1(_, {error, Reason}) ->
+del_user(_, {error, Reason}) ->
 	{error, Reason}.
 %% @hidden
-delete_user2(GroupName, Username, Address, Port, Dir, true) ->
-	delete_user3(mod_auth:delete_group_member(GroupName,
-			Username, Address, Port, Dir));
-delete_user2(_, _, _, _, _, {error, Reason}) ->
-	{error, Reason}.
-%% @hidden
-delete_user3(true) ->
-	ok;
-delete_user3({error, Reason}) ->
+del_user(GroupName, Username, Address, Port, Dir, true) ->
+	case mod_auth:delete_group_member(GroupName,
+			Username, Address, Port, Dir) of
+		true ->
+			ok;
+		{error, Reason} ->
+			{error, Reason}
+	end;
+del_user(_, _, _, _, _, {error, Reason}) ->
 	{error, Reason}.
 
 -spec query_users(Cont, Size, MatchId, MatchLocale) -> Result
@@ -582,19 +855,24 @@ generate_password() ->
 generate_identity() ->
 	generate_identity(7).
 
--spec import(File) -> Result
-	when
-		File :: file:filename(),
-		Result :: term().
-%% @doc Import 3GPP Bulk Configuration Management (CM) `ConfigData' file.
-import(File) when is_list(File) ->
-	Options = [{event_fun, fun parse/3},
-		{event_state, #state{}}],
-	xmerl_sax_parser:file(File, Options).
-
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
+
+-spec unique() -> Result
+	when
+		Result :: {ID, LM},
+		ID :: string(),
+		LM :: {TS, N},
+		TS :: pos_integer(),
+		N :: pos_integer().
+%% @doc Generate a unique identifier and timestamp.
+unique() ->
+	TS = erlang:system_time(?MILLISECOND),
+	N = erlang:unique_integer([positive]),
+	ID = integer_to_list(TS - ?IDOFFSET) ++ integer_to_list(N),
+	LM = {TS, N},
+	{ID, LM}.
 
 -spec match_condition(MatchVariable, Match) -> MatchCondition
    when
@@ -750,39 +1028,6 @@ filter_source(Op, String) ->
                   false
          end
    end.
-
-%% @hidden
-parse(startDocument = _Event, _Location, State) ->
-   State;
-parse({startElement, _, "MO", _, [{_, _, "className", Class}, {_, _, "fdn", Fdn}]}, _, _State) ->
-   #state{resource = #resource{id = Fdn, description = Class, type = "EQUIPMENT", base_type = "PhysicalResource"}};
-parse({startElement, _, "MO", _, _}, _, #state{}) ->
-   #state{};
-parse({startElement, _, "attr", _, [{_, _, "name", Name}]}, _, State) ->
-   State#state{current = Name};
-parse({characters, Chars}, _, #state{current = "fdn", resource = R} = State) ->
-   State#state{resource = R#resource{id = Chars}, current = undefined};
-parse({characters, Chars}, _, #state{current = "name", resource = R} = State) ->
-   State#state{resource = R#resource{name = Chars}, current = undefined};
-parse({characters, _Chars}, _, #state{current = "className"} = State) ->
-   State#state{current = undefined};
-parse({characters, Chars}, _, #state{current = Name, resource = R} = State) ->
-   Characteristics = [{Name, Chars} | R#resource.characteristic],
-   State#state{resource = R#resource{characteristic = Characteristics}, current = undefined};
-parse({endElement, _, "attr", _}, _, State) ->
-   State#state{current = undefined};
-parse({endElement, _, "MO", _}, _, #state{resource = R}) ->
-   F = fun() ->
-         mnesia:write(R)
-   end,
-   mnesia:transaction(F),
-   #state{};
-parse({ignorableWhitespace, _}, _, State) ->
-   State;
-parse(endDocument, _, State) ->
-   State;
-parse(_Other, _Location, State) ->
-   State.
 
 %strip(Char) ->
 %	strip1(Char, []).

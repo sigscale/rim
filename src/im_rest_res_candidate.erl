@@ -156,12 +156,11 @@ get_candidate(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCandidate' collection.
 post_candidate(RequestBody) ->
 	try
-		Candidate = candidate(zj:decode(RequestBody)),
-		case im:add_candidate(Candidate) of
-			{ok, #candidate{id = Id, last_modified = LM} = NewCandidate} ->
-				Body = zj:encode(candidate(NewCandidate)),
-				Location = ?PathCatalog ++ "candidate/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+		{ok, CandidateMap} = zj:decode(RequestBody),
+		case im:add_candidate(candidate(CandidateMap)) of
+			{ok, #candidate{href = Href, last_modified = LM} = Candidate} ->
+				Body = zj:encode(candidate(Candidate)),
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -178,7 +177,7 @@ post_candidate(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCandidate' resource.
 delete_candidate(Id) ->
-	case im:delete_candidate(Id) of
+	case im:del_candidate(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -187,43 +186,72 @@ delete_candidate(Id) ->
 
 -spec candidate(ResourceCandidate) -> ResourceCandidate
 	when
-		ResourceCandidate :: #candidate{} | map().
+		ResourceCandidate :: candidate() | map().
 %% @doc CODEC for `ResourceCandidate'.
 candidate(#candidate{} = ResourceCandidate) ->
 	candidate(record_info(fields, candidate), ResourceCandidate, #{});
 candidate(#{} = ResourceCandidate) ->
 	candidate(record_info(fields, candidate), ResourceCandidate, #candidate{}).
 %% @hidden
-candidate([id | T], #candidate{id = Id} = R, Acc) ->
+candidate([id | T], #candidate{id = Id} = R, Acc)
+		when is_list(Id) ->
 	candidate(T, R, Acc#{"id" => Id});
-candidate([id | T], #{"id" := Id} = M, Acc) ->
+candidate([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	candidate(T, M, Acc#candidate{id = Id});
-candidate([href | T], #candidate{href = Href} = R, Acc) ->
+candidate([href | T], #candidate{href = Href} = R, Acc)
+		when is_list(Href) ->
 	candidate(T, R, Acc#{"href" => Href});
-candidate([href | T], #{"href" := Href} = M, Acc) ->
+candidate([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	candidate(T, M, Acc#candidate{href = Href});
-candidate([name | T], #candidate{name = Name} = R, Acc) ->
+candidate([name | T], #candidate{name = Name} = R, Acc)
+		when is_list(Name) ->
 	candidate(T, R, Acc#{"name" => Name});
-candidate([name | T], #{"name" := Name} = M, Acc) ->
+candidate([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	candidate(T, M, Acc#candidate{name = Name});
 candidate([description| T],
-		#candidate{description = Description} = R, Acc) ->
+		#candidate{description = Description} = R, Acc)
+		when is_list(Description) ->
 	candidate(T, R, Acc#{"description" => Description});
-candidate([description| T], #{"description" := Description} = M, Acc) ->
+candidate([description| T], #{"description" := Description} = M, Acc)
+		when is_list(Description) ->
 	candidate(T, M, Acc#candidate{description = Description});
-candidate([version | T], #candidate{version = Version} = R, Acc) ->
+candidate([class_type | T], #candidate{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate(T, R, Acc#{"@baseType" => Type});
+candidate([class_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate(T, M, Acc#candidate{class_type = Type});
+candidate([base_type | T], #candidate{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate(T, R, Acc#{"@type" => Type});
+candidate([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate(T, M, Acc#candidate{base_type = Type});
+candidate([schema | T], #candidate{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	candidate(T, R, Acc#{"@schemaLocation" => Schema});
+candidate([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	candidate(T, M, Acc#candidate{schema = Schema});
+candidate([version | T], #candidate{version = Version} = R, Acc)
+		when is_list(Version) ->
 	candidate(T, R, Acc#{"version" => Version});
-candidate([version | T], #{"version" := Version} = M, Acc) ->
+candidate([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
 	candidate(T, M, Acc#candidate{version = Version});
 candidate([start_date | T], #candidate{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
 	candidate(T, R, Acc#{"validFor" => ValidFor});
 candidate([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
 	candidate(T, M, Acc#candidate{start_date = im_rest:iso8601(Start)});
 candidate([end_date | T], #candidate{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	candidate(T, R, Acc#{"validFor" := NewValidFor});
 candidate([end_date | T], #candidate{end_date = End} = R, Acc)
@@ -231,26 +259,34 @@ candidate([end_date | T], #candidate{end_date = End} = R, Acc)
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
 	candidate(T, R, Acc#{"validFor" := ValidFor});
 candidate([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
 	candidate(T, M, Acc#candidate{end_date = im_rest:iso8601(End)});
-candidate([last_modified | T], #candidate{last_modified = LM} = R, Acc) ->
-	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-candidate([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
-	candidate(T, M, Acc#candidate{last_modified = im_rest:iso8601(LM)});
+candidate([last_modified | T], #candidate{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	candidate(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+candidate([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
+	candidate(T, M, Acc#candidate{last_modified = LM});
 candidate([status | T], #candidate{status = Status} = R, Acc)
 		when Status /= undefined ->
 	candidate(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc)
+		when is_list(Status) ->
 	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
-candidate([category | T], #candidate{category = CatRefs} = R, Acc) ->
-	candidate(T, R, Acc#{"category" => im_rest:related_category(CatRefs)});
-candidate([category | T], #{"category" := CatRefs} = M, Acc) ->
-	candidate(T, M, Acc#candidate{category = im_rest:related_category(CatRefs)});
+candidate([category | T], #candidate{category = CatRefs} = R, Acc)
+		when is_list(CatRefs) ->
+	candidate(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
+candidate([category | T], #{"category" := CatRefs} = M, Acc)
+		when is_list(CatRefs) ->
+	candidate(T, M, Acc#candidate{category = im_rest:category_ref(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
-		when is_record(Spec, related) ->
-	candidate(T, R, Acc#{"resourceSpecification" => im_rest:related(Spec)});
-candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc) ->
-	candidate(T, M, Acc#candidate{specification = im_rest:related(Spec)});
+		when is_record(Spec, specification_ref) ->
+	candidate(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(Spec)});
+candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc)
+		when is_tuple(Spec) ->
+	candidate(T, M, Acc#candidate{specification = im_rest:specification_ref(Spec)});
 candidate([_ | T], R, Acc) ->
 	candidate(T, R, Acc);
 candidate([], _, Acc) ->

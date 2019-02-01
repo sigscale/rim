@@ -24,7 +24,8 @@
 -export([date/1, iso8601/1, etag/1]).
 -export([parse_query/1, range/1]).
 -export([lifecycle_status/1]).
--export([related/1, related_party/1, related_category/1]).
+-export([related_party_ref/1, category_ref/1, candidate_ref/1,
+		specification_ref/1]).
 
 -include("im.hrl").
 
@@ -207,134 +208,206 @@ lifecycle_status("Retired") ->
 lifecycle_status("Obsolete") ->
 	obsolete.
 
--spec related(RelatedRef) -> RelatedRef
+-spec related_party_ref(RelatedPartyRef) -> RelatedPartyRef
 	when
-		RelatedRef :: [related()] | [map()]
-				| related() | map().
-%% @doc CODEC for simple relationships.
-related(#related{} = RelatedRef) ->
-	related(record_info(fields, related), RelatedRef, #{});
-related(#{} = RelatedRef) ->
-	related(record_info(fields, related), RelatedRef, #related{});
-related([#related{} | _] = List) ->
-	Fields = record_info(fields, related),
-	[related(Fields, R, #{}) || R <- List];
-related([#{} | _] = List) ->
-	Fields = record_info(fields, related),
-	[related(Fields, R, #related{}) || R <- List].
-%% @hidden
-related([id | T], #related{id = Id} = R, Acc) ->
-	related(T, R, Acc#{"id" => Id});
-related([id | T], #{"id" := Id} = M, Acc) ->
-	related(T, M, Acc#related{id = Id});
-related([href | T], #related{href = Href} = R, Acc) ->
-	related(T, R, Acc#{"href" => Href});
-related([href | T], #{"href" := Href} = M, Acc) ->
-	related(T, M, Acc#related{href = Href});
-related([name | T], #related{name = Name} = R, Acc) ->
-	related(T, R, Acc#{"name" => Name});
-related([name | T], #{"name" := Name} = M, Acc) ->
-	related(T, M, Acc#related{name = Name});
-related([version | T], #related{version = Version} = R, Acc)
-		when is_list(Version) ->
-	related(T, R, Acc#{"version" => Version});
-related([version | T], #{"version" := Version} = M, Acc) ->
-	related(T, M, Acc#related{version = Version});
-related([_ | T], R, Acc) ->
-	related(T, R, Acc);
-related([], _, Acc) ->
-	Acc.
-
--spec related_party(RelatedPartyRef) -> RelatedPartyRef
-	when
-		RelatedPartyRef :: [related_party()] | [map()]
-				| related_party() | map().
+		RelatedPartyRef :: [related_party_ref()] | [map()]
+				| related_party_ref() | map().
 %% @doc CODEC for `RelatedPartyRef'.
-related_party(#related_party{} = RelatedPartyRef) ->
-	related_party(record_info(fields, related_party), RelatedPartyRef, #{});
-related_party(#{} = RelatedPartyRef) ->
-	related_party(record_info(fields, related_party), RelatedPartyRef, #related_party{});
-related_party([#related_party{} | _] = List) ->
-	Fields = record_info(fields, related_party),
-	[related_party(Fields, RP, #{}) || RP <- List];
-related_party([#{} | _] = List) ->
-	Fields = record_info(fields, related_party),
-	[related_party(Fields, RP, #related_party{}) || RP <- List].
+related_party_ref(#related_party_ref{} = RelatedPartyRef) ->
+	related_party_ref(record_info(fields, related_party_ref), RelatedPartyRef, #{});
+related_party_ref(#{} = RelatedPartyRef) ->
+	related_party_ref(record_info(fields, related_party_ref), RelatedPartyRef, #related_party_ref{});
+related_party_ref([#related_party_ref{} | _] = List) ->
+	Fields = record_info(fields, related_party_ref),
+	[related_party_ref(Fields, RP, #{}) || RP <- List];
+related_party_ref([#{} | _] = List) ->
+	Fields = record_info(fields, related_party_ref),
+	[related_party_ref(Fields, RP, #related_party_ref{}) || RP <- List].
 %% @hidden
-related_party([id | T], #related_party{id = Id} = R, Acc) ->
-	related_party(T, R, Acc#{"id" => Id});
-related_party([id | T], #{"id" := Id} = M, Acc) ->
-	related_party(T, M, Acc#related_party{id = Id});
-related_party([href | T], #related_party{href = Href} = R, Acc) ->
-	related_party(T, R, Acc#{"href" => Href});
-related_party([href | T], #{"href" := Href} = M, Acc) ->
-	related_party(T, M, Acc#related_party{href = Href});
-related_party([name | T], #related_party{name = Name} = R, Acc) ->
-	related_party(T, R, Acc#{"name" => Name});
-related_party([name | T], #{"name" := Name} = M, Acc) ->
-	related_party(T, M, Acc#related_party{name = Name});
-related_party([role | T], #related_party{role = Role} = R, Acc)
+related_party_ref([id | T], #related_party_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	related_party_ref(T, R, Acc#{"id" => Id});
+related_party_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	related_party_ref(T, M, Acc#related_party_ref{id = Id});
+related_party_ref([href | T], #related_party_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	related_party_ref(T, R, Acc#{"href" => Href});
+related_party_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	related_party_ref(T, M, Acc#related_party_ref{href = Href});
+related_party_ref([name | T], #related_party_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	related_party_ref(T, R, Acc#{"name" => Name});
+related_party_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	related_party_ref(T, M, Acc#related_party_ref{name = Name});
+related_party_ref([role | T], #related_party_ref{role = Role} = R, Acc)
 		when is_list(Role) ->
-	related_party(T, R, Acc#{"role" => Role});
-related_party([role | T], #{"role" := Role} = M, Acc) ->
-	related_party(T, M, Acc#related_party{role = Role});
-related_party([start_date | T], #related_party{start_date = StartDate} = R, Acc)
+	related_party_ref(T, R, Acc#{"role" => Role});
+related_party_ref([role | T], #{"role" := Role} = M, Acc)
+		when is_list(Role) ->
+	related_party_ref(T, M, Acc#related_party_ref{role = Role});
+related_party_ref([start_date | T], #related_party_ref{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	related_party(T, R, Acc#{"validFor" => ValidFor});
-related_party([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
-	related_party(T, M, Acc#related_party{start_date = im_rest:iso8601(Start)});
-related_party([end_date | T], #related_party{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+	related_party_ref(T, R, Acc#{"validFor" => ValidFor});
+related_party_ref([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	related_party_ref(T, M, Acc#related_party_ref{start_date = im_rest:iso8601(Start)});
+related_party_ref([end_date | T], #related_party_ref{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	related_party(T, R, Acc#{"validFor" := NewValidFor});
-related_party([end_date | T], #related_party{end_date = End} = R, Acc)
+	related_party_ref(T, R, Acc#{"validFor" := NewValidFor});
+related_party_ref([end_date | T], #related_party_ref{end_date = End} = R, Acc)
 		when is_integer(End) ->
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	related_party(T, R, Acc#{"validFor" := ValidFor});
-related_party([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
-	related_party(T, M, Acc#related_party{end_date = im_rest:iso8601(End)});
-related_party([_ | T], R, Acc) ->
-	related_party(T, R, Acc);
-related_party([], _, Acc) ->
+	related_party_ref(T, R, Acc#{"validFor" := ValidFor});
+related_party_ref([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	related_party_ref(T, M, Acc#related_party_ref{end_date = im_rest:iso8601(End)});
+related_party_ref([_ | T], R, Acc) ->
+	related_party_ref(T, R, Acc);
+related_party_ref([], _, Acc) ->
 	Acc.
 
--spec related_category(CategoryRef) -> CategoryRef
+-spec category_ref(CategoryRef) -> CategoryRef
 	when
-		CategoryRef :: #related{} | map().
+		CategoryRef :: [category_ref()] | [map()]
+				| category_ref() | map().
 %% @doc CODEC for `CategoryRef'.
-related_category(#related{} = CategoryRef) ->
-	related_category(record_info(fields, related), CategoryRef, #{});
-related_category(#{} = CategoryRef) ->
-	related_category(record_info(fields, related), CategoryRef, #related{});
-related_category([#related{} | _] = List) ->
-	Fields = record_info(fields, related),
-	[related_category(Fields, R, #{}) || R <- List];
-related_category([#{} | _] = List) ->
-	Fields = record_info(fields, related),
-	[related_category(Fields, R, #related{}) || R <- List].
+category_ref(#category_ref{} = CategoryRef) ->
+	category_ref(record_info(fields, category_ref), CategoryRef, #{});
+category_ref(#{} = CategoryRef) ->
+	category_ref(record_info(fields, category_ref), CategoryRef, #category_ref{});
+category_ref([#category_ref{} | _] = List) ->
+	Fields = record_info(fields, category_ref),
+	[category_ref(Fields, R, #{}) || R <- List];
+category_ref([#{} | _] = List) ->
+	Fields = record_info(fields, category_ref),
+	[category_ref(Fields, R, #category_ref{}) || R <- List].
 %% @hidden
-related_category([id | T], #related{id = Id} = R, Acc) ->
-	related_category(T, R, Acc#{"id" => Id});
-related_category([id | T], #{"id" := Id} = M, Acc) ->
-	related_category(T, M, Acc#related{id = Id});
-related_category([href | T], #related{href = Href} = R, Acc) ->
-	related_category(T, R, Acc#{"href" => Href});
-related_category([href | T], #{"href" := Href} = M, Acc) ->
-	related_category(T, M, Acc#related{href = Href});
-related_category([name | T], #related{name = Name} = R, Acc) ->
-	related_category(T, R, Acc#{"name" => Name});
-related_category([name | T], #{"name" := Name} = M, Acc) ->
-	related_category(T, M, Acc#related{name = Name});
-related_category([version | T], #related{version = Version} = R, Acc) ->
-	related_category(T, R, Acc#{"version" => Version});
-related_category([version | T], #{"version" := Version} = M, Acc) ->
-	related_category(T, M, Acc#related{version = Version});
-related_category([_ | T], R, Acc) ->
-	related_category(T, R, Acc);
-related_category([], _, Acc) ->
+category_ref([id | T], #category_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	category_ref(T, R, Acc#{"id" => Id});
+category_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	category_ref(T, M, Acc#category_ref{id = Id});
+category_ref([href | T], #category_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	category_ref(T, R, Acc#{"href" => Href});
+category_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	category_ref(T, M, Acc#category_ref{href = Href});
+category_ref([name | T], #category_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	category_ref(T, R, Acc#{"name" => Name});
+category_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	category_ref(T, M, Acc#category_ref{name = Name});
+category_ref([version | T], #category_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	category_ref(T, R, Acc#{"version" => Version});
+category_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	category_ref(T, M, Acc#category_ref{version = Version});
+category_ref([_ | T], R, Acc) ->
+	category_ref(T, R, Acc);
+category_ref([], _, Acc) ->
+	Acc.
+
+-spec candidate_ref(CandidateRef) -> CandidateRef
+	when
+		CandidateRef :: [candidate_ref()] | [map()]
+				| candidate_ref() | map().
+%% @doc CODEC for `CandidateRef'.
+candidate_ref(#candidate_ref{} = CandidateRef) ->
+	candidate_ref(record_info(fields, candidate_ref), CandidateRef, #{});
+candidate_ref(#{} = CandidateRef) ->
+	candidate_ref(record_info(fields, candidate_ref), CandidateRef, #candidate_ref{});
+candidate_ref([#candidate_ref{} | _] = List) ->
+	Fields = record_info(fields, candidate_ref),
+	[candidate_ref(Fields, R, #{}) || R <- List];
+candidate_ref([#{} | _] = List) ->
+	Fields = record_info(fields, candidate_ref),
+	[candidate_ref(Fields, R, #candidate_ref{}) || R <- List].
+%% @hidden
+candidate_ref([id | T], #candidate_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	candidate_ref(T, R, Acc#{"id" => Id});
+candidate_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	candidate_ref(T, M, Acc#candidate_ref{id = Id});
+candidate_ref([href | T], #candidate_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	candidate_ref(T, R, Acc#{"href" => Href});
+candidate_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	candidate_ref(T, M, Acc#candidate_ref{href = Href});
+candidate_ref([name | T], #candidate_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	candidate_ref(T, R, Acc#{"name" => Name});
+candidate_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	candidate_ref(T, M, Acc#candidate_ref{name = Name});
+candidate_ref([version | T], #candidate_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	candidate_ref(T, R, Acc#{"version" => Version});
+candidate_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	candidate_ref(T, M, Acc#candidate_ref{version = Version});
+candidate_ref([_ | T], R, Acc) ->
+	candidate_ref(T, R, Acc);
+candidate_ref([], _, Acc) ->
+	Acc.
+
+-spec specification_ref(ResourceSpecificationRef) -> ResourceSpecificationRef
+	when
+		ResourceSpecificationRef :: [specification_ref()] | [map()]
+				| specification_ref() | map().
+%% @doc CODEC for `ResourceSpecificationRef'.
+specification_ref(#specification_ref{} = ResourceSpecificationRef) ->
+	specification_ref(record_info(fields, specification_ref),
+			ResourceSpecificationRef, #{});
+specification_ref(#{} = ResourceSpecificationRef) ->
+	specification_ref(record_info(fields, specification_ref),
+			ResourceSpecificationRef, #specification_ref{});
+specification_ref([#specification_ref{} | _] = List) ->
+	Fields = record_info(fields, specification_ref),
+	[specification_ref(Fields, R, #{}) || R <- List];
+specification_ref([#{} | _] = List) ->
+	Fields = record_info(fields, specification_ref),
+	[specification_ref(Fields, R, #specification_ref{}) || R <- List].
+%% @hidden
+specification_ref([id | T], #specification_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	specification_ref(T, R, Acc#{"id" => Id});
+specification_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	specification_ref(T, M, Acc#specification_ref{id = Id});
+specification_ref([href | T], #specification_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	specification_ref(T, R, Acc#{"href" => Href});
+specification_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	specification_ref(T, M, Acc#specification_ref{href = Href});
+specification_ref([name | T], #specification_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	specification_ref(T, R, Acc#{"name" => Name});
+specification_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	specification_ref(T, M, Acc#specification_ref{name = Name});
+specification_ref([version | T], #specification_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	specification_ref(T, R, Acc#{"version" => Version});
+specification_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	specification_ref(T, M, Acc#specification_ref{version = Version});
+specification_ref([_ | T], R, Acc) ->
+	specification_ref(T, R, Acc);
+specification_ref([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------

@@ -56,10 +56,20 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 				undefined ->
 					Path = http_uri:decode(Uri),
 					case string:tokens(Path, "/?") of
-						["partyManagement", "v1", "individual"] ->
+						["partyManagement", "v2", "individual"] ->
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
-						["partyManagement", "v1", "individual", _Id] ->
+						["partyManagement", "v2", "individual", _Id] ->
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
+						["resourceCatalogManagement", "v3", "catalog" | _] ->
+                     check_content_type_header(Headers, Method, im_rest_res_catalog, Data);
+						["resourceCatalogManagement", "v3", "category" | _] ->
+                     check_content_type_header(Headers, Method, im_rest_res_category, Data);
+						["resourceCatalogManagement", "v3", "candidate" | _] ->
+                     check_content_type_header(Headers, Method, im_rest_res_candidate, Data);
+						["resourceCatalogManagement", "v3", "specification" | _] ->
+                     check_content_type_header(Headers, Method, im_rest_res_specification, Data);
+						["resourceInventoryManagement", "v3", "logicalResource" | _] ->
+                     check_content_type_header(Headers, Method, im_rest_res_inventory, Data);
 						_ ->
 							{proceed, Data}
 					end;

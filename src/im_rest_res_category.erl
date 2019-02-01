@@ -155,12 +155,11 @@ get_category(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCategory' collection.
 post_category(RequestBody) ->
 	try
-		Category = category(zj:decode(RequestBody)),
-		case im:add_category(Category) of
-			{ok, #category{id = Id, last_modified = LM} = NewCategory} ->
+		{ok, CategoryMap} = zj:decode(RequestBody),
+		case im:add_category(category(CategoryMap)) of
+			{ok, #category{href = Href, last_modified = LM} = NewCategory} ->
 				Body = zj:encode(category(NewCategory)),
-				Location = ?PathCatalog ++ "category/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -177,7 +176,7 @@ post_category(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCategory' resource.
 delete_category(Id) ->
-	case im:delete_category(Id) of
+	case im:del_category(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -186,43 +185,72 @@ delete_category(Id) ->
 
 -spec category(Category) -> Category
 	when
-		Category :: #category{} | map().
+		Category :: category() | map().
 %% @doc CODEC for `ResourceCategory'.
 category(#category{} = Category) ->
 	category(record_info(fields, category), Category, #{});
 category(#{} = Category) ->
 	category(record_info(fields, category), Category, #category{}).
 %% @hidden
-category([id | T], #category{id = Id} = R, Acc) ->
+category([id | T], #category{id = Id} = R, Acc)
+		when is_list(Id) ->
 	category(T, R, Acc#{"id" => Id});
-category([id | T], #{"id" := Id} = M, Acc) ->
+category([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	category(T, M, Acc#category{id = Id});
-category([href | T], #category{href = Href} = R, Acc) ->
+category([href | T], #category{href = Href} = R, Acc)
+		when is_list(Href) ->
 	category(T, R, Acc#{"href" => Href});
-category([href | T], #{"href" := Href} = M, Acc) ->
+category([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	category(T, M, Acc#category{href = Href});
-category([name | T], #category{name = Name} = R, Acc) ->
+category([name | T], #category{name = Name} = R, Acc)
+		when is_list(Name) ->
 	category(T, R, Acc#{"name" => Name});
-category([name | T], #{"name" := Name} = M, Acc) ->
+category([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	category(T, M, Acc#category{name = Name});
 category([description| T],
-		#category{description = Description} = R, Acc) ->
+		#category{description = Description} = R, Acc)
+		when is_list(Description) ->
 	category(T, R, Acc#{"description" => Description});
-category([description| T], #{"description" := Description} = M, Acc) ->
+category([description| T], #{"description" := Description} = M, Acc)
+		when is_list(Description) ->
 	category(T, M, Acc#category{description = Description});
-category([version | T], #category{version = Version} = R, Acc) ->
+category([class_type | T], #category{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category(T, R, Acc#{"@baseType" => Type});
+category([class_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	category(T, M, Acc#category{class_type = Type});
+category([base_type | T], #category{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category(T, R, Acc#{"@type" => Type});
+category([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	category(T, M, Acc#category{base_type = Type});
+category([schema | T], #category{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	category(T, R, Acc#{"@schemaLocation" => Schema});
+category([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	category(T, M, Acc#category{schema = Schema});
+category([version | T], #category{version = Version} = R, Acc)
+		when is_list(Version) ->
 	category(T, R, Acc#{"version" => Version});
-category([version | T], #{"version" := Version} = M, Acc) ->
+category([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
 	category(T, M, Acc#category{version = Version});
 category([start_date | T], #category{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
 	category(T, R, Acc#{"validFor" => ValidFor});
 category([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
 	category(T, M, Acc#category{start_date = im_rest:iso8601(Start)});
 category([end_date | T], #category{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	category(T, R, Acc#{"validFor" := NewValidFor});
 category([end_date | T], #category{end_date = End} = R, Acc)
@@ -230,16 +258,21 @@ category([end_date | T], #category{end_date = End} = R, Acc)
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
 	category(T, R, Acc#{"validFor" := ValidFor});
 category([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
 	category(T, M, Acc#category{end_date = im_rest:iso8601(End)});
-category([last_modified | T], #category{last_modified = LM} = R, Acc) ->
-	category(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-category([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
-	category(T, M, Acc#category{last_modified = im_rest:iso8601(LM)});
+category([last_modified | T], #category{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	category(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+category([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
+	category(T, M, Acc#category{last_modified = LM});
 category([status | T], #category{status = Status} = R, Acc)
 		when Status /= undefined ->
 	category(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-category([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+category([status | T], #{"lifecycleStatus" := Status} = M, Acc)
+		when is_list(Status) ->
 	category(T, M, Acc#category{status = im_rest:lifecycle_status(Status)});
 category([parent | T], #category{parent = Parent} = R, Acc)
 		when is_list(Parent) ->
@@ -253,14 +286,24 @@ category([root | T], #category{root = IsRoot} = R, Acc)
 category([root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
 	category(T, M, Acc#category{root = IsRoot});
-category([related_party | T], #category{related_party = RP} = R, Acc) ->
-	category(T, R, Acc#{"relatedParty" => im_rest:related_party(RP)});
-category([related_party | T], #{"relatedParty" := RP} = M, Acc) ->
-	category(T, M, Acc#category{related_party = im_rest:related_party(RP)});
-category([category | T], #category{category = CatRefs} = R, Acc) ->
-	category(T, R, Acc#{"category" => im_rest:related_category(CatRefs)});
-category([category | T], #{"category" := CatRefs} = M, Acc) ->
-	category(T, M, Acc#category{category = im_rest:related_category(CatRefs)});
+category([related_party | T], #category{related_party = RP} = R, Acc)
+		when is_list(RP) ->
+	category(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
+category([related_party | T], #{"relatedParty" := RP} = M, Acc)
+		when is_list(RP) ->
+	category(T, M, Acc#category{related_party = im_rest:related_party_ref(RP)});
+category([category | T], #category{category = CatRefs} = R, Acc)
+		when is_list(CatRefs) ->
+	category(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
+category([category | T], #{"category" := CatRefs} = M, Acc)
+		when is_list(CatRefs) ->
+	category(T, M, Acc#category{category = im_rest:category_ref(CatRefs)});
+category([candidate | T], #category{candidate = CanRefs} = R, Acc)
+		when is_list(CanRefs) ->
+	category(T, R, Acc#{"resourceCandidate" => im_rest:candidate_ref(CanRefs)});
+category([candidate | T], #{"resourceCandidate" := CanRefs} = M, Acc)
+		when is_list(CanRefs) ->
+	category(T, M, Acc#category{candidate = im_rest:candidate_ref(CanRefs)});
 category([_ | T], R, Acc) ->
 	category(T, R, Acc);
 category([], _, Acc) ->

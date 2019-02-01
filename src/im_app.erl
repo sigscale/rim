@@ -55,7 +55,7 @@
 %% @see //kernel/application:start/2
 %%
 start(normal = _StartType, _Args) ->
-	Tables = [catalog, inventory],
+	Tables = [catalog, category, candidate, specification, resource],
 	case mnesia:wait_for_tables(Tables, 60000) of
 		ok ->
 			supervisor:start_link(im_sup, []);
@@ -192,14 +192,14 @@ install4(Nodes, Acc) ->
 	case mnesia:create_table(category, [{disc_copies, Nodes},
 			{attributes, record_info(fields, category)}]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Created new category table.~n"),
-			install5(Nodes, [inventory | Acc]);
+			error_logger:info_msg("Created new resource category table.~n"),
+			install5(Nodes, [category | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, category}} ->
-			error_logger:info_msg("Found existing category table.~n"),
+			error_logger:info_msg("Found existing resource category table.~n"),
 			install5(Nodes, [category | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
@@ -246,18 +246,18 @@ install6(Nodes, Acc) ->
 	end.
 %% @hidden
 install7(Nodes, Acc) ->
-	case mnesia:create_table(inventory, [{disc_copies, Nodes},
+	case mnesia:create_table(resource, [{disc_copies, Nodes},
 			{attributes, record_info(fields, resource)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource inventory table.~n"),
-			install8(Nodes, [inventory | Acc]);
+			install8(Nodes, [resource | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
-		{aborted, {already_exists, inventory}} ->
+		{aborted, {already_exists, resource}} ->
 			error_logger:info_msg("Found existing resource inventory table.~n"),
-			install8(Nodes, [inventory | Acc]);
+			install8(Nodes, [resource | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -374,7 +374,7 @@ install15(Tables, false) ->
 	{ok, Tables}.
 %% @hidden
 install16(Tables) ->
-	case im:list_users() of
+	case im:get_users() of
 		{ok, []} ->
 			case im:add_user("admin", "admin", "en") of
 				{ok, _LastModified} ->

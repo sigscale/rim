@@ -155,12 +155,11 @@ get_catalog(_, _, _) ->
 %% @doc Handle `POST' request on `ResourceCatalog' collection.
 post_catalog(RequestBody) ->
 	try
-		Catalog = catalog(zj:decode(RequestBody)),
-		case im:add_catalog(Catalog) of
-			{ok, #catalog{id = Id, last_modified = LM} = Catalog} ->
+		{ok, CatalogMap} = zj:decode(RequestBody),
+		case im:add_catalog(catalog(CatalogMap)) of
+			{ok, #catalog{href = Href, last_modified = LM} = Catalog} ->
 				Body = zj:encode(catalog(Catalog)),
-				Location = ?PathCatalog ++ "catalog/" ++ Id,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -177,7 +176,7 @@ post_catalog(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `ResourceCatalog' resource.
 delete_catalog(Id) ->
-	case im:delete_catalog(Id) of
+	case im:del_catalog(Id) of
 		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
@@ -186,43 +185,72 @@ delete_catalog(Id) ->
 
 -spec catalog(Catalog) -> Catalog
 	when
-		Catalog :: #catalog{} | map().
+		Catalog :: catalog() | map().
 %% @doc CODEC for `ResourceCatalog'.
 catalog(#catalog{} = Catalog) ->
 	catalog(record_info(fields, catalog), Catalog, #{});
 catalog(#{} = Catalog) ->
 	catalog(record_info(fields, catalog), Catalog, #catalog{}).
 %% @hidden
-catalog([id | T], #catalog{id = Id} = R, Acc) ->
+catalog([id | T], #catalog{id = Id} = R, Acc)
+		when is_list(Id) ->
 	catalog(T, R, Acc#{"id" => Id});
-catalog([id | T], #{"id" := Id} = M, Acc) ->
+catalog([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
 	catalog(T, M, Acc#catalog{id = Id});
-catalog([href | T], #catalog{href = Href} = R, Acc) ->
+catalog([href | T], #catalog{href = Href} = R, Acc)
+		when is_list(Href) ->
 	catalog(T, R, Acc#{"href" => Href});
-catalog([href | T], #{"href" := Href} = M, Acc) ->
+catalog([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
 	catalog(T, M, Acc#catalog{href = Href});
-catalog([name | T], #catalog{name = Name} = R, Acc) ->
+catalog([name | T], #catalog{name = Name} = R, Acc)
+		when is_list(Name) ->
 	catalog(T, R, Acc#{"name" => Name});
-catalog([name | T], #{"name" := Name} = M, Acc) ->
+catalog([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
 	catalog(T, M, Acc#catalog{name = Name});
 catalog([description| T],
-		#catalog{description = Description} = R, Acc) ->
+		#catalog{description = Description} = R, Acc)
+		when is_list(Description) ->
 	catalog(T, R, Acc#{"description" => Description});
-catalog([description| T], #{"description" := Description} = M, Acc) ->
+catalog([description| T], #{"description" := Description} = M, Acc)
+		when is_list(Description) ->
 	catalog(T, M, Acc#catalog{description = Description});
-catalog([version | T], #catalog{version = Version} = R, Acc) ->
+catalog([class_type | T], #catalog{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	catalog(T, R, Acc#{"@type" => Type});
+catalog([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	catalog(T, M, Acc#catalog{class_type = Type});
+catalog([base_type | T], #catalog{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	catalog(T, R, Acc#{"@baseType" => Type});
+catalog([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	catalog(T, M, Acc#catalog{base_type = Type});
+catalog([schema | T], #catalog{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	catalog(T, R, Acc#{"@schemaLocation" => Schema});
+catalog([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	catalog(T, M, Acc#catalog{schema = Schema});
+catalog([version | T], #catalog{version = Version} = R, Acc)
+		when is_list(Version) ->
 	catalog(T, R, Acc#{"version" => Version});
-catalog([version | T], #{"version" := Version} = M, Acc) ->
+catalog([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
 	catalog(T, M, Acc#catalog{version = Version});
 catalog([start_date | T], #catalog{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
 	catalog(T, R, Acc#{"validFor" => ValidFor});
 catalog([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc) ->
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
 	catalog(T, M, Acc#catalog{start_date = im_rest:iso8601(Start)});
 catalog([end_date | T], #catalog{end_date = End} = R,
-		#{validFor := ValidFor} = Acc) when is_integer(End) ->
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
 	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
 	catalog(T, R, Acc#{"validFor" := NewValidFor});
 catalog([end_date | T], #catalog{end_date = End} = R, Acc)
@@ -230,25 +258,34 @@ catalog([end_date | T], #catalog{end_date = End} = R, Acc)
 	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
 	catalog(T, R, Acc#{"validFor" := ValidFor});
 catalog([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc) ->
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
 	catalog(T, M, Acc#catalog{end_date = im_rest:iso8601(End)});
-catalog([last_modified | T], #catalog{last_modified = LM} = R, Acc) ->
-	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(LM)});
-catalog([last_modified | T], #{"lastUpdate" := LM} = M, Acc) ->
-	catalog(T, M, Acc#catalog{last_modified = im_rest:iso8601(LM)});
+catalog([last_modified | T], #catalog{last_modified = {TS, _}} = R, Acc)
+		when is_integer(TS) ->
+	catalog(T, R, Acc#{"lastUpdate" => im_rest:iso8601(TS)});
+catalog([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
+		when is_list(DateTime) ->
+	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
+	catalog(T, M, Acc#catalog{last_modified = LM});
 catalog([status | T], #catalog{status = Status} = R, Acc)
 		when status /= undefined ->
 	catalog(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-catalog([status | T], #{"lifecycleStatus" := Status} = M, Acc) ->
+catalog([status | T], #{"lifecycleStatus" := Status} = M, Acc)
+		when is_list(Status) ->
 	catalog(T, M, Acc#catalog{status = im_rest:lifecycle_status(Status)});
-catalog([related_party | T], #catalog{related_party = RP} = R, Acc) ->
-	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party(RP)});
-catalog([related_party | T], #{"relatedParty" := RP} = M, Acc) ->
-	catalog(T, M, Acc#catalog{related_party = im_rest:related_party(RP)});
-catalog([category | T], #catalog{category = Category} = R, Acc) ->
-	catalog(T, R, Acc#{"category" => im_rest:related_category(Category)});
-catalog([category | T], #{"category" := Category} = M, Acc) ->
-	catalog(T, M, Acc#catalog{category = im_rest:related_category(Category)});
+catalog([related_party | T], #catalog{related_party = RP} = R, Acc)
+		when is_list(RP) ->
+	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
+catalog([related_party | T], #{"relatedParty" := RP} = M, Acc)
+		when is_list(RP) ->
+	catalog(T, M, Acc#catalog{related_party = im_rest:related_party_ref(RP)});
+catalog([category | T], #catalog{category = Category} = R, Acc)
+		when is_list(Category) ->
+	catalog(T, R, Acc#{"category" => im_rest:category_ref(Category)});
+catalog([category | T], #{"category" := Category} = M, Acc)
+		when is_list(Category) ->
+	catalog(T, M, Acc#catalog{category = im_rest:category_ref(Category)});
 catalog([_ | T], R, Acc) ->
 	catalog(T, R, Acc);
 catalog([], _, Acc) ->

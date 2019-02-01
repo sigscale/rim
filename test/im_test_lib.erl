@@ -20,20 +20,12 @@ initialize_db() ->
 					initialize_db()
 			end;
 		yes ->
-			case mnesia:wait_for_tables([inventory, catalog], 1000) of
+			Tables = [httpd_group, httpd_user, resource,
+					specification, candidate, category, catalog],
+			case mnesia:wait_for_tables(Tables, 1000) of
 				{timeout, _} ->
 					ok = application:stop(mnesia),
-					{ok, Tables} = im_app:install(),
-					F = fun(T) ->
-						case T of
-							T when T == inventory; T == catalog;
-									T == httpd_user; T == httpd_group ->
-								true;
-							_ ->
-								false
-						end
-					end,
-					lists:all(F, Tables),
+					{ok, _} = im_app:install(),
 					initialize_db();
 				ok ->
 					ok

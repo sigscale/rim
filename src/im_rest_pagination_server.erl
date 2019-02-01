@@ -31,14 +31,14 @@
 
 -opaque continuation() :: start | eof | ets:continuation() | disk_log:continuation().
 -record(state,
-		{etag :: string(),
-		max_page_size :: pos_integer(),
-		timeout :: pos_integer(),
-		module :: atom(),
-		function :: atom(),
-		args :: list(),
+		{etag :: string() | undefined,
+		max_page_size :: pos_integer() | undefined,
+		timeout :: pos_integer() | undefined,
+		module :: atom() | undefined,
+		function :: atom() | undefined,
+		args :: list() | undefined,
 		cont = start :: continuation(),
-		total :: non_neg_integer(),
+		total :: non_neg_integer() | undefined,
 		buffer = [] :: [tuple()],
 		offset = 0 :: integer()}).
 -type state() :: #state{}.

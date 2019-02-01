@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+ * Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
  * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
@@ -9,6 +9,7 @@
  */
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
@@ -145,6 +146,11 @@ class inventoryList extends PolymerElement {
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
+			<iron-ajax
+				id="getInventoryAjax"
+				url="resourceInventoryManagement/v1/logicalResource"
+				rejectWithRequest>
+			</iron-ajax>
 		`;
 	}
 
@@ -204,12 +210,78 @@ class inventoryList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
-console.log(grid);
+		var ajaxGrid = this.shadowRoot.getElementById('getInventoryAjax');
 		grid.dataProvider = this._getInventoryList;
 	}
 
 	_getInventoryList(params, callback) {
-	}
+		var grid = this;
+		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
+		if(inventoryList.etag && params.page > 0) {
+			headers['If-Range'] = userList.etag;
+		}
+		var inventoryList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
+		var handleAjaxResponse = function(request) {
+			if(request) {
+				inventoryList1.etag = request.xhr.getResponseHeader('ETag');
+				var range = request.xhr.getResponseHeader('Content-Range');
+				var range1 = range.split("/");
+				var range2 = range1[0].split("-");
+				if (range1[1] != "*") {
+					grid.size = Number(range1[1]);
+				} else {
+					grid.size = Number(range2[1]) + grid.pageSize * 2;
+				}
+				var vaadinItems = new Array();
+				for(var index in request.response) {
+					var newRecord = new Object();
+					newRecord.id = request.response[index].id;
+					newRecord.name = request.response[index].name;
+					newRecord.category = request.response[index].category;
+					newRecord.description = request.response[index].description;
+					newRecord.type = request.response[index].inventoryType;
+					vaadinItems[index] = newRecord;
+				}
+				callback(vaadinItems);
+			} else {
+				grid.size = 0;
+				callback([]);
+			}
+		};
+		var handleAjaxError = function(error) {
+			alarmList1.etag = null;
+			var toast;
+			toast.text = "error";
+			toast.open();
+			if(!grid.size) {
+				grid.size = 0;
+			}
+			callback([]);
+		}
+		if(inventoryList.loading) {
+			inventoryList.lastRequest.completes.then(function(request) {
+				var startRange = params.page * params.pageSize + 1;
+				var endRange = startRange + params.pageSize - 1;
+				inventoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (inventoryList1.etag && params.page > 0) {
+					inventoryList.headers['If-Range'] = inventoryList1.etag;
+				} else {
+					delete inventoryList.headers['If-Range'];
+				}
+				return inventoryList.generateRequest().completes;
+				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+			} else {
+				var startRange = params.page * params.pageSize + 1;
+				var endRange = startRange + params.pageSize - 1;
+				inventoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (inventoryList1.etag && params.page > 0) {
+               inventoryList.headers['If-Range'] = inventoryList1.etag;
+            } else {
+               delete inventoryList.headers['If-Range'];
+            }
+				inventoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+				}
+			}
 }
 
 window.customElements.define('inventory-list', inventoryList);
