@@ -173,46 +173,25 @@
 							}
 						},
 						"subNetwork": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/SubNetwork"
-							}
+							"$ref": "#/definitions/SubNetworks"
 						},
 						"managedElement": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/ManagedElement"
-							}
+							"$ref": "#/definitions/ManagedElements"
 						},
 						"meContext": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/MeContext"
-							}
+							"$ref": "#/definitions/MeContexts"
 						},
 						"managementNode": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/ManagementNode"
-							}
+							"$ref": "#/definitions/ManagementNodes"
 						},
 						"irpAgent": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/IRPAgent"
-							}
+							"$ref": "#/definitions/IRPAgents"
 						},
 						"subNetworkOptionallyContainedNrmClass": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/SubNetworkOptionallyContainedNrmClass"
-							}
+							"$ref": "#/definitions/SubNetworkOptionallyContainedNrmClasses"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/VsDataContainer"
-							}
+							"$ref": "#/definitions/VsDataContainers"
 						},
 						"esPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
@@ -300,6 +279,12 @@
 				}
 			]
 		},
+		"SubNetworks": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/SubNetwork"
+			}
+		},
 		"ManagedElement": {
 			"allOf": [
 				{
@@ -343,22 +328,13 @@
 							}
 						},
 						"irpAgent": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/IRPAgent"
-							}
+							"$ref": "#/definitions/IRPAgents"
 						},
 						"managedElementOptionallyContainedNrmClass": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/ManagedElementOptionallyContainedNrmClass"
-							}
+							"$ref": "#/definitions/ManagedElementOptionallyContainedNrmClasses"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/VsDataContainer"
-							}
+							"$ref": "#/definitions/VsDataContainer"
 						}
 					},
 					"dependencies": {
@@ -387,6 +363,12 @@
 				}
 			]
 		},
+		"ManagedElements": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ManagedElement"
+			}
+		},
 		"MeContext": {
 			"allOf": [
 				{
@@ -404,14 +386,17 @@
 							}
 						},
 						"managedElement": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/ManagedElement"
-							}
+							"$ref": "#/definitions/ManagedElements"
 						}
 					}
 				}
 			]
+		},
+		"MeContexts": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MeContext"
+			}
 		},
 		"ManagementNode": {
 			"allOf": [
@@ -452,16 +437,10 @@
 							}
 						},
 						"irpAgent": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/IRPAgent"
-							}
+							"$ref": "#/definitions/IRPAgents"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/VsDataContainer"
-							}
+							"$ref": "#/definitions/VsDataContainer"
 						}
 					},
 					"dependencies": {
@@ -480,6 +459,12 @@
 					}
 				}
 			]
+		},
+		"ManagementNodes": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ManagementNode"
+			}
 		},
 		"IRPAgent": {
 			"allOf": [
@@ -500,6 +485,12 @@
 					}
 				}
 			]
+		},
+		"IRPAgents": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/IRPAgent"
+			}
 		},
 		"VsDataContainer": {
 			"allOf": [
@@ -529,10 +520,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/VsDataContainer"
-							}
+							"$ref": "#/definitions/VsDataContainers"
 						}
 					}
 				}
@@ -552,8 +540,20 @@
 		"SubNetworkOptionallyContainedNrmClass": {
 			"$ref": "#/definitions/NrmClass"
 		},
+		"SubNetworkOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/SubNetworkOptionallyContainedNrmClass"
+			}
+		},
 		"ManagedElementOptionallyContainedNrmClass": {
 			"$ref": "#/definitions/NrmClass"
+		},
+		"ManagedElementOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ManagedElementOptionallyContainedNrmClass"
+			}
 		}
 	}
 }
