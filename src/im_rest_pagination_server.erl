@@ -58,13 +58,17 @@
 		PageServer :: pid(),
 		Reason :: term().
 %% @doc Start a handler for a sequence of REST range requests.
+%%
 %% 	`Args' is a list of `[Log, Module, Function, Arguments]'
 %% 	or `[Module, Function, Arguments]'.
+%%
 %% 	Each request will result in a call to the callback
-%% 	with `apply(Module, Function, [Cont, Size | Arguments])'.
+%% 	with `apply(Module, Function, [start, Size | Arguments])'
+%% 	or `apply(Module, Function, [Cont])'
+%%
 %% 	The result should be `{Cont, Items}', `{Cont, Items, Total}'
 %% 	or `{error, Reason}'.  `Cont' will be `start' on the first
-%% 	call and the returned value may be `eof' or an opaque
+%% 	call and the returned `Cont' may be `eof' or an opaque
 %% 	continuation value which will be used in the next call
 %% 	to the callback. `Items' would normally be a list of items
 %% 	in a collection but may be the number of items in the case
@@ -280,7 +284,13 @@ range_request({StartRange, EndRange}, From,
 				when is_integer(EndRange), is_integer(StartRange) ->
 			(EndRange - StartRange) + 1
 	end,
-	case apply(Module, Function, [Cont1, Size | Args]) of
+	ApplyArgs = case Cont1 of
+		start ->
+			[Cont1, Size | Args];
+		_ ->
+			[Cont1]
+	end,
+	case apply(Module, Function, ApplyArgs) of
 		{error, _Reason} ->
 			{stop, shutdown, {error, 500}, State};
 		{Cont2, Items} when is_list(Items) ->

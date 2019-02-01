@@ -28,6 +28,7 @@
 -export([add_specification/1, get_specifications/0, get_specification/1,
 		del_specification/1]).
 -export([add_resource/1, get_resources/0, get_resource/1, del_resource/1]).
+-export([query_catalog/4, query_catalog/1]).
 -export([query_resource/7, query_resource/8]).
 -export([add_user/3, get_users/0, get_user/1, del_user/1, query_users/4]).
 -export([generate_password/0, generate_identity/0]).
@@ -416,6 +417,55 @@ del_resource(ResourceID) when is_list(ResourceID) ->
 			{error, Reason};
 		{atomic, ok} ->
 			ok
+	end.
+
+-spec query_catalog(Continuation, Size, MatchHead, MatchConditions) -> Result
+	when
+		Continuation :: start | ets:continuation(),
+		Size :: pos_integer() | undefined,
+		MatchHead :: ets:match_pattern(),
+		MatchConditions :: [tuple()],
+		Result :: {NextContinuation, [#catalog{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Query the Resource Catalog.
+query_catalog(start = _Continuation, undefined, MatchHead, MatchConditions) ->
+	query_catalog(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
+query_catalog(start = _Continuation, Size, MatchHead, MatchConditions)
+		when is_integer(Size), Size > 0,
+		(is_record(MatchHead,  catalog) orelse (MatchHead == '_')),
+		is_list(MatchConditions) ->
+	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
+	F = fun() ->
+			 mnesia:select(catalog, MatchExpression, Size, read)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Catalogs, NextContinuation} ->
+			{NextContinuation, Catalogs}
+	end.
+
+-spec query_catalog(Continuation) -> Result
+	when
+		Continuation :: ets:continuation(),
+		Result :: {NextContinuation, [#catalog{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Get the next results using a previous query of the Resource Catalog.
+query_catalog(Continuation) ->
+	F = fun() ->
+			 mnesia:select(Continuation)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Catalogs, NextContinuation} ->
+			{NextContinuation, Catalogs}
 	end.
 
 -spec query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType,

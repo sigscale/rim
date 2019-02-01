@@ -16,7 +16,6 @@
 					"type": "boolean"
 				}
 			}
-			
 		},
 		"HoppingSequence": {
 			"type": "object",
@@ -60,16 +59,10 @@
 							}
 						},
 						"btsSiteMgr": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/BtsSiteMgr"
-							}
+							"$ref": "#/definitions/BtsSiteMgrs"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "genericNrm#/definitions/VsDataContainer"
-							}
+							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
 					},
 					"dependencies": {
@@ -110,27 +103,21 @@
 									"$ref": "genericNrm#/definitions/vnfParametersListType"
 								},
 								"latitude": {
-									"$ref": "genericNrm#/definitions/latitude"
+									"$ref": "genericRanNrm#/definitions/latitude"
 								},
 								"longitude": {
-									"$ref": "genericNrm#/definitions/longitude"
+									"$ref": "genericRanNrm#/definitions/longitude"
 								},
 								"operationalState": {
-									"$ref": "sonPolicyNrm#/definitions/operationalStateType"
+									"$ref": "stateManagementIRP#/definitions/operationalStateType"
 								}
 							}
 						},
 						"gsmCell": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/GsmCell"
-							}
+							"$ref": "#/definitions/GsmCells"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "genericNrm#/definitions/VsDataContainer"
-							}
+							"$ref": "genericNrm#/definitions/VsDataContainers"
 						},
 						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
@@ -152,6 +139,12 @@
 					}
 				}
 			]
+		},
+		"BtsSiteMgrs": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/BtsSiteMgr"
+			}
 		},
 		"GsmCell": {
 			"allOf": [
@@ -328,6 +321,12 @@
 				}
 			]
 		},
+		"GsmCells": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/GsmCell"
+			}
+		},
 		"GsmRelation": {
 			"allOf": [
 				{
@@ -375,10 +374,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "genericNrm#/definitions/VsDataContainer"
-							}
+							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
 					}
 				}
@@ -463,10 +459,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "genericNrm#/definitions/VsDataContainer"
-							}
+							"$ref": "genericNrm#/definitions/VsDataContainers"
 						},
 						"interRatEsPolicies": {
 							"type": "object",
@@ -477,6 +470,12 @@
 					}
 				}
 			]
+		},
+		"ExternalGsmCells": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalGsmCell"
+			}
 		},
 		"ExternalBssFunction": {
 			"allOf": [
@@ -501,16 +500,10 @@
 							}
 						},
 						"externalGsmCell": {
-							"type": "array",
-							"items": {
-								"$ref": "#/definitions/ExternalGsmCell"
-							}
+							"$ref": "#/definitions/ExternalGsmCells"
 						},
 						"vsDataContainer": {
-							"type": "array",
-							"items": {
-								"$ref": "genericNrm#/definitions/VsDataContainer"
-							}
+							"$ref": "genericNrm#/definitions/VsDataContainer"
 						}
 					},
 					"dependencies": {

@@ -387,12 +387,13 @@ auth_header() ->
 
 is_related_party_ref(#{"id" := Id, "href" := Href,
 		"name" := Name, "role" := Role,
-		"validFor" := #{"startEndDate" := Start,
+		"validFor" := #{"startDateTime" := Start,
 		"endDateTime" := End}}) when is_list(Id),
 		is_list(Href), is_list(Name), is_list(Role),
-		is_integer(Start), is_integer(End) ->
-	true;
-is_related_party_ref(_) ->
+		is_list(Start), is_list(End) ->
+	im_rest:iso8601(End) > im_rest:iso8601(Start);
+is_related_party_ref(_RP) ->
+erlang:display({?MODULE, ?LINE, _RP}),
 	false.
 
 is_category_ref(#{"id" := Id, "href" := Href,
