@@ -4,216 +4,216 @@
 		| rejected | active | launched | retired | obsolete.
 
 -record(category_ref,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		version :: string() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		version :: string() | undefined | '_'}).
 -type category_ref() :: #category_ref{}.
 
 -record(candidate_ref,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		version :: string() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		version :: string() | undefined | '_'}).
 -type candidate_ref() :: #candidate_ref{}.
 
 -record(related_party_ref,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		role :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		role :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_'}).
 -type related_party_ref() :: #related_party_ref{}.
 
 -record(specification_ref,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		version :: string() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		version :: string() | undefined | '_'}).
 -type specification_ref() :: #specification_ref{}.
 
 -record(specification_rel,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		type :: string() | undefined,
-		role :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		type :: string() | undefined | '_',
+		role :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_'}).
 -type specification_rel() :: #specification_rel{}.
 
 -record(spec_char_rel,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		type :: string() | undefined,
-		class_type :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		type :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_'}).
 -type spec_char_rel() :: #spec_char_rel{}.
 
 -record(resource_rel,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		type :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		type :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_'}).
 -type resource_rel() :: #resource_rel{}.
 
 -record(place_ref,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		role :: string() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		role :: string() | undefined | '_'}).
 -type place_ref() :: #place_ref{}.
 
 -record(target_schema_ref,
-		{class_type :: string() | undefined,
-		schema :: string() | undefined}).
+		{class_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_'}).
 -type target_schema_ref() :: #target_schema_ref{}.
 
 -record(feature,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		version :: string() | undefined,
-		class_type :: string() | undefined,
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
 		bundle = false :: boolean(),
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
 		enabled = false :: boolean()}).
 -type feature() :: #feature{}.
 
 -record(attachment,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		description :: string() | undefined,
-		type :: string() | undefined,
-		url :: string() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		type :: string() | undefined | '_',
+		url :: string() | undefined | '_'}).
 -type attachment() :: #attachment{}.
 
 -record(note,
-		{author :: string() | undefined,
-		date :: pos_integer() | undefined,
-		text :: string() | undefined}).
+		{author :: string() | undefined | '_',
+		date :: pos_integer() | undefined | '_',
+		text :: string() | undefined | '_'}).
 -type note() :: #note{}.
 
 -record(catalog,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		description :: string() | undefined,
-		class_type :: string() | undefined,
-		base_type :: string() | undefined,
-		schema :: string() | undefined,
-		version :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
-		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined,
-		status :: catalog_status() | undefined,
-		related_party = [] :: [related_party_ref()],
-		category = [] :: [category_ref()]}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_',
+		status :: catalog_status() | undefined | '_',
+		related_party = [] :: [related_party_ref()] | '_',
+		category = [] :: [category_ref()] | '_'}).
 -type catalog() :: #catalog{}.
 
 -record(category,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		description :: string() | undefined,
-		class_type :: string() | undefined,
-		base_type :: string() | undefined,
-		schema :: string() | undefined,
-		version :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
-		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined,
-		status :: catalog_status() | undefined,
-		parent :: string() | undefined,
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_',
+		status :: catalog_status() | undefined | '_',
+		parent :: string() | undefined | '_',
 		root = false :: boolean(),
-		related_party = [] :: [related_party_ref()],
-		category = [] :: [category_ref()],
-		candidate = [] :: [candidate_ref()]}).
+		related_party = [] :: [related_party_ref()] | '_',
+		category = [] :: [category_ref()] | '_',
+		candidate = [] :: [candidate_ref()] | '_'}).
 -type category() :: #category{}.
 
 -record(candidate,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		description :: string() | undefined,
-		class_type :: string() | undefined,
-		base_type :: string() | undefined,
-		schema :: string() | undefined,
-		version :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
-		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined,
-		status :: catalog_status() | undefined,
-		category = [] :: [category_ref()],
-		specification :: specification_ref() | undefined}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_',
+		status :: catalog_status() | undefined | '_',
+		category = [] :: [category_ref()]  | '_',
+		specification :: specification_ref() | undefined | '_'}).
 -type candidate() :: #candidate{}.
 
 -record(specification,
-		{id :: string() | undefined,
-		href :: string() | undefined,
-		name :: string() | undefined,
-		description :: string() | undefined,
-		class_type :: string() | undefined,
-		base_type :: string() | undefined,
-		schema :: string() | undefined,
-		status :: string() | undefined,
-		version :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
-		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined,
-		bundle = false :: boolean() | undefined,
-		category :: string() | undefined,
-		target_schema :: target_schema_ref() | undefined,
-		model :: string() | undefined,
-		part :: string() | undefined,
-		sku :: string() | undefined,
-		vendor :: string() | undefined,
-		device_serial :: string() | undefined,
-		device_version :: string() | undefined,
-		feature = [] :: [feature()],
-		attachment = [] :: [attachment()],
-		related_party = [] :: [related_party_ref()],
-		characteristic = [] :: [specification_char()],
-		related = [] :: [specification_rel()]}).
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		status :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_',
+		bundle = false :: boolean() | undefined | '_',
+		category :: string() | undefined | '_',
+		target_schema :: target_schema_ref() | undefined | '_',
+		model :: string() | undefined | '_',
+		part :: string() | undefined | '_',
+		sku :: string() | undefined | '_',
+		vendor :: string() | undefined | '_',
+		device_serial :: string() | undefined | '_',
+		device_version :: string() | undefined | '_',
+		feature = [] :: [feature()] | '_',
+		attachment = [] :: [attachment()] | '_',
+		related_party = [] :: [related_party_ref()] | '_',
+		characteristic = [] :: [specification_char()] | '_',
+		related = [] :: [specification_rel()] | '_'}).
 -type specification() :: #specification{}.
 
 -record(spec_char_value,
-		{value_type :: string() | undefined,
-		default = false :: boolean() | undefined,
-		class_type :: string() | undefined,
-		schema :: string() | undefined,
-		unit :: string() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
-		from :: term() | undefined,
-		to :: term() | undefined,
-		interval :: open | closed | closed_bottom | closed_top | undefined,
-		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined,
-		value :: term() | undefined}).
+		{value_type :: string() | undefined | '_',
+		default = false :: boolean() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		unit :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		from :: term() | undefined | '_',
+		to :: term() | undefined | '_',
+		interval :: open | closed | closed_bottom | closed_top | undefined | '_',
+		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
+		value :: term() | undefined | '_'}).
 -type spec_char_value() :: #spec_char_value{}.
 
 -record(specification_char,
-		{name :: string() | undefined,
-		description :: string() | undefined,
-		value_type :: string() | undefined,
-		class_type :: string() | undefined,
-		schema :: string() | undefined,
-		value_schema :: string() | undefined,
-		configurable :: boolean() | undefined,
-		start_date :: pos_integer() | undefined,
-		end_date :: pos_integer() | undefined,
-		min :: non_neg_integer() | undefined,
-		max :: non_neg_integer() | undefined,
-		unique :: boolean() | undefined,
-		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined,
-		extensible :: boolean() | undefined,
-		char_relation = [] :: [spec_char_rel()],
-		char_value = [] :: [spec_char_value()]}).
+		{name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		value_type :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		value_schema :: string() | undefined | '_',
+		configurable :: boolean() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		min :: non_neg_integer() | undefined | '_',
+		max :: non_neg_integer() | undefined | '_',
+		unique :: boolean() | undefined | '_',
+		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
+		extensible :: boolean() | undefined | '_',
+		char_relation = [] :: [spec_char_rel()] | '_',
+		char_value = [] :: [spec_char_value()] | '_'}).
 -type specification_char() :: #specification_char{}.
 
 -record(resource,
@@ -241,60 +241,60 @@
 -type resource() :: #resource{}.
 
 -record(resource_char,
-		{name :: string() | undefined,
-		class_type :: string() | undefined,
-		schema :: string() | undefined,
-		value :: term() | undefined}).
+		{name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		value :: term() | undefined | '_'}).
 -type resource_char() :: #resource_char{}.
 
 -record(sites,
-		{name :: string() | undefined,
-		network :: string() | undefined,
-		longtitude :: string() | undefined,
-		latitude :: string() | undefined,
-		city :: string() | undefined,
-		country :: string() | undefined,
-		countryCity :: string() | undefined}).
+		{name :: string() | undefined | '_',
+		network :: string() | undefined | '_',
+		longtitude :: string() | undefined | '_',
+		latitude :: string() | undefined | '_',
+		city :: string() | undefined | '_',
+		country :: string() | undefined | '_',
+		countryCity :: string() | undefined | '_'}).
 -type sites() :: #sites{}.
 
 -record(gsm_relation,
-		{id :: string() | undefined,
-		adjacent_cell :: string() | undefined,
-		bcch_frequency :: integer() | undefined,
-		ncc :: integer() | undefined,
-		bcc :: integer() | undefined,
-		lac :: integer() | undefined,
-		is_remove_allowed :: boolean() | undefined,
-		is_hoa_allowed :: boolean() | undefined,
-		is_covered_by :: no | yes | partial | undefined,
-		vs_data_container :: [term()] | undefined}).
+		{id :: string() | undefined | '_',
+		adjacent_cell :: string() | undefined | '_',
+		bcch_frequency :: integer() | undefined | '_',
+		ncc :: integer() | undefined | '_',
+		bcc :: integer() | undefined | '_',
+		lac :: integer() | undefined | '_',
+		is_remove_allowed :: boolean() | undefined | '_',
+		is_hoa_allowed :: boolean() | undefined | '_',
+		is_covered_by :: no | yes | partial | undefined | '_',
+		vs_data_container :: [term()] | undefined | '_'}).
 
 -record(utran_relation,
-		{id :: string() | undefined,
-		adjacent_cell :: string() | undefined,
-		vs_data_container :: [term()] | undefined}).
+		{id :: string() | undefined | '_',
+		adjacent_cell :: string() | undefined | '_',
+		vs_data_container :: [term()] | undefined | '_'}).
 
 -record(eutran_relation,
-		{id :: string() | undefined,
-		tci :: integer() | undefined,
-		is_remove_allowed :: boolean() | undefined,
-		is_hoa_allowed :: boolean() | undefined,
-		is_icic_information_send_allowed :: boolean() | undefined,
-		is_lb_allowed :: boolean() | undefined,
-		adjacent_cell :: string() | undefined,
-		is_es_covered_by :: no | yes | partial | undefined,
-		cell_individual_offset :: string() | undefined,
-		q_offset :: string() | undefined,
-		vs_data_container :: [term()] | undefined}).
+		{id :: string() | undefined | '_',
+		tci :: integer() | undefined | '_',
+		is_remove_allowed :: boolean() | undefined | '_',
+		is_hoa_allowed :: boolean() | undefined | '_',
+		is_icic_information_send_allowed :: boolean() | undefined | '_',
+		is_lb_allowed :: boolean() | undefined | '_',
+		adjacent_cell :: string() | undefined | '_',
+		is_es_covered_by :: no | yes | partial | undefined | '_',
+		cell_individual_offset :: string() | undefined | '_',
+		q_offset :: string() | undefined | '_',
+		vs_data_container :: [term()] | undefined | '_'}).
 
 -record(inter_rat_es_policies,
-		{id :: string() | undefined,
-		act_original_cell_params :: relative_cell_load_parameters() | undefined,
-		act_candidate_cell_params :: relative_cell_load_parameters() | undefined,
-		deact_candidate_cell_params :: relative_cell_load_parameters() | undefined}).
+		{id :: string() | undefined | '_',
+		act_original_cell_params :: relative_cell_load_parameters() | undefined | '_',
+		act_candidate_cell_params :: relative_cell_load_parameters() | undefined | '_',
+		deact_candidate_cell_params :: relative_cell_load_parameters() | undefined | '_'}).
 
 -record(rel_cell_load_params,
-		{load_threshold :: 0..10000 | undefined,
-		time_duration :: 0..900 | undefined}).
+		{load_threshold :: 0..10000 | undefined | '_',
+		time_duration :: 0..900 | undefined | '_'}).
 -type relative_cell_load_parameters() :: #inter_rat_es_policies{}.
 
