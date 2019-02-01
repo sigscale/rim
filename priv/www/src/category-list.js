@@ -11,6 +11,8 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
+import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
+import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
 class categoryList extends PolymerElement {
@@ -22,51 +24,119 @@ class categoryList extends PolymerElement {
 					id="categoryGrid">
 				<vaadin-grid-column>
 					<template class="header">
-						Name
+						<vaadin-grid-sorter
+								path="categoryName">
+							<vaadin-grid-filter
+									id="filterCategoryName""
+									aria-label="Name"
+									path="categoryName"
+									value="{{_filterCategoryName}}">
+								<input
+										slot="filter""
+										placeholder="Name"
+										value="{{_filterCategoryName::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.id]]
+						[[item.categoryName]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Description
+						<vaadin-grid-sorter
+								path="categoryDescription">
+							<vaadin-grid-filter
+									id="filterCategoryDescription"
+									aria-label="Description"
+									path="categoryDescription"
+									value="{{_filterCategoryDescription}}">
+								<input
+										slot="filter"
+										placeholder="Description"
+										value="{{_filterCategoryDescription::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
-					<template>
-						[[item.description]]
-					</template>
+					<template>[[item.categoryDescription]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Class
+						<vaadin-grid-sorter
+								path="categoryClass">
+							<vaadin-grid-filter
+									id="filterCategoryClass"
+									aria-label="Class"
+									path="categoryClass"
+									value="{{_filterCategoryClass}}">
+								<input
+										slot="filter"
+										placeholder="Class"
+										value="{{_filterCategoryClass::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
-					<template>
-						[[item.classs]]
-					</template>
+					<template>[[item.categoryClass]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Status
+						<vaadin-grid-sorter
+								path="categoryStatus">
+							<vaadin-grid-filter
+									id="filterCategoryStatus"
+									aria-label="Status"
+									path="categoryStatus"
+									value="{{_filterCategoryStatus}}">
+								<input
+										slot="filter"
+										placeholder="Status"
+										value="{{_filterCategoryStatus::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
-					<template>
-						[[item.stat]]
-					</template>
+					<template>[[item.categoryStatus]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Parent
+						<vaadin-grid-sorter
+								path="categoryParent">
+							<vaadin-grid-filter
+									id="filterCategoryParent"
+									aria-label="Parent"
+									path="categoryParent"
+									value="{{_filterCategoryParent}}">
+								<input
+										slot="filter"
+										placeholder="Parent"
+										value="{{_filterCategoryParent::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
-					<template>
-						[[item.parentt]]
-					</template>
+					<template>[[item.categoryParent]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Root
+						<vaadin-grid-sorter
+								path="categoryRoot">
+							<vaadin-grid-filter
+									id="filterCategoryRoot"
+									aria-label="Root"
+									path="categoryRoot"
+									value="{{_filterCategoryRoot}}">
+								<input
+										slot="filter"
+										placeholder="Root"
+										value="{{_filterCategoryRoot::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
-					<template>
-						[[item.root]]
-					</template>
+					<template>[[item.categoryRoot]]</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
 			<iron-ajax

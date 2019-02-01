@@ -11,6 +11,8 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
+import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
+import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
 class candidateList extends PolymerElement {
@@ -22,34 +24,84 @@ class candidateList extends PolymerElement {
 					id="candidateGrid">
 				<vaadin-grid-column>
 					<template class="header">
-						Name
+						<vaadin-grid-sorter
+								path="candidateName">
+							<vaadin-grid-filter
+									id="filter"
+									aria-label="Name"
+									path="candidateName"
+									value="{{_filterCatalogName}}">
+								<input
+										slot="filter"
+										placeholder="Name"
+										value="{{_filterCatalogName::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
+					</template>
+					<template>[[item.candidateName]]</template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+					<template class="header">
+						<vaadin-grid-sorter
+								path="candidateDescription">
+							<vaadin-grid-filter
+									id="filter"
+									aria-label="Description"
+									path="candidateDescription"
+									value="{{_filterCatalogDescription}}">
+								<input
+										slot="filter"
+										placeholder="Description"
+										value="{{_filterCatalogDescription::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.id]]
+						[[item.candidateDescription]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Description
+						<vaadin-grid-sorter
+								path="candidateClass">
+							<vaadin-grid-filter
+									id="filter"
+									aria-label="Class"
+									path="candidateClass"
+									value="{{_filterCatalogClass}}">
+								<input
+										slot="filter"
+										placeholder="Class"
+										value="{{_filterCatalogClass::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.description]]
+						[[item.candidateClass]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Class
+						<vaadin-grid-sorter
+								path="candidateStatus">
+							<vaadin-grid-filter
+									id="filter"
+									aria-label="Status"
+									path="candidateStatus"
+									value="{{_filterCatalogStatus}}">
+								<input
+										slot="filter"
+										placeholder="Status"
+										value="{{_filterCatalogStatus::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.classs]]
-					</template>
-				</vaadin-grid-column>
-				<vaadin-grid-column>
-					<template class="header">
-						Status
-					</template>
-					<template>
-						[[item.stat]]
+						[[item.candidateStatus]]
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
