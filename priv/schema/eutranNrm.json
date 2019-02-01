@@ -1,0 +1,2585 @@
+{
+	"id": "eutranNrm", 
+	"definitions": {
+		"IpAddressList": {
+			"type": "object",
+			"properties": {
+				"ipAddress": {
+					"type": "string"
+				}
+			}
+		},
+		"EnbId": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 268435455
+		},
+		"Eci": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 268435455
+		},
+		"CellLocalId": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 255
+		},
+		"CellLocalIdList": {
+			"type": "object",
+			"properties": {
+				"cellLocalId": {
+					"$ref": "#/definitions/CellLocalId"
+				}
+			}
+		},
+		"cellSize": {
+			"type": "string",
+			"enum": [
+				"verysmall",
+				"small",
+				"medium",
+				"large"
+			]
+		},
+		"allowedAccessClassesElementType": {
+			"type": "string",
+			"enum": [
+				"EmergencyCall",
+				"ForPLMNUse",
+				"SecurityServices",
+				"PublicUtilities",
+				"EmergencyServices",
+				"PLMNStaff"
+			]
+		},
+		"allowedAccessClassesType": {
+			"type": "object",
+			"properties": {
+				"allowedAccessClassesElement": {
+					"type": "array",
+					"minItems": 0,
+					"maxItems": 6,
+					"items": {
+						"$ref": "#/definitions/allowedAccessClassesElementType"
+					}
+				}
+			}
+		},
+		"PLMNId": {
+			"type": "object",
+			"properties": {
+				"mcc": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"mnc": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				}
+			}
+		},
+		"PLMNIdList": {
+			"type": "object",
+			"properties": {
+				"pLMNId": {
+					"type": "array",
+					"maxItems": 6,
+					"items": {
+						"$ref": "#/definitions/PLMNId"
+					}
+				}
+			}
+		},
+		"CellAccessInfo": {
+			"type": "object",
+			"properties": {
+				"plmnId": {
+					"$ref": "#/definitions/PLMNId"
+				},
+				"tac": {
+					"type": "integer",
+					"minimum": -9223372036854775808,
+					"maximum": 9223372036854775807
+				},
+				"cellId": {
+					"type": "integer",
+					"minimum": -9223372036854775808,
+					"maximum": 9223372036854775807
+				}
+			}
+		},
+		"CellAccessInfoList": {
+			"type": "object",
+			"properties": {
+				"cellAccessInfo": {
+					"type": "array",
+					"maxItems": 5,
+					"items": {
+						"$ref": "#/definitions/CellAccessInfo"
+					}
+				}
+			}
+		},
+		"EcgiList": {
+			"type": "object",
+			"properties": {
+				"plmnId": {
+					"$ref": "#/definitions/PLMNId"
+				},
+				"eci": {
+					"$ref": "#/definitions/Eci"
+				}
+			}
+		},
+		"Pci": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 503
+		},
+		"PciList": {
+			"type": "object",
+			"properties": {
+				"pci": {
+					"type": "array",
+					"maxItems": 504,
+					"items": {
+						"$ref": "#/definitions/Pci"
+					}
+				}
+			}
+		},
+		"cellResvInfoType": {
+			"type": "string",
+			"enum": [
+				"reservedCell",
+				"nonReservedCell"
+			]
+		},
+		"mbsfnAreaIdType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 255
+		},
+		"QciDscpMappingType": {
+			"type": "object",
+			"properties": {
+				"qci": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"dscp": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				}
+			}
+		},
+		"QciDscpMappingListType": {
+			"type": "object",
+			"properties": {
+				"QciDscpMappingPair": {
+					"$ref": "#/definitions/QciDscpMappingType"
+				}
+			}
+		},
+		"isEsCoveredByEnumType": {
+			"type": "string",
+			"enum": [
+				"no",
+				"partial",
+				"yes"
+			]
+		},
+		"yesNoType": {
+			"type": "string",
+			"enum": [
+				"yes",
+				"no"
+			]
+		},
+		"QOffsetEnumType": {
+			"type": "string",
+			"enum": [
+				"dB-24",
+				"dB-22",
+				"dB-20",
+				"dB-18",
+				"dB-16",
+				"dB-14",
+				"dB-12",
+				"dB-10",
+				"dB-8",
+				"dB-6",
+				"dB-5",
+				"dB-4",
+				"dB-3",
+				"dB-2",
+				"dB-1",
+				"dB1",
+				"dB2",
+				"dB3",
+				"dB4",
+				"dB5",
+				"dB6",
+				"dB8",
+				"dB10",
+				"dB12",
+				"dB14",
+				"dB16",
+				"dB18",
+				"dB20",
+				"dB22",
+				"dB24"
+			]
+		},
+		"ContentionResolutionTimerEnumType": {
+			"type": "string",
+			"enum": [
+				"sf8",
+				"sf16",
+				"sf24",
+				"sf32",
+				"sf40",
+				"sf48",
+				"sf56",
+				"sf64"
+			]
+		},
+		"NumberOfRaPreamblesEnumType": {
+			"type": "string",
+			"enum": [
+				"n4",
+				"n8",
+				"n12",
+				"n16",
+				"n20",
+				"n24",
+				"n28",
+				"n32",
+				"n36",
+				"n40",
+				"n44",
+				"n48",
+				"n52",
+				"n56",
+				"n60",
+				"n64"
+			]
+		},
+		"PreambleInitialReceivedTargetPowerEnumType": {
+			"type": "string",
+			"enum": [
+				"dBm-120",
+				"dBm-118",
+				"dBm-116",
+				"dBm-114",
+				"dBm-112",
+				"dBm-110",
+				"dBm-108",
+				"dBm-106",
+				"dBm-104",
+				"dBm-102",
+				"dBm-100",
+				"dBm-98",
+				"dBm-96",
+				"dBm-94",
+				"dBm-92",
+				"dBm-90"
+			]
+		},
+		"PreambleTransMaxEnumType": {
+			"type": "string",
+			"enum": [
+				"n3",
+				"n4",
+				"n5",
+				"n6",
+				"n7",
+				"n8",
+				"n10",
+				"n20",
+				"n50",
+				"n100",
+				"n200"
+			]
+		},
+		"PowerRampingStepEnumType": {
+			"type": "string",
+			"enum": [
+				"dB0",
+				"dB2",
+				"dB4",
+				"dB6"
+			]
+		},
+		"QHystEnumType": {
+			"type": "string",
+			"enum": [
+				"dB0",
+				"dB1",
+				"dB2",
+				"dB3",
+				"dB4",
+				"dB5",
+				"dB6",
+				"dB8",
+				"dB10",
+				"dB12",
+				"dB14",
+				"dB16",
+				"dB18",
+				"dB20",
+				"dB22",
+				"dB24"
+			]
+		},
+		"ResponseWindowSizeEnumType": {
+			"type": "string",
+			"enum": [
+				"sf2",
+				"sf3",
+				"sf4",
+				"sf5",
+				"sf6",
+				"sf7",
+				"sf8",
+				"sf10"
+			]
+		},
+		"SizeOfRAPreambleGroupAEnumType": {
+			"type": "string",
+			"enum": [
+				"n4",
+				"n8",
+				"n12",
+				"n16",
+				"n20",
+				"n24",
+				"n28",
+				"n32",
+				"n36",
+				"n40",
+				"n44",
+				"n48",
+				"n52",
+				"n56",
+				"n60"
+			]
+		},
+		"TimeToTriggerEUtraEnumType": {
+			"type": "string",
+			"enum": [
+				"ms0",
+				"ms40",
+				"ms64",
+				"ms80",
+				"ms100",
+				"ms128",
+				"ms160",
+				"ms256",
+				"ms320",
+				"ms480",
+				"ms512",
+				"ms640",
+				"ms1024",
+				"ms1280",
+				"ms2560",
+				"ms5120"
+			]
+		},
+		"ThresholdRsrpRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 97
+		},
+		"ThresholdRsrqRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 34
+		},
+		"OffsetRangeType": {
+			"type": "integer",
+			"minimum": -30,
+			"maximum": 30
+		},
+		"ThresholdUtraRscpRangeType": {
+			"type": "integer",
+			"minimum": -5,
+			"maximum": 91
+		},
+		"ThresholdUtraEcN0RangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 49
+		},
+		"ThresholdGeranRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 63
+		},
+		"ThresholdCDMA2000RangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 63
+		},
+		"CommonChannelPowerOffsetRangeType": {
+			"type": "integer",
+			"minimum": -350,
+			"maximum": 150
+		},
+		"ConfigurationIndexRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 63
+		},
+		"HysteresisRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 30
+		},
+		"PMaxRangeType": {
+			"type": "integer",
+			"minimum": -30,
+			"maximum": 33
+		},
+		"QOffsetRangeType": {
+			"type": "integer",
+			"minimum": -15,
+			"maximum": 15
+		},
+		"QQualMinUtraRangeType": {
+			"type": "integer",
+			"minimum": -24,
+			"maximum": 0
+		},
+		"QRxLevMinEUtraRangeType": {
+			"type": "integer",
+			"minimum": -77,
+			"maximum": -22
+		},
+		"QRxLevMinGeranRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 63
+		},
+		"QRxLevMinUtraRangeType": {
+			"type": "integer",
+			"minimum": -60,
+			"maximum": -13
+		},
+		"RootSequenceIndexRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 837
+		},
+		"SIntraSearchRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 31
+		},
+		"TReselectionRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 7
+		},
+		"TStoreUeContextRangeType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 1023
+		},
+		"TceIDMappingInfo": {
+			"type": "object",
+			"properties": {
+				"tceID": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"tceIPAddr": {
+					"type": "string"
+				}
+			}
+		},
+		"TceIDMappingInfoList": {
+			"type": "object",
+			"properties": {
+				"tceIDMappingInfo": {
+					"$ref": "#/definitions/TceIDMappingInfo"
+				}
+			}
+		},
+		"SharNetTceMappingInfo": {
+			"type": "object",
+			"properties": {
+				"pLMNId": {
+					"type": "integer",
+					"minimum": -9223372036854775808,
+					"maximum": 9223372036854775807
+				},
+				"tceID": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"tceIPAddr": {
+					"type": "string"
+				}
+			}
+		},
+		"SharNetTceMappingInfoList": {
+			"type": "object",
+			"properties": {
+				"sharNetTceMappingInfo": {
+					"$ref": "#/definitions/SharNetTceMappingInfo"
+				}
+			}
+		},
+		"cellOutageCompensationState": {
+			"type": "string",
+			"enum": [
+				"cOCActivating",
+				"cOCActive",
+				"cOCDeactivating",
+				"cOCDeactive"
+			]
+		},
+		"cellOutageCompensationStatus": {
+			"type": "object",
+			"properties": {
+				"cellOutageCompensationState": {
+					"$ref": "#/definitions/cellOutageCompensationState"
+				},
+				"errorList": {
+					"$ref": "genericNrm#/definitions/dnList"
+				}
+			}
+		},
+		"CellOutageCompensationInformation": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"cellOutageCompensationStatus",
+								"isCOCAllowed"
+							],
+							"properties": {
+								"cellOutageCompensationStatus": {
+									"$ref": "#/definitions/cellOutageCompensationStatus"
+								},
+								"isCOCAllowed": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"NumOfCRSPorts": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 2
+		},
+		"ReferenceSignalPattern": {
+			"type": "object",
+			"properties": {
+				"prsSupported": {
+					"$ref": "#/definitions/yesNoType"
+				}
+			}
+		},
+		"ReferenceSignalPeriodicity": {
+			"type": "string",
+			"enum": [
+				"ms1280",
+				"ms2560",
+				"ms5120",
+				"ms10240"
+			]
+		},
+		"ReferenceSignalOffset": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 10239
+		},
+		"NetListeningRefSignalType": {
+			"type": "object",
+			"properties": {
+				"referenceSignalPattern": {
+					"$ref": "#/definitions/ReferenceSignalPattern"
+				},
+				"numOfCRSPorts": {
+					"$ref": "#/definitions/NumOfCRSPorts"
+				},
+				"referenceSignalPeriodicity": {
+					"$ref": "#/definitions/ReferenceSignalPeriodicity"
+				},
+				"referenceSignalOffset": {
+					"$ref": "#/definitions/ReferenceSignalOffset"
+				}
+			}
+		},
+		"NetListeningRSForRIBS": {
+			"type": "object",
+			"properties": {
+				"netListeningRefSignal": {
+					"type": "array",
+					"maxItems": 4,
+					"items": {
+						"$ref": "#/definitions/NetListeningRefSignalType"
+					}
+				}
+			}
+		},
+		"EUtranCellNMCentralizedSON": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"a1ThresholdRsrp": {
+									"$ref": "#/definitions/ThresholdRsrpRangeType"
+								},
+								"a1ThresholdRsrq": {
+									"$ref": "#/definitions/ThresholdRsrqRangeType"
+								},
+								"a2ThresholdRsrp": {
+									"$ref": "#/definitions/ThresholdRsrpRangeType"
+								},
+								"a2ThresholdRsrq": {
+									"$ref": "#/definitions/ThresholdRsrqRangeType"
+								},
+								"a3Offset": {
+									"$ref": "#/definitions/OffsetRangeType"
+								},
+								"a4ThresholdRsrp": {
+									"$ref": "#/definitions/ThresholdRsrpRangeType"
+								},
+								"a4ThresholdRsrq": {
+									"$ref": "#/definitions/ThresholdRsrqRangeType"
+								},
+								"a5ThresholdRsrp": {
+									"$ref": "#/definitions/ThresholdRsrpRangeType"
+								},
+								"a5ThresholdRsrq": {
+									"$ref": "#/definitions/ThresholdRsrqRangeType"
+								},
+								"b1ThresholdUtraRscp": {
+									"$ref": "#/definitions/ThresholdUtraRscpRangeType"
+								},
+								"b1ThresholdUtraEcN0": {
+									"$ref": "#/definitions/ThresholdUtraEcN0RangeType"
+								},
+								"b1ThresholdGeran": {
+									"$ref": "#/definitions/ThresholdGeranRangeType"
+								},
+								"b1ThresholdCdma2000": {
+									"$ref": "#/definitions/ThresholdCDMA2000RangeType"
+								},
+								"b2Threshold1Rsrp": {
+									"$ref": "#/definitions/ThresholdRsrpRangeType"
+								},
+								"b2Threshold1Rsrq": {
+									"$ref": "#/definitions/ThresholdRsrqRangeType"
+								},
+								"b2Threshold2UtraRscp": {
+									"$ref": "#/definitions/ThresholdUtraRscpRangeType"
+								},
+								"b2Threshold2UtraEcN0": {
+									"$ref": "#/definitions/ThresholdUtraEcN0RangeType"
+								},
+								"b2Threshold2Geran": {
+									"$ref": "#/definitions/ThresholdGeranRangeType"
+								},
+								"b2Threshold2Cdma2000": {
+									"$ref": "#/definitions/ThresholdCDMA2000RangeType"
+								},
+								"commonChannelPowerOffset": {
+									"$ref": "#/definitions/CommonChannelPowerOffsetRangeType"
+								},
+								"configurationIndex": {
+									"$ref": "#/definitions/ConfigurationIndexRangeType"
+								},
+								"contentionResolutionTimer": {
+									"$ref": "#/definitions/ContentionResolutionTimerEnumType"
+								},
+								"hysteresisEutraA1": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"hysteresisEutraA2": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"hysteresisEutraA3": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"hysteresisEutraA4": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"hysteresisEutraA5": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"hysteresisIratB1": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"hysteresisIratB2": {
+									"$ref": "#/definitions/HysteresisRangeType"
+								},
+								"dwb1ThresholdGeraOPreambles": {
+									"$ref": "#/definitions/NumberOfRaPreamblesEnumType"
+								},
+								"preambleInitialReceivedTargetPower": {
+									"$ref": "#/definitions/PreambleInitialReceivedTargetPowerEnumType"
+								},
+								"preambleTransMax": {
+									"$ref": "#/definitions/PreambleTransMaxEnumType"
+								},
+								"pMax": {
+									"$ref": "#/definitions/PMaxRangeType"
+								},
+								"powerRampingStep": {
+									"$ref": "#/definitions/PowerRampingStepEnumType"
+								},
+								"qHyst": {
+									"$ref": "#/definitions/PreambleInitialReceivedTargetPowerEnumType"
+								},
+								"qOffsetUtra": {
+									"$ref": "#/definitions/QOffsetRangeType"
+								},
+								"qOffsetGeran": {
+									"$ref": "#/definitions/QOffsetRangeType"
+								},
+								"qOffsetCdma2000": {
+									"$ref": "#/definitions/QOffsetRangeType"
+								},
+								"qQualMinUtra": {
+									"$ref": "#/definitions/QQualMinUtraRangeType"
+								},
+								"qRxLevMinEUtraSib1": {
+									"$ref": "#/definitions/QRxLevMinEUtraRangeType"
+								},
+								"qRxLevMinEUtraSib3": {
+									"$ref": "#/definitions/QRxLevMinEUtraRangeType"
+								},
+								"qRxLevMinGeran": {
+									"$ref": "#/definitions/QRxLevMinGeranRangeType"
+								},
+								"qRxLevMinUtra": {
+									"$ref": "#/definitions/QRxLevMinUtraRangeType"
+								},
+								"responseWindowSize": {
+									"$ref": "#/definitions/ResponseWindowSizeEnumType"
+								},
+								"rootSequenceIndex": {
+									"$ref": "#/definitions/RootSequenceIndexRangeType"
+								},
+								"sIntraSearch": {
+									"$ref": "#/definitions/SIntraSearchRangeType"
+								},
+								"sizeOfRAPreamblesGroupA": {
+									"$ref": "#/definitions/SizeOfRAPreambleGroupAEnumType"
+								},
+								"timeToTriggerEutraA1": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"timeToTriggerEutraA2": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"timeToTriggerEutraA3": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"timeToTriggerEutraA4": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"timeToTriggerEutraA5": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"timeToTriggerIratB1": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"timeToTriggerIratB2": {
+									"$ref": "#/definitions/TimeToTriggerEUtraEnumType"
+								},
+								"tReselectionCdma2000": {
+									"$ref": "#/definitions/TReselectionRangeType"
+								},
+								"tReselectionEUtra": {
+									"$ref": "#/definitions/TReselectionRangeType"
+								},
+								"tReselectionGeran": {
+									"$ref": "#/definitions/TReselectionRangeType"
+								},
+								"tReselectionUtra": {
+									"$ref": "#/definitions/TReselectionRangeType"
+								},
+								"tStoreUeContext": {
+									"$ref": "#/definitions/TStoreUeContextRangeType"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"ENBFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								},
+								"intraANRSwitch": {
+									"type": "boolean"
+								},
+								"iRATANRSwitch": {
+									"type": "boolean"
+								},
+								"enbId": {
+									"$ref": "#/definitions/EnbId"
+								},
+								"x2BlackList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"x2WhiteList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"x2HOBlackList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"x2IpAddressList": {
+									"type": "string"
+								},
+								"tceIDMappingInfoList": {
+									"$ref": "#/definitions/TceIDMappingInfoList"
+								},
+								"sharNetTceMappingInfoList": {
+									"$ref": "#/definitions/SharNetTceMappingInfoList"
+								},
+								"netListeningRSForRIBS": {
+									"$ref": "#/definitions/NetListeningRSForRIBS"
+								}
+							}
+						},
+						"eUtranCellFDD": {
+							"$ref": "#/definitions/EUtranCellFDDs"
+						},
+						"eUtranCellTDD": {
+							"$ref": "#/definitions/EUtranCellTDDs"
+						},
+						"eP_RP_EPS": {
+							"$ref": "epcNrm#/definitions/EP_RP_EPSs"
+						},
+						"eP_X2C": {
+							"$ref": "nrNrm#/definitions/EP_X2Cs"
+						},
+						"eP_X2U": {
+							"$ref": "nrNrm#/definitions/EP_X2Us"
+						},
+						"eP_NgC": {
+							"$ref": "nrNrm#/definitions/EP_NgCs"
+						},
+						"eP_NgU": {
+							"$ref": "nrNrm#/definitions/EP_NgUs"
+						},
+						"eP_XnC": {
+							"$ref": "nrNrm#/definitions/EP_XnCs"
+						},
+						"eP_XnU": {
+							"$ref": "nrNrm#/definitions/EP_XnUs"
+						},
+						"eNBFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClasses"
+						},
+						"deNBCapability": {
+							"$ref": "#/definitions/DeNBCapabilities"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"eSPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						}
+					},
+					"dependencies": {
+						"eUtranCellFDD": {
+							"type": "object",
+							"properties": {
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eUtranCellTDD": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_RP_EPS": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_X2C": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_X2U": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_NgC": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_NgU": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_XnC": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eP_XnU": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"eNBFunctionOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"deNBCapability": false,
+								"vsDataContainer": false
+							}
+						},
+						"deNBCapability": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"eUtranCellFDD": false,
+								"eUtranCellTDD": false,
+								"eP_RP_EPS": false,
+								"eP_X2C": false,
+								"eP_X2U": false,
+								"eP_NgC": false,
+								"eP_NgU": false,
+								"eP_XnC": false,
+								"eP_XnU": false,
+								"eNBFunctionOptionallyContainedNrmClass": false,
+								"deNBCapability": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"RNFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"servingCell"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								},
+								"servingCell": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"eP_RP_EPS": {
+							"$ref": "epcNrm#/definitions/EP_RP_EPSs"
+						},
+						"rNFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"eP_RP_EPS": {
+							"type": "object",
+							"properties": {
+								"rNFunctionOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"rNFunctionOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"eP_RP_EPS": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"eP_RP_EPS": false,
+								"rNFunctionOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"DeNBCapability": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"maxNbrRNAllowed"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								},
+								"servedRN": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"maxNbrRNAllowed": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 65535
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"DeNBCapabilities": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/DeNBCapability"
+			}
+		},
+		"ExternalRNFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"candidateDeNBCells": {
+									"$ref": "#/definitions/EcgiList"
+								}
+							}
+						},
+						"eP_RP_EPS": {
+							"$ref": "epcNrm#/definitions/EP_RP_EPSs"
+						},
+						"externalRNFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"eP_RP_EPS": {
+							"type": "object",
+							"properties": {
+								"externalRNFunctionOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"externalRNFunctionOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"eP_RP_EPS": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"eP_RP_EPS": false,
+								"externalRNFunctionOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"ExternalENBFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"enbId": {
+									"$ref": "#/definitions/EnbId"
+								}
+							}
+						},
+						"externalEUtranCellFDD": {
+							"$ref": "#/definitions/ExternalEUtranCellFDDs"
+						},
+						"externalEUtranCellTDD": {
+							"$ref": "#/definitions/ExternalEUtranCellTDDs"
+						},
+						"externalENBFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+						}
+					},
+					"dependencies": {
+						"externalEUtranCellFDD": {
+							"type": "object",
+							"properties": {
+								"externalEUtranCellTDD": false,
+								"externalENBFunctionOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"externalEUtranCellTDD": {
+							"type": "object",
+							"properties": {
+								"externalEUtranCellFDD": false,
+								"externalENBFunctionOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"externalENBFunctionOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"externalEUtranCellFDD": false,
+								"externalEUtranCellTDD": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"externalEUtranCellFDD": false,
+								"externalEUtranCellTDD": false,
+								"externalENBFunctionOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"EUtranCellFDD": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"cellLocalId",
+								"cellSize",
+								"pLMNIdList",
+								"cellAccessInfoList",
+								"tac",
+								"pci",
+								"maximumTransmissionPower",
+								"referenceSignalPower",
+								"pb",
+								"allowedAccessClasses",
+								"earfcnDl",
+								"earfcnUl"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"cellLocalId": {
+									"$ref": "#/definitions/CellLocalId"
+								},
+								"cellLocalIdList": {
+									"$ref": "#/definitions/CellLocalIdList"
+								},
+								"cellSize": {
+									"$ref": "#/definitions/cellSize"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"cellAccessInfoList": {
+									"$ref": "#/definitions/CellAccessInfoList"
+								},
+								"tac": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"pci": {
+									"$ref": "#/definitions/Pci"
+								},
+								"pciList": {
+									"$ref": "#/definitions/PciList"
+								},
+								"maximumTransmissionPower": {
+									"$ref": "#/definitions/maximumTransmissionPower"
+								},
+								"partOfSectorPower": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"referenceSignalPower": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"pb": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"relatedTmaList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"relatedAntennaList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"relatedSector": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"operationalState": {
+									"$ref": "stateManagementIRP#/definitions/operationalStateType"
+								},
+								"administrativeState": {
+									"$ref": "stateManagementIRP#/definitions/administrativeStateType"
+								},
+								"availabilityStatus": {
+									"$ref": "stateManagementIRP#/definitions/availabilityStatusType"
+								},
+								"allowedAccessClasses": {
+									"$ref": "#/definitions/allowedAccessClassesType"
+								},
+								"cellResvInfo": {
+									"$ref": "#/definitions/cellResvInfoType"
+								},
+								"nbIoTcellFlag": {
+									"$ref": "#/definitions/yesNoType"
+								},
+								"isChangeForEnergySavingAllowed": {
+									"$ref": "#/definitions/yesNoType"
+								},
+								"ngranCellFlag": {
+									"$ref": "#/definitions/yesNoType"
+								},
+								"nSSAI": {
+									"$ref": "ngcNrm#/definitions/NssaiList"
+								},
+								"earfcnDl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"earfcnUl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"eUtranRelation": {
+							"$ref": "#/definitions/EUtranRelations"
+						},
+						"cdma2000Relation": {
+							"$ref": "#/definitions/Cdma2000Relations"
+						},
+						"gsmRelation": {
+							"$ref": "geranNrm#/definitions/GsmRelations"
+						},
+						"utranRelation": {
+							"$ref": "utranNrm#/definitions/UtranRelations"
+						},
+						"eUtranCellFDDOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"energySavingProperties": {
+							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
+						},
+						"eSPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						}
+					},
+					"dependencies": {
+						"eUtranRelation": {
+							"type": "object",
+							"properties": {
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranCellFDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"cdma2000Relation": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranCellFDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"gsmRelation": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"utranRelation": false,
+								"eUtranCellFDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"utranRelation": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"eUtranCellFDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"eUtranCellFDDOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranCellFDDOptionallyContainedNrmClass": false
+							}
+						},
+						"energySavingProperties": {
+							"type": "object",
+							"properties": {
+								"eSPolicies": false
+							}
+						},
+						"eSPolicies": {
+							"type": "object",
+							"properties": {
+								"energySavingProperties": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"EUtranCellFDDs": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EUtranCellFDD"
+			}
+		},
+		"ExternalEUtranCellFDD": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"pci",
+								"pLMNIdList",
+								"cellAccessInfoList",
+								"cellLocalId",
+								"earfcnDl",
+								"earfcnUl"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pci": {
+									"$ref": "#/definitions/Pci"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"cellAccessInfoList": {
+									"$ref": "#/definitions/CellAccessInfoList"
+								},
+								"cellLocalId": {
+									"$ref": "#/definitions/CellLocalId"
+								},
+								"enbId": {
+									"$ref": "#/definitions/EnbId"
+								},
+								"earfcnDl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"earfcnUl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"externalEUtranCellFDDOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"cellOutageCompensationInformation": {
+							"$ref": "#/definitions/CellOutageCompensationInformation"
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+						}
+					},
+					"dependencies": {
+						"externalEUtranCellFDDOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"externalEUtranCellFDDOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"ExternalEUtranCellFDDs": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalEUtranCellFDD"
+			}
+		},
+		"EUtranCellTDD": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"cellLocalId",
+								"cellSize",
+								"pLMNIdList",
+								"cellAccessInfoList",
+								"tac",
+								"pci",
+								"maximumTransmissionPower",
+								"referenceSignalPower",
+								"pb",
+								"allowedAccessClasses",
+								"earfcn",
+								"sfAssignment",
+								"specialSfPatterns"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"cellLocalId": {
+									"$ref": "#/definitions/CellLocalId"
+								},
+								"cellLocalIdList": {
+									"$ref": "#/definitions/CellLocalIdList"
+								},
+								"cellSize": {
+									"$ref": "#/definitions/cellSize"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"cellAccessInfoList": {
+									"$ref": "#/definitions/CellAccessInfoList"
+								},
+								"tac": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"pci": {
+									"$ref": "#/definitions/Pci"
+								},
+								"pciList": {
+									"$ref": "#/definitions/PciList"
+								},
+								"maximumTransmissionPower": {
+									"$ref": "#/definitions/maximumTransmissionPower"
+								},
+								"partOfSectorPower": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"referenceSignalPower": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"pb": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"relatedTmaList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"relatedAntennaList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"relatedSector": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"operationalState": {
+									"$ref": "stateManagementIRP#/definitions/operationalStateType"
+								},
+								"administrativeState": {
+									"$ref": "stateManagementIRP#/definitions/administrativeStateType"
+								},
+								"availabilityStatus": {
+									"$ref": "stateManagementIRP#/definitions/availabilityStatusType"
+								},
+								"allowedAccessClasses": {
+									"$ref": "#/definitions/allowedAccessClassesType"
+								},
+								"cellResvInfo": {
+									"$ref": "#/definitions/cellResvInfoType"
+								},
+								"nbIoTcellFlag": {
+									"$ref": "#/definitions/yesNoType"
+								},
+								"isChangeForEnergySavingAllowed": {
+									"$ref": "#/definitions/yesNoType"
+								},
+								"ngranCellFlag": {
+									"$ref": "#/definitions/yesNoType"
+								},
+								"nSSAI": {
+									"$ref": "ngcNrm#/definitions/NssaiList"
+								},
+								"earfcn": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"sfAssignment": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"specialSfPatterns": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"eUtranRelation": {
+							"$ref": "#/definitions/EUtranRelations"
+						},
+						"cdma2000Relation": {
+							"$ref": "#/definitions/Cdma2000Relations"
+						},
+						"gsmRelation": {
+							"$ref": "geranNrm#/definitions/GsmRelations"
+						},
+						"utranRelation": {
+							"$ref": "utranNrm#/definitions/UtranRelations"
+						},
+						"eUtranCellTDDOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"energySavingProperties": {
+							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
+						},
+						"eSPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						},
+						"cellOutageCompensationInformation": {
+							"$ref": "#/definitions/CellOutageCompensationInformation"
+						}
+					},
+					"dependencies": {
+						"eUtranRelation": {
+							"type": "object",
+							"properties": {
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranCellTDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"cdma2000Relation": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranCellTDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"gsmRelation": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"utranRelation": false,
+								"eUtranCellTDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"utranRelation": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"eUtranCellTDDOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"eUtranCellTDDOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"eUtranRelation": false,
+								"cdma2000Relation": false,
+								"gsmRelation": false,
+								"utranRelation": false,
+								"eUtranCellTDDOptionallyContainedNrmClass": false
+							}
+						},
+						"energySavingProperties": {
+							"type": "object",
+							"properties": {
+								"eSPolicies": false
+							}
+						},
+						"eSPolicies": {
+							"type": "object",
+							"properties": {
+								"energySavingProperties": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"EUtranCellTDDs": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EUtranCellTDD"
+			}
+		},
+		"ExternalEUtranCellTDD": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"pci",
+								"pLMNIdList",
+								"cellLocalId",
+								"earfcn"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pci": {
+									"$ref": "#/definitions/Pci"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"cellLocalId": {
+									"$ref": "#/definitions/CellLocalId"
+								},
+								"enbId": {
+									"$ref": "#/definitions/EnbId"
+								},
+								"earfcn": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"externalEUtranCellTDDOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+						}
+					},
+					"dependencies": {
+						"externalEUtranCellTDDOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"externalEUtranCellTDDOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"ExternalEUtranCellTDDs": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalEUtranCellTDD"
+			}
+		},
+		"EUtranRelation": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"adjacentCell"
+							],
+							"properties": {
+								"tCI": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"isRemoveAllowed": {
+									"type": "boolean"
+								},
+								"isHOAllowed": {
+									"type": "boolean"
+								},
+								"isICICInformationSendAllowed": {
+									"type": "boolean"
+								},
+								"isLBAllowed": {
+									"type": "boolean"
+								},
+								"adjacentCell": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"isEsCoveredBy": {
+									"$ref": "#/definitions/isEsCoveredByEnumType"
+								},
+								"cellIndividualOffset": {
+									"$ref": "#/definitions/QOffsetEnumType"
+								},
+								"qOffset": {
+									"$ref": "#/definitions/QOffsetEnumType"
+								}
+							}
+						},
+						"eUtranRelationOptionallyContainedNrmClass": {
+								"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"eUtranRelationOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"eUtranRelationOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"EUtranRelations": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EUtranRelation"
+			}
+		},
+		"Cdma2000Relation": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"adjacentCell"
+							],
+							"properties": {
+								"adjacentCell": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"cdma2000RelationOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"cdma2000RelationOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"cdma2000RelationOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"Cdma2000Relations": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Cdma2000Relation"
+			}
+		},
+		"Link_ENB_ENB": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"link_ENB_ENBOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"link_ENB_ENBOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"link_ENB_ENBOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"MCEFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								}
+							}
+						},
+						"mCEFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClasses"
+						},
+						"mBSFNArea": {
+							"$ref": "#/definitions/MBSFNAreas"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"mCEFunctionOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"mBSFNArea": false,
+								"vsDataContainer": false
+							}
+						},
+						"mBSFNArea": {
+							"type": "object",
+							"properties": {
+								"mCEFunctionOptionallyContainedNrmClass": false,
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"mCEFunctionOptionallyContainedNrmClass": false,
+								"mBSFNArea": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"MBSFNArea": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"mbsfnAreaId": {
+									"$ref": "#/definitions/mbsfnAreaIdType"
+								},
+								"cellIdList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								}
+							}
+						},
+						"mBSFNAreaOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"mBSFNAreaOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"mBSFNAreaOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"MBSFNAreas": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MBSFNArea"
+			}
+		},
+		"Link_MCE_ENB": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"link_MCE_ENBOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"link_MCE_ENBOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"link_MCE_ENBOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"Link_MCE_MME": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"link_MCE_MMEOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClasses"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					},
+					"dependencies": {
+						"link_MCE_MMEOptionallyContainedNrmClass": {
+							"type": "object",
+							"properties": {
+								"vsDataContainer": false
+							}
+						},
+						"vsDataContainer": {
+							"type": "object",
+							"properties": {
+								"link_MCE_MMEOptionallyContainedNrmClass": false
+							}
+						}
+					}
+				}
+			]
+		},
+		"QciDscpMapping": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/RNFunctionOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"QciDscpMappingList"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"QciDscpMappingList": {
+									"$ref": "#/definitions/QciDscpMappingListType"
+								}
+							}
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						}
+					}
+				}
+			]
+		},
+		"ENBFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ENBFunctionOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalENBFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalENBFunctionOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"EUtranCellFDDOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EUtranCellFDDOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalEUtranCellFDDOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalEUtranCellFDDOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClass"
+			}
+		},
+		"EUtranCellTDDOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EUtranCellTDDOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalEUtranCellTDDOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalEUtranCellTDDOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClass"
+			}
+		},
+		"EUtranRelationOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EUtranRelationOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClass"
+			}
+		},
+		"Cdma2000RelationOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Cdma2000RelationOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ENB_ENBOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_ENB_ENBOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClass"
+			}
+		},
+		"MCEFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"MCEFunctionOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MCE_ENBOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_MCE_ENBOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MCE_MMEOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_MCE_MMEOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClass"
+			}
+		},
+		"MBSFNAreaOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"MBSFNAreaOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClass"
+			}
+		},
+		"RNFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"RNFunctionOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalRNFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalRNFunctionOptionallyContainedNrmClasses": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClass"
+			}
+		}
+	}
+}

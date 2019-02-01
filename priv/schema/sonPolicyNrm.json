@@ -1,0 +1,593 @@
+{
+	"id": "sonPolicyNrm", 
+	"definitions": {
+		"cacRange": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 10000 
+		},
+		"relativeCellLoadRange": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 10000 
+		},
+		"timeDurationRange": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 900 
+		},
+		"rateRange": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 100 
+		},
+		"ROProbability": {
+			"type": "integer",
+			"enum": [
+				25,
+				50,
+				75,
+				90	
+			]
+		},
+		"WeekDay": {
+			"type": "string",
+			"enum": [
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday",
+				"Sunday"
+			]
+		},
+		"WeekDays": {
+			"type": "array",
+			"maxItems": 7,
+			"items": {
+				"day": {
+					"$ref": "#/definitions/WeekDay"
+				}
+			}
+		},
+		"LBOTarget": {
+			"type": "object",
+			"properties": {
+				"lowerEndOfCacRange": {
+					"$ref": "#/definitions/cacRange"
+				},
+				"upperEndOfCacRange": {
+					"$ref": "#/definitions/cacRange"
+				},
+				"Rate": {
+					"$ref": "#/definitions/rateRange"
+				},
+				"Weight": {
+					"type": "integer"
+				}
+			}
+		},
+		"LBOLinkTarget": {
+			"type": "object",
+			"properties": {
+				"UplinkTarget": {
+					"$ref": "#/definitions/LBOTarget"
+				},
+				"DownlinkTarget": {
+					"$ref": "#/definitions/LBOTarget"
+				}
+			}
+		},
+		"HooTarget": {
+			"type": "object",
+			"properties": {
+				"Rate": {
+					"$ref": "#/definitions/rateRange"
+				},
+				"Weight": {
+					"type": "integer"
+				}
+			}
+		},
+		"CellLoadParameters": {
+			"type": "object",
+			"properties": {
+				"Rate": {
+					"$ref": "#/definitions/rateRange"
+				},
+				"TimeDuration": {
+					"type": "integer"
+				}
+			}
+		},
+		"RelativeCellLoadParameters": {
+			"type": "object",
+			"properties": {
+				"Rate": {
+					"$ref": "#/definitions/rateRange"
+				},
+				"TimeDuration": {
+					"type": "integer"
+				}
+			}
+		},
+		"DailyPeriod": {
+			"type": "object",
+			"properties": {
+				"StartTime": {
+					"type": "string"
+				},
+				"EndTime": {
+					"type": "string"
+				}
+			}
+		},
+		"TimePeriod": {
+			"type": "object",
+			"properties": {
+				"Day": {
+					"$ref": "#/definitions/WeekDays"
+				},
+				"PeriodOfDay": {
+					"$ref": "#/definitions/DailyPeriod"
+				}
+			}
+		},
+		"ESNotAllowedTimePeriod": {
+			"type": "object",
+			"properties": {
+				"TimePeriodList": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TimePeriod"
+					}
+				}
+			}
+		},
+		"AccessDelayRange": {
+			"type": "integer",
+			"minimum": 10,
+			"maximum": 560 
+		},
+		"AccessDelayProbabilityROTarget": {
+			"type": "object",
+			"properties": {
+				"Probability": {
+					"$ref": "#/definitions/ROProbability"
+				},
+				"AccessDelay": {
+					"$ref": "#/definitions/AccessDelayRange"
+				}
+			}
+		},
+		"AccessDelayProbabilityTargetSet": {
+			"type": "array",
+			"maxItems": 4,
+			"items": {
+				"AccessDelayProbabilityTarget": {
+					"$ref": "#/definitions/AccessDelayProbabilityROTarget"
+				}
+			}
+		},
+		"AccessNumberAttemptRange": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 200 
+		},
+		"AccessProbabilityROTarget": {
+			"type": "object",
+			"properties": {
+				"Probability": {
+					"$ref": "#/definitions/ROProbability"
+				},
+				"AccessNumber": {
+					"$ref": "#/definitions/AccessNumberAttemptRange"
+				}
+			}
+		},
+		"AccessProbabilityTargetSet": {
+			"type": "array",
+			"maxItems": 4,
+			"items": {
+				"AccessProbabilityTarget": {
+					"$ref": "#/definitions/AccessProbabilityROTarget"
+				}
+			}
+		},
+		"rachOptTarget": {
+			"type": "array",
+			"maxItems": 4,
+			"properties": {
+				"rachOptAccessProbability": {
+					"$ref": "#/definitions/AccessProbabilityTargetSet"
+				},
+				"rachOptAccessDelayProbability": {
+					"$ref": "#/definitions/AccessDelayProbabilityTargetSet"
+				}
+			},
+			"dependencies": {
+				"rachOptAccessProbability": {
+					"type": "object",
+					"properties": {
+						"rachOptAccessDelayProbability": false
+					}
+				},
+				"rachOptAccessDelayProbability": {
+					"type": "object",
+					"properties": {
+						"rachOptAccessProbability": false
+					}
+				}
+			}
+		},
+		"AasTarget": {
+			"type": "object",
+			"properties": {
+				"TargetLowerThreshold": {
+					"$ref": "#/definitions/rateRange"
+				},
+				"TargetUpperThreshold": {
+					"$ref": "#/definitions/rateRange"
+				},
+				"Weight": {
+					"type": "integer"
+				}
+			}
+		},
+		"MaximumDeviationHoTriggerType": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 96 
+		},
+		"MinimumTimeBetweenHoTriggerChangeType": {
+			"type": "integer",
+			"maximum": 1440
+		},
+		"CellLocalIDType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 255
+		},
+		"CellLocalIDListType": {
+			"type": "object",
+			"properties": {
+				"CellLocalID": {
+					"$ref": "#/definitions/CellLocalIDType"
+				}
+			}
+		},
+		"CellCovStateType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 15 
+		},
+		"Beamwidth": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 360
+		},
+		"AntennaPowerType": {
+			"type": "integer",
+			"minimum": -60,
+			"maximum": 50
+		},
+		"AntennaPowerRangeType": {
+			"type": "object",
+			"properties": {
+				"AntennaPowerLowerThreshold": {
+					"$ref": "#/definitions/AntennaPowerType"
+				},
+				"AntennaPowerUpperThreshold": {
+					"$ref": "#/definitions/AntennaPowerType"
+				}
+			}
+		},
+		"AntennaCovConfigType": {
+			"type": "object",
+			"properties": {
+				"SateID": {
+					"$ref": "#/definitions/CellCovStateType"
+				},
+				"HorizontalHBW": {
+					"$ref": "#/definitions/Beamwidth"
+				},
+				"VerticalHBW": {
+					"$ref": "#/definitions/Beamwidth"
+				},
+				"MaxTransmissionPowerRange": {
+					"$ref": "#/definitions/AntennaPowerRangeType"
+				},
+				"ReferenceSignalPowerRange": {
+					"$ref": "#/definitions/AntennaPowerRangeType"
+				}
+			}
+		},
+		"AntennaCovConfigListType": {
+			"type": "array",
+			"maxItems": 16,
+			"items": {
+				"AntennaCovConfig": {
+					"$ref": "#/definitions/AntennaCovConfigType"
+				}
+			}
+		},
+		"energySavingStateEnumType": {
+			"type": "string",
+			"enum": [
+				"isEnergySaving",
+				"isNotEnergySaving"
+			]
+		},
+		"energySavingControlEnumType": {
+			"type": "string",
+			"enum": [
+				"isEnergySaving",
+				"isNotEnergySaving"
+			]
+		},
+		"SonFuncNameType": {
+			"type": "string",
+			"enum": [
+				"anr",
+				"hoo",
+				"lbo",
+				"es",
+				"coc",
+				"cco",
+				"aas"
+			]
+		},
+		"SonCoordPoliciesType": {
+			"type": "string",
+			"enum": [
+				"baseOnPriority",
+				"baseOnState"
+			]
+		},
+		"SonFuncNameListType": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/SonFuncNameType"
+			}
+		},
+		"SONTarget": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"hoFailureRate": {
+									"$ref": "#/definitions/HooTarget"
+								},
+								"rrcConnectionEstablishmentFailureRate": {
+									"$ref": "#/definitions/LBOLinkTarget"
+								},
+								"rrcConnectionAbnormalReleaseRate": {
+									"$ref": "#/definitions/LBOLinkTarget"
+								},
+								"eRabSetupFailureRate": {
+									"$ref": "#/definitions/LBOLinkTarget"
+								},
+								"eRabAbnormalReleaseRate": {
+									"$ref": "#/definitions/LBOLinkTarget"
+								},
+								"rachOpt": {
+									"$ref": "#/definitions/rachOptTarget"
+								},
+								"pDCPDataVolumeLoadRate": {
+									"$ref": "#/definitions/AasTarget"
+								},
+								"iPThroughputLoadRate": {
+									"$ref": "#/definitions/AasTarget"
+								},
+								"activeUEAmountLoadRate": {
+									"$ref": "genericNrm#/definitions/AasTarget"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"SONControl": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"hooSwitch": {
+									"type": "boolean"
+								},
+								"lboSwitch": {
+									"type": "boolean"
+								},
+								"cocSwitch": {
+									"type": "boolean"
+								},
+								"esSwitch": {
+									"type": "boolean"
+								},
+								"roSwitch": {
+									"type": "boolean"
+								},
+								"aasSplitSwitch": {
+									"type": "boolean"
+								},
+								"aasMergeSwitch": {
+									"type": "boolean"
+								},
+								"aasShapeSwitch": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"ESPolicies": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"esActivationOriginalCellLoadParameters": {
+									"$ref": "#/definitions/CellLoadParameters"
+								},
+								"esActivationCandidateCellsLoadParameters": {
+									"$ref": "#/definitions/CellLoadParameters"
+								},
+								"esDeactivationCandidateCellsLoadParameters": {
+									"$ref": "#/definitions/CellLoadParameters"
+								},
+								"esNotAllowedTimePeriod": {
+									"$ref": "#/definitions/ESNotAllowedTimePeriod"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"InterRatEsPolicies": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"interRatEsActivationOriginalCellParameters": {
+									"$ref": "#/definitions/RelativeCellLoadParameters"
+								},
+								"interRatEsActivationCandidateCellParameters": {
+									"$ref": "#/definitions/RelativeCellLoadParameters"
+								},
+								"interRatEsDeactivationCandidateCellParameters": {
+									"$ref": "#/definitions/RelativeCellLoadParameters"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"EUtranCellSON": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"maximumDeviationHoTrigger": {
+									"$ref": "#/definitions/MaximumDeviationHoTriggerType"
+								},
+								"minimumTimeBetweenHoTriggerChange": {
+									"$ref": "#/definitions/MinimumTimeBetweenHoTriggerChangeType"
+								},
+								"alterCovConfig": {
+									"$ref": "#/definitions/AntennaCovConfigListType"
+								},
+								"replacedCells": {
+									"$ref": "#/definitions/CellLocalIDListType"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"EnergySavingProperties": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"energySavingState": {
+									"$ref": "#/definitions/energySavingStateEnumType"
+								},
+								"energySavingControl": {
+									"$ref": "#/definitions/energySavingControlEnumType"
+								},
+								"isProbingCapable": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"SONFuncInfo": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"sonFuncCapabilityBelowItfN": {
+									"$ref": "#/definitions/SonFuncNameListType"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"SONCoordinationPolicies": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"selectedSonCoordPolicy": {
+									"$ref": "#/definitions/SonCoordPoliciesType"
+								},
+								"sonFuncPriorityOrder": {
+									"$ref": "#/definitions/SonFuncNameListType"
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+}
