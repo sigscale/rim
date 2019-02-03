@@ -1,4 +1,4 @@
-%%% im_rest_res_inventory.erl
+%%% im_rest_res_resource.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @copyright 2019 SigScale Global Inc.
@@ -20,11 +20,11 @@
 %%%
 %%% 	Handle `Resource' collection.
 %%%
--module(im_rest_res_inventory).
+-module(im_rest_res_resource).
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_inventory/2, get_resource/2, post_resource/1, delete_resource/1]).
+-export([get_resources/2, get_resource/2, post_resource/1, delete_resource/1]).
 -export([resource/1]).
  
 -include("im.hrl").
@@ -50,22 +50,22 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec get_inventory(Query, Headers) -> Result
+-spec get_resources(Query, Headers) -> Result
 	when
 		Query :: [{Key :: string(), Value :: string()}],
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Handle `GET' request on `Resource' collection.
-get_inventory(Query, Headers) ->
+get_resources(Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
-			get_inventory(NewQuery, Filters, Headers);
+			get_resources(NewQuery, Filters, Headers);
 		false ->
-			get_inventory(Query, [], Headers)
+			get_resources(Query, [], Headers)
 	end.
 %% @hidden
-get_inventory(Query, Filters, Headers) ->
+get_resources(Query, Filters, Headers) ->
 	case {lists:keyfind("if-match", 1, Headers),
 			lists:keyfind("if-range", 1, Headers),
 			lists:keyfind("range", 1, Headers)} of
@@ -571,7 +571,7 @@ query_start(Query, Filters, RangeStart, RangeEnd) ->
 		end
 	of
 		{MatchHead, MatchConditions} ->
-			MFA = [im, query_inventory, [MatchHead, MatchConditions]],
+			MFA = [im, query_resource, [MatchHead, MatchConditions]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);

@@ -10,7 +10,7 @@
 				mod_im_rest_get,
 				im_rest,
 				im_rest_res_user,
-				im_rest_res_inventory,
+				im_rest_res_resource,
 				im_rest_query_scanner,
 				im_rest_query_parser,
 				im_rest_pagination_sup,

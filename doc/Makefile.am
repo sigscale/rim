@@ -16,7 +16,7 @@ modhtml = im_app.html \
 			im_rest_res_category.html \
 			im_rest_res_candidate.html \
 			im_rest_res_specification.html \
-			im_rest_res_inventory.html \
+			im_rest_res_resource.html \
 			im_rest_query_scanner.html \
 			im_rest_query_parser.html \
 			im_rest_pagination_sup.html \
