@@ -22,17 +22,17 @@
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% export the im public API
--export([add_catalog/1, del_catalog/1, get_catalogs/0, get_catalog/1,
+-export([add_catalog/1, del_catalog/1, get_catalog/0, get_catalog/1,
 		query_catalog/4, query_catalog/1]).
--export([add_category/1, del_category/1, get_categories/0, get_category/1,
+-export([add_category/1, del_category/1, get_category/0, get_category/1,
 		query_category/4, query_category/1]).
--export([add_candidate/1, del_candidate/1, get_candidates/0, get_candidate/1,
+-export([add_candidate/1, del_candidate/1, get_candidate/0, get_candidate/1,
 		query_candidate/4, query_candidate/1]).
--export([add_specification/1, del_specification/1, get_specifications/0,
+-export([add_specification/1, del_specification/1, get_specification/0,
 		get_specification/1, query_specification/4, query_specification/1]).
--export([add_resource/1, del_resource/1, get_resources/0, get_resource/1,
+-export([add_resource/1, del_resource/1, get_resource/0, get_resource/1,
 		query_resource/4, query_resource/1]).
--export([add_user/3, del_user/1, get_users/0, get_user/1,
+-export([add_user/3, del_user/1, get_user/0, get_user/1,
 		query_user/4, query_user/1]).
 -export([generate_password/0, generate_identity/0]).
 
@@ -91,13 +91,13 @@ del_catalog(CatalogID) when is_list(CatalogID) ->
 			ok
 	end.
 
--spec get_catalogs() -> Result
+-spec get_catalog() -> Result
 	when
 		Result :: {ok, CatalogIDs} | {error, Reason},
 		CatalogIDs :: [string()],
 		Reason :: term().
 %% @doc Get all Resource Catalog identifiers.
-get_catalogs() ->
+get_catalog() ->
 	F = fun() ->
 			mnesia:all_keys(catalog)
 	end,
@@ -214,13 +214,13 @@ del_category(CategoryID) when is_list(CategoryID) ->
 			ok
 	end.
 
--spec get_categories() -> Result
+-spec get_category() -> Result
 	when
 		Result :: {ok, CategoryIDs} | {error, Reason},
 		CategoryIDs :: [string()],
 		Reason :: term().
 %% @doc Get all Resource Category identifiers.
-get_categories() ->
+get_category() ->
 	F = fun() ->
 			mnesia:all_keys(category)
 	end,
@@ -337,13 +337,13 @@ del_candidate(CandidateID) when is_list(CandidateID) ->
 			ok
 	end.
 
--spec get_candidates() -> Result
+-spec get_candidate() -> Result
 	when
 		Result :: {ok, CandidateIDs} | {error, Reason},
 		CandidateIDs :: [string()],
 		Reason :: term().
 %% @doc Get all Resource Candidate identifiers.
-get_candidates() ->
+get_candidate() ->
 	F = fun() ->
 			mnesia:all_keys(candidate)
 	end,
@@ -460,13 +460,13 @@ del_specification(SpecificationID) when is_list(SpecificationID) ->
 			ok
 	end.
 
--spec get_specifications() -> Result
+-spec get_specification() -> Result
 	when
 		Result :: {ok, SpecificationIDs} | {error, Reason},
 		SpecificationIDs :: [string()],
 		Reason :: term().
 %% @doc Get all Resource Specification identifiers.
-get_specifications() ->
+get_specification() ->
 	F = fun() ->
 			mnesia:all_keys(specification)
 	end,
@@ -583,13 +583,13 @@ del_resource(ResourceID) when is_list(ResourceID) ->
 			ok
 	end.
 
--spec get_resources() -> Result
+-spec get_resource() -> Result
 	when
 		Result :: {ok, ResourceIDs} | {error, Reason},
 		ResourceIDs :: [string()],
 		Reason :: term().
 %% @doc Get all Resource identifiers.
-get_resources() ->
+get_resource() ->
 	F = fun() ->
 			mnesia:all_keys(resource)
 	end,
@@ -740,7 +740,7 @@ del_user(GroupName, Username, Address, Port, Dir, true) ->
 del_user(_, _, _, _, _, {error, Reason}) ->
 	{error, Reason}.
 
--spec get_users() -> Result
+-spec get_user() -> Result
 	when
 		Result :: {ok, Users} | {error, Reason},
 		Users :: [Username],
@@ -748,7 +748,7 @@ del_user(_, _, _, _, _, {error, Reason}) ->
 		Reason :: term().
 %% @doc List HTTP users.
 %% @equiv  mod_auth:list_users(Address, Port, Dir)
-get_users() ->
+get_user() ->
 	get_users(get_params()).
 %% @hidden
 get_users({Port, Address, Dir, _}) ->
