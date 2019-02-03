@@ -393,7 +393,6 @@ is_related_party_ref(#{"id" := Id, "href" := Href,
 		is_list(Start), is_list(End) ->
 	im_rest:iso8601(End) > im_rest:iso8601(Start);
 is_related_party_ref(_RP) ->
-erlang:display({?MODULE, ?LINE, _RP}),
 	false.
 
 is_category_ref(#{"id" := Id, "href" := Href,
