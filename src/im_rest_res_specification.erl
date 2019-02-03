@@ -689,14 +689,16 @@ query_start(Query, Filters, RangeStart, RangeEnd) ->
 				{ok, Tokens, _} = im_rest_query_scanner:string(String),
 				case im_rest_query_parser:parse(Tokens) of
 					{ok, [{array, [{complex, [{"id", like, [Id]}]}]}]} ->
-						{{like, Id}, '_'}
+						{#catalog{id = Id ++ '_', _ = '_'}, []};
+					{ok, [{array, [{complex, [{"id", exact, [Id]}]}]}]} ->
+						{#catalog{id = Id, _ = '_'}, []}
 				end;
 			false ->
-				{'_', '_'}
+				{'_', []}
 		end
 	of
-		{MatchId, MatchLocale} ->
-			MFA = [im, query_specification, [MatchId, MatchLocale]],
+		{MatchHead, MatchConditions} ->
+			MFA = [im, query_specification, [MatchHead, MatchConditions]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);

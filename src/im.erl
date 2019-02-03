@@ -22,15 +22,18 @@
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
 %% export the im public API
--export([add_catalog/1, get_catalogs/0, get_catalog/1, del_catalog/1]).
--export([add_category/1, get_categories/0, get_category/1, del_category/1]).
--export([add_candidate/1, get_candidates/0, get_candidate/1, del_candidate/1]).
--export([add_specification/1, get_specifications/0, get_specification/1,
-		del_specification/1]).
--export([add_resource/1, get_resources/0, get_resource/1, del_resource/1]).
--export([query_catalog/4, query_catalog/1]).
--export([query_resource/7, query_resource/8]).
--export([add_user/3, get_users/0, get_user/1, del_user/1, query_users/4]).
+-export([add_catalog/1, del_catalog/1, get_catalogs/0, get_catalog/1,
+		query_catalog/4, query_catalog/1]).
+-export([add_category/1, del_category/1, get_categories/0, get_category/1,
+		query_category/4, query_category/1]).
+-export([add_candidate/1, del_candidate/1, get_candidates/0, get_candidate/1,
+		query_candidate/4, query_candidate/1]).
+-export([add_specification/1, del_specification/1, get_specifications/0,
+		get_specification/1, query_specification/4, query_specification/1]).
+-export([add_resource/1, del_resource/1, get_resources/0, get_resource/1,
+		query_resource/4, query_resource/1]).
+-export([add_user/3, del_user/1, get_users/0, get_user/1,
+		query_user/4, query_user/1]).
 -export([generate_password/0, generate_identity/0]).
 
 -include("im.hrl").
@@ -71,6 +74,23 @@ add_catalog(#catalog{id = undefined, href = undefined,
 			{ok, NewCatalog}
 	end.
 
+-spec del_catalog(CatalogID) -> Result
+	when
+		CatalogID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Catalog.
+del_catalog(CatalogID) when is_list(CatalogID) ->
+	F = fun() ->
+			mnesia:delete(catalog, CatalogID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
 -spec get_catalogs() -> Result
 	when
 		Result :: {ok, CatalogIDs} | {error, Reason},
@@ -104,319 +124,6 @@ get_catalog(CatalogID) when is_list(CatalogID) ->
 			{error, Reason};
 		{atomic, [Catalog]} ->
 			{ok, Catalog}
-	end.
-
--spec del_catalog(CatalogID) -> Result
-	when
-		CatalogID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource Catalog.
-del_catalog(CatalogID) when is_list(CatalogID) ->
-	F = fun() ->
-			mnesia:delete(catalog, CatalogID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
-	end.
-
--spec add_category(Category) -> Result
-	when
-		Result :: {ok, Category} | {error, Reason},
-		Reason :: term().
-%% @doc Create a new Resource Category.
-add_category(#category{id = undefined,
-		last_modified = undefined} = Category) ->
-	F = fun() ->
-			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "category/" ++ Id,
-			NewCategory = Category#category{id = Id,
-					href = Href, last_modified = LM},
-			ok = mnesia:write(NewCategory),
-			NewCategory
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, NewCategory} ->
-			{ok, NewCategory}
-	end.
-
--spec get_categories() -> Result
-	when
-		Result :: {ok, CategoryIDs} | {error, Reason},
-		CategoryIDs :: [string()],
-		Reason :: term().
-%% @doc Get all Resource Category identifiers.
-get_categories() ->
-	F = fun() ->
-			mnesia:all_keys(category)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, CategoryIDs} ->
-			CategoryIDs
-	end.
-
--spec get_category(CategoryID) -> Result
-	when
-		CategoryID :: string(),
-		Result :: {ok, Category} | {error, Reason},
-		Category :: category(),
-		Reason :: term().
-%% @doc Get a Resource Category.
-get_category(CategoryID) when is_list(CategoryID) ->
-	F = fun() ->
-			mnesia:read(category, CategoryID, read)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, [Category]} ->
-			{ok, Category}
-	end.
-
--spec del_category(CategoryID) -> Result
-	when
-		CategoryID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource Category.
-del_category(CategoryID) when is_list(CategoryID) ->
-	F = fun() ->
-			mnesia:delete(category, CategoryID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
-	end.
-
--spec add_candidate(Candidate) -> Result
-	when
-		Result :: {ok, Candidate} | {error, Reason},
-		Reason :: term().
-%% @doc Create a new Resource Candidate.
-add_candidate(#candidate{id = undefined,
-		last_modified = undefined} = Candidate) ->
-	F = fun() ->
-			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "candidate/" ++ Id,
-			NewCandidate = Candidate#candidate{id = Id,
-					href = Href, last_modified = LM},
-			ok = mnesia:write(NewCandidate),
-			NewCandidate
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, NewCandidate} ->
-			{ok, NewCandidate}
-	end.
-
--spec get_candidates() -> Result
-	when
-		Result :: {ok, CandidateIDs} | {error, Reason},
-		CandidateIDs :: [string()],
-		Reason :: term().
-%% @doc Get all Resource Candidate identifiers.
-get_candidates() ->
-	F = fun() ->
-			mnesia:all_keys(candidate)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, CandidateIDs} ->
-			CandidateIDs
-	end.
-
--spec get_candidate(CandidateID) -> Result
-	when
-		CandidateID :: string(),
-		Result :: {ok, Candidate} | {error, Reason},
-		Candidate :: candidate(),
-		Reason :: term().
-%% @doc Get a Resource Candidate.
-get_candidate(CandidateID) when is_list(CandidateID) ->
-	F = fun() ->
-			mnesia:read(candidate, CandidateID, read)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, [Candidate]} ->
-			{ok, Candidate}
-	end.
-
--spec del_candidate(CandidateID) -> Result
-	when
-		CandidateID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource Candidate.
-del_candidate(CandidateID) when is_list(CandidateID) ->
-	F = fun() ->
-			mnesia:delete(candidate, CandidateID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
-	end.
-
--spec add_specification(Specification) -> Result
-	when
-		Result :: {ok, Specification} | {error, Reason},
-		Reason :: term().
-%% @doc Create a new Resource Specification.
-add_specification(#specification{id = undefined,
-		last_modified = undefined} = Specification) ->
-	F = fun() ->
-			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "specification/" ++ Id,
-			NewSpecification = Specification#specification{id = Id,
-					href = Href, last_modified = LM},
-			ok = mnesia:write(NewSpecification),
-			NewSpecification
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, NewSpecification} ->
-			{ok, NewSpecification}
-	end.
-
--spec get_specifications() -> Result
-	when
-		Result :: {ok, SpecificationIDs} | {error, Reason},
-		SpecificationIDs :: [string()],
-		Reason :: term().
-%% @doc Get all Resource Specification identifiers.
-get_specifications() ->
-	F = fun() ->
-			mnesia:all_keys(specification)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, SpecificationIDs} ->
-			SpecificationIDs
-	end.
-
--spec get_specification(SpecificationID) -> Result
-	when
-		SpecificationID :: string(),
-		Result :: {ok, Specification} | {error, Reason},
-		Specification :: specification(),
-		Reason :: term().
-%% @doc Get a Resource Specification.
-get_specification(SpecificationID) when is_list(SpecificationID) ->
-	F = fun() ->
-			mnesia:read(specification, SpecificationID, read)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, [Specification]} ->
-			{ok, Specification}
-	end.
-
--spec del_specification(SpecificationID) -> Result
-	when
-		SpecificationID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource Specification.
-del_specification(SpecificationID) when is_list(SpecificationID) ->
-	F = fun() ->
-			mnesia:delete(specification, SpecificationID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
-	end.
-
--spec add_resource(Resource) -> Result
-	when
-		Result :: {ok, Resource} | {error, Reason},
-		Reason :: term().
-%% @doc Create a new Resource.
-add_resource(#resource{id = undefined,
-		last_modified = undefined} = Resource) ->
-	F = fun() ->
-			{Id, LM} = unique(),
-			Href = ?PathInventory ++ "resource/" ++ Id,
-			NewResource = Resource#resource{id = Id,
-					href = Href, last_modified = LM},
-			ok = mnesia:write(NewResource),
-			NewResource
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, NewResource} ->
-			{ok, NewResource}
-	end.
-
--spec get_resources() -> Result
-	when
-		Result :: {ok, ResourceIDs} | {error, Reason},
-		ResourceIDs :: [string()],
-		Reason :: term().
-%% @doc Get all Resource identifiers.
-get_resources() ->
-	F = fun() ->
-			mnesia:all_keys(resource)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ResourceIDs} ->
-			ResourceIDs
-	end.
-
--spec get_resource(ResourceID) -> Result
-	when
-		ResourceID :: string(),
-		Result :: {ok, Resource} | {error, Reason},
-		Resource :: resource(),
-		Reason :: term().
-%% @doc Get a Resource.
-get_resource(ResourceID) when is_list(ResourceID) ->
-	F = fun() ->
-			mnesia:read(resource, ResourceID, read)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, [Resource]} ->
-			{ok, Resource}
-	end.
-
--spec del_resource(ResourceID) -> Result
-	when
-		ResourceID :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete a Resource.
-del_resource(ResourceID) when is_list(ResourceID) ->
-	F = fun() ->
-			mnesia:delete(resource, ResourceID, write)
-	end,
-	case mnesia:transaction(F) of
-		{aborted, Reason} ->
-			{error, Reason};
-		{atomic, ok} ->
-			ok
 	end.
 
 -spec query_catalog(Continuation, Size, MatchHead, MatchConditions) -> Result
@@ -468,212 +175,497 @@ query_catalog(Continuation) ->
 			{NextContinuation, Catalogs}
 	end.
 
--spec query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType,
-		MatchChar) -> Result
+-spec add_category(Category) -> Result
 	when
-		Cont :: start | any(),
-		Size :: pos_integer() | undefined,
-		Sort :: [integer()],
-		MatchId :: Match,
-		MatchName :: Match,
-		MatchType :: Match,
-		MatchChar :: Match,
-		Match :: {exact, string()} | {notexact, string()} | {like, [string()]},
-		Result :: {Cont1, [#resource{}], Total} | {error, Reason},
-		Cont1 :: eof | any(),
-		Total :: non_neg_integer(),
+		Result :: {ok, Category} | {error, Reason},
 		Reason :: term().
-%% @equiv query_resource(Cont, Size, Sort, MatchId, MatchName,
-%%       MatchType, MatchChar)
-query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType, MatchChar) ->
-	query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType, MatchChar, false).
+%% @doc Create a new Resource Category.
+add_category(#category{id = undefined,
+		last_modified = undefined} = Category) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "category/" ++ Id,
+			NewCategory = Category#category{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewCategory),
+			NewCategory
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCategory} ->
+			{ok, NewCategory}
+	end.
 
--spec query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType,
-		MatchChar, CountOnly) -> Result
+-spec del_category(CategoryID) -> Result
 	when
-		Cont :: start | any(),
-		Size :: pos_integer() | undefined,
-		Sort :: [integer()],
-		MatchId :: Match,
-		MatchName :: Match,
-		MatchType :: Match,
-		MatchChar :: Match,
-		Match :: {exact, string()} | {notexact, string()} | {like, [string()]},
-		CountOnly :: boolean(),
-		Result :: {Cont1, [#resource{}], Total} | {error, Reason},
-		Cont1 :: eof | any(),
-		Total :: non_neg_integer(),
+		CategoryID :: string(),
+		Result :: ok | {error, Reason},
 		Reason :: term().
-%% @doc Query the resource table.
-%%
-%%    The result list will be sorted by the record elements listed in `Sort', in order.
-query_resource(Cont, undefined, Sort, MatchId, MatchName, MatchType, MatchChar,
-		CountOnly) ->
-	{ok, Size} = application:get_env(rest_page_size),
-	query_resource(Cont, Size, Sort, MatchId, MatchName, MatchType, MatchChar,
-		CountOnly);
-query_resource(Cont, Size, Sort, '_' = _MatchId, MatchName, MatchType, MatchChar,
-		CountOnly) ->
-	MatchHead = #resource{_ = '_'},
-	query_resource1(Cont, Size, Sort, MatchHead, [], MatchName, MatchType, MatchChar,
-		CountOnly);
-query_resource(Cont, Size, Sort, {exact, String} = _MatchId, MatchName, MatchType,
-		MatchChar, CountOnly) ->
-	MatchHead = #resource{id = '$1', _ = '_'},
-	MatchConditions = [{'==', '$1', String}],
-	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
-		MatchChar, CountOnly);
-query_resource(Cont, Size, Sort, {like, [String]} = _MatchId, MatchName, MatchType,
-		MatchChar, CountOnly) ->
-	{MatchHead, MatchConditions} = case lists:last(String) of
-		$% ->
-			Prefix = lists:droplast(String),
-			Mh = #resource{id = Prefix ++ '_', _ = '_'},
-			{Mh, []};
-		_ ->
-			Mh1 = #resource{id = String, _ = '_'},
-			{Mh1, []}
-	end,
-	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
-		MatchChar, CountOnly);
-query_resource(Cont, Size, Sort, {notexact, String} = _MatchId, MatchName, MatchType,
-		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead = #resource{id = '$1', _ = '_'},
-		MatchConditions = [{'/=', '$1', String}],
-	query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, MatchName, MatchType,
-		MatchChar, CountOnly).
-%% @hidden
-query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, '_' = _MatchName, MatchType,
-		MatchChar, CountOnly) ->
-	query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, MatchType, MatchChar,
-		CountOnly);
-query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, {exact, String} = _MatchName,
-		MatchType, MatchChar, CountOnly) when is_list(String)->
-		MatchHead1 = MatchHead#resource{name = '$2'},
-		MatchConditions1 = [{'==', '$2', String} | MatchConditions],
-	query_resource2(Cont, Size, Sort, MatchHead1, MatchConditions1, MatchType,
-		MatchChar, CountOnly);
-query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, {Op, [String]} = _MatchName,
-		MatchType, MatchChar, CountOnly) when ((Op == exact) orelse (Op == like))->
-	{MatchHead1, MatchConditions1} = case lists:last(String) of
-		$% when Op == like ->
-			Prefix = lists:droplast(String),
-			Mh = MatchHead#resource{name = '$2'},
-			Mc = [{'>=', '$3', Prefix} | MatchConditions],
-			{Mh, Mc};
-		_ ->
-			Mh1 = MatchHead#resource{name = String},
-			{Mh1, MatchConditions}
-	end,
-	query_resource2(Cont, Size, Sort, MatchHead1, MatchConditions1, MatchType, MatchChar,
-			CountOnly);
-query_resource1(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String} = _MatchName,
-		MatchType, MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{name = '$2'},
-		MatchConditions1 = [{'/=', '$2', String} | MatchConditions],
-	query_resource2(Cont, Size, Sort, MatchHead1, MatchConditions1, MatchType, MatchChar,
-		CountOnly).
-%% @hidden
-query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, '_' = _MatchType, MatchChar,
-		CountOnly) ->
-	query_resource3(Cont, Size, Sort, MatchHead, MatchConditions, MatchChar, CountOnly);
-query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {exact, String} = _MatchType,
-		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{class_type = '$3'},
-		MatchCondition = {'==', '$3', String},
-	query_resource3(Cont, Size, Sort, MatchHead1, [MatchCondition | MatchConditions],
-			MatchChar, CountOnly);
-query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {Op, [String]} = _MatchType,
-		MatchChar, CountOnly) when ((Op == exact) orelse (Op == like)) ->
-	MatchHead1 = case lists:last(String) of
-		$% ->
-			Prefix = lists:droplast(String),
-			MatchHead#resource{class_type = Prefix ++ '_'};
-		_ ->
-			MatchHead#resource{class_type = String}
-	end,
-	query_resource3(Cont, Size, Sort, MatchHead1, MatchConditions, MatchChar, CountOnly);
-query_resource2(Cont, Size, Sort, MatchHead, MatchConditions, {notexact, String} = _MatchType,
-		MatchChar, CountOnly) when is_list(String) ->
-		MatchHead1 = MatchHead#resource{class_type = '$3'},
-		MatchCondition = {'/=', '$3', String},
-	query_resource3(Cont, Size, Sort, MatchHead1, [MatchCondition | MatchConditions],
-			MatchChar, CountOnly).
-%% @hidden
-query_resource3(start, Size, [], #resource{_ = '_'}, [], '_', true) ->
-	{eof, Size, mnesia:table_info(inventory, size)};
-query_resource3(start, Size, [], #resource{_ = '_'} = MatchHead, [] = MatchConditions,
-	'_', false) ->
-	MatchSpec = [{MatchHead, MatchConditions, ['$_']}],
+%% @doc Delete a Resource Category.
+del_category(CategoryID) when is_list(CategoryID) ->
 	F = fun() ->
-			{mnesia:select(inventory, MatchSpec, Size, read),
-					mnesia:table_info(inventory, size)}
+			mnesia:delete(category, CategoryID, write)
 	end,
-	query_resource4(mnesia:ets(F), [], '_', false);
-query_resource3(start, Size, [], MatchHead, MatchConditions, MatchChar, false) ->
-	MatchSpec = [{MatchHead, MatchConditions, ['$_']}],
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec get_categories() -> Result
+	when
+		Result :: {ok, CategoryIDs} | {error, Reason},
+		CategoryIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Category identifiers.
+get_categories() ->
 	F = fun() ->
-		{mnesia:select(inventory, MatchSpec, Size, read), undefined}
+			mnesia:all_keys(category)
 	end,
-	query_resource4(mnesia:ets(F), [], MatchChar, false);
-query_resource3(start, _Size, Sort, MatchHead, MatchConditions, MatchChar, CountOnly) ->
-	MatchSpec = [{MatchHead, MatchConditions, ['$_']}],
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CategoryIDs} ->
+			CategoryIDs
+	end.
+
+-spec get_category(CategoryID) -> Result
+	when
+		CategoryID :: string(),
+		Result :: {ok, Category} | {error, Reason},
+		Category :: category(),
+		Reason :: term().
+%% @doc Get a Resource Category.
+get_category(CategoryID) when is_list(CategoryID) ->
 	F = fun() ->
-		{mnesia:select(inventory, MatchSpec, read), undefined}
+			mnesia:read(category, CategoryID, read)
 	end,
-	query_resource4(mnesia:ets(F), Sort, MatchChar, CountOnly);
-query_resource3(Cont, _Size, Sort, #resource{_ = '_'}, [], '_' = MatchChar, CountOnly) ->
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Category]} ->
+			{ok, Category}
+	end.
+
+-spec query_category(Continuation, Size, MatchHead, MatchConditions) -> Result
+	when
+		Continuation :: start | ets:continuation(),
+		Size :: pos_integer() | undefined,
+		MatchHead :: ets:match_pattern(),
+		MatchConditions :: [tuple()],
+		Result :: {NextContinuation, [#category{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Query the Resource Categories.
+query_category(start = _Continuation, undefined, MatchHead, MatchConditions) ->
+	query_category(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
+query_category(start = _Continuation, Size, MatchHead, MatchConditions)
+		when is_integer(Size), Size > 0,
+		(is_record(MatchHead,  category) orelse (MatchHead == '_')),
+		is_list(MatchConditions) ->
+	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
 	F = fun() ->
-		{mnesia:select(Cont), mnesia:table_info(inventory, size)}
+			 mnesia:select(category, MatchExpression, Size, read)
 	end,
-	query_resource4(mnesia:ets(F), Sort, MatchChar, CountOnly);
-query_resource3(Cont, _Size, Sort, _MatchHead, _MatchConditions, MatchChar, CountOnly) ->
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Categories, NextContinuation} ->
+			{NextContinuation, Categories}
+	end.
+
+-spec query_category(Continuation) -> Result
+	when
+		Continuation :: ets:continuation(),
+		Result :: {NextContinuation, [#category{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Get the next results using a previous query of Resource Categories.
+query_category(Continuation) ->
 	F = fun() ->
-		{mnesia:select(Cont), undefined}
+			 mnesia:select(Continuation)
 	end,
-	query_resource4(mnesia:ets(F), Sort, MatchChar, CountOnly).
-%% @hidden
-query_resource4({Resource, Cont}, '_', '_', '_') ->
-	{Cont, Resource};
-query_resource4({Resource, undefined}, _Sort, '_', true) when is_list(Resource) ->
-	Total = length(Resource),
-	{eof, Total, Total};
-query_resource4({Resource, undefined}, Sort, '_', true) when is_list(Resource) ->
-	Total = length(Resource),
-	query_resource5(eof, Resource, Total, lists:reverse(Sort));
-query_resource4({{Resource, Cont}, Total}, _Sort, '_', true) when is_list(Resource) ->
-	{Cont, length(Resource), Total};
-query_resource4({{Resource, Cont}, Total}, Sort, '_', false) ->
-	query_resource5(Cont, Resource, Total, lists:reverse(Sort));
-query_resource4({Resource, undefined}, _Sort, {Op, [String]}, true) when is_list(Resource),
-		is_list(String), ((Op == exact) orelse (Op == like)) ->
-	Fun = count_source(Op, String),
-	Total = lists:foldl(Fun, 0, Resource),
-	{eof, Total, Total};
-query_resource4({Resource, Total}, Sort, {Op, [String]}, false) when is_list(Resource),
-		is_list(String), ((Op == exact) orelse (Op == like)) ->
-	Fun = filter_source(Op, String),
-	query_resource5(eof, lists:filter(Fun, Resource), Total, lists:reverse(Sort));
-query_resource4({{Resource, Cont}, _Total}, _Sort, {Op, [String]}, true)
-		when is_list(String), ((Op == exact) orelse (Op == like)) ->
-	Fun = count_source(Op, String),
-	Total = lists:foldl(Fun, 0, Resource),
-	{Cont, Total, Total};
-query_resource4({{Resource, _Cont}, _Total}, Sort, {Op, [String]}, false)
-		when is_list(String), ((Op == exact) orelse (Op == like)) ->
-	Fun = filter_source(Op, String),
-	query_resource5(eof, lists:filter(Fun, Resource), undefined, lists:reverse(Sort));
-query_resource4({'$end_of_table', _Total}, _Sort, _MatchChar, _CountOnly) ->
-	{eof, []}.
-%% @hidden
-query_resource5(Cont, Resource, Total, [H | T]) when H > 0 ->
-	query_resource5(Cont, lists:keysort(H, Resource), Total, T);
-query_resource5(Cont, Resource, Total, [H | T]) when H < 0 ->
-	query_resource5(Cont, lists:reverse(lists:keysort(H, Resource)), Total, T);
-query_resource5(Cont, Resource, undefined, []) ->
-	{Cont, Resource};
-query_resource5(Cont, Resource, Total, []) ->
-	{Cont, Resource, Total}.
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Categories, NextContinuation} ->
+			{NextContinuation, Categories}
+	end.
+
+-spec add_candidate(Candidate) -> Result
+	when
+		Result :: {ok, Candidate} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Candidate.
+add_candidate(#candidate{id = undefined,
+		last_modified = undefined} = Candidate) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "candidate/" ++ Id,
+			NewCandidate = Candidate#candidate{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewCandidate),
+			NewCandidate
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewCandidate} ->
+			{ok, NewCandidate}
+	end.
+
+-spec del_candidate(CandidateID) -> Result
+	when
+		CandidateID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Candidate.
+del_candidate(CandidateID) when is_list(CandidateID) ->
+	F = fun() ->
+			mnesia:delete(candidate, CandidateID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec get_candidates() -> Result
+	when
+		Result :: {ok, CandidateIDs} | {error, Reason},
+		CandidateIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Candidate identifiers.
+get_candidates() ->
+	F = fun() ->
+			mnesia:all_keys(candidate)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, CandidateIDs} ->
+			CandidateIDs
+	end.
+
+-spec get_candidate(CandidateID) -> Result
+	when
+		CandidateID :: string(),
+		Result :: {ok, Candidate} | {error, Reason},
+		Candidate :: candidate(),
+		Reason :: term().
+%% @doc Get a Resource Candidate.
+get_candidate(CandidateID) when is_list(CandidateID) ->
+	F = fun() ->
+			mnesia:read(candidate, CandidateID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Candidate]} ->
+			{ok, Candidate}
+	end.
+
+-spec query_candidate(Continuation, Size, MatchHead, MatchConditions) -> Result
+	when
+		Continuation :: start | ets:continuation(),
+		Size :: pos_integer() | undefined,
+		MatchHead :: ets:match_pattern(),
+		MatchConditions :: [tuple()],
+		Result :: {NextContinuation, [#candidate{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Query the Resource Candidates.
+query_candidate(start = _Continuation, undefined, MatchHead, MatchConditions) ->
+	query_candidate(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
+query_candidate(start = _Continuation, Size, MatchHead, MatchConditions)
+		when is_integer(Size), Size > 0,
+		(is_record(MatchHead,  candidate) orelse (MatchHead == '_')),
+		is_list(MatchConditions) ->
+	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
+	F = fun() ->
+			 mnesia:select(candidate, MatchExpression, Size, read)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Categories, NextContinuation} ->
+			{NextContinuation, Categories}
+	end.
+
+-spec query_candidate(Continuation) -> Result
+	when
+		Continuation :: ets:continuation(),
+		Result :: {NextContinuation, [#candidate{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Get the next results using a previous query of Resource Candidates.
+query_candidate(Continuation) ->
+	F = fun() ->
+			 mnesia:select(Continuation)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Candidates, NextContinuation} ->
+			{NextContinuation, Candidates}
+	end.
+
+-spec add_specification(Specification) -> Result
+	when
+		Result :: {ok, Specification} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource Specification.
+add_specification(#specification{id = undefined,
+		last_modified = undefined} = Specification) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathCatalog ++ "specification/" ++ Id,
+			NewSpecification = Specification#specification{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewSpecification),
+			NewSpecification
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewSpecification} ->
+			{ok, NewSpecification}
+	end.
+
+-spec del_specification(SpecificationID) -> Result
+	when
+		SpecificationID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource Specification.
+del_specification(SpecificationID) when is_list(SpecificationID) ->
+	F = fun() ->
+			mnesia:delete(specification, SpecificationID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec get_specifications() -> Result
+	when
+		Result :: {ok, SpecificationIDs} | {error, Reason},
+		SpecificationIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource Specification identifiers.
+get_specifications() ->
+	F = fun() ->
+			mnesia:all_keys(specification)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, SpecificationIDs} ->
+			SpecificationIDs
+	end.
+
+-spec get_specification(SpecificationID) -> Result
+	when
+		SpecificationID :: string(),
+		Result :: {ok, Specification} | {error, Reason},
+		Specification :: specification(),
+		Reason :: term().
+%% @doc Get a Resource Specification.
+get_specification(SpecificationID) when is_list(SpecificationID) ->
+	F = fun() ->
+			mnesia:read(specification, SpecificationID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Specification]} ->
+			{ok, Specification}
+	end.
+
+-spec query_specification(Continuation, Size, MatchHead, MatchConditions) -> Result
+	when
+		Continuation :: start | ets:continuation(),
+		Size :: pos_integer() | undefined,
+		MatchHead :: ets:match_pattern(),
+		MatchConditions :: [tuple()],
+		Result :: {NextContinuation, [#specification{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Query the Resource Specifications.
+query_specification(start = _Continuation, undefined, MatchHead, MatchConditions) ->
+	query_specification(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
+query_specification(start = _Continuation, Size, MatchHead, MatchConditions)
+		when is_integer(Size), Size > 0,
+		(is_record(MatchHead,  specification) orelse (MatchHead == '_')),
+		is_list(MatchConditions) ->
+	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
+	F = fun() ->
+			 mnesia:select(specification, MatchExpression, Size, read)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Categories, NextContinuation} ->
+			{NextContinuation, Categories}
+	end.
+
+-spec query_specification(Continuation) -> Result
+	when
+		Continuation :: ets:continuation(),
+		Result :: {NextContinuation, [#specification{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Get the next results using a previous query of Resource Specifications.
+query_specification(Continuation) ->
+	F = fun() ->
+			 mnesia:select(Continuation)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Specifications, NextContinuation} ->
+			{NextContinuation, Specifications}
+	end.
+
+-spec add_resource(Resource) -> Result
+	when
+		Result :: {ok, Resource} | {error, Reason},
+		Reason :: term().
+%% @doc Create a new Resource.
+add_resource(#resource{id = undefined,
+		last_modified = undefined} = Resource) ->
+	F = fun() ->
+			{Id, LM} = unique(),
+			Href = ?PathInventory ++ "resource/" ++ Id,
+			NewResource = Resource#resource{id = Id,
+					href = Href, last_modified = LM},
+			ok = mnesia:write(NewResource),
+			NewResource
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, NewResource} ->
+			{ok, NewResource}
+	end.
+
+-spec del_resource(ResourceID) -> Result
+	when
+		ResourceID :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a Resource.
+del_resource(ResourceID) when is_list(ResourceID) ->
+	F = fun() ->
+			mnesia:delete(resource, ResourceID, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec get_resources() -> Result
+	when
+		Result :: {ok, ResourceIDs} | {error, Reason},
+		ResourceIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Resource identifiers.
+get_resources() ->
+	F = fun() ->
+			mnesia:all_keys(resource)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ResourceIDs} ->
+			ResourceIDs
+	end.
+
+-spec get_resource(ResourceID) -> Result
+	when
+		ResourceID :: string(),
+		Result :: {ok, Resource} | {error, Reason},
+		Resource :: resource(),
+		Reason :: term().
+%% @doc Get a Resource.
+get_resource(ResourceID) when is_list(ResourceID) ->
+	F = fun() ->
+			mnesia:read(resource, ResourceID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Resource]} ->
+			{ok, Resource}
+	end.
+
+-spec query_resource(Continuation, Size, MatchHead, MatchConditions) -> Result
+	when
+		Continuation :: start | ets:continuation(),
+		Size :: pos_integer() | undefined,
+		MatchHead :: ets:match_pattern(),
+		MatchConditions :: [tuple()],
+		Result :: {NextContinuation, [#resource{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Query the inventory Resources.
+query_resource(start = _Continuation, undefined, MatchHead, MatchConditions) ->
+	query_resource(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
+query_resource(start = _Continuation, Size, MatchHead, MatchConditions)
+		when is_integer(Size), Size > 0,
+		(is_record(MatchHead,  resource) orelse (MatchHead == '_')),
+		is_list(MatchConditions) ->
+	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
+	F = fun() ->
+			 mnesia:select(resource, MatchExpression, Size, read)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Categories, NextContinuation} ->
+			{NextContinuation, Categories}
+	end.
+
+-spec query_resource(Continuation) -> Result
+	when
+		Continuation :: ets:continuation(),
+		Result :: {NextContinuation, [#resource{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Get the next results using a previous query of inventory Resources.
+query_resource(Continuation) ->
+	F = fun() ->
+			 mnesia:select(Continuation)
+	end,
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Resources, NextContinuation} ->
+			{NextContinuation, Resources}
+	end.
 
 -spec add_user(Username, Password, Locale) -> Result
 	when
@@ -722,6 +714,32 @@ add_user4(LM, true) ->
 add_user4(_, {error, Reason}) ->
 	{error, Reason}.
 
+-spec del_user(Username) -> Result
+	when
+		Username :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete an existing HTTP user.
+del_user(Username) ->
+	del_user(Username, get_params()).
+%% @hidden
+del_user(Username, {Port, Address, Dir, GroupName}) ->
+	del_user(GroupName, Username, Address, Port, Dir,
+			mod_auth:delete_user(Username, Address, Port, Dir));
+del_user(_, {error, Reason}) ->
+	{error, Reason}.
+%% @hidden
+del_user(GroupName, Username, Address, Port, Dir, true) ->
+	case mod_auth:delete_group_member(GroupName,
+			Username, Address, Port, Dir) of
+		true ->
+			ok;
+		{error, Reason} ->
+			{error, Reason}
+	end;
+del_user(_, _, _, _, _, {error, Reason}) ->
+	{error, Reason}.
+
 -spec get_users() -> Result
 	when
 		Result :: {ok, Users} | {error, Reason},
@@ -754,145 +772,54 @@ get_user(Username, {Port, Address, Dir, _}) ->
 get_user(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec del_user(Username) -> Result
+-spec query_user(Continuation, Size, MatchHead, MatchConditions) -> Result
 	when
-		Username :: string(),
-		Result :: ok | {error, Reason},
-		Reason :: term().
-%% @doc Delete an existing HTTP user.
-del_user(Username) ->
-	del_user(Username, get_params()).
-%% @hidden
-del_user(Username, {Port, Address, Dir, GroupName}) ->
-	del_user(GroupName, Username, Address, Port, Dir,
-			mod_auth:delete_user(Username, Address, Port, Dir));
-del_user(_, {error, Reason}) ->
-	{error, Reason}.
-%% @hidden
-del_user(GroupName, Username, Address, Port, Dir, true) ->
-	case mod_auth:delete_group_member(GroupName,
-			Username, Address, Port, Dir) of
-		true ->
-			ok;
-		{error, Reason} ->
-			{error, Reason}
-	end;
-del_user(_, _, _, _, _, {error, Reason}) ->
-	{error, Reason}.
-
--spec query_users(Cont, Size, MatchId, MatchLocale) -> Result
-	when
-		Cont :: start | any(),
+		Continuation :: start | ets:continuation(),
 		Size :: pos_integer() | undefined,
-		MatchId :: Match,
-		MatchLocale :: Match,
-		Match :: {exact, string()} | {notexact, string()} | {like, string()},
-		Result :: {Cont1, [#httpd_user{}]} | {error, Reason},
-		Cont1 :: eof | any(),
+		MatchHead :: ets:match_pattern(),
+		MatchConditions :: [tuple()],
+		Result :: {NextContinuation, [#httpd_user{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
 		Reason :: term().
-%% @doc Query the user table.
-query_users(Cont, undefined, MatchId, MatchLocale) ->
-	{ok, Size} = application:get_env(rest_page_size),
-	query_users(Cont, Size, MatchId, MatchLocale);
-query_users(start, Size, '_', MatchLocale) ->
-	MatchSpec = [{'_', [], ['$_']}],
-	query_users1(Size, MatchSpec, MatchLocale);
-query_users(start, Size, {Op, String} = _MatchId, MatchLocale)
-		when is_list(String), ((Op == exact) orelse (Op == like)) ->
-	MatchSpec = case lists:last(String) of
-		$% when Op == like ->
-			Prefix = lists:droplast(String),
-			Username = {Prefix ++ '_', '_', '_', '_'},
-			MatchHead = #httpd_user{username = Username, _ = '_'},
-			[{MatchHead, [], ['$_']}];
-		_ ->
-			Username = {String, '_', '_', '_'},
-			MatchHead = #httpd_user{username = Username, _ = '_'},
-			[{MatchHead, [], ['$_']}]
-	end,
-	query_users1(Size, MatchSpec, MatchLocale);
-query_users(start, Size, {notexact, String} = _MatchId, MatchLocale)
-		when is_list(String) ->
-	Username = {'$1', '_', '_', '_'},
-	MatchHead = #httpd_user{username = Username, _ = '_'},
-	MatchSpec = [{MatchHead, [{'/=', '$1', String}], ['$_']}],
-	query_users1(Size, MatchSpec, MatchLocale);
-query_users(Cont, _Size, _MatchId, MatchLocale) when is_tuple(Cont) ->
+%% @doc Query the REST Users.
+query_user(start = _Continuation, undefined, MatchHead, MatchConditions) ->
+	query_user(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
+query_user(start = _Continuation, Size, MatchHead, MatchConditions)
+		when is_integer(Size), Size > 0,
+		(is_record(MatchHead,  httpd_user) orelse (MatchHead == '_')),
+		is_list(MatchConditions) ->
+	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
 	F = fun() ->
-			mnesia:select(Cont)
+			 mnesia:select(user, MatchExpression, Size, read)
 	end,
 	case mnesia:ets(F) of
-		{Users, Cont1} ->
-			query_users2(MatchLocale, Cont1, Users);
+		{error, Reason} ->
+			{error, Reason};
 		'$end_of_table' ->
-			{eof, []}
-	end;
-query_users(start, Size, MatchId, MatchLocale) when is_tuple(MatchId) ->
-	MatchCondition = [match_condition('$1', MatchId)],
-	Username = {'$1', '_', '_', '_'},
-	MatchHead = #httpd_user{username = Username, _ = '_'},
-	MatchSpec = [{MatchHead, MatchCondition, ['$_']}],
-	query_users1(Size, MatchSpec, MatchLocale).
-%% @hidden
-query_users1(Size, MatchSpec, MatchLocale) ->
-	F = fun() ->
-			mnesia:select(httpd_user, MatchSpec, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{Users, Cont} ->
-			query_users2(MatchLocale, Cont, Users);
-		'$end_of_table' ->
-			{eof, []}
+			{eof, []};
+		{Users, NextContinuation} ->
+			{NextContinuation, Users}
 	end.
-%% @hidden
-query_users2('_' = _MatchLocale, Cont, Users) ->
-	{Cont, Users};
-query_users2({exact, String} = _MatchLocale, Cont, Users)
-		when is_list(String) ->
-	F = fun(#httpd_user{user_data = UD}) ->
-			case lists:keyfind(locale, 1, UD) of
-				{_, String} ->
-					true;
-				_ ->
-					false
-			end
+
+-spec query_user(Continuation) -> Result
+	when
+		Continuation :: ets:continuation(),
+		Result :: {NextContinuation, [#httpd_user{}]} | {error, Reason},
+		NextContinuation:: eof | ets:continuation(),
+		Reason :: term().
+%% @doc Get the next results using a previous query of REST Users.
+query_user(Continuation) ->
+	F = fun() ->
+			 mnesia:select(Continuation)
 	end,
-	{Cont, lists:filter(F, Users)};
-query_users2({notexact, String} = _MatchLocale, Cont, Users)
-		when is_list(String) ->
-	F = fun(#httpd_user{user_data = UD}) ->
-			case lists:keyfind(locale, 1, UD) of
-				{_, String} ->
-					false;
-				_ ->
-					true
-			end
-	end,
-	{Cont, lists:filter(F, Users)};
-query_users2({like, String} = _MatchLocale, Cont, Users)
-		when is_list(String) ->
-	F = case lists:last(String) of
-		$% ->
-			Prefix = lists:droplast(String),
-			fun(#httpd_user{user_data = UD}) ->
-					case lists:keyfind(locale, 1, UD) of
-						{_, Locale} ->
-							lists:prefix(Prefix, Locale);
-						_ ->
-							false
-					end
-			end;
-		_ ->
-			fun(#httpd_user{user_data = UD}) ->
-					case lists:keyfind(locale, 1, UD) of
-						{_, String} ->
-							true;
-						_ ->
-							false
-					end
-			end
-	end,
-	{Cont, lists:filter(F, Users)}.
+	case mnesia:ets(F) of
+		{error, Reason} ->
+			{error, Reason};
+		'$end_of_table' ->
+			{eof, []};
+		{Users, NextContinuation} ->
+			{NextContinuation, Users}
+	end.
 
 -type password() :: [50..57 | 97..104 | 106..107 | 109..110 | 112..116 | 119..122].
 -spec generate_password() -> password().
@@ -923,29 +850,6 @@ unique() ->
 	ID = integer_to_list(TS - ?IDOFFSET) ++ integer_to_list(N),
 	LM = {TS, N},
 	{ID, LM}.
-
--spec match_condition(MatchVariable, Match) -> MatchCondition
-   when
-      MatchVariable :: atom(), % '$<number>'
-      Match :: {exact, term()} | {notexact, term()} | {lt, term()}
-            | {lte, term()} | {gt, term()} | {gte, term()},
-      MatchCondition :: {GuardFunction, MatchVariable, Term},
-      Term :: any(),
-      GuardFunction :: '=:=' | '=/=' | '<' | '=<' | '>' | '>='.
-%% @doc Convert REST query patterns to Erlang match specification conditions.
-%% @hidden
-match_condition(Var, {exact, Term}) ->
-   {'=:=', Var, Term};
-match_condition(Var, {notexact, Term}) ->
-   {'=/=', Var, Term};
-match_condition(Var, {lt, Term}) ->
-   {'<', Var, Term};
-match_condition(Var, {lte, Term}) ->
-   {'=<', Var, Term};
-match_condition(Var, {gt, Term}) ->
-   {'>', Var, Term};
-match_condition(Var, {gte, Term}) ->
-   {'>=', Var, Term}.
 
 -spec generate_password(Length) -> password()
 	when
@@ -1041,63 +945,4 @@ get_params5(Address, Port, Directory, {require_group, [Group | _]}) ->
 get_params5(_, _, _, false) ->
 	{error, httpd_group_undefined}.
 
-%% @hidden
-count_source(Op, String) ->
-   case lists:last(String) of
-      $% when Op == like ->
-         Prefix = lists:droplast(String),
-         fun(#resource{characteristic = Ext}, Acc) ->
-               case lists:prefix(Prefix, Ext) of
-                  true ->
-                     Acc + 1;
-                  false ->
-                     Acc
-               end
-         end;
-      _ ->
-         fun(#resource{characteristic = Ext}, Acc) when Ext == String ->
-                  Acc + 1;
-               (_, Acc) ->
-                  Acc
-         end
-   end.
-
-
-%% @hidden
-filter_source(Op, String) ->
-   case lists:last(String) of
-      $% when Op == like ->
-         Prefix = lists:droplast(String),
-         fun(#resource{characteristic = Ext}) ->
-               lists:prefix(Prefix, Ext)
-         end;
-      _ ->
-         fun(#resource{characteristic = Ext}) when Ext == String ->
-                  true;
-               (_) ->
-                  false
-         end
-   end.
-
-%strip(Char) ->
-%	strip1(Char, []).
-
-%strip1([$_, $B | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([$_, $G | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([$_, $M | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([$_, $R | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([$_, $W | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([$_, $X | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([$_ | T], Acc) ->
-%	strip1(T, Acc);
-%strip1([H | T], Acc) ->
-%	strip1(T, [H | Acc]);
-%strip1([], Acc) ->
-%   lists:reverse(Acc).
 

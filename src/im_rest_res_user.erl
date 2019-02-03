@@ -201,28 +201,6 @@ delete_user(Id) ->
 			{error, 400}
 	end.
 
--spec get_params() -> Result
-	when
-		Result :: {Port, Address, Directory, Group},
-		Port :: integer(),
-		Address :: string(),
-		Directory :: string(),
-		Group :: string().
-%% @doc Get {@link //inets/httpd. httpd} configuration parameters.
-get_params() ->
-	{_, _, Info} = lists:keyfind(httpd, 1, inets:services_info()),
-	{_, Port} = lists:keyfind(port, 1, Info),
-	{_, Address} = lists:keyfind(bind_address, 1, Info),
-	{ok, EnvObj} = application:get_env(inets, services),
-	{httpd, HttpdObj} = lists:keyfind(httpd, 1, EnvObj),
-	{directory, {Directory, AuthObj}} = lists:keyfind(directory, 1, HttpdObj),
-	case lists:keyfind(require_group, 1, AuthObj) of
-		{require_group, [Group | _T]} ->
-			{Port, Address, Directory, Group};
-		false ->
-			exit(not_found)
-	end.
-
 -spec user(User) -> User
 	when
 		User :: #httpd_user{} | map().
@@ -267,26 +245,50 @@ user1([], Acc) ->
 %%  internal functions
 %%----------------------------------------------------------------------
 
+-spec get_params() -> Result
+	when
+		Result :: {Port, Address, Directory, Group},
+		Port :: integer(),
+		Address :: string(),
+		Directory :: string(),
+		Group :: string().
+%% @doc Get {@link //inets/httpd. httpd} configuration parameters.
+%% @private
+get_params() ->
+	{_, _, Info} = lists:keyfind(httpd, 1, inets:services_info()),
+	{_, Port} = lists:keyfind(port, 1, Info),
+	{_, Address} = lists:keyfind(bind_address, 1, Info),
+	{ok, EnvObj} = application:get_env(inets, services),
+	{httpd, HttpdObj} = lists:keyfind(httpd, 1, EnvObj),
+	{directory, {Directory, AuthObj}} = lists:keyfind(directory, 1, HttpdObj),
+	case lists:keyfind(require_group, 1, AuthObj) of
+		{require_group, [Group | _T]} ->
+			{Port, Address, Directory, Group};
+		false ->
+			exit(not_found)
+	end.
+
 %% @hidden
 query_start(Query, Filters, RangeStart, RangeEnd) ->
 	try
+		{Port, Address, Directory, _Group} = get_params(),
 		case lists:keyfind("filter", 1, Query) of
 			{_, String} ->
 				{ok, Tokens, _} = im_rest_query_scanner:string(String),
 				case im_rest_query_parser:parse(Tokens) of
-					{ok, [{array, [{complex, [{"id", like, [Id]},
-							{"characteristic", contains, Contains}]}]}]} ->
-						[{"language", {like, [Locale]}}] = char(Contains, '_'),
-						{{like, Id}, {like, Locale}};
 					{ok, [{array, [{complex, [{"id", like, [Id]}]}]}]} ->
-						{{like, Id}, '_'}
+						Username = {Id ++ '_', Address, Port, Directory},
+						{#httpd_user{username = Username, _ = '_'}, []};
+					{ok, [{array, [{complex, [{"id", exact, [Id]}]}]}]} ->
+						Username = {Id ++ '_', Address, Port, Directory},
+						{#httpd_user{username = Username, _ = '_'}, []}
 				end;
 			false ->
-				{'_', '_'}
+				{'_', []}
 		end
 	of
-		{MatchId, MatchLocale} ->
-			MFA = [im, query_users, [MatchId, MatchLocale]],
+		{MatchHead, MatchConditions} ->
+			MFA = [im, query_users, [MatchHead, MatchConditions]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
@@ -311,37 +313,4 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 					{content_range, ContentRange}],
 			{ok, Headers, Body}
 	end.
-
-%% @hidden
-char([{complex, L1} | T], Chars) ->
-	case lists:keytake("name", 1, L1) of
-		{_, Name, L2} ->
-			case lists:keytake("value", 1, L2) of
-				{_, Value, []} ->
-					char(Name, Value, T, Chars);
-				_ ->
-					throw({error, 400})
-			end;
-		false ->
-			throw({error, 400})
-	end;
-char([], '_') ->
-	'_';
-char([], Attributes) when is_list(Attributes) ->
-	lists:reverse(Attributes).
-%% @hidden
-char({"name", exact, "language"}, {"value", exact, Lang}, T, Chars)
-			when is_list(Lang) ->
-		Obj = add_char(Chars, {"language", {exact, Lang}}),
-		char(T, Obj);
-char({"name", exact, "language"}, {"value", like, Like}, T, Chars)
-			when is_list(Like) ->
-		Obj = add_char(Chars, {"language", {like, Like}}),
-		char(T, Obj).
-
-%% @hidden
-add_char('_', AttributeMatch) ->
-	[AttributeMatch];
-add_char(Attributes, AttributeMatch) when is_list(Attributes) ->
-	[AttributeMatch | Attributes].
 
