@@ -130,7 +130,7 @@
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_',
 		status :: catalog_status() | undefined | '_',
 		parent :: string() | undefined | '_',
-		root = false :: boolean(),
+		root = false :: boolean() | '_',
 		related_party = [] :: [related_party_ref()] | '_',
 		category = [] :: [category_ref()] | '_',
 		candidate = [] :: [candidate_ref()] | '_'}).
