@@ -4,7 +4,7 @@
 	"name": "GsmCell",
 	"description": "GSM Radio Cell",
 	"@type": "ResourceFunctionSpecification",
-	"@schemaLocation": "/resourceCatalog/v2/schema/ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunctionSpecification",
 	"@baseType": "LogicalResourceSpecification",
 	"version": "0.1",
 	"validFor": {
@@ -17,6 +17,6 @@
 	"category": "Radio",
 	"targetResourceSchema": {
 		"@type": "ResourceFunction",
-		"@schemaLocation": "/catalogManagement/v2/schema/ResourceFunction"
-	},
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunction"
+	}
 }

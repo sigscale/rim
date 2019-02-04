@@ -4,7 +4,7 @@
 	"name": "LTE",
 	"description": "Evolved Universal Terrestrial Radio Access Network (EUTRAN)",
 	"@type": "ResourceCategory",
-	"@schemaLocation": "/resourceCatalogManagement/v3/swagger2.json#/definitions/ResourceCategory",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceCategory",
 	"@baseType": "Category",
 	"version": "0.1",
 	"validFor": {

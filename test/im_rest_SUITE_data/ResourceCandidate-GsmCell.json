@@ -4,7 +4,7 @@
 	"name": "GsmCell",
 	"description": "GSM Radio Cell",
 	"@type": "ResourceCandidate",
-	"@schemaLocation": "/resourceCatalogManagement/v3/swagger2.json#/definitions/ResourceCandidate",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceCandidate",
 	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {

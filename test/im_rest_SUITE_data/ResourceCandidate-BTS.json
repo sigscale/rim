@@ -4,7 +4,7 @@
 	"name": "BTS",
 	"description": "GSM Base Transceiver Station (BTS)",
 	"@type": "ResourceCandidate",
-	"@schemaLocation": "/resourceCatalogManagement/v3/swagger2.json#/definitions/ResourceCandidate",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceCandidate",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-24T00:00Z",

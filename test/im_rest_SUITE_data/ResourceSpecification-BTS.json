@@ -4,7 +4,7 @@
 	"name": "BTS",
 	"description": "GSM Base Transceiver Station (BTS)",
 	"@type": "ResourceFunctionSpecification",
-	"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunctionSpecification",
 	"@baseType": "LogicalResourceSpecification",
 	"version": "0.1",
 	"validFor": {
@@ -17,7 +17,7 @@
 	"category": "GSM",
 	"targetResourceSchema": {
 		"@type": "ResourceFunction",
-		"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunction"
 	},
 	"resourceSpecCharacteristic": [
 		{
@@ -28,43 +28,43 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VnfParametersList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
 			"name": "latitude",
 			"description": "Latitude of the site manager location based on (WGS 84) global reference frame",
 			"valueType": "latitude",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/latitude"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/latitude"
 		},
 		{
 			"name": "longitude",
 			"description": "Longitude of the site manager location based on (WGS 84) global reference frame",
 			"valueType": "longitude",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/longitude"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/longitude"
 		},
 		{
 			"name": "operationalState",
 			"description": "Indicates the operational state of the object instance",
 			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/operationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/operationalStateType"
 		},
 		{
 			"name": "gsmCell",
 			"description": "GSM Radio Cell",
 			"valueType": "GsmCellList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/GsmCellList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/GsmCellList"
 		},
 		{
 			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VsDataContainerList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
 			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information.",
 			"valueType": "InterRatEsPolicies",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
 		}
 	]
 }

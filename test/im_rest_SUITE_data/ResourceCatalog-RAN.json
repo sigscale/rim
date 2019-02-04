@@ -4,7 +4,7 @@
 	"name": "RAN Domain Catalog",
 	"description": "Radio Access Network (RAN) Domain Resource Catalog",
 	"@type": "ResourceCatalog",
-	"@schemaLocation": "/resourceCatalogManagement/v3/swagger2.json#/definitions/ResourceCatalog",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceCatalog",
 	"@baseType": "Catalog",
 	"version": "0.1",
 	"validFor": {

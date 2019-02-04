@@ -4,7 +4,7 @@
 	"name": "GsmCell",
 	"description": "GSM Radio Cell",
 	"@type": "ResourceFunctionSpecification",
-	"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunctionSpecification",
 	"@baseType": "LogicalResourceSpecification",
 	"version": "0.1",
 	"validFor": {
@@ -17,7 +17,7 @@
 	"category": "GSM",
 	"targetResourceSchema": {
 		"@type": "ResourceFunction",
-		"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunction"
 	},
 	"resourceSpecCharacteristic": [
 		{
@@ -27,7 +27,7 @@
 		{
 			"name": "vnfParametersList",
 			"valueType": "VnfParametersList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VnfParametersList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
 			"name": "cellIdentity",
@@ -175,7 +175,7 @@
 			"name": "hoppingSequenceList",
 			"description": "List of hopping sequence: MA (3GPP 44.018) and HSN (3GPP 45.002)",
 			"valueType": "HoppingSequenceList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/HoppingSequenceList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/HoppingSequenceList"
 		},
 		{
 			"name": "plmnPermitted",
@@ -192,31 +192,31 @@
 			"name": "gsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelationList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/GsmRelationList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
 			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranCell",
 			"valueType": "UtranRelationList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/utranNrm#/definitions/UtranRelationList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
 			"name": "eUtranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target EUtranCell",
 			"valueType": "EUtranRelationList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/eutranNrm#/definitions/EUtranRelationList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranRelationList"
 		},
 		{
 			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VsDataContainerList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
 			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information.",
 			"valueType": "InterRatEsPolicies",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
 		}
 	]
 }

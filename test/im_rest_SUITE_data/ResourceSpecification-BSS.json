@@ -4,7 +4,7 @@
 	"name": "BSS",
 	"description": "GSM Base Station System (BSS)",
 	"@type": "ResourceFunctionSpecification",
-	"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunctionSpecification",
 	"@baseType": "LogicalResourceSpecification",
 	"version": "0.1",
 	"validFor": {
@@ -17,7 +17,7 @@
 	"category": "GSM",
 	"targetResourceSchema": {
 		"@type": "ResourceFunction",
-		"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunction"
 	},
 	"resourceSpecCharacteristic": [
 		{
@@ -28,19 +28,19 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VnfParametersList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
 			"name": "btsSiteMgr",
 			"description": "Base Tranceiver Station (BTS) Site",
 			"valueType": "BtsSiteMgrList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/BtsSiteMgrList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
 		},
 		{
 			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VsDataContainerList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }
