@@ -1,0 +1,37 @@
+{
+	"id": "1",
+	"href": "/resourceCatalogManagement/v3/resourceCatalog/1",
+	"name": "RAN Domain Catalog",
+	"description": "Radio Access Network (RAN) Domain Resource Catalog",
+	"@type": "ResourceCatalog",
+	"@schemaLocation": "/resourceCatalogManagement/v3/swagger2.json#/definitions/ResourceCatalog",
+	"@baseType": "Catalog",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-24T00:00Z",
+		"endDateTime": "2019-02-01T00:00Z"
+	},
+	"lastUpdate": "2019-01-24T00:00Z",
+	"lifecycleStatus": "In Study",
+	"relatedParty": [],
+	"category": [
+		{
+			"id": "1",
+			"href": "/resourceCatalogManagement/v3/resourceCategory/1",
+			"version": "0.1",
+			"name": "GSM"
+		},
+		{
+			"id": "2",
+			"href": "/resourceCatalogManagement/v3/resourceCategory/2",
+			"version": "0.1",
+			"name": "UMTS"
+		},
+		{
+			"id": "3",
+			"href": "/resourceCatalogManagement/v3/resourceCategory/3",
+			"version": "0.1",
+			"name": "LTE"
+		}
+	]
+}

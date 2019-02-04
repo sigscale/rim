@@ -1,0 +1,222 @@
+{
+	"id": "3",
+	"href": "/resourceCatalogManagement/v3/resourceSpecification/3",
+	"name": "GsmCell",
+	"description": "GSM Radio Cell",
+	"@type": "ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunctionSpecification",
+	"@baseType": "LogicalResourceSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-24T00:00Z",
+		"endDateTime": "2019-02-01T00:00Z"
+	},
+	"lastUpdate": "2019-01-24T00:00Z",
+	"lifecycleStatus": "In Study",
+	"isBundle": false,
+	"category": "GSM",
+	"targetResourceSchema": {
+		"@type": "ResourceFunction",
+		"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunction"
+	},
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "cellIdentity",
+			"description": "Cell Identity (3GPP 24.008)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 65535
+				} 
+			]
+		},
+		{
+			"name": "cellAllocation",
+			"description": "The set of Absolute Radio Frequency Channel Number (ARFCN) (3GPP 44.018)",
+			"valueType": "array"
+		},
+		{
+			"name": "ncc",
+			"description": "Network Colour Code (NCC) (3GPP 44.018)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 7
+				} 
+			]
+		},
+		{
+			"name": "bcc",
+			"description": "Base Station Colour Code (BCC) (3GPP 44.018)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 7 
+				} 
+			]
+		},
+		{
+			"name": "lac",
+			"description": "Location Area Code (LAC) (3GPP 24.008)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 1,
+					"valueTo": 65533
+				} 
+			]
+		},
+		{
+			"name": "mcc",
+			"description": "Mobile Country Code (MCC) (3GPP 23.003)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 1,
+					"valueTo": 999
+				} 
+			]
+		},
+		{
+			"name": "mnc",
+			"description": "Mobile Network Code (MNC) (3GPP 23.003)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 1,
+					"valueTo": 999
+				} 
+			]
+		},
+		{
+			"name": "mnc",
+			"description": "Mobile Network Code (MNC) (3GPP 23.003)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 1,
+					"valueTo": 999
+				} 
+			]
+		},
+		{
+			"name": "rac",
+			"description": "Routing Area Code (RAC) (3GPP 44.018)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 255
+				} 
+			]
+		},
+		{
+			"name": "racc",
+			"description": "Routing Area Colour Code (RACC) (3GPP 44.018)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 7
+				} 
+			]
+		},
+		{
+			"name": "tsc",
+			"description": "Training Sequence Code (TSC) (3GPP 44.018)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 7
+				} 
+			]
+		},
+		{
+			"name": "rxLevAccessMin",
+			"description": "Minimum Access Level (RXLEV_ACCESS_MIN) (3GPP TS 45.008)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 63
+				} 
+			]
+		},
+		{
+			"name": "msTxPwrMaxCCH",
+			"description": "Maximum Transmission Power (MS_TXPWR_MAX_CCH) (3GPP 45.008)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 31
+				} 
+			]
+		},
+		{
+			"name": "rfHoppingEnabled",
+			"description": "Indicates if frequency hopping is enabled",
+			"valueType": "boolean"
+		},
+		{
+			"name": "hoppingSequenceList",
+			"description": "List of hopping sequence: MA (3GPP 44.018) and HSN (3GPP 45.002)",
+			"valueType": "HoppingSequenceList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/HoppingSequenceList"
+		},
+		{
+			"name": "plmnPermitted",
+			"description": "Network Colour Code (NCC) Permitted (NCC_PERMITTED) (3GPP 45.008)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 255
+				} 
+			]
+		},
+		{
+			"name": "gsmRelation",
+			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
+			"valueType": "GsmRelationList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/GsmRelationList"
+		},
+		{
+			"name": "utranRelation",
+			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranCell",
+			"valueType": "UtranRelationList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/utranNrm#/definitions/UtranRelationList"
+		},
+		{
+			"name": "eUtranRelation",
+			"description": "Neighbour cell Relation (NR) from a source cell to a target EUtranCell",
+			"valueType": "EUtranRelationList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/eutranNrm#/definitions/EUtranRelationList"
+		},
+		{
+			"name": "vsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+		{
+			"name": "interRatEsPolicies",
+			"description": "Inter-RAT energy saving policies information.",
+			"valueType": "InterRatEsPolicies",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
+		}
+	]
+}

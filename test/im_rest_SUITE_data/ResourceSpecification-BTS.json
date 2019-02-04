@@ -1,0 +1,70 @@
+{
+	"id": "2",
+	"href": "/resourceCatalogManagement/v3/resourceSpecification/2",
+	"name": "BTS",
+	"description": "GSM Base Transceiver Station (BTS)",
+	"@type": "ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunctionSpecification",
+	"@baseType": "LogicalResourceSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-24T00:00Z",
+		"endDateTime": "2019-02-01T00:00Z"
+	},
+	"lastUpdate": "2019-01-24T00:00Z",
+	"lifecycleStatus": "In Study",
+	"isBundle": false,
+	"category": "GSM",
+	"targetResourceSchema": {
+		"@type": "ResourceFunction",
+		"@schemaLocation": "/resourceFunctionActivationConfiguration/v2/swagger2.json#/definitions/ResourceFunction"
+	},
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "latitude",
+			"description": "Latitude of the site manager location based on (WGS 84) global reference frame",
+			"valueType": "latitude",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/latitude"
+		},
+		{
+			"name": "longitude",
+			"description": "Longitude of the site manager location based on (WGS 84) global reference frame",
+			"valueType": "longitude",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/longitude"
+		},
+		{
+			"name": "operationalState",
+			"description": "Indicates the operational state of the object instance",
+			"valueType": "operationalStateType",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/geranNrm#/definitions/operationalStateType"
+		},
+		{
+			"name": "gsmCell",
+			"description": "GSM Radio Cell",
+			"valueType": "GsmCellList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/GsmCellList"
+		},
+		{
+			"name": "vsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+		{
+			"name": "interRatEsPolicies",
+			"description": "Inter-RAT energy saving policies information.",
+			"valueType": "InterRatEsPolicies",
+			"@valueSchemaLocation": "/resourceFunctionActivationConfiguration/v2/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
+		}
+	]
+}

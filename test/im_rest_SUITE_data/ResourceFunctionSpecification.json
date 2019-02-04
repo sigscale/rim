@@ -1,0 +1,22 @@
+{
+	"id": "1",
+	"href": "/resourceCatalog/v2/resourceSpecification/1",
+	"name": "GsmCell",
+	"description": "GSM Radio Cell",
+	"@type": "ResourceFunctionSpecification",
+	"@schemaLocation": "/resourceCatalog/v2/schema/ResourceFunctionSpecification",
+	"@baseType": "LogicalResourceSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-24T00:00Z",
+		"endDateTime": "2019-02-01T00:00Z"
+	},
+	"lastUpdate": "2019-01-24T00:00Z",
+	"lifecycleStatus": "In Study",
+	"isBundle": false,
+	"category": "Radio",
+	"targetResourceSchema": {
+		"@type": "ResourceFunction",
+		"@schemaLocation": "/catalogManagement/v2/schema/ResourceFunction"
+	},
+}

@@ -1,0 +1,31 @@
+{
+	"id": "1",
+	"href": "/resourceCatalogManagement/v3/resourceCandidate/1",
+	"name": "BSS",
+	"description": "GSM Base Station System (BSS)",
+	"@type": "ResourceCandidate",
+	"@schemaLocation": "/resourceCatalogManagement/v3/swagger2.json#/definitions/ResourceCandidate",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-24T00:00Z",
+		"endDateTime": "2019-02-01T00:00Z"
+	},
+	"lastUpdate": "2019-01-24T00:00Z",
+	"lifecycleStatus": "In Study",
+	"category": [
+		{
+			"id": "1",
+			"href": "/resourceCatalogManagement/v3/resourceCategory/1",
+			"name": "GSM",
+			"version": "0.1"
+		}
+	],
+	"resourceSpecification": [
+		{
+			"id": "1",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1",
+			"name": "BSS",
+			"version": "0.1"
+		}
+	]
+}
