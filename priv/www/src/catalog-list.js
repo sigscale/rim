@@ -142,6 +142,14 @@ class catalogList extends PolymerElement {
 					grid.size = Number(range2[1]) + grid.pageSize * 2;
 				}
 				var vaadinItems = new Array();
+				for(var index in request.response) {
+					var newRecord = new Object();
+					newRecord.catalogName = request.response[index].name;
+					newRecord.catalogDescription = request.response[index].description;
+					newRecord.catalogClass = request.response[index].class_type;
+					newRecord.catalogStatus = request.response[index].status;
+					vaadinItems[index] = newRecord;
+				}
 				callback(vaadinItems);
 		} else {
 			grid.size = 0;

@@ -11,6 +11,8 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
+import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
+import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
 class specificationList extends PolymerElement {
@@ -22,56 +24,130 @@ class specificationList extends PolymerElement {
 					id="specificationGrid">
 				<vaadin-grid-column>
 					<template class="header">
-						Name
+						<vaadin-grid-sorter
+								path="specName">
+							<vaadin-grid-filter
+									id="filterSpecName"
+									aria-label="Name"
+									path="specName"
+									value="{{_filterSpecName}}">
+								<input
+										slot="filter"
+										placeholder="Name"
+										value="{{_filterSpecName::input}}"
+										focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
+					</template>
+					<template>[[item.specName]]</template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+					<template class="header">
+						<vaadin-grid-sorter
+								path="specDesc">
+							<vaadin-grid-filter
+									id="filterSpecDesc"
+									aria-label="Description"
+									path="specDesc"
+									value="{{_filterSpecDesc}}">
+								<input
+									slot="filter"
+									placeholder="Description"
+									value="{{_filterSpecDesc::input}}"
+									focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
+					</template>
+					<template>[[item.specDesc]]</template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+					<template class="header">
+						<vaadin-grid-sorter
+								path="specClass">
+							<vaadin-grid-filter
+									id="filterSpecClass"
+									aria-label="Class"
+									path="specClass"
+									value="{{_filterSpecClass}}">
+								<input
+									slot="filter"
+									placeholder="Class"
+									value="{{_filterSpecClass::input}}"
+									focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.id]]
+						[[item.specClass]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Description
+						<vaadin-grid-sorter
+								path="specStatus">
+							<vaadin-grid-filter
+									id="filterSpecStatus"
+									aria-label="Status"
+									path="specStatus"
+									value="{{_filterSpecStatus}}">
+								<input
+									slot="filter"
+									placeholder="Status"
+									value="{{_filterSpecStatus::input}}"
+									focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.description]]
+						[[item.specStatus]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Class
+						<vaadin-grid-sorter
+								path="specCat">
+							<vaadin-grid-filter
+									id="filterSpecCat"
+									aria-label="Category"
+									path="specCat"
+									value="{{_filterSpecCat}}">
+								<input
+									slot="filter"
+									placeholder="Category"
+									value="{{_filterSpecCat::input}}"
+									focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.classs]]
+						[[item.specCat]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
-						Status
+						<vaadin-grid-sorter
+								path="specBundle">
+							<vaadin-grid-filter
+									id="filterSpecBundle"
+									aria-label="Bundle"
+									path="specBundle"
+									value="{{_filterSpecBundle}}">
+								<input
+									slot="filter"
+									placeholder="Bundle"
+									value="{{_filterSpecBundle::input}}"
+									focus-target>
+							</vaadin-grid-filter>
+						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.stat]]
-					</template>
-				</vaadin-grid-column>
-				<vaadin-grid-column>
-					<template class="header">
-						Category	
-					</template>
-					<template>
-						[[item.cat]]
-					</template>
-				</vaadin-grid-column>
-				<vaadin-grid-column>
-					<template class="header">
-						Bundle
-					</template>
-					<template>
-						[[item.bundle]]
+						[[item.specBundle]]
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
 			<iron-ajax
 				id="getSpecificationAjax"
-				url="resourceCatalogManagement/v3/specification1"
+				url="resourceCatalogManagement/v3/specification"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
@@ -112,6 +188,16 @@ class specificationList extends PolymerElement {
 					grid.size = Number(range2[1]) + grid.pageSize * 2;
 				}
 				var vaadinItems = new Array();
+				for(var index in request.response) {
+					var newRecord = new Object();
+					newRecord.specName = request.response[index].name;
+					newRecord.specDesc = request.response[index].description;
+					newRecord.specClass = request.response[index].class_type;
+					newRecord.specStatus = request.response[index].status;
+					newRecord.specCat = request.response[index].related_party;
+					newRecord.specBundle = request.response[index].bundle;
+					vaadinItems[index] = newRecord;
+				}
 				callback(vaadinItems);
 		} else {
 			grid.size = 0;

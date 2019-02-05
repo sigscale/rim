@@ -182,6 +182,16 @@ class categoryList extends PolymerElement {
 					grid.size = Number(range2[1]) + grid.pageSize * 2;
 				}
 				var vaadinItems = new Array();
+				for(var index in request.response) {
+					var newRecord = new Object();
+					newRecord.categoryName = request.response[index].name;
+					newRecord.categoryDescription = request.response[index].description;
+					newRecord.categoryClass = request.response[index].class_type;
+					newRecord.categoryStatus = request.response[index].status;
+					newRecord.categoryParent = request.response[index].parent;
+					newRecord.categoryRoot = request.response[index].root;
+					vaadinItems[index] = newRecord;
+				}
 				callback(vaadinItems);
 			} else {
 				grid.size = 0;

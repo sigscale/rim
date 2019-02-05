@@ -107,7 +107,7 @@ class candidateList extends PolymerElement {
 			</vaadin-grid>
 			<iron-ajax
 				id="getCandidateAjax"
-				url="resourceCatalogManagement/v3/candidate1"
+				url="resourceCatalogManagement/v3/candidate"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
@@ -148,6 +148,15 @@ class candidateList extends PolymerElement {
 					grid.size = Number(range2[1]) + grid.pageSize * 2;
 				}
 				var vaadinItems = new Array();
+					for(var index in request.response) {
+						var newRecord = new Object();
+						newRecord.candidateName = request.response[index].name;
+						newRecord.candidateDescription = request.response[index].description;
+						newRecord.candidateDescription = request.response[index].description;
+						newRecord.candidateClass = request.response[index].class_type;
+						newRecord.candidateStatus = request.response[index].status;
+						vaadinItems[index] = newRecord;
+					}
 				callback(vaadinItems);
 			} else {
 				grid.size = 0;
