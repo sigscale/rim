@@ -32,6 +32,20 @@ styleElement.innerHTML = `<template>
 				height: 100%;
 				top: 64px;
 			}
+			paper-dialog {
+            overflow: auto;
+         }
+         paper-item {
+            padding-right: 10px;
+         }
+         paper-toolbar{
+            margin-top: 0px;
+            color: white;
+            background-color: #bc5100;
+         }
+         .cancel-button {
+            color: black;
+         }
 			paper-progress {
 				display: block;
 				width: 100%;
@@ -102,6 +116,16 @@ styleElement.innerHTML = `<template>
 			paper-icon-item {
 				--paper-item-icon-width: 32px;
 				--paper-item-min-height: 1em;
+			}
+			paper-fab {
+				background: var(--paper-lime-a700);
+				color: black;
+			}
+			.add-button {
+				right: 2%;
+				position: fixed;
+				bottom: 5%;
+				z-index: 100;
 			}
 			.labelName {
 				font-style: normal;

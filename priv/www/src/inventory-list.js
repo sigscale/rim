@@ -10,6 +10,8 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
@@ -146,6 +148,12 @@ class inventoryList extends PolymerElement {
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
+			<div class="add-button">
+				<paper-fab
+					icon="add"
+					on-tap = "showAddInventoryModal">
+				</paper-fab>
+			</div>
 			<iron-ajax
 				id="getInventoryAjax"
 				url="resourceInventoryManagement/v1/logicalResource"

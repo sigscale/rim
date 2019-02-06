@@ -10,6 +10,8 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import './style-element.js';
 
@@ -37,9 +39,15 @@ class userList extends PolymerElement {
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
+			<div class="add-button">
+				<paper-fab
+					icon="add"
+					on-tap = "showAddUserModal">
+				</paper-fab>
+         </div>
 			<iron-ajax
 				id="getUserAjax"
-				url="partyManagement/v1/individual"
+				url="partyManagement/v2/individual"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
@@ -60,6 +68,11 @@ class userList extends PolymerElement {
 		var ajaxGrid = this.shadowRoot.getElementById('getUserAjax');
 		grid.dataProvider = this._getLog;
 	}
+
+//	showAddUserModal(event) {
+//		document.getElementById("addUserModal").open();
+//		document.body.querySelector('inventory-management').shadowRoot.getElementById('addUserModal').open();
+//	}
 
 	_getLog(params, callback) {
 		var grid = this;
