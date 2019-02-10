@@ -129,10 +129,9 @@ class InventoryManagement extends PolymerElement {
 							attr-for-selected="name"
 							class="drawer-list"
 							role="navigation">
-						<a name="catalogMenu">
+						<a href="" on-click="_collapseLogs">
 							<paper-icon-button
-									icon="my-icons:resourceCatalog"
-									on-click="_collapseLogs">
+									icon="my-icons:resourceCatalog">
 							</paper-icon-button>
 							Catalog
 						</a>
