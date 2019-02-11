@@ -276,10 +276,10 @@ candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 		when is_list(Status) ->
 	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
 candidate([category | T], #candidate{category = CatRefs} = R, Acc)
-		when is_list(CatRefs) ->
+		when is_list(CatRefs), length(CatRefs) > 0 ->
 	candidate(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
 candidate([category | T], #{"category" := CatRefs} = M, Acc)
-		when is_list(CatRefs) ->
+		when is_list(CatRefs), length(CatRefs) > 0 ->
 	candidate(T, M, Acc#candidate{category = im_rest:category_ref(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
 		when is_record(Spec, specification_ref) ->
