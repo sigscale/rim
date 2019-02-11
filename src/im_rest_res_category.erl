@@ -219,14 +219,14 @@ category([description| T], #{"description" := Description} = M, Acc)
 	category(T, M, Acc#category{description = Description});
 category([class_type | T], #category{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	category(T, R, Acc#{"@baseType" => Type});
-category([class_type | T], #{"@baseType" := Type} = M, Acc)
+	category(T, R, Acc#{"@type" => Type});
+category([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	category(T, M, Acc#category{class_type = Type});
 category([base_type | T], #category{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	category(T, R, Acc#{"@type" => Type});
-category([base_type | T], #{"@type" := Type} = M, Acc)
+	category(T, R, Acc#{"@baseType" => Type});
+category([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	category(T, M, Acc#category{base_type = Type});
 category([schema | T], #category{schema = Schema} = R, Acc)
