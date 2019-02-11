@@ -220,14 +220,14 @@ candidate([description| T], #{"description" := Description} = M, Acc)
 	candidate(T, M, Acc#candidate{description = Description});
 candidate([class_type | T], #candidate{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	candidate(T, R, Acc#{"@baseType" => Type});
-candidate([class_type | T], #{"@baseType" := Type} = M, Acc)
+	candidate(T, R, Acc#{"@type" => Type});
+candidate([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	candidate(T, M, Acc#candidate{class_type = Type});
 candidate([base_type | T], #candidate{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	candidate(T, R, Acc#{"@type" => Type});
-candidate([base_type | T], #{"@type" := Type} = M, Acc)
+	candidate(T, R, Acc#{"@baseType" => Type});
+candidate([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	candidate(T, M, Acc#candidate{base_type = Type});
 candidate([schema | T], #candidate{schema = Schema} = R, Acc)
@@ -276,16 +276,16 @@ candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 		when is_list(Status) ->
 	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
 candidate([category | T], #candidate{category = CatRefs} = R, Acc)
-		when is_list(CatRefs) ->
+		when is_list(CatRefs), length(CatRefs) > 0 ->
 	candidate(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
 candidate([category | T], #{"category" := CatRefs} = M, Acc)
-		when is_list(CatRefs) ->
+		when is_list(CatRefs), length(CatRefs) > 0 ->
 	candidate(T, M, Acc#candidate{category = im_rest:category_ref(CatRefs)});
 candidate([specification | T], #candidate{specification = Spec} = R, Acc)
 		when is_record(Spec, specification_ref) ->
 	candidate(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(Spec)});
 candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc)
-		when is_tuple(Spec) ->
+		when is_map(Spec) ->
 	candidate(T, M, Acc#candidate{specification = im_rest:specification_ref(Spec)});
 candidate([_ | T], R, Acc) ->
 	candidate(T, R, Acc);

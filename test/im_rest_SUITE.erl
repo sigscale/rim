@@ -120,7 +120,11 @@ sequences() ->
 %% Returns a list of all test cases in this test suite.
 %%
 all() ->
-	[map_to_catalog, catalog_to_map, post_catalog, get_catalogs, get_catalog].
+	[map_to_catalog, catalog_to_map, post_catalog, get_catalogs, get_catalog,
+			map_to_category, category_to_map, post_category, get_categories, get_category,
+			map_to_candidate, candidate_to_map, post_candidate, get_candidates, get_candidate,
+			map_to_specification, specification_to_map, post_specification, get_specifications,
+			get_specification].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -307,6 +311,7 @@ get_catalogs(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{ok, Catalogs} = zj:decode(ResponseBody),
+	false = is_empty(Catalogs),
 	true = lists:all(fun is_catalog/1, Catalogs).
 
 get_catalog() ->
@@ -360,9 +365,716 @@ get_catalog(Config) ->
 	true = is_related_party_ref(RP),
 	true = is_category_ref(C).
 
+map_to_category() ->
+	[{userdata, [{doc, "Decode Category map()"}]}].
+
+map_to_category(_Config) ->
+	CategoryId = random_string(12),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Parent = random_string(10),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CandidateId = random_string(10),
+	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateName = random_string(10),
+	Map = #{"id" => CategoryId,
+			"href" => CategoryHref,
+			"name" => CategoryName,
+			"description" => Description,
+			"@type" => ClassType,
+			"@schemaLocation" => Schema,
+			"@baseType" => "Category",
+			"version" => Version,
+			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+					"endDateTime" => "2019-12-31T23:59"},
+			"lifecycleStatus" => "Active",
+			"parentId" => Parent,
+			"isRoot" => "false",
+			"resourceCandidate" => [#{"id" => CandidateId,
+					"href" => CandidateHref,
+					"name" => CandidateName,
+					"version" => Version}],
+			"relatedParty" => [#{"id" => PartyId,
+					"href" => PartyHref,
+					"role" => "Supplier",
+					"name" => "ACME Inc.",
+					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+							"endDateTime" => "2019-12-31T23:59"}}]},
+	#category{id = CategoryId, href = CategoryHref,
+			description = Description, class_type = ClassType,
+			schema = Schema, base_type = "Category", version = Version,
+			start_date = StartDate, end_date = EndDate,
+			status = active, parent = Parent, root = false, related_party = [RP],
+			candidate = [C]} = im_rest_res_category:category(Map),
+	true = is_integer(StartDate),
+	true = is_integer(EndDate),
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#candidate_ref{id = CandidateId, href = CandidateHref,
+			name = CandidateName, version = Version} = C.
+%erlang:display({?MODULE, ?LINE, im_rest_res_category:category(Map)}).
+
+category_to_map() ->
+	[{userdata, [{doc, "Encode Category map()"}]}].
+
+category_to_map(_Config) ->
+	CategoryId = random_string(12),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Parent = random_string(10),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CandidateId = random_string(10),
+	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateName = random_string(10),
+	CategoryRecord = #category{id = CategoryId,
+			href = CategoryHref,
+			name = CategoryName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Category",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			parent = Parent,
+			root = false,
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			candidate = [#candidate_ref{id = CandidateId,
+					href = CandidateHref,
+					name = CandidateName,
+					version = Version}]},
+	#{"id" := CategoryId, "href" := CategoryHref,
+			"description" := Description, "@type" := ClassType,
+			"@schemaLocation" := Schema, "@baseType" := "Category", "version" := Version,
+			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
+			"lifecycleStatus" := "Active", "parentId" := Parent, "isRoot" := false,
+			"relatedParty" := [RP], "resourceCandidate" := [C]}
+			= im_rest_res_category:category(CategoryRecord),
+	true = is_list(Start),
+	true = is_list(End),
+	#{"id" := PartyId, "href" := PartyHref} = RP,
+	#{"id" := CandidateId, "href" := CandidateHref,
+			"name" := CandidateName, "version" := Version} = C.
+
+post_category() ->
+	[{userdata, [{doc, "POST to Category collection"}]}].
+
+post_category(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "category",
+	CategoryName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Parent = random_string(10),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CandidateId = random_string(10),
+	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateName = random_string(10),
+	RequestBody = "{\n"
+			++ "\t\"name\": \"" ++ CategoryName ++ "\",\n"
+			++ "\t\"description\": \"" ++ Description ++ "\",\n"
+			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
+			++ "\t\"@schemaLocation\": \"" ++ Schema ++ "\",\n"
+			++ "\t\"@baseType\": \"Category\",\n"
+			++ "\t\"version\": \"" ++ Version ++ "\",\n"
+			++ "\t\"validFor\": {\n"
+			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t},\n"
+			++ "\t\"lifecycleStatus\": \"In Test\",\n"
+			++ "\t\"parentId\": \"" ++ Parent ++ "\",\n"
+			++ "\t\"isRoot\": true,\n"
+			++ "\t\"resourceCandidate\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ CandidateId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ CandidateHref ++ "\",\n"
+			++ "\t\t\t\"name\": \"" ++ CandidateName ++ "\",\n"
+			++ "\t\t\t\"version\": \"" ++ Version ++ "\"\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
+			++ "\t\"relatedParty\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ PartyId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ PartyHref ++ "\",\n"
+			++ "\t\t\t\"role\": \"Supplier\",\n"
+			++ "\t\t\t\"name\": \"ACME Inc.\",\n"
+			++ "\t\t\t\"validFor\": {\n"
+			++ "\t\t\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
+			++ "\t\t\t}\n"
+			++ "\t\t}\n"
+			++ "\t]\n"
+			++ "}\n",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{_, URI} = lists:keyfind("location", 1, Headers),
+	{?PathCatalog ++ "category/" ++ ID, _} = httpd_util:split_path(URI),
+	{ok, #category{id = ID, name = CategoryName,
+			description = Description, version = Version,
+			class_type = ClassType, base_type = "Category",
+			parent = Parent, root = true, 
+			schema = Schema, related_party = [RP],
+			candidate = [C]}} = im:get_category(ID),
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#candidate_ref{id = CandidateId, href = CandidateHref,
+			name = CandidateName, version = Version} = C.
+
+get_categories() ->
+	[{userdata, [{doc, "GET Category collection"}]}].
+
+get_categories(Config) ->
+	ok = fill_category(5),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "category",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, Categories} = zj:decode(ResponseBody),
+	false = is_empty(Categories),
+	true = lists:all(fun is_category/1, Categories).
+
+get_category() ->
+	[{userdata, [{doc, "GET Category resource"}]}].
+
+get_category(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CategoryName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Parent = random_string(10),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CandidateId = random_string(10),
+	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateName = random_string(10),
+	CategoryRecord = #category{name = CategoryName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Category",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			parent = Parent,
+			root = true,
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			candidate = [#candidate_ref{id = CandidateId,
+					href = CandidateHref,
+					name = CandidateName,
+					version = Version}]},
+	{ok, #category{id = Id, href = Href}} = im:add_category(CategoryRecord),
+	Accept = {"accept", "application/json"},
+	Request = {HostUrl ++ Href, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, CategoryMap} = zj:decode(ResponseBody),
+	#{"id" := Id, "href" := Href, "name" := CategoryName,
+			"description" := Description, "version" := Version,
+			"@type" := ClassType, "@baseType" := "Category", "parentId" := Parent,
+			"isRoot" := true, "@schemaLocation" := Schema, "relatedParty" := [RP],
+			"resourceCandidate" := [C]} = CategoryMap,
+	true = is_related_party_ref(RP),
+	true = is_candidate_ref(C).
+
+map_to_candidate() ->
+	[{userdata, [{doc, "Decode Candidate map()"}]}].
+
+map_to_candidate(_Config) ->
+	CandidateId = random_string(12),
+	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	SpecificationId = random_string(12),
+	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationName = random_string(10),
+	Map = #{"id" => CandidateId,
+			"href" => CandidateHref,
+			"name" => CandidateName,
+			"description" => Description,
+			"@type" => ClassType,
+			"@schemaLocation" => Schema,
+			"@baseType" => "Candidate",
+			"version" => Version,
+			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+					"endDateTime" => "2019-12-31T23:59"},
+			"lifecycleStatus" => "Active",
+			"category" => [#{"id" => CategoryId,
+					"href" => CategoryHref,
+					"name" => CategoryName,
+					"version" => Version}],
+			"resourceSpecification" => #{"id" => SpecificationId,
+					"href" => SpecificationHref,
+					"name" => SpecificationName,
+					"version" => Version}},
+	#candidate{id = CandidateId, href = CandidateHref,
+			description = Description, class_type = ClassType,
+			schema = Schema, base_type = "Candidate", version = Version,
+			start_date = StartDate, end_date = EndDate, status = active, category = [C],
+			specification = S} = im_rest_res_candidate:candidate(Map),
+	true = is_integer(StartDate),
+	true = is_integer(EndDate),
+	#category_ref{id = CategoryId, href = CategoryHref,
+			name = CategoryName, version = Version} = C,
+	#specification_ref{id = SpecificationId, href = SpecificationHref,
+			name = SpecificationName, version = Version} = S.
+
+candidate_to_map() ->
+	[{userdata, [{doc, "Encode Candidate map()"}]}].
+
+candidate_to_map(_Config) ->
+	CandidateId = random_string(10),
+	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	CategoryId = random_string(12),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	SpecificationId = random_string(12),
+	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationName = random_string(10),
+	CandidateRecord = #candidate{id = CandidateId,
+			href = CandidateHref,
+			name = CandidateName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Candidate",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			category = [#category_ref{id = CategoryId,
+					href = CategoryHref,
+					name = CategoryName,
+					version = Version}],
+			specification = #specification_ref{id = SpecificationId,
+					href = SpecificationHref,
+					name = SpecificationName,
+					version = Version}},
+	#{"id" := CandidateId, "href" := CandidateHref,
+			"description" := Description, "@type" := ClassType,
+			"@schemaLocation" := Schema, "@baseType" := "Candidate", "version" := Version,
+			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
+			"lifecycleStatus" := "Active", "category" := [C],
+			"resourceSpecification" := S} = im_rest_res_candidate:candidate(CandidateRecord),
+	true = is_list(Start),
+	true = is_list(End),
+	#{"id" := CategoryId, "href" := CategoryHref,
+			"name" := CategoryName, "version" := Version} = C,
+	#{"id" := SpecificationId, "href" := SpecificationHref,
+			"name" := SpecificationName, "version" := Version} = S.
+
+post_candidate() ->
+	[{userdata, [{doc, "POST to Candidate collection"}]}].
+
+post_candidate(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "candidate",
+	CandidateName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	SpecificationId = random_string(12),
+	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationName = random_string(10),
+	RequestBody = "{\n"
+			++ "\t\"name\": \"" ++ CandidateName ++ "\",\n"
+			++ "\t\"description\": \"" ++ Description ++ "\",\n"
+			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
+			++ "\t\"@schemaLocation\": \"" ++ Schema ++ "\",\n"
+			++ "\t\"@baseType\": \"Candidate\",\n"
+			++ "\t\"version\": \"" ++ Version ++ "\",\n"
+			++ "\t\"validFor\": {\n"
+			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t},\n"
+			++ "\t\"lifecycleStatus\": \"In Test\",\n"
+			++ "\t\"category\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ CategoryId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ CategoryHref ++ "\",\n"
+			++ "\t\t\t\"name\": \"" ++ CategoryName ++ "\",\n"
+			++ "\t\t\t\"version\": \"" ++ Version ++ "\"\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
+			++ "\t\"resourceSpecification\": \n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ SpecificationId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ SpecificationHref ++ "\",\n"
+			++ "\t\t\t\"name\": \"" ++ SpecificationName ++ "\",\n"
+			++ "\t\t\t\"version\": \"" ++ Version ++ "\"\n"
+			++ "\t\t}\n"
+			++ "\t\n"
+			++ "}\n",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{_, URI} = lists:keyfind("location", 1, Headers),
+	{?PathCatalog ++ "candidate/" ++ ID, _} = httpd_util:split_path(URI),
+	{ok, #candidate{id = ID, name = CandidateName,
+			description = Description, version = Version,
+			class_type = ClassType, base_type = "Candidate",
+			schema = Schema, category = [C],
+			specification = S}} = im:get_candidate(ID),
+	#category_ref{id = CategoryId, href = CategoryHref,
+			name = CategoryName, version = Version} = C,
+	#specification_ref{id = SpecificationId, href = SpecificationHref,
+			name = SpecificationName, version = Version} = S.
+
+get_candidates() ->
+	[{userdata, [{doc, "GET Candidate collection"}]}].
+
+get_candidates(Config) ->
+	ok = fill_candidate(5),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "candidate",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, Candidates} = zj:decode(ResponseBody),
+	false = is_empty(Candidates),
+	true = lists:all(fun is_candidate/1, Candidates).
+
+get_candidate() ->
+	[{userdata, [{doc, "GET Candidate resource"}]}].
+
+get_candidate(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CandidateName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	CategoryId = random_string(10),
+	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryName = random_string(10),
+	SpecificationId = random_string(10),
+	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationName = random_string(10),
+	CandidateRecord = #candidate{name = CandidateName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Candidate",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			category = [#category_ref{id = CategoryId,
+					href = CategoryHref,
+					name = CategoryName,
+					version = Version}],
+			specification = #specification_ref{id = SpecificationId,
+					href = SpecificationHref,
+					name = SpecificationName,
+					version = Version}},
+	{ok, #candidate{id = Id, href = Href}} = im:add_candidate(CandidateRecord),
+	Accept = {"accept", "application/json"},
+	Request = {HostUrl ++ Href, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, CandidateMap} = zj:decode(ResponseBody),
+	#{"id" := Id, "href" := Href, "name" := CandidateName,
+			"description" := Description, "version" := Version,
+			"@type" := ClassType, "@baseType" := "Candidate",
+			"@schemaLocation" := Schema, "category" := [C],
+			"resourceSpecification" := S} = CandidateMap,
+	true = is_category_ref(C),
+	true = is_specification_ref(S).
+
+map_to_specification() ->
+	[{userdata, [{doc, "Decode Specification map()"}]}].
+
+map_to_specification(_Config) ->
+	SpecificationId = random_string(12),
+	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceSpecification",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	Map = #{"id" => SpecificationId,
+			"href" => SpecificationHref,
+			"name" => SpecificationName,
+			"description" => Description,
+			"@type" => ClassType,
+			"@schemaLocation" => Schema,
+			"@baseType" => "Specification",
+			"version" => Version,
+			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+					"endDateTime" => "2019-12-31T23:59"},
+			"lifecycleStatus" => "Active",
+			"relatedParty" => [#{"id" => PartyId,
+					"href" => PartyHref,
+					"role" => "Supplier",
+					"name" => "ACME Inc.",
+					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+							"endDateTime" => "2019-12-31T23:59"}}]},
+	#specification{id = SpecificationId, href = SpecificationHref,
+			description = Description, class_type = ClassType,
+			schema = Schema, base_type = "Specification", version = Version,
+			start_date = StartDate, end_date = EndDate, status = active,
+			related_party = [RP]} = im_rest_res_specification:specification(Map),
+	true = is_integer(StartDate),
+	true = is_integer(EndDate),
+	#related_party_ref{id = PartyId, href = PartyHref} = RP.
+
+specification_to_map() ->
+	[{userdata, [{doc, "Encode Specification map()"}]}].
+
+specification_to_map(_Config) ->
+	SpecificationId = random_string(12),
+	SpecificationHref = ?PathCatalog ++ "catalog/" ++ SpecificationId,
+	SpecificationName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Model = random_string(5),
+	Part = random_string(5),
+	Vendor = random_string(20),
+	DeviceSerial = random_string(15),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	SpecificationRecord = #specification{id = SpecificationId,
+			href = SpecificationHref,
+			name = SpecificationName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Catalog",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			model = Model,
+			part = Part,
+			vendor = Vendor,
+			device_serial = DeviceSerial,
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}]},
+	#{"id" := SpecificationId, "href" := SpecificationHref,
+			"description" := Description, "@type" := ClassType,
+			"@schemaLocation" := Schema, "@baseType" := "Catalog", "version" := Version,
+			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
+			"lifecycleStatus" := "Active", "model" := Model, "part" := Part,
+			"vendor" := Vendor, "device_serial" := DeviceSerial, "relatedParty" := [RP]}
+			= im_rest_res_specification:specification(SpecificationRecord),
+	true = is_list(Start),
+	true = is_list(End),
+	#{"id" := PartyId, "href" := PartyHref} = RP.
+
+post_specification() ->
+	[{userdata, [{doc, "POST to Specification collection"}]}].
+
+post_specification(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "catalog",
+	SpecificationName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceSpecification",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Model = random_string(5),
+	Part = random_string(5),
+	Vendor = random_string(20),
+	DeviceSerial = random_string(15),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	RequestBody = "{\n"
+			++ "\t\"name\": \"" ++ SpecificationName ++ "\",\n"
+			++ "\t\"description\": \"" ++ Description ++ "\",\n"
+			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
+			++ "\t\"@schemaLocation\": \"" ++ Schema ++ "\",\n"
+			++ "\t\"@baseType\": \"Catalog\",\n"
+			++ "\t\"version\": \"" ++ Version ++ "\",\n"
+			++ "\t\"validFor\": {\n"
+			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t},\n"
+			++ "\t\"lifecycleStatus\": \"In Test\",\n"
+			++ "\t\"model\": \"" ++ Model ++ "\",\n"
+			++ "\t\"part\": \"" ++ Part ++ "\",\n"
+			++ "\t\"vendor\": \"" ++ Vendor ++ "\",\n"
+			++ "\t\"device_serial\": \"" ++ DeviceSerial ++ "\",\n"
+			++ "\t\"relatedParty\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ PartyId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ PartyHref ++ "\",\n"
+			++ "\t\t\t\"role\": \"Supplier\",\n"
+			++ "\t\t\t\"name\": \"ACME Inc.\",\n"
+			++ "\t\t\t\"validFor\": {\n"
+			++ "\t\t\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
+			++ "\t\t\t}\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
+			++ "}\n",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{_, URI} = lists:keyfind("location", 1, Headers),
+	{?PathCatalog ++ "specification/" ++ ID, _} = httpd_util:split_path(URI),
+	{ok, #specification{id = ID, name = SpecificationName,
+			description = Description, version = Version,
+			class_type = ClassType, base_type = "Catalog", schema = Schema,
+			model = Model, part = Part, vendor = Vendor, device_serial = DeviceSerial,
+			related_party = [RP]}} = im:get_specification(ID),
+	#related_party_ref{id = PartyId, href = PartyHref} = RP.
+
+get_specifications() ->
+	[{userdata, [{doc, "GET Specification collection"}]}].
+
+get_specifications(Config) ->
+	ok = fill_specification(5),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "specification",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, Specifications} = zj:decode(ResponseBody),
+	false = is_empty(Specifications),
+	true = lists:all(fun is_specification/1, Specifications).
+
+get_specification() ->
+	[{userdata, [{doc, "GET Specification resource"}]}].
+
+get_specification(Config) ->
+	HostUrl = ?config(host_url, Config),
+	SpecificationName = random_string(10),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "ResourceSpecification",
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Model = random_string(5),
+	Part = random_string(5),
+	Vendor = random_string(20),
+	DeviceSerial = random_string(15),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	SpecificationRecord = #specification{name = SpecificationName,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Catalog",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			model = Model,
+			part = Part,
+			vendor = Vendor,
+			device_serial = DeviceSerial,
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}]},
+	{ok, #specification{id = Id, href = Href}} = im:add_specification(SpecificationRecord),
+	Accept = {"accept", "application/json"},
+	Request = {HostUrl ++ Href, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, SpecificationMap} = zj:decode(ResponseBody),
+	#{"id" := Id, "href" := Href, "name" := SpecificationName,
+			"description" := Description, "version" := Version,
+			"@type" := ClassType, "@baseType" := "Catalog",
+			"@schemaLocation" := Schema, "model" := Model, "part" := Part,
+			"vendor" := Vendor, "device_serial" := DeviceSerial,
+			"relatedParty" := [RP]} = SpecificationMap,
+	true = is_related_party_ref(RP).
+
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
+
+is_empty([]) ->
+	true;
+is_empty(_) ->
+	false.
 
 random_string(Length) ->
 	Charset = lists:seq($a, $z),
@@ -403,6 +1115,22 @@ is_category_ref(#{"id" := Id, "href" := Href,
 is_category_ref(_) ->
 	false.
 
+is_candidate_ref(#{"id" := Id, "href" := Href,
+		"name" := Name, "version" := Version})
+		when is_list(Id), is_list(Href),
+		is_list(Name), is_list(Version) ->
+	true;
+is_candidate_ref(_) ->
+	false.
+
+is_specification_ref(#{"id" := Id, "href" := Href,
+		"name" := Name, "version" := Version})
+		when is_list(Id), is_list(Href),
+		is_list(Name), is_list(Version) ->
+	true;
+is_specification_ref(_) ->
+	false.
+
 is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
 		"@type" := ClassType, "@baseType" := "Catalog",
@@ -414,6 +1142,47 @@ is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
 	lists:all(fun is_related_party_ref/1, RelatedParty),
 	lists:all(fun is_category_ref/1, Category);
 is_catalog(_) ->
+	false.
+
+is_category(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "@baseType" := "Category",
+		"@schemaLocation" := Schema, "parentId" := Parent, "isRoot" := Bool,
+		"relatedParty" := RelatedParty, "resourceCandidate" := Candidate})
+		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Schema),
+		is_list(Parent), is_list(RelatedParty), is_list(Candidate),
+		is_boolean(Bool) ->
+	lists:all(fun is_related_party_ref/1, RelatedParty),
+	lists:all(fun is_candidate_ref/1, Candidate);
+is_category(_) ->
+	false.
+
+is_candidate(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "@baseType" := "Candidate",
+		"@schemaLocation" := Schema, "category" := Category,
+		"resourceSpecification" := Specification}) when is_list(Id), is_list(Href),
+		is_list(Name), is_list(Description), is_list(Version),
+		is_list(ClassType), is_list(Schema), is_list(Category),
+		is_map(Specification) ->
+	lists:all(fun is_category_ref/1, Category),
+	is_specification_ref(Specification);
+is_candidate(_) ->
+	false.
+
+is_specification(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "@baseType" := "Catalog",
+		"@schemaLocation" := Schema, "model" := Model,
+		"part" := Part, "vendor" := Vendor, "device_serial" := DeviceSerial,
+		"relatedParty" := RelatedParty}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Schema),
+		is_list(Model), is_list(Part), is_list(Vendor), is_list(DeviceSerial),
+		is_list(RelatedParty) ->
+	lists:all(fun is_related_party_ref/1, RelatedParty);
+is_specification(_) ->
 	false.
 
 fill_catalog(0) ->
@@ -430,9 +1199,71 @@ fill_catalog(N) ->
 			end_date = 1577836740000,
 			status = active,
 			related_party = fill_related_party(3),
-			category = fill_category(5)},
+			category = fill_category_ref(5)},
 	{ok, _} = im:add_catalog(Catalog),
 	fill_catalog(N - 1).
+
+fill_category(0) ->
+	ok;
+fill_category(N) ->
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Category = #category{name = random_string(10),
+			description = random_string(25),
+			class_type = "ResourceCategory",
+			schema = Schema,
+			base_type = "Category",
+			version = random_string(3),
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			parent = random_string(10),
+			root = true,
+			related_party = fill_related_party(3),
+			candidate = fill_candidate_ref(5)},
+	{ok, _} = im:add_category(Category),
+	fill_category(N - 1).
+
+fill_candidate(0) ->
+	ok;
+fill_candidate(N) ->
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	Id = random_string(10),
+	Href = ?PathParty ++ "organization/" ++ Id,
+	Candidate = #candidate{name = random_string(10),
+			description = random_string(25),
+			class_type = "ResourceCandidate",
+			schema = Schema,
+			base_type = "Candidate",
+			version = random_string(3),
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			category = fill_category_ref(5),
+			specification = #specification_ref{id = Id, href = Href,
+					name = random_string(10), version = random_string(3)}},
+	{ok, _} = im:add_candidate(Candidate),
+	fill_candidate(N - 1).
+
+fill_specification(0) ->
+	ok;
+fill_specification(N) ->
+	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Specification = #specification{name = random_string(10),
+			description = random_string(25),
+			class_type = "ResourceCatalog",
+			schema = Schema,
+			base_type = "Catalog",
+			version = random_string(3),
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			model = random_string(5),
+			part = random_string(5),
+			vendor = random_string(20),
+			device_serial = random_string(15),
+			related_party = fill_related_party(3)},
+	{ok, _} = im:add_specification(Specification),
+	fill_specification(N - 1).
 
 fill_related_party(N) ->
 	fill_related_party(N, []).
@@ -446,14 +1277,25 @@ fill_related_party(N, Acc) ->
 	start_date = 1548720000000, end_date = 1577836740000},
 	fill_related_party(N - 1, [RelatedParty | Acc]).
 
-fill_category(N) ->
-	fill_category(N, []).
-fill_category(0, Acc) ->
+fill_category_ref(N) ->
+	fill_category_ref(N, []).
+fill_category_ref(0, Acc) ->
 	Acc;
-fill_category(N, Acc) ->
+fill_category_ref(N, Acc) ->
 	Id = random_string(10),
 	Href = ?PathParty ++ "organization/" ++ Id,
 	Category = #category_ref{id = Id, href = Href,
 			name = random_string(10), version = random_string(3)},
-	fill_category(N - 1, [Category | Acc]).
+	fill_category_ref(N - 1, [Category | Acc]).
+
+fill_candidate_ref(N) ->
+	fill_candidate_ref(N, []).
+fill_candidate_ref(0, Acc) ->
+	Acc;
+fill_candidate_ref(N, Acc) ->
+	Id = random_string(10),
+	Href = ?PathParty ++ "organization/" ++ Id,
+	Candidate = #candidate_ref{id = Id, href = Href,
+			name = random_string(10), version = random_string(3)},
+	fill_candidate_ref(N - 1, [Candidate | Acc]).
 
