@@ -103,10 +103,10 @@
 									"$ref": "genericNrm#/definitions/vnfParametersListType"
 								},
 								"latitude": {
-									"$ref": "genericRanNrm#/definitions/latitude"
+									"$ref": "genericNrm#/definitions/latitude"
 								},
 								"longitude": {
-									"$ref": "genericRanNrm#/definitions/longitude"
+									"$ref": "genericNrm#/definitions/longitude"
 								},
 								"operationalState": {
 									"$ref": "stateManagementIRP#/definitions/operationalStateType"
