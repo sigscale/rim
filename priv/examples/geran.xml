@@ -65,16 +65,23 @@
 								<gn:userLabel>Cell ajfkad</gn:userLabel>
 								<gn:cellIdentity>42</gn:cellIdentity>
 								<gn:cellAllocation>963</gn:cellAllocation>
-								<gn:ncc>365</gn:ncc>
-								<gn:bcc>756</gn:bcc>
+								<gn:ncc>1</gn:ncc>
+								<gn:bcc>7</gn:bcc>
 								<gn:lac>425</gn:lac>
 								<gn:mcc>999</gn:mcc>
 								<gn:mnc>159</gn:mnc>
-								<gn:rxLevAccessMin>78954</gn:rxLevAccessMin>
-								<gn:msTxPwrMaxCCH>8564</gn:msTxPwrMaxCCH>
+								<gn:rxLevAccessMin>50</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>16</gn:msTxPwrMaxCCH>
 								<gn:rfHoppingEnabled>true</gn:rfHoppingEnabled>
-								<gn:hoppingSequenceList>132564</gn:hoppingSequenceList>
-								<gn:plmnPermitted>true</gn:plmnPermitted>
+								<gn:hoppingSequenceList>
+									<gn:hoppingSequence>
+										<gn:ma>
+											<gn:rfSelected>true</gn:rfSelected>
+										</gn:ma>
+										<gn:hsn>128</gn:hsn>
+									</gn:hoppingSequence>
+								</gn:hoppingSequenceList>
+								<gn:plmnPermitted>71</gn:plmnPermitted>
 							</gn:attributes>
 							<gn:GsmRelation id="1">
 								<gn:attributes>
@@ -87,16 +94,23 @@
 								<gn:userLabel>Cell dahfwew</gn:userLabel>
 								<gn:cellIdentity>59</gn:cellIdentity>
 								<gn:cellAllocation>32564</gn:cellAllocation>
-								<gn:ncc>365</gn:ncc>
-								<gn:bcc>756</gn:bcc>
+								<gn:ncc>1</gn:ncc>
+								<gn:bcc>7</gn:bcc>
 								<gn:lac>425</gn:lac>
 								<gn:mcc>999</gn:mcc>
 								<gn:mnc>159</gn:mnc>
-								<gn:rxLevAccessMin>78954</gn:rxLevAccessMin>
-								<gn:msTxPwrMaxCCH>8564</gn:msTxPwrMaxCCH>
+								<gn:rxLevAccessMin>35</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>10</gn:msTxPwrMaxCCH>
 								<gn:rfHoppingEnabled>true</gn:rfHoppingEnabled>
-								<gn:hoppingSequenceList>132564</gn:hoppingSequenceList>
-								<gn:plmnPermitted>true</gn:plmnPermitted>
+								<gn:hoppingSequenceList>
+									<gn:hoppingSequence>
+										<gn:ma>
+											<gn:rfSelected>true</gn:rfSelected>
+										</gn:ma>
+										<gn:hsn>165</gn:hsn>
+									</gn:hoppingSequence>
+								</gn:hoppingSequenceList>
+								<gn:plmnPermitted>71</gn:plmnPermitted>
 							</gn:attributes>
 							<gn:GsmRelation id="1">
 								<gn:attributes>
