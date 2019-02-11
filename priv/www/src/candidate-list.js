@@ -140,6 +140,28 @@ class candidateList extends PolymerElement {
 	_getCandidate(params, callback) {
 		var grid = this;
 		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
+		var query = "";
+		function checkHead(param) {
+         return param.path == "candidateName" || param.path == "candidateDescription"
+            || param.path == "candidateClass" || param.path == "candidateStatus";
+      }
+      params.filters.filter(checkHead).forEach(function(filter) {
+         if(filter.value) {
+            if (query) {
+               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+            } else {
+               query = "[{" + filter.path + ".like=[" + filter.value + "%";
+            }
+         }
+      });
+      if(query) {
+         if(query.includes("like=[%")) {
+            delete params.filters[0];
+            candidateList.params['filter'] = "resourceCatalogManagement/v3/candidate";
+         } else {
+            candidateList.params['filter'] = "\"" + query + "]}]\"";
+         }
+      }
 		if(candidateList.etag && params.page > 0) {
 			headers['If-Range'] = candidateList.etag;
 		}
@@ -159,7 +181,6 @@ class candidateList extends PolymerElement {
 					for(var index in request.response) {
 						var newRecord = new Object();
 						newRecord.candidateName = request.response[index].name;
-						newRecord.candidateDescription = request.response[index].description;
 						newRecord.candidateDescription = request.response[index].description;
 						newRecord.candidateClass = request.response[index].class_type;
 						newRecord.candidateStatus = request.response[index].status;

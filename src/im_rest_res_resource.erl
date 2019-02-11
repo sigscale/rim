@@ -285,25 +285,25 @@ resource([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 		when is_list(Status) ->
 	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
 resource([place | T], #resource{place = PlaceRef} = R, Acc)
-		when is_list(PlaceRef) ->
+		when is_list(PlaceRef), length(PlaceRef) > 0 ->
 	resource(T, R, Acc#{"place" => place_ref(PlaceRef)});
 resource([place | T], #{"place" := PlaceRef} = M, Acc)
 		when is_list(PlaceRef) ->
 	resource(T, M, Acc#resource{place = place_ref(PlaceRef)});
 resource([note | T], #resource{note = Note} = R, Acc)
-		when is_list(Note) ->
+		when is_list(Note), length(Note) > 0 ->
 	resource(T, R, Acc#{"note" => note(Note)});
 resource([note | T], #{"note" := Note} = M, Acc)
 		when is_list(Note) ->
 	resource(T, M, Acc#resource{note = note(Note)});
 resource([attachment | T], #resource{attachment = Attachment} = R, Acc)
-		when is_list(Attachment) ->
+		when is_list(Attachment), length(Attachment) > 0 ->
 	resource(T, R, Acc#{"resourceAttachment" => attachment(Attachment)});
 resource([attachment | T], #{"resourceAttachment" := Attachment} = M, Acc)
 		when is_list(Attachment) ->
 	resource(T, M, Acc#resource{attachment = attachment(Attachment)});
 resource([related | T], #resource{related = ResRel} = R, Acc)
-		when is_list(ResRel) ->
+		when is_list(ResRel), length(ResRel) > 0 ->
 	resource(T, R, Acc#{"resourceRelationship" => resource_rel(ResRel)});
 resource([related | T], #{"resourceRelationship" := ResRel} = M, Acc)
 		when is_list(ResRel) ->
@@ -315,7 +315,7 @@ resource([specification | T], #{"resourceSpecification" := SpecRef} = M, Acc)
 		when is_tuple(SpecRef) ->
 	resource(T, M, Acc#resource{specification = im_rest:specification_ref(SpecRef)});
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
-		when is_list(ResChar) ->
+		when is_list(ResChar), length(ResChar) > 0 ->
 	resource(T, R, Acc#{"resorceCharacteristic" => resource_char(ResChar)});
 resource([characteristic | T], #{"resorceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->

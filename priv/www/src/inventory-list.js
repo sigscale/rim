@@ -156,7 +156,7 @@ class inventoryList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="getInventoryAjax"
-				url="resourceInventoryManagement/v1/logicalResource"
+				url="resourceInventoryManagement/v3/logicalResource"
 				rejectWithRequest>
 			</iron-ajax>
 		`;

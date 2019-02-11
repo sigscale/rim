@@ -174,6 +174,29 @@ class categoryList extends PolymerElement {
 	_getCategory(params, callback) {
 		var grid = this;
 		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
+		var query = "";
+		function checkHead(param) {
+         return param.path == "categoryName" || param.path == "categoryDescription"
+            || param.path == "categoryClass" || param.path == "categoryStatus"
+				|| param.path == "categoryParent" || param.path == "categoryRoot";
+      }
+      params.filters.filter(checkHead).forEach(function(filter) {
+         if(filter.value) {
+            if (query) {
+               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+            } else {
+               query = "[{" + filter.path + ".like=[" + filter.value + "%";
+            }
+         }
+      });
+      if(query) {
+         if(query.includes("like=[%")) {
+            delete params.filters[0];
+            categoryList.params['filter'] = "resourceCatalogManagement/v3/category";
+         } else {
+            categoryList.params['filter'] = "\"" + query + "]}]\"";
+         }
+      }
 		if(categoryList.etag && params.page > 0) {
 			headers['If-Range'] = categoryList.etag;
 		}

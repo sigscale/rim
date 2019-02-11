@@ -69,7 +69,7 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 						["resourceCatalogManagement", "v3", "specification" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_specification, Data);
 						["resourceInventoryManagement", "v3", "logicalResource" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_inventory, Data);
+                     check_content_type_header(Headers, Method, im_rest_res_resource, Data);
 						_ ->
 							{proceed, Data}
 					end;
