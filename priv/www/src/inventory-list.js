@@ -97,7 +97,7 @@ class inventoryList extends PolymerElement {
 					</template>
 					<template>
 						<div>
-							[[item.Category]]
+							[[item.category]]
 						</div>
 					</template>
 				</vaadin-grid-column>
@@ -127,11 +127,11 @@ class inventoryList extends PolymerElement {
 				<vaadin-grid-column width="11ex" flex-grow="2">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="inventoryType">
+								path="type">
 							<vaadin-grid-filter
 									id="filterType"
 									aria-label="Type"
-									path="inventoryType"
+									path="type"
 									value="{{_filterType}}">
 								<input
 										slot="filter"
@@ -143,7 +143,7 @@ class inventoryList extends PolymerElement {
 					</template>
 					<template>
 						<div>
-							[[item.inventoryType]]
+							[[item.type]]
 						</div>
 					</template>
 				</vaadin-grid-column>
@@ -247,7 +247,7 @@ class inventoryList extends PolymerElement {
 					newRecord.name = request.response[index].name;
 					newRecord.category = request.response[index].category;
 					newRecord.description = request.response[index].description;
-					newRecord.type = request.response[index].inventoryType;
+					newRecord.type = request.response[index]["@type"];
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);

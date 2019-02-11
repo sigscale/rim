@@ -217,10 +217,10 @@ class categoryList extends PolymerElement {
 					var newRecord = new Object();
 					newRecord.categoryName = request.response[index].name;
 					newRecord.categoryDescription = request.response[index].description;
-					newRecord.categoryClass = request.response[index].class_type;
-					newRecord.categoryStatus = request.response[index].status;
-					newRecord.categoryParent = request.response[index].parent;
-					newRecord.categoryRoot = request.response[index].root;
+					newRecord.categoryClass = request.response[index]["@baseType"];
+					newRecord.categoryStatus = request.response[index].lifecycleStatus;
+					newRecord.categoryParent = request.response[index].parentId;
+					newRecord.categoryRoot = request.response[index].isRoot;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
