@@ -26,6 +26,6 @@
     |State Mgmt  |stateManagementIRP  | 28.626|
 
 ## Validating XML against the schemas
-	$ xmllint --noout -schema configData.xsd genericNrm.xml
-	genericNrm.xml validates
+	$ xmllint --noout --path ../schema --schema configData.xsd geran.xml
+	geran.xml validates
 
