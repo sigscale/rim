@@ -285,7 +285,7 @@ candidate([specification | T], #candidate{specification = Spec} = R, Acc)
 		when is_record(Spec, specification_ref) ->
 	candidate(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(Spec)});
 candidate([specification | T], #{"resourceSpecification" := Spec} = M, Acc)
-		when is_tuple(Spec) ->
+		when is_map(Spec) ->
 	candidate(T, M, Acc#candidate{specification = im_rest:specification_ref(Spec)});
 candidate([_ | T], R, Acc) ->
 	candidate(T, R, Acc);
