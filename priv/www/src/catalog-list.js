@@ -134,6 +134,28 @@ class catalogList extends PolymerElement {
 	_getCatalog(params, callback) {
 		var grid = this;
 		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var query = "";
+		function checkHead(param) {
+         return param.path == "catalogName" || param.path == "catalogDescription"
+            || param.path == "catalogClass" || param.path == "catalogStatus";
+      }
+      params.filters.filter(checkHead).forEach(function(filter) {
+         if(filter.value) {
+            if (query) {
+               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+            } else {
+               query = "[{" + filter.path + ".like=[" + filter.value + "%";
+            }
+         }
+      });
+      if(query) {
+         if(query.includes("like=[%")) {
+            delete params.filters[0];
+            catalogList.params['filter'] = "resourceCatalogManagement/v3/catalog";
+         } else {
+            catalogList.params['filter'] = "\"" + query + "]}]\"";
+         }
+      }
 		if(catalogList.etag && params.page > 0) {
 			headers['If-Range'] = catalogList.etag;
 		}

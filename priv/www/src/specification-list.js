@@ -180,6 +180,29 @@ class specificationList extends PolymerElement {
 	_getSpecification(params, callback) {
 		var grid = this;
 		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		var query = "";
+		function checkHead(param) {
+         return param.path == "specName" || param.path == "specDesc"
+            || param.path == "specClass" || param.path == "specStatus"
+				|| param.path == "specCat" || param.path == "specBundle";
+      }
+      params.filters.filter(checkHead).forEach(function(filter) {
+         if(filter.value) {
+            if (query) {
+               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+            } else {
+               query = "[{" + filter.path + ".like=[" + filter.value + "%";
+            }
+         }
+      });
+      if(query) {
+         if(query.includes("like=[%")) {
+            delete params.filters[0];
+            specificationList.params['filter'] = "resourceCatalogManagement/v3/specification";
+         } else {
+            specificationList.params['filter'] = "\"" + query + "]}]\"";
+         }
+      }
 		if(specificationList.etag && params.page > 0) {
 			headers['If-Range'] = specificationList.etag;
 		}
