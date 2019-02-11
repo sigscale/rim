@@ -91,8 +91,8 @@
 								<all>
 									<element name="userLabel"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element ref="gr:latitude" minOccurs="0"/>
-									<element ref="gr:longitude" minOccurs="0"/>
+									<element name="latitude" type="xn:latitude" minOccurs="0"/>
+									<element name="longitude" type="xn:longitude" minOccurs="0"/>
 									<element name="operationalState" type="sm:operationalStateType" minOccurs="0" />
 								</all>
 							</complexType>
@@ -118,23 +118,107 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="userLabel" type"string"/>
+									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="cellIdentity" type="integer" minInclusive="0" maxInclusive="65535"/>
+									<element name="cellIdentity">
+										<simpleType>
+												<restriction base="integer">
+													<minInclusive value="0"/>
+													<maxInclusive value="65535"/>
+												</restriction>
+										</simpleType>
+									</element>
 									<element name="cellAllocation"/>
-									<element name="ncc" type="integer" minInclusive="0" maxInclusive="7"/>
-									<element name="bcc" type="integer" minInclusive="0" maxInclusive="7"/>
-									<element name="lac" type="integer" minInclusive="1" maxInclusive="65533"/>
-									<element name="mcc" type="integer" minInclusive="1" maxInclusive="999"/>
-									<element name="mnc" type="integer" minInclusive="1" maxInclusive="999"/>
-									<element name="rac" type="integer" minInclusive="0" maxInclusive="255" minOccurs="0"/>
-									<element name="racc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
-									<element name="tsc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
-									<element name="rxLevAccessMin" type="integer" minInclusive="0" maxInclusive="63"/>
-									<element name="msTxPwrMaxCCH" type="integer" minInclusive="0" maxInclusive="31"/>
+									<element name="ncc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="bcc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="lac">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="65533"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mcc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rac" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="255"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="racc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="tsc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rxLevAccessMin">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="63"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="msTxPwrMaxCCH">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="31"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="rfHoppingEnabled" type="boolean"/>
 									<element name="hoppingSequenceList" type="gn:HoppingSequenceList"/>
-									<element name="plmnPermitted" type="integer" minInclusive="0" maxInclusive="255"/>
+									<element name="plmnPermitted">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="255"/>
+											</restriction>
+										</simpleType>
+									</element>
 								</all>
 							</complexType>
 						</element>
@@ -164,9 +248,30 @@
 								<all>
 									<element name="adjacentCell" type="xn:dn"/>
 									<element name="bcchFrequency" type="integer" minOccurs="0"/>
-									<element name="ncc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
-									<element name="bcc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
-									<element name="lac" type="integer" minInclusive="1" maxInclusive="65533" minOccurs="0"/>
+									<element name="ncc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="bcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="lac" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="65533"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="isRemoveAllowed" type="boolean" minOccurs="0"/>
 									<element name="isHOAllowed" type="boolean" minOccurs="0"/>
 									<element name="isESCoveredBy" type="gn:isESCoveredByEnumType" minOccurs="0"/>
@@ -192,15 +297,71 @@
 								<all>
 									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="cellIdentity" type="integer" minInclusive="0" maxInclusive="65535"/>
-									<element name="bcchFrequency" type="integer"/>
-									<element name="ncc" type="integer" minInclusive="0" maxInclusive="7"/>
-									<element name="bcc" type="integer" minInclusive="0" maxInclusive="7"/>
-									<element name="lac" type="integer" minInclusive="1" maxInclusive="65533"/>
-									<element name="mcc" type="integer" minInclusive="1" maxInclusive="999"/>
-									<element name="mnc" type="integer" minInclusive="1" maxInclusive="999"/>
-									<element name="rac" type="integer" minInclusive="0" maxInclusive="255" minOccurs="0"/>
-									<element name="racc" type="integer" minInclusive="0" maxInclusive="7" minOccurs="0"/>
+									<element name="cellIdentity">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="65535"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="bcchFrequency" type="integer" />
+									<element name="ncc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="bcc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="lac">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="65533"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mcc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rac" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="255"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="racc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="7"/>
+											</restriction>
+										</simpleType>
+									</element>
 								</all>
 							</complexType>
 						</element> 
