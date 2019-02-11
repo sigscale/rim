@@ -275,13 +275,13 @@ catalog([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 		when is_list(Status) ->
 	catalog(T, M, Acc#catalog{status = im_rest:lifecycle_status(Status)});
 catalog([related_party | T], #catalog{related_party = RP} = R, Acc)
-		when is_list(RP) ->
+		when is_list(RP), length(RP) > 0 ->
 	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
 catalog([related_party | T], #{"relatedParty" := RP} = M, Acc)
 		when is_list(RP) ->
 	catalog(T, M, Acc#catalog{related_party = im_rest:related_party_ref(RP)});
 catalog([category | T], #catalog{category = Category} = R, Acc)
-		when is_list(Category) ->
+		when is_list(Category), length(Category) > 0 ->
 	catalog(T, R, Acc#{"category" => im_rest:category_ref(Category)});
 catalog([category | T], #{"category" := Category} = M, Acc)
 		when is_list(Category) ->

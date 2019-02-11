@@ -98,7 +98,7 @@ class catalogList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.stat]]</template>
+					<template>[[item.catalogStatus]]</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
 			<div class="add-button">
@@ -176,8 +176,8 @@ class catalogList extends PolymerElement {
 					var newRecord = new Object();
 					newRecord.catalogName = request.response[index].name;
 					newRecord.catalogDescription = request.response[index].description;
-					newRecord.catalogClass = request.response[index].class_type;
-					newRecord.catalogStatus = request.response[index].status;
+					newRecord.catalogClass = request.response[index]["@type"];
+					newRecord.catalogStatus = request.response[index].lifecycleStatus;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
