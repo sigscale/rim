@@ -220,14 +220,14 @@ candidate([description| T], #{"description" := Description} = M, Acc)
 	candidate(T, M, Acc#candidate{description = Description});
 candidate([class_type | T], #candidate{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	candidate(T, R, Acc#{"@baseType" => Type});
-candidate([class_type | T], #{"@baseType" := Type} = M, Acc)
+	candidate(T, R, Acc#{"@type" => Type});
+candidate([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	candidate(T, M, Acc#candidate{class_type = Type});
 candidate([base_type | T], #candidate{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	candidate(T, R, Acc#{"@type" => Type});
-candidate([base_type | T], #{"@type" := Type} = M, Acc)
+	candidate(T, R, Acc#{"@baseType" => Type});
+candidate([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	candidate(T, M, Acc#candidate{base_type = Type});
 candidate([schema | T], #candidate{schema = Schema} = R, Acc)
