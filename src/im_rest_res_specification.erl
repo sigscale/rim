@@ -220,14 +220,14 @@ specification([description| T], #{"description" := Description} = M, Acc)
 	specification(T, M, Acc#specification{description = Description});
 specification([class_type | T], #specification{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification(T, R, Acc#{"@baseType" => Type});
-specification([class_type | T], #{"@baseType" := Type} = M, Acc)
+	specification(T, R, Acc#{"@type" => Type});
+specification([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification(T, M, Acc#specification{class_type = Type});
 specification([base_type | T], #specification{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification(T, R, Acc#{"@type" => Type});
-specification([base_type | T], #{"@type" := Type} = M, Acc)
+	specification(T, R, Acc#{"@baseType" => Type});
+specification([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification(T, M, Acc#specification{base_type = Type});
 specification([schema | T], #specification{schema = Schema} = R, Acc)
