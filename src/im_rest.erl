@@ -25,7 +25,7 @@
 -export([parse_query/1, range/1]).
 -export([lifecycle_status/1]).
 -export([related_party_ref/1, category_ref/1, candidate_ref/1,
-		specification_ref/1]).
+		specification_ref/1, target_schema_ref/1]).
 
 -include("im.hrl").
 
@@ -408,6 +408,41 @@ specification_ref([version | T], #{"version" := Version} = M, Acc)
 specification_ref([_ | T], R, Acc) ->
 	specification_ref(T, R, Acc);
 specification_ref([], _, Acc) ->
+	Acc.
+
+-spec target_schema_ref(TargetSchemaRef) -> TargetSchemaRef 
+	when
+		TargetSchemaRef :: [target_schema_ref()] | [map()]
+				| target_schema_ref() | map().
+%% @doc CODEC for `TargetSchemaRef'.
+target_schema_ref(#target_schema_ref{} = TargetSchemaRef) ->
+	target_schema_ref(record_info(fields, target_schema_ref),
+			TargetSchemaRef, #{});
+target_schema_ref(#{} = TargetSchemaRef) ->
+	target_schema_ref(record_info(fields, target_schema_ref),
+			TargetSchemaRef, #target_schema_ref{});
+target_schema_ref([#target_schema_ref{} | _] = List) ->
+	Fields = record_info(fields, target_schema_ref),
+	[target_schema_ref(Fields, R, #{}) || R <- List];
+target_schema_ref([#{} | _] = List) ->
+	Fields = record_info(fields, target_schema_ref),
+	[target_schema_ref(Fields, R, #target_schema_ref{}) || R <- List].
+%% @hidden
+target_schema_ref([class_type | T], #target_schema_ref{class_type = ClassType} = R, Acc)
+		when is_list(ClassType) ->
+	target_schema_ref(T, R, Acc#{"@type" => ClassType});
+target_schema_ref([class_type | T], #{"@type" := ClassType} = M, Acc)
+		when is_list(ClassType) ->
+	target_schema_ref(T, M, Acc#target_schema_ref{class_type = ClassType});
+target_schema_ref([schema | T], #target_schema_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	target_schema_ref(T, R, Acc#{"@schemaLocation" => Schema});
+target_schema_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	target_schema_ref(T, M, Acc#target_schema_ref{schema = Schema});
+target_schema_ref([_ | T], R, Acc) ->
+	target_schema_ref(T, R, Acc);
+target_schema_ref([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------

@@ -287,12 +287,18 @@ specification([related_party | T], #specification{related_party = PartyRefs} = R
 specification([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
 		when is_list(PartyRefs) ->
 	specification(T, M, Acc#specification{related_party = im_rest:related_party_ref(PartyRefs)});
-specification([category | T], #specification{category = CatSpecRefs} = R, Acc)
-		when is_list(CatSpecRefs) ->
-	specification(T, R, Acc#{"category" => CatSpecRefs});
-specification([category | T], #{"category" := CatSpecRefs} = M, Acc)
-		when is_list(CatSpecRefs) ->
-	specification(T, M, Acc#specification{category = CatSpecRefs});
+specification([category | T], #specification{category = Category} = R, Acc)
+		when is_list(Category) ->
+	specification(T, R, Acc#{"category" => Category});
+specification([category | T], #{"category" := Category} = M, Acc)
+		when is_list(Category) ->
+	specification(T, M, Acc#specification{category = Category});
+specification([target_schema | T], #specification{target_schema = TS} = M, Acc)
+		when is_record(TS, target_schema_ref) ->
+	specification(T, M, Acc#{"targetResourceSchema" => im_rest:target_schema_ref(TS)});
+specification([target_schema | T], #{"targetResourceSchema" := TS} = M, Acc)
+		when is_map(TS) ->
+	specification(T, M, Acc#specification{target_schema = im_rest:target_schema_ref(TS)});
 specification([characteristic | T], #specification{characteristic = SpecChars} = R, Acc)
 		when is_list(SpecChars), length(SpecChars) > 0->
 	specification(T, R, Acc#{"resourceSpecCharacteristic" => specification_char(SpecChars)});
