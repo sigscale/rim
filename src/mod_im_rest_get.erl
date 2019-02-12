@@ -106,28 +106,28 @@ do_get(Resource, ModData,
 		["partyManagement", "v2", "individual", Id], Query) ->
 	do_response(ModData, Resource:get_user(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["resourceCatalogManagement", "v3", "catalog"], Query) ->
+		["resourceCatalogManagement", "v3", "resourceCatalog"], Query) ->
 	do_response(ModData, Resource:get_catalogs(Query, Headers));
 do_get(Resource, ModData,
-		["resourceCatalogManagement", "v3", "catalog", Id], Query) ->
+		["resourceCatalogManagement", "v3", "resourceCatalog", Id], Query) ->
 	do_response(ModData, Resource:get_catalog(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["resourceCatalogManagement", "v3", "category"], Query) ->
+		["resourceCatalogManagement", "v3", "resourceCategory"], Query) ->
 	do_response(ModData, Resource:get_categories(Query, Headers));
 do_get(Resource, ModData,
-		["resourceCatalogManagement", "v3", "category", Id], Query) ->
+		["resourceCatalogManagement", "v3", "resourceCategory", Id], Query) ->
 	do_response(ModData, Resource:get_category(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["resourceCatalogManagement", "v3", "candidate"], Query) ->
+		["resourceCatalogManagement", "v3", "resourceCandidate"], Query) ->
 	do_response(ModData, Resource:get_candidates(Query, Headers));
 do_get(Resource, ModData,
-		["resourceCatalogManagement", "v3", "candidate", Id], Query) ->
+		["resourceCatalogManagement", "v3", "resourceCandidate", Id], Query) ->
 	do_response(ModData, Resource:get_candidate(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["resourceCatalogManagement", "v3", "specification"], Query) ->
+		["resourceCatalogManagement", "v3", "resourceSpecification"], Query) ->
 	do_response(ModData, Resource:get_specifications(Query, Headers));
 do_get(Resource, ModData,
-		["resourceCatalogManagement", "v3", "specification", Id], Query) ->
+		["resourceCatalogManagement", "v3", "resourceSpecification", Id], Query) ->
 	do_response(ModData, Resource:get_specification(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
 		["resourceInventoryManagement", "v3", "logicalResource"], Query) ->

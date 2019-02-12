@@ -155,7 +155,7 @@ class specificationList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="getSpecificationAjax"
-				url="resourceCatalogManagement/v3/specification"
+				url="resourceCatalogManagement/v3/resourceSpecification"
 				rejectWithRequest>
 			</iron-ajax>
 		`;

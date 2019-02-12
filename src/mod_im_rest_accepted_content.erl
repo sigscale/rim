@@ -60,13 +60,13 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
 						["partyManagement", "v2", "individual", _Id] ->
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
-						["resourceCatalogManagement", "v3", "catalog" | _] ->
+						["resourceCatalogManagement", "v3", "resourceCatalog" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_catalog, Data);
-						["resourceCatalogManagement", "v3", "category" | _] ->
+						["resourceCatalogManagement", "v3", "resourceCategory" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_category, Data);
-						["resourceCatalogManagement", "v3", "candidate" | _] ->
+						["resourceCatalogManagement", "v3", "resourceCandidate" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_candidate, Data);
-						["resourceCatalogManagement", "v3", "specification" | _] ->
+						["resourceCatalogManagement", "v3", "resourceSpecification" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_specification, Data);
 						["resourceInventoryManagement", "v3", "logicalResource" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_resource, Data);

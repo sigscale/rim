@@ -109,7 +109,7 @@ class catalogList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="getCatalogAjax"
-				url="resourceCatalogManagement/v3/catalog"
+				url="resourceCatalogManagement/v3/resourceCatalog"
 				rejectWithRequest>
 			</iron-ajax>
 		`;

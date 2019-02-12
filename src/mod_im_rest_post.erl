@@ -86,13 +86,13 @@ content_type_available(Headers, Uri, Body, Resource, ModData) ->
 %% @hidden
 do_post(Resource, ModData, Body, ["partyManagement", "v2", "individual"]) ->
 	do_response(ModData, Resource:post_user(Body));
-do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "catalog"]) ->
+do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "resourceCatalog"]) ->
 	do_response(ModData, Resource:post_catalog(Body));
-do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "category"]) ->
+do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "resourceCategory"]) ->
 	do_response(ModData, Resource:post_category(Body));
-do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "candidate"]) ->
+do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "resourceCandidate"]) ->
 	do_response(ModData, Resource:post_candidate(Body));
-do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "specification"]) ->
+do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "resourceSpecification"]) ->
 	do_response(ModData, Resource:post_specification(Body));
 do_post(Resource, ModData, Body, ["resourceInventoryManagement", "v1", "logicalResource", Table]) ->
 	do_response(ModData, Resource:add_resource(Table, Body)).
