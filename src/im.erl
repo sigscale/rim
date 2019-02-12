@@ -61,7 +61,7 @@ add_catalog(#catalog{id = undefined, href = undefined,
 		last_modified = undefined} = Catalog) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "catalog/" ++ Id,
+			Href = ?PathCatalog ++ "resourceCatalog/" ++ Id,
 			NewCatalog = Catalog#catalog{id = Id,
 					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCatalog),
@@ -184,7 +184,7 @@ add_category(#category{id = undefined,
 		last_modified = undefined} = Category) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "category/" ++ Id,
+			Href = ?PathCatalog ++ "resourceCategory/" ++ Id,
 			NewCategory = Category#category{id = Id,
 					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCategory),
@@ -307,7 +307,7 @@ add_candidate(#candidate{id = undefined,
 		last_modified = undefined} = Candidate) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "candidate/" ++ Id,
+			Href = ?PathCatalog ++ "resourceCandidate/" ++ Id,
 			NewCandidate = Candidate#candidate{id = Id,
 					href = Href, last_modified = LM},
 			ok = mnesia:write(NewCandidate),
@@ -430,7 +430,7 @@ add_specification(#specification{id = undefined,
 		last_modified = undefined} = Specification) ->
 	F = fun() ->
 			{Id, LM} = unique(),
-			Href = ?PathCatalog ++ "specification/" ++ Id,
+			Href = ?PathCatalog ++ "resourceSpecification/" ++ Id,
 			NewSpecification = Specification#specification{id = Id,
 					href = Href, last_modified = LM},
 			ok = mnesia:write(NewSpecification),

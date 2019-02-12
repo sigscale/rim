@@ -135,7 +135,7 @@ map_to_catalog() ->
 
 map_to_catalog(_Config) ->
 	CatalogId = random_string(12),
-	CatalogHref = ?PathCatalog ++ "catalog/" ++ CatalogId,
+	CatalogHref = ?PathCatalog ++ "resourceCatalog/" ++ CatalogId,
 	CatalogName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -144,7 +144,7 @@ map_to_catalog(_Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCcategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	Map = #{"id" => CatalogId,
 			"href" => CatalogHref,
@@ -184,7 +184,7 @@ catalog_to_map() ->
 
 catalog_to_map(_Config) ->
 	CatalogId = random_string(12),
-	CatalogHref = ?PathCatalog ++ "catalog/" ++ CatalogId,
+	CatalogHref = ?PathCatalog ++ "resourceCatalog/" ++ CatalogId,
 	CatalogName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -193,7 +193,7 @@ catalog_to_map(_Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	CatalogRecord = #catalog{id = CatalogId,
 			href = CatalogHref,
@@ -233,7 +233,7 @@ post_catalog() ->
 
 post_catalog(Config) ->
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "catalog",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceCatalog",
 	CatalogName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -242,7 +242,7 @@ post_catalog(Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ CatalogName ++ "\",\n"
@@ -286,7 +286,7 @@ post_catalog(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, URI} = lists:keyfind("location", 1, Headers),
-	{?PathCatalog ++ "catalog/" ++ ID, _} = httpd_util:split_path(URI),
+	{?PathCatalog ++ "resourceCatalog/" ++ ID, _} = httpd_util:split_path(URI),
 	{ok, #catalog{id = ID, name = CatalogName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Catalog",
@@ -302,7 +302,7 @@ get_catalogs() ->
 get_catalogs(Config) ->
 	ok = fill_catalog(5),
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "catalog",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceCatalog",
 	Accept = {"accept", "application/json"},
 	Request = {CollectionUrl, [Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
@@ -327,7 +327,7 @@ get_catalog(Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	CatalogRecord = #catalog{name = CatalogName,
 			description = Description,
@@ -370,7 +370,7 @@ map_to_category() ->
 
 map_to_category(_Config) ->
 	CategoryId = random_string(12),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -380,7 +380,7 @@ map_to_category(_Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CandidateId = random_string(10),
-	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateHref = ?PathCatalog ++ "resourceCandidate/" ++ CandidateId,
 	CandidateName = random_string(10),
 	Map = #{"id" => CategoryId,
 			"href" => CategoryHref,
@@ -423,7 +423,7 @@ category_to_map() ->
 
 category_to_map(_Config) ->
 	CategoryId = random_string(12),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -433,7 +433,7 @@ category_to_map(_Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CandidateId = random_string(10),
-	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateHref = ?PathCatalog ++ "resourceCandidate/" ++ CandidateId,
 	CandidateName = random_string(10),
 	CategoryRecord = #category{id = CategoryId,
 			href = CategoryHref,
@@ -476,7 +476,7 @@ post_category() ->
 
 post_category(Config) ->
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "category",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceCategory",
 	CategoryName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -486,7 +486,7 @@ post_category(Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CandidateId = random_string(10),
-	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateHref = ?PathCatalog ++ "resourceCandidate/" ++ CandidateId,
 	CandidateName = random_string(10),
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ CategoryName ++ "\",\n"
@@ -532,7 +532,7 @@ post_category(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, URI} = lists:keyfind("location", 1, Headers),
-	{?PathCatalog ++ "category/" ++ ID, _} = httpd_util:split_path(URI),
+	{?PathCatalog ++ "resourceCategory/" ++ ID, _} = httpd_util:split_path(URI),
 	{ok, #category{id = ID, name = CategoryName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Category",
@@ -549,7 +549,7 @@ get_categories() ->
 get_categories(Config) ->
 	ok = fill_category(5),
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "category",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceCategory",
 	Accept = {"accept", "application/json"},
 	Request = {CollectionUrl, [Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
@@ -575,7 +575,7 @@ get_category(Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CandidateId = random_string(10),
-	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateHref = ?PathCatalog ++ "resourceCandidate/" ++ CandidateId,
 	CandidateName = random_string(10),
 	CategoryRecord = #category{name = CategoryName,
 			description = Description,
@@ -620,17 +620,17 @@ map_to_candidate() ->
 
 map_to_candidate(_Config) ->
 	CandidateId = random_string(12),
-	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateHref = ?PathCatalog ++ "resourceCandidate/" ++ CandidateId,
 	CandidateName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	SpecificationId = random_string(12),
-	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationHref = ?PathCatalog ++ "resourceSpecification/" ++ SpecificationId,
 	SpecificationName = random_string(10),
 	Map = #{"id" => CandidateId,
 			"href" => CandidateHref,
@@ -668,17 +668,17 @@ candidate_to_map() ->
 
 candidate_to_map(_Config) ->
 	CandidateId = random_string(10),
-	CandidateHref = ?PathCatalog ++ "candidate/" ++ CandidateId,
+	CandidateHref = ?PathCatalog ++ "resourceCandidate/" ++ CandidateId,
 	CandidateName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
 	CategoryId = random_string(12),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	SpecificationId = random_string(12),
-	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationHref = ?PathCatalog ++ "resourceSpecification/" ++ SpecificationId,
 	SpecificationName = random_string(10),
 	CandidateRecord = #candidate{id = CandidateId,
 			href = CandidateHref,
@@ -717,17 +717,17 @@ post_candidate() ->
 
 post_candidate(Config) ->
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "candidate",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceCandidate",
 	CandidateName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	SpecificationId = random_string(12),
-	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationHref = ?PathCatalog ++ "resourceSpecification/" ++ SpecificationId,
 	SpecificationName = random_string(10),
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ CandidateName ++ "\",\n"
@@ -767,7 +767,7 @@ post_candidate(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, URI} = lists:keyfind("location", 1, Headers),
-	{?PathCatalog ++ "candidate/" ++ ID, _} = httpd_util:split_path(URI),
+	{?PathCatalog ++ "resourceCandidate/" ++ ID, _} = httpd_util:split_path(URI),
 	{ok, #candidate{id = ID, name = CandidateName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Candidate",
@@ -784,7 +784,7 @@ get_candidates() ->
 get_candidates(Config) ->
 	ok = fill_candidate(5),
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "candidate",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceCandidate",
 	Accept = {"accept", "application/json"},
 	Request = {CollectionUrl, [Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
@@ -807,10 +807,10 @@ get_candidate(Config) ->
 	ClassType = "ResourceCandidate",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
 	CategoryId = random_string(10),
-	CategoryHref = ?PathCatalog ++ "category/" ++ CategoryId,
+	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
 	SpecificationId = random_string(10),
-	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationHref = ?PathCatalog ++ "resourceSpecification/" ++ SpecificationId,
 	SpecificationName = random_string(10),
 	CandidateRecord = #candidate{name = CandidateName,
 			description = Description,
@@ -851,7 +851,7 @@ map_to_specification() ->
 
 map_to_specification(_Config) ->
 	SpecificationId = random_string(12),
-	SpecificationHref = ?PathCatalog ++ "specification/" ++ SpecificationId,
+	SpecificationHref = ?PathCatalog ++ "resourceSpecification/" ++ SpecificationId,
 	SpecificationName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -862,7 +862,7 @@ map_to_specification(_Config) ->
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "relationship/" ++ ResourceId,
+	ResouceHref = ?PathInventory ++ "resourceSpecification/" ++ ResourceId,
 	Map = #{"id" => SpecificationId,
 			"href" => SpecificationHref,
 			"name" => SpecificationName,
@@ -907,7 +907,7 @@ specification_to_map() ->
 
 specification_to_map(_Config) ->
 	SpecificationId = random_string(12),
-	SpecificationHref = ?PathCatalog ++ "catalog/" ++ SpecificationId,
+	SpecificationHref = ?PathCatalog ++ "resourceCatalog/" ++ SpecificationId,
 	SpecificationName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
@@ -918,7 +918,7 @@ specification_to_map(_Config) ->
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "relationship/" ++ ResourceId,
+	ResouceHref = ?PathInventory ++ "resourceSpecification/" ++ ResourceId,
 	SpecificationRecord = #specification{id = SpecificationId,
 			href = SpecificationHref,
 			name = SpecificationName,
@@ -1031,7 +1031,7 @@ get_specifications() ->
 get_specifications(Config) ->
 	ok = fill_specification(5),
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "specification",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceSpecification",
 	Accept = {"accept", "application/json"},
 	Request = {CollectionUrl, [Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
