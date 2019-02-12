@@ -942,7 +942,7 @@ post_specification(Config) ->
 	Version = random_string(3),
 	ClassType = "BssSpecification",
 	ClassSchema = ?PathCatalog ++ "schema/BssSpecification.json",
-	TargetSchema = ?PathCatalog ++ "schema/Bss.json",
+	TargetSchema = ?PathCatalog ++ "schema/BssFunction.json",
 	Category = random_string(6),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -960,7 +960,10 @@ post_specification(Config) ->
 			++ "\t\"lifecycleStatus\": \"In Test\",\n"
 			++ "\t\"isBundle\": \"false\",\n"
 			++ "\t\"category\": \"" ++ Category ++ "\",\n"
-			++ "\t\"targetResourceSchema\": \"" ++ TargetSchema++ "\",\n"
+			++ "\t\"targetResourceSchema\": {\n"
+			++ "\t\t\"@type\": \"BssFunction\"\n"
+			++ "\t\t\"@schemaLocation\": \"" ++ TargetSchema ++ "\"\n"
+			++ "\t},\n"
 			++ "\t\"feature\": []\n"
 			++ "\t\"attachment\": []\n"
 			++ "\t\"relatedParty\": [\n"
@@ -975,8 +978,30 @@ post_specification(Config) ->
 			++ "\t\t\t}\n"
 			++ "\t\t}\n"
 			++ "\t],\n"
-			++ "\t\"resourceSpecCharacteristic\": [],\n"
-			++ "\t\"resourceSpecRelationship\": []\n"
+			++ "\t\"resourceSpecCharacteristic\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"userLabel\",\n"
+			++ "\t\t\t\"valueType\": \"string\"\n"
+			++ "\t\t},\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"vnfParametersList\",\n"
+			++ "\t\t\t\"description\": \"Parameter set of the VNF instance(s)\",\n"
+			++ "\t\t\t\"valueType\": \"VnfParametersList\",\n"
+			++ "\t\t\t\"@valueSchemaLocation\": \"/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList\"\n"
+			++ "\t\t},\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"btsSiteMgr\",\n"
+			++ "\t\t\t\"description\": \"Base Tranceiver Station (BTS) Site\",\n"
+			++ "\t\t\t\"valueType\": \"BtsSiteMgrList\",\n"
+			++ "\t\t\t\"@valueSchemaLocation\": \"/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList\"\n"
+			++ "\t\t},\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"vsDataContainer\",\n"
+			++ "\t\t\t\"description\": \"Container for vendor specific data\",\n"
+			++ "\t\t\t\"valueType\": \"VsDataContainerList\",\n"
+			++ "\t\t\t\"@valueSchemaLocation\": \"/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList\"\n"
+			++ "\t\t}\n"
+			++ "\t]\n"
 			++ "}\n",
 	ContentType = "application/json",
 	Accept = {"accept", "application/json"},
@@ -991,7 +1016,7 @@ post_specification(Config) ->
 	{ok, #specification{id = ID, name = SpecificationName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "ResourceFunctionSpecification",
-			schema = Schema, related_party = [RP]}} = im:get_specification(ID),
+			schema = ClassSchema, related_party = [RP]}} = im:get_specification(ID),
 	#related_party_ref{id = PartyId, href = PartyHref} = RP.
 
 get_specifications() ->

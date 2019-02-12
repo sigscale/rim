@@ -12,7 +12,10 @@
 	"lifecycleStatus": "In Test",
 	"isBundle": "false",
 	"category": "RAN",
-	"targetResourceSchema": "/resourceCatalogManagement/v3/schema/Bss.json",
+	"targetResourceSchema": {
+		"@type": "BssFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunction.json#"
+	},
 	"relatedParty": [
 		{
 			"id": "154995511356799",
@@ -25,6 +28,28 @@
 			}
 		}
 	],
-	"resourceSpecCharacteristic": [],
-	"resourceSpecRelationship": []
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "btsSiteMgr",
+			"description": "Base Tranceiver Station (BTS) Site",
+			"valueType": "BtsSiteMgrList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
+		},
+		{
+			"name": "vsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
 }
