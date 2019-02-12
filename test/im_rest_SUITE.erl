@@ -482,6 +482,7 @@ post_category(Config) ->
 	Version = random_string(3),
 	ClassType = "ResourceCategory",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Parent = random_string(10),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CandidateId = random_string(10),
@@ -499,6 +500,7 @@ post_category(Config) ->
 			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
 			++ "\t},\n"
 			++ "\t\"lifecycleStatus\": \"In Test\",\n"
+			++ "\t\"parentId\": \"" ++ Parent ++ "\",\n"
 			++ "\t\"isRoot\": true,\n"
 			++ "\t\"resourceCandidate\": [\n"
 			++ "\t\t{\n"
@@ -534,7 +536,8 @@ post_category(Config) ->
 	{ok, #category{id = ID, name = CategoryName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Category",
-			root = true, schema = Schema, related_party = [RP],
+			parent = Parent, root = true, 
+			schema = Schema, related_party = [RP],
 			candidate = [C]}} = im:get_category(ID),
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
 	#candidate_ref{id = CandidateId, href = CandidateHref,
@@ -854,8 +857,12 @@ map_to_specification(_Config) ->
 	Version = random_string(3),
 	ClassType = "ResourceSpecification",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	ResourceId = random_string(10),
+	ResourceName = random_string(7),
+	ResouceHref = ?PathInventory ++ "relationship/" ++ ResourceId,
 	Map = #{"id" => SpecificationId,
 			"href" => SpecificationHref,
 			"name" => SpecificationName,
@@ -867,20 +874,33 @@ map_to_specification(_Config) ->
 			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 					"endDateTime" => "2019-12-31T23:59"},
 			"lifecycleStatus" => "Active",
+			"category" => Category,
+			"targetResourceSchema" => #{"@type" => ClassType,
+					"@schemaLocation" => Schema},
 			"relatedParty" => [#{"id" => PartyId,
 					"href" => PartyHref,
 					"role" => "Supplier",
 					"name" => "ACME Inc.",
+					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+							"endDateTime" => "2019-12-31T23:59"}}],
+			"resourceSpecRelationship" => [#{"id" => ResourceId,
+					"href" => ResouceHref,
+					"role" => "Supplier",
+					"name" => ResourceName,
+					"type" => "substitution",
 					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 							"endDateTime" => "2019-12-31T23:59"}}]},
 	#specification{id = SpecificationId, href = SpecificationHref,
 			description = Description, class_type = ClassType,
 			schema = Schema, base_type = "Specification", version = Version,
 			start_date = StartDate, end_date = EndDate, status = active,
-			related_party = [RP]} = im_rest_res_specification:specification(Map),
+			category = Category, target_schema = TS, related_party = [RP],
+			related = [R]} = im_rest_res_specification:specification(Map),
 	true = is_integer(StartDate),
 	true = is_integer(EndDate),
-	#related_party_ref{id = PartyId, href = PartyHref} = RP.
+	#target_schema_ref{class_type = ClassType, schema = Schema} = TS,
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#specification_rel{id = ResourceId, href = ResouceHref, role = "Supplier"} = R.
 
 specification_to_map() ->
 	[{userdata, [{doc, "Encode Specification map()"}]}].
@@ -893,12 +913,12 @@ specification_to_map(_Config) ->
 	Version = random_string(3),
 	ClassType = "ResourceCatalog",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
-	Model = random_string(5),
-	Part = random_string(5),
-	Vendor = random_string(20),
-	DeviceSerial = random_string(15),
+	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	ResourceId = random_string(10),
+	ResourceName = random_string(7),
+	ResouceHref = ?PathInventory ++ "relationship/" ++ ResourceId,
 	SpecificationRecord = #specification{id = SpecificationId,
 			href = SpecificationHref,
 			name = SpecificationName,
@@ -910,26 +930,34 @@ specification_to_map(_Config) ->
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-			model = Model,
-			part = Part,
-			vendor = Vendor,
-			device_serial = DeviceSerial,
+			category = Category,
+			target_schema = #target_schema_ref{class_type = ClassType,
+					schema = Schema},
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
 					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			related = [#specification_rel{id = ResourceId,
+					href = ResouceHref,
+					role = "Supplier",
+					name = ResourceName,
 					start_date = 1548720000000,
 					end_date = 1577836740000}]},
 	#{"id" := SpecificationId, "href" := SpecificationHref,
 			"description" := Description, "@type" := ClassType,
 			"@schemaLocation" := Schema, "@baseType" := "Catalog", "version" := Version,
 			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
-			"lifecycleStatus" := "Active", "model" := Model, "part" := Part,
-			"vendor" := Vendor, "device_serial" := DeviceSerial, "relatedParty" := [RP]}
+			"lifecycleStatus" := "Active", "category" := Category,
+			"targetResourceSchema" := TS, "relatedParty" := [RP],
+			"resourceSpecRelationship" := [R]}
 			= im_rest_res_specification:specification(SpecificationRecord),
 	true = is_list(Start),
 	true = is_list(End),
-	#{"id" := PartyId, "href" := PartyHref} = RP.
+	#{"@type" := ClassType, "@schemaLocation" := Schema} = TS,
+	#{"id" := PartyId, "href" := PartyHref} = RP,
+	#{"id" := ResourceId, "href" := ResouceHref, "name" := ResourceName} = R.
 
 post_specification() ->
 	[{userdata, [{doc, "POST to Specification collection"}]}].
@@ -942,7 +970,7 @@ post_specification(Config) ->
 	Version = random_string(3),
 	ClassType = "BssSpecification",
 	ClassSchema = ?PathCatalog ++ "schema/BssSpecification.json",
-	TargetSchema = ?PathCatalog ++ "schema/BssFunction.json",
+	TargetSchema = ?PathCatalog ++ "schema/Bss.json",
 	Category = random_string(6),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -955,17 +983,17 @@ post_specification(Config) ->
 			++ "\t\"version\": \"" ++ Version ++ "\",\n"
 			++ "\t\"validFor\": {\n"
 			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
-			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
+			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
 			++ "\t},\n"
 			++ "\t\"lifecycleStatus\": \"In Test\",\n"
 			++ "\t\"isBundle\": \"false\",\n"
 			++ "\t\"category\": \"" ++ Category ++ "\",\n"
 			++ "\t\"targetResourceSchema\": {\n"
-			++ "\t\t\"@type\": \"BssFunction\"\n"
+			++ "\t\t\"@type\": \"" ++ ClassType ++ "\",\n"
 			++ "\t\t\"@schemaLocation\": \"" ++ TargetSchema ++ "\"\n"
-			++ "\t},\n"
-			++ "\t\"feature\": []\n"
-			++ "\t\"attachment\": []\n"
+			++ "\t\t},\n"
+			++ "\t\"feature\": [],\n"
+			++ "\t\"attachment\": [],\n"
 			++ "\t\"relatedParty\": [\n"
 			++ "\t\t{\n"
 			++ "\t\t\t\"id\": \"" ++ PartyId ++ "\",\n"
@@ -978,30 +1006,8 @@ post_specification(Config) ->
 			++ "\t\t\t}\n"
 			++ "\t\t}\n"
 			++ "\t],\n"
-			++ "\t\"resourceSpecCharacteristic\": [\n"
-			++ "\t\t{\n"
-			++ "\t\t\t\"name\": \"userLabel\",\n"
-			++ "\t\t\t\"valueType\": \"string\"\n"
-			++ "\t\t},\n"
-			++ "\t\t{\n"
-			++ "\t\t\t\"name\": \"vnfParametersList\",\n"
-			++ "\t\t\t\"description\": \"Parameter set of the VNF instance(s)\",\n"
-			++ "\t\t\t\"valueType\": \"VnfParametersList\",\n"
-			++ "\t\t\t\"@valueSchemaLocation\": \"/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList\"\n"
-			++ "\t\t},\n"
-			++ "\t\t{\n"
-			++ "\t\t\t\"name\": \"btsSiteMgr\",\n"
-			++ "\t\t\t\"description\": \"Base Tranceiver Station (BTS) Site\",\n"
-			++ "\t\t\t\"valueType\": \"BtsSiteMgrList\",\n"
-			++ "\t\t\t\"@valueSchemaLocation\": \"/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList\"\n"
-			++ "\t\t},\n"
-			++ "\t\t{\n"
-			++ "\t\t\t\"name\": \"vsDataContainer\",\n"
-			++ "\t\t\t\"description\": \"Container for vendor specific data\",\n"
-			++ "\t\t\t\"valueType\": \"VsDataContainerList\",\n"
-			++ "\t\t\t\"@valueSchemaLocation\": \"/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList\"\n"
-			++ "\t\t}\n"
-			++ "\t]\n"
+			++ "\t\"resourceSpecCharacteristic\": [],\n"
+			++ "\t\"resourceSpecRelationship\": []\n"
 			++ "}\n",
 	ContentType = "application/json",
 	Accept = {"accept", "application/json"},
@@ -1272,9 +1278,9 @@ fill_specification(N) ->
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
 	Specification = #specification{name = random_string(10),
 			description = random_string(25),
-			class_type = "ResourceCatalog",
+			class_type = "ResourceSpecification",
 			schema = Schema,
-			base_type = "Catalog",
+			base_type = "Specification",
 			version = random_string(3),
 			start_date = 1548720000000,
 			end_date = 1577836740000,
