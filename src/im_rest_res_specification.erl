@@ -293,6 +293,12 @@ specification([category | T], #specification{category = Category} = R, Acc)
 specification([category | T], #{"category" := Category} = M, Acc)
 		when is_list(Category) ->
 	specification(T, M, Acc#specification{category = Category});
+specification([target_schema | T], #specification{target_schema = TS} = M, Acc)
+		when is_record(TS, target_schema_ref) ->
+	specification(T, M, Acc#{"targetResourceSchema" => im_rest:target_schema_ref(TS)});
+specification([target_schema | T], #{"targetResourceSchema" := TS} = M, Acc)
+		when is_map(TS) ->
+	specification(T, M, Acc#specification{target_schema = im_rest:target_schema_ref(TS)});
 specification([characteristic | T], #specification{characteristic = SpecChars} = R, Acc)
 		when is_list(SpecChars), length(SpecChars) > 0->
 	specification(T, R, Acc#{"resourceSpecCharacteristic" => specification_char(SpecChars)});
