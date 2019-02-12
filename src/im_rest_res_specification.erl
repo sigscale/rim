@@ -282,19 +282,25 @@ specification([bundle | T], #{"isBundle" := Bundle} = M, Acc)
 		when is_boolean(Bundle) ->
 	specification(T, M, Acc#specification{bundle = Bundle});
 specification([related_party | T], #specification{related_party = PartyRefs} = R, Acc)
-		when is_list(PartyRefs) ->
+		when is_list(PartyRefs), length(PartyRefs) > 0 ->
 	specification(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
 specification([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
 		when is_list(PartyRefs) ->
-	specification(T, M, Acc#specification{category = im_rest:related_party_ref(PartyRefs)});
+	specification(T, M, Acc#specification{related_party = im_rest:related_party_ref(PartyRefs)});
+specification([category | T], #specification{category = CatSpecRefs} = R, Acc)
+		when is_list(CatSpecRefs) ->
+	specification(T, R, Acc#{"category" => CatSpecRefs});
+specification([category | T], #{"category" := CatSpecRefs} = M, Acc)
+		when is_list(CatSpecRefs) ->
+	specification(T, M, Acc#specification{category = CatSpecRefs});
 specification([characteristic | T], #specification{characteristic = SpecChars} = R, Acc)
-		when is_list(SpecChars) ->
+		when is_list(SpecChars), length(SpecChars) > 0->
 	specification(T, R, Acc#{"resourceSpecCharacteristic" => specification_char(SpecChars)});
 specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars} = M, Acc)
 		when is_list(SpecChars) ->
 	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
 specification([related | T], #specification{related = SpecRels} = R, Acc)
-		when is_list(SpecRels) ->
+		when is_list(SpecRels), length(SpecRels) > 0->
 	specification(T, R, Acc#{"resourceSpecRelationship" => specification_rel(SpecRels)});
 specification([related | T], #{"resourceSpecRelationship" := SpecRels} = M, Acc)
 		when is_list(SpecRels) ->
