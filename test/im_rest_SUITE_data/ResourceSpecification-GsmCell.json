@@ -101,17 +101,6 @@
 			]
 		},
 		{
-			"name": "mnc",
-			"description": "Mobile Network Code (MNC) (3GPP 23.003)",
-			"valueType": "integer",
-			"resourceSpecCharacteristicValue": [
-				{
-					"valueFrom": 1,
-					"valueTo": 999
-				} 
-			]
-		},
-		{
 			"name": "rac",
 			"description": "Routing Area Code (RAC) (3GPP 44.018)",
 			"valueType": "integer",
@@ -214,7 +203,7 @@
 		},
 		{
 			"name": "interRatEsPolicies",
-			"description": "Inter-RAT energy saving policies information.",
+			"description": "Inter-RAT energy saving policies information",
 			"valueType": "InterRatEsPolicies",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
 		}
