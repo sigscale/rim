@@ -939,34 +939,33 @@ post_specification() ->
 
 post_specification(Config) ->
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathCatalog ++ "catalog",
+	CollectionUrl = HostUrl ++ ?PathCatalog ++ "resourceSpecification",
 	SpecificationName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
-	ClassType = "ResourceSpecification",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
-	Model = random_string(5),
-	Part = random_string(5),
-	Vendor = random_string(20),
-	DeviceSerial = random_string(15),
+	ClassType = "BssSpecification",
+	ClassSchema = ?PathCatalog ++ "schema/BssSpecification.json",
+	TargetSchema = ?PathCatalog ++ "schema/Bss.json",
+	Category = random_string(6),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ SpecificationName ++ "\",\n"
 			++ "\t\"description\": \"" ++ Description ++ "\",\n"
 			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
-			++ "\t\"@schemaLocation\": \"" ++ Schema ++ "\",\n"
-			++ "\t\"@baseType\": \"Catalog\",\n"
+			++ "\t\"@schemaLocation\": \"" ++ ClassSchema ++ "\",\n"
+			++ "\t\"@baseType\": \"ResourceFunctionSpecification\",\n"
 			++ "\t\"version\": \"" ++ Version ++ "\",\n"
 			++ "\t\"validFor\": {\n"
 			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
 			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
 			++ "\t},\n"
 			++ "\t\"lifecycleStatus\": \"In Test\",\n"
-			++ "\t\"model\": \"" ++ Model ++ "\",\n"
-			++ "\t\"part\": \"" ++ Part ++ "\",\n"
-			++ "\t\"vendor\": \"" ++ Vendor ++ "\",\n"
-			++ "\t\"device_serial\": \"" ++ DeviceSerial ++ "\",\n"
+			++ "\t\"isBundle\": \"false\",\n"
+			++ "\t\"category\": \"" ++ Category ++ "\",\n"
+			++ "\t\"targetResourceSchema\": \"" ++ TargetSchema++ "\",\n"
+			++ "\t\"feature\": []\n"
+			++ "\t\"attachment\": []\n"
 			++ "\t\"relatedParty\": [\n"
 			++ "\t\t{\n"
 			++ "\t\t\t\"id\": \"" ++ PartyId ++ "\",\n"
@@ -979,6 +978,8 @@ post_specification(Config) ->
 			++ "\t\t\t}\n"
 			++ "\t\t}\n"
 			++ "\t],\n"
+			++ "\t\"resourceSpecCharacteristic\": [],\n"
+			++ "\t\"resourceSpecRelationship\": []\n"
 			++ "}\n",
 	ContentType = "application/json",
 	Accept = {"accept", "application/json"},
@@ -989,12 +990,11 @@ post_specification(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, URI} = lists:keyfind("location", 1, Headers),
-	{?PathCatalog ++ "specification/" ++ ID, _} = httpd_util:split_path(URI),
+	{?PathCatalog ++ "resourceSpecification/" ++ ID, _} = httpd_util:split_path(URI),
 	{ok, #specification{id = ID, name = SpecificationName,
 			description = Description, version = Version,
-			class_type = ClassType, base_type = "Catalog", schema = Schema,
-			model = Model, part = Part, vendor = Vendor, device_serial = DeviceSerial,
-			related_party = [RP]}} = im:get_specification(ID),
+			class_type = ClassType, base_type = "ResourceFunctionSpecification",
+			schema = Schema, related_party = [RP]}} = im:get_specification(ID),
 	#related_party_ref{id = PartyId, href = PartyHref} = RP.
 
 get_specifications() ->
