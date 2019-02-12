@@ -1,5 +1,6 @@
 {
-	"id": "eutranNrm", 
+	"title": "EUTRAN NRM",
+	"description": "Evolved UTRAN (EUTRAN) Network Resource Model (NRM)",
 	"definitions": {
 		"IpAddressList": {
 			"type": "object",

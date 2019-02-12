@@ -1,5 +1,6 @@
 {
-	"id": "sonPolicyNrm", 
+	"title": "SON Policy NRM", 
+	"description": "Self Organizing Networks (SON) Policy Network Resource Model (NRM)",
 	"definitions": {
 		"cacRange": {
 			"type": "integer",
@@ -27,7 +28,7 @@
 				25,
 				50,
 				75,
-				90	
+				90
 			]
 		},
 		"WeekDay": {

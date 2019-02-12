@@ -1,5 +1,6 @@
 {
-	"$id": "genericNrm",
+	"title": "Generic NRM",
+	"description": "Generic Network Resource Model (NRM)",
 	"definitions": {
 		"NrmClass": {
 			"type": "object",

@@ -1,5 +1,6 @@
 {
-	"id": "utranNrm", 
+	"title": "UTRAN NRM",
+	"description": "Universal Terrestrial Radio Access Network (UTRAN) Network Resource Model (NRM)",
 	"definitions": {
 		"localCellId": {
 			"type": "integer",
