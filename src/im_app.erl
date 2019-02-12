@@ -35,8 +35,8 @@
 
 -record(state, {}).
 
--define(WAITFORSCHEMA, 10000).
--define(WAITFORTABLES, 10000).
+-define(WAITFORSCHEMA, 11000).
+-define(WAITFORTABLES, 11000).
 
 %%----------------------------------------------------------------------
 %%  The im_app aplication callbacks
@@ -111,6 +111,7 @@ install(Nodes) when is_list(Nodes) ->
 							[{nodes, Nodes}]),
 					install1(Nodes);
 				{error, Reason} ->
+					error_logger:info_msg("Found existing schema.~n"),
 					error_logger:error_report(["Failed to create schema",
 							mnesia:error_description(Reason),
 							{nodes, Nodes}, {error, Reason}]),
@@ -265,90 +266,101 @@ install7(Nodes, Acc) ->
 	end.
 %% @hidden
 install8(Nodes, Acc) ->
-	case application:load(inets) of
+	case add_specifications() of
 		ok ->
-			error_logger:info_msg("Loaded inets.~n"),
+			error_logger:info_msg("Added 3GPP NRM resource specifications.~n"),
 			install9(Nodes, Acc);
-		{error, {already_loaded, inets}} ->
-			install9(Nodes, Acc)
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
 	end.
 %% @hidden
 install9(Nodes, Acc) ->
+	case application:load(inets) of
+		ok ->
+			error_logger:info_msg("Loaded inets.~n"),
+			install10(Nodes, Acc);
+		{error, {already_loaded, inets}} ->
+			install10(Nodes, Acc)
+	end.
+%% @hidden
+install10(Nodes, Acc) ->
 	case application:get_env(inets, services) of
 		{ok, InetsServices} ->
-			install10(Nodes, Acc, InetsServices);
+			install11(Nodes, Acc, InetsServices);
 		undefined ->
 			error_logger:info_msg("Inets services not defined. "
 					"User table not created~n"),
-			install14(Nodes, Acc)
+			install15(Nodes, Acc)
 	end.
 %% @hidden
-install10(Nodes, Acc, InetsServices) ->
+install11(Nodes, Acc, InetsServices) ->
 	case lists:keyfind(httpd, 1, InetsServices) of
 		{httpd, HttpdInfo} ->
-			install11(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
+			install12(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
 		false ->
 			error_logger:info_msg("Httpd service not defined. "
 					"User table not created~n"),
-			install14(Nodes, Acc)
+			install15(Nodes, Acc)
 	end.
 %% @hidden
-install11(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
+install12(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
 	case lists:keyfind(auth_type, 1, DirectoryInfo) of
 		{auth_type, mnesia} ->
-			install12(Nodes, Acc);
+			install13(Nodes, Acc);
 		_ ->
 			error_logger:info_msg("Auth type not mnesia. "
 					"User table not created~n"),
-			install14(Nodes, Acc)
+			install15(Nodes, Acc)
 	end;
-install11(Nodes, Acc, false) ->
+install12(Nodes, Acc, false) ->
 	error_logger:info_msg("Auth directory not defined. "
 			"User table not created~n"),
-	install14(Nodes, Acc).
+	install15(Nodes, Acc).
 %% @hidden
-install12(Nodes, Acc) ->
+install13(Nodes, Acc) ->
 	case mnesia:create_table(httpd_user, [{type, bag}, {disc_copies, Nodes},
 			{attributes, record_info(fields, httpd_user)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_user table.~n"),
-			install13(Nodes, [httpd_user | Acc]);
+			install14(Nodes, [httpd_user | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, httpd_user}} ->
 			error_logger:info_msg("Found existing httpd_user table.~n"),
-			install13(Nodes, [httpd_user | Acc]);
+			install14(Nodes, [httpd_user | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
 			{error, Reason}
 	end.
 %% @hidden
-install13(Nodes, Acc) ->
+install14(Nodes, Acc) ->
 	case mnesia:create_table(httpd_group, [{type, bag}, {disc_copies, Nodes},
 			{attributes, record_info(fields, httpd_group)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_group table.~n"),
-			install14(Nodes, [httpd_group | Acc]);
+			install15(Nodes, [httpd_group | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, httpd_group}} ->
 			error_logger:info_msg("Found existing httpd_group table.~n"),
-			install14(Nodes, [httpd_group | Acc]);
+			install15(Nodes, [httpd_group | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
 			{error, Reason}
 	end.
 %% @hidden
-install14(_Nodes, Tables) ->
+install15(_Nodes, Tables) ->
 	case mnesia:wait_for_tables(Tables, ?WAITFORTABLES) of
 		ok ->
-			install15(Tables, lists:member(httpd_user, Tables));
+			install16(Tables, lists:member(httpd_user, Tables));
 		{timeout, Tables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, Tables}]),
@@ -359,21 +371,21 @@ install14(_Nodes, Tables) ->
 			{error, Reason}
 	end.
 %% @hidden
-install15(Tables, true) ->
+install16(Tables, true) ->
 	case inets:start() of
 		ok ->
 			error_logger:info_msg("Started inets.~n"),
-			install16(Tables);
+			install17(Tables);
 		{error, {already_started, inets}} ->
-			install16(Tables);
+			install17(Tables);
 		{error, Reason} ->
 			error_logger:error_msg("Failed to start inets~n"),
 			{error, Reason}
 	end;
-install15(Tables, false) ->
+install16(Tables, false) ->
 	{ok, Tables}.
 %% @hidden
-install16(Tables) ->
+install17(Tables) ->
 	case im:get_user() of
 		{ok, []} ->
 			case im:add_user("admin", "admin", "en") of
@@ -463,4 +475,153 @@ force([H | T]) ->
 	end;
 force([]) ->
 	ok.
+
+-spec add_specifications() -> Result
+	when
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Add 3GPP NRM `ResourceFunctionSpecification's to resource table.
+add_specifications() ->
+	add_bss().
+%% @hidden
+add_bss() ->
+	UserLabel = #specification_char{name = "userLabel",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	BtsSiteMgr = #specification_char{name = "btsSiteMgr",
+			description = "Base Tranceiver Station (BTS) Site",
+			value_type = "BtsSiteMgrList",
+			value_schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"},
+	VsDataContainer = #specification_char{name = "vsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, BtsSiteMgr, VsDataContainer],
+	BssSpecification = #specification{name = "BSS",
+			description = "GSM Base Station Subsystem",
+			class_type = "BssSpecification",
+			base_type  = "ResourceFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/BssSpecification.json",
+			status = "Active",
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "BssFunction",
+					schema = "/resourceInventoryManagement/v3/schema/Bss.json"},
+			characteristic = Chars},
+	case im:add_specification(BssSpecification) of
+		{ok, _} ->
+			add_gsmcell();
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_gsmcell() ->
+	UserLabel = #specification_char{name = "userLabel",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	CellIdentity = #specification_char{name = "cellIdentity",
+			description = "Cell Identity (3GPP 24.008)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 65535}]},
+	CellAllocation = #specification_char{name = "cellAllocation",
+			description = "The set of Absolute Radio Frequency Channel Number (ARFCN) (3GPP 44.018)",
+			value_type = "array"},
+	Ncc = #specification_char{name = "ncc",
+			description = "Network Colour Code (NCC) (3GPP 44.018)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 7}]},
+	Bcc = #specification_char{name = "bcc",
+			description = "Base Station Colour Code (BCC) (3GPP 44.018)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 7}]},
+	Lac = #specification_char{name = "lac",
+			description = "Location Area Code (LAC) (3GPP 24.008)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 1, to = 65533}]},
+	Mcc = #specification_char{name = "mcc",
+			description = "Mobile Country Code (MCC) (3GPP 23.003)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 1, to = 999}]},
+	Mnc = #specification_char{name = "mnc",
+			description = "Mobile Network Code (MNC) (3GPP 23.003)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 1, to = 999}]},
+	Rac = #specification_char{name = "rac",
+			description = "Routing Area Code (RAC) (3GPP 44.018)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 255}]},
+	Racc = #specification_char{name = "racc",
+			description = "Routing Area Colour Code (RACC) (3GPP 44.018)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 7}]},
+	Tsc = #specification_char{name = "tsc",
+			description = "Training Sequence Code (TSC) (3GPP 44.018)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 7}]},
+	RxrLevAccessMinM = #specification_char{name = "rxrLevAccessMinM",
+			description = "Minimum Access Level (RXLEV_ACCESS_MIN) (3GPP TS 45.008)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 63}]},
+	MsTxPwrMaxCCH = #specification_char{name = "msTxPwrMaxCCH",
+			description = "Maximum Transmission Power (MS_TXPWR_MAX_CCH) (3GPP 45.008)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 31}]},
+	RfHoppingEnabled = #specification_char{name = "rfHoppingEnabled",
+			description = "Indicates if frequency hopping is enabled",
+			value_type = "boolean"},
+	HoppingSequenceList = #specification_char{name = "hoppingSequenceList",
+			description = "List of hopping sequence: MA (3GPP 44.018) and HSN (3GPP 45.002)",
+			value_type = "HoppingSequenceList",
+			value_schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/HoppingSequenceList"},
+	PlmnPermitted = #specification_char{name = "plmnPermitted",
+			description = "Network Colour Code (NCC) Permitted (NCC_PERMITTED) (3GPP 45.008)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = 0, to = 255}]},
+	GsmRelation = #specification_char{name = "gsmRelation",
+			description = "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
+			value_type = "GsmRelationList",
+			value_schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"},
+	UtranRelation = #specification_char{name = "utranRelation",
+			description = "Neighbour cell Relation (NR) from a source cell to a target UtranCell",
+			value_type = "UtranRelationList",
+			value_schema = "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"},
+	EUtranRelation = #specification_char{name = "eUtranRelation",
+			description = "Neighbour cell Relation (NR) from a source cell to a target EUtranCell",
+			value_type = "EUtranRelationList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranRelationList"},
+	VsDataContainer = #specification_char{name = "vsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	InterRatEsPolicies = #specification_char{name = "interRatEsPolicies",
+			description = "Inter-RAT energy saving policies information",
+			value_type = "InterRatEsPolicies",
+			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"},
+	Chars = [UserLabel, VnfParametersList, CellIdentity, CellAllocation, Ncc,
+			Bcc, Lac, Mcc, Mnc, Rac, Racc, Tsc, RxrLevAccessMinM, MsTxPwrMaxCCH,
+			RfHoppingEnabled, HoppingSequenceList, PlmnPermitted, GsmRelation,
+			UtranRelation, EUtranRelation, VsDataContainer, InterRatEsPolicies],
+	GsmCellSpecification = #specification{name = "GsmCell",
+			description = "GSM Radio Cell",
+			class_type = "GsmCellSpecification",
+			base_type  = "ResourceFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/GsmCellSpecification.json",
+			status = "Active",
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "GsmCellFunction",
+					schema = "/resourceInventoryManagement/v3/schema/GsmCellFunction.json"},
+			characteristic = Chars},
+	case im:add_specification(GsmCellSpecification) of
+		{ok, _} ->
+			ok;
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
