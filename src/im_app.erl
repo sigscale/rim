@@ -171,7 +171,7 @@ install2(Nodes) ->
 %% @hidden
 install3(Nodes, Acc) ->
 	case mnesia:create_table(catalog, [{disc_copies, Nodes},
-			{attributes, record_info(fields, catalog)}]) of
+			{attributes, record_info(fields, catalog)}, {index, [name]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource catalog table.~n"),
 			install4(Nodes, [catalog | Acc]);
@@ -190,7 +190,7 @@ install3(Nodes, Acc) ->
 %% @hidden
 install4(Nodes, Acc) ->
 	case mnesia:create_table(category, [{disc_copies, Nodes},
-			{attributes, record_info(fields, category)}]) of
+			{attributes, record_info(fields, category)}, {index, [name]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource category table.~n"),
 			install5(Nodes, [category | Acc]);
@@ -209,7 +209,7 @@ install4(Nodes, Acc) ->
 %% @hidden
 install5(Nodes, Acc) ->
 	case mnesia:create_table(candidate, [{disc_copies, Nodes},
-			{attributes, record_info(fields, candidate)}]) of
+			{attributes, record_info(fields, candidate)}, {index, [name]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource candidate table.~n"),
 			install6(Nodes, [candidate | Acc]);
@@ -228,7 +228,7 @@ install5(Nodes, Acc) ->
 %% @hidden
 install6(Nodes, Acc) ->
 	case mnesia:create_table(specification, [{disc_copies, Nodes},
-			{attributes, record_info(fields, specification)}]) of
+			{attributes, record_info(fields, specification)}, {index, [name]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource specification table.~n"),
 			install7(Nodes, [specification | Acc]);
@@ -247,7 +247,7 @@ install6(Nodes, Acc) ->
 %% @hidden
 install7(Nodes, Acc) ->
 	case mnesia:create_table(resource, [{disc_copies, Nodes},
-			{attributes, record_info(fields, resource)}]) of
+			{attributes, record_info(fields, resource)}, {index, [name]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource inventory table.~n"),
 			install8(Nodes, [resource | Acc]);
