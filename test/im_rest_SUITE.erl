@@ -482,7 +482,6 @@ post_category(Config) ->
 	Version = random_string(3),
 	ClassType = "ResourceCategory",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
-	Parent = random_string(10),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CandidateId = random_string(10),
@@ -500,7 +499,6 @@ post_category(Config) ->
 			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\",\n"
 			++ "\t},\n"
 			++ "\t\"lifecycleStatus\": \"In Test\",\n"
-			++ "\t\"parentId\": \"" ++ Parent ++ "\",\n"
 			++ "\t\"isRoot\": true,\n"
 			++ "\t\"resourceCandidate\": [\n"
 			++ "\t\t{\n"
@@ -536,8 +534,7 @@ post_category(Config) ->
 	{ok, #category{id = ID, name = CategoryName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Category",
-			parent = Parent, root = true, 
-			schema = Schema, related_party = [RP],
+			root = true, schema = Schema, related_party = [RP],
 			candidate = [C]}} = im:get_category(ID),
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
 	#candidate_ref{id = CandidateId, href = CandidateHref,

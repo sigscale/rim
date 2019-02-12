@@ -1,0 +1,31 @@
+{
+	"id": "154995553124366",
+	"href": "/resourceCatalogManagement/v3/candidate/154995553124366",
+	"name": "BSS",
+	"description": "GSM Base Station Subsystem (BSS)",
+	"@type": "ResourceCandidate",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/swagger.json#/definitions/ResourceCandidate",
+	"@baseType": "Candidate",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00",
+		"endDateTime": "2019-12-31T23:59",
+	},
+	"lifecycleStatus": "In Test",
+	"category": [
+		{
+			"id": "154995556287925",
+			"href": "/resourceCatalogManagement/v3/category/154995556287925",
+			"name": "RAN",
+			"version": "0.1"
+		}
+	],
+	"resourceSpecification": 
+		{
+			"id": "154995556288077",
+			"href": "/resourceCatalogManagement/v3/specification/154995556288077",
+			"name": "BssSpecification",
+			"version": "0.1"
+		}
+
+}
