@@ -29,9 +29,6 @@
  
 -include("im.hrl").
 
--define(PathInventory, "/resourceInventoryManagement/v3/").
--define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
-
 %%----------------------------------------------------------------------
 %%  The im public API
 %%----------------------------------------------------------------------
