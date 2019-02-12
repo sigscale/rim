@@ -1,0 +1,30 @@
+{
+	"name": "BSS",
+	"description": "GSM Base Station Subsystem",
+	"@type": "BssSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssSpecification.json",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00",
+		"endDateTime": "2019-12-31T23:59",
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": "false",
+	"category": "RAN",
+	"targetResourceSchema": "/resourceCatalogManagement/v3/schema/Bss.json",
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00",
+				"endDateTime": "2019-12-31T23:59"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [],
+	"resourceSpecRelationship": []
+}

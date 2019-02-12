@@ -1,0 +1,34 @@
+{
+	"id": "154995555743217",
+	"name": "Network",
+	"description": "Network Resources",
+	"@type": "ResourceCatalog",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/swagger.json#/definitions/ResourceCatalog",
+	"@baseType": "Catalog",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00",
+		"endDateTime": "2019-12-31T23:59",
+	},
+	"lifecycleStatus": "In Test",
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00",
+				"endDateTime": "2019-12-31T23:59"
+			}
+		}
+	],
+	"category": [
+		{
+			"id": "154995556287925",
+			"href": "/resourceCatalogManagement/v3/category/154995556287925",
+			"name": "RAN",
+			"version": "0.1",
+		}
+	]
+}
