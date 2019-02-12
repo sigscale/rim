@@ -271,10 +271,10 @@ candidate([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 	candidate(T, M, Acc#candidate{last_modified = LM});
 candidate([status | T], #candidate{status = Status} = R, Acc)
 		when Status /= undefined->
-	candidate(T, R, Acc#{"lifecycleStatus" => Status});
+	candidate(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
 candidate([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 		when is_list(Status) ->
-	candidate(T, M, Acc#candidate{status = Status});
+	candidate(T, M, Acc#candidate{status = im_rest:lifecycle_status(Status)});
 candidate([category | T], #candidate{category = CatRefs} = R, Acc)
 		when is_list(CatRefs), length(CatRefs) > 0 ->
 	candidate(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});
