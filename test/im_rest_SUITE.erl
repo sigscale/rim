@@ -416,7 +416,6 @@ map_to_category(_Config) ->
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
 	#candidate_ref{id = CandidateId, href = CandidateHref,
 			name = CandidateName, version = Version} = C.
-%erlang:display({?MODULE, ?LINE, im_rest_res_category:category(Map)}).
 
 category_to_map() ->
 	[{userdata, [{doc, "Encode Category map()"}]}].
@@ -1053,25 +1052,16 @@ get_specification(Config) ->
 	Version = random_string(3),
 	ClassType = "ResourceSpecification",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
-	Model = random_string(5),
-	Part = random_string(5),
-	Vendor = random_string(20),
-	DeviceSerial = random_string(15),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	SpecificationRecord = #specification{name = SpecificationName,
 			description = Description,
 			class_type = ClassType,
 			schema = Schema,
-			base_type = "Catalog",
 			version = Version,
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-			model = Model,
-			part = Part,
-			vendor = Vendor,
-			device_serial = DeviceSerial,
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
@@ -1089,9 +1079,7 @@ get_specification(Config) ->
 	{ok, SpecificationMap} = zj:decode(ResponseBody),
 	#{"id" := Id, "href" := Href, "name" := SpecificationName,
 			"description" := Description, "version" := Version,
-			"@type" := ClassType, "@baseType" := "Catalog",
-			"@schemaLocation" := Schema, "model" := Model, "part" := Part,
-			"vendor" := Vendor, "device_serial" := DeviceSerial,
+			"@type" := ClassType, "@schemaLocation" := Schema,
 			"relatedParty" := [RP]} = SpecificationMap,
 	true = is_related_party_ref(RP).
 
@@ -1201,15 +1189,11 @@ is_candidate(_) ->
 
 is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
-		"@type" := ClassType, "@baseType" := "Catalog",
-		"@schemaLocation" := Schema, "model" := Model,
-		"part" := Part, "vendor" := Vendor, "device_serial" := DeviceSerial,
-		"relatedParty" := RelatedParty}) when is_list(Id),
-		is_list(Href), is_list(Name), is_list(Description),
-		is_list(Version), is_list(ClassType), is_list(Schema),
-		is_list(Model), is_list(Part), is_list(Vendor), is_list(DeviceSerial),
-		is_list(RelatedParty) ->
-	lists:all(fun is_related_party_ref/1, RelatedParty);
+		"@type" := ClassType, "@schemaLocation" := Schema})
+		when is_list(Id), is_list(Href), is_list(Name),
+		is_list(Description), is_list(Version),
+		is_list(ClassType), is_list(Schema) ->
+	true;
 is_specification(_) ->
 	false.
 
@@ -1280,15 +1264,10 @@ fill_specification(N) ->
 			description = random_string(25),
 			class_type = "ResourceSpecification",
 			schema = Schema,
-			base_type = "Specification",
 			version = random_string(3),
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-			model = random_string(5),
-			part = random_string(5),
-			vendor = random_string(20),
-			device_serial = random_string(15),
 			related_party = fill_related_party(3)},
 	{ok, _} = im:add_specification(Specification),
 	fill_specification(N - 1).
@@ -1302,7 +1281,7 @@ fill_related_party(N, Acc) ->
 	Href = ?PathParty ++ "organization/" ++ Id,
 	RelatedParty = #related_party_ref{id = Id, href = Href,
 			role = "Supplier", name = "ACME Inc.",
-	start_date = 1548720000000, end_date = 1577836740000},
+			start_date = 1548720000000, end_date = 1577836740000},
 	fill_related_party(N - 1, [RelatedParty | Acc]).
 
 fill_category_ref(N) ->
