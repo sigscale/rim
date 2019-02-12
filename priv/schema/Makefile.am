@@ -3,7 +3,7 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-schema_DATA = $(abs_builddir)/ResourceSpecification-BSS.json
+schema_DATA = $(abs_builddir)/ResourceFunctionSpec.json
 
 $(abs_builddir)/%.json:	$(srcdir)/%.json
 	if [ ! -e $@ ]; then \
