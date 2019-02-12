@@ -334,9 +334,9 @@ specification_rel([#{} | _] = List) ->
 specification_rel([]) ->
 	[].
 %% @hidden
-specification_rel([id | T], #{"id" := Id} = M, Acc)
+specification_rel([id | T], #specification_rel{id = Id} = M, Acc)
 		when is_list(Id) ->
-	specification_rel(T, M, Acc#specification_rel{id = Id});
+	specification_rel(T, M, Acc#{"id" => Id});
 specification_rel([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
 	specification_rel(T, M, Acc#specification_rel{id = Id});
