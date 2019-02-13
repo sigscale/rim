@@ -500,7 +500,7 @@ add_bss() ->
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
 	Chars = [UserLabel, VnfParametersList, BtsSiteMgr, VsDataContainer],
-	BssSpecification = #specification{name = "BSS",
+	BssSpecification = #specification{name = "BssFunction",
 			description = "GSM Base Station Subsystem",
 			class_type = "BssSpecification",
 			base_type  = "ResourceFunctionSpecification",
