@@ -1230,19 +1230,6 @@ is_candidate(_) ->
 
 is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		"@type" := ClassType, "@schemaLocation" := Schema})
-		when is_list(Id), is_list(Href), is_list(Name),
-		is_list(Description), is_list(Version),
-		is_list(ClassType), is_list(Schema) ->
-	true;
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 		"@type" := ClassType, "@baseType" := "Specification",
 		"@schemaLocation" := Schema, "targetResourceSchema" := T,
 		"relatedParty" := RelatedParty, "resourceSpecRelationship" := R})
@@ -1252,13 +1239,6 @@ is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 	is_target_ref(T),
 	lists:all(fun is_related_party_ref/1, RelatedParty),
 	lists:all(fun is_related_ref/1, R);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 is_specification(_) ->
 	false.
 
@@ -1333,9 +1313,6 @@ fill_specification(N) ->
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-<<<<<<< Updated upstream
-			related_party = fill_related_party(3)},
-=======
 			model = random_string(5),
 			part = random_string(5),
 			vendor = random_string(20),
@@ -1344,13 +1321,6 @@ fill_specification(N) ->
 					schema = Schema},
 			related_party = fill_related_party(3),
 			related = fill_related_ref(3)},
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	{ok, _} = im:add_specification(Specification),
 	fill_specification(N - 1).
 
