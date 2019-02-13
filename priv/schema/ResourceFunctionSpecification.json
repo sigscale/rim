@@ -1,7 +1,7 @@
 {
 	"title": "Resource Function Specification",
 	"description": "Specifies a function as a behaviour to transform inputs of any nature into outputs of any nature independently from the way it is provided.",
-	"type": "object", 
+	"type": "object",
 	"properties": {
 		"allOf": [
 			{
@@ -9,7 +9,7 @@
 			},
 			{
 				"@baseType": {
-					"pattern": "^LogicalResourceSpec$", 
+					"pattern": "^LogicalResourceSpec$"
 				},
 				"sap": {
 					"type": "array",
@@ -19,7 +19,7 @@
 						}
 					]
 				}
-			} 
+			}
 		]
 	}
 }
