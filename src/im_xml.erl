@@ -290,18 +290,23 @@ parse_gsm_cell_rels(GsmCellID, Characteristics,
 	parse_gsm_cell_rels(GsmCellID, Characteristics, T2, Stack, NewAcc);
 parse_gsm_cell_rels(GsmCellID, Characteristics, CellStack, Stack, Acc) ->
 	NewCharacteristics = maps:to_list(Acc) ++ Characteristics,
-%	F1 = fun() ->
-%		ResChars = #resource{characteristic = NewCharacteristics},
-%		mnesia:write(inventory, ResChars, write),
-%		ResChars
-%	end,
-%	case mnesia:transaction(F1) of
-%		{atomic, Resource} ->
-%			{ok, Resource};
-%		{aborted, Reason} ->
-%			exit(Reason)
-%	end,
-	parse_gsm_cell_pol(GsmCellID, NewCharacteristics, CellStack, Stack).
+	F1 = fun() ->
+		ID = im:generate_identity(),
+		ResChars = #resource{id = ID,
+			href = "/resourceInventoryManagement/v3/resource/" ++ ID,
+			name = "resource Name",
+			description = "resource description",
+			category = "foo",
+			base_type = "base",
+			characteristic = NewCharacteristics},
+		mnesia:write(resource, ResChars, write)
+	end,
+	case mnesia:transaction(F1) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			parse_gsm_cell_pol(GsmCellID, NewCharacteristics, CellStack, Stack)
+	end.
 
 % @hidden
 parse_gsm_cell_pol(_GsmCellID, _Characteristics,

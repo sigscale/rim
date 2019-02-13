@@ -7,7 +7,7 @@
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00",
-		"endDateTime": "2019-12-31T23:59",
+		"endDateTime": "2019-12-31T23:59"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": "false",
