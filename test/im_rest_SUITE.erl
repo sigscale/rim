@@ -1105,6 +1105,7 @@ get_specification(Config) ->
 			= SpecificationMap,
 	true = is_target_ref(T),
 	true = is_related_party_ref(RP),
+erlang:display({?MODULE, ?LINE, R}),
 	true = is_related_ref(R).
 
 %%---------------------------------------------------------------------
@@ -1231,12 +1232,15 @@ is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		"@type" := ClassType, "@schemaLocation" := Schema})
 		when is_list(Id), is_list(Href), is_list(Name),
 		is_list(Description), is_list(Version),
 		is_list(ClassType), is_list(Schema) ->
 	true;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 		"@type" := ClassType, "@baseType" := "Specification",
@@ -1249,6 +1253,9 @@ is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 	lists:all(fun is_related_party_ref/1, RelatedParty),
 	lists:all(fun is_related_ref/1, R);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -1338,6 +1345,9 @@ fill_specification(N) ->
 			related_party = fill_related_party(3),
 			related = fill_related_ref(3)},
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
