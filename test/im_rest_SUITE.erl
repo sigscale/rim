@@ -985,7 +985,7 @@ post_specification(Config) ->
 			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
 			++ "\t},\n"
 			++ "\t\"lifecycleStatus\": \"In Test\",\n"
-			++ "\t\"isBundle\": \"false\",\n"
+			++ "\t\"isBundle\": false,\n"
 			++ "\t\"category\": \"" ++ Category ++ "\",\n"
 			++ "\t\"targetResourceSchema\": {\n"
 			++ "\t\t\"@type\": \"" ++ ClassType ++ "\",\n"
@@ -1052,20 +1052,40 @@ get_specification(Config) ->
 	Version = random_string(3),
 	ClassType = "ResourceSpecification",
 	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	TargetSchema = ?PathCatalog ++ "schema/Bss.json",
+	Model = random_string(5),
+	Part = random_string(5),
+	Vendor = random_string(20),
+	DeviceSerial = random_string(15),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	Type = random_string(7),
 	SpecificationRecord = #specification{name = SpecificationName,
 			description = Description,
 			class_type = ClassType,
 			schema = Schema,
+			base_type = "Specification",
 			version = Version,
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
+			model = Model,
+			part = Part,
+			vendor = Vendor,
+			device_serial = DeviceSerial,
+			target_schema = #target_schema_ref{class_type = ClassType,
+					schema = TargetSchema},
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
 					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			related = [#specification_rel{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					type = Type,
 					start_date = 1548720000000,
 					end_date = 1577836740000}]},
 	{ok, #specification{id = Id, href = Href}} = im:add_specification(SpecificationRecord),
@@ -1079,9 +1099,13 @@ get_specification(Config) ->
 	{ok, SpecificationMap} = zj:decode(ResponseBody),
 	#{"id" := Id, "href" := Href, "name" := SpecificationName,
 			"description" := Description, "version" := Version,
-			"@type" := ClassType, "@schemaLocation" := Schema,
-			"relatedParty" := [RP]} = SpecificationMap,
-	true = is_related_party_ref(RP).
+			"@type" := ClassType, "@baseType" := "Specification",
+			"@schemaLocation" := Schema, "targetResourceSchema" := T,
+			"relatedParty" := [RP], "resourceSpecRelationship" := [R]}
+			= SpecificationMap,
+	true = is_target_ref(T),
+	true = is_related_party_ref(RP),
+	true = is_related_ref(R).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
@@ -1147,6 +1171,22 @@ is_specification_ref(#{"id" := Id, "href" := Href,
 is_specification_ref(_) ->
 	false.
 
+is_target_ref(#{"@type" := Type, "@schemaLocation" := Schema})
+		when is_list(Type), is_list(Schema) ->
+	true;
+is_target_ref(_) ->
+	false.
+
+is_related_ref(#{"id" := Id, "href" := Href,
+		"name" := Name, "role" := Role, "type" := Type,
+		"validFor" := #{"startDateTime" := Start,
+		"endDateTime" := End}}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Role),
+		is_list(Start), is_list(End), is_list(Type) ->
+	im_rest:iso8601(End) > im_rest:iso8601(Start);
+is_related_ref(_R) ->
+	false.
+
 is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
 		"@type" := ClassType, "@baseType" := "Catalog",
@@ -1189,11 +1229,23 @@ is_candidate(_) ->
 
 is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
+<<<<<<< Updated upstream
 		"@type" := ClassType, "@schemaLocation" := Schema})
 		when is_list(Id), is_list(Href), is_list(Name),
 		is_list(Description), is_list(Version),
 		is_list(ClassType), is_list(Schema) ->
 	true;
+=======
+		"@type" := ClassType, "@baseType" := "Specification",
+		"@schemaLocation" := Schema, "targetResourceSchema" := T,
+		"relatedParty" := RelatedParty, "resourceSpecRelationship" := R})
+		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Schema),
+		is_list(RelatedParty), is_list(R) ->
+	is_target_ref(T),
+	lists:all(fun is_related_party_ref/1, RelatedParty),
+	lists:all(fun is_related_ref/1, R);
+>>>>>>> Stashed changes
 is_specification(_) ->
 	false.
 
@@ -1268,7 +1320,18 @@ fill_specification(N) ->
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
+<<<<<<< Updated upstream
 			related_party = fill_related_party(3)},
+=======
+			model = random_string(5),
+			part = random_string(5),
+			vendor = random_string(20),
+			device_serial = random_string(15),
+			target_schema = #target_schema_ref{class_type = "ResourceSpecification",
+					schema = Schema},
+			related_party = fill_related_party(3),
+			related = fill_related_ref(3)},
+>>>>>>> Stashed changes
 	{ok, _} = im:add_specification(Specification),
 	fill_specification(N - 1).
 
@@ -1306,3 +1369,15 @@ fill_candidate_ref(N, Acc) ->
 			name = random_string(10), version = random_string(3)},
 	fill_candidate_ref(N - 1, [Candidate | Acc]).
 
+fill_related_ref(N) ->
+	fill_related_ref(N, []).
+fill_related_ref(0, Acc) ->
+	Acc;
+fill_related_ref(N, Acc) ->
+	Id = random_string(10),
+	Type = random_string(5),
+	Href = ?PathParty ++ "organization/" ++ Id,
+	Related = #specification_rel{id = Id, href = Href,
+			role = "Supplier", name = "ACME Inc.", type = Type,
+	start_date = 1548720000000, end_date = 1577836740000},
+	fill_related_ref(N - 1, [Related | Acc]).

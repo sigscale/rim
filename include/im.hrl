@@ -298,3 +298,10 @@
 		time_duration :: 0..900 | undefined | '_'}).
 -type relative_cell_load_parameters() :: #inter_rat_es_policies{}.
 
+-record('BssFunction',
+		{user_label:: string() | undefined | '_',
+		vs_data_container :: [term()] | undefined | '_'}).
+
+-record('BtsSiteMgr',
+		{user_label:: string() | undefined | '_',
+		vs_data_container :: [term()] | undefined | '_'}).
