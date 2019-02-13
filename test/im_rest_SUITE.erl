@@ -1105,7 +1105,6 @@ get_specification(Config) ->
 			= SpecificationMap,
 	true = is_target_ref(T),
 	true = is_related_party_ref(RP),
-erlang:display({?MODULE, ?LINE, R}),
 	true = is_related_ref(R).
 
 %%---------------------------------------------------------------------
@@ -1230,16 +1229,13 @@ is_candidate(_) ->
 
 is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
-		"@type" := ClassType, "@baseType" := "Specification",
-		"@schemaLocation" := Schema, "targetResourceSchema" := T,
-		"relatedParty" := RelatedParty, "resourceSpecRelationship" := R})
+		"@type" := ClassType, "@baseType" := BaseType,
+		"@schemaLocation" := Schema, "targetResourceSchema" := T})
 		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
 		is_list(Version), is_list(ClassType), is_list(Schema),
-		is_list(RelatedParty), is_list(R) ->
-	is_target_ref(T),
-	lists:all(fun is_related_party_ref/1, RelatedParty),
-	lists:all(fun is_related_ref/1, R);
-is_specification(_) ->
+		is_list(BaseType) ->
+	true = is_target_ref(T);
+is_specification(_S) ->
 	false.
 
 fill_catalog(0) ->
@@ -1308,6 +1304,7 @@ fill_specification(N) ->
 	Specification = #specification{name = random_string(10),
 			description = random_string(25),
 			class_type = "ResourceSpecification",
+			base_type = "Specification",
 			schema = Schema,
 			version = random_string(3),
 			start_date = 1548720000000,
