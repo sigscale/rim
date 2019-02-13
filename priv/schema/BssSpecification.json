@@ -1,0 +1,42 @@
+{
+	"title": "BSS Specification",
+	"description": "GSM Base Station Subsystem (BSS) resource function specification",
+	"type": "object",
+	"properties": {
+		"allOf": [
+			{
+				"$ref": "ResourceFunctionSpecification.json#"
+			},
+			{
+				"@baseType": {
+					"pattern": "^ResourceFunctionSpecification$"
+				},
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "/resourceCatalogManagement/v3/schema/resourceCatalogManagement.json#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"btsSiteMgr",
+											"vsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		]
+	}
+}
