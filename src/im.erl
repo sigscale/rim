@@ -790,7 +790,7 @@ query_user(start = _Continuation, Size, MatchHead, MatchConditions)
 		is_list(MatchConditions) ->
 	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
 	F = fun() ->
-			 mnesia:select(user, MatchExpression, Size, read)
+			 mnesia:select(httpd_user, MatchExpression, Size, read)
 	end,
 	case mnesia:ets(F) of
 		{error, Reason} ->
