@@ -141,7 +141,7 @@ map_to_catalog(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCatalog",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
@@ -190,7 +190,7 @@ catalog_to_map(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCatalog",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
@@ -239,7 +239,7 @@ post_catalog(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCatalog",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
@@ -324,7 +324,7 @@ get_catalog(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCatalog",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CategoryId = random_string(10),
@@ -376,7 +376,7 @@ map_to_category(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCategory",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	Parent = random_string(10),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -428,7 +428,7 @@ category_to_map(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCategory",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	Parent = random_string(10),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -481,7 +481,7 @@ post_category(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCategory",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	Parent = random_string(10),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -570,7 +570,7 @@ get_category(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCategory",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	Parent = random_string(10),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -625,7 +625,7 @@ map_to_candidate(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCandidate",
 	CategoryId = random_string(10),
 	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
@@ -673,7 +673,7 @@ candidate_to_map(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCandidate",
 	CategoryId = random_string(12),
 	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
@@ -722,7 +722,7 @@ post_candidate(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCandidate",
 	CategoryId = random_string(10),
 	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
@@ -805,7 +805,7 @@ get_candidate(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCandidate",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCandidate",
 	CategoryId = random_string(10),
 	CategoryHref = ?PathCatalog ++ "resourceCategory/" ++ CategoryId,
 	CategoryName = random_string(10),
@@ -856,13 +856,13 @@ map_to_specification(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceSpecification",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceSpecification",
 	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "resourceSpecification/" ++ ResourceId,
+	ResouceHref = ?PathCatalog ++ "resourceSpecification/" ++ ResourceId,
 	Map = #{"id" => SpecificationId,
 			"href" => SpecificationHref,
 			"name" => SpecificationName,
@@ -912,13 +912,13 @@ specification_to_map(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceCatalog",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "resourceSpecification/" ++ ResourceId,
+	ResouceHref = ?PathCatalog ++ "resourceSpecification/" ++ ResourceId,
 	SpecificationRecord = #specification{id = SpecificationId,
 			href = SpecificationHref,
 			name = SpecificationName,
@@ -1052,7 +1052,7 @@ get_specification(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "ResourceSpecification",
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceSpecification",
 	TargetSchema = ?PathCatalog ++ "schema/BssFunction.json",
 	Model = random_string(5),
 	Part = random_string(5),
@@ -1119,7 +1119,7 @@ map_to_resource(_Config) ->
 	PublicIdentifier = random_string(15),
 	Version = random_string(3),
 	ClassType = "LogicalResource",
-	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/BssFunction.json",
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/BssFunction.json",
 	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -1128,7 +1128,7 @@ map_to_resource(_Config) ->
 	ResourceType = random_string(5),
 	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
 	CharValue = random_string(10),
-	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/geranNrm#/
+	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
 			definitions/BtsSiteMgrList",
 	Map = #{"id" => Id,
 			"href" => Href,
@@ -1183,7 +1183,7 @@ resource_to_map(_Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "LogicalResource",
-	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/logicalResource",
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/logicalResource",
 	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
@@ -1252,7 +1252,7 @@ post_resource(Config) ->
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CharValue = random_string(10),
-	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/geranNrm#/
+	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
 			definitions/BtsSiteMgrList",
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ Name ++ "\",\n"
@@ -1345,14 +1345,14 @@ get_resource(Config) ->
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "LogicalResource",
-	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/LogicalResource",
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/LogicalResource",
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
 	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
 	CharValue = random_string(10),
-	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/geranNrm#/
+	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
 			definitions/BtsSiteMgrList",
 	ResourceRecord = #resource{name = Name,
 			public_id = PublicId,
@@ -1558,7 +1558,7 @@ is_resource(_) ->
 fill_catalog(0) ->
 	ok;
 fill_catalog(N) ->
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCatalog",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	Catalog = #catalog{name = random_string(10),
 			description = random_string(25),
 			class_type = "ResourceCatalog",
@@ -1576,7 +1576,7 @@ fill_catalog(N) ->
 fill_category(0) ->
 	ok;
 fill_category(N) ->
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCategory",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	Category = #category{name = random_string(10),
 			description = random_string(25),
 			class_type = "ResourceCategory",
@@ -1596,7 +1596,7 @@ fill_category(N) ->
 fill_candidate(0) ->
 	ok;
 fill_candidate(N) ->
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceCandidate",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceCandidate",
 	Id = random_string(10),
 	Href = ?PathParty ++ "organization/" ++ Id,
 	Candidate = #candidate{name = random_string(10),
@@ -1617,7 +1617,7 @@ fill_candidate(N) ->
 fill_specification(0) ->
 	ok;
 fill_specification(N) ->
-	Schema = ?PathCatalog ++ "schema/swagger.json#/definitions/ResourceSpecification",
+	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceSpecification",
 	Specification = #specification{name = random_string(10),
 			description = random_string(25),
 			class_type = "ResourceSpecification",
@@ -1641,7 +1641,7 @@ fill_specification(N) ->
 fill_resource(0) ->
 	ok;
 fill_resource(N) ->
-	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/logicalResource",
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/logicalResource",
 	Version = random_string(3),
 	Resource = #resource{name = random_string(10),
 			public_id = random_string(15),
@@ -1713,8 +1713,7 @@ fill_resource_char(N) ->
 fill_resource_char(0, Acc) ->
 	Acc;
 fill_resource_char(N, Acc) ->
-	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/
-			geranNrm#/definitions/BtsSiteMgrList",
+	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/definitions/BtsSiteMgrList",
 	Characteristic = #resource_char{name = random_string(10),
 			class_type = random_string(5),
 			schema = CharSchema, value = random_string(15)},
