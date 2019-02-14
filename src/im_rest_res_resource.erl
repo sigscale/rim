@@ -277,8 +277,8 @@ resource([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 	resource(T, M, Acc#resource{last_modified = LM});
 resource([status | T], #resource{status = Status} = R, Acc)
 		when Status /= undefined ->
-	resource(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-resource([status | T], #{"lifecycleStatus" := Status} = M, Acc)
+	resource(T, R, Acc#{"lifecycleState" => im_rest:lifecycle_status(Status)});
+resource([status | T], #{"lifecycleState" := Status} = M, Acc)
 		when is_list(Status) ->
 	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
 resource([place | T], #resource{place = PlaceRef} = R, Acc)
