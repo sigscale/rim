@@ -4,12 +4,12 @@
 	"name": "RAN",
 	"description": "Radio Access Network",
 	"@type": "ResourceCategory",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/swagger.json#/definitions/ResourceCategory",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	"@baseType": "Category",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00",
-		"endDateTime": "2019-12-31T23:59",
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isRoot": true,
@@ -28,8 +28,8 @@
 			"role": "Supplier",
 			"name": "ACME Inc.",
 			"validFor": {
-				"startDateTime": "2019-01-29T00:00",
-				"endDateTime": "2019-12-31T23:59"
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
 			}
 		}
 	]

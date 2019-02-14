@@ -210,8 +210,8 @@ resource([name | T], #{"name" := Name} = M, Acc)
 	resource(T, M, Acc#resource{name = Name});
 resource([public_id | T], #resource{public_id = PublicId} = R, Acc)
 		when is_list(PublicId) ->
-	resource(T, R, Acc#{"public_id" => PublicId});
-resource([public_id | T], #{"public_id" := PublicId} = M, Acc)
+	resource(T, R, Acc#{"publicIdentifier" => PublicId});
+resource([public_id | T], #{"publicIdentifier" := PublicId} = M, Acc)
 		when is_list(PublicId) ->
 	resource(T, M, Acc#resource{public_id = PublicId});
 resource([description| T],
@@ -229,14 +229,14 @@ resource([category | T], #{"category" := Category} = M, Acc)
 	resource(T, M, Acc#resource{category = Category});
 resource([class_type | T], #resource{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource(T, R, Acc#{"@baseType" => Type});
-resource([class_type | T], #{"@baseType" := Type} = M, Acc)
+	resource(T, R, Acc#{"@type" => Type});
+resource([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	resource(T, M, Acc#resource{class_type = Type});
 resource([base_type | T], #resource{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource(T, R, Acc#{"@type" => Type});
-resource([base_type | T], #{"@type" := Type} = M, Acc)
+	resource(T, R, Acc#{"@baseType" => Type});
+resource([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	resource(T, M, Acc#resource{base_type = Type});
 resource([schema | T], #resource{schema = Schema} = R, Acc)
@@ -245,6 +245,9 @@ resource([schema | T], #resource{schema = Schema} = R, Acc)
 resource([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 		when is_list(Schema) ->
 	resource(T, M, Acc#resource{schema = Schema});
+resource([version | T], #resource{version = Version} = R, Acc)
+		when is_list(Version) ->
+	resource(T, R, Acc#{"version" => Version});
 resource([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	resource(T, M, Acc#resource{version = Version});
@@ -277,8 +280,8 @@ resource([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 	resource(T, M, Acc#resource{last_modified = LM});
 resource([status | T], #resource{status = Status} = R, Acc)
 		when Status /= undefined ->
-	resource(T, R, Acc#{"lifecycleStatus" => im_rest:lifecycle_status(Status)});
-resource([status | T], #{"lifecycleStatus" := Status} = M, Acc)
+	resource(T, R, Acc#{"lifecycleState" => im_rest:lifecycle_status(Status)});
+resource([status | T], #{"lifecycleState" := Status} = M, Acc)
 		when is_list(Status) ->
 	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
 resource([place | T], #resource{place = PlaceRef} = R, Acc)
@@ -309,12 +312,18 @@ resource([specification | T], #resource{specification = SpecRef} = R, Acc)
 		when is_record(SpecRef, specification_ref) ->
 	resource(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(SpecRef)});
 resource([specification | T], #{"resourceSpecification" := SpecRef} = M, Acc)
-		when is_tuple(SpecRef) ->
+		when is_map(SpecRef) ->
 	resource(T, M, Acc#resource{specification = im_rest:specification_ref(SpecRef)});
+resource([related_party | T], #resource{related_party = PartyRefs} = R, Acc)
+		when is_list(PartyRefs), length(PartyRefs) > 0 ->
+	resource(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
+resource([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
+		when is_list(PartyRefs), length(PartyRefs) > 0 ->
+	resource(T, M, Acc#resource{related_party = im_rest:related_party_ref(PartyRefs)});
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 		when is_list(ResChar), length(ResChar) > 0 ->
-	resource(T, R, Acc#{"resorceCharacteristic" => resource_char(ResChar)});
-resource([characteristic | T], #{"resorceCharacteristic" := ResChar} = M, Acc)
+	resource(T, R, Acc#{"resourceCharacteristic" => resource_char(ResChar)});
+resource([characteristic | T], #{"resourceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->
 	resource(T, M, Acc#resource{characteristic = resource_char(ResChar)});
 resource([_ | T], R, Acc) ->

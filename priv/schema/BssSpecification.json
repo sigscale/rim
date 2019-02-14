@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/BssSpecification",
+	"title": "BSS Specification",
+	"description": "GSM Base Station Subsystem (BSS) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"@baseType": {
+					"pattern": "^ResourceFunctionSpecification$"
+				},
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"btsSiteMgr",
+											"vsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

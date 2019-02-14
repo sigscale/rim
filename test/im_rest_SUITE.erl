@@ -124,7 +124,8 @@ all() ->
 			map_to_category, category_to_map, post_category, get_categories, get_category,
 			map_to_candidate, candidate_to_map, post_candidate, get_candidates, get_candidate,
 			map_to_specification, specification_to_map, post_specification, get_specifications,
-			get_specification].
+			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
+			get_resource].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -924,7 +925,7 @@ specification_to_map(_Config) ->
 			description = Description,
 			class_type = ClassType,
 			schema = Schema,
-			base_type = "Catalog",
+			base_type = "Specification",
 			version = Version,
 			start_date = 1548720000000,
 			end_date = 1577836740000,
@@ -946,7 +947,7 @@ specification_to_map(_Config) ->
 					end_date = 1577836740000}]},
 	#{"id" := SpecificationId, "href" := SpecificationHref,
 			"description" := Description, "@type" := ClassType,
-			"@schemaLocation" := Schema, "@baseType" := "Catalog", "version" := Version,
+			"@schemaLocation" := Schema, "@baseType" := "Specification", "version" := Version,
 			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
 			"lifecycleStatus" := "Active", "category" := Category,
 			"targetResourceSchema" := TS, "relatedParty" := [RP],
@@ -1105,8 +1106,295 @@ get_specification(Config) ->
 			= SpecificationMap,
 	true = is_target_ref(T),
 	true = is_related_party_ref(RP),
-erlang:display({?MODULE, ?LINE, R}),
 	true = is_related_ref(R).
+
+map_to_resource() ->
+	[{userdata, [{doc, "Decode Resource map()"}]}].
+
+map_to_resource(_Config) ->
+	Id = random_string(12),
+	Href = ?PathInventory ++ "logicalResource/" ++ Id,
+	Name = random_string(10),
+	Description = random_string(25),
+	PublicIdentifier = random_string(15),
+	Version = random_string(3),
+	ClassType = "LogicalResource",
+	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/BssFunction.json",
+	Category = random_string(5),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	ResourceId = random_string(10),
+	ResourceName = random_string(7),
+	ResourceType = random_string(5),
+	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	CharValue = random_string(10),
+	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/geranNrm#/
+			definitions/BtsSiteMgrList",
+	Map = #{"id" => Id,
+			"href" => Href,
+			"name" => Name,
+			"publicIdentifier" => PublicIdentifier,
+			"description" => Description,
+			"category" => Category,
+			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+					"endDateTime" => "2019-12-31T23:59"},
+			"lifecycleState" => "Active",
+			"@type" => ClassType,
+			"@baseType" => "Resource",
+			"@schemaLocation" => Schema,
+			"version" => Version,
+			"resourceSpecification" => #{"id" => ResourceId,
+					"href" => ResouceHref,
+					"name" => ResourceName,
+					"@type" => ResourceType,
+					"version" => "1.1"},
+			"relatedParty" => [#{"id" => PartyId,
+					"href" => PartyHref,
+					"role" => "Supplier",
+					"name" => "ACME Inc.",
+					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
+							"endDateTime" => "2019-12-31T23:59"}}],
+			"resourceCharacteristic" => [#{"name" => "btsSiteMgr",
+					"value" => CharValue,
+					"@type" => "BtsSiteMgrList",
+					"@schemaLocation" => CharSchema}]},
+	#resource{id = Id, href = Href, name = Name, public_id = PublicIdentifier,
+			description = Description, category = Category, class_type = ClassType,
+			schema = Schema, base_type = "Resource", status = active,
+			version = Version, start_date = StartDate,
+			end_date = EndDate, specification = S, related_party = [RP],
+			characteristic = [C]} = im_rest_res_resource:resource(Map),
+	true = is_integer(StartDate),
+	true = is_integer(EndDate),
+	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
+			version = "1.1"} = S,
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#resource_char{name = "btsSiteMgr", class_type = "BtsSiteMgrList",
+			schema = CharSchema, value = CharValue} = C.
+
+resource_to_map() ->
+	[{userdata, [{doc, "Encode Resource map()"}]}].
+
+resource_to_map(_Config) ->
+	Id = random_string(12),
+	Href = ?PathInventory ++ "logicalResource/" ++ Id,
+	Name = random_string(10),
+	PublicId = random_string(15),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "LogicalResource",
+	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/logicalResource",
+	Category = random_string(5),
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	ResourceId = random_string(10),
+	ResourceName = random_string(7),
+	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	CharValue = random_string(10),
+	CharSchema = ?PathInventory ++ "schema/geranNrm#/definitions/BtsSiteMgrList",
+	ResourceRecord = #resource{id = Id,
+			href = Href,
+			name = Name,
+			public_id = PublicId,
+			description = Description,
+			category = Category,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Resource",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			specification = #specification_ref{id = ResourceId,
+					href = ResouceHref, name = ResourceName, version = "1.1"},
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			characteristic = [#resource_char{name = "btsSiteMgr",
+					class_type = "BtsSiteMgrList",
+					value = CharValue,
+					schema = CharSchema}]},
+	#{"id" := Id, "href" := Href, "name" := Name, "publicIdentifier" := PublicId, 
+			"description" := Description, "@type" := ClassType,
+			"@schemaLocation" := Schema, "@baseType" := "Resource", "version" := Version,
+			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
+			"lifecycleState" := "Active", "category" := Category,
+			"resourceSpecification" := S, "relatedParty" := [RP],
+			"resourceCharacteristic" := [C]}
+			= im_rest_res_resource:resource(ResourceRecord),
+	true = is_list(Start),
+	true = is_list(End),
+	#{"id" := ResourceId, "href" := ResouceHref, "name" := ResourceName,
+			"version" := "1.1"} = S,
+	#{"id" := PartyId, "href" := PartyHref} = RP,
+	#{"name" := "btsSiteMgr", "value" := CharValue, "@type" := "BtsSiteMgrList",
+			"@schemaLocation" := CharSchema} = C.
+
+post_resource() ->
+	[{userdata, [{doc, "POST to Resource collection"}]}].
+
+post_resource(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathInventory ++ "logicalResource",
+	Name = random_string(10),
+	PublicId = random_string(15),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "LogicalResource",
+	ClassSchema = ?PathInventory ++ "schema/resourceInventoryManagement.json",
+	Category = random_string(6),
+	ResourceId = random_string(10),
+	ResourceName = random_string(7),
+	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CharValue = random_string(10),
+	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/geranNrm#/
+			definitions/BtsSiteMgrList",
+	RequestBody = "{\n"
+			++ "\t\"name\": \"" ++ Name ++ "\",\n"
+			++ "\t\"publicIdentifier\": \"" ++ PublicId ++ "\",\n"
+			++ "\t\"description\": \"" ++ Description ++ "\",\n"
+			++ "\t\"category\": \"" ++ Category ++ "\",\n"
+			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
+			++ "\t\"@schemaLocation\": \"" ++ ClassSchema ++ "\",\n"
+			++ "\t\"@baseType\": \"Resource\",\n"
+			++ "\t\"version\": \"" ++ Version ++ "\",\n"
+			++ "\t\"validFor\": {\n"
+			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
+			++ "\t},\n"
+			++ "\t\"lifecycleState\": \"In Test\",\n"
+			++ "\t\"resourceSpecification\": {\n"
+			++ "\t\t\"id\": \"" ++ ResourceId ++ "\",\n"
+			++ "\t\t\"href\": \"" ++ ResouceHref ++ "\",\n"
+			++ "\t\t\"name\": \"" ++ ResourceName ++ "\",\n"
+			++ "\t\t\"@type\": \"" ++ ClassType ++ "\",\n"
+			++ "\t\t\"version\": \"" ++ Version ++ "\"\n"
+			++ "\t\t},\n"
+			++ "\t\"relatedParty\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"id\": \"" ++ PartyId ++ "\",\n"
+			++ "\t\t\t\"href\": \"" ++ PartyHref ++ "\",\n"
+			++ "\t\t\t\"role\": \"Supplier\",\n"
+			++ "\t\t\t\"name\": \"ACME Inc.\",\n"
+			++ "\t\t\t\"validFor\": {\n"
+			++ "\t\t\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
+			++ "\t\t\t\t\"endDateTime\": \"2019-12-31T23:59\"\n"
+			++ "\t\t\t}\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
+			++ "\t\"resourceCharacteristic\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"btsSiteMgr\",\n"
+			++ "\t\t\t\"value\": \"" ++ CharValue ++ "\",\n"
+			++ "\t\t\t\"@type\": \"BtsSiteMgrList\",\n"
+			++ "\t\t\t\"@schemaLocation\": \"" ++ CharSchema ++ "\"\n"
+			++ "\t\t}\n"
+			++ "\t]\n"
+			++ "}\n",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{_, URI} = lists:keyfind("location", 1, Headers),
+	{?PathInventory ++ "logicalResource/" ++ ID, _} = httpd_util:split_path(URI),
+	{ok, #resource{id = ID, name = Name, public_id = PublicId, 
+			description = Description, version = Version, category = Category,
+			class_type = ClassType, base_type = "Resource",
+			schema = ClassSchema, specification = S, related_party = [RP],
+			characteristic = [C]}} = im:get_specification(ID),
+	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
+			version = "1.1"} = S,
+	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#resource_char{name = "btsSiteMgr", class_type = "BtsSiteMgrList",
+			schema = CharSchema, value = CharValue} = C.
+
+get_resources() ->
+	[{userdata, [{doc, "GET Resource collection"}]}].
+
+get_resources(Config) ->
+	ok = fill_resource(5),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathInventory ++ "logicalResource",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, Resources} = zj:decode(ResponseBody),
+	false = is_empty(Resources),
+	true = lists:all(fun is_resource/1, Resources).
+
+get_resource() ->
+	[{userdata, [{doc, "GET inventory Resource"}]}].
+
+get_resource(Config) ->
+	HostUrl = ?config(host_url, Config),
+	Name = random_string(10),
+	PublicId = random_string(15),
+	Description = random_string(25),
+	Version = random_string(3),
+	ClassType = "LogicalResource",
+	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/LogicalResource",
+	PartyId = random_string(10),
+	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	ResourceId = random_string(10),
+	ResourceName = random_string(7),
+	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	CharValue = random_string(10),
+	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/geranNrm#/
+			definitions/BtsSiteMgrList",
+	ResourceRecord = #resource{name = Name,
+			public_id = PublicId,
+			description = Description,
+			class_type = ClassType,
+			schema = Schema,
+			base_type = "Resource",
+			version = Version,
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			specification = #specification_ref{id = ResourceId,
+					href = ResouceHref, name = ResourceName, version = "1.1"},
+			related_party = [#related_party_ref{id = PartyId,
+					href = PartyHref,
+					role = "Supplier",
+					name = "ACME Inc.",
+					start_date = 1548720000000,
+					end_date = 1577836740000}],
+			characteristic = [#resource_char{name = "btsSiteMgr",
+					class_type = "BtsSiteMgrList",
+					value = CharValue,
+					schema = CharSchema}]},
+	{ok, #resource{id = Id, href = Href}} = im:add_resource(ResourceRecord),
+	Accept = {"accept", "application/json"},
+	Request = {HostUrl ++ Href, [Accept, auth_header()]},
+erlang:display({?MODULE, ?LINE, Href, HostUrl}),
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	#{"id" := Id, "href" := Href, "name" := Name, "publicIdentifier" := PublicId,
+			"description" := Description, "version" := Version,
+			"@type" := ClassType, "@baseType" := "Resource",
+			"@schemaLocation" := Schema, "resourceSpecification" := S,
+			"relatedParty" := [RP], "resourceCharacteristic" := [C]}
+			= ResourceMap,
+	true = is_resource_spec(S),
+	true = is_related_party_ref(RP),
+	true = is_resource_char(C).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
@@ -1188,6 +1476,22 @@ is_related_ref(#{"id" := Id, "href" := Href,
 is_related_ref(_R) ->
 	false.
 
+is_resource_spec(#{"id" := ResourceId, "href" := ResouceHref,
+		"name" := ResourceName, "version" := Version})
+		when is_list(ResourceId), is_list(ResouceHref),
+		is_list(ResourceName), is_list(Version) ->
+	true;
+is_resource_spec(_) ->
+	false.
+
+is_resource_char(#{"name" := Name, "value" := Value,
+		"@type" := Type, "@schemaLocation" := CharSchema})
+		when is_list(Name), is_list(Value),
+		is_list(Type), is_list(CharSchema) ->
+	true;
+is_resource_char(_) ->
+	false.
+
 is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
 		"@type" := ClassType, "@baseType" := "Catalog",
@@ -1230,16 +1534,25 @@ is_candidate(_) ->
 
 is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		"description" := Description, "version" := Version,
-		"@type" := ClassType, "@baseType" := "Specification",
-		"@schemaLocation" := Schema, "targetResourceSchema" := T,
-		"relatedParty" := RelatedParty, "resourceSpecRelationship" := R})
+		"@type" := ClassType, "@baseType" := BaseType,
+		"@schemaLocation" := Schema, "targetResourceSchema" := T})
 		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
 		is_list(Version), is_list(ClassType), is_list(Schema),
-		is_list(RelatedParty), is_list(R) ->
-	is_target_ref(T),
-	lists:all(fun is_related_party_ref/1, RelatedParty),
-	lists:all(fun is_related_ref/1, R);
-is_specification(_) ->
+		is_list(BaseType) ->
+	true = is_target_ref(T);
+is_specification(_S) ->
+	false.
+
+is_resource(#{"id" := Id, "publicIdentifier" := PublicId, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "@baseType" := "Resource",
+		"@schemaLocation" := Schema, "resourceSpecification" := S,
+		"relatedParty" := RelatedParty, "resourceCharacteristic" := Char})
+		when is_list(Id), is_list(PublicId), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Schema),
+		is_list(RelatedParty), is_list(Char) ->
+	true = is_resource_spec(S);
+is_resource(_) ->
 	false.
 
 fill_catalog(0) ->
@@ -1308,6 +1621,7 @@ fill_specification(N) ->
 	Specification = #specification{name = random_string(10),
 			description = random_string(25),
 			class_type = "ResourceSpecification",
+			base_type = "Specification",
 			schema = Schema,
 			version = random_string(3),
 			start_date = 1548720000000,
@@ -1323,6 +1637,29 @@ fill_specification(N) ->
 			related = fill_related_ref(3)},
 	{ok, _} = im:add_specification(Specification),
 	fill_specification(N - 1).
+
+fill_resource(0) ->
+	ok;
+fill_resource(N) ->
+	Schema = ?PathInventory ++ "schema/swagger.json#/definitions/logicalResource",
+	Version = random_string(3),
+	Resource = #resource{name = random_string(10),
+			public_id = random_string(15),
+			description = random_string(25),
+			class_type = "LogicalResource",
+			base_type = "Resource",
+			schema = Schema,
+			version = random_string(3),
+			start_date = 1548720000000,
+			end_date = 1577836740000,
+			status = active,
+			specification = #specification_ref{id = random_string(10),
+					href = random_string(25), name = random_string(10),
+					version = Version},
+			related_party = fill_related_party(3),
+			characteristic  = fill_resource_char(3)},
+	{ok, _} = im:add_resource(Resource),
+	fill_resource(N - 1).
 
 fill_related_party(N) ->
 	fill_related_party(N, []).
@@ -1370,3 +1707,15 @@ fill_related_ref(N, Acc) ->
 			role = "Supplier", name = "ACME Inc.", type = Type,
 	start_date = 1548720000000, end_date = 1577836740000},
 	fill_related_ref(N - 1, [Related | Acc]).
+
+fill_resource_char(N) ->
+	fill_resource_char(N, []).
+fill_resource_char(0, Acc) ->
+	Acc;
+fill_resource_char(N, Acc) ->
+	CharSchema = ?PathInventory ++ "schema/swagger.json#/definitions/v3/schema/
+			geranNrm#/definitions/BtsSiteMgrList",
+	Characteristic = #resource_char{name = random_string(10),
+			class_type = random_string(5),
+			schema = CharSchema, value = random_string(15)},
+	fill_resource_char(N - 1, [Characteristic | Acc]).
