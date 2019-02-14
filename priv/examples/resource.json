@@ -6,8 +6,8 @@
 	"description": "GSM Base Station Subsystem (BSS)",
 	"category": "RAN",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00",
-		"endDateTime": "2019-12-31T23:59"
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
 	},
 	"lifecycleState": "In Test",
 	"@type": "BssFunction",

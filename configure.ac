@@ -47,6 +47,7 @@ beamdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/ebin
 eincludedir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/include
 docdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/doc
 schemadir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/priv/schema
+examplesdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/priv/examples
 wwwdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/priv/www
 AC_SUBST(appdir)
 AC_SUBST(erldir)
@@ -54,6 +55,7 @@ AC_SUBST(beamdir)
 AC_SUBST(eincludedir)
 AC_SUBST(privdir)
 AC_SUBST(schemadir)
+AC_SUBST(examplesdir)
 AC_SUBST(wwwdir)
 
 
@@ -93,7 +95,8 @@ AC_ERLANG_CHECK_LIB([zj], [], [AC_MSG_ERROR([zj was not found!])])
 ## Output:  create output files
 ## 
 
-AC_OUTPUT([Makefile src/Makefile include/Makefile ebin/Makefile doc/Makefile
-		priv/Makefile priv/schema/Makefile priv/www/Makefile priv/www/package.json
+AC_OUTPUT([Makefile src/Makefile include/Makefile ebin/Makefile
+		doc/Makefile priv/Makefile priv/schema/Makefile
+		priv/examples/Makefile priv/www/Makefile priv/www/package.json
 		test/Makefile sys.config])
 

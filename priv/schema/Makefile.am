@@ -44,9 +44,9 @@ $(abs_builddir)/%.json:	$(srcdir)/%.json
 		$(LN_S) $< $@; \
 	fi
 
-check_DATA = .schema_ok
+check_DATA = .validation_ok
 
-.schema_ok:
+.validation_ok:
 	@if xmllint --version > /dev/null 2>&1; then \
 		for i in `ls *.xsd`; do \
 			if xmllint --noout $$i; then \
