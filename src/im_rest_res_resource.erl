@@ -320,7 +320,7 @@ resource([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 		when is_list(ResChar), length(ResChar) > 0 ->
 	resource(T, R, Acc#{"resorceCharacteristic" => resource_char(ResChar)});
-resource([characteristic | T], #{"resorceCharacteristic" := ResChar} = M, Acc)
+resource([characteristic | T], #{"resourceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->
 	resource(T, M, Acc#resource{characteristic = resource_char(ResChar)});
 resource([_ | T], R, Acc) ->
