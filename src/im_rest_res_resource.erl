@@ -210,8 +210,8 @@ resource([name | T], #{"name" := Name} = M, Acc)
 	resource(T, M, Acc#resource{name = Name});
 resource([public_id | T], #resource{public_id = PublicId} = R, Acc)
 		when is_list(PublicId) ->
-	resource(T, R, Acc#{"public_id" => PublicId});
-resource([public_id | T], #{"public_id" := PublicId} = M, Acc)
+	resource(T, R, Acc#{"publicIdentifier" => PublicId});
+resource([public_id | T], #{"publicIdentifier" := PublicId} = M, Acc)
 		when is_list(PublicId) ->
 	resource(T, M, Acc#resource{public_id = PublicId});
 resource([description| T],
