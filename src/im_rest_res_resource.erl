@@ -309,7 +309,7 @@ resource([specification | T], #resource{specification = SpecRef} = R, Acc)
 		when is_record(SpecRef, specification_ref) ->
 	resource(T, R, Acc#{"resourceSpecification" => im_rest:specification_ref(SpecRef)});
 resource([specification | T], #{"resourceSpecification" := SpecRef} = M, Acc)
-		when is_tuple(SpecRef) ->
+		when is_map(SpecRef) ->
 	resource(T, M, Acc#resource{specification = im_rest:specification_ref(SpecRef)});
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 		when is_list(ResChar), length(ResChar) > 0 ->
