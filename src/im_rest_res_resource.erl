@@ -315,7 +315,7 @@ resource([related_party | T], #resource{related_party = PartyRefs} = R, Acc)
 		when is_list(PartyRefs), length(PartyRefs) > 0 ->
 	resource(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
 resource([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
-		when is_list(PartyRefs) ->
+		when is_list(PartyRefs), length(PartyRefs) > 0 ->
 	resource(T, M, Acc#resource{related_party = im_rest:related_party_ref(PartyRefs)});
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 		when is_list(ResChar), length(ResChar) > 0 ->
