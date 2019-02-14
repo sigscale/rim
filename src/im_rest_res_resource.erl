@@ -245,6 +245,9 @@ resource([schema | T], #resource{schema = Schema} = R, Acc)
 resource([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 		when is_list(Schema) ->
 	resource(T, M, Acc#resource{schema = Schema});
+resource([version | T], #resource{version = Version} = R, Acc)
+		when is_list(Version) ->
+	resource(T, R, Acc#{"version" => Version});
 resource([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	resource(T, M, Acc#resource{version = Version});
