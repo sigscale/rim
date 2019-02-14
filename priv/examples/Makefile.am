@@ -1,0 +1,54 @@
+## Makefile.am
+## vim: ts=3
+##
+## Process this file with automake to produce Makefile.in
+
+examples_DATA = $(abs_builddir)/geran.xml \
+		$(abs_builddir)/utran.xml \
+		$(abs_builddir)/eutran.xml \
+		$(abs_builddir)/core.xml \
+		$(abs_builddir)/epc.xml \
+		$(abs_builddir)/ims.xml \
+		$(abs_builddir)/catalog.json \
+		$(abs_builddir)/category.json \
+		$(abs_builddir)/candidate.json \
+		$(abs_builddir)/specification.json \
+		$(abs_builddir)/resource.json
+
+$(abs_builddir)/%.xml:	$(srcdir)/%.xml
+	if [ ! -e $@ ]; then \
+		$(LN_S) $< $@; \
+	fi
+
+$(abs_builddir)/%.json:	$(srcdir)/%.json
+	if [ ! -e $@ ]; then \
+		$(LN_S) $< $@; \
+	fi
+
+check_DATA = .validation_ok
+
+.validation_ok:
+	@if xmllint --version > /dev/null 2>&1; then \
+		for i in `ls *.xml`; do \
+			xmllint --noout --schema $(top_builddir)/priv/schema/configData.xsd $$i; \
+		done; \
+	else \
+		echo "xmllint needed to validate XML"; \
+	fi
+	@if ajv help > /dev/null 2>&1; then \
+		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d catalog.json; \
+		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d category.json; \
+		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d candidate.json; \
+		ajv validate -s $(top_builddir)/priv/schema/BssSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification.json; \
+		ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource.json; \
+	else \
+		echo "ajv-cli needed to validate JSON"; \
+	fi
+
