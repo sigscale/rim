@@ -311,10 +311,16 @@ resource([specification | T], #resource{specification = SpecRef} = R, Acc)
 resource([specification | T], #{"resourceSpecification" := SpecRef} = M, Acc)
 		when is_map(SpecRef) ->
 	resource(T, M, Acc#resource{specification = im_rest:specification_ref(SpecRef)});
+resource([related_party | T], #resource{related_party = PartyRefs} = R, Acc)
+		when is_list(PartyRefs), length(PartyRefs) > 0 ->
+	resource(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
+resource([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
+		when is_list(PartyRefs), length(PartyRefs) > 0 ->
+	resource(T, M, Acc#resource{related_party = im_rest:related_party_ref(PartyRefs)});
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 		when is_list(ResChar), length(ResChar) > 0 ->
 	resource(T, R, Acc#{"resorceCharacteristic" => resource_char(ResChar)});
-resource([characteristic | T], #{"resorceCharacteristic" := ResChar} = M, Acc)
+resource([characteristic | T], #{"resourceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->
 	resource(T, M, Acc#resource{characteristic = resource_char(ResChar)});
 resource([_ | T], R, Acc) ->
