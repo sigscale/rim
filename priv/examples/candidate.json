@@ -20,12 +20,10 @@
 			"version": "0.1"
 		}
 	],
-	"resourceSpecification": 
-		{
-			"id": "154995556288077",
-			"href": "/resourceCatalogManagement/v3/specification/154995556288077",
-			"name": "BssSpecification",
-			"version": "0.1"
-		}
-
+	"resourceSpecification": {
+		"id": "154995556288077",
+		"href": "/resourceCatalogManagement/v3/specification/154995556288077",
+		"name": "BssFunctionSpecification",
+		"version": "0.1"
+	}
 }

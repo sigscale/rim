@@ -1,6 +1,6 @@
 {
 	"id": "8994832012",
-	"href": "/resourceInventoryManagement/v3/",
+	"href": "/resourceInventoryManagement/v3/resource/8994832012",
 	"name": "DC=sigscale.net,Subnet=1,BssFunction=1",
 	"publicIdentifier": "07467336644",
 	"description": "GSM Base Station Subsystem (BSS)",
@@ -18,21 +18,17 @@
 		"id": "798115636",
 		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115636",
 		"name": "resourceSpecification",
-		"@type": "BssSpecification",
+		"@type": "BssFunctionSpecification",
 		"version": "1.0"
 	},
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "string"
-		},
-		{
-			"name": "vnfParametersList",
-			"value": "vnfParametersListType"
+			"value" : "Embarcadero"
 		},
 		{
 			"name": "btsSiteMgr",
-			"value": "btsSiteMgr instance",
+			"value": "",
 			"@type": "BtsSiteMgrList",
 			"@schemaLocation": "/resourceInventoryManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
 		},

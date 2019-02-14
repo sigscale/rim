@@ -30,7 +30,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/eutranNrm.json \
 		$(abs_builddir)/sonPolicyNrm.json \
 		$(abs_builddir)/ResourceFunctionSpecification.json \
-		$(abs_builddir)/BssSpecification.json \
+		$(abs_builddir)/BssFunctionSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -68,7 +68,7 @@ check_DATA = .validation_ok
 		ajv compile -s resourceCatalogManagement.json; \
 		ajv compile -s ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
-		ajv compile -s BssSpecification.json \
+		ajv compile -s BssFunctionSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 		ajv compile -s resourceInventoryManagement.json; \

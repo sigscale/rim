@@ -42,7 +42,7 @@ check_DATA = .validation_ok
 				-d category.json; \
 		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d candidate.json; \
-		ajv validate -s $(top_builddir)/priv/schema/BssSpecification.json \
+		ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification.json; \

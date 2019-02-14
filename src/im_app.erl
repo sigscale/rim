@@ -500,18 +500,18 @@ add_bss() ->
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
 	Chars = [UserLabel, VnfParametersList, BtsSiteMgr, VsDataContainer],
-	BssSpecification = #specification{name = "BssFunction",
-			description = "GSM Base Station Subsystem",
-			class_type = "BssSpecification",
+	BssFunctionSpecification = #specification{name = "BssFunction",
+			description = "GSM Base Station Subsystem (BSS) resource function specification",
+			class_type = "BssFunctionSpecification",
 			base_type  = "ResourceFunctionSpecification",
-			schema = "/resourceCatalogManagement/v3/schema/BssSpecification.json",
+			schema = "/resourceCatalogManagement/v3/schema/BssFunctionSpecification.json",
 			status = "Active",
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BssFunction",
-					schema = "/resourceInventoryManagement/v3/schema/Bss.json"},
+					schema = "/resourceInventoryManagement/v3/schema/BssFunction.json"},
 			characteristic = Chars},
-	case im:add_specification(BssSpecification) of
+	case im:add_specification(BssFunctionSpecification) of
 		{ok, _} ->
 			add_gsmcell();
 		{error, Reason} ->
