@@ -1,13 +1,15 @@
 {
+	"$id": "http://sigscale.org/schema/ResourceFunctionSpecification",
 	"title": "Resource Function Specification",
 	"description": "Specifies a function as a behaviour to transform inputs of any nature into outputs of any nature independently from the way it is provided.",
 	"type": "object",
-	"properties": {
-		"allOf": [
-			{
-				"$ref": "ResourceSpecification.json#"
-			},
-			{
+	"allOf": [
+		{
+			"$ref": "resourceCatalogManagement#/definitions/ResourceSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
 				"@baseType": {
 					"pattern": "^LogicalResourceSpec$"
 				},
@@ -15,11 +17,30 @@
 					"type": "array",
 					"items": [
 						{
-							"$ref": "ConnectionPointSpec"
+							"$ref": "#/definitions/SapRef"
 						}
 					]
 				}
 			}
-		]
+		}
+	],
+	"definitions": {
+		"SapRef": {
+			"type": "object",
+			"title": "SAP Reference",
+			"description": "Service Access Point (SAP) reference",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"href": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"id",
+				"href"
+			]
+		}
 	}
 }
