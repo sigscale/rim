@@ -229,14 +229,14 @@ resource([category | T], #{"category" := Category} = M, Acc)
 	resource(T, M, Acc#resource{category = Category});
 resource([class_type | T], #resource{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource(T, R, Acc#{"@baseType" => Type});
-resource([class_type | T], #{"@baseType" := Type} = M, Acc)
+	resource(T, R, Acc#{"type" => Type});
+resource([class_type | T], #{"type" := Type} = M, Acc)
 		when is_list(Type) ->
 	resource(T, M, Acc#resource{class_type = Type});
 resource([base_type | T], #resource{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource(T, R, Acc#{"@type" => Type});
-resource([base_type | T], #{"@type" := Type} = M, Acc)
+	resource(T, R, Acc#{"@baseType" => Type});
+resource([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
 	resource(T, M, Acc#resource{base_type = Type});
 resource([schema | T], #resource{schema = Schema} = R, Acc)
