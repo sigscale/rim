@@ -1,0 +1,59 @@
+{
+	"$id": "http://sigscale.org/schema/GsmCellSpecification",
+	"title": "GSM Cell Specification",
+	"description": "GSM radio resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"@baseType": {
+					"pattern": "^ResourceFunctionSpecification$"
+				},
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"cellIdentity",
+											"cellAllocation",
+											"ncc",
+											"bcc",
+											"lac",
+											"mcc",
+											"mnc",
+											"rxLevAccessMin",
+											"msTxPwrMaxCCH",
+											"rfHoppingEnabled",
+											"hoppingSequenceList",
+											"plmnPermitted",
+											"gsmRelation",
+											"utranRelation",
+											"eUtranRelation",
+											"vsDataContainer",
+											"interRatEsPolicies"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
