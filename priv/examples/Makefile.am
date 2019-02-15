@@ -14,7 +14,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/candidate.json \
 		$(abs_builddir)/specification-bss.json \
 		$(abs_builddir)/specification-bts.json \
-		$(abs_builddir)/specification-cell.json \
+		$(abs_builddir)/specification-gsmcell.json \
 		$(abs_builddir)/specification-rnc.json \
 		$(abs_builddir)/specification-nodeb.json \
 		$(abs_builddir)/resource.json
