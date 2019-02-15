@@ -55,7 +55,7 @@ class inventoryList extends PolymerElement {
 						</div>
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column width="11ex" flex-grow="2">
+				<vaadin-grid-column width="13ex" flex-grow="2">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="name">
@@ -73,8 +73,8 @@ class inventoryList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						<div>
-							[[item.name]]
+						<div class="timestamp">
+							<bdo dir="ltr">[[item.name]]</bdo>
 						</div>
 					</template>
 				</vaadin-grid-column>

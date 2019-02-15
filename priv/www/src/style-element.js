@@ -109,6 +109,9 @@ styleElement.innerHTML = `<template>
 			[part~="header-cell"] {
 				background-color: #ffb04c;
 			}
+			.timestamp {
+            direction: rtl;
+         }
 			paper-card {
 				margin: 4px;
 				vertical-align: top;
