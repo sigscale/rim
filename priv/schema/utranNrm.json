@@ -750,9 +750,7 @@
 									"$ref": "genericNrm#/definitions/vnfParametersListType"
 								},
 								"peeParametersList": {
-									"type": "string"
-								},
-								"managedElements": {
+									"type": "string",
 									"$ref": "genericNrm#/definitions/peeParametersListType"
 								},
 								"nodeBFunctionIubLink": {
