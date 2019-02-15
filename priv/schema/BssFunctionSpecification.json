@@ -1,6 +1,6 @@
 {
 	"$id": "http://sigscale.org/schema/BssFunctionSpecification",
-	"title": "BSS Specification",
+	"title": "GSM BSS Specification",
 	"description": "GSM Base Station Subsystem (BSS) resource function specification",
 	"type": "object",
 	"allOf": [

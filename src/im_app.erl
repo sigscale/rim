@@ -504,12 +504,12 @@ add_bss() ->
 			description = "GSM Base Station Subsystem (BSS) resource function specification",
 			class_type = "BssFunctionSpecification",
 			base_type  = "ResourceFunctionSpecification",
-			schema = "/resourceCatalogManagement/v3/schema/BssFunctionSpecification.json",
+			schema = "/resourceCatalogManagement/v3/schema/BssFunctionSpecification",
 			status = "Active",
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BssFunction",
-					schema = "/resourceInventoryManagement/v3/schema/BssFunction.json"},
+					schema = "/resourceInventoryManagement/v3/schema/BssFunction"},
 			characteristic = Chars},
 	case im:add_specification(BssFunctionSpecification) of
 		{ok, _} ->
@@ -551,15 +551,15 @@ add_bts() ->
 	Chars = [UserLabel, VnfParametersList, Latitude, Longitude,
 			OperationalState, GsmCell, VsDataContainer, InterRatEsPolicies],
 	BtsSiteMgrSpecification = #specification{name = "BtsSiteMgr",
-			description = "GSM Base Transceiver Station (BTS) resource specification",
+			description = "GSM Base Transceiver Station (BTS) resource function specification",
 			class_type = "BtsSiteMgrSpecification",
 			base_type  = "ResourceFunctionSpecification",
-			schema = "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification.json",
+			schema = "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification",
 			status = "Active",
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BtsSiteManager",
-					schema = "/resourceInventoryManagement/v3/schema/BtsSiteManager.json"},
+					schema = "/resourceInventoryManagement/v3/schema/BtsSiteManager"},
 			characteristic = Chars},
 	case im:add_specification(BtsSiteMgrSpecification) of
 		{ok, _} ->
@@ -661,12 +661,12 @@ add_gsmcell() ->
 			description = "GSM Radio Cell",
 			class_type = "GsmCellSpecification",
 			base_type  = "ResourceFunctionSpecification",
-			schema = "/resourceCatalogManagement/v3/schema/GsmCellSpecification.json",
+			schema = "/resourceCatalogManagement/v3/schema/GsmCellSpecification",
 			status = "Active",
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GsmCellFunction",
-					schema = "/resourceInventoryManagement/v3/schema/GsmCellFunction.json"},
+					schema = "/resourceInventoryManagement/v3/schema/GsmCellFunction"},
 			characteristic = Chars},
 	case im:add_specification(GsmCellSpecification) of
 		{ok, _} ->

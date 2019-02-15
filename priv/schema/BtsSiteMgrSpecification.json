@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/BtsSiteMgrSpecification",
 	"title": "GSM BTS Specification",
-	"description": "GSM Base Transceiver Station (BTS) resource specification",
+	"description": "GSM Base Transceiver Station (BTS) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

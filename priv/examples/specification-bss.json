@@ -1,6 +1,6 @@
 {
 	"name": "BssFunction",
-	"description": "GSM Base Station Subsystem (BSS)",
+	"description": "GSM Base Station Subsystem (BSS) resource function specification",
 	"@type": "BssFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunctionSpecification",
 	"@baseType": "ResourceFunctionSpecification",
@@ -41,7 +41,7 @@
 		},
 		{
 			"name": "btsSiteMgr",
-			"description": "Base Tranceiver Station (BTS) Site",
+			"description": "Base Tranceiver Station (BTS) sites",
 			"valueType": "BtsSiteMgrList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
 		},
