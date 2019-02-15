@@ -324,7 +324,7 @@ parse_gsm_cell_rels(GsmCellID, Characteristics, CellStack,
 			category = "RAN",
 			base_type = "ResourceFunctionSpecification",
 			class_type = "GsmCell",
-			schema = "/resourceInventoryManagement/v3/schema/GsmCell.json",
+			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
 			specification = #specification_ref{},
 			characteristic = NewCharacteristics},
 	case im:add_resource(Resource) of

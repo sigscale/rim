@@ -1,24 +1,33 @@
 {
-	"id": "2",
-	"href": "/resourceCatalogManagement/v3/resourceSpecification/2",
-	"name": "BTS",
+	"name": "BtsSiteMgr",
 	"description": "GSM Base Transceiver Station (BTS)",
-	"@type": "ResourceFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunctionSpecification",
-	"@baseType": "LogicalResourceSpecification",
+	"@type": "BtsSiteMgrSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification",
+	"@baseType": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-24T00:00Z",
-		"endDateTime": "2019-02-01T00:00Z"
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
 	},
-	"lastUpdate": "2019-01-24T00:00Z",
-	"lifecycleStatus": "In Study",
+	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "GSM",
+	"category": "RAN",
 	"targetResourceSchema": {
-		"@type": "ResourceFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ResourceFunction"
+		"@type": "BtsSiteMgr",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/BtsSiteMgr"
 	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
 	"resourceSpecCharacteristic": [
 		{
 			"name": "userLabel",

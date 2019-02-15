@@ -31,6 +31,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/sonPolicyNrm.json \
 		$(abs_builddir)/ResourceFunctionSpecification.json \
 		$(abs_builddir)/BssFunctionSpecification.json \
+		$(abs_builddir)/BtsSiteMgrSpecification.json \
 		$(abs_builddir)/GsmCellSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -61,21 +62,35 @@ check_DATA = .validation_ok
 		echo "xmllint needed to validate XML Schema"; \
 	fi
 	@if ajv help > /dev/null 2>&1; then \
-		ajv compile -s genericNrm.json; \
-		ajv compile -s geranNrm.json; \
-		ajv compile -s utranNrm.json; \
-		ajv compile -s eutranNrm.json; \
-		ajv compile -s sonPolicyNrm.json; \
-		ajv compile -s resourceCatalogManagement.json; \
-		ajv compile -s ResourceFunctionSpecification.json \
+		if ! ajv compile -s genericNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s geranNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s utranNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s eutranNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s sonPolicyNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
-		ajv compile -s BssFunctionSpecification.json \
+			then exit 1; fi; \
+		if ! ajv compile -s BssFunctionSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
-		ajv compile -s GsmCellSpecification.json \
+			then exit 1; fi; \
+		if ! ajv compile -s BtsSiteMgrSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
-		ajv compile -s resourceInventoryManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GsmCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s resourceInventoryManagement.json; \
+			then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON Schema"; \
 	fi

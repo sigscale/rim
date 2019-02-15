@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/GsmCellSpecification",
-	"title": "GSM Cell Specification",
-	"description": "GSM radio resource function specification",
+	"$id": "http://sigscale.org/schema/BtsSiteMgrSpecification",
+	"title": "GSM BTS Specification",
+	"description": "GSM Base Transceiver Station (BTS) resource specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -29,24 +29,10 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"cellIdentity",
-											"cellAllocation",
-											"ncc",
-											"bcc",
-											"lac",
-											"mcc",
-											"mnc",
-											"rac",
-											"racc",
-											"tsc",
-											"rxLevAccessMin",
-											"msTxPwrMaxCCH",
-											"rfHoppingEnabled",
-											"hoppingSequenceList",
-											"plmnPermitted",
-											"gsmRelation",
-											"utranRelation",
-											"eUtranRelation",
+											"latitude",
+											"longitude",
+											"operationalState",
+											"gsmCell",
 											"vsDataContainer",
 											"interRatEsPolicies"
 										]

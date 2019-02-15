@@ -12,7 +12,7 @@
 	"lifecycleState": "In Test",
 	"@type": "BssFunction",
 	"@baseType": "ResourceFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/BssFunction.json",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/BssFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115636",

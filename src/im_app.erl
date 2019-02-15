@@ -513,6 +513,56 @@ add_bss() ->
 			characteristic = Chars},
 	case im:add_specification(BssFunctionSpecification) of
 		{ok, _} ->
+			add_bts();
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_bts() ->
+	UserLabel = #specification_char{name = "userLabel", value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	Latitude = #specification_char{name = "latitude",
+			description = "Latitude of the site manager location based on (WGS 84) global reference frame",
+			value_type = "latitude",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/latitude"},
+	Longitude = #specification_char{name = "longitude",
+			description = "Longitude of the site manager location based on (WGS 84) global reference frame",
+			value_type = "longitude",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/longitude"},
+	OperationalState = #specification_char{name = "operationalState",
+			description = "Indicates the operational state of the object instance",
+			value_type = "operationalStateType",
+			value_schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/operationalStateType"},
+	GsmCell = #specification_char{name = "gsmCell",
+			description = "GSM Radio Cell",
+			value_type = "GsmCellList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/GsmCellList"},
+	VsDataContainer = #specification_char{name = "vsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	InterRatEsPolicies = #specification_char{name = "interRatEsPolicies",
+			description = "Inter-RAT energy saving policies information.",
+			value_type = "InterRatEsPolicies",
+			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"},
+	Chars = [UserLabel, VnfParametersList, Latitude, Longitude,
+			OperationalState, GsmCell, VsDataContainer, InterRatEsPolicies],
+	BtsSiteMgrSpecification = #specification{name = "BtsSiteMgr",
+			description = "GSM Base Transceiver Station (BTS) resource specification",
+			class_type = "BtsSiteMgrSpecification",
+			base_type  = "ResourceFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification.json",
+			status = "Active",
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "BtsSiteManager",
+					schema = "/resourceInventoryManagement/v3/schema/BtsSiteManager.json"},
+			characteristic = Chars},
+	case im:add_specification(BtsSiteMgrSpecification) of
+		{ok, _} ->
 			add_gsmcell();
 		{error, Reason} ->
 			{error, Reason}

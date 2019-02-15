@@ -1,6 +1,6 @@
 {
 	"name": "BssFunction",
-	"description": "GSM Base Station Subsystem",
+	"description": "GSM Base Station Subsystem (BSS)",
 	"@type": "BssFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunctionSpecification",
 	"@baseType": "ResourceFunctionSpecification",
