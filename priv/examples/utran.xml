@@ -55,7 +55,7 @@
 							<xn:autoScalable>true</xn:autoScalable>
 						</un:vnfParametersList>
 						<un:mcc>999</un:mcc>
-						<un:rncId>Uterlhgerw</un:rncId>
+						<un:rncId>777</un:rncId>
 					</un:attributes>
 					<!-- Multiple UtranCellFDD in a RNC-->
 					<un:UtranCellFDD id="1">

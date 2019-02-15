@@ -491,13 +491,13 @@
 			"properties": {
 				"mcc": {
 					"type": "integer",
-					"minimum": -32768,
-					"maximum": 32767
+					"minimum": 1,
+					"maximum": 999
 				},
 				"mnc": {
 					"type": "integer",
-					"minimum": -32768,
-					"maximum": 32767
+					"minimum": 1,
+					"maximum": 999
 				}
 			}
 		},
@@ -571,11 +571,9 @@
 			}
 		},
 		"TceIDMappingInfoList": {
-			"type": "object",
-			"properties": {
-				"tceIDMappingInfo": {
+			"type": "array",
+			"items": {
 					"$ref": "#/definitions/TceIDMappingInfo"
-				}
 			}
 		},
 		"SharNetTceMappingInfo": {
@@ -625,13 +623,19 @@
 									"$ref": "genericNrm#/definitions/peeParametersListType"
 								},
 								"mcc": {
-									"type": "string"
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 999
 								},
 								"mnc": {
-									"type": "string"
+									"type": "integer",
+									"minimum": 1,
+									"maximum": 999
 								},
 								"rncId": {
-									"type": "string"
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 4095 
 								},
 								"siptoSupported": {
 									"$ref": "#/definitions/siptoSupported"

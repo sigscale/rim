@@ -562,8 +562,22 @@
 
 	<complexType name="NsPlmnId">
 		<sequence>
-			<element name="mcc" type="short"/>
-			<element name="mnc" type="short"/>
+			<element name="mcc">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="1"/>
+						<maxInclusive value="999"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="mnc">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="1"/>
+						<maxInclusive value="999"/>
+					</restriction>
+				</simpleType>
+			</element>
 		</sequence>
 	</complexType>
 
@@ -646,9 +660,30 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="siptoSupported" type="un:siptoSupported" minOccurs="0"/>
 									<element name="tceIDMappingInfoList" type="un:TceIDMappingInfoList" minOccurs="0"/>
 									<element name="sharNetTceMappingInfoList" type="un:SharNetTceMappingInfoList" minOccurs="0"/>
@@ -1104,9 +1139,30 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="cId" type="un:cId" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
 									<element name="lac" type="un:lac" minOccurs="0"/>
 									<element name="rac" type="un:rac" minOccurs="0"/>
@@ -1150,9 +1206,30 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="cId" type="un:cId" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
 									<element name="lac" type="un:lac" minOccurs="0"/>
 									<element name="rac" type="un:rac" minOccurs="0"/>
@@ -1209,9 +1286,30 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="cId" type="un:cId" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
 									<element name="lac" type="un:lac" minOccurs="0"/>
 									<element name="rac" type="un:rac" minOccurs="0"/>
@@ -1262,9 +1360,30 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="cId" type="un:cId" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
 									<element name="lac" type="un:lac" minOccurs="0"/>
 									<element name="rac" type="un:rac" minOccurs="0"/>
@@ -1322,9 +1441,30 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="cId" type="un:cId" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="cellMode" type="un:cellMode" minOccurs="0"/>
 									<element name="lac" type="un:lac" minOccurs="0"/>
 									<element name="rac" type="un:rac" minOccurs="0"/>
@@ -1377,9 +1517,30 @@
 								<all>
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="mcc" type="string" minOccurs="0"/>
-									<element name="mnc" type="string" minOccurs="0"/>
-									<element name="rncId" type="string" minOccurs="0"/>
+									<element name="mcc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="mnc" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="1"/>
+												<maxInclusive value="999"/>
+											</restriction>
+										</simpleType>
+									</element>
+									<element name="rncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 									<element name="controlledCellList" type="xn:dnList" minOccurs="0"/>
 								</all>
 							</complexType>
