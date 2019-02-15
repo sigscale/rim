@@ -12,7 +12,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/catalog.json \
 		$(abs_builddir)/category.json \
 		$(abs_builddir)/candidate.json \
-		$(abs_builddir)/specification.json \
+		$(abs_builddir)/specification-bss.json \
+		$(abs_builddir)/specification-cell.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -46,7 +47,11 @@ check_DATA = .validation_ok
 		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification.json; then exit 1; fi; \
+				-d specification-bss.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-cell.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \
