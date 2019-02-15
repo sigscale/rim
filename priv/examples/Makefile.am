@@ -30,24 +30,25 @@ check_DATA = .validation_ok
 .validation_ok:
 	@if xmllint --version > /dev/null 2>&1; then \
 		for i in `ls *.xml`; do \
-			xmllint --noout --schema $(top_builddir)/priv/schema/configData.xsd $$i; \
+			if ! xmllint --noout --schema $(top_builddir)/priv/schema/configData.xsd $$i; \
+			then exit 1; fi \
 		done; \
 	else \
 		echo "xmllint needed to validate XML"; \
 	fi
 	@if ajv help > /dev/null 2>&1; then \
-		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d catalog.json; \
-		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d category.json; \
-		ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d candidate.json; \
-		ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d catalog.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d category.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d candidate.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification.json; \
-		ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
-				-d resource.json; \
+				-d specification.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
