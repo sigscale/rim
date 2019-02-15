@@ -1,0 +1,48 @@
+{
+	"$id": "http://sigscale.org/schema/BtsSiteMgrSpecification",
+	"title": "GSM BTS Specification",
+	"description": "GSM Base Transceiver Station (BTS) resource specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"@baseType": {
+					"pattern": "^ResourceFunctionSpecification$"
+				},
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"latitude",
+											"longitude",
+											"operationalState",
+											"gsmCell",
+											"vsDataContainer",
+											"interRatEsPolicies"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

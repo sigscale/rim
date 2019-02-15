@@ -13,6 +13,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/category.json \
 		$(abs_builddir)/candidate.json \
 		$(abs_builddir)/specification-bss.json \
+		$(abs_builddir)/specification-bts.json \
 		$(abs_builddir)/specification-cell.json \
 		$(abs_builddir)/resource.json
 
@@ -48,6 +49,10 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-bss.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/BtsSiteMgrSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-bts.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
