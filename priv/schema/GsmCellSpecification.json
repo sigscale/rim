@@ -10,9 +10,6 @@
 		{
 			"type": "object",
 			"properties": {
-				"@baseType": {
-					"pattern": "^ResourceFunctionSpecification$"
-				},
 				"resourceSpecCharacteristic": {
 					"items": {
 						"allOf": [
