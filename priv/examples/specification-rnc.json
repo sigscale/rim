@@ -1,0 +1,129 @@
+{
+	"name": "RncFunction",
+	"description": "UTRAN Radio Network Controller (RNC) resource function specification",
+	"@type": "RncFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/RncFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "RncFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/RncFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "peeParametersList",
+			"description": "Parameter list for the control and monitoring of power, energy and environment",
+			"valueType": "peeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+		},
+		{
+			"name": "mcc",
+			"description": "Mobile Country Code (MCC) (3GPP 23.003)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 1,
+					"valueTo": 999
+				} 
+			]
+		},
+		{
+			"name": "mnc",
+			"description": "Mobile Network Code (MNC) (3GPP 23.003)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 1,
+					"valueTo": 999
+				} 
+			]
+		},
+		{
+			"name": "rncId",
+			"description": "Unique RNC ID for the associated RNC (3GPP 23.003)",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": 0,
+					"valueTo": 4095
+				} 
+			]
+		},
+		{
+			"name": "siptoSupported",
+			"description": "Indicates whether the RNC supports SIPTO function",
+			"valueType": "boolean"
+		},
+		{
+			"name": "tceIDMappingInfoList",
+			"description": "List of Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
+			"valueType": "TceIDMappingInfoList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/TceIDMappingInfoList"
+		},
+		{
+			"name": "sharNetTceMappingInfoList",
+			"description": "List of shared PLMN ID, Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
+			"valueType": "SharNetTceMappingInfoList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
+		},
+		{
+			"name": "utranCellFDD",
+			"description": "Frequency Division Duplex (FDD) radio cells controlled by an RNC",
+			"valueType": "UtranCellFDDs",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellFDDs"
+		},
+		{
+			"name": "utranCellTDDLcr",
+			"description": "Time Division Duplex (TDD) low chip rate (LCR) radio cell controlled by an RNC",
+			"valueType": "UtranCellTDDLcrs",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDLcrs"
+		},
+		{
+			"name": "utranCellTDDHcr",
+			"description": "Time Division Duplex (TDD) high chip rate (HCR) radio cell controlled by an RNC",
+			"valueType": "UtranCellTDDHcrs",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDHcrs"
+		},
+		{
+			"name": "iubLink",
+			"description": "Logical link to a NodeB as seen from the RNC",
+			"valueType": "IubLinks",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/IubLinks"
+		},
+		{
+			"name": "vsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

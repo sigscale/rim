@@ -1,0 +1,55 @@
+{
+	"$id": "http://sigscale.org/schema/RncFunctionSpecification",
+	"title": "UTRAN RNC Specification",
+	"description": "UTRAN Radio Network Controller (RNC) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"@baseType": {
+					"pattern": "^ResourceFunctionSpecification$"
+				},
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"peeParametersList",
+											"mcc",
+											"mnc",
+											"rncId",
+											"siptoSupported",
+											"tceIDMappingInfoList",
+											"sharNetTceMappingInfoList",
+											"utranCellFDD",
+											"utranCellTDDLcr",
+											"utranCellTDDHcr",
+											"iubLink",
+											"rncFunctionOptionallyContainedNrmClass",
+											"vsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
