@@ -47,7 +47,7 @@
 		{
 			"name": "nodeBFunctionIubLink",
 			"description": "DN of a logical link to an RNC as seen by a NodeB.",
-			"valueType": "string",
+			"valueType": "string"
 		},
 		{
 			"name": "vsDataContainer",
