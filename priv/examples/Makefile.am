@@ -17,6 +17,9 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-gsmcell.json \
 		$(abs_builddir)/specification-rnc.json \
 		$(abs_builddir)/specification-nodeb.json \
+		$(abs_builddir)/specification-utran-cell-fdd.json \
+		$(abs_builddir)/specification-utran-cell-tdd-lcr.json \
+		$(abs_builddir)/specification-utran-cell-tdd-hcr.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -67,6 +70,23 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nodeb.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellFDDSpecification.json \
+				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-utran-cell.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDLcrSpecification.json \
+				-r $(top_builddir)/priv/schema/UtranCellTDDSpecification.json \
+				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-utran-cell-tdd-lcr.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDHcrSpecification.json \
+				-r $(top_builddir)/priv/schema/UtranCellTDDSpecification.json \
+				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-utran-cell-tdd-hcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \

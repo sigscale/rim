@@ -1,5 +1,5 @@
 {
-	"$id": "http://sigscale.org/schema/UtranCellTDDLcr",
+	"$id": "http://sigscale.org/schema/UtranCellTDDLcrSpecification",
 	"title": "UTRAN TDD LCR Cell Specification",
 	"description": "UTRAN Time Division Duplex (TDD) low chip rate (HCR) radio resource function specification",
 	"type": "object",
@@ -14,7 +14,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/priv/schema/UtranCellTDD"
+								"$ref": "resourceCatalogManagement#/definitions/priv/schema/UtranCellTDDSpecification"
 							},
 							{
 								"type": "object",

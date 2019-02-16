@@ -1,5 +1,5 @@
 {
-	"$id": "http://sigscale.org/schema/UtranCellTDD",
+	"$id": "http://sigscale.org/schema/UtranCellTDDSpecification",
 	"title": "UTRAN TDD Cell Specification",
 	"description": "UTRAN Time Division Duplex (TDD) radio resource function specification",
 	"type": "object",
@@ -14,7 +14,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/UtranGenericCell"
+								"$ref": "resourceCatalogManagement#/definitions/UtranGenericCellSpecification"
 							},
 							{
 								"type": "object",

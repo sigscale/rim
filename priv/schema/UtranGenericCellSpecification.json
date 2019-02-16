@@ -1,5 +1,5 @@
 {
-	"$id": "http://sigscale.org/schema/UtranGenericCell",
+	"$id": "http://sigscale.org/schema/UtranGenericCellSpecification",
 	"title": "UTRAN Generic Cell Specification",
 	"description": "UTRAN radio cell common properties resource function specification",
 	"type": "object",

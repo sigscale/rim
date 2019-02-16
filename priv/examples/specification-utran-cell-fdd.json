@@ -242,6 +242,96 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
 		},
 		{
+			"name": "uarfcnUl",
+			"description": "Upload (UL) UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
+			"valueType": "uarfcnAnyMode",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/uarfcnAnyMode"
+		},
+		{
+			"name": "uarfcnDl",
+			"description": "Download (DL) UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
+			"valueType": "uarfcnAnyMode",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/uarfcnAnyMode"
+		},
+		{
+			"name": "primaryScramblingCode",
+			"description": "Primary download (DL) scrambling code (3GPP 25.433)",
+			"valueType": "primaryScramblingCode",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/primaryScramblingCode"
+		},
+		{
+			"name": "primaryCpichPower",
+			"description": "Power of the primary CPICH channel (3GPP 25.433)",
+			"valueType": "primaryCpichPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/primaryCpichPower"
+		},
+		{
+			"name": "primarySchPower",
+			"description": "Power of the primary synchronisation channel (3GPP 25.433)",
+			"valueType": "primarySchPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/primarySchPower"
+		},
+		{
+			"name": "secondarySchPower",
+			"description": "Power of the secondary synchronisation channel (3GPP 25.433)",
+			"valueType": "secondarySchPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/secondarySchPower"
+		},
+		{
+			"name": "bchPower",
+			"description": "Power of the broadcast channel (3GPP 25.433)",
+			"valueType": "bchPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/bchPower"
+		},
+		{
+			"name": "aichPower",
+			"description": "Power of the the AICH channel (3GPP 25.433)",
+			"valueType": "aichPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/aichPower"
+		},
+		{
+			"name": "qqualMin",
+			"description": "Minimum required quality level in cell (re)selection (3GPP 25.331)",
+			"valueType": "qqualMin",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/qqualMin"
+		},
+		{
+			"name": "cellCapabilityContainerFDD",
+			"description": "Bitfield indicating support of particular functionality (3GPP 25.423)",
+			"valueType": "cellCapabilityContainerFDD",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/cellCapabilityContainerFDD"
+		},
+		{
+			"name": "txDiversityIndicator",
+			"description": "TX Diversity Indicator (3GPP 25.331)",
+			"valueType": "txDiversityIndicator",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/txDiversityIndicator"
+		},
+		{
+			"name": "temporaryOffset1",
+			"description": "Offset applied to hierarchical cell structure (HCS) in cell (re)selection (3GPP 25.331)",
+			"valueType": "temporaryOffset1",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/temporaryOffset1"
+		},
+		{
+			"name": "temporaryOffset2",
+			"description": "Offset applied to hierarchical cell structure (HCS) in cell (re)selection (3GPP 25.331)",
+			"valueType": "temporaryOffset2",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/temporaryOffset2"
+		},
+		{
+			"name": "sttdSupportIndicator",
+			"description": "STTD Support Indicator in power control (3GPP 25.423)",
+			"valueType": "sttdSupport",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/sttdSupport"
+		},
+		{
+			"name": "closedLoopModelSupportIndicator",
+			"description": "Closed Loop Mode1 Support Indicator in power control (3GPP 25.423)",
+			"valueType": "closedLoopMode1",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/closedLoopMode1"
+		},
+		{
 			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
 			"valueType": "UtranRelations",

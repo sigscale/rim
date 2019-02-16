@@ -35,6 +35,11 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/GsmCellSpecification.json \
 		$(abs_builddir)/RncFunctionSpecification.json \
 		$(abs_builddir)/NodeBFunctionSpecification.json \
+		$(abs_builddir)/UtranGenericCellSpecification.json \
+		$(abs_builddir)/UtranCellFDDSpecification.json \
+		$(abs_builddir)/UtranCellTDDSpecification.json \
+		$(abs_builddir)/UtranCellTDDLcrSpecification.json \
+		$(abs_builddir)/UtranCellTDDHcrSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -96,6 +101,32 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NodeBFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UtranCellFDDSpecification.json \
+			-r UtranCellFDDSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UtranCellTDDSpecification.json \
+			-r UtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UtranCellTDDLcrSpecification.json \
+			-r UtranCellTDDSpecification.json \
+			-r UtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UtranCellTDDHcrSpecification.json \
+			-r UtranCellTDDSpecification.json \
+			-r UtranGenericCellSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
