@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/UtranCellTDD",
+	"title": "UTRAN TDD Cell Specification",
+	"description": "UTRAN Time Division Duplex (TDD) radio resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/UtranGenericCell"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"uarfcn",
+			                        "cellParameterId",
+			                        "primaryCcpchPower",
+			                        "cellCapabilityContainerTDD",
+			                        "sctdIndicator",
+			                        "dpchConstantValue"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/UtranCellTDDHcr",
+	"title": "UTRAN TDD HCR Cell Specification",
+	"description": "UTRAN Time Division Duplex (TDD) high chip rate (HCR) radio resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/priv/schema/UtranCellTDD"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"schPower",
+			                        "temporaryOffset1",
+			                        "syncCase",
+			                        "timeSlotForSch",
+			                        "schTimeSlot",
+			                        "timeSlotHCRList"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
