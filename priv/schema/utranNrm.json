@@ -966,9 +966,6 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
 								"uarfcnUl": {
 									"$ref": "#/definitions/uarfcnAnyMode"
 								},
@@ -1040,9 +1037,6 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
 								"uarfcn": {
 									"$ref": "#/definitions/uarfcnAnyMode"
 								},
@@ -1559,9 +1553,6 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
 								"uarfcn": {
 									"$ref": "#/definitions/uarfcnAnyMode"
 								},
@@ -1614,9 +1605,6 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
 								"temporaryOffset1": {
 									"$ref": "#/definitions/temporaryOffset1"
 								},
