@@ -46,7 +46,7 @@
 		},
 		{
 			"name": "nodeBFunctionIubLink",
-			"description": "DN of a logical link to an RNC as seen by a NodeB.",
+			"description": "DN of a logical link to an RNC as seen by a NodeB",
 			"valueType": "string"
 		},
 		{
