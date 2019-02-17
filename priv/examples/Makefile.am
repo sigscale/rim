@@ -12,14 +12,14 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/catalog.json \
 		$(abs_builddir)/category.json \
 		$(abs_builddir)/candidate.json \
-		$(abs_builddir)/specification-bss.json \
-		$(abs_builddir)/specification-bts.json \
-		$(abs_builddir)/specification-gsmcell.json \
-		$(abs_builddir)/specification-rnc.json \
-		$(abs_builddir)/specification-nodeb.json \
-		$(abs_builddir)/specification-utran-cell-fdd.json \
-		$(abs_builddir)/specification-utran-cell-tdd-lcr.json \
-		$(abs_builddir)/specification-utran-cell-tdd-hcr.json \
+		$(abs_builddir)/specification-gsm-bss.json \
+		$(abs_builddir)/specification-gsm-bts.json \
+		$(abs_builddir)/specification-gsm-cell.json \
+		$(abs_builddir)/specification-umts-rnc.json \
+		$(abs_builddir)/specification-umts-nodeb.json \
+		$(abs_builddir)/specification-umts-cell-fdd.json \
+		$(abs_builddir)/specification-umts-cell-tdd-lcr.json \
+		$(abs_builddir)/specification-umts-cell-tdd-hcr.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -53,40 +53,40 @@ check_DATA = .validation_ok
 		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-bss.json; then exit 1; fi; \
+				-d specification-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/BtsSiteMgrSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-bts.json; then exit 1; fi; \
+				-d specification-gsm-bts.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-cell.json; then exit 1; fi; \
+				-d specification-gsm-cell.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/RncFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-rnc.json; then exit 1; fi; \
+				-d specification-umts-rnc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NodeBFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nodeb.json; then exit 1; fi; \
+				-d specification-umts-nodeb.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellFDDSpecification.json \
 				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-utran-cell.json; then exit 1; fi; \
+				-d specification-umts-cell-fdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDLcrSpecification.json \
 				-r $(top_builddir)/priv/schema/UtranCellTDDSpecification.json \
 				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-utran-cell-tdd-lcr.json; then exit 1; fi; \
+				-d specification-utran-umts-cell-tdd-lcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDHcrSpecification.json \
 				-r $(top_builddir)/priv/schema/UtranCellTDDSpecification.json \
 				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-utran-cell-tdd-hcr.json; then exit 1; fi; \
+				-d specification-umtsn-cell-tdd-hcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \
