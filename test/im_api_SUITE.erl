@@ -64,7 +64,6 @@ end_per_suite(_Config) ->
 %%
 init_per_testcase(bulk_cm_geran, Config) ->
 	Newline = #xmlText{value = "\n",type = text},
-	Tabs6 = #xmlText{value = "\t\t\t\t\t\t",type = text},
 	Indent1 = #xmlText{value = "\n\t",type = text},
 	Indent2 = #xmlText{value = "\n\t\t",type = text},
 	Indent3 = #xmlText{value = "\n\t\t\t",type = text},
@@ -74,6 +73,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 	Indent7 = #xmlText{value = "\n\t\t\t\t\t\t\t",type = text},
 	Indent8 = #xmlText{value = "\n\t\t\t\t\t\t\t\t",type = text},
 	Indent9 = #xmlText{value = "\n\t\t\t\t\t\t\t\t\t",type = text},
+	Indent10 = #xmlText{value = "\n\t\t\t\t\t\t\t\t\t\t",type = text},
 	NCC = integer_to_list(rand:uniform(8) - 1),
 	BCC = integer_to_list(rand:uniform(8) - 1),
 	LAC = integer_to_list(rand:uniform(65533)),
@@ -100,7 +100,10 @@ init_per_testcase(bulk_cm_geran, Config) ->
 								Indent8, {'gn:rxLevAccessMin', [integer_to_list(rand:uniform(64) - 1)]},
 								Indent8, {'gn:msTxPwrMaxCCH', [integer_to_list(rand:uniform(32) - 1)]},
 								Indent8, {'gn:rfHoppingEnabled', ["false"]},
-								Indent8, {'gn:plmnPermitted', ["true"]}, Indent7]},
+								Indent8, {'gn:hoppingSequenceList', [],
+								[Indent9, {'gn:hoppingSequence', [],
+								[Indent10, {'gn:hsn', [], ["0"]}, Indent9]}, Indent8]},
+								Indent8, {'gn:plmnPermitted', [NCC]}, Indent7]},
 								Indent7, {'gn:GsmRelation', [{id, "1"}],
 								[Indent8, {'gn:attributes', [],
 								[Indent9, {'gn:adjacentCell', ["SubNetwork="
@@ -115,13 +118,13 @@ init_per_testcase(bulk_cm_geran, Config) ->
 			F(N, Acc) ->
 				SiteManager = {'gn:BtsSiteMgr', [{id, integer_to_list(N)}],
 						[Indent6, {'gn:attributes', [],
-								[Indent7, {'gn:userLabel', ["BTS " ++ integer_to_list(N)]},
-								Indent7, {'gn:operationalState', ["disabled"]}, Indent6]}, Tabs6] ++ F1(3, []) ++
-						[Indent6, {'xn:VsDataContainer', [{id, "1"}],
-								[Indent7, {'xn:attributes', [],
-										[Indent8, {'xn:vsDataType', ["DataType " ++ integer_to_list(N)]},
-										Indent8, {'xn:vsDataFormatVersion', [generate_identity(5)]},
-										Indent8, {'xn:vsData', []}, Indent7]}, Indent6]}, Indent5]},
+						[Indent7, {'gn:userLabel', ["BTS " ++ integer_to_list(N)]},
+						Indent7, {'gn:operationalState', ["disabled"]}, Indent6]}]
+						++ F1(3, []) ++ [Indent6, {'xn:VsDataContainer', [{id, "1"}],
+						[Indent7, {'xn:attributes', [],
+						[Indent8, {'xn:vsDataType', ["DataType " ++ integer_to_list(N)]},
+						Indent8, {'xn:vsDataFormatVersion', [generate_identity(5)]},
+						Indent8, {'xn:vsData', []}, Indent7]}, Indent6]}, Indent5]},
 				F(N - 1, [Indent5, SiteManager | Acc])
 	end,
 	SiteManager = F(10, []),
