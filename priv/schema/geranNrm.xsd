@@ -66,7 +66,7 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="userLabel"/>
+									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 								</all>
 							</complexType>
@@ -89,7 +89,7 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="userLabel"/>
+									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="latitude" type="xn:latitude" minOccurs="0"/>
 									<element name="longitude" type="xn:longitude" minOccurs="0"/>
@@ -128,7 +128,11 @@
 												</restriction>
 										</simpleType>
 									</element>
-									<element name="cellAllocation"/>
+									<element name="cellAllocation">
+										<simpleType>
+												<list itemType="integer"/>
+										</simpleType>
+									</element>
 									<element name="ncc">
 										<simpleType>
 											<restriction base="integer">

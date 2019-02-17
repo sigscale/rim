@@ -74,28 +74,40 @@ init_per_testcase(bulk_cm_geran, Config) ->
 	Indent7 = #xmlText{value = "\n\t\t\t\t\t\t\t",type = text},
 	Indent8 = #xmlText{value = "\n\t\t\t\t\t\t\t\t",type = text},
 	Indent9 = #xmlText{value = "\n\t\t\t\t\t\t\t\t\t",type = text},
+	NCC = integer_to_list(rand:uniform(8) - 1),
+	BCC = integer_to_list(rand:uniform(8) - 1),
+	LAC = integer_to_list(rand:uniform(65533)),
+	MCC = integer_to_list(rand:uniform(999)),
+	MNC = integer_to_list(rand:uniform(999)),
+	RAC = integer_to_list(rand:uniform(256) - 1),
+	RACC = integer_to_list(rand:uniform(8) - 1),
 	F1 = fun F1(0, Acc) ->
 				Acc;
 			F1(N, Acc) ->
 				GsmCell = {'gn:GsmCell', [{id, integer_to_list(N)}],
 						[Indent7, {'gn:attributes', [],
 								[Indent8, {'gn:userLabel', ["Cell " ++ generate_identity(5)]},
-								Indent8, {'gn:cellIdentity', ["42"]},
-								Indent8, {'gn:cellAllocation', ["963"]},
-								Indent8, {'gn:ncc', ["365"]},
-								Indent8, {'gn:bcc', ["756"]},
-								Indent8, {'gn:lac', ["425"]},
-								Indent8, {'gn:mcc', ["999"]},
-								Indent8, {'gn:mnc', ["159"]},
-								Indent8, {'gn:rxLevAccessMin', ["78954"]},
-								Indent8, {'gn:msTxPwrMaxCCH', ["8564"]},
-								Indent8, {'gn:rfHoppingEnabled', ["true"]},
-								Indent8, {'gn:hoppingSequenceList', ["132564"]},
+								Indent8, {'gn:cellIdentity', [integer_to_list(rand:uniform(65535))]},
+								Indent8, {'gn:cellAllocation', [cell_allocation()]},
+								Indent8, {'gn:ncc', [NCC]},
+								Indent8, {'gn:bcc', [BCC]},
+								Indent8, {'gn:lac', [LAC]},
+								Indent8, {'gn:mcc', [MCC]},
+								Indent8, {'gn:mnc', [MNC]},
+								Indent8, {'gn:rac', [RAC]},
+								Indent8, {'gn:racc', [RACC]},
+								Indent8, {'gn:tsc', [BCC]},
+								Indent8, {'gn:rxLevAccessMin', [integer_to_list(rand:uniform(64) - 1)]},
+								Indent8, {'gn:msTxPwrMaxCCH', [integer_to_list(rand:uniform(32) - 1)]},
+								Indent8, {'gn:rfHoppingEnabled', ["false"]},
 								Indent8, {'gn:plmnPermitted', ["true"]}, Indent7]},
-						Indent7, {'gn:GsmRelation', [{id, "1"}],
+								Indent7, {'gn:GsmRelation', [{id, "1"}],
 								[Indent8, {'gn:attributes', [],
-										[Indent9, {'gn:adjacentCell', ["SubNetwork=1,BtsSiteMgr=1,GsmCell=2"]},
-												Indent8]}, Indent7]}, Indent6]},
+								[Indent9, {'gn:adjacentCell', ["SubNetwork="
+								++ integer_to_list(rand:uniform(8)) ++ ",BtsSiteMgr="
+								++ integer_to_list(rand:uniform(32)) ++ ",GsmCell="
+								++ integer_to_list(rand:uniform(128))]},
+								Indent8]}, Indent7]}, Indent6]},
 				F1(N - 1, [Indent6, GsmCell | Acc])
 	end,
 	F = fun F(0, Acc) ->
@@ -103,7 +115,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 			F(N, Acc) ->
 				SiteManager = {'gn:BtsSiteMgr', [{id, integer_to_list(N)}],
 						[Indent6, {'gn:attributes', [],
-								[Indent7, {'gn:userLabel', ["Paris MN2"]},
+								[Indent7, {'gn:userLabel', ["BTS " ++ integer_to_list(N)]},
 								Indent7, {'gn:operationalState', ["disabled"]}, Indent6]}, Tabs6] ++ F1(3, []) ++
 						[Indent6, {'xn:VsDataContainer', [{id, "1"}],
 								[Indent7, {'xn:attributes', [],
@@ -745,6 +757,20 @@ generate_identity(<<N, Rest/binary>>, Charset, NumChars, Acc) ->
 	generate_identity(Rest, Charset, NumChars, NewAcc);
 generate_identity(<<>>, _Charset, _NumChars, Acc) ->
 	Acc.
+
+%% @hidden
+cell_allocation() ->
+	cell_allocation(rand:uniform(12) + 6, []).
+%% @hidden
+cell_allocation(N, Acc) when N > 0 ->
+	cell_allocation(N - 1, [rand:uniform(124) | Acc]);
+cell_allocation(0, Acc) ->
+	cell_allocation1(lists:reverse(lists:sort(Acc)), []).
+%% @hidden
+cell_allocation1([H], Acc) ->
+	[integer_to_list(H) | Acc];
+cell_allocation1([H | T], Acc) ->
+	cell_allocation1(T, [" " ++ integer_to_list(H) | Acc]).
 
 charset() ->
 	C1 = lists:seq($A, $D),

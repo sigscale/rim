@@ -64,7 +64,7 @@
 							<gn:attributes>
 								<gn:userLabel>Cell ajfkad</gn:userLabel>
 								<gn:cellIdentity>42</gn:cellIdentity>
-								<gn:cellAllocation>963</gn:cellAllocation>
+								<gn:cellAllocation>10 23 44 57 67 72 89 112 121</gn:cellAllocation>
 								<gn:ncc>1</gn:ncc>
 								<gn:bcc>7</gn:bcc>
 								<gn:lac>425</gn:lac>
@@ -93,7 +93,7 @@
 							<gn:attributes>
 								<gn:userLabel>Cell dahfwew</gn:userLabel>
 								<gn:cellIdentity>59</gn:cellIdentity>
-								<gn:cellAllocation>32564</gn:cellAllocation>
+								<gn:cellAllocation>12 45 66 71 72 93 111 114</gn:cellAllocation>
 								<gn:ncc>1</gn:ncc>
 								<gn:bcc>7</gn:bcc>
 								<gn:lac>425</gn:lac>
