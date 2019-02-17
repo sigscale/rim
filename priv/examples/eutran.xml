@@ -7,13 +7,11 @@
 		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm">
-
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1"
-			vendorName="Company NN" />
-
-	<configData dnPrefix="DC=a1.companyNN.com">
+			senderName="DC=sigscale.net,SubNetwork=1,IRPAgent=1"
+			vendorName="Acme" />
+	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
 				<xn:userLabel>Paris SN1</xn:userLabel>
@@ -23,7 +21,7 @@
 			<xn:ManagementNode id="1">
 				<xn:attributes>
 					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
-					<xn:vendorName>Company NN</xn:vendorName>
+					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Montparnasse</xn:locationName>
 					<xn:managedElements>
@@ -39,7 +37,7 @@
 						<xn:managedElementType>BSS</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
-					<xn:vendorName>Company NN</xn:vendorName>
+					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Champ de Mars</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>

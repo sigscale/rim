@@ -7,25 +7,23 @@
 		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:cn="http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm">
-
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1"
-			vendorName="Company NN" />
-
-	<configData dnPrefix="DC=a1.companyNN.com">
+			senderName="DC=sigscale.net,SubNetwork=1,IRPAgent=1"
+			vendorName="Acme" />
+	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Paris SN1</xn:userLabel>
-				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
+				<xn:userLabel>Metro</xn:userLabel>
+				<xn:userDefinedNetworkType>GSM</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
-					<xn:vendorName>Company NN</xn:vendorName>
+					<xn:userLabel>EMS 1</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Montparnasse</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
 						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
 					</xn:managedElements>
@@ -34,81 +32,882 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix></xn:dnPrefix>
+					<xn:dnPrefix/>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>BSS</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
-					<xn:vendorName>Company NN</xn:vendorName>
+					<xn:userLabel>BSS 1</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Champ de Mars</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
-				<cn:MscServerFunction id="1">
-					<cn:attributes>
-						<cn:userLabel>Paris SN1</cn:userLabel>
-						<cn:mccList>
-							<cn:em>8564132</cn:em>
-						</cn:mccList>
-						<cn:mncList>
-							<cn:em>9365425</cn:em>
-						</cn:mncList>
-						<cn:lacList>
-							<cn:em>518567</cn:em>
-						</cn:lacList>
-						<cn:sacList>
-							<cn:em>3879476</cn:em>
-						</cn:sacList>
-						<cn:mscId>9613247</cn:mscId>
-						<cn:mscServerFunctionGsmCell>
-							<xn:dn>ENBFunction=1,mscServerFunctionGsmCell</xn:dn>
-						</cn:mscServerFunctionGsmCell>
-						<cn:mscServerFunctionExternalGsmCell>
-							<xn:dn>ENBFunction=1,mscServerFunctionExternalGsmCell</xn:dn>
-						</cn:mscServerFunctionExternalGsmCell>
-						<cn:mscServerFunctionCsMgwFunction>
-							<xn:dn>ENBFunction=1,mscServerFunctionCsMgwFunction</xn:dn>
-						</cn:mscServerFunctionCsMgwFunction>
-						<cn:nriList>
-							<cn:em>1565372</cn:em>
-						</cn:nriList>
-					</cn:attributes>
-					<!-- Multiple IucsLink in a MSCS  -->
-					<cn:IucsLink id="1">
-						<cn:attributes>
-							<cn:userLabel>Paris MNO5</cn:userLabel>
-							<cn:vnfParametersList>
-								<xn:vnfInstanceId>plkasfjh</xn:vnfInstanceId>
-								<xn:autoScalable>true</xn:autoScalable>
-							</cn:vnfParametersList>
-						</cn:attributes>
-						<!--  Vendor specific data for IucsLink-->
+				<gn:BssFunction id="1">
+					<gn:attributes>
+						<gn:userLabel>BSC 1</gn:userLabel>
+					</gn:attributes>
+					<gn:BtsSiteMgr id="1">
+						<gn:attributes>
+							<gn:userLabel>BTS 1</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell ThkAT</gn:userLabel>
+								<gn:cellIdentity>56764</gn:cellIdentity>
+								<gn:cellAllocation>20 26 30 37 42 55 68 95 100 106</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>0</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>10</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=8,BtsSiteMgr=7,GsmCell=99</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell gznmn</gn:userLabel>
+								<gn:cellIdentity>22494</gn:cellIdentity>
+								<gn:cellAllocation>6 9 32 40 68 77 100 103 119</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>56</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>16</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=3,BtsSiteMgr=5,GsmCell=19</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell PjRQw</gn:userLabel>
+								<gn:cellIdentity>11658</gn:cellIdentity>
+								<gn:cellAllocation>5 8 37 52 60 64 78 85 87 93 93 116 117 119</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>19</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>31</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=7,BtsSiteMgr=31,GsmCell=79</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
 						<xn:VsDataContainer id="1">
 							<xn:attributes>
-								<xn:vsDataType>DataType=8</xn:vsDataType>
-								<xn:vsDataFormatVersion>DFV7</xn:vsDataFormatVersion>
+								<xn:vsDataType>DataType 1</xn:vsDataType>
+								<xn:vsDataFormatVersion>mgfQz</xn:vsDataFormatVersion>
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
-					</cn:IucsLink>
-					<cn:IucsLink id="2">
-					</cn:IucsLink>
-				</cn:MscServerFunction>
-				<!--  Vcndor specific data for MSCS -->
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="2">
+						<gn:attributes>
+							<gn:userLabel>BTS 2</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell RTQDn</gn:userLabel>
+								<gn:cellIdentity>23364</gn:cellIdentity>
+								<gn:cellAllocation>8 22 39 45 53 68 78 81 82 92 95 123</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>15</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>30</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=1,BtsSiteMgr=15,GsmCell=18</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell zkCyj</gn:userLabel>
+								<gn:cellIdentity>9141</gn:cellIdentity>
+								<gn:cellAllocation>2 3 14 31 32 48 61 67 79 80 82 92 96 97 106 108 108 113</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>21</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>13</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=3,BtsSiteMgr=7,GsmCell=12</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell kS mm</gn:userLabel>
+								<gn:cellIdentity>34963</gn:cellIdentity>
+								<gn:cellAllocation>35 44 51 59 67 88 112 117</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>30</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>31</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=5,BtsSiteMgr=31,GsmCell=35</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 2</xn:vsDataType>
+								<xn:vsDataFormatVersion>AhTxn</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="3">
+						<gn:attributes>
+							<gn:userLabel>BTS 3</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell xBQCf</gn:userLabel>
+								<gn:cellIdentity>14843</gn:cellIdentity>
+								<gn:cellAllocation>27 33 33 46 60 64 67 84 114 117 124</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>14</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>18</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=7,BtsSiteMgr=20,GsmCell=35</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell gyPwy</gn:userLabel>
+								<gn:cellIdentity>59683</gn:cellIdentity>
+								<gn:cellAllocation>13 26 37 41 41 62 72 80 81 84 97 103 103 114 121 121 122 124</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>9</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>16</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=6,BtsSiteMgr=22,GsmCell=112</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell nmfDj</gn:userLabel>
+								<gn:cellIdentity>33009</gn:cellIdentity>
+								<gn:cellAllocation>2 9 19 21 47 49 80 80 101</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>20</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>10</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=2,BtsSiteMgr=15,GsmCell=30</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 3</xn:vsDataType>
+								<xn:vsDataFormatVersion>ySTfS</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="4">
+						<gn:attributes>
+							<gn:userLabel>BTS 4</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell mn Rg</gn:userLabel>
+								<gn:cellIdentity>28934</gn:cellIdentity>
+								<gn:cellAllocation>20 24 34 36 46 57 82 107</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>0</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>28</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=2,BtsSiteMgr=27,GsmCell=47</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell S jfP</gn:userLabel>
+								<gn:cellIdentity>40648</gn:cellIdentity>
+								<gn:cellAllocation>7 11 23 25 37 79 93 123</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>32</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>1</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=5,BtsSiteMgr=5,GsmCell=34</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell mCzkT</gn:userLabel>
+								<gn:cellIdentity>16534</gn:cellIdentity>
+								<gn:cellAllocation>26 29 33 42 55 61 78 123</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>19</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>10</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=6,BtsSiteMgr=26,GsmCell=41</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 4</xn:vsDataType>
+								<xn:vsDataFormatVersion>xjjSy</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="5">
+						<gn:attributes>
+							<gn:userLabel>BTS 5</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell xTRzx</gn:userLabel>
+								<gn:cellIdentity>43657</gn:cellIdentity>
+								<gn:cellAllocation>15 17 18 20 40 75 77 85 86 93 118</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>63</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>23</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=7,BtsSiteMgr=27,GsmCell=9</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell RjBhm</gn:userLabel>
+								<gn:cellIdentity>16946</gn:cellIdentity>
+								<gn:cellAllocation>5 55 66 100 102 113 113 123</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>48</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>4</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=3,BtsSiteMgr=26,GsmCell=65</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell knmDD</gn:userLabel>
+								<gn:cellIdentity>27850</gn:cellIdentity>
+								<gn:cellAllocation>5 6 25 88 103 114 115 123</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>59</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>15</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=5,BtsSiteMgr=30,GsmCell=127</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 5</xn:vsDataType>
+								<xn:vsDataFormatVersion>kPgPz</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="6">
+						<gn:attributes>
+							<gn:userLabel>BTS 6</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell mDwkx</gn:userLabel>
+								<gn:cellIdentity>15526</gn:cellIdentity>
+								<gn:cellAllocation>7 23 26 37 45 51 54 59 73 79 96 110 121</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>60</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>19</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=4,BtsSiteMgr=29,GsmCell=7</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell n Sgh</gn:userLabel>
+								<gn:cellIdentity>62619</gn:cellIdentity>
+								<gn:cellAllocation>6 31 32 52 67 69 108 112 119</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>39</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>29</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=6,BtsSiteMgr=25,GsmCell=118</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell DR zS</gn:userLabel>
+								<gn:cellIdentity>5984</gn:cellIdentity>
+								<gn:cellAllocation>7 18 27 34 47 49 75 80 84 105 107 108 110</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>53</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>0</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=3,BtsSiteMgr=11,GsmCell=70</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 6</xn:vsDataType>
+								<xn:vsDataFormatVersion>kBxCn</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="7">
+						<gn:attributes>
+							<gn:userLabel>BTS 7</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell ykAQS</gn:userLabel>
+								<gn:cellIdentity>16300</gn:cellIdentity>
+								<gn:cellAllocation>8 23 24 31 44 46 53 60 81 100 100 116</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>55</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>11</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=5,BtsSiteMgr=18,GsmCell=105</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell kkQCC</gn:userLabel>
+								<gn:cellIdentity>24857</gn:cellIdentity>
+								<gn:cellAllocation>19 21 23 61 70 104 111 116 120</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>62</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>18</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=6,BtsSiteMgr=11,GsmCell=98</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell kBwAy</gn:userLabel>
+								<gn:cellIdentity>1302</gn:cellIdentity>
+								<gn:cellAllocation>12 17 26 38 45 46 51 69 89 91 93 96 107 108</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>22</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>0</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=6,BtsSiteMgr=14,GsmCell=87</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 7</xn:vsDataType>
+								<xn:vsDataFormatVersion>SwnDQ</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="8">
+						<gn:attributes>
+							<gn:userLabel>BTS 8</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell SzjPy</gn:userLabel>
+								<gn:cellIdentity>18742</gn:cellIdentity>
+								<gn:cellAllocation>6 7 9 17 23 36 49 57 66 73 76 77 79 86 103 120 121</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>47</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>27</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=1,BtsSiteMgr=1,GsmCell=21</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell yPn A</gn:userLabel>
+								<gn:cellIdentity>30714</gn:cellIdentity>
+								<gn:cellAllocation>9 45 49 54 56 60 65 66 80 81 92 119</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>53</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>9</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=3,BtsSiteMgr=23,GsmCell=62</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell wQnAm</gn:userLabel>
+								<gn:cellIdentity>64553</gn:cellIdentity>
+								<gn:cellAllocation>5 14 18 19 35 58 69 79 82 85 100 105 115 118</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>29</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>19</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=3,BtsSiteMgr=29,GsmCell=8</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 8</xn:vsDataType>
+								<xn:vsDataFormatVersion>QBBR </xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="9">
+						<gn:attributes>
+							<gn:userLabel>BTS 9</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell DTfQP</gn:userLabel>
+								<gn:cellIdentity>21669</gn:cellIdentity>
+								<gn:cellAllocation>2 9 24 35 52 59 60 61 98 99 109</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>14</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>21</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=4,BtsSiteMgr=4,GsmCell=8</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell QCjDg</gn:userLabel>
+								<gn:cellIdentity>52951</gn:cellIdentity>
+								<gn:cellAllocation>14 17 37 54 86 88 110 112</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>33</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>4</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=5,BtsSiteMgr=4,GsmCell=19</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell jBDny</gn:userLabel>
+								<gn:cellIdentity>7221</gn:cellIdentity>
+								<gn:cellAllocation>3 11 40 42 44 56 65 67 68 73 88 110 116 118 120 120</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>10</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>14</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=7,BtsSiteMgr=22,GsmCell=44</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 9</xn:vsDataType>
+								<xn:vsDataFormatVersion>TABfj</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr>
+					<gn:BtsSiteMgr id="10">
+						<gn:attributes>
+							<gn:userLabel>BTS 10</gn:userLabel>
+							<gn:operationalState>disabled</gn:operationalState>
+						</gn:attributes>						
+						<gn:GsmCell id="1">
+							<gn:attributes>
+								<gn:userLabel>Cell fygBP</gn:userLabel>
+								<gn:cellIdentity>20953</gn:cellIdentity>
+								<gn:cellAllocation>6 18 22 56 78 102 112 114</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>4</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>12</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=6,BtsSiteMgr=1,GsmCell=82</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="2">
+							<gn:attributes>
+								<gn:userLabel>Cell RRfCn</gn:userLabel>
+								<gn:cellIdentity>21101</gn:cellIdentity>
+								<gn:cellAllocation>6 9 19 20 25 25 31 62 63 73 97 102 117 118</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>18</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>15</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=8,BtsSiteMgr=29,GsmCell=3</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<gn:GsmCell id="3">
+							<gn:attributes>
+								<gn:userLabel>Cell CyhQw</gn:userLabel>
+								<gn:cellIdentity>62228</gn:cellIdentity>
+								<gn:cellAllocation>10 18 19 23 25 27 44 51 67 70 75 77 79</gn:cellAllocation>
+								<gn:ncc>5</gn:ncc>
+								<gn:bcc>3</gn:bcc>
+								<gn:lac>32619</gn:lac>
+								<gn:mcc>642</gn:mcc>
+								<gn:mnc>241</gn:mnc>
+								<gn:rac>50</gn:rac>
+								<gn:racc>4</gn:racc>
+								<gn:tsc>3</gn:tsc>
+								<gn:rxLevAccessMin>19</gn:rxLevAccessMin>
+								<gn:msTxPwrMaxCCH>11</gn:msTxPwrMaxCCH>
+								<gn:rfHoppingEnabled>false</gn:rfHoppingEnabled>
+								<gn:plmnPermitted>true</gn:plmnPermitted>
+							</gn:attributes>
+							<gn:GsmRelation id="1">
+								<gn:attributes>
+									<gn:adjacentCell>SubNetwork=7,BtsSiteMgr=15,GsmCell=16</gn:adjacentCell>
+								</gn:attributes>
+							</gn:GsmRelation>
+						</gn:GsmCell>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType 10</xn:vsDataType>
+								<xn:vsDataFormatVersion>BgjRz</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</gn:BtsSiteMgr></gn:BssFunction>
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
-						<xn:vsDataType>abc</xn:vsDataType>
-						<xn:vsDataFormatVersion>abc.1.1</xn:vsDataFormatVersion>
-						<xn:vsData />
+						<xn:vsDataType>DataType=9</xn:vsDataType>
+						<xn:vsDataFormatVersion>yARAn.1.1</xn:vsDataFormatVersion>
+						<xn:vsData/>
 					</xn:attributes>
 				</xn:VsDataContainer>
 			</xn:ManagedElement>
 		</xn:SubNetwork>
 	</configData>
-
-	<fileFooter dateTime="2018-12-15T12:00:00Z" />
-
+	<fileFooter dateTime="2018-12-26T12:00:00Z"/>
 </bulkCmConfigDataFile>
