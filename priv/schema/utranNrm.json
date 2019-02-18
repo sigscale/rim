@@ -1624,6 +1624,7 @@
 						},
 						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClasses"
+						}
 					},
 					"dependencies": {
 						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
@@ -1669,6 +1670,7 @@
 						},
 						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClasses"
+						}
 					},
 					"dependencies": {
 						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
