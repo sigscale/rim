@@ -158,14 +158,19 @@ parse_gsm_cell({endElement, _Uri, _LocalName, QName}, #state{stack = Stack} = St
 parse_gsm_cell_attr(ID, Characteristics,
 		[{startElement, {"gn", "attributes"}, []} | T1] = _CellStack, State) ->
 	{[_ | Attributes], T2} = pop(endElement, {"gn", "attributes"}, T1),
-	Fchars = fun Fchars([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
+	Fchars = fun Fchars([{endElement, {"gn", "hoppingSequenceList"}} | T], undefined, Acc) ->
+				{[_ | _HsList], T3} = pop(startElement, {"gn", "hoppingSequenceList"}, T),
+				% @todo Implement hoppingSequenceList
+				Fchars(T3, undefined, Acc);
+			Fchars([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
 				Fchars(T, Attr, Acc);
 			Fchars([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
 			Fchars([{characters, Chars} | T], "cellIdentity" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+				CellAllocation = [list_to_integer(C) || C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
+				Fchars(T, Attr, [#resource_char{name = Attr, value = CellAllocation} | Acc]);
 			Fchars([{characters, Chars} | T], "ncc" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "bcc" = Attr, Acc) ->
@@ -176,6 +181,12 @@ parse_gsm_cell_attr(ID, Characteristics,
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "mnc" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+			Fchars([{characters, Chars} | T], "rac" = Attr, Acc) ->
+				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+			Fchars([{characters, Chars} | T], "racc" = Attr, Acc) ->
+				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+			Fchars([{characters, Chars} | T], "tsc" = Attr, Acc) ->
+				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "rxLevAccessMin" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "msTxPwrMaxCCH" = Attr, Acc) ->
@@ -184,14 +195,8 @@ parse_gsm_cell_attr(ID, Characteristics,
 				Fchars(T, Attr, [#resource_char{name = Attr, value = false} | Acc]);
 			Fchars([{characters, "true"} | T], "rfHoppingEnabled" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = true} | Acc]);
-			Fchars([{characters, Chars} | T], "hoppingSequenceList" = Attr, Acc) ->
+			Fchars([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, "false"} | T], "plmnPermitted" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = false} | Acc]);
-			Fchars([{characters, "true"} | T], "plmnPermitted" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = true} | Acc]);
-			Fchars([{characters, Chars} | T], Attr, Acc) ->
-				Fchars(T, Attr, [{Attr, Chars} | Acc]);
 			Fchars([{startElement, {"gn", Attr}, _} | T], Attr, Acc) ->
 				Fchars(T, undefined, Acc);
 			Fchars([], _Attr, Acc) ->
