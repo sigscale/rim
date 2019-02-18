@@ -107,6 +107,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 								Indent7, {'gn:GsmRelation', [{id, "1"}],
 								[Indent8, {'gn:attributes', [],
 								[Indent9, {'gn:adjacentCell', ["SubNetwork="
+								++ integer_to_list(rand:uniform(8)) ++ ",BssFunction="
 								++ integer_to_list(rand:uniform(8)) ++ ",BtsSiteMgr="
 								++ integer_to_list(rand:uniform(32)) ++ ",GsmCell="
 								++ integer_to_list(rand:uniform(128))]},
@@ -692,8 +693,11 @@ bulk_cm_geran(Config) ->
 			#xmlAttribute.name, SubnetAttr),
 	#xmlElement{content = MeContent} = lists:keyfind('xn:ManagedElement',
 			#xmlElement.name, SubnetContent),
-	#xmlElement{content = BssContent} = lists:keyfind('gn:BssFunction',
+	#xmlElement{content = BssContent,
+			attributes = BssAttr} = lists:keyfind('gn:BssFunction',
 			#xmlElement.name, MeContent),
+	#xmlAttribute{value = BssId} = lists:keyfind(id,
+			#xmlAttribute.name, BssAttr),
 	#xmlElement{content = BtsContent,
 			attributes = BtsAttr} = lists:keyfind('gn:BtsSiteMgr',
 			#xmlElement.name, BssContent),
@@ -704,8 +708,9 @@ bulk_cm_geran(Config) ->
 			#xmlElement.name, BtsContent),
 	#xmlAttribute{value = CellId} = lists:keyfind(id,
 			#xmlAttribute.name, CellAttr),
-	lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
-			",BtsSiteMgr=", BtsId, ",GsmCell=", CellId]).
+	CellName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
+			",BssFunction=", BssId, ",BtsSiteMgr=", BtsId, ",GsmCell=", CellId]),
+	im:get_resource_name(CellName).
 
 bulk_cm_utran() ->
 	[{userdata, [{doc, "Import bulk CM for utran network resources"}]}].
