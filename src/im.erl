@@ -34,6 +34,7 @@
 		query_resource/4, query_resource/1]).
 -export([add_user/3, del_user/1, get_user/0, get_user/1,
 		query_user/4, query_user/1]).
+-export([import/1]).
 -export([generate_password/0, generate_identity/0]).
 
 -include("im.hrl").
@@ -820,6 +821,15 @@ query_user(Continuation) ->
 		{Users, NextContinuation} ->
 			{NextContinuation, Users}
 	end.
+
+-spec import(File) -> Result
+	when
+		File :: string(),
+		Result :: ok | ignore | {error, Reason},
+		Reason :: term().
+%% @doc Import a file in the inventory table.
+import(File) when is_list(File) ->
+	im_xml:import(File).
 
 -type password() :: [50..57 | 97..104 | 106..107 | 109..110 | 112..116 | 119..122].
 -spec generate_password() -> password().

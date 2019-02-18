@@ -41,15 +41,13 @@
 		Result :: ok | ignore | {error, Reason},
 		Reason :: term().
 %% @doc Import a file in the inventory table.
-
 import(File) when is_list(File) ->
 	Options = [{event_fun, fun parse_xml/3},
 		{event_state, #state{}}],
 	xmerl_sax_parser:file(File, Options).
 
-
 %%----------------------------------------------------------------------
-%%  The im public API
+%%  The im private API
 %%----------------------------------------------------------------------
 
 -spec parse_xml(Event, Location, State) -> NewState
