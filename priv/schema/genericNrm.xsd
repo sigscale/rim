@@ -71,7 +71,7 @@
 	<complexType name="vnfParametersListType">
 		<sequence minOccurs="1" maxOccurs="unbounded">
 			<element name="vnfInstanceId" type="string"/>
-			<element name="vnfdId" type="string" minOccurs="0"/> 
+			<element name="vnfdId" type="string" minOccurs="0"/>
 			<element name="flavourId" type="string" minOccurs="0"/>
 			<element name="autoScalable" type="boolean"/>
 		</sequence>
@@ -144,7 +144,7 @@
 			<complexContent>
 				<extension base="xn:NrmClass">
 					<sequence>
-						<element name="attributes" minOccurs="0"> 
+						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
 									<element name="dnPrefix"/>
@@ -222,7 +222,7 @@
 			<complexContent>
 				<extension base="xn:NrmClass">
 					<sequence>
-						<element name="attributes" minOccurs="0"> 
+						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
 									<element ref="xn:systemDN" minOccurs="0"/>

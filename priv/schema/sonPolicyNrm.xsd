@@ -60,7 +60,7 @@
 			<enumeration value="Tuesday"/>
 			<enumeration value="Wednesday"/>
 			<enumeration value="Thursday"/>
-			<enumeration value="Friday"/> 
+			<enumeration value="Friday"/>
 			<enumeration value="Saturday"/>
 			<enumeration value="Sunday"/>
 		</restriction>
@@ -134,7 +134,7 @@
 
 	<simpleType name="AccessDelayRange">
 		<restriction base="unsignedShort">
-			<minInclusive value="10"/> 
+			<minInclusive value="10"/>
 			<maxInclusive value="560"/>
 		</restriction>
 	</simpleType>
@@ -209,7 +209,7 @@
 	</simpleType>
 
 	<!-- Cell Local ID List -->
-	<complexType name="CellLocalIDListType"> 
+	<complexType name="CellLocalIDListType">
 		<sequence>
 			<element name="CellLocalID" type="sp:CellLocalIDType"/>
 		</sequence>
@@ -286,7 +286,7 @@
 			<enumeration value="cco"/>
 			<enumeration value="aas"/>
 		</restriction>
-	</simpleType> 
+	</simpleType>
 
 	<simpleType name="SonCoordPoliciesType">
 		<restriction base="string">
@@ -360,7 +360,7 @@
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
-								<all> 
+								<all>
 									<element name="esActivationOriginalCellLoadParameters" type="sp:CellLoadParameters" minOccurs="0"/>
 									<element name="esActivationCandidateCellsLoadParameters" type="sp:CellLoadParameters" minOccurs="0"/>
 									<element name="esDeactivationCandidateCellsLoadParameters" type="sp:CellLoadParameters" minOccurs="0"/>
@@ -427,7 +427,7 @@
 									<element name="energySavingControl" type="sp:energySavingControlEnumType" minOccurs="0"/>
 									<element name="isProbingCapable" type="boolean" minOccurs="0"/>
 								</all>
-							</complexType> 
+							</complexType>
 						</element>
 					</sequence>
 				</extension>
@@ -472,4 +472,4 @@
 		</complexType>
 	</element>
 
-</schema> 
+</schema>

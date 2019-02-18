@@ -62,7 +62,7 @@
 					</sequence>
 				</extension>
 			</complexContent>
-		</complexType> 
+		</complexType>
 	</element>
 
 	<element name="OSASCSASFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass" >
@@ -131,7 +131,7 @@
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="im:BGCFFunctionOptionallyContainedNrmClass"/>
-							<element ref="xn:VsDataContainer"/> 
+							<element ref="xn:VsDataContainer"/>
 						</choice>
 					</sequence>
 				</extension>
@@ -200,7 +200,7 @@
 									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
 								</all>
 							</complexType>
-						</element> 
+						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="im:MGCFFunctionOptionallyContainedNrmClass"/>
 							<element ref="xn:VsDataContainer"/>
@@ -269,7 +269,7 @@
 								<all>
 									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="linkList" type="xn:linkListType" minOccurs="0"/> 
+									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -338,7 +338,7 @@
 					<sequence>
 						<element name="attributes" minOccurs="0">
 							<complexType>
-								<all> 
+								<all>
 									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
@@ -415,7 +415,7 @@
 				<extension base="xn:NrmClass">
 					<sequence>
 						<element name="attributes" minOccurs="0">
-							<complexType> 
+							<complexType>
 								<all>
 									<element name="aEnd" type="xn:dn"/>
 									<element name="linkType" type="xn:linkType" minOccurs="0"/>
@@ -491,7 +491,7 @@
 	</element>
 
 	<element name="Link_ICSCF_SCSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
-		<complexType> 
+		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
 					<sequence>
@@ -566,7 +566,7 @@
 							<element ref="xn:VsDataContainer"/>
 						</choice>
 					</sequence>
-				</extension> 
+				</extension>
 			</complexContent>
 		</complexType>
 	</element>
@@ -643,7 +643,7 @@
 							</complexType>
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
-							<element ref="im:Link_IMSMGW_MGCFOptionallyContainedNrmClass"/> 
+							<element ref="im:Link_IMSMGW_MGCFOptionallyContainedNrmClass"/>
 							<element ref="xn:VsDataContainer"/>
 						</choice>
 					</sequence>
@@ -721,7 +721,7 @@
 									<element name="userLabel" type="string"/>
 									<element name="zEnd" type="xn:dn"/>
 								</all>
-							</complexType> 
+							</complexType>
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="im:Link_MRFC_SCSCFOptionallyContainedNrmClass"/>
@@ -796,7 +796,7 @@
 							<complexType>
 								<all>
 									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/> 
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="linkList" type="xn:linkListType" minOccurs="0"/>
 								</all>
 							</complexType>
@@ -874,7 +874,7 @@
 							<complexType>
 								<all>
 									<element name="aEnd" type="xn:dn"/>
-									<element name="linkType" type="xn:linkType" minOccurs="0"/> 
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
 									<element name="protocolName" type="string" minOccurs="0"/>
 									<element name="protocolVersion" type="string" minOccurs="0"/>
 									<element name="userLabel" type="string"/>
@@ -951,7 +951,7 @@
 			<complexContent>
 				<extension base="xn:NrmClass">
 					<sequence>
-						<element name="attributes" minOccurs="0"> 
+						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
 									<element name="aEnd" type="xn:dn"/>
@@ -1025,7 +1025,7 @@
 				</extension>
 			</complexContent>
 		</complexType>
-	</element> 
+	</element>
 
 	<element name="Link_MGCF_ECSCF" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass" >
 		<complexType>
@@ -1095,4 +1095,4 @@
 	<element name="Link_BGCF_ECSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="Link_MGCF_ECSCFOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 
-</schema> 
+</schema>

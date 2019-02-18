@@ -90,7 +90,7 @@
 		</sequence>
 	</complexType>
 
-	<complexType name="PLMNId"> 
+	<complexType name="PLMNId">
 		<sequence>
 			<element name="mcc" type="short"/>
 			<element name="mnc" type="short"/>
@@ -179,7 +179,7 @@
 		</restriction>
 	</simpleType>
 
-	<simpleType name="QOffsetEnumType"> 
+	<simpleType name="QOffsetEnumType">
 		<restriction base="string">
 			<enumeration value="dB-24"/>
 			<enumeration value="dB-22"/>
@@ -260,7 +260,7 @@
 			<enumeration value="dBm-108"/>
 			<enumeration value="dBm-106"/>
 			<enumeration value="dBm-104"/>
-			<enumeration value="dBm-102"/> 
+			<enumeration value="dBm-102"/>
 			<enumeration value="dBm-100"/>
 			<enumeration value="dBm-98"/>
 			<enumeration value="dBm-96"/>
@@ -343,7 +343,7 @@
 			<enumeration value="n40"/>
 			<enumeration value="n44"/>
 			<enumeration value="n48"/>
-			<enumeration value="n52"/> 
+			<enumeration value="n52"/>
 			<enumeration value="n56"/>
 			<enumeration value="n60"/>
 		</restriction>
@@ -431,7 +431,7 @@
 			<minInclusive value="0"/>
 			<maxInclusive value="63"/>
 		</restriction>
-	</simpleType> 
+	</simpleType>
 
 	<simpleType name="HysteresisRangeType">
 		<restriction base="unsignedShort">
@@ -521,7 +521,7 @@
 		<sequence>
 			<element name="tceIDMappingInfo" type="en:TceIDMappingInfo" minOccurs="0"/>
 		</sequence>
-	</complexType> 
+	</complexType>
 
 	<complexType name="SharNetTceMappingInfo">
 		<sequence>
@@ -601,7 +601,7 @@
 		</restriction>
 	</simpleType>
 
-	<complexType name="NetListeningRefSignalType"> 
+	<complexType name="NetListeningRefSignalType">
 		<sequence>
 			<element name="referenceSignalPattern" type="en:ReferenceSignalPattern"/>
 			<element name="numOfCRSPorts" type="en:NumOfCRSPorts"/>
@@ -662,7 +662,7 @@
 									<element name="qOffsetUtra" type="en:QOffsetRangeType" minOccurs="0"/>
 									<element name="qOffsetGeran" type="en:QOffsetRangeType" minOccurs="0"/>
 									<element name="qOffsetCdma2000" type="en:QOffsetRangeType" minOccurs="0"/>
-									<element name="qQualMinUtra" type="en:QQualMinUtraRangeType" minOccurs="0"/> 
+									<element name="qQualMinUtra" type="en:QQualMinUtraRangeType" minOccurs="0"/>
 									<element name="qRxLevMinEUtraSib1" type="en:QRxLevMinEUtraRangeType" minOccurs="0"/>
 									<element name="qRxLevMinEUtraSib3" type="en:QRxLevMinEUtraRangeType" minOccurs="0"/>
 									<element name="qRxLevMinGeran" type="en:QRxLevMinGeranRangeType" minOccurs="0"/>
@@ -724,7 +724,7 @@
 							<element ref="nn:EP_X2C"/>
 							<element ref="nn:EP_X2U"/>
 							<element ref="nn:EP_NgC"/>
-							<element ref="nn:EP_NgU"/> 
+							<element ref="nn:EP_NgU"/>
 							<element ref="nn:EP_XnC"/>
 							<element ref="nn:EP_XnU"/>
 							<element ref="en:ENBFunctionOptionallyContainedNrmClass"/>
@@ -804,7 +804,7 @@
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="epc:EP_RP_EPS"/>
-							<element ref="en:ExternalRNFunctionOptionallyContainedNrmClass"/> 
+							<element ref="en:ExternalRNFunctionOptionallyContainedNrmClass"/>
 							<element ref="xn:VsDataContainer"/>
 						</choice>
 					</sequence>
@@ -881,7 +881,7 @@
 									<!-- End of inherited attributes from EUtranGenericCell -->
 									<element name="earfcnDl" type="short"/>
 									<element name="earfcnUl" type="short"/>
-								</all> 
+								</all>
 							</complexType>
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
@@ -958,7 +958,7 @@
 									<element name="cellAccessInfoList" type="en:CellAccessInfoList"/>
 									<element name="tac" type="long"/>
 									<element name="pci" type="en:Pci" />
-									<element name="pciList" type="en:PciList" minOccurs="0"/> 
+									<element name="pciList" type="en:PciList" minOccurs="0"/>
 									<element name="maximumTransmissionPower" type="short"/>
 									<element name="partOfSectorPower" type="short" minOccurs="0"/>
 									<element name="referenceSignalPower" type="short"/>
@@ -1033,7 +1033,7 @@
 					</sequence>
 				</extension>
 			</complexContent>
-		</complexType> 
+		</complexType>
 	</element>
 
 	<element name="EUtranRelation">
@@ -1114,7 +1114,7 @@
 					</sequence>
 				</extension>
 			</complexContent>
-		</complexType> 
+		</complexType>
 	</element>
 
 	<element name="MCEFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
@@ -1196,7 +1196,7 @@
 	</element>
 
 	<element name="Link_MCE_MME" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
-		<complexType> 
+		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
 					<sequence>
@@ -1265,4 +1265,4 @@
 	<element name="RNFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="ExternalRNFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 
-</schema> 
+</schema>

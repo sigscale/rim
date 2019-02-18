@@ -62,7 +62,7 @@
 			<fractionDigits value="1"/>
 			<minInclusive value="0"/>
 			<maxInclusive value="50"/>
-		</restriction> 
+		</restriction>
 	</simpleType>
 
 	<simpleType name="primarySchPower">
@@ -140,7 +140,7 @@
 			<simpleType>
 				<restriction base="integer">
 					<minInclusive value="65535"/>
-					<maxInclusive value="65535"/> 
+					<maxInclusive value="65535"/>
 				</restriction>
 			</simpleType>
 		</union>
@@ -217,7 +217,7 @@
 				<complexType>
 					<all>
 						<element name="timeSlotId" minOccurs="1">
-							<simpleType> 
+							<simpleType>
 								<restriction base="integer">
 									<minInclusive value="0"/>
 									<maxInclusive value="6"/>
@@ -293,7 +293,7 @@
 			<enumeration value="dpcModeChangeSupported"/>
 			<enumeration value="dpcModeChangeNotSupported"/>
 		</restriction>
-	</simpleType> 
+	</simpleType>
 
 	<simpleType name="sttdSupport">
 		<restriction base="string">
@@ -371,7 +371,7 @@
 			<minInclusive value="0"/>
 			<maxInclusive value="38400"/>
 		</restriction>
-	</simpleType> 
+	</simpleType>
 
 	<simpleType name="readSFNIndicator">
 		<restriction base="string">
@@ -450,7 +450,7 @@
 			<extension base="xn:NrmClass">
 				<sequence>
 					<element name="attributes" minOccurs="0">
-						<complexType> 
+						<complexType>
 							<all>
 								<element name="Flexible_Hard_Split_Support_Indicator" minOccurs="0"/>
 								<element name="Delayed_Activation_Support_Indicator" minOccurs="0"/>
@@ -528,7 +528,7 @@
 	<simpleType name="schTimeSlot">
 		<restriction base="integer">
 			<minInclusive value="0"/>
-			<maxInclusive value="6"/> 
+			<maxInclusive value="6"/>
 		</restriction>
 	</simpleType>
 
@@ -620,7 +620,7 @@
 		</restriction>
 	</simpleType>
 
-	<complexType name="TceIDMappingInfo"> 
+	<complexType name="TceIDMappingInfo">
 		<sequence>
 			<element name="tceID" type="short"/>
 			<element name="tceIPAddr" type="string"/>
@@ -713,7 +713,7 @@
 							<complexType>
 								<all>
 									<element name="userLabel" type="string" minOccurs="0"/>
-									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/> 
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
 									<element name="nodeBFunctionIubLink" type="string" minOccurs="0"/>
 								</all>
@@ -784,7 +784,7 @@
 						</choice>
 					</sequence>
 				</extension>
-			</complexContent> 
+			</complexContent>
 		</complexType>
 	</element>
 
@@ -848,7 +848,7 @@
 									<element name="temporaryOffset1" type="un:temporaryOffset1" minOccurs="0"/>
 									<element name="temporaryOffset2" type="un:temporaryOffset2" minOccurs="0"/>
 									<element name="sttdSupportIndicator" type="un:sttdSupport" minOccurs="0"/>
-									<element name="closedLoopModelSupportIndicator" type="un:closedLoopMode1" minOccurs="0"/> 
+									<element name="closedLoopModelSupportIndicator" type="un:closedLoopMode1" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -915,7 +915,7 @@
 									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
 									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
 									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
-									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/> 
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -983,7 +983,7 @@
 									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
 									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
 									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
-									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/> 
+									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
 									<!-- End of inherited attributes from UtranCellTDD -->
 									<element name="uarfcnLCRList" type="un:uarfcnLCRList" minOccurs="0"/>
 									<element name="fpachPower" type="un:fpachPower" minOccurs="0"/>
@@ -1051,7 +1051,7 @@
 									<element name="dpcModechangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
 									<element name="relatedSectorEquipment" type="xn:dn" minOccurs="0"/>
 									<!-- End of inherited attributes from UtranGenericCell via UtranCellTDD -->
-									<!-- Inherited attributes from UtranCellTDD --> 
+									<!-- Inherited attributes from UtranCellTDD -->
 									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
 									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
 									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
@@ -1126,7 +1126,7 @@
 				</extension>
 			</complexContent>
 		</complexType>
-	</element> 
+	</element>
 
 	<element name="ExternalUtranGenericCell" abstract="true" >
 		<complexType>
@@ -1320,7 +1320,7 @@
 									<element name="hcsPrio" type="un:hcsPrio" minOccurs="0"/>
 									<element name="maximumAllowedUlTxPower" type="un:maximumAllowedUlTxPower" minOccurs="0"/>
 									<element name="snaInformation" type="un:snaInformation" minOccurs="0"/>
-									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/> 
+									<element name="qrxlevMin" type="un:qrxlevMin" minOccurs="0"/>
 									<element name="deltaQrxlevmin" type="un:deltaQrxlevmin" minOccurs="0"/>
 									<element name="qhcs" type="un:qhcs" minOccurs="0"/>
 									<element name="penaltyTime" type="un:penaltyTime" minOccurs="0"/>
@@ -1403,7 +1403,7 @@
 									<element name="restrictionStateIndicator" type="un:restrictionStateIndicator" minOccurs="0"/>
 									<element name="dpcModeChangeSupportIndicator" type="un:dpcModeChangeSupport" minOccurs="0"/>
 									<!-- End of inherited attributes from ExternalUtranGenericCell -->
-									<!-- Inherited attributes from ExternalUtranCellTDD --> 
+									<!-- Inherited attributes from ExternalUtranCellTDD -->
 									<element name="uarfcn" type="un:uarfcnAnyMode" minOccurs="0"/>
 									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
 									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
@@ -1489,7 +1489,7 @@
 									<element name="cellParameterId" type="un:cellParameterId" minOccurs="0"/>
 									<element name="primaryCcpchPower" type="un:primaryCcpchPower" minOccurs="0"/>
 									<element name="cellCapabilityContainerTDD" type="un:cellCapabilityContainerTDD" minOccurs="0"/>
-									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/> 
+									<element name="sctdIndicator" type="un:sctdIndicator" minOccurs="0"/>
 									<element name="dpchConstantValue" type="un:dpchConstantValue" minOccurs="0"/>
 									<!-- End of inherited attributes from ExternalUtranCellTDD -->
 									<element name="tstdIndicator" type="un:tstdIndicator" minOccurs="0"/>
@@ -1584,7 +1584,7 @@
 	<element name="UtranCellTDDLcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="UtranCellTDDHcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="IubLinkOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
-	<element name="UtranRelationOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/> 
+	<element name="UtranRelationOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="ExternalUtranGenericCellOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="ExternalUtranCellFDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="ExternalUtranCellTDDOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
@@ -1592,4 +1592,4 @@
 	<element name="ExternalUtranCellTDDLcrOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 	<element name="ExternalRncFunctionOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
 
-</schema> 
+</schema>

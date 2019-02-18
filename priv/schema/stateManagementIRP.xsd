@@ -78,7 +78,7 @@
 
 	<complexType name="availabilityStatusType">
 		<sequence minOccurs="0" maxOccurs="9">
-			<element name="availabilityStatusElement" type="sm:availabilityStatusElementType"/> 
+			<element name="availabilityStatusElement" type="sm:availabilityStatusElementType"/>
 		</sequence>
 	</complexType>
 
@@ -122,4 +122,4 @@
 	<element name="standbyStatus" type="sm:standbyStatusType"/>
 	<element name="unknownStatus" type="sm:unknownStatusType"/>
 
-</schema> 
+</schema>

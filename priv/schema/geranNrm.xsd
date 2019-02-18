@@ -368,7 +368,7 @@
 									</element>
 								</all>
 							</complexType>
-						</element> 
+						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="xn:VsDataContainer"/>
 						</choice>
