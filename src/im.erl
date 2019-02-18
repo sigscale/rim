@@ -31,7 +31,7 @@
 -export([add_specification/1, del_specification/1, get_specification/0,
 		get_specification/1, query_specification/4, query_specification/1]).
 -export([add_resource/1, del_resource/1, get_resource/0, get_resource/1,
-		query_resource/4, query_resource/1]).
+		get_resource_name/1, query_resource/4, query_resource/1]).
 -export([add_user/3, del_user/1, get_user/0, get_user/1,
 		query_user/4, query_user/1]).
 -export([import/1]).
@@ -607,10 +607,28 @@ get_resource() ->
 		Result :: {ok, Resource} | {error, Reason},
 		Resource :: resource(),
 		Reason :: term().
-%% @doc Get a Resource.
+%% @doc Get a Resource by identifier.
 get_resource(ResourceID) when is_list(ResourceID) ->
 	F = fun() ->
 			mnesia:read(resource, ResourceID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Resource]} ->
+			{ok, Resource}
+	end.
+
+-spec get_resource_name(ResourceName) -> Result
+	when
+		ResourceName :: string(),
+		Result :: {ok, Resource} | {error, Reason},
+		Resource :: resource(),
+		Reason :: term().
+%% @doc Get a Resource by name.
+get_resource_name(ResourceName) when is_list(ResourceName) ->
+	F = fun() ->
+			mnesia:index_read(resource, ResourceName, #resource.name)
 	end,
 	case mnesia:transaction(F) of
 		{aborted, Reason} ->
