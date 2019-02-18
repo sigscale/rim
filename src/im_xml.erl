@@ -165,7 +165,8 @@ parse_gsm_cell_attr(ID, Characteristics,
 			Fchars([{characters, Chars} | T], "cellIdentity" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+				CellAllocation = [list_to_integer(C) || C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
+				Fchars(T, Attr, [#resource_char{name = Attr, value = CellAllocation} | Acc]);
 			Fchars([{characters, Chars} | T], "ncc" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], "bcc" = Attr, Acc) ->
@@ -186,10 +187,8 @@ parse_gsm_cell_attr(ID, Characteristics,
 				Fchars(T, Attr, [#resource_char{name = Attr, value = true} | Acc]);
 			Fchars([{characters, Chars} | T], "hoppingSequenceList" = Attr, Acc) ->
 				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, "false"} | T], "plmnPermitted" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = false} | Acc]);
-			Fchars([{characters, "true"} | T], "plmnPermitted" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = true} | Acc]);
+			Fchars([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
+				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
 			Fchars([{characters, Chars} | T], Attr, Acc) ->
 				Fchars(T, Attr, [{Attr, Chars} | Acc]);
 			Fchars([{startElement, {"gn", Attr}, _} | T], Attr, Acc) ->
