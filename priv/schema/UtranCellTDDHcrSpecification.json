@@ -14,7 +14,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/priv/schema/UtranCellTDDSpecification"
+								"$ref": "UtranCellTDDSpecification"
 							},
 							{
 								"type": "object",
