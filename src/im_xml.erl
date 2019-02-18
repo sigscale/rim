@@ -44,7 +44,17 @@
 import(File) when is_list(File) ->
 	Options = [{event_fun, fun parse_xml/3},
 		{event_state, #state{}}],
-	xmerl_sax_parser:file(File, Options).
+	case xmerl_sax_parser:file(File, Options) of
+		{ok, _EventState, _Rest} ->
+			ok;
+		{fatal_error, {CurrentLocation, EntityName, LineNo},
+				Reason, EndTags, EventState} ->
+			error_logger:error_report(["Error parsing import file",
+					{file, File}, {location, CurrentLocation},
+					{line, LineNo}, {entity, EntityName},
+					{tags, EndTags}, {error, Reason}]),
+			{error, Reason}
+	end.
 
 %%----------------------------------------------------------------------
 %%  The im private API
