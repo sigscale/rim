@@ -21,7 +21,7 @@
 -module(im_rest).
 -copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
 
--export([date/1, iso8601/1, etag/1]).
+-export([date/1, iso8601/1, geoaxis/1, etag/1]).
 -export([parse_query/1, range/1]).
 -export([lifecycle_status/1]).
 -export([related_party_ref/1, category_ref/1, candidate_ref/1,
@@ -444,6 +444,59 @@ target_schema_ref([_ | T], R, Acc) ->
 	target_schema_ref(T, R, Acc);
 target_schema_ref([], _, Acc) ->
 	Acc.
+
+-spec geoaxis(Axis) -> Axis
+	when
+		Axis :: string() | non_neg_integer().
+%% @doc CODEC for latitude/longitude axis value.
+geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -10000  ->
+	io_lib:fwrite("-0.~4.10.0b", [abs(Axis)]);
+geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -1000  ->
+	io_lib:fwrite("-0.~3.10.0b", [abs(Axis)]);
+geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -100  ->
+	io_lib:fwrite("-0.~2.10.0b", [abs(Axis)]);
+geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -10  ->
+	io_lib:fwrite("-0.~b", [abs(Axis)]);
+geoaxis(Axis) when Axis rem 10000 =:= 0  ->
+	integer_to_list(Axis div 10000);
+geoaxis(Axis) when Axis rem 1000 =:= 0  ->
+	io_lib:fwrite("~b.~b", [Axis div 10000, (abs(Axis) rem 10000) div 1000]);
+geoaxis(Axis) when Axis rem 100 =:= 0  ->
+	io_lib:fwrite("~b.~2.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 100]);
+geoaxis(Axis) when Axis rem 10 =:= 0  ->
+	io_lib:fwrite("~b.~3.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 10]);
+geoaxis(Axis) when is_integer(Axis) ->
+	io_lib:fwrite("~b.~4.10.0b", [Axis div 10000, abs(Axis) rem 10000]);
+geoaxis(Axis) when is_list(Axis) ->
+	case string:split(Axis, ".") of
+		[[$- | Int], Dec] when length(Dec) =:= 4 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			-((list_to_integer(Int) * 10000) + list_to_integer(Dec));
+		[Int, Dec] when length(Dec) =:= 4 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			(list_to_integer(Int) * 10000) + list_to_integer(Dec);
+		[[$- | Int], Dec] when length(Dec) =:= 3 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 10));
+		[Int, Dec] when length(Dec) =:= 3 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 10);
+		[[$- | Int], Dec] when length(Dec) =:= 2 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 100));
+		[Int, Dec] when length(Dec) =:= 2 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 100);
+		[[$- | Int], Dec] when length(Dec) =:= 1 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 1000));
+		[Int, Dec] when length(Dec) =:= 1 ->
+erlang:display({?MODULE, ?LINE, Int, Dec}),
+			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 1000);
+		[Int] ->
+erlang:display({?MODULE, ?LINE, Int}),
+			list_to_integer(Int) * 10000
+	end.
 
 %%----------------------------------------------------------------------
 %%  internal functions
