@@ -181,183 +181,141 @@ parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes},
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
 parse_gsm_cell({endElement,  _Uri, "GsmCell", QName},
 		#state{stack = Stack} = State) ->
-	{[_ | T1], NewStack} = pop(startElement, QName, Stack),
-	parse_gsm_cell_attr([], T1, State#state{stack = NewStack});
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_gsm_cell_attr(T, State#state{stack = NewStack}, []);
 parse_gsm_cell({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 % @hidden
-parse_gsm_cell_attr(Characteristics,
-		[{startElement, {"gn", "attributes"}, []} | T1] = _CellStack, State) ->
+parse_gsm_cell_attr([{startElement, {"gn", "attributes"}, []} | T1],
+		State, Acc) ->
 	{[_ | Attributes], T2} = pop(endElement, {"gn", "attributes"}, T1),
-	Fchars = fun Fchars([{endElement, {"gn", "hoppingSequenceList"}} | T], undefined, Acc) ->
-				{[_ | _HsList], T3} = pop(startElement, {"gn", "hoppingSequenceList"}, T),
-				% @todo Implement hoppingSequenceList
-				Fchars(T3, undefined, Acc);
-			Fchars([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-				Fchars(T, Attr, Acc);
-			Fchars([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
-			Fchars([{characters, Chars} | T], "cellIdentity" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
-				CellAllocation = [list_to_integer(C) || C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
-				Fchars(T, Attr, [#resource_char{name = Attr, value = CellAllocation} | Acc]);
-			Fchars([{characters, Chars} | T], "ncc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "bcc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "lac" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "mcc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "mnc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "rac" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "racc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "tsc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "rxLevAccessMin" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "msTxPwrMaxCCH" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, "false"} | T], "rfHoppingEnabled" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = false} | Acc]);
-			Fchars([{characters, "true"} | T], "rfHoppingEnabled" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = true} | Acc]);
-			Fchars([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{startElement, {"gn", Attr}, _} | T], Attr, Acc) ->
-				Fchars(T, undefined, Acc);
-			Fchars([], _Attr, Acc) ->
-				Acc
-	end,
-	NewCharacteristics = Fchars(Attributes, undefined, Characteristics),
-	parse_gsm_cell_rels(NewCharacteristics, T2, State, #{}).
+	parse_gsm_cell_attr1(Attributes, undefined, T2, State, Acc).
+% @hidden
+parse_gsm_cell_attr1([{endElement, {"gn", "hoppingSequenceList"}} | T1],
+		undefined, CellStack, State, Acc) ->
+	{[_ | _HsList], T2} = pop(startElement, {"gn", "hoppingSequenceList"}, T1),
+	% @todo Implement hoppingSequenceList
+	parse_gsm_cell_attr1(T2, undefined, CellStack, State, Acc);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"cellIdentity" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"cellAllocation" = Attr, CellStack, State, Acc) ->
+	CellAllocation = [list_to_integer(C)
+			|| C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = CellAllocation} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"ncc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T], 
+		"bcc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"lac" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"mcc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"mnc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"rac" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"racc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"tsc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"rxLevAccessMin" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"msTxPwrMaxCCH" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, "false"} | T],
+		"rfHoppingEnabled" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = false} | Acc]);
+parse_gsm_cell_attr1([{characters, "true"} | T],
+		"rfHoppingEnabled" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = true} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"plmnPermitted" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{startElement, {"gn", Attr}, _} | T],
+		Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, undefined, CellStack, State, Acc);
+parse_gsm_cell_attr1([{endElement, {"gn", Attr}} | T],
+		undefined, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, Acc);
+parse_gsm_cell_attr1([], _Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_rels(CellStack, State, Acc,
+			#{gsmRel => [], utranRel => [], eutranRel => []}).
 
 % @hidden
-parse_gsm_cell_rels(Characteristics,
-		[{startElement, {"gn", "GsmRelation"}, Attributes1} | T1] = _CellStack,
-		State, Acc1) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
-	{[_ | Attributes2], T2} = pop(endElement, {"gn", "GsmRelation"}, T1),
-	Frels = fun Frels([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
-				Acc;
-			Frels([{endElement, {"gn", "attributes"}} | T], undefined, Acc) ->
-				Frels(T, undefined, Acc);
-			Frels([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-				Frels(T, Attr, Acc);
-			Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{adjacent_cell = Chars});
-			Frels([{characters, Chars} | T], "bcch_frequency" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{bcch_frequency = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "ncc" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{ncc = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "bcc" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{bcc = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "lac" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{lac = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{lac = list_to_atom(Chars)});
-			Frels([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
-			Frels([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
-			Frels([{startElement, {"gn", _Attr}, _} | T], _Attr, Acc) ->
-				Frels(T, undefined, Acc)
-	end,
-	R = Frels(Attributes2, undefined, #gsm_relation{id = RelID}),
-   % maps:update_with/4 is a stdlib-3.0 feature
-   % Fmap = fun(R1) -> [R | R1] end,
-   % NewAcc = maps:update_with(gsmRelation, Fmap, [R], Acc1),
-	R2 = case Acc1 of
-		#{gsmRelation := R1} ->
-			[R | R1];
-		#{} ->
-			[R]
-	end,
-	NewAcc = Acc1#{gsmRelation => R2},
-	parse_gsm_cell_rels( Characteristics, T2, State, NewAcc);
-parse_gsm_cell_rels(Characteristics,
-		[{startElement, {"un", "UtranRelation"}, Attributes1} | T1] = _CellStack,
-		State, Acc1) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
-	{[_ | Attributes2], T2} = pop(endElement, {"un", "UtranRelation"}, T1),
-	Frels = fun Frels([{startElement, {"un", "attributes"}, []}], _Attr, Acc) ->
-				Acc;
-			Frels([{endElement, {"un", "attributes"}} | T], undefined, Acc) ->
-				Frels(T, undefined, Acc);
-			Frels([{endElement, {"un", Attr}} | T], undefined, Acc) ->
-				Frels(T, Attr, Acc);
-			Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-				Frels(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
-			Frels([{startElement, {"un", _Attr}, _} | T], _Attr, Acc) ->
-				Frels(T, undefined, Acc)
-	end,
-	R = Frels(Attributes2, undefined, #utran_relation{id = RelID}),
-	R2 = case Acc1 of
-		#{utranRelation := R1} ->
-			[R | R1];
-		#{} ->
-			[R]
-	end,
-	NewAcc = Acc1#{utranRelation => R2},
-	parse_gsm_cell_rels(Characteristics, T2, State, NewAcc);
-parse_gsm_cell_rels(Characteristics,
-		[{startElement, {"en", "EutranRelation"}, Attributes1} | T1] = _CellStack,
-		State, Acc1) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
-	{[_ | Attributes2], T2} = pop(endElement, {"en", "EutranRelation"}, T1),
-	Frels = fun Frels([{startElement, {"en", "attributes"}, []}], _Attr, Acc) ->
-            Acc;
-		Frels([{endElement, {"en", "attributes"}} | T], undefined, Acc) ->
-			Frels(T, undefined, Acc);
-		Frels([{endElement, {"en", Attr}} | T], undefined, Acc) ->
-			Frels(T, Attr, Acc);
-		Frels([{characters, Chars} | T], "tci" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{tci = list_to_integer(Chars)});
-		Frels([{characters, Chars} | T], "isRemoveAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_remove_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "isHoaAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_hoa_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "isIcicInformationSendAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_icic_information_send_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "isLbAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_lb_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{adjacent_cell = Chars});
-		Frels([{characters, Chars} | T], "isEsCoveredBy" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_es_covered_by = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "cellIndividualOffset" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{cell_individual_offset = Chars});
-		Frels([{characters, Chars} | T], "qOffset" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{q_offset = Chars});
-		Frels([{startElement, {"en", _Attr}, _} | T], _Attr, Acc) ->
-			Frels(T, undefined, Acc)
-	end,
-	R = Frels(Attributes2, undefined, #eutran_relation{id = RelID}),
-	R2 = case Acc1 of
-		#{eutranRelation := R1} ->
-			[R | R1];
-		#{} ->
-			[R]
-	end,
-	NewAcc = Acc1#{eutranRelation => R2},
-	parse_gsm_cell_rels(Characteristics, T2, State, NewAcc);
-parse_gsm_cell_rels(Characteristics, CellStack,
+parse_gsm_cell_rels([{startElement, {"gn", "GsmRelation"}, XmlAttr} | T1],
+		State, Characteristics, #{gsmRel := GsmRels} = Acc) ->
+	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
+	{[_ | Attributes], T2} = pop(endElement, {"gn", "GsmRelation"}, T1),
+	Relation = parse_gsm_cell_rel(Attributes,
+			undefined, #gsm_relation{id = RelID}),
+	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
+	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+parse_gsm_cell_rels([{startElement, {"un", "UtranRelation"}, XmlAttr} | T1],
+		State, Characteristics, #{utranRel := UtranRels} = Acc) ->
+	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
+	{[_ | Attributes], T2} = pop(endElement, {"un", "UtranRelation"}, T1),
+	Relation = parse_utran_cell_rel(Attributes,
+			undefined, #utran_relation{id = RelID}),
+	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
+	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+parse_gsm_cell_rels([{startElement, {"en", "EutranRelation"}, XmlAttr} | T1],
+		State, Characteristics, #{eutranRel := EutranRels} = Acc) ->
+	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
+	{[_ | Attributes], T2} = pop(endElement, {"en", "EutranRelation"}, T1),
+	Relation = parse_eutran_cell_rel(Attributes,
+			undefined, #eutran_relation{id = RelID}),
+	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
+	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+parse_gsm_cell_rels(CellStack,
 		#state{dnPrefix = Dn, subnet = SubId, bss = BssId, bts = BtsId,
-		cell = CellId, cells = Cells} = State, Acc1) ->
-	F1 = fun(gsmRelation, R, Acc) ->
-				[#resource_char{name = "gsmRelation", value = R} | Acc];
-			(utranRelation, R, Acc) ->
-				[#resource_char{name = "utranRelation", value = R} | Acc];
-			(eUtranRelation, R, Acc) ->
-				[#resource_char{name = "eUtranRelation", value = R} | Acc]
+		cell = CellId, cells = Cells} = State, Characteristics, Acc) ->
+	F1 = fun(gsmRel, [], Acc1) ->
+				Acc1;
+			(gsmRel, R, Acc1) ->
+				[#resource_char{name = "gsmRelation", value = R} | Acc1];
+			(utranReln, [], Acc1) ->
+				Acc1;
+			(utranRel, R, Acc1) ->
+				[#resource_char{name = "utranRelation", value = R} | Acc1];
+			(eutranRel, [], Acc1) ->
+				Acc1;
+			(eutranRel, R, Acc1) ->
+				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
 	end,
-	NewCharacteristics = maps:fold(F1, Characteristics, Acc1), 
+	NewCharacteristics = maps:fold(F1, Characteristics, Acc), 
 	Resource = #resource{name = Dn ++ SubId ++ BssId ++ BtsId ++ CellId,
 			description = "GSM radio",
 			category = "RAN",
@@ -373,6 +331,100 @@ parse_gsm_cell_rels(Characteristics, CellStack,
 		{error, Reason} ->
 			{error, Reason}
 	end.
+% @hidden
+parse_gsm_cell_rel([{endElement, {"gn", "attributes"}} | T],
+		undefined, Acc) ->
+	parse_gsm_cell_rel(T, undefined, Acc);
+parse_gsm_cell_rel([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
+	parse_gsm_cell_rel(T, Attr, Acc);
+parse_gsm_cell_rel([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr, Acc#gsm_relation{adjacent_cell = Chars});
+parse_gsm_cell_rel([{characters, Chars} | T], "bcch_frequency" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{bcch_frequency = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "ncc" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{ncc = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "bcc" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{bcc = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "lac" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{lac = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{lac = list_to_atom(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
+parse_gsm_cell_rel([{startElement, {"gn", Attr}, []} | T], Attr, Acc) ->
+	parse_gsm_cell_rel(T, undefined, Acc);
+parse_gsm_cell_rel([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
+	Acc.
+
+% @hidden
+parse_utran_cell_rel([{endElement, {"un", "attributes"}} | T],
+		undefined, Acc) ->
+	parse_utran_cell_rel(T, undefined, Acc);
+parse_utran_cell_rel([{endElement, {"un", Attr}} | T],
+		undefined, Acc) ->
+	parse_utran_cell_rel(T, Attr, Acc);
+parse_utran_cell_rel([{characters, Chars} | T],
+		"adjacentCell" = Attr, Acc) ->
+	parse_utran_cell_rel(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
+parse_utran_cell_rel([{startElement, {"un", "attributes"}, []}],
+		_Attr, Acc) ->
+	Acc.
+
+% @hidden
+parse_eutran_cell_rel([{endElement, {"en", "attributes"}} | T],
+		undefined, Acc) ->
+	parse_eutran_cell_rel(T, undefined, Acc);
+parse_eutran_cell_rel([{endElement, {"en", Attr}} | T],
+		undefined, Acc) ->
+	parse_eutran_cell_rel(T, Attr, Acc);
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"tci" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+		Acc#eutran_relation{tci = list_to_integer(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isRemoveAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_remove_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isHoaAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_hoa_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isIcicInformationSendAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_icic_information_send_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isLbAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_lb_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"adjacentCell" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{adjacent_cell = Chars});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isEsCoveredBy" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_es_covered_by = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"cellIndividualOffset" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{cell_individual_offset = Chars});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"qOffset" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{q_offset = Chars});
+parse_eutran_cell_rel([{startElement, {"en", "attributes"}, []}],
+		_Attr, Acc) ->
+	Acc.
 
 % @hidden
 parse_gsm_cell_pol(_Characteristics,
