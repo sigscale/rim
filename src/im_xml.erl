@@ -160,7 +160,7 @@ parse_geran({endElement,  _Uri, _LocalName, QName},
 %% @hidden
 parse_bts({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_bts({startElement,  _Uri, "GsmCell", QName,
+parse_bts({startElement, _Uri, "GsmCell", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{stack = Stack} = State) ->
 	DnComponent = ",GsmCell=" ++ Id,
@@ -188,14 +188,14 @@ parse_gsm_cell({endElement, _Uri, _LocalName, QName},
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 % @hidden
-parse_gsm_cell_attr([{startElement, {"gn", "attributes"}, []} | T1],
+parse_gsm_cell_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
 		State, Acc) ->
-	{[_ | Attributes], T2} = pop(endElement, {"gn", "attributes"}, T1),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
 	parse_gsm_cell_attr1(Attributes, undefined, T2, State, Acc).
 % @hidden
-parse_gsm_cell_attr1([{endElement, {"gn", "hoppingSequenceList"}} | T1],
+parse_gsm_cell_attr1([{endElement, {"gn", "hoppingSequenceList"} = QName} | T1],
 		undefined, CellStack, State, Acc) ->
-	{[_ | _HsList], T2} = pop(startElement, {"gn", "hoppingSequenceList"}, T1),
+	{[_ | _HsList], T2} = pop(startElement, QName, T1),
 	% @todo Implement hoppingSequenceList
 	parse_gsm_cell_attr1(T2, undefined, CellStack, State, Acc);
 parse_gsm_cell_attr1([{characters, Chars} | T],
@@ -275,26 +275,29 @@ parse_gsm_cell_attr1([], _Attr, CellStack, State, Acc) ->
 			#{gsmRel => [], utranRel => [], eutranRel => []}).
 
 % @hidden
-parse_gsm_cell_rels([{startElement, {"gn", "GsmRelation"}, XmlAttr} | T1],
+parse_gsm_cell_rels([{startElement,
+		{"gn", "GsmRelation"} = QName, XmlAttr} | T1],
 		State, Characteristics, #{gsmRel := GsmRels} = Acc) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, {"gn", "GsmRelation"}, T1),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
 	Relation = parse_gsm_cell_rel(Attributes,
 			undefined, #gsm_relation{id = RelID}),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
 	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
-parse_gsm_cell_rels([{startElement, {"un", "UtranRelation"}, XmlAttr} | T1],
+parse_gsm_cell_rels([{startElement,
+		{"un", "UtranRelation"} = QName, XmlAttr} | T1],
 		State, Characteristics, #{utranRel := UtranRels} = Acc) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, {"un", "UtranRelation"}, T1),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
 	Relation = parse_utran_cell_rel(Attributes,
 			undefined, #utran_relation{id = RelID}),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
-parse_gsm_cell_rels([{startElement, {"en", "EutranRelation"}, XmlAttr} | T1],
+parse_gsm_cell_rels([{startElement,
+		{"en", "EutranRelation"} = QName, XmlAttr} | T1],
 		State, Characteristics, #{eutranRel := EutranRels} = Acc) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, {"en", "EutranRelation"}, T1),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
 	Relation = parse_eutran_cell_rel(Attributes,
 			undefined, #eutran_relation{id = RelID}),
 	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
@@ -428,9 +431,9 @@ parse_eutran_cell_rel([{startElement, {"en", "attributes"}, []}],
 
 % @hidden
 parse_gsm_cell_pol(_Characteristics,
-		[{startElement, {"sp", "IneractEsPolicies"}, []} | T1] = _CellStack,
+		[{startElement, {"sp", "IneractEsPolicies"} = QName, []} | T1],
 		#state{parse_function = F} = State) ->
-	{[_ | _Attributes], _T2} = pop(endElement, {"sp", "IneractEsPolicies"}, T1),
+	{[_ | _Attributes], _T2} = pop(endElement, QName, T1),
 	State#state{parse_function = parse_geran};
 parse_gsm_cell_pol(_Characteristics, _CellStack,
 		#state{parse_function = F} = State) ->
