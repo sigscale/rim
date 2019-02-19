@@ -21,7 +21,7 @@
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
-  
+
 -record(state,
 		{parseFunction :: atom(),
 		dnPrefix = [] :: string(),
@@ -216,7 +216,7 @@ parse_gsm_cell_attr1([{characters, Chars} | T],
 		"ncc" = Attr, CellStack, State, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T], 
+parse_gsm_cell_attr1([{characters, Chars} | T],
 		"bcc" = Attr, CellStack, State, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
@@ -315,7 +315,7 @@ parse_gsm_cell_rels(CellStack,
 			(eutranRel, R, Acc1) ->
 				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
 	end,
-	NewCharacteristics = maps:fold(F1, Characteristics, Acc), 
+	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
 	Resource = #resource{name = Dn ++ SubId ++ BssId ++ BtsId ++ CellId,
 			description = "GSM radio",
 			category = "RAN",
@@ -445,7 +445,7 @@ parse_gsm_cell_pol(_Characteristics, _CellStack,
 		Attributes :: [tuple()]} | {endElement,
 		QName :: {Prefix :: string(), LocalName :: string()}}
 		| {characters, string()}.
--spec pop(Element, QName, Stack) -> Result 
+-spec pop(Element, QName, Stack) -> Result
 	when
 		Element :: startElement | endElement,
 		QName :: {Prefix, LocalName},
