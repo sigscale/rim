@@ -51,7 +51,7 @@ import(File) when is_list(File) ->
 		{ok, _EventState, _Rest} ->
 			ok;
 		{fatal_error, {CurrentLocation, EntityName, LineNo},
-				Reason, EndTags, EventState} ->
+				Reason, EndTags, _EventState} ->
 			error_logger:error_report(["Error parsing import file",
 					{file, File}, {location, CurrentLocation},
 					{line, LineNo}, {entity, EntityName},
@@ -79,7 +79,8 @@ import(File) when is_list(File) ->
 %% @doc Parse xml.
 parse_xml(startDocument = _Event, _Location, State) ->
 	State;
-parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _, #state{parseFunction = undefined} = State) ->
+parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _,
+		#state{parseFunction = undefined} = State) ->
 	 State#state{parseFunction = parse_bulk_cm};
 parse_xml(endDocument = _Event, _Location, State) ->
 	State;
@@ -103,9 +104,11 @@ parse_bulk_cm({startElement, _, "configData", _, Attributes},
 		#state{parseFunction = _, dnPrefix = [], stack = Stack} = State) ->
 	case lists:keyfind("dnPrefix", 3, Attributes) of
 		{_Uri, _Prefix, "dnPrefix", Dn} ->
-			State#state{parseFunction = parse_generic, dnPrefix = Dn, stack = [{startElement, "configData", Attributes} | Stack]};
+			State#state{parseFunction = parse_generic, dnPrefix = Dn,
+					stack = [{startElement, "configData", Attributes} | Stack]};
 		false ->
-			State#state{parseFunction = parse_generic, dnPrefix = [], stack = [{startElement, "configData", Attributes} | Stack]}
+			State#state{parseFunction = parse_generic, dnPrefix = [],
+					stack = [{startElement, "configData", Attributes} | Stack]}
 	end;
 parse_bulk_cm({startElement, _, "fileFooter", _, _}, State) ->
 	State;
@@ -125,16 +128,17 @@ parse_generic({startElement,  _Uri, "SubNetwork", QName,
 			stack = [{startElement, QName, _Attributes} | Stack]};
 parse_generic({startElement,  _Uri, "BssFunction", QName,
 		[{[], [], "id", Id}] = _Attributes},
-		#state{parseFunction = _F, bss = [], stack = Stack} =State) ->
+		#state{bss = [], stack = Stack} =State) ->
 	DnComponent = ",BssFunction=" ++ Id,
 	State#state{parseFunction = parse_geran, bss = DnComponent,
 			stack = [{startElement, QName, _Attributes} | Stack]};
-parse_generic({startElement,  _, _, QName, Attributes}, #state{stack = Stack} = State) ->
+parse_generic({startElement,  _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({endElement,  _Uri, "BssFunction", _QName}, State) ->
 	State;
-%	#state{parseFunction = F, dnPrefix = Dn, subnet = SubId, bss = BssId, stack = Stack};
-parse_generic({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_generic({endElement,  _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
@@ -146,9 +150,11 @@ parse_geran({startElement,  _Uri, "BtsSiteMgr", QName,
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	State#state{parseFunction = parse_bts, bts = DnComponent,
 			stack = [{startElement, QName, _Attributes} | Stack]};
-parse_geran({startElement, _, _, QName, Attributes}, #state{stack = Stack} = State) ->
+parse_geran({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_geran({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_geran({endElement,  _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
@@ -160,20 +166,25 @@ parse_bts({startElement,  _Uri, "GsmCell", QName,
 	DnComponent = ",GsmCell=" ++ Id,
 	State#state{parseFunction = parse_gsm_cell, cell = DnComponent,
 			stack = [{startElement, QName, _Attributes} | Stack]};
-parse_bts({startElement, _, _, QName, Attributes}, #state{stack = Stack} = State) ->
+parse_bts({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_bts({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_bts({endElement,  _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
 parse_gsm_cell({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes}, #state{stack = Stack} = State) ->
+parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_gsm_cell({endElement,  _Uri, "GsmCell", QName}, #state{stack = Stack} = State) ->
+parse_gsm_cell({endElement,  _Uri, "GsmCell", QName},
+		#state{stack = Stack} = State) ->
 	{[_ | T1], NewStack} = pop(startElement, QName, Stack),
 	parse_gsm_cell_attr([], T1, State#state{stack = NewStack});
-parse_gsm_cell({endElement, _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_gsm_cell({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 % @hidden
@@ -229,7 +240,8 @@ parse_gsm_cell_attr(Characteristics,
 
 % @hidden
 parse_gsm_cell_rels(Characteristics,
-		[{startElement, {"gn", "GsmRelation"}, Attributes1} | T1] = _CellStack, State, Acc1) ->
+		[{startElement, {"gn", "GsmRelation"}, Attributes1} | T1] = _CellStack,
+		State, Acc1) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
 	{[_ | Attributes2], T2} = pop(endElement, {"gn", "GsmRelation"}, T1),
 	Frels = fun Frels([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
@@ -270,7 +282,8 @@ parse_gsm_cell_rels(Characteristics,
 	NewAcc = Acc1#{gsmRelation => R2},
 	parse_gsm_cell_rels( Characteristics, T2, State, NewAcc);
 parse_gsm_cell_rels(Characteristics,
-		[{startElement, {"un", "UtranRelation"}, Attributes1} | T1] = _CellStack, State, Acc1) ->
+		[{startElement, {"un", "UtranRelation"}, Attributes1} | T1] = _CellStack,
+		State, Acc1) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
 	{[_ | Attributes2], T2} = pop(endElement, {"un", "UtranRelation"}, T1),
 	Frels = fun Frels([{startElement, {"un", "attributes"}, []}], _Attr, Acc) ->
@@ -294,7 +307,8 @@ parse_gsm_cell_rels(Characteristics,
 	NewAcc = Acc1#{utranRelation => R2},
 	parse_gsm_cell_rels(Characteristics, T2, State, NewAcc);
 parse_gsm_cell_rels(Characteristics,
-		[{startElement, {"en", "EutranRelation"}, Attributes1} | T1] = _CellStack, State, Acc1) ->
+		[{startElement, {"en", "EutranRelation"}, Attributes1} | T1] = _CellStack,
+		State, Acc1) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
 	{[_ | Attributes2], T2} = pop(endElement, {"en", "EutranRelation"}, T1),
 	Frels = fun Frels([{startElement, {"en", "attributes"}, []}], _Attr, Acc) ->
@@ -362,18 +376,22 @@ parse_gsm_cell_rels(Characteristics, CellStack,
 
 % @hidden
 parse_gsm_cell_pol(_Characteristics,
-		[{startElement, {"sp", "IneractEsPolicies"}, []} | T1] = _CellStack, #state{parseFunction = F} = State) ->
+		[{startElement, {"sp", "IneractEsPolicies"}, []} | T1] = _CellStack,
+		#state{parseFunction = F} = State) ->
 	{[_ | _Attributes], _T2} = pop(endElement, {"sp", "IneractEsPolicies"}, T1),
 	State#state{parseFunction = parse_geran};
-parse_gsm_cell_pol(_Characteristics, _CellStack, #state{parseFunction = F} = State) ->
+parse_gsm_cell_pol(_Characteristics, _CellStack,
+		#state{parseFunction = F} = State) ->
 	State#state{parseFunction = parse_geran}.
 
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
 
--type event() :: {startElement, QName :: {Prefix :: string(), LocalName :: string()},
-		Attributes :: [tuple()]} | {endElement, QName :: {Prefix :: string(), LocalName :: string()}}
+-type event() :: {startElement,
+		QName :: {Prefix :: string(), LocalName :: string()},
+		Attributes :: [tuple()]} | {endElement,
+		QName :: {Prefix :: string(), LocalName :: string()}}
 		| {characters, string()}.
 -spec pop(Element, QName, Stack) -> Result 
 	when
