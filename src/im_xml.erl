@@ -78,6 +78,10 @@ parse_xml(endDocument = _Event, _Location, State) ->
 	State;
 parse_xml(_Event, _Location, #state{parseFunction = undefined} = State) ->
 	State;
+parse_xml({startPrefixMapping, _Prefix, _Uri}, _, State) ->
+	State;
+parse_xml({endPrefixMapping, _Prefix}, _, State) ->
+	State;
 parse_xml({ignorableWhitespace, _}, _, State) ->
 	State;
 parse_xml({comment, _Comment}, _, State) ->
@@ -100,14 +104,10 @@ parse_bulk_cm({startElement, _, "fileFooter", _, _}, State) ->
 	State;
 parse_bulk_cm({endElement, _, "configData", _}, State) ->
 	State;
-parse_bulk_cm({ignorableWhitespace, _}, State) ->
-	State;
 parse_bulk_cm(_Event, #state{parseFunction = parse_bulk_cm} = State) ->
 	State.
 
 %% @hidden
-parse_generic({ignorableWhitespace, _}, State) ->
-	State;
 parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_generic({startElement,  _Uri, "SubNetwork", QName,
@@ -127,14 +127,8 @@ parse_generic({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = St
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
-parse_geran({ignorableWhitespace, _}, State) ->
-	State;
 parse_geran({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_geran({startPrefixMapping, _Prefix, _Uri}, State) ->
-	State;
-parse_geran({endPrefixMapping, _Prefix}, State) ->
-	State;
 parse_geran({startElement,  _Uri, "GsmCell", QName,
 		Attributes}, #state{parseFunction = _F, stack = Stack} = State) ->
 	State#state{parseFunction = parse_gsm_cell, stack = [{startElement, QName, Attributes} | Stack]};
@@ -144,8 +138,6 @@ parse_geran({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = Stat
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
-parse_gsm_cell({ignorableWhitespace, _}, State) ->
-	State;
 parse_gsm_cell({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes}, #state{stack = Stack} = State) ->
@@ -157,8 +149,6 @@ parse_gsm_cell({endElement,  _Uri, "GsmCell", QName}, #state{stack = Stack} = St
 	parse_gsm_cell_attr(ID, [], T1, State#state{stack = NewStack});
 parse_gsm_cell({endElement, _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
-%parse_gsm_cell({endPrefixMapping, _Prefix}, State) ->
-%	State.
 
 % @hidden
 parse_gsm_cell_attr(ID, Characteristics,
