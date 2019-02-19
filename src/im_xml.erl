@@ -23,8 +23,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 
 -record(state,
-		{parseFunction :: atom(),
-		dnPrefix = [] :: string(),
+		{parse_function :: atom(),
+		dn_prefix = [] :: string(),
 		subnet = []:: string(),
 		bss = [] :: string(),
 		bts = [] :: string(),
@@ -80,11 +80,11 @@ import(File) when is_list(File) ->
 parse_xml(startDocument = _Event, _Location, State) ->
 	State;
 parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _,
-		#state{parseFunction = undefined} = State) ->
-	 State#state{parseFunction = parse_bulk_cm};
+		#state{parse_function = undefined} = State) ->
+	 State#state{parse_function = parse_bulk_cm};
 parse_xml(endDocument = _Event, _Location, State) ->
 	State;
-parse_xml(_Event, _Location, #state{parseFunction = undefined} = State) ->
+parse_xml(_Event, _Location, #state{parse_function = undefined} = State) ->
 	State;
 parse_xml({startPrefixMapping, _Prefix, _Uri}, _, State) ->
 	State;
@@ -94,27 +94,27 @@ parse_xml({ignorableWhitespace, _}, _, State) ->
 	State;
 parse_xml({comment, _Comment}, _, State) ->
 	State;
-parse_xml(_Event, _Location, #state{parseFunction = F} = State) ->
+parse_xml(_Event, _Location, #state{parse_function = F} = State) ->
 	?MODULE:F(_Event, State).
 
 %% @hidden
 parse_bulk_cm({startElement, _, "fileHeader", _, _}, State) ->
 	State;
 parse_bulk_cm({startElement, _, "configData", _, Attributes},
-		#state{parseFunction = _, dnPrefix = [], stack = Stack} = State) ->
+		#state{parse_function = _, dn_prefix = [], stack = Stack} = State) ->
 	case lists:keyfind("dnPrefix", 3, Attributes) of
 		{_Uri, _Prefix, "dnPrefix", Dn} ->
-			State#state{parseFunction = parse_generic, dnPrefix = Dn,
+			State#state{parse_function = parse_generic, dn_prefix = Dn,
 					stack = [{startElement, "configData", Attributes} | Stack]};
 		false ->
-			State#state{parseFunction = parse_generic, dnPrefix = [],
+			State#state{parse_function = parse_generic, dn_prefix = [],
 					stack = [{startElement, "configData", Attributes} | Stack]}
 	end;
 parse_bulk_cm({startElement, _, "fileFooter", _, _}, State) ->
 	State;
 parse_bulk_cm({endElement, _, "configData", _}, State) ->
 	State;
-parse_bulk_cm(_Event, #state{parseFunction = parse_bulk_cm} = State) ->
+parse_bulk_cm(_Event, #state{parse_function = parse_bulk_cm} = State) ->
 	State.
 
 %% @hidden
@@ -130,7 +130,7 @@ parse_generic({startElement,  _Uri, "BssFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{bss = [], stack = Stack} =State) ->
 	DnComponent = ",BssFunction=" ++ Id,
-	State#state{parseFunction = parse_geran, bss = DnComponent,
+	State#state{parse_function = parse_geran, bss = DnComponent,
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({startElement,  _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -148,7 +148,7 @@ parse_geran({startElement,  _Uri, "BtsSiteMgr", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{stack = Stack} = State) ->
 	DnComponent = ",BtsSiteMgr=" ++ Id,
-	State#state{parseFunction = parse_bts, bts = DnComponent,
+	State#state{parse_function = parse_bts, bts = DnComponent,
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_geran({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -164,7 +164,7 @@ parse_bts({startElement,  _Uri, "GsmCell", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{stack = Stack} = State) ->
 	DnComponent = ",GsmCell=" ++ Id,
-	State#state{parseFunction = parse_gsm_cell, cell = DnComponent,
+	State#state{parse_function = parse_gsm_cell, cell = DnComponent,
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_bts({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -300,7 +300,7 @@ parse_gsm_cell_rels([{startElement, {"en", "EutranRelation"}, XmlAttr} | T1],
 	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
 	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
 parse_gsm_cell_rels(CellStack,
-		#state{dnPrefix = Dn, subnet = SubId, bss = BssId, bts = BtsId,
+		#state{dn_prefix = Dn, subnet = SubId, bss = BssId, bts = BtsId,
 		cell = CellId, cells = Cells} = State, Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
@@ -429,12 +429,12 @@ parse_eutran_cell_rel([{startElement, {"en", "attributes"}, []}],
 % @hidden
 parse_gsm_cell_pol(_Characteristics,
 		[{startElement, {"sp", "IneractEsPolicies"}, []} | T1] = _CellStack,
-		#state{parseFunction = F} = State) ->
+		#state{parse_function = F} = State) ->
 	{[_ | _Attributes], _T2} = pop(endElement, {"sp", "IneractEsPolicies"}, T1),
-	State#state{parseFunction = parse_geran};
+	State#state{parse_function = parse_geran};
 parse_gsm_cell_pol(_Characteristics, _CellStack,
-		#state{parseFunction = F} = State) ->
-	State#state{parseFunction = parse_geran}.
+		#state{parse_function = F} = State) ->
+	State#state{parse_function = parse_geran}.
 
 %%----------------------------------------------------------------------
 %%  internal functions
