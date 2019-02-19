@@ -80,6 +80,8 @@ parse_xml(_Event, _Location, #state{parseFunction = undefined} = State) ->
 	State;
 parse_xml({ignorableWhitespace, _}, _, State) ->
 	State;
+parse_xml({comment, _Comment}, _, State) ->
+	State;
 parse_xml(_Event, _Location, #state{parseFunction = F} = State) ->
 	?MODULE:F(_Event, State).
 
@@ -108,8 +110,6 @@ parse_generic({ignorableWhitespace, _}, State) ->
 	State;
 parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_generic({comment, _Comment}, State) ->
-	State;
 parse_generic({startElement,  _Uri, "SubNetwork", QName,
 		[{[], [], "id", Sub}] = _Attributes}, #state{subnet = [], stack = Stack} = State) ->
 		SubId = ",SubNetwork=" ++ Sub,
@@ -135,8 +135,6 @@ parse_geran({startPrefixMapping, _Prefix, _Uri}, State) ->
 	State;
 parse_geran({endPrefixMapping, _Prefix}, State) ->
 	State;
-parse_geran({comment, _Comment}, State) ->
-	State;
 parse_geran({startElement,  _Uri, "GsmCell", QName,
 		Attributes}, #state{parseFunction = _F, stack = Stack} = State) ->
 	State#state{parseFunction = parse_gsm_cell, stack = [{startElement, QName, Attributes} | Stack]};
@@ -150,8 +148,6 @@ parse_gsm_cell({ignorableWhitespace, _}, State) ->
 	State;
 parse_gsm_cell({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_gsm_cell({comment, _Comment}, State) ->
-	State;
 parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes}, #state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
 parse_gsm_cell({endElement,  _Uri, "GsmCell", QName}, #state{stack = Stack} = State) ->
