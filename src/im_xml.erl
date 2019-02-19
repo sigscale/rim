@@ -121,17 +121,17 @@ parse_bulk_cm(_Event, #state{parseFunction = parse_bulk_cm} = State) ->
 parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_generic({startElement,  _Uri, "SubNetwork", QName,
-		[{[], [], "id", Id}] = _Attributes},
+		[{[], [], "id", Id}] = Attributes},
 		#state{subnet = [], stack = Stack} = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
 	State#state{subnet = DnComponent,
-			stack = [{startElement, QName, _Attributes} | Stack]};
+			stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({startElement,  _Uri, "BssFunction", QName,
-		[{[], [], "id", Id}] = _Attributes},
+		[{[], [], "id", Id}] = Attributes},
 		#state{bss = [], stack = Stack} =State) ->
 	DnComponent = ",BssFunction=" ++ Id,
 	State#state{parseFunction = parse_geran, bss = DnComponent,
-			stack = [{startElement, QName, _Attributes} | Stack]};
+			stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({startElement,  _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
@@ -145,11 +145,11 @@ parse_generic({endElement,  _Uri, _LocalName, QName},
 parse_geran({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_geran({startElement,  _Uri, "BtsSiteMgr", QName,
-		[{[], [], "id", Id}] = _Attributes},
+		[{[], [], "id", Id}] = Attributes},
 		#state{stack = Stack} = State) ->
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	State#state{parseFunction = parse_bts, bts = DnComponent,
-			stack = [{startElement, QName, _Attributes} | Stack]};
+			stack = [{startElement, QName, Attributes} | Stack]};
 parse_geran({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
@@ -161,11 +161,11 @@ parse_geran({endElement,  _Uri, _LocalName, QName},
 parse_bts({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_bts({startElement,  _Uri, "GsmCell", QName,
-		[{[], [], "id", Id}] = _Attributes},
+		[{[], [], "id", Id}] = Attributes},
 		#state{stack = Stack} = State) ->
 	DnComponent = ",GsmCell=" ++ Id,
 	State#state{parseFunction = parse_gsm_cell, cell = DnComponent,
-			stack = [{startElement, QName, _Attributes} | Stack]};
+			stack = [{startElement, QName, Attributes} | Stack]};
 parse_bts({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
