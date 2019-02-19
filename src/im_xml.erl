@@ -153,6 +153,10 @@ parse_geran({startElement,  _Uri, "BtsSiteMgr", QName,
 parse_geran({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_geran({endElement,  _Uri, "BssFunction", QName},
+		#state{stack = Stack} = State) ->
+	State#state{parse_function = parse_generic,
+			stack = [{endElement, QName} | Stack]};
 parse_geran({endElement,  _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
@@ -169,9 +173,53 @@ parse_bts({startElement, _Uri, "GsmCell", QName,
 parse_bts({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_bts({endElement,  _Uri, _LocalName, QName},
+parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_gsm_bts_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_bts({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_gsm_bts_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	parse_gsm_bts_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"latitude" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"longitude" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"operationalState" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gsm_bts_attr1([{startElement, {"gn", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, undefined, State, Acc);
+parse_gsm_bts_attr1([{endElement, {"gn", "vnfParametersList"}}],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	State;
+parse_gsm_bts_attr1([{endElement, {"gn", "attributes"}}],
+		undefined, State, Acc) ->
+	State;
+parse_gsm_bts_attr1([{endElement, {"gn", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State, Acc);
+parse_gsm_bts_attr1([], undefined, State, Acc) ->
+erlang:display({?MODULE, ?LINE, Acc, State#state.cells}),
+	% @todo add BTS to resource inventory
+	State#state{parse_function = parse_geran, cells = []}.
 
 %% @hidden
 parse_gsm_cell({characters, Chars}, #state{stack = Stack} = State) ->
@@ -429,15 +477,13 @@ parse_eutran_cell_rel([{startElement, {"en", "attributes"}, []}],
 		_Attr, Acc) ->
 	Acc.
 
-% @hidden
+%% @hidden
 parse_gsm_cell_pol(_Characteristics,
-		[{startElement, {"sp", "IneractEsPolicies"} = QName, []} | T1],
-		#state{parse_function = F} = State) ->
+		[{startElement, {"sp", "IneractEsPolicies"} = QName, []} | T1], State) ->
 	{[_ | _Attributes], _T2} = pop(endElement, QName, T1),
-	State#state{parse_function = parse_geran};
-parse_gsm_cell_pol(_Characteristics, _CellStack,
-		#state{parse_function = F} = State) ->
-	State#state{parse_function = parse_geran}.
+	State#state{parse_function = parse_bts};
+parse_gsm_cell_pol(_Characteristics, _CellStack, State) ->
+	State#state{parse_function = parse_bts}.
 
 %%----------------------------------------------------------------------
 %%  internal functions
