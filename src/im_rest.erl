@@ -450,25 +450,25 @@ target_schema_ref([], _, Acc) ->
 		Axis :: string() | non_neg_integer().
 %% @doc CODEC for latitude/longitude axis value.
 geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -10000  ->
-	io_lib:fwrite("-0.~4.10.0b", [abs(Axis)]);
+	lists:flatten(io_lib:fwrite("-0.~4.10.0b", [abs(Axis)]));
 geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -1000  ->
-	io_lib:fwrite("-0.~3.10.0b", [abs(Axis)]);
+	lists:flatten(io_lib:fwrite("-0.~3.10.0b", [abs(Axis)]));
 geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -100  ->
-	io_lib:fwrite("-0.~2.10.0b", [abs(Axis)]);
+	lists:flatten(io_lib:fwrite("-0.~2.10.0b", [abs(Axis)]));
 geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -10  ->
-	io_lib:fwrite("-0.~b", [abs(Axis)]);
+	lists:flatten(io_lib:fwrite("-0.~b", [abs(Axis)]));
 geoaxis(Axis) when Axis rem 10000 =:= 0  ->
 	integer_to_list(Axis div 10000);
 geoaxis(Axis) when Axis rem 1000 =:= 0  ->
-	io_lib:fwrite("~b.~b", [Axis div 10000, (abs(Axis) rem 10000) div 1000]);
+	lists:flatten(io_lib:fwrite("~b.~b", [Axis div 10000, (abs(Axis) rem 10000) div 1000]));
 geoaxis(Axis) when Axis rem 100 =:= 0  ->
-	io_lib:fwrite("~b.~2.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 100]);
+	lists:flatten(io_lib:fwrite("~b.~2.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 100]));
 geoaxis(Axis) when Axis rem 10 =:= 0  ->
-	io_lib:fwrite("~b.~3.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 10]);
+	lists:flatten(io_lib:fwrite("~b.~3.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 10]));
 geoaxis(Axis) when is_integer(Axis) ->
-	io_lib:fwrite("~b.~4.10.0b", [Axis div 10000, abs(Axis) rem 10000]);
+	lists:flatten(io_lib:fwrite("~b.~4.10.0b", [Axis div 10000, abs(Axis) rem 10000]));
 geoaxis(Axis) when is_list(Axis) ->
-	case string:split(Axis, ".") of
+	case string:tokens(Axis, ".") of
 		[[$- | Int], Dec] when length(Dec) =:= 4 ->
 			-((list_to_integer(Int) * 10000) + list_to_integer(Dec));
 		[Int, Dec] when length(Dec) =:= 4 ->
