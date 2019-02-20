@@ -1379,7 +1379,6 @@ get_resource(Config) ->
 	{ok, #resource{id = Id, href = Href}} = im:add_resource(ResourceRecord),
 	Accept = {"accept", "application/json"},
 	Request = {HostUrl ++ Href, [Accept, auth_header()]},
-erlang:display({?MODULE, ?LINE, Href, HostUrl}),
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
 	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
