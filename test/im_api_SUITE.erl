@@ -126,7 +126,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 						[Indent8, {'xn:vsDataType', ["DataType " ++ integer_to_list(N)]},
 						Indent8, {'xn:vsDataFormatVersion', [generate_identity(5)]},
 						Indent8, {'xn:vsData', []}, Indent7]}, Indent6]}, Indent5]},
-				F(N - 1, [Indent5, SiteManager, Indent4 | Acc])
+				F(N - 1, [Indent5, SiteManager | Acc])
 	end,
 	SiteManager = F(10, []),
 	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
