@@ -1398,7 +1398,7 @@ get_resource(Config) ->
 geoaxis() ->
 	[{userdata, [{doc, "CODEC for latitude/longitude"}]}].
 
-geoaxis(Config) ->
+geoaxis(_Config) ->
 	"-180" = im_rest:geoaxis(-1800000),
 	"90" = im_rest:geoaxis(900000),
 	"0" = im_rest:geoaxis(0),
