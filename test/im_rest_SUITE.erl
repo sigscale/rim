@@ -125,7 +125,7 @@ all() ->
 			map_to_candidate, candidate_to_map, post_candidate, get_candidates, get_candidate,
 			map_to_specification, specification_to_map, post_specification, get_specifications,
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
-			get_resource].
+			get_resource, geoaxis].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1394,6 +1394,38 @@ get_resource(Config) ->
 	true = is_resource_spec(S),
 	true = is_related_party_ref(RP),
 	true = is_resource_char(C).
+
+geoaxis() ->
+	[{userdata, [{doc, "CODEC for latitude/longitude"}]}].
+
+geoaxis(Config) ->
+	"-180" = im_rest:geoaxis(-1800000),
+	"90" = im_rest:geoaxis(900000),
+	"0" = im_rest:geoaxis(0),
+	"0.0001" = im_rest:geoaxis(1),
+	"0.001" = im_rest:geoaxis(10),
+	"0.01" = im_rest:geoaxis(100),
+	"0.1" = im_rest:geoaxis(1000),
+	"1" = im_rest:geoaxis(10000),
+	"-0.0001" = im_rest:geoaxis(-1),
+	"-0.001" = im_rest:geoaxis(-10),
+	"-0.01" = im_rest:geoaxis(-100),
+	"-0.1" = im_rest:geoaxis(-1000),
+	"-1" = im_rest:geoaxis(-10000),
+	123456 = im_rest:geoaxis("-12.3456"),
+	123450 = im_rest:geoaxis("-12.345"),
+	123400 = im_rest:geoaxis("-12.34"),
+	123000 = im_rest:geoaxis("-12.3"),
+	120000 = im_rest:geoaxis("-12"),
+	-123456 = im_rest:geoaxis("-12.3456"),
+	-123450 = im_rest:geoaxis("-12.345"),
+	-123400 = im_rest:geoaxis("-12.34"),
+	-123000 = im_rest:geoaxis("-12.3"),
+	-120000 = im_rest:geoaxis("-12"),
+	Pos = rand:uniform(1800000),
+	Pos = im_rest:geoaxis(im_rest:geoaxis(Pos)),
+	Neg = -(rand:uniform(1800000)),
+	Neg = im_rest:geoaxis(im_rest:geoaxis(Neg)).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
