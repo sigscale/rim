@@ -470,31 +470,22 @@ geoaxis(Axis) when is_integer(Axis) ->
 geoaxis(Axis) when is_list(Axis) ->
 	case string:split(Axis, ".") of
 		[[$- | Int], Dec] when length(Dec) =:= 4 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + list_to_integer(Dec));
 		[Int, Dec] when length(Dec) =:= 4 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + list_to_integer(Dec);
 		[[$- | Int], Dec] when length(Dec) =:= 3 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 10));
 		[Int, Dec] when length(Dec) =:= 3 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 10);
 		[[$- | Int], Dec] when length(Dec) =:= 2 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 100));
 		[Int, Dec] when length(Dec) =:= 2 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 100);
 		[[$- | Int], Dec] when length(Dec) =:= 1 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 1000));
 		[Int, Dec] when length(Dec) =:= 1 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 1000);
 		[Int] ->
-erlang:display({?MODULE, ?LINE, Int}),
 			list_to_integer(Int) * 10000
 	end.
 
