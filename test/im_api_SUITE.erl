@@ -165,7 +165,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 							Indent4, {'gn:BssFunction', [{id, "1"}],
 									[Indent5, {'gn:attributes', [],
 											[Indent6, {'gn:userLabel', ["BSC " ++ generate_identity(5)]},
-													Indent5]} | SiteManager]},
+													Indent5]} | SiteManager] ++ [Indent4]},
 							Indent4, {'xn:VsDataContainer', [{id, "1"}],
 									[Indent5, {'xn:attributes', [],
 											[Indent6, {'xn:vsDataType', ["DataType=9"]},
