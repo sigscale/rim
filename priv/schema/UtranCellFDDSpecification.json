@@ -2,19 +2,19 @@
 	"$id": "http://sigscale.org/schema/UtranCellFDDSpecification",
 	"title": "UTRAN FDD Cell Specification",
 	"description": "UTRAN Frequency Division Duplex (FDD) radio resource function specification",
-	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpecification"
+			"$ref": "UtranGenericCellSpecification"
 		},
 		{
 			"type": "object",
 			"properties": {
 				"resourceSpecCharacteristic": {
+					"type": "array",
 					"items": {
-						"allOf": [
+						"oneOf": [
 							{
-								"$ref": "UtranGenericCellSpecification"
+								"$ref": "UtranGenericCellSpecification#/definitions/ResourceSpecCharacteristic"
 							},
 							{
 								"type": "object",

@@ -5,16 +5,20 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpecification"
+			"$ref": "UtranCellTDDSpecification"
 		},
 		{
 			"type": "object",
 			"properties": {
 				"resourceSpecCharacteristic": {
+					"type": "array",
 					"items": {
-						"allOf": [
+						"oneOf": [
 							{
-								"$ref": "UtranCellTDDSpecification"
+								"$ref": "UtranGenericCellSpecification#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"$ref": "UtranCellTDDSpecification#/definitions/ResourceSpecCharacteristic"
 							},
 							{
 								"type": "object",

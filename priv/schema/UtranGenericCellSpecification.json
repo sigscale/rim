@@ -11,66 +11,65 @@
 			"type": "object",
 			"properties": {
 				"resourceSpecCharacteristic": {
+					"type": "array",
 					"items": {
-						"allOf": [
-							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
-							},
-							{
-								"type": "object",
-								"required": [
-									"name"
-								],
-								"properties": {
-									"name": {
-										"enum": [
-											"userLabel",
-											"vnfParametersList",
-											"cId",
-											"localCellId",
-											"maximumTransmissionPower",
-											"cellMode",
-											"pichPower",
-											"pchPower",
-											"fachPower",
-											"lac",
-											"rac",
-											"sac",
-											"uraList",
-											"utranCellIubLink",
-											"relatedAntennaList",
-											"relatedTmaList",
-											"operationalState",
-											"hsFlag",
-											"hsEnable",
-											"numOfHspdschs",
-											"numOfHsscchs",
-											"frameOffset",
-											"cellIndividualOffset",
-											"hcsPrio",
-											"maximumAllowedUlTxPower",
-											"snaInformation",
-											"qrxlevMin",
-											"deltaQrxlevmin",
-											"qhcs",
-											"penaltyTime",
-											"referenceTimeDifferenceToCell",
-											"readSFNIndicator",
-											"nsPlmnIdList",
-											"restrictionStateIndicator",
-											"dpcModechangeSupportIndicator",
-											"relatedSectorEquipment",
-											"utranRelation",
-											"gsmRelation",
-											"vsDataContainer"
-										]
-									}
-								}
-							}
-						]
+						"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
 					}
 				}
 			}
 		}
-	]
+	],
+	"definitions": {
+		"ResourceSpecCharacteristic": {
+			"type": "object",
+			"required": [
+				"name"
+			],
+			"properties": {
+				"name": {
+					"enum": [
+						"userLabel",
+						"vnfParametersList",
+						"cId",
+						"localCellId",
+						"maximumTransmissionPower",
+						"cellMode",
+						"pichPower",
+						"pchPower",
+						"fachPower",
+						"lac",
+						"rac",
+						"sac",
+						"uraList",
+						"utranCellIubLink",
+						"relatedAntennaList",
+						"relatedTmaList",
+						"operationalState",
+						"hsFlag",
+						"hsEnable",
+						"numOfHspdschs",
+						"numOfHsscchs",
+						"frameOffset",
+						"cellIndividualOffset",
+						"hcsPrio",
+						"maximumAllowedUlTxPower",
+						"snaInformation",
+						"qrxlevMin",
+						"deltaQrxlevmin",
+						"qhcs",
+						"penaltyTime",
+						"referenceTimeDifferenceToCell",
+						"readSFNIndicator",
+						"nsPlmnIdList",
+						"restrictionStateIndicator",
+						"dpcModechangeSupportIndicator",
+						"relatedSectorEquipment",
+						"utranRelation",
+						"gsmRelation",
+						"vsDataContainer"
+					]
+				}
+			}
+		}
+	}
 }
