@@ -130,10 +130,10 @@ do_get(Resource, ModData,
 		["resourceCatalogManagement", "v3", "resourceSpecification", Id], Query) ->
 	do_response(ModData, Resource:get_specification(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["resourceInventoryManagement", "v3", "logicalResource"], Query) ->
+		["resourceInventoryManagement", "v3", "resource"], Query) ->
    do_response(ModData, Resource:get_resources(Query, Headers));
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
-		["resourceInventoryManagement", "v3", "logicalResource", Id], Query) ->
+		["resourceInventoryManagement", "v3", "resource", Id], Query) ->
    do_response(ModData, Resource:get_resource(Id, Query));
 do_get(_, _, _, _) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",
