@@ -218,6 +218,7 @@
 			"valueType": "readSFNIndicator",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/readSFNIndicator"
 		},
+		{
 			"name": "nsPlmnIdList",
 			"description": "List of unique identities for PLMN",
 			"valueType": "NsPlmnIdListType",
