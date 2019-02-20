@@ -707,6 +707,8 @@ bulk_cm_geran(Config) ->
 			#xmlElement.name, BssContent),
 	#xmlAttribute{value = BtsId} = lists:keyfind(id,
 			#xmlAttribute.name, BtsAttr),
+	BtsName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
+			",BssFunction=", BssId, ",BtsSiteMgr=", BtsId]),
 	#xmlElement{content = _Cell,
 			attributes = CellAttr} = lists:keyfind('gn:GsmCell',
 			#xmlElement.name, BtsContent),
@@ -714,7 +716,8 @@ bulk_cm_geran(Config) ->
 			#xmlAttribute.name, CellAttr),
 	CellName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",BssFunction=", BssId, ",BtsSiteMgr=", BtsId, ",GsmCell=", CellId]),
-	im:get_resource_name(CellName).
+	{ok, #resource{name = BtsName}} = im:get_resource_name(BtsName),
+	{ok, #resource{name = CellName}} = im:get_resource_name(CellName).
 
 bulk_cm_utran() ->
 	[{userdata, [{doc, "Import bulk CM for utran network resources"}]}].
