@@ -86,7 +86,7 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-umtsn-cell-tdd-hcr.json; then exit 1; fi; \
+				-d specification-umts-cell-tdd-hcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \
