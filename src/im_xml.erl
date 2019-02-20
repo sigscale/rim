@@ -16,16 +16,19 @@
 -export([import/1]).
 
 %% export the im private API
--export([parse_bulk_cm/2, parse_generic/2, parse_geran/2, parse_gsm_cell/2]).
+-export([parse_bulk_cm/2, parse_generic/2, parse_geran/2,
+		parse_bts/2, parse_gsm_cell/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
-  
+
 -record(state,
-		{parseFunction :: atom(),
-		dnPrefix = [] :: string(),
+		{parse_function :: atom(),
+		dn_prefix = [] :: string(),
 		subnet = []:: string(),
 		bss = [] :: string(),
+		bts = [] :: string(),
+		cell = [] :: string(),
 		btss = [] :: [string()],
 		cells = [] :: [string()],
 		stack = [] :: list()}).
@@ -44,7 +47,21 @@
 import(File) when is_list(File) ->
 	Options = [{event_fun, fun parse_xml/3},
 		{event_state, #state{}}],
-	xmerl_sax_parser:file(File, Options).
+	case xmerl_sax_parser:file(File, Options) of
+		{ok, _EventState, _Rest} ->
+			ok;
+		{fatal_error, {CurrentLocation, EntityName, LineNo},
+				Reason, EndTags, _EventState} ->
+			error_logger:error_report(["Error parsing import file",
+					{file, File}, {location, CurrentLocation},
+					{line, LineNo}, {entity, EntityName},
+					{tags, EndTags}, {error, Reason}]),
+			{error, Reason};
+		{fatal_error, Reason} ->
+			error_logger:error_report(["Error parsing import file",
+					{file, File}, {error, Reason}]),
+			{error, Reason}
+	end.
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -62,267 +79,295 @@ import(File) when is_list(File) ->
 %% @doc Parse xml.
 parse_xml(startDocument = _Event, _Location, State) ->
 	State;
-parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _, #state{parseFunction = undefined} = State) ->
-	 State#state{parseFunction = parse_bulk_cm};
+parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _,
+		#state{parse_function = undefined} = State) ->
+	 State#state{parse_function = parse_bulk_cm};
 parse_xml(endDocument = _Event, _Location, State) ->
 	State;
-parse_xml(_Event, _Location, #state{parseFunction = undefined} = State) ->
+parse_xml(_Event, _Location, #state{parse_function = undefined} = State) ->
+	State;
+parse_xml({startPrefixMapping, _Prefix, _Uri}, _, State) ->
+	State;
+parse_xml({endPrefixMapping, _Prefix}, _, State) ->
 	State;
 parse_xml({ignorableWhitespace, _}, _, State) ->
 	State;
-parse_xml(_Event, _Location, #state{parseFunction = F} = State) ->
+parse_xml({comment, _Comment}, _, State) ->
+	State;
+parse_xml(_Event, _Location, #state{parse_function = F} = State) ->
 	?MODULE:F(_Event, State).
 
 %% @hidden
 parse_bulk_cm({startElement, _, "fileHeader", _, _}, State) ->
 	State;
 parse_bulk_cm({startElement, _, "configData", _, Attributes},
-		#state{parseFunction = _, dnPrefix = [], stack = Stack} = State) ->
+		#state{parse_function = _, dn_prefix = [], stack = Stack} = State) ->
 	case lists:keyfind("dnPrefix", 3, Attributes) of
 		{_Uri, _Prefix, "dnPrefix", Dn} ->
-			State#state{parseFunction = parse_generic, dnPrefix = Dn, stack = [{startElement, "configData", Attributes} | Stack]};
+			State#state{parse_function = parse_generic, dn_prefix = Dn,
+					stack = [{startElement, "configData", Attributes} | Stack]};
 		false ->
-			State#state{parseFunction = parse_generic, dnPrefix = [], stack = [{startElement, "configData", Attributes} | Stack]}
+			State#state{parse_function = parse_generic, dn_prefix = [],
+					stack = [{startElement, "configData", Attributes} | Stack]}
 	end;
 parse_bulk_cm({startElement, _, "fileFooter", _, _}, State) ->
 	State;
 parse_bulk_cm({endElement, _, "configData", _}, State) ->
 	State;
-parse_bulk_cm({ignorableWhitespace, _}, State) ->
-	State;
-parse_bulk_cm(_Event, #state{parseFunction = parse_bulk_cm} = State) ->
+parse_bulk_cm(_Event, #state{parse_function = parse_bulk_cm} = State) ->
 	State.
 
 %% @hidden
-parse_generic({ignorableWhitespace, _}, State) ->
-	State;
 parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_generic({comment, _Comment}, State) ->
-	State;
 parse_generic({startElement,  _Uri, "SubNetwork", QName,
-		[{[], [], "id", Sub}] = _Attributes}, #state{subnet = [], stack = Stack} = State) ->
-		SubId = ",SubNetwork=" ++ Sub,
-	State#state{subnet = SubId, stack = [{startElement, QName, _Attributes} | Stack]};
+		[{[], [], "id", Id}] = Attributes},
+		#state{subnet = [], stack = Stack} = State) ->
+	DnComponent = ",SubNetwork=" ++ Id,
+	State#state{subnet = DnComponent,
+			stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({startElement,  _Uri, "BssFunction", QName,
-		[{[], [], "id", Bss}] = _Attributes}, #state{parseFunction = _F, bss = [], stack = Stack} =State) ->
-	BssId = ",BssFunction=" ++ Bss,
-	State#state{parseFunction = parse_geran, bss = BssId, stack = [{startElement, QName, _Attributes} | Stack]};
-parse_generic({startElement,  _, _, QName, Attributes}, #state{stack = Stack} = State) ->
+		[{[], [], "id", Id}] = Attributes},
+		#state{bss = [], stack = Stack} =State) ->
+	DnComponent = ",BssFunction=" ++ Id,
+	State#state{parse_function = parse_geran, bss = DnComponent,
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_generic({startElement,  _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({endElement,  _Uri, "BssFunction", _QName}, State) ->
 	State;
-%	#state{parseFunction = F, dnPrefix = Dn, subnet = SubId, bss = BssId, stack = Stack};
-parse_generic({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_generic({endElement,  _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
-parse_geran({ignorableWhitespace, _}, State) ->
-	State;
 parse_geran({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_geran({startPrefixMapping, _Prefix, _Uri}, State) ->
-	State;
-parse_geran({endPrefixMapping, _Prefix}, State) ->
-	State;
-parse_geran({comment, _Comment}, State) ->
-	State;
-parse_geran({startElement,  _Uri, "GsmCell", QName,
-		Attributes}, #state{parseFunction = _F, stack = Stack} = State) ->
-	State#state{parseFunction = parse_gsm_cell, stack = [{startElement, QName, Attributes} | Stack]};
-parse_geran({startElement, _, _, QName, Attributes}, #state{stack = Stack} = State) ->
+parse_geran({startElement,  _Uri, "BtsSiteMgr", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",BtsSiteMgr=" ++ Id,
+	State#state{parse_function = parse_bts, bts = DnComponent,
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_geran({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_geran({endElement,  _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_geran({endElement,  _Uri, "BssFunction", QName},
+		#state{stack = Stack} = State) ->
+	State#state{parse_function = parse_generic,
+			stack = [{endElement, QName} | Stack]};
+parse_geran({endElement,  _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
-parse_gsm_cell({ignorableWhitespace, _}, State) ->
+parse_bts({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_bts({startElement, _Uri, "GsmCell", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",GsmCell=" ++ Id,
+	State#state{parse_function = parse_gsm_cell, cell = DnComponent,
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_bts({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_gsm_bts_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_bts({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_gsm_bts_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	parse_gsm_bts_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"latitude" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"longitude" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
+parse_gsm_bts_attr1([{characters, Chars} | T],
+		"operationalState" = Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gsm_bts_attr1([{startElement, {"gn", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_gsm_bts_attr1(T, undefined, State, Acc);
+parse_gsm_bts_attr1([{endElement, {"gn", "vnfParametersList"}}],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
 	State;
+parse_gsm_bts_attr1([{endElement, {"gn", "attributes"}}],
+		undefined, State, Acc) ->
+	State;
+parse_gsm_bts_attr1([{endElement, {"gn", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_gsm_bts_attr1(T, Attr, State, Acc);
+parse_gsm_bts_attr1([], undefined, State, Acc) ->
+erlang:display({?MODULE, ?LINE, Acc, State#state.cells}),
+	% @todo add BTS to resource inventory
+	State#state{parse_function = parse_geran, cells = []}.
+
+%% @hidden
 parse_gsm_cell({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_gsm_cell({comment, _Comment}, State) ->
-	State;
-parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes}, #state{stack = Stack} = State) ->
+parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_gsm_cell({endElement,  _Uri, "GsmCell", QName}, #state{stack = Stack} = State) ->
-	{Value, NewStack} = pop(startElement, QName, Stack),
-	[{startElement, {"gn", "GsmCell"}, Attributes1} | T1] = Value,
-	{_Uri1, _Prefix, "id", ID} = lists:keyfind("id", 3, Attributes1),
-	parse_gsm_cell_attr(ID, [], T1, State#state{stack = NewStack});
-parse_gsm_cell({endElement, _Uri, _LocalName, QName}, #state{stack = Stack} = State) ->
+parse_gsm_cell({endElement,  _Uri, "GsmCell", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_gsm_cell_attr(T, State#state{stack = NewStack}, []);
+parse_gsm_cell({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
-%parse_gsm_cell({endPrefixMapping, _Prefix}, State) ->
-%	State.
 
 % @hidden
-parse_gsm_cell_attr(ID, Characteristics,
-		[{startElement, {"gn", "attributes"}, []} | T1] = _CellStack, State) ->
-	{[_ | Attributes], T2} = pop(endElement, {"gn", "attributes"}, T1),
-	Fchars = fun Fchars([{endElement, {"gn", "hoppingSequenceList"}} | T], undefined, Acc) ->
-				{[_ | _HsList], T3} = pop(startElement, {"gn", "hoppingSequenceList"}, T),
-				% @todo Implement hoppingSequenceList
-				Fchars(T3, undefined, Acc);
-			Fchars([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-				Fchars(T, Attr, Acc);
-			Fchars([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
-			Fchars([{characters, Chars} | T], "cellIdentity" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
-				CellAllocation = [list_to_integer(C) || C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
-				Fchars(T, Attr, [#resource_char{name = Attr, value = CellAllocation} | Acc]);
-			Fchars([{characters, Chars} | T], "ncc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "bcc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "lac" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "mcc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "mnc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "rac" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "racc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "tsc" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "rxLevAccessMin" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, Chars} | T], "msTxPwrMaxCCH" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{characters, "false"} | T], "rfHoppingEnabled" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = false} | Acc]);
-			Fchars([{characters, "true"} | T], "rfHoppingEnabled" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = true} | Acc]);
-			Fchars([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
-				Fchars(T, Attr, [#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-			Fchars([{startElement, {"gn", Attr}, _} | T], Attr, Acc) ->
-				Fchars(T, undefined, Acc);
-			Fchars([], _Attr, Acc) ->
-				Acc
-	end,
-	NewCharacteristics = Fchars(Attributes, undefined, Characteristics),
-	parse_gsm_cell_rels(ID, NewCharacteristics, T2, State, #{}).
+parse_gsm_cell_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+		State, Acc) ->
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	parse_gsm_cell_attr1(Attributes, undefined, T2, State, Acc).
+% @hidden
+parse_gsm_cell_attr1([{endElement, {"gn", "hoppingSequenceList"} = QName} | T1],
+		undefined, CellStack, State, Acc) ->
+	{[_ | _HsList], T2} = pop(startElement, QName, T1),
+	% @todo Implement hoppingSequenceList
+	parse_gsm_cell_attr1(T2, undefined, CellStack, State, Acc);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"cellIdentity" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"cellAllocation" = Attr, CellStack, State, Acc) ->
+	CellAllocation = [list_to_integer(C)
+			|| C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = CellAllocation} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"ncc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"bcc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"lac" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"mcc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"mnc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"rac" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"racc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"tsc" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"rxLevAccessMin" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"msTxPwrMaxCCH" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{characters, "false"} | T],
+		"rfHoppingEnabled" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = false} | Acc]);
+parse_gsm_cell_attr1([{characters, "true"} | T],
+		"rfHoppingEnabled" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = true} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T],
+		"plmnPermitted" = Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_gsm_cell_attr1([{startElement, {"gn", Attr}, _} | T],
+		Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, undefined, CellStack, State, Acc);
+parse_gsm_cell_attr1([{endElement, {"gn", Attr}} | T],
+		undefined, CellStack, State, Acc) ->
+	parse_gsm_cell_attr1(T, Attr, CellStack, State, Acc);
+parse_gsm_cell_attr1([], _Attr, CellStack, State, Acc) ->
+	parse_gsm_cell_rels(CellStack, State, Acc,
+			#{gsmRel => [], utranRel => [], eutranRel => []}).
 
 % @hidden
-parse_gsm_cell_rels(GsmCellID, Characteristics,
-		[{startElement, {"gn", "GsmRelation"}, Attributes1} | T1] = _CellStack, State, Acc1) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
-	{[_ | Attributes2], T2} = pop(endElement, {"gn", "GsmRelation"}, T1),
-	Frels = fun Frels([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
-				Acc;
-			Frels([{endElement, {"gn", "attributes"}} | T], undefined, Acc) ->
-				Frels(T, undefined, Acc);
-			Frels([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-				Frels(T, Attr, Acc);
-			Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{adjacent_cell = Chars});
-			Frels([{characters, Chars} | T], "bcch_frequency" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{bcch_frequency = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "ncc" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{ncc = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "bcc" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{bcc = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "lac" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{lac = list_to_integer(Chars)});
-			Frels([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{lac = list_to_atom(Chars)});
-			Frels([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
-			Frels([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
-				Frels(T, Attr, Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
-			Frels([{startElement, {"gn", _Attr}, _} | T], _Attr, Acc) ->
-				Frels(T, undefined, Acc)
+parse_gsm_cell_rels([{startElement,
+		{"gn", "GsmRelation"} = QName, XmlAttr} | T1],
+		State, Characteristics, #{gsmRel := GsmRels} = Acc) ->
+	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	Relation = parse_gsm_cell_rel(Attributes,
+			undefined, #gsm_relation{id = RelID}),
+	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
+	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+parse_gsm_cell_rels([{startElement,
+		{"un", "UtranRelation"} = QName, XmlAttr} | T1],
+		State, Characteristics, #{utranRel := UtranRels} = Acc) ->
+	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	Relation = parse_utran_cell_rel(Attributes,
+			undefined, #utran_relation{id = RelID}),
+	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
+	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+parse_gsm_cell_rels([{startElement,
+		{"en", "EutranRelation"} = QName, XmlAttr} | T1],
+		State, Characteristics, #{eutranRel := EutranRels} = Acc) ->
+	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
+	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	Relation = parse_eutran_cell_rel(Attributes,
+			undefined, #eutran_relation{id = RelID}),
+	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
+	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+parse_gsm_cell_rels(CellStack,
+		#state{dn_prefix = Dn, subnet = SubId, bss = BssId, bts = BtsId,
+		cell = CellId, cells = Cells} = State, Characteristics, Acc) ->
+	F1 = fun(gsmRel, [], Acc1) ->
+				Acc1;
+			(gsmRel, R, Acc1) ->
+				[#resource_char{name = "gsmRelation", value = R} | Acc1];
+			(utranReln, [], Acc1) ->
+				Acc1;
+			(utranRel, R, Acc1) ->
+				[#resource_char{name = "utranRelation", value = R} | Acc1];
+			(eutranRel, [], Acc1) ->
+				Acc1;
+			(eutranRel, R, Acc1) ->
+				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
 	end,
-	R = Frels(Attributes2, undefined, #gsm_relation{id = RelID}),
-   % maps:update_with/4 is a stdlib-3.0 feature
-   % Fmap = fun(R1) -> [R | R1] end,
-   % NewAcc = maps:update_with(gsmRelation, Fmap, [R], Acc1),
-	R2 = case Acc1 of
-		#{gsmRelation := R1} ->
-			[R | R1];
-		#{} ->
-			[R]
-	end,
-	NewAcc = Acc1#{gsmRelation => R2},
-	parse_gsm_cell_rels(GsmCellID, Characteristics, T2, State, NewAcc);
-parse_gsm_cell_rels(GsmCellID, Characteristics,
-		[{startElement, {"un", "UtranRelation"}, Attributes1} | T1] = _CellStack, State, Acc1) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
-	{[_ | Attributes2], T2} = pop(endElement, {"un", "UtranRelation"}, T1),
-	Frels = fun Frels([{startElement, {"un", "attributes"}, []}], _Attr, Acc) ->
-				Acc;
-			Frels([{endElement, {"un", "attributes"}} | T], undefined, Acc) ->
-				Frels(T, undefined, Acc);
-			Frels([{endElement, {"un", Attr}} | T], undefined, Acc) ->
-				Frels(T, Attr, Acc);
-			Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-				Frels(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
-			Frels([{startElement, {"un", _Attr}, _} | T], _Attr, Acc) ->
-				Frels(T, undefined, Acc)
-	end,
-	R = Frels(Attributes2, undefined, #utran_relation{id = RelID}),
-	R2 = case Acc1 of
-		#{utranRelation := R1} ->
-			[R | R1];
-		#{} ->
-			[R]
-	end,
-	NewAcc = Acc1#{utranRelation => R2},
-	parse_gsm_cell_rels(GsmCellID, Characteristics, T2, State, NewAcc);
-parse_gsm_cell_rels(GsmCellID, Characteristics,
-		[{startElement, {"en", "EutranRelation"}, Attributes1} | T1] = _CellStack, State, Acc1) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, Attributes1),
-	{[_ | Attributes2], T2} = pop(endElement, {"en", "EutranRelation"}, T1),
-	Frels = fun Frels([{startElement, {"en", "attributes"}, []}], _Attr, Acc) ->
-            Acc;
-		Frels([{endElement, {"en", "attributes"}} | T], undefined, Acc) ->
-			Frels(T, undefined, Acc);
-		Frels([{endElement, {"en", Attr}} | T], undefined, Acc) ->
-			Frels(T, Attr, Acc);
-		Frels([{characters, Chars} | T], "tci" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{tci = list_to_integer(Chars)});
-		Frels([{characters, Chars} | T], "isRemoveAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_remove_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "isHoaAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_hoa_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "isIcicInformationSendAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_icic_information_send_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "isLbAllowed" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_lb_allowed = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{adjacent_cell = Chars});
-		Frels([{characters, Chars} | T], "isEsCoveredBy" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{is_es_covered_by = list_to_atom(Chars)});
-		Frels([{characters, Chars} | T], "cellIndividualOffset" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{cell_individual_offset = Chars});
-		Frels([{characters, Chars} | T], "qOffset" = Attr, Acc) ->
-			Frels(T, Attr, Acc#eutran_relation{q_offset = Chars});
-		Frels([{startElement, {"en", _Attr}, _} | T], _Attr, Acc) ->
-			Frels(T, undefined, Acc)
-	end,
-	R = Frels(Attributes2, undefined, #eutran_relation{id = RelID}),
-	R2 = case Acc1 of
-		#{eutranRelation := R1} ->
-			[R | R1];
-		#{} ->
-			[R]
-	end,
-	NewAcc = Acc1#{eutranRelation => R2},
-	parse_gsm_cell_rels(GsmCellID, Characteristics, T2, State, NewAcc);
-parse_gsm_cell_rels(GsmCellID, Characteristics, CellStack,
-		#state{dnPrefix = Dn, subnet = SubId, bss = BssId, cells = Cells} = State, Acc1) ->
-	GsmCellID1 = ",GsmCell=" ++ GsmCellID,
-	F1 = fun(gsmRelation, R, Acc) ->
-				[#resource_char{name = "gsmRelation", value = R} | Acc];
-			(utranRelation, R, Acc) ->
-				[#resource_char{name = "utranRelation", value = R} | Acc];
-			(eUtranRelation, R, Acc) ->
-				[#resource_char{name = "eUtranRelation", value = R} | Acc]
-	end,
-	NewCharacteristics = maps:fold(F1, Characteristics, Acc1), 
-	Resource = #resource{name = Dn ++ SubId ++ BssId ++ GsmCellID1,
+	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
+	Resource = #resource{name = Dn ++ SubId ++ BssId ++ BtsId ++ CellId,
 			description = "GSM radio",
 			category = "RAN",
 			class_type = "GsmCell",
@@ -333,27 +378,123 @@ parse_gsm_cell_rels(GsmCellID, Characteristics, CellStack,
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ID}} ->
 			NewState = State#state{cells = [ID | Cells]},
-			parse_gsm_cell_pol(GsmCellID, NewCharacteristics, CellStack, NewState);
+			parse_gsm_cell_pol(NewCharacteristics, CellStack, NewState);
 		{error, Reason} ->
 			{error, Reason}
 	end.
+% @hidden
+parse_gsm_cell_rel([{endElement, {"gn", "attributes"}} | T],
+		undefined, Acc) ->
+	parse_gsm_cell_rel(T, undefined, Acc);
+parse_gsm_cell_rel([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
+	parse_gsm_cell_rel(T, Attr, Acc);
+parse_gsm_cell_rel([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr, Acc#gsm_relation{adjacent_cell = Chars});
+parse_gsm_cell_rel([{characters, Chars} | T], "bcch_frequency" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{bcch_frequency = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "ncc" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{ncc = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "bcc" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{bcc = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "lac" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{lac = list_to_integer(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{lac = list_to_atom(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
+parse_gsm_cell_rel([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
+	parse_gsm_cell_rel(T, Attr,
+		Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
+parse_gsm_cell_rel([{startElement, {"gn", Attr}, []} | T], Attr, Acc) ->
+	parse_gsm_cell_rel(T, undefined, Acc);
+parse_gsm_cell_rel([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
+	Acc.
 
 % @hidden
-parse_gsm_cell_pol(_GsmCellID, _Characteristics,
-		[{startElement, {"sp", "IneractEsPolicies"}, []} | T1] = _CellStack, #state{parseFunction = F} = State) ->
-	{[_ | _Attributes], _T2} = pop(endElement, {"sp", "IneractEsPolicies"}, T1),
-	State#state{parseFunction = parse_geran};
-parse_gsm_cell_pol(_GsmCellID, _Characteristics, _CellStack, #state{parseFunction = F} = State) ->
-	State#state{parseFunction = parse_geran}.
+parse_utran_cell_rel([{endElement, {"un", "attributes"}} | T],
+		undefined, Acc) ->
+	parse_utran_cell_rel(T, undefined, Acc);
+parse_utran_cell_rel([{endElement, {"un", Attr}} | T],
+		undefined, Acc) ->
+	parse_utran_cell_rel(T, Attr, Acc);
+parse_utran_cell_rel([{characters, Chars} | T],
+		"adjacentCell" = Attr, Acc) ->
+	parse_utran_cell_rel(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
+parse_utran_cell_rel([{startElement, {"un", "attributes"}, []}],
+		_Attr, Acc) ->
+	Acc.
+
+% @hidden
+parse_eutran_cell_rel([{endElement, {"en", "attributes"}} | T],
+		undefined, Acc) ->
+	parse_eutran_cell_rel(T, undefined, Acc);
+parse_eutran_cell_rel([{endElement, {"en", Attr}} | T],
+		undefined, Acc) ->
+	parse_eutran_cell_rel(T, Attr, Acc);
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"tci" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+		Acc#eutran_relation{tci = list_to_integer(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isRemoveAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_remove_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isHoaAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_hoa_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isIcicInformationSendAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_icic_information_send_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isLbAllowed" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_lb_allowed = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"adjacentCell" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{adjacent_cell = Chars});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"isEsCoveredBy" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{is_es_covered_by = list_to_atom(Chars)});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"cellIndividualOffset" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{cell_individual_offset = Chars});
+parse_eutran_cell_rel([{characters, Chars} | T],
+		"qOffset" = Attr, Acc) ->
+	parse_eutran_cell_rel(T, Attr,
+			Acc#eutran_relation{q_offset = Chars});
+parse_eutran_cell_rel([{startElement, {"en", "attributes"}, []}],
+		_Attr, Acc) ->
+	Acc.
+
+%% @hidden
+parse_gsm_cell_pol(_Characteristics,
+		[{startElement, {"sp", "IneractEsPolicies"} = QName, []} | T1], State) ->
+	{[_ | _Attributes], _T2} = pop(endElement, QName, T1),
+	State#state{parse_function = parse_bts};
+parse_gsm_cell_pol(_Characteristics, _CellStack, State) ->
+	State#state{parse_function = parse_bts}.
 
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
 
--type event() :: {startElement, QName :: {Prefix :: string(), LocalName :: string()},
-		Attributes :: [tuple()]} | {endElement, QName :: {Prefix :: string(), LocalName :: string()}}
+-type event() :: {startElement,
+		QName :: {Prefix :: string(), LocalName :: string()},
+		Attributes :: [tuple()]} | {endElement,
+		QName :: {Prefix :: string(), LocalName :: string()}}
 		| {characters, string()}.
--spec pop(Element, QName, Stack) -> Result 
+-spec pop(Element, QName, Stack) -> Result
 	when
 		Element :: startElement | endElement,
 		QName :: {Prefix, LocalName},

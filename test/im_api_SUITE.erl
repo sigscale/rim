@@ -107,6 +107,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 								Indent7, {'gn:GsmRelation', [{id, "1"}],
 								[Indent8, {'gn:attributes', [],
 								[Indent9, {'gn:adjacentCell', ["SubNetwork="
+								++ integer_to_list(rand:uniform(8)) ++ ",BssFunction="
 								++ integer_to_list(rand:uniform(8)) ++ ",BtsSiteMgr="
 								++ integer_to_list(rand:uniform(32)) ++ ",GsmCell="
 								++ integer_to_list(rand:uniform(128))]},
@@ -679,10 +680,37 @@ bulk_cm_geran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	GeranXML = PrivDir ++ "/" ++ "geran.xml",
 	ok = im:import(GeranXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(GeranXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
+	{#xmlElement{content = BulkCmContent}, []} = xmerl_scan:file(GeranXML),
+	#xmlElement{content = ConfigContent,
+			attributes = ConfigAttr} = lists:keyfind(configData,
+			#xmlElement.name, BulkCmContent),
+	#xmlAttribute{value = DnPrefix} = lists:keyfind(dnPrefix,
+			#xmlAttribute.name, ConfigAttr),
+	#xmlElement{content = SubnetContent,
+			attributes = SubnetAttr} = lists:keyfind('xn:SubNetwork',
+			#xmlElement.name, ConfigContent),
+	#xmlAttribute{value = SubnetId} = lists:keyfind(id,
+			#xmlAttribute.name, SubnetAttr),
+	#xmlElement{content = MeContent} = lists:keyfind('xn:ManagedElement',
+			#xmlElement.name, SubnetContent),
+	#xmlElement{content = BssContent,
+			attributes = BssAttr} = lists:keyfind('gn:BssFunction',
+			#xmlElement.name, MeContent),
+	#xmlAttribute{value = BssId} = lists:keyfind(id,
+			#xmlAttribute.name, BssAttr),
+	#xmlElement{content = BtsContent,
+			attributes = BtsAttr} = lists:keyfind('gn:BtsSiteMgr',
+			#xmlElement.name, BssContent),
+	#xmlAttribute{value = BtsId} = lists:keyfind(id,
+			#xmlAttribute.name, BtsAttr),
+	#xmlElement{content = _Cell,
+			attributes = CellAttr} = lists:keyfind('gn:GsmCell',
+			#xmlElement.name, BtsContent),
+	#xmlAttribute{value = CellId} = lists:keyfind(id,
+			#xmlAttribute.name, CellAttr),
+	CellName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
+			",BssFunction=", BssId, ",BtsSiteMgr=", BtsId, ",GsmCell=", CellId]),
+	im:get_resource_name(CellName).
 
 bulk_cm_utran() ->
 	[{userdata, [{doc, "Import bulk CM for utran network resources"}]}].
@@ -690,11 +718,7 @@ bulk_cm_utran() ->
 bulk_cm_utran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	UtranXML = PrivDir ++ "/" ++ "utran.xml",
-	ok = im:import(UtranXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(UtranXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
+	ok = im:import(UtranXML).
 
 bulk_cm_eutran() ->
 	[{userdata, [{doc, "Import bulk CM for eutran network resources"}]}].
@@ -702,11 +726,7 @@ bulk_cm_eutran() ->
 bulk_cm_eutran(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	EutranXML = PrivDir ++ "/" ++ "eutran.xml",
-	ok = im:import(EutranXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(EutranXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
+	ok = im:import(EutranXML).
 
 bulk_cm_epc() ->
 	[{userdata, [{doc, "Import bulk CM for epc network resources"}]}].
@@ -714,11 +734,7 @@ bulk_cm_epc() ->
 bulk_cm_epc(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	EpcXML = PrivDir ++ "/" ++ "epcNrm.xml",
-	ok = im:import(EpcXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(EpcXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
+	ok = im:import(EpcXML).
 
 bulk_cm_core() ->
 	[{userdata, [{doc, "Import bulk CM for core network resources"}]}].
@@ -726,11 +742,7 @@ bulk_cm_core() ->
 bulk_cm_core(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	CoreXML = PrivDir ++ "/" ++ "core.xml",
-	ok = im:import(CoreXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(CoreXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
+	ok = im:import(CoreXML).
 
 bulk_cm_ims() ->
 	[{userdata, [{doc, "Import bulk CM for ims network resources"}]}].
@@ -738,11 +750,7 @@ bulk_cm_ims() ->
 bulk_cm_ims(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	ImsXML = PrivDir ++ "/" ++ "ims.xml",
-	ok = im:import(ImsXML),
-	[ConfigData] = decode_xml(xmerl_scan:file(ImsXML)),
-	Resources = get_resources(ConfigData#xmlElement.content),
-	ResourceNames = [Name || #xmlElement{name = Name} <- Resources],
-	ok = check_resources(ResourceNames).
+	ok = im:import(ImsXML).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
@@ -784,31 +792,4 @@ charset() ->
 	C6 = lists:seq($w, $z),
 	C7 = lists:seq($ , $ ),
 	lists:append([C1, C2, C3, C4, C5, C6, C7]).
-
-decode_xml({#xmlElement{name = _Name, attributes = _Attr, content = Content}, _Rest}) ->
-	F = fun(#xmlElement{name = configData}) ->
-			true;
-		(_) ->
-			false
-	end,
-	lists:filter(F, Content).
-
-get_resources(Content) ->
-	F = fun(#xmlElement{}) ->
-			true;
-		(_) ->
-			false
-	end,
-	[I] = lists:filter(F, Content),
-	lists:filter(F, I#xmlElement.content).
-
-check_resources([ResourceName | T]) ->
-	case im:get_resource(ResourceName) of
-		#resource{name = ResourceName} ->
-			check_resources(T);
-		{error, Reason} ->
-			{error, Reason}
-	end;
-check_resources([]) ->
-	ok.
 
