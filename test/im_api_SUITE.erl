@@ -117,10 +117,14 @@ init_per_testcase(bulk_cm_geran, Config) ->
 	F = fun F(0, Acc) ->
 				Acc;
 			F(N, Acc) ->
+				Latitude = "43." ++ integer_to_list(rand:uniform(9999)),
+				Longitude = "-79." ++ integer_to_list(rand:uniform(9999)),
 				SiteManager = {'gn:BtsSiteMgr', [{id, integer_to_list(N)}],
 						[Indent6, {'gn:attributes', [],
 						[Indent7, {'gn:userLabel', ["BTS " ++ integer_to_list(N)]},
-						Indent7, {'gn:operationalState', ["disabled"]}, Indent6]}]
+						Indent7, {'gn:latitude', [Latitude]},
+						Indent7, {'gn:longitude', [Longitude]},
+						Indent7, {'gn:operationalState', ["enabled"]}, Indent6]}]
 						++ F1(3, []) ++ [Indent6, {'xn:VsDataContainer', [{id, "1"}],
 						[Indent7, {'xn:attributes', [],
 						[Indent8, {'xn:vsDataType', ["DataType " ++ integer_to_list(N)]},
