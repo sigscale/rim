@@ -106,7 +106,7 @@ styleElement.innerHTML = `<template>
             font-weight: bold;
             font-size: inherit;
 			}
-			[part~="header-cell"] {
+			[part="row"]:last-child [part~="header-cell"] {
 				background-color: #ffb04c;
 			}
 			.timestamp {

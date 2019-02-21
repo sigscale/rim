@@ -1113,7 +1113,7 @@ map_to_resource() ->
 
 map_to_resource(_Config) ->
 	Id = random_string(12),
-	Href = ?PathInventory ++ "logicalResource/" ++ Id,
+	Href = ?PathInventory ++ "resource/" ++ Id,
 	Name = random_string(10),
 	Description = random_string(25),
 	PublicIdentifier = random_string(15),
@@ -1126,7 +1126,7 @@ map_to_resource(_Config) ->
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
 	ResourceType = random_string(5),
-	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
 	CharValue = random_string(10),
 	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
 			definitions/BtsSiteMgrList",
@@ -1177,19 +1177,19 @@ resource_to_map() ->
 
 resource_to_map(_Config) ->
 	Id = random_string(12),
-	Href = ?PathInventory ++ "logicalResource/" ++ Id,
+	Href = ?PathInventory ++ "resource/" ++ Id,
 	Name = random_string(10),
 	PublicId = random_string(15),
 	Description = random_string(25),
 	Version = random_string(3),
 	ClassType = "LogicalResource",
-	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/logicalResource",
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/resource",
 	Category = random_string(5),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
 	CharValue = random_string(10),
 	CharSchema = ?PathInventory ++ "schema/geranNrm#/definitions/BtsSiteMgrList",
 	ResourceRecord = #resource{id = Id,
@@ -1349,7 +1349,7 @@ get_resource(Config) ->
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
 	CharValue = random_string(10),
 	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/definitions/BtsSiteMgrList",
 	ResourceRecord = #resource{name = Name,
@@ -1670,7 +1670,7 @@ fill_specification(N) ->
 fill_resource(0) ->
 	ok;
 fill_resource(N) ->
-	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/logicalResource",
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/resource",
 	Version = random_string(3),
 	Resource = #resource{name = random_string(10),
 			public_id = random_string(15),
