@@ -141,7 +141,7 @@
 				}
 			]
 		},
-		"BtsSiteMgrs": {
+		"BtsSiteMgrList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/BtsSiteMgr"
@@ -322,7 +322,7 @@
 				}
 			]
 		},
-		"GsmCells": {
+		"GsmCellList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/GsmCell"
@@ -381,7 +381,7 @@
 				}
 			]
 		},
-		"GsmRelations": {
+		"GsmRelationList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/GsmRelation"
@@ -472,7 +472,7 @@
 				}
 			]
 		},
-		"ExternalGsmCells": {
+		"ExternalGsmCellList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalGsmCell"
@@ -527,7 +527,7 @@
 		"GsmCellOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"GsmCellOptionallyContainedNrmClasses": {
+		"GsmCellOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/GsmCellOptionallyContainedNrmClass"

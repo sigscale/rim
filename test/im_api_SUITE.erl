@@ -117,10 +117,14 @@ init_per_testcase(bulk_cm_geran, Config) ->
 	F = fun F(0, Acc) ->
 				Acc;
 			F(N, Acc) ->
+				Latitude = "43." ++ integer_to_list(rand:uniform(9999)),
+				Longitude = "-79." ++ integer_to_list(rand:uniform(9999)),
 				SiteManager = {'gn:BtsSiteMgr', [{id, integer_to_list(N)}],
 						[Indent6, {'gn:attributes', [],
 						[Indent7, {'gn:userLabel', ["BTS " ++ integer_to_list(N)]},
-						Indent7, {'gn:operationalState', ["disabled"]}, Indent6]}]
+						Indent7, {'gn:latitude', [Latitude]},
+						Indent7, {'gn:longitude', [Longitude]},
+						Indent7, {'gn:operationalState', ["enabled"]}, Indent6]}]
 						++ F1(3, []) ++ [Indent6, {'xn:VsDataContainer', [{id, "1"}],
 						[Indent7, {'xn:attributes', [],
 						[Indent8, {'xn:vsDataType', ["DataType " ++ integer_to_list(N)]},
@@ -165,7 +169,7 @@ init_per_testcase(bulk_cm_geran, Config) ->
 							Indent4, {'gn:BssFunction', [{id, "1"}],
 									[Indent5, {'gn:attributes', [],
 											[Indent6, {'gn:userLabel', ["BSC " ++ generate_identity(5)]},
-													Indent5]} | SiteManager]},
+													Indent5]} | SiteManager] ++ [Indent4]},
 							Indent4, {'xn:VsDataContainer', [{id, "1"}],
 									[Indent5, {'xn:attributes', [],
 											[Indent6, {'xn:vsDataType', ["DataType=9"]},
@@ -703,6 +707,8 @@ bulk_cm_geran(Config) ->
 			#xmlElement.name, BssContent),
 	#xmlAttribute{value = BtsId} = lists:keyfind(id,
 			#xmlAttribute.name, BtsAttr),
+	BtsName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
+			",BssFunction=", BssId, ",BtsSiteMgr=", BtsId]),
 	#xmlElement{content = _Cell,
 			attributes = CellAttr} = lists:keyfind('gn:GsmCell',
 			#xmlElement.name, BtsContent),
@@ -710,7 +716,8 @@ bulk_cm_geran(Config) ->
 			#xmlAttribute.name, CellAttr),
 	CellName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",BssFunction=", BssId, ",BtsSiteMgr=", BtsId, ",GsmCell=", CellId]),
-	im:get_resource_name(CellName).
+	{ok, #resource{name = BtsName}} = im:get_resource_name(BtsName),
+	{ok, #resource{name = CellName}} = im:get_resource_name(CellName).
 
 bulk_cm_utran() ->
 	[{userdata, [{doc, "Import bulk CM for utran network resources"}]}].

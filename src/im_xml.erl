@@ -206,20 +206,35 @@ parse_gsm_bts_attr1([{characters, Chars} | T],
 parse_gsm_bts_attr1([{startElement, {"gn", Attr}, _} | T],
 		Attr, State, Acc) ->
 	parse_gsm_bts_attr1(T, undefined, State, Acc);
-parse_gsm_bts_attr1([{endElement, {"gn", "vnfParametersList"}}],
+parse_gsm_bts_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
 		undefined, State, Acc) ->
 	% @todo vnfParametersListType
-	State;
+	parse_gsm_bts_attr1(T, undefined, State, Acc);
 parse_gsm_bts_attr1([{endElement, {"gn", "attributes"}}],
 		undefined, State, Acc) ->
 	State;
 parse_gsm_bts_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_gsm_bts_attr1(T, Attr, State, Acc);
-parse_gsm_bts_attr1([], undefined, State, Acc) ->
-erlang:display({?MODULE, ?LINE, Acc, State#state.cells}),
-	% @todo add BTS to resource inventory
-	State#state{parse_function = parse_geran, cells = []}.
+parse_gsm_bts_attr1([], undefined,
+		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId, bts = BtsId,
+		btss = Btss, cells = Cells} = State, Acc) ->
+	GsmCell = #resource_char{name = "gsmCell", value = []},
+	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId,
+			description = "GSM Base Transceiver Station (BTS)",
+			category = "RAN",
+			class_type = "BtsSiteMgr",
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			specification = #specification_ref{},
+			characteristic = lists:reverse([GsmCell | Acc])},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = ID} = _R} ->
+			State#state{parse_function = parse_geran,
+					btss = [ID | Btss], cells = []};
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 %% @hidden
 parse_gsm_cell({characters, Chars}, #state{stack = Stack} = State) ->
@@ -351,7 +366,7 @@ parse_gsm_cell_rels([{startElement,
 	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
 	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
 parse_gsm_cell_rels(CellStack,
-		#state{dn_prefix = Dn, subnet = SubId, bss = BssId, bts = BtsId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId, bts = BtsId,
 		cell = CellId, cells = Cells} = State, Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
@@ -367,7 +382,7 @@ parse_gsm_cell_rels(CellStack,
 				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
-	Resource = #resource{name = Dn ++ SubId ++ BssId ++ BtsId ++ CellId,
+	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
 			description = "GSM radio",
 			category = "RAN",
 			class_type = "GsmCell",

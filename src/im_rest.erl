@@ -410,7 +410,7 @@ specification_ref([_ | T], R, Acc) ->
 specification_ref([], _, Acc) ->
 	Acc.
 
--spec target_schema_ref(TargetSchemaRef) -> TargetSchemaRef 
+-spec target_schema_ref(TargetSchemaRef) -> TargetSchemaRef
 	when
 		TargetSchemaRef :: [target_schema_ref()] | [map()]
 				| target_schema_ref() | map().
@@ -449,52 +449,48 @@ target_schema_ref([], _, Acc) ->
 	when
 		Axis :: string() | non_neg_integer().
 %% @doc CODEC for latitude/longitude axis value.
-geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -10000  ->
-	io_lib:fwrite("-0.~4.10.0b", [abs(Axis)]);
-geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -1000  ->
-	io_lib:fwrite("-0.~3.10.0b", [abs(Axis)]);
-geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -100  ->
-	io_lib:fwrite("-0.~2.10.0b", [abs(Axis)]);
-geoaxis(Axis) when is_integer(Axis), Axis < 0, Axis > -10  ->
-	io_lib:fwrite("-0.~b", [abs(Axis)]);
-geoaxis(Axis) when Axis rem 10000 =:= 0  ->
+%%
+%% Internally an integer value is used to represent an axis.
+%% Externally a string representation of a decimal number, with
+%% up to four decimal places, allows a precision of 11.1 meters.
+%%
+geoaxis(Axis) when Axis rem 10000 =:= 0 ->
 	integer_to_list(Axis div 10000);
+geoaxis(Axis) when Axis < 0, Axis > -10000, Axis rem 1000 =:= 0 ->
+	lists:flatten(io_lib:fwrite("-0.~1.10.0b", [abs(Axis) div 1000]));
+geoaxis(Axis) when Axis < 0, Axis > -10000, Axis rem 100 =:= 0 ->
+	lists:flatten(io_lib:fwrite("-0.~2.10.0b", [abs(Axis)div 100]));
+geoaxis(Axis) when Axis < 0, Axis > -10000, Axis rem 10 =:= 0 ->
+	lists:flatten(io_lib:fwrite("-0.~3.10.0b", [abs(Axis) div 10]));
+geoaxis(Axis) when Axis < 0, Axis > -10000 ->
+	lists:flatten(io_lib:fwrite("-0.~4.10.0b", [abs(Axis)]));
 geoaxis(Axis) when Axis rem 1000 =:= 0  ->
-	io_lib:fwrite("~b.~b", [Axis div 10000, (abs(Axis) rem 10000) div 1000]);
+	lists:flatten(io_lib:fwrite("~b.~b", [Axis div 10000, (abs(Axis) rem 10000) div 1000]));
 geoaxis(Axis) when Axis rem 100 =:= 0  ->
-	io_lib:fwrite("~b.~2.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 100]);
+	lists:flatten(io_lib:fwrite("~b.~2.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 100]));
 geoaxis(Axis) when Axis rem 10 =:= 0  ->
-	io_lib:fwrite("~b.~3.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 10]);
+	lists:flatten(io_lib:fwrite("~b.~3.10.0b", [Axis div 10000, (abs(Axis) rem 10000) div 10]));
 geoaxis(Axis) when is_integer(Axis) ->
-	io_lib:fwrite("~b.~4.10.0b", [Axis div 10000, abs(Axis) rem 10000]);
+	lists:flatten(io_lib:fwrite("~b.~4.10.0b", [Axis div 10000, abs(Axis) rem 10000]));
 geoaxis(Axis) when is_list(Axis) ->
-	case string:split(Axis, ".") of
+	case string:tokens(Axis, ".") of
 		[[$- | Int], Dec] when length(Dec) =:= 4 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + list_to_integer(Dec));
 		[Int, Dec] when length(Dec) =:= 4 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + list_to_integer(Dec);
 		[[$- | Int], Dec] when length(Dec) =:= 3 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 10));
 		[Int, Dec] when length(Dec) =:= 3 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 10);
 		[[$- | Int], Dec] when length(Dec) =:= 2 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 100));
 		[Int, Dec] when length(Dec) =:= 2 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 100);
 		[[$- | Int], Dec] when length(Dec) =:= 1 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			-((list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 1000));
 		[Int, Dec] when length(Dec) =:= 1 ->
-erlang:display({?MODULE, ?LINE, Int, Dec}),
 			(list_to_integer(Int) * 10000) + (list_to_integer(Dec) * 1000);
 		[Int] ->
-erlang:display({?MODULE, ?LINE, Int}),
 			list_to_integer(Int) * 10000
 	end.
 

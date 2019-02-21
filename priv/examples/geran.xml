@@ -52,7 +52,9 @@
 					<gn:BtsSiteMgr id="1">
 						<gn:attributes>
 							<gn:userLabel>BTS 1</gn:userLabel>
-							<gn:operationalState>disabled</gn:operationalState>
+							<gn:latitude>43.6698</gn:latitude>
+							<gn:longitude>-79.3898</gn:longitude>
+							<gn:operationalState>enabled</gn:operationalState>
 						</gn:attributes>
 						<gn:GsmCell id="1">
 							<gn:attributes>
@@ -90,7 +92,8 @@
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
-					</gn:BtsSiteMgr></gn:BssFunction>
+					</gn:BtsSiteMgr>
+				</gn:BssFunction>
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
 						<xn:vsDataType>DataType=9</xn:vsDataType>
