@@ -1238,7 +1238,7 @@ post_resource() ->
 
 post_resource(Config) ->
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathInventory ++ "logicalResource",
+	CollectionUrl = HostUrl ++ ?PathInventory ++ "resource",
 	Name = random_string(10),
 	PublicId = random_string(15),
 	Description = random_string(25),
@@ -1248,12 +1248,11 @@ post_resource(Config) ->
 	Category = random_string(6),
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
-	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
+	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
 	CharValue = random_string(10),
-	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
-			definitions/BtsSiteMgrList",
+	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/definitions/BtsSiteMgrList",
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ Name ++ "\",\n"
 			++ "\t\"publicIdentifier\": \"" ++ PublicId ++ "\",\n"
@@ -1305,14 +1304,14 @@ post_resource(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, URI} = lists:keyfind("location", 1, Headers),
-	{?PathInventory ++ "logicalResource/" ++ ID, _} = httpd_util:split_path(URI),
+	{?PathInventory ++ "resource/" ++ ID, _} = httpd_util:split_path(URI),
 	{ok, #resource{id = ID, name = Name, public_id = PublicId, 
 			description = Description, version = Version, category = Category,
 			class_type = ClassType, base_type = "Resource",
 			schema = ClassSchema, specification = S, related_party = [RP],
-			characteristic = [C]}} = im:get_specification(ID),
+			characteristic = [C]}} = im:get_resource(ID),
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
-			version = "1.1"} = S,
+			version = Version} = S,
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
 	#resource_char{name = "btsSiteMgr", class_type = "BtsSiteMgrList",
 			schema = CharSchema, value = CharValue} = C.
@@ -1323,7 +1322,7 @@ get_resources() ->
 get_resources(Config) ->
 	ok = fill_resource(5),
 	HostUrl = ?config(host_url, Config),
-	CollectionUrl = HostUrl ++ ?PathInventory ++ "logicalResource",
+	CollectionUrl = HostUrl ++ ?PathInventory ++ "resource",
 	Accept = {"accept", "application/json"},
 	Request = {CollectionUrl, [Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
@@ -1352,8 +1351,7 @@ get_resource(Config) ->
 	ResourceName = random_string(7),
 	ResouceHref = ?PathInventory ++ "logicalResource/" ++ ResourceId,
 	CharValue = random_string(10),
-	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
-			definitions/BtsSiteMgrList",
+	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/definitions/BtsSiteMgrList",
 	ResourceRecord = #resource{name = Name,
 			public_id = PublicId,
 			description = Description,
@@ -1379,7 +1377,6 @@ get_resource(Config) ->
 	{ok, #resource{id = Id, href = Href}} = im:add_resource(ResourceRecord),
 	Accept = {"accept", "application/json"},
 	Request = {HostUrl ++ Href, [Accept, auth_header()]},
-erlang:display({?MODULE, ?LINE, Href, HostUrl}),
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
 	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
