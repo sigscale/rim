@@ -94,8 +94,8 @@ do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "resourceCa
 	do_response(ModData, Resource:post_candidate(Body));
 do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v3", "resourceSpecification"]) ->
 	do_response(ModData, Resource:post_specification(Body));
-do_post(Resource, ModData, Body, ["resourceInventoryManagement", "v3", "resource", ID]) ->
-	do_response(ModData, Resource:add_resource(ID, Body)).
+do_post(Resource, ModData, Body, ["resourceInventoryManagement", "v3", "resource"]) ->
+	do_response(ModData, Resource:post_resource(Body)).
 
 %% @hidden
 do_response(#mod{data = Data} = ModData, {ok, Headers, ResponseBody}) ->
