@@ -929,200 +929,6 @@
 						"eSPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
 						}
-					},
-					"dependencies": {
-						"eUtranCellFDD": {
-							"type": "object",
-							"properties": {
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eUtranCellTDD": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_RP_EPS": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_X2C": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_X2U": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_NgC": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_NgU": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_XnC": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eP_XnU": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"eNBFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"deNBCapability": false,
-								"vsDataContainer": false
-							}
-						},
-						"deNBCapability": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"eUtranCellFDD": false,
-								"eUtranCellTDD": false,
-								"eP_RP_EPS": false,
-								"eP_X2C": false,
-								"eP_X2U": false,
-								"eP_NgC": false,
-								"eP_NgU": false,
-								"eP_XnC": false,
-								"eP_XnU": false,
-								"eNBFunctionOptionallyContainedNrmClass": false,
-								"deNBCapability": false
-							}
-						}
 					}
 				}
 			]
@@ -1164,29 +970,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"eP_RP_EPS": {
-							"type": "object",
-							"properties": {
-								"rNFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"rNFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"eP_RP_EPS": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"eP_RP_EPS": false,
-								"rNFunctionOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -1270,29 +1053,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"eP_RP_EPS": {
-							"type": "object",
-							"properties": {
-								"externalRNFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"externalRNFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"eP_RP_EPS": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"eP_RP_EPS": false,
-								"externalRNFunctionOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1336,40 +1096,6 @@
 						},
 						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
-						}
-					},
-					"dependencies": {
-						"externalEUtranCellFDD": {
-							"type": "object",
-							"properties": {
-								"externalEUtranCellTDD": false,
-								"externalENBFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"externalEUtranCellTDD": {
-							"type": "object",
-							"properties": {
-								"externalEUtranCellFDD": false,
-								"externalENBFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"externalENBFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"externalEUtranCellFDD": false,
-								"externalEUtranCellTDD": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalEUtranCellFDD": false,
-								"externalEUtranCellTDD": false,
-								"externalENBFunctionOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -1523,80 +1249,6 @@
 						"eSPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
 						}
-					},
-					"dependencies": {
-						"eUtranRelation": {
-							"type": "object",
-							"properties": {
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"eUtranCellFDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"cdma2000Relation": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"eUtranCellFDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"gsmRelation": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"utranRelation": false,
-								"eUtranCellFDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranRelation": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"eUtranCellFDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"eUtranCellFDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"eUtranCellFDDOptionallyContainedNrmClass": false
-							}
-						},
-						"energySavingProperties": {
-							"type": "object",
-							"properties": {
-								"eSPolicies": false
-							}
-						},
-						"eSPolicies": {
-							"type": "object",
-							"properties": {
-								"energySavingProperties": false
-							}
-						}
 					}
 				}
 			]
@@ -1671,20 +1323,6 @@
 						},
 						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
-						}
-					},
-					"dependencies": {
-						"externalEUtranCellFDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalEUtranCellFDDOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -1853,80 +1491,6 @@
 						"cellOutageCompensationInformation": {
 							"$ref": "#/definitions/CellOutageCompensationInformation"
 						}
-					},
-					"dependencies": {
-						"eUtranRelation": {
-							"type": "object",
-							"properties": {
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"eUtranCellTDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"cdma2000Relation": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"eUtranCellTDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"gsmRelation": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"utranRelation": false,
-								"eUtranCellTDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranRelation": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"eUtranCellTDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"eUtranCellTDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"eUtranRelation": false,
-								"cdma2000Relation": false,
-								"gsmRelation": false,
-								"utranRelation": false,
-								"eUtranCellTDDOptionallyContainedNrmClass": false
-							}
-						},
-						"energySavingProperties": {
-							"type": "object",
-							"properties": {
-								"eSPolicies": false
-							}
-						},
-						"eSPolicies": {
-							"type": "object",
-							"properties": {
-								"energySavingProperties": false
-							}
-						}
 					}
 				}
 			]
@@ -1989,20 +1553,6 @@
 						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
 						}
-					},
-					"dependencies": {
-						"externalEUtranCellTDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalEUtranCellTDDOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -2064,20 +1614,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"eUtranRelationOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"eUtranRelationOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -2112,20 +1648,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"cdma2000RelationOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"cdma2000RelationOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -2179,20 +1701,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"link_ENB_ENBOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"link_ENB_ENBOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -2228,29 +1736,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"mCEFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"mBSFNArea": false,
-								"vsDataContainer": false
-							}
-						},
-						"mBSFNArea": {
-							"type": "object",
-							"properties": {
-								"mCEFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"mCEFunctionOptionallyContainedNrmClass": false,
-								"mBSFNArea": false
-							}
-						}
 					}
 				}
 			]
@@ -2279,20 +1764,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"mBSFNAreaOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"mBSFNAreaOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -2341,20 +1812,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"link_MCE_ENBOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"link_MCE_ENBOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -2395,20 +1852,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"link_MCE_MMEOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"link_MCE_MMEOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}

@@ -668,68 +668,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"utranCellFDD": {
-							"type": "object",
-							"properties": {
-								"utranCellTDDLcr": false,
-								"utranCellTDDHcr": false,
-								"iubLink": false,
-								"rncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranCellTDDLcr": {
-							"type": "object",
-							"properties": {
-								"utranCellFDD": false,
-								"utranCellTDDHcr": false,
-								"iubLink": false,
-								"rncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranCellTDDHcr": {
-							"type": "object",
-							"properties": {
-								"utranCellFDD": false,
-								"utranCellTDDLcr": false,
-								"iubLink": false,
-								"rncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"iubLink": {
-							"type": "object",
-							"properties": {
-								"utranCellFDD": false,
-								"utranCellTDDLcr": false,
-								"utranCellTDDHcr": false,
-								"rncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"rncFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"utranCellFDD": false,
-								"utranCellTDDLcr": false,
-								"utranCellTDDHcr": false,
-								"iubLink": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"utranCellFDD": false,
-								"utranCellTDDLcr": false,
-								"utranCellTDDHcr": false,
-								"iubLink": false,
-								"rncFunctionOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -765,20 +703,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"nodeBFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"nodeBFunctionOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -917,40 +841,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"utranRelation": {
-							"type": "object",
-							"properties": {
-								"gsmRelation": false,
-								"utranGenericCellOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"gsmRelation": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"utranGenericCellOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranGenericCellOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"utranGenericCellOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1060,40 +950,6 @@
 						"utranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDOptionallyContainedNrmClasses"
 						}
-					},
-					"dependencies": {
-						"utranRelation": {
-							"type": "object",
-							"properties": {
-								"gsmRelation": false,
-								"utranCellTDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"gsmRelation": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"utranCellTDDOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranCellTDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"utranCellTDDOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1128,40 +984,6 @@
 						},
 						"utranCellTDDLcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDLcrOptionallyContainedNrmClasses"
-						}
-					},
-					"dependencies": {
-						"utranRelation": {
-							"type": "object",
-							"properties": {
-								"gsmRelation": false,
-								"utranCellTDDLcrOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"gsmRelation": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"utranCellTDDLcrOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranCellTDDLcrOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"utranCellTDDLcrOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -1207,40 +1029,6 @@
 						"utranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDHcrOptionallyContainedNrmClasses"
 						}
-					},
-					"dependencies": {
-						"utranRelation": {
-							"type": "object",
-							"properties": {
-								"gsmRelation": false,
-								"utranCellTDDHcrOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"gsmRelation": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"utranCellTDDHcrOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"utranCellTDDHcrOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"utranRelation": false,
-								"gsmRelation": false,
-								"utranCellTDDHcrOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1285,20 +1073,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"iubLinkOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"iubLinkOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1330,20 +1104,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"utranRelationOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"utranRelationOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -1448,20 +1208,6 @@
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						}
-					},
-					"dependencies": {
-						"externalUtranGenericCellOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalUtranGenericCellOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1518,20 +1264,6 @@
 						"externalUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellFDDOptionallyContainedNrmClasses"
 						}
-					},
-					"dependencies": {
-						"externalUtranCellFDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellFDDOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1576,20 +1308,6 @@
 						"externalUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDOptionallyContainedNrmClasses"
 						}
-					},
-					"dependencies": {
-						"externalUtranCellTDDOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellTDDOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1625,20 +1343,6 @@
 						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClasses"
 						}
-					},
-					"dependencies": {
-						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellTDDHcrOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -1670,20 +1374,6 @@
 						},
 						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClasses"
-						}
-					},
-					"dependencies": {
-						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellTDDLcrOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -1742,53 +1432,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
-						}
-					},
-					"dependencies": {
-						"externalUtranCellFDD": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellTDDHcr": false,
-								"externalUtranCellTDDLcr": false,
-								"externalRncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"externalUtranCellTDDHcr": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellFDD": false,
-								"externalUtranCellTDDLcr": false,
-								"externalRncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"externalUtranCellTDDLcr": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellFDD": false,
-								"externalUtranCellTDDHcr": false,
-								"externalRncFunctionOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"externalRncFunctionOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellFDD": false,
-								"externalUtranCellTDDHcr": false,
-								"externalUtranCellTDDLcr": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"externalUtranCellFDD": false,
-								"externalUtranCellTDDHcr": false,
-								"externalUtranCellTDDLcr": false,
-								"externalRncFunctionOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}

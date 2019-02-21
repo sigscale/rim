@@ -206,20 +206,6 @@
 				"rachOptAccessDelayProbability": {
 					"$ref": "#/definitions/AccessDelayProbabilityTargetSet"
 				}
-			},
-			"dependencies": {
-				"rachOptAccessProbability": {
-					"type": "object",
-					"properties": {
-						"rachOptAccessDelayProbability": false
-					}
-				},
-				"rachOptAccessDelayProbability": {
-					"type": "object",
-					"properties": {
-						"rachOptAccessProbability": false
-					}
-				}
 			}
 		},
 		"AasTarget": {

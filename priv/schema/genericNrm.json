@@ -197,85 +197,6 @@
 						"esPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
 						}
-					},
-					"dependencies": {
-						"subNetwork": {
-							"type": "object",
-							"properties": {
-								"managedElement": false,
-								"meContext": false,
-								"managementNode": false,
-								"irpAgent": false,
-								"subNetworkOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"managedElement": {
-							"type": "object",
-							"properties": {
-								"subNetwork": false,
-								"meContext": false,
-								"managementNode": false,
-								"irpAgent": false,
-								"subNetworkOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"meContext": {
-							"type": "object",
-							"properties": {
-								"subNetwork": false,
-								"managedElement": false,
-								"managementNode": false,
-								"irpAgent": false,
-								"subNetworkOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"managementNode": {
-							"type": "object",
-							"properties": {
-								"subNetwork": false,
-								"managedElement": false,
-								"meContext": false,
-								"irpAgent": false,
-								"subNetworkOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"irpAgent": {
-							"type": "object",
-							"properties": {
-								"subNetwork": false,
-								"managedElement": false,
-								"meContext": false,
-								"managementNode": false,
-								"subNetworkOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"subNetworkOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"subNetwork": false,
-								"managedElement": false,
-								"meContext": false,
-								"managementNode": false,
-								"irpAgent": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"subNetwork": false,
-								"managedElement": false,
-								"meContext": false,
-								"managementNode": false,
-								"irpAgent": false,
-								"subNetworkOptionallyContainedNrmClass": false
-							}
-						}
 					}
 				}
 			]
@@ -336,29 +257,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "#/definitions/VsDataContainer"
-						}
-					},
-					"dependencies": {
-						"irpAgent": {
-							"type": "object",
-							"properties": {
-								"managedElementOptionallyContainedNrmClass": false,
-								"vsDataContainer": false
-							}
-						},
-						"managedElementOptionallyContainedNrmClass": {
-							"type": "object",
-							"properties": {
-								"irpAgent": false,
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"irpAgent": false,
-								"managedElementOptionallyContainedNrmClass": false
-							}
 						}
 					}
 				}
@@ -442,20 +340,6 @@
 						},
 						"vsDataContainer": {
 							"$ref": "#/definitions/VsDataContainer"
-						}
-					},
-					"dependencies": {
-						"irpAgent": {
-							"type": "object",
-							"properties": {
-								"vsDataContainer": false
-							}
-						},
-						"vsDataContainer": {
-							"type": "object",
-							"properties": {
-								"irpAgent": false
-							}
 						}
 					}
 				}
