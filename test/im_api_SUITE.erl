@@ -303,9 +303,9 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 	F1 = fun F1(0, Acc) ->
 				Acc;
 			F1(N, Acc) ->
-				Relation = {'un:EUtranRelation', [{id, integer_to_list(N)}],
-						[Indent7, {'un:attributes', [],
-								[Indent8, {'un:adjacentCell', ["SubNetwork=1,UtranCellFDD=1,UtranRelation=2"]},
+				Relation = {'en:EUtranRelation', [{id, integer_to_list(N)}],
+						[Indent7, {'en:attributes', [],
+								[Indent8, {'en:adjacentCell', ["SubNetwork=1,ENBFunction=1,EUtranCellTDD=2"]},
 										Indent7]},
 						Indent7, {'xn:VsDataContainer', [{id, "1"}],
 								[Indent8, {'xn:attributes', [],
