@@ -132,7 +132,7 @@ do_get(Resource, ModData,
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
 		["resourceInventoryManagement", "v3", "resource"], Query) ->
    do_response(ModData, Resource:get_resources(Query, Headers));
-do_get(Resource, #mod{parsed_header = Headers} = ModData,
+do_get(Resource, #mod{parsed_header = _Headers} = ModData,
 		["resourceInventoryManagement", "v3", "resource", Id], Query) ->
    do_response(ModData, Resource:get_resource(Id, Query));
 do_get(_, _, _, _) ->
