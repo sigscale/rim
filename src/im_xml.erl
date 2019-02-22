@@ -176,47 +176,47 @@ parse_bts({startElement, _, _, QName, Attributes},
 parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 		#state{stack = Stack} = State) ->
 	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_gsm_bts_attr(T, undefined, State#state{stack = NewStack}, []);
+	parse_bts_attr(T, undefined, State#state{stack = NewStack}, []);
 parse_bts({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 % @hidden
-parse_gsm_bts_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_bts_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
 		undefined, State, Acc) ->
 	{[_ | Attributes], T2} = pop(endElement, QName, T1),
-	parse_gsm_bts_attr1(Attributes, undefined, State, Acc).
+	parse_bts_attr1(Attributes, undefined, State, Acc).
 % @hidden
-parse_gsm_bts_attr1([{characters, Chars} | T],
+parse_bts_attr1([{characters, Chars} | T],
 		"userLabel" = Attr, State, Acc) ->
-	parse_gsm_bts_attr1(T, Attr, State,
+	parse_bts_attr1(T, Attr, State,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_gsm_bts_attr1([{characters, Chars} | T],
+parse_bts_attr1([{characters, Chars} | T],
 		"latitude" = Attr, State, Acc) ->
-	parse_gsm_bts_attr1(T, Attr, State,
+	parse_bts_attr1(T, Attr, State,
 			[#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
-parse_gsm_bts_attr1([{characters, Chars} | T],
+parse_bts_attr1([{characters, Chars} | T],
 		"longitude" = Attr, State, Acc) ->
-	parse_gsm_bts_attr1(T, Attr, State,
+	parse_bts_attr1(T, Attr, State,
 			[#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
-parse_gsm_bts_attr1([{characters, Chars} | T],
+parse_bts_attr1([{characters, Chars} | T],
 		"operationalState" = Attr, State, Acc) ->
-	parse_gsm_bts_attr1(T, Attr, State,
+	parse_bts_attr1(T, Attr, State,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_gsm_bts_attr1([{startElement, {"gn", Attr}, _} | T],
+parse_bts_attr1([{startElement, {"gn", Attr}, _} | T],
 		Attr, State, Acc) ->
-	parse_gsm_bts_attr1(T, undefined, State, Acc);
-parse_gsm_bts_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+	parse_bts_attr1(T, undefined, State, Acc);
+parse_bts_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
 		undefined, State, Acc) ->
 	% @todo vnfParametersListType
-	parse_gsm_bts_attr1(T, undefined, State, Acc);
-parse_gsm_bts_attr1([{endElement, {"gn", "attributes"}}],
+	parse_bts_attr1(T, undefined, State, Acc);
+parse_bts_attr1([{endElement, {"gn", "attributes"}}],
 		undefined, State, Acc) ->
 	State;
-parse_gsm_bts_attr1([{endElement, {"gn", Attr}} | T],
+parse_bts_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
-	parse_gsm_bts_attr1(T, Attr, State, Acc);
-parse_gsm_bts_attr1([], undefined,
+	parse_bts_attr1(T, Attr, State, Acc);
+parse_bts_attr1([], undefined,
 		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId, bts = BtsId,
 		btss = Btss, cells = Cells} = State, Acc) ->
 	GsmCell = #resource_char{name = "gsmCell", value = Cells},
