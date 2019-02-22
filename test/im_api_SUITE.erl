@@ -808,7 +808,7 @@ bulk_cm_epc() ->
 
 bulk_cm_epc(Config) ->
 	PrivDir = ?config(priv_dir, Config),
-	EpcXML = PrivDir ++ "/" ++ "epcNrm.xml",
+	EpcXML = PrivDir ++ "/" ++ "epc.xml",
 	ok = im:import(EpcXML),
 	{#xmlElement{content = BulkCmContent}, []} = xmerl_scan:file(EpcXML),
 	#xmlElement{content = ConfigContent,
