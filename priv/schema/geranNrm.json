@@ -116,7 +116,7 @@
 		"BtsSiteMgrList": {
 			"type": "array",
 			"items": {
-				"$ref": "#/definitions/BtsSiteMgr"
+				"$ref": "genericNrm#/definitions/dn"
 			}
 		},
 		"GsmCell": {
@@ -250,7 +250,7 @@
 		"GsmCellList": {
 			"type": "array",
 			"items": {
-				"$ref": "#/definitions/GsmCell"
+				"$ref": "genericNrm#/definitions/dn"
 			}
 		},
 		"GsmRelation": {
