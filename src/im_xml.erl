@@ -219,7 +219,7 @@ parse_gsm_bts_attr1([{endElement, {"gn", Attr}} | T],
 parse_gsm_bts_attr1([], undefined,
 		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId, bts = BtsId,
 		btss = Btss, cells = Cells} = State, Acc) ->
-	GsmCell = #resource_char{name = "gsmCell", value = []},
+	GsmCell = #resource_char{name = "gsmCell", value = Cells},
 	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
