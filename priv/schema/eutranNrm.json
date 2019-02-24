@@ -10,7 +10,7 @@
 				}
 			}
 		},
-		"EnbId": {
+		"ENBId": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 268435455
@@ -864,8 +864,8 @@
 								"iRATANRSwitch": {
 									"type": "boolean"
 								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
+								"eNBId": {
+									"$ref": "#/definitions/ENBId"
 								},
 								"x2BlackList": {
 									"$ref": "genericNrm#/definitions/dnList"
@@ -1077,8 +1077,8 @@
 								"vnfParametersList": {
 									"$ref": "genericNrm#/definitions/vnfParametersListType"
 								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
+								"eNBId": {
+									"$ref": "#/definitions/ENBId"
 								}
 							}
 						},
@@ -1326,8 +1326,8 @@
 								"cellLocalId": {
 									"$ref": "#/definitions/CellLocalId"
 								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
+								"eNBId": {
+									"$ref": "#/definitions/ENBId"
 								}
 							}
 						},
