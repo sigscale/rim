@@ -694,7 +694,7 @@
 									"$ref": "genericNrm#/definitions/peeParametersListType"
 								},
 								"nodeBFunctionIubLink": {
-									"type": "string"
+									"$ref": "genericNrm#/definitions/dn"
 								}
 							}
 						},
