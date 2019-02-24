@@ -1101,7 +1101,7 @@
 				}
 			]
 		},
-		"EUtranCellFDD": {
+		"EUtranGenericCell": {
 			"allOf": [
 				{
 					"$ref": "genericNrm#/definitions/NrmClass"
@@ -1237,9 +1237,6 @@
 						"utranRelation": {
 							"$ref": "utranNrm#/definitions/UtranRelations"
 						},
-						"eUtranCellFDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClasses"
-						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainers"
 						},
@@ -1253,13 +1250,47 @@
 				}
 			]
 		},
+		"EUtranCellFDD": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/EUtranGenericCell"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"earfcnDl",
+								"earfcnUl"
+							],
+							"properties": {
+								"earfcnDl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"earfcnUl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"eUtranCellFDDOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClasses"
+						}
+					}
+				}
+			]
+		},
 		"EUtranCellFDDs": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranCellFDD"
 			}
 		},
-		"ExternalEUtranCellFDD": {
+		"ExternalEUtranGenericCell": {
 			"allOf": [
 				{
 					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
@@ -1274,9 +1305,7 @@
 								"pci",
 								"pLMNIdList",
 								"cellAccessInfoList",
-								"cellLocalId",
-								"earfcnDl",
-								"earfcnUl"
+								"cellLocalId"
 							],
 							"properties": {
 								"userLabel": {
@@ -1299,7 +1328,37 @@
 								},
 								"enbId": {
 									"$ref": "#/definitions/EnbId"
-								},
+								}
+							}
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainers"
+						},
+						"cellOutageCompensationInformation": {
+							"$ref": "#/definitions/CellOutageCompensationInformation"
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+						}
+					}
+				}
+			]
+		},
+		"ExternalEUtranCellFDD": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/ExternalEUtranGenericCell"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"earfcnDl",
+								"earfcnUl"
+							],
+							"properties": {
 								"earfcnDl": {
 									"type": "integer",
 									"minimum": -32768,
@@ -1314,15 +1373,6 @@
 						},
 						"externalEUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClasses"
-						},
-						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
-						},
-						"cellOutageCompensationInformation": {
-							"$ref": "#/definitions/CellOutageCompensationInformation"
-						},
-						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
 						}
 					}
 				}
@@ -1345,108 +1395,11 @@
 						"attributes": {
 							"type": "object",
 							"required": [
-								"userLabel",
-								"cellLocalId",
-								"cellSize",
-								"pLMNIdList",
-								"cellAccessInfoList",
-								"tac",
-								"pci",
-								"maximumTransmissionPower",
-								"referenceSignalPower",
-								"pb",
-								"allowedAccessClasses",
 								"earfcn",
 								"sfAssignment",
 								"specialSfPatterns"
 							],
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
-								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
-								},
-								"cellLocalId": {
-									"$ref": "#/definitions/CellLocalId"
-								},
-								"cellLocalIdList": {
-									"$ref": "#/definitions/CellLocalIdList"
-								},
-								"cellSize": {
-									"$ref": "#/definitions/cellSize"
-								},
-								"pLMNIdList": {
-									"$ref": "#/definitions/PLMNIdList"
-								},
-								"cellAccessInfoList": {
-									"$ref": "#/definitions/CellAccessInfoList"
-								},
-								"tac": {
-									"type": "integer",
-									"minimum": -9223372036854775808,
-									"maximum": 9223372036854775807
-								},
-								"pci": {
-									"$ref": "#/definitions/Pci"
-								},
-								"pciList": {
-									"$ref": "#/definitions/PciList"
-								},
-								"maximumTransmissionPower": {
-									"$ref": "#/definitions/maximumTransmissionPower"
-								},
-								"partOfSectorPower": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"referenceSignalPower": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"pb": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"relatedTmaList": {
-									"$ref": "genericNrm#/definitions/dnList"
-								},
-								"relatedAntennaList": {
-									"$ref": "genericNrm#/definitions/dnList"
-								},
-								"relatedSector": {
-									"$ref": "genericNrm#/definitions/dn"
-								},
-								"operationalState": {
-									"$ref": "stateManagementIRP#/definitions/operationalStateType"
-								},
-								"administrativeState": {
-									"$ref": "stateManagementIRP#/definitions/administrativeStateType"
-								},
-								"availabilityStatus": {
-									"$ref": "stateManagementIRP#/definitions/availabilityStatusType"
-								},
-								"allowedAccessClasses": {
-									"$ref": "#/definitions/allowedAccessClassesType"
-								},
-								"cellResvInfo": {
-									"$ref": "#/definitions/cellResvInfoType"
-								},
-								"nbIoTcellFlag": {
-									"$ref": "#/definitions/yesNoType"
-								},
-								"isChangeForEnergySavingAllowed": {
-									"$ref": "#/definitions/yesNoType"
-								},
-								"ngranCellFlag": {
-									"$ref": "#/definitions/yesNoType"
-								},
-								"nSSAI": {
-									"$ref": "ngcNrm#/definitions/NssaiList"
-								},
 								"earfcn": {
 									"type": "integer",
 									"minimum": -32768,
@@ -1464,32 +1417,8 @@
 								}
 							}
 						},
-						"eUtranRelation": {
-							"$ref": "#/definitions/EUtranRelations"
-						},
-						"cdma2000Relation": {
-							"$ref": "#/definitions/Cdma2000Relations"
-						},
-						"gsmRelation": {
-							"$ref": "geranNrm#/definitions/GsmRelations"
-						},
-						"utranRelation": {
-							"$ref": "utranNrm#/definitions/UtranRelations"
-						},
 						"eUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClasses"
-						},
-						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
-						},
-						"energySavingProperties": {
-							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
-						},
-						"eSPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
-						},
-						"cellOutageCompensationInformation": {
-							"$ref": "#/definitions/CellOutageCompensationInformation"
 						}
 					}
 				}
@@ -1512,31 +1441,9 @@
 						"attributes": {
 							"type": "object",
 							"required": [
-								"userLabel",
-								"pci",
-								"pLMNIdList",
-								"cellLocalId",
 								"earfcn"
 							],
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
-								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
-								},
-								"pci": {
-									"$ref": "#/definitions/Pci"
-								},
-								"pLMNIdList": {
-									"$ref": "#/definitions/PLMNIdList"
-								},
-								"cellLocalId": {
-									"$ref": "#/definitions/CellLocalId"
-								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
-								},
 								"earfcn": {
 									"type": "integer",
 									"minimum": -32768,
@@ -1546,12 +1453,6 @@
 						},
 						"externalEUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClasses"
-						},
-						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
-						},
-						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
 						}
 					}
 				}
