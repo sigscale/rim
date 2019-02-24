@@ -1,0 +1,179 @@
+{
+	"name": "ENBFunction",
+	"description": "LTE eNB resource function specification",
+	"@type": "ENBFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ENBFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "ENB",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ENB"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "peeParametersList",
+			"description": "Parameter list for the control and monitoring of power, energy and environment",
+			"valueType": "peeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+		},
+		{
+			"name": "intraANRSwitch",
+			"description": "Whether the intra E-UTRAN ANR function is activated or deactivated.",
+			"valueType": "boolean"
+		},
+		{
+			"name": "iRATANRSwitch",
+			"description": "Whether the IRAT ANR function is activated or deactivated.",
+			"valueType": "boolean"
+		},
+		{
+			"name": "eNBId",
+			"description": "Unambiguously identifies an eNodeB within a PLMN",
+			"valueType": "ENBId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/ENBId"
+		},
+		{
+			"name": "x2BlackList",
+			"description": "List of target nodes prohibited X2 connections",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "x2WhiteList",
+			"description": "List of target nodes allowed X2 connections",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "x2HOBlackList",
+			"description": "List of target nodes prohibited handover",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "x2IpAddressList",
+			"description": "IP addresses used for this ENBFunction's X2 Interface",
+			"valueType": "string"
+		},
+		{
+			"name": "tceIDMappingInfoList",
+			"description": "List of Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
+			"valueType": "TceIDMappingInfoList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/TceIDMappingInfoList"
+		},
+		{
+			"name": "sharNetTceMappingInfoList",
+			"description": "List of shared PLMN ID, Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
+			"valueType": "SharNetTceMappingInfoList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/SharNetTceMappingInfoList"
+		},
+		{
+			"name": "netListeningRSForRIBS",
+			"description": "RS for RIBS ('Radio Interface based Synchronization' in 3GPP 36.300)",
+			"valueType": "NetListeningRSForRIBS",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/NetListeningRSForRIBS"
+		},
+		{
+			"name": "eUtranCellFDD",
+			"description": "LTE Frequency Division Duplex (FDD) Radio Cells",
+			"valueType": "EUtranCellFDDList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellFDDList"
+		},
+		{
+			"name": "eUtranCellTDD",
+			"description": "UMTS Time Division Duplex (TDD) Radio Cells",
+			"valueType": "EUtranCellTDDList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellTDDList"
+		},
+		{
+			"name": "eP_RP_EPS",
+			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
+			"valueType": "EP_RP_EPSList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
+		},
+		{
+			"name": "eP_X2C",
+			"description": "Endpoint of X2-C logical link to neighbour eNB or en-gNB node (3GPP 36.423)",
+			"valueType": "EP_X2CList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_X2CList"
+		},
+		{
+			"name": "eP_X2U",
+			"description": "Endpoint of X2 user plane (X2-U) logical link (3GPP 36.425)",
+			"valueType": "EP_X2UList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_X2UList"
+		},
+		{
+			"name": "eP_NgC",
+			"description": "Endpoint of NG control plane (NG-C) between gNB and NG-Core entity (3GPP 38.470)",
+			"valueType": "EP_NgCList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_NgCList"
+		},
+		{
+			"name": "eP_NgU",
+			"description": "Endpoint of NG user plane (NG-U) between gNB and UPGW (3GPP 38.470)",
+			"valueType": "EP_NgUList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_NgUList"
+		},
+		{
+			"name": "eP_XnC",
+			"description": "Endpoint of Xn Application protocols between neighbour gNB nodes (3GPP 38.420)",
+			"valueType": "EP_XnCList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnCList"
+		},
+		{
+			"name": "eP_XnU",
+			"description": "Endpoint of Xn user plane (Xn-U) logical link (3GPP 38.420)",
+			"valueType": "EP_XnUList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnUList"
+		},
+		{
+			"name": "deNBCapability",
+			"description": "Capability for eNodeB to act as Donor eNodeB (DeNB) (3GPP 36.300)",
+			"valueType": "DeNBCapabilityList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/DeNBCapabilityList"
+		},
+		{
+			"name": "vsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+		{
+			"name": "eSPolicies",
+			"description": "Energy saving policies information",
+			"valueType": "ESPoliciesList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"
+		}
+	]
+}
