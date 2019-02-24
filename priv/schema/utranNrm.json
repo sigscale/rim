@@ -410,7 +410,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -451,7 +451,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -651,22 +651,22 @@
 							}
 						},
 						"utranCellFDD": {
-							"$ref": "#/definitions/UtranCellFDDs"
+							"$ref": "#/definitions/UtranCellFDDList"
 						},
 						"utranCellTDDLcr": {
-							"$ref": "#/definitions/UtranCellTDDLcrs"
+							"$ref": "#/definitions/UtranCellTDDLcrList"
 						},
 						"utranCellTDDHcr": {
-							"$ref": "#/definitions/UtranCellTDDHcrs"
+							"$ref": "#/definitions/UtranCellTDDHcrList"
 						},
 						"iubLink": {
-							"$ref": "#/definitions/IubLinks"
+							"$ref": "#/definitions/IubLinkList"
 						},
 						"rncFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/RncFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/RncFunctionOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -699,10 +699,10 @@
 							}
 						},
 						"nodeBFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/NodeBFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/NodeBFunctionOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -836,10 +836,10 @@
 							"$ref": "geranNrm#/definitions/GsmRelations"
 						},
 						"utranGenericCellOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/UtranGenericCellOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/UtranGenericCellOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -904,13 +904,13 @@
 							}
 						},
 						"utranCellFDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/UtranCellFDDOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/UtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"UtranCellFDDs": {
+		"UtranCellFDDList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellFDD"
@@ -948,7 +948,7 @@
 							}
 						},
 						"utranCellTDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/UtranCellTDDOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/UtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
@@ -983,13 +983,13 @@
 							}
 						},
 						"utranCellTDDLcrOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/UtranCellTDDLcrOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/UtranCellTDDLcrOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"UtranCellTDDLcrs": {
+		"UtranCellTDDLcrList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellTDDLcr"
@@ -1027,13 +1027,13 @@
 							}
 						},
 						"utranCellTDDHcrOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/UtranCellTDDHcrOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/UtranCellTDDHcrOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"UtranCellTDDHcrs": {
+		"UtranCellTDDHcrList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellTDDHcr"
@@ -1068,16 +1068,16 @@
 							}
 						},
 						"iubLinkOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/IubLinkOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/IubLinkOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
 			]
 		},
-		"IubLinks": {
+		"IubLinkList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/IubLink"
@@ -1100,10 +1100,10 @@
 							}
 						},
 						"utranRelationOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/UtranRelationOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/UtranRelationOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1203,10 +1203,10 @@
 							}
 						},
 						"externalUtranGenericCellOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalUtranGenericCellOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalUtranGenericCellOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1262,13 +1262,13 @@
 							}
 						},
 						"externalUtranCellFDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalUtranCellFDDOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"ExternalUtranCellFDDs": {
+		"ExternalUtranCellFDDList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellFDD"
@@ -1306,7 +1306,7 @@
 							}
 						},
 						"externalUtranCellTDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalUtranCellTDDOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
@@ -1341,13 +1341,13 @@
 							}
 						},
 						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"ExternalUtranCellTDDHcrs": {
+		"ExternalUtranCellTDDHcrList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellTDDHcr"
@@ -1373,13 +1373,13 @@
 							}
 						},
 						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"ExternalUtranCellTDDLcrs": {
+		"ExternalUtranCellTDDLcrList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellTDDLcr"
@@ -1419,19 +1419,19 @@
 							}
 						},
 						"externalUtranCellFDD": {
-							"$ref": "#/definitions/ExternalUtranCellFDDs"
+							"$ref": "#/definitions/ExternalUtranCellFDDList"
 						},
 						"externalUtranCellTDDHcr": {
-							"$ref": "#/definitions/ExternalUtranCellTDDHcrs"
+							"$ref": "#/definitions/ExternalUtranCellTDDHcrList"
 						},
 						"externalUtranCellTDDLcr": {
-							"$ref": "#/definitions/ExternalUtranCellTDDLcrs"
+							"$ref": "#/definitions/ExternalUtranCellTDDLcrList"
 						},
 						"externalRncFunctionOptionallyContainedNrmClass": {
-								"$ref": "#/definitions/ExternalRncFunctionOptionallyContainedNrmClasses"
+								"$ref": "#/definitions/ExternalRncFunctionOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1460,7 +1460,7 @@
 		"RncFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"RncFunctionOptionallyContainedNrmClasses": {
+		"RncFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/RncFunctionOptionallyContainedNrmClass"
@@ -1469,7 +1469,7 @@
 		"NodeBFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"NodeBFunctionOptionallyContainedNrmClasses": {
+		"NodeBFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/NodeBFunctionOptionallyContainedNrmClass"
@@ -1478,7 +1478,7 @@
 		"UtranGenericCellOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"UtranGenericCellOptionallyContainedNrmClasses": {
+		"UtranGenericCellOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranGenericCellOptionallyContainedNrmClass"
@@ -1487,7 +1487,7 @@
 		"UtranCellFDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"UtranCellFDDOptionallyContainedNrmClasses": {
+		"UtranCellFDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellFDDOptionallyContainedNrmClass"
@@ -1496,7 +1496,7 @@
 		"UtranCellTDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"UtranCellTDDOptionallyContainedNrmClasses": {
+		"UtranCellTDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellTDDOptionallyContainedNrmClass"
@@ -1505,7 +1505,7 @@
 		"UtranCellTDDLcrOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"UtranCellTDDLcrOptionallyContainedNrmClasses": {
+		"UtranCellTDDLcrOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellTDDLcrOptionallyContainedNrmClass"
@@ -1514,7 +1514,7 @@
 		"UtranCellTDDHcrOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"UtranCellTDDHcrOptionallyContainedNrmClasses": {
+		"UtranCellTDDHcrOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranCellTDDHcrOptionallyContainedNrmClass"
@@ -1523,7 +1523,7 @@
 		"IubLinkOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"IubLinkOptionallyContainedNrmClasses": {
+		"IubLinkOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/IubLinkOptionallyContainedNrmClass"
@@ -1532,7 +1532,7 @@
 		"UtranRelationOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"UtranRelationOptionallyContainedNrmClasses": {
+		"UtranRelationOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranRelationOptionallyContainedNrmClass"
@@ -1541,7 +1541,7 @@
 		"ExternalUtranGenericCellOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalUtranGenericCellOptionallyContainedNrmClasses": {
+		"ExternalUtranGenericCellOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranGenericCellOptionallyContainedNrmClass"
@@ -1550,7 +1550,7 @@
 		"ExternalUtranCellFDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalUtranCellFDDOptionallyContainedNrmClasses": {
+		"ExternalUtranCellFDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellFDDOptionallyContainedNrmClass"
@@ -1559,7 +1559,7 @@
 		"ExternalUtranCellTDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalUtranCellTDDOptionallyContainedNrmClasses": {
+		"ExternalUtranCellTDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellTDDOptionallyContainedNrmClass"
@@ -1568,7 +1568,7 @@
 		"ExternalUtranCellTDDHcrOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalUtranCellTDDHcrOptionallyContainedNrmClasses": {
+		"ExternalUtranCellTDDHcrOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClass"
@@ -1577,7 +1577,7 @@
 		"ExternalUtranCellTDDLcrOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalUtranCellTDDLcrOptionallyContainedNrmClasses": {
+		"ExternalUtranCellTDDLcrOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClass"
@@ -1586,7 +1586,7 @@
 		"ExternalRncFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalRncFunctionOptionallyContainedNrmClasses": {
+		"ExternalRncFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalRncFunctionOptionallyContainedNrmClass"

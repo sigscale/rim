@@ -63,7 +63,7 @@
 							"$ref": "#/definitions/BtsSiteMgrs"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -101,13 +101,13 @@
 							}
 						},
 						"gsmCell": {
-							"$ref": "#/definitions/GsmCells"
+							"$ref": "#/definitions/GsmCellList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
 				}
@@ -226,22 +226,22 @@
 							}
 						},
 						"gsmRelation": {
-							"$ref": "#/definitions/GsmRelations"
+							"$ref": "#/definitions/GsmRelationList"
 						},
 						"utranRelation": {
-							"$ref": "utranNrm#/definitions/UtranRelations"
+							"$ref": "utranNrm#/definitions/UtranRelationList"
 						},
 						"eUtranRelation": {
-							"$ref": "eutranNrm#/definitions/EUtranRelations"
+							"$ref": "eutranNrm#/definitions/EUtranRelationList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"gsmCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/GsmCellOptionallyContainedNrmClasses"
 						},
 						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
 				}
@@ -300,7 +300,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -385,12 +385,12 @@
 							}
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"interRatEsPolicies": {
 							"type": "object",
 							"items": {
-								"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+								"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 							}
 						}
 					}
@@ -426,7 +426,7 @@
 							}
 						},
 						"externalGsmCell": {
-							"$ref": "#/definitions/ExternalGsmCells"
+							"$ref": "#/definitions/ExternalGsmCellList"
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainer"
