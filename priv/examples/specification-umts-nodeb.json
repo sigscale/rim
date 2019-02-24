@@ -47,9 +47,28 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
 		},
 		{
+			"name": "utranCellFDD",
+			"description": "UMTS Frequency Division Duplex (FDD) Radio Cells",
+			"valueType": "UtranCellFDDList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellFDDList"
+		},
+		{
+			"name": "utranCellTDDLcr",
+			"description": "UMTS Time Division Duplex (TDD) low chip rate (LCR) Radio Cells",
+			"valueType": "UtranCellTDDLcrList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDLcrList"
+		},
+		{
+			"name": "utranCellTDDHcr",
+			"description": "UMTS Time Division Duplex (TDD) high chip rate (HCR) Radio Cells",
+			"valueType": "UtranCellTDDHcrList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDHcrList"
+		},
+		{
 			"name": "nodeBFunctionIubLink",
 			"description": "DN of a logical link to an RNC as seen by a NodeB",
-			"valueType": "string"
+			"valueType": "dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
 		},
 		{
 			"name": "vsDataContainer",
