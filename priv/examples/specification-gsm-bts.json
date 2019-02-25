@@ -54,7 +54,7 @@
 		},
 		{
 			"name": "operationalState",
-			"description": "Indicates the operational state of the object instance",
+			"description": "Indicates the operational state of the object instance (ITU-T X.731)",
 			"valueType": "operationalStateType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/operationalStateType"
 		},
