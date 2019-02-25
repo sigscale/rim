@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/UtranCellTDDHcrSpecification",
 	"title": "UTRAN TDD HCR Cell Specification",
-	"description": "UTRAN Time Division Duplex (TDD) high chip rate (HCR) radio resource function specification",
+	"description": "UMTS Time Division Duplex (TDD) high chip rate (HCR) radio resource function specification",
 	"type": "object",
 	"allOf": [
 		{

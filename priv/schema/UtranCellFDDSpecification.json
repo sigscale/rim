@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/UtranCellFDDSpecification",
 	"title": "UTRAN FDD Cell Specification",
-	"description": "UTRAN Frequency Division Duplex (FDD) radio resource function specification",
+	"description": "UMTS Frequency Division Duplex (FDD) radio resource function specification",
 	"allOf": [
 		{
 			"$ref": "UtranGenericCellSpecification"
