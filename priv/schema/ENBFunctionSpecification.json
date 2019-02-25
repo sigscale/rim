@@ -1,0 +1,62 @@
+{
+	"$id": "http://sigscale.org/schema/ENBFunction",
+	"title": "EUTRAN ENB Specification",
+	"description": "LTE Evolved Node B (ENB) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"peeParametersList",
+											"intraANRSwitch",
+											"iRATANRSwitch",
+											"eNBId",
+											"x2BlackList",
+											"x2WhiteList",
+											"x2HOBlackList",
+											"x2IpAddressList",
+											"tceIDMappingInfoList",
+											"sharNetTceMappingInfoList",
+											"netListeningRSForRIBS",
+											"eUtranCellFDD",
+											"eUtranCellTDD",
+											"eP_RP_EPS",
+											"eP_X2C",
+											"eP_X2U",
+											"eP_NgC",
+											"eP_NgU",
+											"eP_XnC",
+											"eP_XnU",
+											"deNBCapability",
+											"vsDataContainer",
+											"eSPolicies"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
