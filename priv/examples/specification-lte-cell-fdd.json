@@ -93,28 +93,28 @@
 			"name": "maximumTransmissionPower",
 			"description": "Maximum power for all downlink channels used simultaneously, added together",
 			"valueType": "integer",
-			"valueFrom": −32768,
+			"valueFrom": -32768,
 			"valueTo": 32767
 		},
 		{
 			"name": "partOfSectorPower",
 			"description": "Requested % power allocated to the cell",
 			"valueType": "integer",
-			"valueFrom": −32768,
+			"valueFrom": -32768,
 			"valueTo": 32767
 		},
 		{
 			"name": "referenceSignalPower",
 			"description": "Cell specific downlink reference signal transmit power (3GPP 36.213)",
 			"valueType": "integer",
-			"valueFrom": −32768,
+			"valueFrom": -32768,
 			"valueTo": 32767
 		},
 		{
 			"name": "pb",
 			"description": "Downlink power allocation ('PB' in 3GPP 36.213 Section 5.2 of 3GPP 36.213)",
 			"valueType": "integer",
-			"valueFrom": −32768,
+			"valueFrom": -32768,
 			"valueTo": 32767
 		},
 		{
