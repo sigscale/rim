@@ -10,7 +10,7 @@
 				}
 			}
 		},
-		"EnbId": {
+		"ENBId": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 268435455
@@ -585,6 +585,12 @@
 				}
 			]
 		},
+		"CellOutageCompensationInformationList": {
+			"type": "array",
+			"item": {
+				"$ref": "#/definitions/CellOutageCompensationInformation"
+			}
+		},
 		"NumOfCRSPorts": {
 			"type": "integer",
 			"minimum": 1,
@@ -864,8 +870,8 @@
 								"iRATANRSwitch": {
 									"type": "boolean"
 								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
+								"eNBId": {
+									"$ref": "#/definitions/ENBId"
 								},
 								"x2BlackList": {
 									"$ref": "genericNrm#/definitions/dnList"
@@ -891,43 +897,43 @@
 							}
 						},
 						"eUtranCellFDD": {
-							"$ref": "#/definitions/EUtranCellFDDs"
+							"$ref": "#/definitions/EUtranCellFDDList"
 						},
 						"eUtranCellTDD": {
-							"$ref": "#/definitions/EUtranCellTDDs"
+							"$ref": "#/definitions/EUtranCellTDDList"
 						},
 						"eP_RP_EPS": {
-							"$ref": "epcNrm#/definitions/EP_RP_EPSs"
+							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
 						"eP_X2C": {
-							"$ref": "nrNrm#/definitions/EP_X2Cs"
+							"$ref": "nrNrm#/definitions/EP_X2CList"
 						},
 						"eP_X2U": {
-							"$ref": "nrNrm#/definitions/EP_X2Us"
+							"$ref": "nrNrm#/definitions/EP_X2UList"
 						},
 						"eP_NgC": {
-							"$ref": "nrNrm#/definitions/EP_NgCs"
+							"$ref": "nrNrm#/definitions/EP_NgCList"
 						},
 						"eP_NgU": {
-							"$ref": "nrNrm#/definitions/EP_NgUs"
+							"$ref": "nrNrm#/definitions/EP_NgUList"
 						},
 						"eP_XnC": {
-							"$ref": "nrNrm#/definitions/EP_XnCs"
+							"$ref": "nrNrm#/definitions/EP_XnCList"
 						},
 						"eP_XnU": {
-							"$ref": "nrNrm#/definitions/EP_XnUs"
+							"$ref": "nrNrm#/definitions/EP_XnUList"
 						},
 						"eNBFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClassList"
 						},
 						"deNBCapability": {
-							"$ref": "#/definitions/DeNBCapabilities"
+							"$ref": "#/definitions/DeNBCapabilityList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"eSPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
 				}
@@ -963,13 +969,13 @@
 							}
 						},
 						"eP_RP_EPS": {
-							"$ref": "epcNrm#/definitions/EP_RP_EPSs"
+							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
 						"rNFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1013,7 +1019,7 @@
 				}
 			]
 		},
-		"DeNBCapabilities": {
+		"DeNBCapabilityList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/DeNBCapability"
@@ -1045,13 +1051,13 @@
 							}
 						},
 						"eP_RP_EPS": {
-							"$ref": "epcNrm#/definitions/EP_RP_EPSs"
+							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
 						"externalRNFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1077,31 +1083,31 @@
 								"vnfParametersList": {
 									"$ref": "genericNrm#/definitions/vnfParametersListType"
 								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
+								"eNBId": {
+									"$ref": "#/definitions/ENBId"
 								}
 							}
 						},
 						"externalEUtranCellFDD": {
-							"$ref": "#/definitions/ExternalEUtranCellFDDs"
+							"$ref": "#/definitions/ExternalEUtranCellFDDList"
 						},
 						"externalEUtranCellTDD": {
-							"$ref": "#/definitions/ExternalEUtranCellTDDs"
+							"$ref": "#/definitions/ExternalEUtranCellTDDList"
 						},
 						"externalENBFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
 				}
 			]
 		},
-		"EUtranCellFDD": {
+		"EUtranGenericCell": {
 			"allOf": [
 				{
 					"$ref": "genericNrm#/definitions/NrmClass"
@@ -1226,40 +1232,71 @@
 							}
 						},
 						"eUtranRelation": {
-							"$ref": "#/definitions/EUtranRelations"
+							"$ref": "#/definitions/EUtranRelationList"
 						},
 						"cdma2000Relation": {
-							"$ref": "#/definitions/Cdma2000Relations"
+							"$ref": "#/definitions/Cdma2000RelationList"
 						},
 						"gsmRelation": {
-							"$ref": "geranNrm#/definitions/GsmRelations"
+							"$ref": "geranNrm#/definitions/GsmRelationList"
 						},
 						"utranRelation": {
-							"$ref": "utranNrm#/definitions/UtranRelations"
-						},
-						"eUtranCellFDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClasses"
+							"$ref": "utranNrm#/definitions/UtranRelationList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"energySavingProperties": {
-							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
+							"$ref": "sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 						},
 						"eSPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
 				}
 			]
 		},
-		"EUtranCellFDDs": {
+		"EUtranCellFDD": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/EUtranGenericCell"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"earfcnDl",
+								"earfcnUl"
+							],
+							"properties": {
+								"earfcnDl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"earfcnUl": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"eUtranCellFDDOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClassList"
+						}
+					}
+				}
+			]
+		},
+		"EUtranCellFDDList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranCellFDD"
 			}
 		},
-		"ExternalEUtranCellFDD": {
+		"ExternalEUtranGenericCell": {
 			"allOf": [
 				{
 					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
@@ -1274,9 +1311,7 @@
 								"pci",
 								"pLMNIdList",
 								"cellAccessInfoList",
-								"cellLocalId",
-								"earfcnDl",
-								"earfcnUl"
+								"cellLocalId"
 							],
 							"properties": {
 								"userLabel": {
@@ -1297,9 +1332,39 @@
 								"cellLocalId": {
 									"$ref": "#/definitions/CellLocalId"
 								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
-								},
+								"eNBId": {
+									"$ref": "#/definitions/ENBId"
+								}
+							}
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						},
+						"cellOutageCompensationInformation": {
+							"$ref": "#/definitions/CellOutageCompensationInformationList"
+						},
+						"interRatEsPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalEUtranCellFDD": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/ExternalEUtranGenericCell"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"earfcnDl",
+								"earfcnUl"
+							],
+							"properties": {
 								"earfcnDl": {
 									"type": "integer",
 									"minimum": -32768,
@@ -1313,22 +1378,13 @@
 							}
 						},
 						"externalEUtranCellFDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClasses"
-						},
-						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
-						},
-						"cellOutageCompensationInformation": {
-							"$ref": "#/definitions/CellOutageCompensationInformation"
-						},
-						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+							"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"ExternalEUtranCellFDDs": {
+		"ExternalEUtranCellFDDList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalEUtranCellFDD"
@@ -1345,108 +1401,11 @@
 						"attributes": {
 							"type": "object",
 							"required": [
-								"userLabel",
-								"cellLocalId",
-								"cellSize",
-								"pLMNIdList",
-								"cellAccessInfoList",
-								"tac",
-								"pci",
-								"maximumTransmissionPower",
-								"referenceSignalPower",
-								"pb",
-								"allowedAccessClasses",
 								"earfcn",
 								"sfAssignment",
 								"specialSfPatterns"
 							],
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
-								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
-								},
-								"cellLocalId": {
-									"$ref": "#/definitions/CellLocalId"
-								},
-								"cellLocalIdList": {
-									"$ref": "#/definitions/CellLocalIdList"
-								},
-								"cellSize": {
-									"$ref": "#/definitions/cellSize"
-								},
-								"pLMNIdList": {
-									"$ref": "#/definitions/PLMNIdList"
-								},
-								"cellAccessInfoList": {
-									"$ref": "#/definitions/CellAccessInfoList"
-								},
-								"tac": {
-									"type": "integer",
-									"minimum": -9223372036854775808,
-									"maximum": 9223372036854775807
-								},
-								"pci": {
-									"$ref": "#/definitions/Pci"
-								},
-								"pciList": {
-									"$ref": "#/definitions/PciList"
-								},
-								"maximumTransmissionPower": {
-									"$ref": "#/definitions/maximumTransmissionPower"
-								},
-								"partOfSectorPower": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"referenceSignalPower": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"pb": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"relatedTmaList": {
-									"$ref": "genericNrm#/definitions/dnList"
-								},
-								"relatedAntennaList": {
-									"$ref": "genericNrm#/definitions/dnList"
-								},
-								"relatedSector": {
-									"$ref": "genericNrm#/definitions/dn"
-								},
-								"operationalState": {
-									"$ref": "stateManagementIRP#/definitions/operationalStateType"
-								},
-								"administrativeState": {
-									"$ref": "stateManagementIRP#/definitions/administrativeStateType"
-								},
-								"availabilityStatus": {
-									"$ref": "stateManagementIRP#/definitions/availabilityStatusType"
-								},
-								"allowedAccessClasses": {
-									"$ref": "#/definitions/allowedAccessClassesType"
-								},
-								"cellResvInfo": {
-									"$ref": "#/definitions/cellResvInfoType"
-								},
-								"nbIoTcellFlag": {
-									"$ref": "#/definitions/yesNoType"
-								},
-								"isChangeForEnergySavingAllowed": {
-									"$ref": "#/definitions/yesNoType"
-								},
-								"ngranCellFlag": {
-									"$ref": "#/definitions/yesNoType"
-								},
-								"nSSAI": {
-									"$ref": "ngcNrm#/definitions/NssaiList"
-								},
 								"earfcn": {
 									"type": "integer",
 									"minimum": -32768,
@@ -1464,38 +1423,14 @@
 								}
 							}
 						},
-						"eUtranRelation": {
-							"$ref": "#/definitions/EUtranRelations"
-						},
-						"cdma2000Relation": {
-							"$ref": "#/definitions/Cdma2000Relations"
-						},
-						"gsmRelation": {
-							"$ref": "geranNrm#/definitions/GsmRelations"
-						},
-						"utranRelation": {
-							"$ref": "utranNrm#/definitions/UtranRelations"
-						},
 						"eUtranCellTDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClasses"
-						},
-						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
-						},
-						"energySavingProperties": {
-							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
-						},
-						"eSPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
-						},
-						"cellOutageCompensationInformation": {
-							"$ref": "#/definitions/CellOutageCompensationInformation"
+							"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"EUtranCellTDDs": {
+		"EUtranCellTDDList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranCellTDD"
@@ -1512,31 +1447,9 @@
 						"attributes": {
 							"type": "object",
 							"required": [
-								"userLabel",
-								"pci",
-								"pLMNIdList",
-								"cellLocalId",
 								"earfcn"
 							],
 							"properties": {
-								"userLabel": {
-									"type": "string"
-								},
-								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
-								},
-								"pci": {
-									"$ref": "#/definitions/Pci"
-								},
-								"pLMNIdList": {
-									"$ref": "#/definitions/PLMNIdList"
-								},
-								"cellLocalId": {
-									"$ref": "#/definitions/CellLocalId"
-								},
-								"enbId": {
-									"$ref": "#/definitions/EnbId"
-								},
 								"earfcn": {
 									"type": "integer",
 									"minimum": -32768,
@@ -1545,19 +1458,13 @@
 							}
 						},
 						"externalEUtranCellTDDOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClasses"
-						},
-						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
-						},
-						"interRatEsPolicies": {
-							"$ref": "sonPolicyNrm#/definitions/InterRatEsPolicies"
+							"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
 				}
 			]
 		},
-		"ExternalEUtranCellTDDs": {
+		"ExternalEUtranCellTDDList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalEUtranCellTDD"
@@ -1609,16 +1516,16 @@
 							}
 						},
 						"eUtranRelationOptionallyContainedNrmClass": {
-								"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClasses"
+								"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
 			]
 		},
-		"EUtranRelations": {
+		"EUtranRelationList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranRelation"
@@ -1644,16 +1551,16 @@
 							}
 						},
 						"cdma2000RelationOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
 			]
 		},
-		"Cdma2000Relations": {
+		"Cdma2000RelationList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/Cdma2000Relation"
@@ -1696,10 +1603,10 @@
 							}
 						},
 						"link_ENB_ENBOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1728,13 +1635,13 @@
 							}
 						},
 						"mCEFunctionOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClassList"
 						},
 						"mBSFNArea": {
-							"$ref": "#/definitions/MBSFNAreas"
+							"$ref": "#/definitions/MBSFNAreaList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1760,16 +1667,16 @@
 							}
 						},
 						"mBSFNAreaOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
 			]
 		},
-		"MBSFNAreas": {
+		"MBSFNAreaList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/MBSFNArea"
@@ -1807,10 +1714,10 @@
 							}
 						},
 						"link_MCE_ENBOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1848,10 +1755,10 @@
 							}
 						},
 						"link_MCE_MMEOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClassList"
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1884,7 +1791,7 @@
 							}
 						},
 						"vsDataContainer": {
-							"$ref": "genericNrm#/definitions/VsDataContainers"
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
@@ -1893,7 +1800,7 @@
 		"ENBFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ENBFunctionOptionallyContainedNrmClasses": {
+		"ENBFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClass"
@@ -1902,7 +1809,7 @@
 		"ExternalENBFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalENBFunctionOptionallyContainedNrmClasses": {
+		"ExternalENBFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClass"
@@ -1911,7 +1818,7 @@
 		"EUtranCellFDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"EUtranCellFDDOptionallyContainedNrmClasses": {
+		"EUtranCellFDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClass"
@@ -1920,7 +1827,7 @@
 		"ExternalEUtranCellFDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalEUtranCellFDDOptionallyContainedNrmClasses": {
+		"ExternalEUtranCellFDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClass"
@@ -1929,7 +1836,7 @@
 		"EUtranCellTDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"EUtranCellTDDOptionallyContainedNrmClasses": {
+		"EUtranCellTDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClass"
@@ -1938,7 +1845,7 @@
 		"ExternalEUtranCellTDDOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalEUtranCellTDDOptionallyContainedNrmClasses": {
+		"ExternalEUtranCellTDDOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClass"
@@ -1947,7 +1854,7 @@
 		"EUtranRelationOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"EUtranRelationOptionallyContainedNrmClasses": {
+		"EUtranRelationOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClass"
@@ -1956,7 +1863,7 @@
 		"Cdma2000RelationOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"Cdma2000RelationOptionallyContainedNrmClasses": {
+		"Cdma2000RelationOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClass"
@@ -1965,7 +1872,7 @@
 		"Link_ENB_ENBOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"Link_ENB_ENBOptionallyContainedNrmClasses": {
+		"Link_ENB_ENBOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClass"
@@ -1974,7 +1881,7 @@
 		"MCEFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"MCEFunctionOptionallyContainedNrmClasses": {
+		"MCEFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClass"
@@ -1983,7 +1890,7 @@
 		"Link_MCE_ENBOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"Link_MCE_ENBOptionallyContainedNrmClasses": {
+		"Link_MCE_ENBOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClass"
@@ -1992,7 +1899,7 @@
 		"Link_MCE_MMEOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"Link_MCE_MMEOptionallyContainedNrmClasses": {
+		"Link_MCE_MMEOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClass"
@@ -2001,7 +1908,7 @@
 		"MBSFNAreaOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"MBSFNAreaOptionallyContainedNrmClasses": {
+		"MBSFNAreaOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClass"
@@ -2010,7 +1917,7 @@
 		"RNFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"RNFunctionOptionallyContainedNrmClasses": {
+		"RNFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClass"
@@ -2019,7 +1926,7 @@
 		"ExternalRNFunctionOptionallyContainedNrmClass": {
 			"$ref": "genericNrm#/definitions/NrmClass"
 		},
-		"ExternalRNFunctionOptionallyContainedNrmClasses": {
+		"ExternalRNFunctionOptionallyContainedNrmClassList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClass"

@@ -31,10 +31,12 @@
 	"resourceSpecCharacteristic": [
 		{
 			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
 			"valueType": "string"
 		},
 		{
 			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
@@ -312,13 +314,13 @@
 			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
 			"valueType": "UtranRelations",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelations"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
 			"name": "gsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelations",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelations"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
 			"name": "vsDataContainer",

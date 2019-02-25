@@ -31,6 +31,7 @@
 	"resourceSpecCharacteristic": [
 		{
 			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
 			"valueType": "string"
 		},
 		{
@@ -73,7 +74,7 @@
 			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information.",
 			"valueType": "InterRatEsPolicies",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 		}
 	]
 }

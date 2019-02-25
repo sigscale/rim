@@ -43,7 +43,7 @@
 				"Sunday"
 			]
 		},
-		"WeekDays": {
+		"WeekDayList": {
 			"type": "array",
 			"maxItems": 7,
 			"items": {
@@ -128,7 +128,7 @@
 			"type": "object",
 			"properties": {
 				"Day": {
-					"$ref": "#/definitions/WeekDays"
+					"$ref": "#/definitions/WeekDayList"
 				},
 				"PeriodOfDay": {
 					"$ref": "#/definitions/DailyPeriod"

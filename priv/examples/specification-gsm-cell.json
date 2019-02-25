@@ -31,10 +31,12 @@
 	"resourceSpecCharacteristic": [
 		{
 			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
 			"valueType": "string"
 		},
 		{
 			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
@@ -214,7 +216,7 @@
 			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information",
 			"valueType": "InterRatEsPolicies",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPolicies"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 		}
 	]
 }

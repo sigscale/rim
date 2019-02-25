@@ -1,9 +1,9 @@
 {
-	"name": "BssFunction",
-	"description": "GSM Base Station Subsystem (BSS) resource function specification",
-	"@type": "BssFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"name": "EUtranCellFDD",
+	"description": "LTE Frequency Division Duplex (FDD) Cell resource function specification",
+	"@type": "EUtranCellFDDSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EUtranCellFDDSpecification",
+	"@baseType": "EUtranGenericCell",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
@@ -13,8 +13,8 @@
 	"isBundle": false,
 	"category": "RAN",
 	"targetResourceSchema": {
-		"@type": "BssFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunction"
+		"@type": "EUtranCellFDD",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EUtranCellFDD"
 	},
 	"relatedParty": [
 		{
@@ -40,17 +40,20 @@
 			"valueType": "VnfParametersList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
-		{
-			"name": "btsSiteMgr",
-			"description": "Base Tranceiver Station (BTS) sites",
-			"valueType": "BtsSiteMgrList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
 		},
+...
 		{
 			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+...
+		{
+			"name": "eSPolicies",
+			"description": "Energy saving policies information",
+			"valueType": "ESPoliciesList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"
 		}
 	]
 }
