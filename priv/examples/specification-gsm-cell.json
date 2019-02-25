@@ -215,7 +215,7 @@
 		{
 			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information",
-			"valueType": "InterRatEsPolicies",
+			"valueType": "InterRatEsPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 		}
 	]

@@ -1,6 +1,6 @@
 {
 	"name": "BtsSiteMgr",
-	"description": "GSM Base Transceiver Station (BTS)",
+	"description": "GSM Base Transceiver Station (BTS) resource specification",
 	"@type": "BtsSiteMgrSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification",
 	"@baseType": "ResourceFunctionSpecification",
@@ -56,7 +56,7 @@
 			"name": "operationalState",
 			"description": "Indicates the operational state of the object instance (ITU-T X.731)",
 			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/operationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/operationalStateType"
 		},
 		{
 			"name": "gsmCell",
@@ -73,7 +73,7 @@
 		{
 			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information.",
-			"valueType": "InterRatEsPolicies",
+			"valueType": "InterRatEsPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 		}
 	]

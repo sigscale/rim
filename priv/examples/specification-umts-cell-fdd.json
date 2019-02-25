@@ -128,7 +128,7 @@
 			"name": "operationalState",
 			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
 			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schemastateManagementIRP#/definitions/operationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/operationalStateType"
 		},
 		{
 			"name": "hsFlag",
@@ -337,13 +337,13 @@
 		{
 			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
-			"valueType": "UtranRelations",
+			"valueType": "UtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
 			"name": "gsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
-			"valueType": "GsmRelations",
+			"valueType": "GsmRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationsList"
 		},
 		{
