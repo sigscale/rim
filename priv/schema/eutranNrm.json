@@ -1128,9 +1128,7 @@
 								"maximumTransmissionPower",
 								"referenceSignalPower",
 								"pb",
-								"allowedAccessClasses",
-								"earfcnDl",
-								"earfcnUl"
+								"allowedAccessClasses"
 							],
 							"properties": {
 								"userLabel": {
@@ -1166,7 +1164,9 @@
 									"$ref": "#/definitions/PciList"
 								},
 								"maximumTransmissionPower": {
-									"$ref": "#/definitions/maximumTransmissionPower"
+									"type": "integer",
+									"minimum": −32768,
+									"maximum": 32767
 								},
 								"partOfSectorPower": {
 									"type": "integer",
@@ -1218,16 +1218,6 @@
 								},
 								"nSSAI": {
 									"$ref": "ngcNrm#/definitions/NssaiList"
-								},
-								"earfcnDl": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
-								},
-								"earfcnUl": {
-									"type": "integer",
-									"minimum": -32768,
-									"maximum": 32767
 								}
 							}
 						},
