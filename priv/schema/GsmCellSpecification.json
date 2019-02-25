@@ -41,11 +41,11 @@
 											"rfHoppingEnabled",
 											"hoppingSequenceList",
 											"plmnPermitted",
-											"gsmRelation",
-											"utranRelation",
-											"eUtranRelation",
-											"vsDataContainer",
-											"interRatEsPolicies"
+											"GsmRelation",
+											"UtranRelation",
+											"EUtranRelation",
+											"VsDataContainer",
+											"InterRatEsPolicies"
 										]
 									}
 								}

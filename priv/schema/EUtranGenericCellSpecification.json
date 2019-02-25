@@ -54,13 +54,13 @@
 						"isChangeForEnergySavingAllowed",
 						"ngranCellFlag",
 						"nSSAI",
-						"eUtranRelation",
-						"cdma2000Relation",
-						"gsmRelation",
-						"utranRelation",
-						"vsDataContainer",
-						"energySavingProperties",
-						"eSPolicies"
+						"EUtranRelation",
+						"Cdma2000Relation",
+						"GsmRelation",
+						"UtranRelation",
+						"VsDataContainer",
+						"EnergySavingProperties",
+						"ESPolicies"
 					]
 				}
 			}

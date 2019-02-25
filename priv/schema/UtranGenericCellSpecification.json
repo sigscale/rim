@@ -64,9 +64,9 @@
 						"restrictionStateIndicator",
 						"dpcModechangeSupportIndicator",
 						"relatedSectorEquipment",
-						"utranRelation",
-						"gsmRelation",
-						"vsDataContainer"
+						"UtranRelation",
+						"GsmRelation",
+						"VsDataContainer"
 					]
 				}
 			}

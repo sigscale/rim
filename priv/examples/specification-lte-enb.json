@@ -104,73 +104,73 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/NetListeningRSForRIBS"
 		},
 		{
-			"name": "eUtranCellFDD",
+			"name": "EUtranCellFDD",
 			"description": "LTE Frequency Division Duplex (FDD) Radio Cells",
 			"valueType": "EUtranCellFDDList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellFDDList"
 		},
 		{
-			"name": "eUtranCellTDD",
+			"name": "EUtranCellTDD",
 			"description": "UMTS Time Division Duplex (TDD) Radio Cells",
 			"valueType": "EUtranCellTDDList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellTDDList"
 		},
 		{
-			"name": "eP_RP_EPS",
+			"name": "EP_RP_EPS",
 			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
 			"valueType": "EP_RP_EPSList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
 		},
 		{
-			"name": "eP_X2C",
+			"name": "EP_X2C",
 			"description": "Endpoint of X2-C logical link to neighbour eNB or en-gNB node (3GPP 36.423)",
 			"valueType": "EP_X2CList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_X2CList"
 		},
 		{
-			"name": "eP_X2U",
+			"name": "EP_X2U",
 			"description": "Endpoint of X2 user plane (X2-U) logical link (3GPP 36.425)",
 			"valueType": "EP_X2UList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_X2UList"
 		},
 		{
-			"name": "eP_NgC",
+			"name": "EP_NgC",
 			"description": "Endpoint of NG control plane (NG-C) between gNB and NG-Core entity (3GPP 38.470)",
 			"valueType": "EP_NgCList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_NgCList"
 		},
 		{
-			"name": "eP_NgU",
+			"name": "EP_NgU",
 			"description": "Endpoint of NG user plane (NG-U) between gNB and UPGW (3GPP 38.470)",
 			"valueType": "EP_NgUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_NgUList"
 		},
 		{
-			"name": "eP_XnC",
+			"name": "EP_XnC",
 			"description": "Endpoint of Xn Application protocols between neighbour gNB nodes (3GPP 38.420)",
 			"valueType": "EP_XnCList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnCList"
 		},
 		{
-			"name": "eP_XnU",
+			"name": "EP_XnU",
 			"description": "Endpoint of Xn user plane (Xn-U) logical link (3GPP 38.420)",
 			"valueType": "EP_XnUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnUList"
 		},
 		{
-			"name": "deNBCapability",
+			"name": "DeNBCapability",
 			"description": "Capability for eNodeB to act as Donor eNodeB (DeNB) (3GPP 36.300)",
 			"valueType": "DeNBCapabilityList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/DeNBCapabilityList"
 		},
 		{
-			"name": "vsDataContainer",
+			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "eSPolicies",
+			"name": "ESPolicies",
 			"description": "Energy saving policies information",
 			"valueType": "ESPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"

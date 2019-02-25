@@ -97,31 +97,31 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
 		},
 		{
-			"name": "utranCellFDD",
+			"name": "UtranCellFDD",
 			"description": "Frequency Division Duplex (FDD) radio cells controlled by an RNC",
 			"valueType": "UtranCellFDDList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellFDDList"
 		},
 		{
-			"name": "utranCellTDDLcr",
+			"name": "UtranCellTDDLcr",
 			"description": "Time Division Duplex (TDD) low chip rate (LCR) radio cell controlled by an RNC",
 			"valueType": "UtranCellTDDLcrList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDLcrList"
 		},
 		{
-			"name": "utranCellTDDHcr",
+			"name": "UtranCellTDDHcr",
 			"description": "Time Division Duplex (TDD) high chip rate (HCR) radio cell controlled by an RNC",
 			"valueType": "UtranCellTDDHcrList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDHcrList"
 		},
 		{
-			"name": "iubLink",
+			"name": "IubLink",
 			"description": "Logical link to a NodeB as seen from the RNC",
 			"valueType": "IubLinkList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/IubLinkList"
 		},
 		{
-			"name": "vsDataContainer",
+			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

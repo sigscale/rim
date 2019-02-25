@@ -187,7 +187,7 @@ parse_bss_attr1([{endElement, {"gn", Attr}} | T],
 parse_bss_attr1([], undefined,
 		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId,
 		btss = Btss} = State, Acc) ->
-	BtsSiteMgr = #resource_char{name = "btsSiteMgr", value = Btss},
+	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
 	Resource = #resource{name = DnPrefix ++ SubId ++ BssId,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
@@ -262,7 +262,7 @@ parse_bts_attr1([{endElement, {"gn", Attr}} | T],
 parse_bts_attr1([], undefined,
 		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId, bts = BtsId,
 		btss = Btss, cells = Cells} = State, Acc) ->
-	GsmCell = #resource_char{name = "gsmCell", value = Cells},
+	GsmCell = #resource_char{name = "GsmCell", value = Cells},
 	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
@@ -400,7 +400,7 @@ parse_gsm_cell_rels([{startElement,
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
-		{"en", "EutranRelation"} = QName, XmlAttr} | T1],
+		{"en", "EUtranRelation"} = QName, XmlAttr} | T1],
 		State, Characteristics, #{eutranRel := EutranRels} = Acc) ->
 	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
 	{[_ | Attributes], T2} = pop(endElement, QName, T1),
@@ -414,15 +414,15 @@ parse_gsm_cell_rels(CellStack,
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
 			(gsmRel, R, Acc1) ->
-				[#resource_char{name = "gsmRelation", value = R} | Acc1];
+				[#resource_char{name = "GsmRelation", value = R} | Acc1];
 			(utranReln, [], Acc1) ->
 				Acc1;
 			(utranRel, R, Acc1) ->
-				[#resource_char{name = "utranRelation", value = R} | Acc1];
+				[#resource_char{name = "UtranRelation", value = R} | Acc1];
 			(eutranRel, [], Acc1) ->
 				Acc1;
 			(eutranRel, R, Acc1) ->
-				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
+				[#resource_char{name = "EUtranRelation", value = R} | Acc1]
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
 	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,

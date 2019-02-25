@@ -409,7 +409,7 @@
 								}
 							}
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -450,7 +450,7 @@
 								}
 							}
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -650,22 +650,22 @@
 								}
 							}
 						},
-						"utranCellFDD": {
+						"UtranCellFDD": {
 							"$ref": "#/definitions/UtranCellFDDList"
 						},
-						"utranCellTDDLcr": {
+						"UtranCellTDDLcr": {
 							"$ref": "#/definitions/UtranCellTDDLcrList"
 						},
-						"utranCellTDDHcr": {
+						"UtranCellTDDHcr": {
 							"$ref": "#/definitions/UtranCellTDDHcrList"
 						},
-						"iubLink": {
+						"IubLink": {
 							"$ref": "#/definitions/IubLinkList"
 						},
-						"rncFunctionOptionallyContainedNrmClass": {
+						"RncFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/RncFunctionOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -698,10 +698,10 @@
 								}
 							}
 						},
-						"nodeBFunctionOptionallyContainedNrmClass": {
+						"NodeBFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/NodeBFunctionOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -829,16 +829,16 @@
 								}
 							}
 						},
-						"utranRelation": {
+						"UtranRelation": {
 							"$ref": "#/definitions/UtranRelations"
 						},
-						"gsmRelation": {
+						"GsmRelation": {
 							"$ref": "geranNrm#/definitions/GsmRelations"
 						},
-						"utranGenericCellOptionallyContainedNrmClass": {
+						"UtranGenericCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranGenericCellOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -903,7 +903,7 @@
 								}
 							}
 						},
-						"utranCellFDDOptionallyContainedNrmClass": {
+						"UtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -947,7 +947,7 @@
 								}
 							}
 						},
-						"utranCellTDDOptionallyContainedNrmClass": {
+						"UtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -982,7 +982,7 @@
 								}
 							}
 						},
-						"utranCellTDDLcrOptionallyContainedNrmClass": {
+						"UtranCellTDDLcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDLcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1026,7 +1026,7 @@
 								}
 							}
 						},
-						"utranCellTDDHcrOptionallyContainedNrmClass": {
+						"UtranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDHcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1067,10 +1067,10 @@
 								}
 							}
 						},
-						"iubLinkOptionallyContainedNrmClass": {
+						"IubLinkOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/IubLinkOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1099,10 +1099,10 @@
 								}
 							}
 						},
-						"utranRelationOptionallyContainedNrmClass": {
+						"UtranRelationOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranRelationOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1202,10 +1202,10 @@
 								}
 							}
 						},
-						"externalUtranGenericCellOptionallyContainedNrmClass": {
+						"ExternalUtranGenericCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranGenericCellOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1261,7 +1261,7 @@
 								}
 							}
 						},
-						"externalUtranCellFDDOptionallyContainedNrmClass": {
+						"ExternalUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1305,7 +1305,7 @@
 								}
 							}
 						},
-						"externalUtranCellTDDOptionallyContainedNrmClass": {
+						"ExternalUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1340,7 +1340,7 @@
 								}
 							}
 						},
-						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
+						"ExternalUtranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1372,7 +1372,7 @@
 								}
 							}
 						},
-						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
+						"ExternalUtranCellTDDLcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1418,19 +1418,19 @@
 								}
 							}
 						},
-						"externalUtranCellFDD": {
+						"ExternalUtranCellFDD": {
 							"$ref": "#/definitions/ExternalUtranCellFDDList"
 						},
-						"externalUtranCellTDDHcr": {
+						"ExternalUtranCellTDDHcr": {
 							"$ref": "#/definitions/ExternalUtranCellTDDHcrList"
 						},
-						"externalUtranCellTDDLcr": {
+						"ExternalUtranCellTDDLcr": {
 							"$ref": "#/definitions/ExternalUtranCellTDDLcrList"
 						},
-						"externalRncFunctionOptionallyContainedNrmClass": {
+						"ExternalRncFunctionOptionallyContainedNrmClass": {
 								"$ref": "#/definitions/ExternalRncFunctionOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}

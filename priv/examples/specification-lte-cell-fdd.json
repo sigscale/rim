@@ -204,43 +204,43 @@
 			"valueTo": 32767
 		},
 		{
-			"name": "eUtranRelation",
+			"name": "EUtranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target EUtranGenericCell",
 			"valueType": "EUtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranRelationList"
 		},
 		{
-			"name": "cdma2000Relation",
+			"name": "Cdma2000Relation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target CDMA200 sector (3GPP2 TS S.S0028)",
 			"valueType": "Cdma2000RelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/Cdma2000RelationList"
 		},
 		{
-			"name": "gsmRelation",
+			"name": "GsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelations",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationsList"
 		},
 		{
-			"name": "utranRelation",
+			"name": "UtranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
 			"valueType": "UtranRelations",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
-			"name": "vsDataContainer",
+			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "energySavingProperties",
+			"name": "EnergySavingProperties",
 			"description": "Energy saving properties of a network element supporting Energy Saving Management",
 			"valueType": "EnergySavingPropertiesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 		},
 		{
-			"name": "eSPolicies",
+			"name": "ESPolicies",
 			"description": "Energy saving policies information",
 			"valueType": "ESPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"

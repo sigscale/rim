@@ -1154,7 +1154,7 @@ map_to_resource(_Config) ->
 					"name" => "ACME Inc.",
 					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 							"endDateTime" => "2019-12-31T23:59"}}],
-			"resourceCharacteristic" => [#{"name" => "btsSiteMgr",
+			"resourceCharacteristic" => [#{"name" => "BtsSiteMgr",
 					"value" => CharValue,
 					"@type" => "BtsSiteMgrList",
 					"@schemaLocation" => CharSchema}]},
@@ -1169,7 +1169,7 @@ map_to_resource(_Config) ->
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
 			version = "1.1"} = S,
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
-	#resource_char{name = "btsSiteMgr", class_type = "BtsSiteMgrList",
+	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
 			schema = CharSchema, value = CharValue} = C.
 
 resource_to_map() ->
@@ -1213,7 +1213,7 @@ resource_to_map(_Config) ->
 					name = "ACME Inc.",
 					start_date = 1548720000000,
 					end_date = 1577836740000}],
-			characteristic = [#resource_char{name = "btsSiteMgr",
+			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
 					schema = CharSchema}]},
@@ -1230,7 +1230,7 @@ resource_to_map(_Config) ->
 	#{"id" := ResourceId, "href" := ResouceHref, "name" := ResourceName,
 			"version" := "1.1"} = S,
 	#{"id" := PartyId, "href" := PartyHref} = RP,
-	#{"name" := "btsSiteMgr", "value" := CharValue, "@type" := "BtsSiteMgrList",
+	#{"name" := "BtsSiteMgr", "value" := CharValue, "@type" := "BtsSiteMgrList",
 			"@schemaLocation" := CharSchema} = C.
 
 post_resource() ->
@@ -1288,7 +1288,7 @@ post_resource(Config) ->
 			++ "\t],\n"
 			++ "\t\"resourceCharacteristic\": [\n"
 			++ "\t\t{\n"
-			++ "\t\t\t\"name\": \"btsSiteMgr\",\n"
+			++ "\t\t\t\"name\": \"BtsSiteMgr\",\n"
 			++ "\t\t\t\"value\": \"" ++ CharValue ++ "\",\n"
 			++ "\t\t\t\"@type\": \"BtsSiteMgrList\",\n"
 			++ "\t\t\t\"@schemaLocation\": \"" ++ CharSchema ++ "\"\n"
@@ -1313,7 +1313,7 @@ post_resource(Config) ->
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
 			version = Version} = S,
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
-	#resource_char{name = "btsSiteMgr", class_type = "BtsSiteMgrList",
+	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
 			schema = CharSchema, value = CharValue} = C.
 
 get_resources() ->
@@ -1370,7 +1370,7 @@ get_resource(Config) ->
 					name = "ACME Inc.",
 					start_date = 1548720000000,
 					end_date = 1577836740000}],
-			characteristic = [#resource_char{name = "btsSiteMgr",
+			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
 					schema = CharSchema}]},

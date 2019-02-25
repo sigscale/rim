@@ -41,13 +41,13 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
-			"name": "btsSiteMgr",
+			"name": "BtsSiteMgr",
 			"description": "Base Tranceiver Station (BTS) sites",
 			"valueType": "BtsSiteMgrList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
 		},
 		{
-			"name": "vsDataContainer",
+			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

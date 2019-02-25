@@ -896,43 +896,43 @@
 								}
 							}
 						},
-						"eUtranCellFDD": {
+						"EUtranCellFDD": {
 							"$ref": "#/definitions/EUtranCellFDDList"
 						},
-						"eUtranCellTDD": {
+						"EUtranCellTDD": {
 							"$ref": "#/definitions/EUtranCellTDDList"
 						},
-						"eP_RP_EPS": {
+						"EP_RP_EPS": {
 							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
-						"eP_X2C": {
+						"EP_X2C": {
 							"$ref": "nrNrm#/definitions/EP_X2CList"
 						},
-						"eP_X2U": {
+						"EP_X2U": {
 							"$ref": "nrNrm#/definitions/EP_X2UList"
 						},
-						"eP_NgC": {
+						"EP_NgC": {
 							"$ref": "nrNrm#/definitions/EP_NgCList"
 						},
-						"eP_NgU": {
+						"EP_NgU": {
 							"$ref": "nrNrm#/definitions/EP_NgUList"
 						},
-						"eP_XnC": {
+						"EP_XnC": {
 							"$ref": "nrNrm#/definitions/EP_XnCList"
 						},
-						"eP_XnU": {
+						"EP_XnU": {
 							"$ref": "nrNrm#/definitions/EP_XnUList"
 						},
-						"eNBFunctionOptionallyContainedNrmClass": {
+						"ENBFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClassList"
 						},
-						"deNBCapability": {
+						"DeNBCapability": {
 							"$ref": "#/definitions/DeNBCapabilityList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"eSPolicies": {
+						"ESPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
@@ -968,13 +968,13 @@
 								}
 							}
 						},
-						"eP_RP_EPS": {
+						"EP_RP_EPS": {
 							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
-						"rNFunctionOptionallyContainedNrmClass": {
+						"RNFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1050,13 +1050,13 @@
 								}
 							}
 						},
-						"eP_RP_EPS": {
+						"EP_RP_EPS": {
 							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
-						"externalRNFunctionOptionallyContainedNrmClass": {
+						"ExternalRNFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1088,19 +1088,19 @@
 								}
 							}
 						},
-						"externalEUtranCellFDD": {
+						"ExternalEUtranCellFDD": {
 							"$ref": "#/definitions/ExternalEUtranCellFDDList"
 						},
-						"externalEUtranCellTDD": {
+						"ExternalEUtranCellTDD": {
 							"$ref": "#/definitions/ExternalEUtranCellTDDList"
 						},
-						"externalENBFunctionOptionallyContainedNrmClass": {
+						"ExternalENBFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"interRatEsPolicies": {
+						"InterRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -1221,25 +1221,25 @@
 								}
 							}
 						},
-						"eUtranRelation": {
+						"EUtranRelation": {
 							"$ref": "#/definitions/EUtranRelationList"
 						},
-						"cdma2000Relation": {
+						"Cdma2000Relation": {
 							"$ref": "#/definitions/Cdma2000RelationList"
 						},
-						"gsmRelation": {
+						"GsmRelation": {
 							"$ref": "geranNrm#/definitions/GsmRelationList"
 						},
-						"utranRelation": {
+						"UtranRelation": {
 							"$ref": "utranNrm#/definitions/UtranRelationList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"energySavingProperties": {
+						"EnergySavingProperties": {
 							"$ref": "sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 						},
-						"eSPolicies": {
+						"ESPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
@@ -1273,7 +1273,7 @@
 								}
 							}
 						},
-						"eUtranCellFDDOptionallyContainedNrmClass": {
+						"EUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1327,13 +1327,13 @@
 								}
 							}
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"cellOutageCompensationInformation": {
+						"CellOutageCompensationInformation": {
 							"$ref": "#/definitions/CellOutageCompensationInformationList"
 						},
-						"interRatEsPolicies": {
+						"InterRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -1367,7 +1367,7 @@
 								}
 							}
 						},
-						"externalEUtranCellFDDOptionallyContainedNrmClass": {
+						"ExternalEUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1413,7 +1413,7 @@
 								}
 							}
 						},
-						"eUtranCellTDDOptionallyContainedNrmClass": {
+						"EUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1447,7 +1447,7 @@
 								}
 							}
 						},
-						"externalEUtranCellTDDOptionallyContainedNrmClass": {
+						"ExternalEUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1505,10 +1505,10 @@
 								}
 							}
 						},
-						"eUtranRelationOptionallyContainedNrmClass": {
+						"EUtranRelationOptionallyContainedNrmClass": {
 								"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1540,10 +1540,10 @@
 								}
 							}
 						},
-						"cdma2000RelationOptionallyContainedNrmClass": {
+						"Cdma2000RelationOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1592,10 +1592,10 @@
 								}
 							}
 						},
-						"link_ENB_ENBOptionallyContainedNrmClass": {
+						"Link_ENB_ENBOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1624,13 +1624,13 @@
 								}
 							}
 						},
-						"mCEFunctionOptionallyContainedNrmClass": {
+						"MCEFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClassList"
 						},
-						"mBSFNArea": {
+						"MBSFNArea": {
 							"$ref": "#/definitions/MBSFNAreaList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1656,10 +1656,10 @@
 								}
 							}
 						},
-						"mBSFNAreaOptionallyContainedNrmClass": {
+						"MBSFNAreaOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1703,10 +1703,10 @@
 								}
 							}
 						},
-						"link_MCE_ENBOptionallyContainedNrmClass": {
+						"Link_MCE_ENBOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1744,10 +1744,10 @@
 								}
 							}
 						},
-						"link_MCE_MMEOptionallyContainedNrmClass": {
+						"Link_MCE_MMEOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClassList"
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1780,7 +1780,7 @@
 								}
 							}
 						},
-						"vsDataContainer": {
+						"VsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}

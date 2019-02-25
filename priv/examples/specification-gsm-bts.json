@@ -59,19 +59,19 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/operationalStateType"
 		},
 		{
-			"name": "gsmCell",
+			"name": "GsmCell",
 			"description": "GSM Radio Cell",
 			"valueType": "GsmCellList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/GsmCellList"
 		},
 		{
-			"name": "vsDataContainer",
+			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "interRatEsPolicies",
+			"name": "InterRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information.",
 			"valueType": "InterRatEsPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"

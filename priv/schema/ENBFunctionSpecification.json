@@ -37,18 +37,18 @@
 											"tceIDMappingInfoList",
 											"sharNetTceMappingInfoList",
 											"netListeningRSForRIBS",
-											"eUtranCellFDD",
-											"eUtranCellTDD",
-											"eP_RP_EPS",
-											"eP_X2C",
-											"eP_X2U",
-											"eP_NgC",
-											"eP_NgU",
-											"eP_XnC",
-											"eP_XnU",
-											"deNBCapability",
-											"vsDataContainer",
-											"eSPolicies"
+											"EUtranCellFDD",
+											"EUtranCellTDD",
+											"EP_RP_EPS",
+											"EP_X2C",
+											"EP_X2U",
+											"EP_NgC",
+											"EP_NgU",
+											"EP_XnC",
+											"EP_XnU",
+											"DeNBCapability",
+											"VsDataContainer",
+											"ESPolicies"
 										]
 									}
 								}

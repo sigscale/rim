@@ -27,14 +27,14 @@
 			"value" : "Embarcadero"
 		},
 		{
-			"name": "btsSiteMgr",
-			"value": "",
+			"name": "BtsSiteMgr",
+			"value": [],
 			"@type": "BtsSiteMgrList",
 			"@schemaLocation": "/resourceInventoryManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
 		},
 		{
-			"name": "vsDataContainer",
-			"value": "vsDataContainer instance",
+			"name": "VsDataContainer",
+			"value": [],
 			"@type": "VsDataContainerList",
 			"@schemaLocation": "/resourceInventoryManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
