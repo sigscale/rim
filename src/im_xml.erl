@@ -16,8 +16,8 @@
 -export([import/1]).
 
 %% export the im private API
--export([parse_bulk_cm/2, parse_generic/2, parse_geran/2,
-		parse_bts/2, parse_gsm_cell/2]).
+-export([parse_bulk_cm/2, parse_generic/2,
+		parse_bss/2, parse_bts/2, parse_gsm_cell/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -120,46 +120,89 @@ parse_bulk_cm(_Event, #state{parse_function = parse_bulk_cm} = State) ->
 %% @hidden
 parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_generic({startElement,  _Uri, "SubNetwork", QName,
+parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{subnet = [], stack = Stack} = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
 	State#state{subnet = DnComponent,
 			stack = [{startElement, QName, Attributes} | Stack]};
-parse_generic({startElement,  _Uri, "BssFunction", QName,
+parse_generic({startElement, _Uri, "BssFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{bss = [], stack = Stack} =State) ->
+		#state{bss = [], stack = Stack} = State) ->
 	DnComponent = ",BssFunction=" ++ Id,
-	State#state{parse_function = parse_geran, bss = DnComponent,
+	State#state{parse_function = parse_bss, bss = DnComponent,
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_generic({startElement,  _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_generic({endElement,  _Uri, "BssFunction", _QName}, State) ->
+parse_generic({endElement, _Uri, "SubNetwork", _QName}, State) ->
 	State;
 parse_generic({endElement,  _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
-parse_geran({characters, Chars}, #state{stack = Stack} = State) ->
+parse_bss({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-parse_geran({startElement,  _Uri, "BtsSiteMgr", QName,
+parse_bss({startElement,  _Uri, "BtsSiteMgr", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{stack = Stack} = State) ->
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	State#state{parse_function = parse_bts, bts = DnComponent,
 			stack = [{startElement, QName, Attributes} | Stack]};
-parse_geran({startElement, _, _, QName, Attributes},
+parse_bss({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_geran({endElement,  _Uri, "BssFunction", QName},
+parse_bss({endElement, _Uri, "BssFunction", QName},
 		#state{stack = Stack} = State) ->
-	State#state{parse_function = parse_generic,
-			stack = [{endElement, QName} | Stack]};
-parse_geran({endElement,  _Uri, _LocalName, QName},
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_bss_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_bss({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_bss_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_bss_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_bss_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_bss_attr1(T, Attr, State,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_bss_attr1([{startElement, {"gn", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_bss_attr1(T, undefined, State, Acc);
+parse_bss_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	parse_bss_attr1(T, undefined, State, Acc);
+parse_bss_attr1([{endElement, {"gn", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_bss_attr1([{endElement, {"gn", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_bss_attr1(T, Attr, State, Acc);
+parse_bss_attr1([], undefined,
+		#state{dn_prefix = DnPrefix, subnet = SubId, bss = BssId,
+		btss = Btss} = State, Acc) ->
+	BtsSiteMgr = #resource_char{name = "btsSiteMgr", value = Btss},
+	Resource = #resource{name = DnPrefix ++ SubId ++ BssId,
+			description = "GSM Base Station Subsystem (BSS)",
+			category = "RAN",
+			class_type = "BssFunction",
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+			specification = #specification_ref{},
+			characteristic = lists:reverse([BtsSiteMgr | Acc])},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = ID} = _R} ->
+			State#state{parse_function = parse_generic,
+					bss = ID, btss = []};
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 %% @hidden
 parse_bts({characters, Chars}, #state{stack = Stack} = State) ->
@@ -184,7 +227,7 @@ parse_bts({endElement, _Uri, _LocalName, QName},
 % @hidden
 parse_bts_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
 		undefined, State, Acc) ->
-	{[_ | Attributes], T2} = pop(endElement, QName, T1),
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_bts_attr1(Attributes, undefined, State, Acc).
 % @hidden
 parse_bts_attr1([{characters, Chars} | T],
@@ -211,7 +254,7 @@ parse_bts_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
 	% @todo vnfParametersListType
 	parse_bts_attr1(T, undefined, State, Acc);
 parse_bts_attr1([{endElement, {"gn", "attributes"}}],
-		undefined, State, Acc) ->
+		undefined, State, _Acc) ->
 	State;
 parse_bts_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
@@ -230,7 +273,7 @@ parse_bts_attr1([], undefined,
 			characteristic = lists:reverse([GsmCell | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ID} = _R} ->
-			State#state{parse_function = parse_geran,
+			State#state{parse_function = parse_bss,
 					btss = [ID | Btss], cells = []};
 		{error, Reason} ->
 			{error, Reason}
