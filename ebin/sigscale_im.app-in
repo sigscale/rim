@@ -5,6 +5,7 @@
 				im_sup,
 				im,
 				im_xml,
+				im_xml_geran,
 				im_server,
 				mod_im_rest_accepted_content,
 				mod_im_rest_get,
