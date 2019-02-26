@@ -327,6 +327,12 @@
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+		{
+			"name": "UtranCellTDDLcrOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "UtranCellTDDLcrOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDLcrOptionallyContainedNrmClassList"
 		}
 	]
 }

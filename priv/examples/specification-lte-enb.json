@@ -158,6 +158,12 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnUList"
 		},
 		{
+			"name": "ENBFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "ENBFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/ENBFunctionOptionallyContainedNrmClassList"
+		},
+		{
 			"name": "DeNBCapability",
 			"description": "Capability for eNodeB to act as Donor eNodeB (DeNB) (3GPP 36.300)",
 			"valueType": "DeNBCapabilityList",
