@@ -66,6 +66,7 @@
 						"relatedSectorEquipment",
 						"UtranRelation",
 						"GsmRelation",
+						"UtranGenericCellOptionallyContainedNrmClass",
 						"VsDataContainer"
 					]
 				}

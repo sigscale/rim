@@ -17,7 +17,8 @@
 						"primaryCcpchPower",
 						"cellCapabilityContainerTDD",
 						"sctdIndicator",
-						"dpchConstantValue"
+						"dpchConstantValue",
+						"UtranCellTDDOptionallyContainedNrmClass"
 					]
 				}
 			}

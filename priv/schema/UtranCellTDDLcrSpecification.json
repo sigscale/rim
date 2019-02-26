@@ -32,7 +32,8 @@
 											"fpachPower",
 											"dwPchPower",
 											"tstdIndicator",
-											"timeSlotLCRList"
+											"timeSlotLCRList",
+											"UtranCellTDDLcrOptionallyContainedNrmClass"
 										]
 									}
 								}

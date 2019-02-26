@@ -30,7 +30,8 @@
 					"enum": [
 						"earfcn",
 						"sfAssignment",
-						"specialSfPatterns"
+						"specialSfPatterns",
+						"EUtranCellTDDOptionallyContainedNrmClass"
 					]
 				}
 			}

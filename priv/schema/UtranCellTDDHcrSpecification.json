@@ -33,7 +33,8 @@
 			                        "syncCase",
 			                        "timeSlotForSch",
 			                        "schTimeSlot",
-			                        "timeSlotHCRList"
+			                        "timeSlotHCRList",
+											"UtranCellTDDOptionallyContainedNrmClass"
 										]
 									}
 								}
