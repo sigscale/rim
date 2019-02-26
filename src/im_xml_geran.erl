@@ -94,7 +94,8 @@ parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		subnet = SubId, parse_state = GeranState} = State, Acc) ->
 	#geran_state{bss = BssId, btss = Btss} = GeranState,
 	BtsSiteMgr = #resource_char{name = "btsSiteMgr", value = Btss},
-	Resource = #resource{name = DnPrefix ++ SubId ++ BssId,
+	BssDn = DnPrefix ++ SubId ++ BssId,
+	Resource = #resource{name = BssDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
 			class_type = "BssFunction",
@@ -107,7 +108,7 @@ parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			Mod = im_xml_cm_bulk,
 			F = parse_generic,
 			State#state{parse_module = Mod, parse_function = F,
-					parse_state = #geran_state{btss = []}};
+					parse_state = #geran_state{bss = BssDn, btss = []}};
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -173,7 +174,8 @@ parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
 	#geran_state{bss = BssId, bts = BtsId, btss = Btss,
 			cells = Cells} = ParseState,
 	GsmCell = #resource_char{name = "gsmCell", value = Cells},
-	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId,
+	BtsDn = DnPrefix ++ SubId ++ BssId ++ BtsId,
+	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
 			class_type = "BtsSiteMgr",
@@ -182,9 +184,9 @@ parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
 			specification = #specification_ref{},
 			characteristic = lists:reverse([GsmCell | Acc])},
 	case im:add_resource(Resource) of
-		{ok, #resource{id = ID} = _R} ->
+		{ok, #resource{} = _R} ->
 			State#state{parse_module = ?MODULE, parse_function = parse_bss,
-					parse_state = ParseState#geran_state{btss = [ID | Btss],
+					parse_state = ParseState#geran_state{btss = [BtsDn | Btss],
 					cells = []}};
 		{error, Reason} ->
 			{error, Reason}
@@ -337,7 +339,8 @@ parse_gsm_cell_rels(CellStack,
 				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
-	Resource = #resource{name = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	Resource = #resource{name = CellDn,
 			description = "GSM radio",
 			category = "RAN",
 			class_type = "GsmCell",
@@ -346,8 +349,8 @@ parse_gsm_cell_rels(CellStack,
 			specification = #specification_ref{},
 			characteristic = NewCharacteristics},
 	case im:add_resource(Resource) of
-		{ok, #resource{id = ID}} ->
-			NewState = State#state{parse_state = ParseState#geran_state{cells = [ID | Cells]}},
+		{ok, #resource{}} ->
+			NewState = State#state{parse_state = ParseState#geran_state{cells = [CellDn | Cells]}},
 			parse_gsm_cell_pol(NewCharacteristics, CellStack, NewState);
 		{error, Reason} ->
 			{error, Reason}
