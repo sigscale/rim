@@ -238,7 +238,7 @@
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
 						"GsmCellOptionallyContainedNrmClass": {
-							"$ref": "#/definitions/GsmCellOptionallyContainedNrmClasses"
+							"$ref": "#/definitions/GsmCellOptionallyContainedNrmClassList"
 						},
 						"InterRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
