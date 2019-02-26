@@ -213,6 +213,12 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
+			"name": "GsmCellOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "GsmCellOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmCellOptionallyContainedNrmClassList"
+		},
+		{
 			"name": "InterRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information",
 			"valueType": "InterRatEsPoliciesList",
