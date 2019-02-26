@@ -56,7 +56,7 @@
 			"name": "cellSize",
 			"description": "Cell-Size (3GPP 36.423)",
 			"valueType": "cellSize",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/cellSize"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/cellSize"
 		},
 		{
 			"name": "pLMNIdList",

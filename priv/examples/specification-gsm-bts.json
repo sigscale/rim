@@ -62,7 +62,7 @@
 			"name": "GsmCell",
 			"description": "GSM Radio Cell",
 			"valueType": "GsmCellList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/GsmCellList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmCellList"
 		},
 		{
 			"name": "VsDataContainer",
