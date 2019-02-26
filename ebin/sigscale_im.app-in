@@ -4,7 +4,7 @@
 		{modules, [im_app,
 				im_sup,
 				im,
-				im_xml,
+				m_xml_cm_bulk,
 				im_xml_geran,
 				im_server,
 				mod_im_rest_accepted_content,
