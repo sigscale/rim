@@ -50,12 +50,10 @@ parse_bss({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_bss({startElement,  _Uri, "BtsSiteMgr", QName,
 		[{[], [], "id", Id}] = Attributes},
-%		#state{parse_state = #geran_state{bss = BssId, bts = []},
 		#state{parse_state = ParseState,
 		stack = Stack} = State) ->
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_bts,
-%			parse_state = #geran_state{bss = BssId, bts = DnComponent},
 			parse_state = ParseState#geran_state{bts = DnComponent},
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_bss({startElement, _, _, QName, Attributes},
@@ -106,11 +104,8 @@ parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			characteristic = lists:reverse([BtsSiteMgr | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			Mod = im_xml,
+			Mod = im_xml_cm_bulk,
 			F = parse_generic,
-%			NewState = State#state{parse_module = Mod, parse_function = F,
-%					parse_state = #geran_state{bss = ID, btss = []}},
-%			Mod:F(NewState);
 			State#state{parse_module = Mod, parse_function = F,
 					parse_state = #geran_state{btss = []}};
 		{error, Reason} ->

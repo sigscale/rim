@@ -847,7 +847,7 @@ query_user(Continuation) ->
 		Reason :: term().
 %% @doc Import a file in the inventory table.
 import(File) when is_list(File) ->
-	im_xml:import(File).
+	im_xml_cm_bulk:import(File).
 
 -type password() :: [50..57 | 97..104 | 106..107 | 109..110 | 112..116 | 119..122].
 -spec generate_password() -> password().
