@@ -121,6 +121,12 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/IubLinkList"
 		},
 		{
+			"name": "RncFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "RncFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/RncFunctionOptionallyContainedNrmClassList"
+		},
+		{
 			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",

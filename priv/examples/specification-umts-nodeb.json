@@ -53,6 +53,12 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
 		},
 		{
+			"name": "NodeBFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "NodeBFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/NodeBFunctionOptionallyContainedNrmClassList"
+		},
+		{
 			"name": "VsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
