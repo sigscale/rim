@@ -2026,8 +2026,48 @@ add_sgw(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(ServingGWFunctionSpecification) of
 		{ok, _} ->
+			add_pgw(["ServingGWFunction" | NrmClasses]);
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_pgw(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "PGWFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "PGWFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PGWFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, ContainedNrmClass,
+			EP_RP_EPS, VsDataContainer],
+	PGWFunctionSpecification= #specification{name = "PGWFunction",
+			description = "EPC PDN Gateway (PGW)",
+			class_type = "PGWFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/PGWFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = "Active",
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "PGWFunction",
+					schema = "/resourceInventoryManagement/v3/schema/PGWFunction"},
+			characteristic = Chars},
+	case im:add_specification(PGWFunctionSpecification) of
+		{ok, _} ->
 			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
-					{classes, lists:reverse(["ServingGWFunction" | NrmClasses])}]);
+					{classes, lists:reverse(["PGWFunction" | NrmClasses])}]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
