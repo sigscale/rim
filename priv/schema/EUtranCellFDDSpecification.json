@@ -1,8 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EUtranCellFDDSpecification",
 	"title": "EUTRAN FDD Cell Specification",
-	"description": "LTE Frequency Division Duplex (FDD) radio cell resource function specification",
-	"type": "object",
+	"description": "LTE Frequency Division Duplex (FDD) radio resource function specification",
 	"allOf": [
 		{
 			"$ref": "EUtranGenericCellSpecification"
@@ -13,27 +12,29 @@
 				"resourceSpecCharacteristic": {
 					"type": "array",
 					"items": {
-						"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+						"oneOf": [
+							{
+								"$ref": "EUtranGenericCellSpecification#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"earfcnDl",
+											"earfcnUl",
+											"EUtranCellFDDOptionallyContainedNrmClass"
+										]
+									}
+								}
+							}
+						]
 					}
 				}
 			}
 		}
-	],
-	"definitions": {
-		"ResourceSpecCharacteristic": {
-			"type": "object",
-			"required": [
-				"name"
-			],
-			"properties": {
-				"name": {
-					"enum": [
-						"earfcnDl",
-						"earfcnUl",
-						"EUtranCellFDDOptionallyContainedNrmClass"
-					]
-				}
-			}
-		}
-	}
+	]
 }
