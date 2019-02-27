@@ -23,11 +23,11 @@
 
 %% export the im public API
 -export([add_catalog/1, del_catalog/1, get_catalog/0, get_catalog/1,
-		query_catalog/4, query_catalog/1]).
+		get_catalog_name/1, query_catalog/4, query_catalog/1]).
 -export([add_category/1, del_category/1, get_category/0, get_category/1,
-		query_category/4, query_category/1]).
+		get_category_name/1, query_category/4, query_category/1]).
 -export([add_candidate/1, del_candidate/1, get_candidate/0, get_candidate/1,
-		query_candidate/4, query_candidate/1]).
+		get_candidate_name/1, query_candidate/4, query_candidate/1]).
 -export([add_specification/1, del_specification/1, get_specification/0,
 		get_specification/1, get_specification_name/1,
 		query_specification/4, query_specification/1]).
@@ -120,6 +120,24 @@ get_catalog() ->
 get_catalog(CatalogID) when is_list(CatalogID) ->
 	F = fun() ->
 			mnesia:read(catalog, CatalogID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Catalog]} ->
+			{ok, Catalog}
+	end.
+
+-spec get_catalog_name(CatalogName) -> Result
+	when
+		CatalogName :: string(),
+		Result :: {ok, Catalog} | {error, Reason},
+		Catalog :: category(),
+		Reason :: term().
+%% @doc Get a Catalog by name.
+get_catalog_name(CatalogName) when is_list(CatalogName) ->
+	F = fun() ->
+			mnesia:index_read(catalog, CatalogName, #catalog.name)
 	end,
 	case mnesia:transaction(F) of
 		{aborted, Reason} ->
@@ -251,6 +269,24 @@ get_category(CategoryID) when is_list(CategoryID) ->
 			{ok, Category}
 	end.
 
+-spec get_category_name(CategoryName) -> Result
+	when
+		CategoryName :: string(),
+		Result :: {ok, Category} | {error, Reason},
+		Category :: category(),
+		Reason :: term().
+%% @doc Get a Category by name.
+get_category_name(CategoryName) when is_list(CategoryName) ->
+	F = fun() ->
+			mnesia:index_read(category, CategoryName, #category.name)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Category]} ->
+			{ok, Category}
+	end.
+
 -spec query_category(Continuation, Size, MatchHead, MatchConditions) -> Result
 	when
 		Continuation :: start | ets:continuation(),
@@ -366,6 +402,24 @@ get_candidate() ->
 get_candidate(CandidateID) when is_list(CandidateID) ->
 	F = fun() ->
 			mnesia:read(candidate, CandidateID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Candidate]} ->
+			{ok, Candidate}
+	end.
+
+-spec get_candidate_name(CandidateName) -> Result
+	when
+		CandidateName :: string(),
+		Result :: {ok, Candidate} | {error, Reason},
+		Candidate :: candidate(),
+		Reason :: term().
+%% @doc Get a Candidate by name.
+get_candidate_name(CandidateName) when is_list(CandidateName) ->
+	F = fun() ->
+			mnesia:index_read(candidate, CandidateName, #candidate.name)
 	end,
 	case mnesia:transaction(F) of
 		{aborted, Reason} ->
