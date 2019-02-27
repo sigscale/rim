@@ -223,7 +223,7 @@ class specificationList extends PolymerElement {
 					var newRecord = new Object();
 					newRecord.specName = request.response[index].name;
 					newRecord.specDesc = request.response[index].description;
-					newRecord.specClass = request.response[index]["@baseType"];
+					newRecord.specClass = request.response[index]["@type"];
 					newRecord.specStatus = request.response[index].lifecycleStatus;
 					newRecord.specCat = request.response[index].category;
 					newRecord.specBundle = request.response[index].isBundle;

@@ -217,7 +217,7 @@ class categoryList extends PolymerElement {
 					var newRecord = new Object();
 					newRecord.categoryName = request.response[index].name;
 					newRecord.categoryDescription = request.response[index].description;
-					newRecord.categoryClass = request.response[index]["@baseType"];
+					newRecord.categoryClass = request.response[index]["@type"];
 					newRecord.categoryStatus = request.response[index].lifecycleStatus;
 					newRecord.categoryParent = request.response[index].parentId;
 					newRecord.categoryRoot = request.response[index].isRoot;
