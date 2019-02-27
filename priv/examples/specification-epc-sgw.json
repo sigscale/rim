@@ -56,7 +56,7 @@
 			"name": "ServingGWFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "ServingGWFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"
 		},
 		{
 			"name": "EP_RP_EPS",

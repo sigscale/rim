@@ -43,7 +43,7 @@
 			"name": "PGWFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "PGWFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/PGWFunctionOptionallyContainedNrmClassList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PGWFunctionOptionallyContainedNrmClassList"
 		},
 		{
 			"name": "EP_RP_EPS",
