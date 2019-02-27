@@ -30,6 +30,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/utranNrm.json \
 		$(abs_builddir)/eutranNrm.json \
 		$(abs_builddir)/sonPolicyNrm.json \
+		$(abs_builddir)/epcNrm.json \
 		$(abs_builddir)/ResourceFunctionSpecification.json \
 		$(abs_builddir)/BssFunctionSpecification.json \
 		$(abs_builddir)/BtsSiteMgrSpecification.json \
@@ -83,6 +84,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s eutranNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s sonPolicyNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s epcNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \

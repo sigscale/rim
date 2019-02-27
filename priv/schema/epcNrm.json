@@ -1,0 +1,2132 @@
+{
+	"title": "EPC NRM",
+	"description": "Evolved Packet Core (EPC) Network Resource Model (NRM)",
+	"definitions": {
+		"PLMNId": {
+			"type": "object",
+			"properties": {
+				"mcc": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"mnc": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				}
+			}
+		},
+		"PLMNIdList": {
+			"type": "object",
+			"properties": {
+				"pLMNId": {
+					"type": "array",
+					"maxItems": 6,
+					"items": {
+						"$ref": "#/definitions/PLMNId"
+					}
+				}
+			}
+		},
+		"TACList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/tAC"
+			}
+		},
+		"QCIType": {
+			"type": "object",
+			"properties": {
+				"qci": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"resourceType": {
+					"type": "boolean"
+				},
+				"priority": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"packetDelayBudget": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"packetErrorLossRate": {
+					"type": "number"
+				}
+			}
+		},
+		"QCIListType": {
+			"type": "object",
+			"properties": {
+				"qCIInfo": {
+					"$ref": "#/definitions/QCIType"
+				}
+			}
+		},
+		"EPDGFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"EPDGFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EPDGFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MMEFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"mMEC": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"mMEPool": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"MMEFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MMEFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"EP_N26": {
+							"$ref": "ngcNrm#/definitions/EP_N26List"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"PCRFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"PCRFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/PCRFFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"PGWFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"PGWFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/PGWFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"PGWCFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"PGWCFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/PGWCFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalPGWCFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalPGWUFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ServingGWFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"tACList": {
+									"$ref": "#/definitions/TACList"
+								}
+							}
+						},
+						"ServingGWFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ServingGwCFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"tACList": {
+									"$ref": "#/definitions/TACList"
+								}
+							}
+						},
+						"ServingGwCFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ServingGwCFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ServingGwUFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"ServingGwUFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ServingGwUFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalServingGWFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"tACList": {
+									"$ref": "#/definitions/TACList"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalServingGwCFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"tACList": {
+									"$ref": "#/definitions/TACList"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalServingGwUFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ExternalMMEFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"mMEC": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"mMEPool": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MMEPool": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"mMEGI": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"mMEPoolMemberList": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"mMEPoolAreaList": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"MMEPoolOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MMEPoolOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MMEPoolArea": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"mMEPool": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"tACList": {
+									"$ref": "#/definitions/TACList"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								}
+							}
+						},
+						"MMEPoolAreaOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MMEPoolAreaOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_ENB_MME": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_ENB_MMEOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ENB_MMEOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_ENB_ServingGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_ENB_ServingGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ENB_ServingGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_EPDG_PCRF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_EPDG_PCRFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_EPDG_PCRFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_EPDG_PGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_EPDG_PGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_EPDG_PGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_HSS_MME": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_HSS_MMEOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_HSS_MMEOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MME_MME": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MME_MMEOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MME_MMEOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MME_SGSN": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MME_SGSNOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MME_SGSNOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MME_ServingGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MME_ServingGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MME_ServingGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_PCRF_ServingGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_PCRF_ServingGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_PCRF_ServingGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_PCRF_PGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_PCRF_PGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_PCRF_PGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_PGW_ServingGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_PGW_ServingGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_PGW_ServingGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_SGSN_ServingGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_SGSN_ServingGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_SGSN_ServingGWOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_RP_EPS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"farEndEntity": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"farEndNeIpAddr": {
+									"type": "string"
+								}
+							}
+						},
+						"EP_RP_EPSOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_RP_EPSOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"QCISet": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"qCIList": {
+									"$ref": "#/definitions/QCIListType"
+								}
+							}
+						},
+						"QCISetOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/QCISetOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MBMSGWFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"MBMSGWFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MBMSGWFunctionOptionallyContainedNrmClassList"
+						},
+						"EP_RP_EPS": {
+							"$ref": "#/definitions/EP_RP_EPSList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MBMSGW_ENB": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MBMSGW_ENBOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MBMSGW_ENBOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_Sxa": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_SxaOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_SxaOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_Sxb": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_SxbOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_SxbOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S4c": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S4cOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S4cOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S4u": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S4uOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S4uOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S11c": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S11cOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S11cOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S11u": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S11uOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S11uOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S1u": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S1uOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S1uOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S2bc": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S2bcOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S2bcOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_PGWC_SGWC": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_PGWC_SGWCOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_PGWC_SGWCOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_PGWU_SGWU": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_PGWU_SGWUOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_PGWU_SGWUOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S2bu": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_S2buOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_S2buOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_Gx": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"EP_GxOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/EP_GxOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EPDGFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EPDGFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EPDGFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"MMEFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"MMEFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MMEFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"PCRFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"PCRFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/PCRFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"PGWFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"PGWFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/PGWFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"PGWCFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"PGWCFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/PGWCFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"PGWUFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"PGWUFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/PGWUFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalPGWCFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalPGWCFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalPGWCFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalPGWUFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalPGWUFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalPGWUFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ServingGWFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ServingGWFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ServingGWFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ServingGwCFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ServingGwCFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ServingGwCFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ServingGwUFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ServingGwUFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ServingGwUFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalServingGwCFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalServingGwCFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalServingGwCFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ExternalServingGwUFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"ExternalServingGwUFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ExternalServingGwUFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"MMEPoolOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"MMEPoolOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MMEPoolOptionallyContainedNrmClass"
+			}
+		},
+		"MMEPoolAreaOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"MMEPoolAreaOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MMEPoolAreaOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ENB_MMEOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_ENB_MMEOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ENB_MMEOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ENB_ServingGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_ENB_ServingGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ENB_ServingGWOptionallyContainedNrmClass"
+			}
+		},
+		"Link_EPDG_PCRFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_EPDG_PCRFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_EPDG_PCRFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_EPDG_PGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_EPDG_PGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_EPDG_PGWOptionallyContainedNrmClass"
+			}
+		},
+		"Link_HSS_MMEOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_HSS_MMEOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_HSS_MMEOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MME_MMEOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_MME_MMEOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MME_MMEOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MME_SGSNOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_MME_SGSNOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MME_SGSNOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MME_ServingGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_MME_ServingGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MME_ServingGWOptionallyContainedNrmClass"
+			}
+		},
+		"Link_PCRF_ServingGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_PCRF_ServingGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_PCRF_ServingGWOptionallyContainedNrmClass"
+			}
+		},
+		"Link_PCRF_PGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_PCRF_PGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_PCRF_PGWOptionallyContainedNrmClass"
+			}
+		},
+		"Link_PGW_ServingGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_PGW_ServingGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_PGW_ServingGWOptionallyContainedNrmClass"
+			}
+		},
+		"Link_SGSN_ServingGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_SGSN_ServingGWOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_SGSN_ServingGWOptionallyContainedNrmClass"
+			}
+		},
+		"EP_SxaOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_SxaOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_SxaOptionallyContainedNrmClass"
+			}
+		},
+		"EP_SxbOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_SxbOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_SxbOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S4cOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S4cOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S4cOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S4uOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S4uOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S4uOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S11cOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S11cOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S11cOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S11uOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S11uOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S11uOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S1uOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S1uOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S1uOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S2bcOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S2bcOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S2bcOptionallyContainedNrmClass"
+			}
+		},
+		"EP_PGWC_SGWCOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_PGWC_SGWCOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_PGWC_SGWCOptionallyContainedNrmClass"
+			}
+		},
+		"EP_PGWU_SGWUOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_PGWU_SGWUOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_PGWU_SGWUOptionallyContainedNrmClass"
+			}
+		},
+		"EP_S2buOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_S2buOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_S2buOptionallyContainedNrmClass"
+			}
+		},
+		"EP_GxOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_GxOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_GxOptionallyContainedNrmClass"
+			}
+		},
+		"EP_RP_EPSOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"EP_RP_EPSOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_RP_EPSOptionallyContainedNrmClass"
+			}
+		},
+		"QCISetOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"QCISetOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/QCISetOptionallyContainedNrmClass"
+			}
+		},
+		"MBMSGWFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"MBMSGWFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MBMSGWFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MBMSGW_ENBOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_MBMSGW_ENBOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MBMSGW_ENBOptionallyContainedNrmClassList"
+			}
+		}
+	}
+}
