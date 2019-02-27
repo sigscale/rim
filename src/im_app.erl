@@ -2066,8 +2066,60 @@ add_pgw(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(PGWFunctionSpecification) of
 		{ok, _} ->
+			add_mme(["PGWFunction" | NrmClasses]);
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_mme(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	MMEC = #specification_char{name = "mMEC",
+			description = "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = -9223372036854775808, to = 9223372036854775808}]},
+	MMEPool = #specification_char{name = "mMEPool",
+			description = "DN of a MMEPool instance",
+			value_type = "dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "MMEFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "MMEFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/MMEFunctionOptionallyContainedNrmClassList"},
+	EP_N26 = #specification_char{name = "EP_N26",
+			description = "N26 interface between AMF and MME (3GPP 23.501)",
+			value_type = "EP_N26List",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_N26List"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, MMEC, MMEPool, ContainedNrmClass,
+			EP_RP_EPS, EP_N26, VsDataContainer],
+	MMEFunctionSpecification= #specification{name = "MMEFunction",
+			description = "EPC Mobility Management Entity (MME)",
+			class_type = "MMEFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/MMEFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = "Active",
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "MMEFunction",
+					schema = "/resourceInventoryManagement/v3/schema/MMEFunction"},
+			characteristic = Chars},
+	case im:add_specification(MMEFunctionSpecification) of
+		{ok, _} ->
 			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
-					{classes, lists:reverse(["PGWFunction" | NrmClasses])}]);
+					{classes, lists:reverse(["MMEFunction" | NrmClasses])}]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
