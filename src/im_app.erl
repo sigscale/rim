@@ -1978,9 +1978,56 @@ add_ltecelltdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellTDDSpecification) of
 		{ok, _} ->
-			NewNrmClasses = lists:reverse(["EUtranCellTDD" | NrmClasses]),
+			add_sgw(["EUtranCellTDD" | NrmClasses]);
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_sgw(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	PLMNIdList = #specification_char{name = "pLMNIdList",
+			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			value_type = "PLMNIdList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"},
+	TACList = #specification_char{name = "tACList",
+			description = "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
+			value_type = "TACList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/TACList"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "ServingGWFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "ServingGWFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, PLMNIdList, TACList,
+			ContainedNrmClass, EP_RP_EPS, VsDataContainer],
+	ServingGWFunctionSpecification= #specification{name = "ServingGWFunction",
+			description = "EPC Serving Gateway (S-GW)",
+			class_type = "ServingGWFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/ServingGWFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = "Active",
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "ServingGWFunction",
+					schema = "/resourceInventoryManagement/v3/schema/ServingGWFunction"},
+			characteristic = Chars},
+	case im:add_specification(ServingGWFunctionSpecification) of
+		{ok, _} ->
 			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
-					{classes, NewNrmClasses}]);
+					{classes, lists:reverse(["ServingGWFunction" | NrmClasses])}]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
