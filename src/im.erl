@@ -29,7 +29,8 @@
 -export([add_candidate/1, del_candidate/1, get_candidate/0, get_candidate/1,
 		query_candidate/4, query_candidate/1]).
 -export([add_specification/1, del_specification/1, get_specification/0,
-		get_specification/1, query_specification/4, query_specification/1]).
+		get_specification/1, get_specification_name/1,
+		query_specification/4, query_specification/1]).
 -export([add_resource/1, del_resource/1, get_resource/0, get_resource/1,
 		get_resource_name/1, query_resource/4, query_resource/1]).
 -export([add_user/3, del_user/1, get_user/0, get_user/1,
@@ -488,6 +489,24 @@ get_specification() ->
 get_specification(SpecificationID) when is_list(SpecificationID) ->
 	F = fun() ->
 			mnesia:read(specification, SpecificationID, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [Specification]} ->
+			{ok, Specification}
+	end.
+
+-spec get_specification_name(SpecName) -> Result
+	when
+		SpecName :: string(),
+		Result :: {ok, Specification} | {error, Reason},
+		Specification :: specification(),
+		Reason :: term().
+%% @doc Get a Specification by name.
+get_specification_name(SpecName) when is_list(SpecName) ->
+	F = fun() ->
+			mnesia:index_read(specification, SpecName, #specification.name)
 	end,
 	case mnesia:transaction(F) of
 		{aborted, Reason} ->

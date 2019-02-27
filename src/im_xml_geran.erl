@@ -24,7 +24,8 @@
 		parse_state :: geran_state(),
 		dn_prefix = [] :: string(),
       subnet = []:: string(),
-		stack = [] :: list()}).
+		stack = [] :: list(),
+		spec_cache = [] :: [specification_ref()]}).
 
 -record(geran_state,
 		{bss = [] :: string(),
@@ -91,24 +92,28 @@ parse_bss_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_bss_attr1(T, Attr, State, Acc);
 parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = GeranState} = State, Acc) ->
+		subnet = SubId, parse_state = GeranState,
+		spec_cache = Cache} = State, Acc) ->
 	#geran_state{bss = BssId, btss = Btss} = GeranState,
 	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
 	BssDn = DnPrefix ++ SubId ++ BssId,
+	ClassType = "BssFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BssDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
-			class_type = "BssFunction",
+			class_type = ClassType,
 			base_type = "SubNetwork",
 			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
-			specification = #specification_ref{},
+			specification = Spec,
 			characteristic = lists:reverse([BtsSiteMgr | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			Mod = im_xml_cm_bulk,
 			F = parse_generic,
 			State#state{parse_module = Mod, parse_function = F,
-					parse_state = #geran_state{bss = BssDn, btss = []}};
+					parse_state = #geran_state{bss = BssDn, btss = []},
+					spec_cache = NewCache};
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -170,24 +175,26 @@ parse_bts_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_bts_attr1(T, Attr, State, Acc);
 parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
-		parse_state = ParseState} = State, Acc) ->
+		parse_state = ParseState, spec_cache = Cache} = State, Acc) ->
 	#geran_state{bss = BssId, bts = BtsId, btss = Btss,
 			cells = Cells} = ParseState,
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
 	BtsDn = DnPrefix ++ SubId ++ BssId ++ BtsId,
+	ClassType = "BtsSiteMgr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
-			class_type = "BtsSiteMgr",
+			class_type = ClassType,
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
-			specification = #specification_ref{},
+			specification = Spec,
 			characteristic = lists:reverse([GsmCell | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = ?MODULE, parse_function = parse_bss,
 					parse_state = ParseState#geran_state{btss = [BtsDn | Btss],
-					cells = []}};
+					cells = []}, spec_cache = NewCache};
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -324,7 +331,8 @@ parse_gsm_cell_rels([{startElement,
 parse_gsm_cell_rels(CellStack,
 		#state{dn_prefix = DnPrefix, subnet = SubId,
 				parse_state = #geran_state{bss = BssId, bts = BtsId,
-				cell = CellId, cells = Cells} = ParseState} = State, Characteristics, Acc) ->
+				cell = CellId, cells = Cells} = ParseState,
+				spec_cache = Cache} = State, Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
 			(gsmRel, R, Acc1) ->
@@ -340,17 +348,20 @@ parse_gsm_cell_rels(CellStack,
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
 	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	ClassType = "GsmCell",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = CellDn,
 			description = "GSM radio",
 			category = "RAN",
-			class_type = "GsmCell",
+			class_type = ClassType,
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
-			specification = #specification_ref{},
+			specification = Spec,
 			characteristic = NewCharacteristics},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
-			NewState = State#state{parse_state = ParseState#geran_state{cells = [CellDn | Cells]}},
+			NewState = State#state{parse_state = ParseState#geran_state{
+					cells = [CellDn | Cells]}, spec_cache = NewCache},
 			parse_gsm_cell_pol(NewCharacteristics, CellStack, NewState);
 		{error, Reason} ->
 			{error, Reason}
@@ -488,3 +499,26 @@ pop(Element, QName, [H | T], Acc)
 pop(Element, QName, [H | T], Acc) ->
 	pop(Element, QName, T, [H | Acc]).
 
+-spec get_specification_ref(Name, Cache) -> Result
+	when
+		Name :: string(),
+		Cache :: [SpecRef],
+		Result :: {SpecRef, Cache} | {error, Reason},
+		SpecRef :: specification_ref(),
+		Reason :: term().
+%% @hidden
+get_specification_ref(Name, Cache) ->
+	case lists:keyfind(Name, #specification_ref.name, Cache) of
+		#specification_ref{name = Name} = SpecRef ->
+			{SpecRef, Cache};
+		false ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Id, href = Href, name = Name,
+						version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
+							version = Version},
+					{SpecRef, [SpecRef | Cache]};
+				{error, Reason} ->
+					{error, Reason}
+			end
+	end.
