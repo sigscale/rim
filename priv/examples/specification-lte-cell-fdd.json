@@ -66,7 +66,7 @@
 		},
 		{
 			"name": "cellAccessInfoList",
-			"description": "List of PLMN information for RAN sharing
+			"description": "List of PLMN information for RAN sharing",
 			"valueType": "CellAccessInfoList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/CellAccessInfoList"
 		},
@@ -85,7 +85,7 @@
 		},
 		{
 			"name": "pciList",
-			"description": "List of Physical Cell Identities (PCI) which can be assigned (3GPP 32.500)".
+			"description": "List of Physical Cell Identities (PCI) which can be assigned (3GPP 32.500)",
 			"valueType": "PciList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PciList"
 		},
