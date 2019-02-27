@@ -2014,7 +2014,7 @@ add_sgw(NrmClasses) ->
 	Chars = [UserLabel, VnfParametersList, PLMNIdList, TACList,
 			ContainedNrmClass, EP_RP_EPS, VsDataContainer],
 	ServingGWFunctionSpecification= #specification{name = "ServingGWFunction",
-			description = "EPC Serving Gateway (S-GW)",
+			description = "EPC Serving Gateway (SGW)",
 			class_type = "ServingGWFunctionSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/ServingGWFunctionSpecification",
 			base_type = "ResourceFunctionSpecification",
