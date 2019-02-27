@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/ServingGWFunctionSpecification",
+	"title": "EPC S-GW Specification",
+	"description": "EPC Serving Gateway (S-GW) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"pLMNIdList",
+											"tACList",
+											"ServingGWFunctionOptionallyContainedNrmClass",
+											"EP_RP_EPS",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

@@ -46,6 +46,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EUtranGenericCellSpecification.json \
 		$(abs_builddir)/EUtranCellFDDSpecification.json \
 		$(abs_builddir)/EUtranCellTDDSpecification.json \
+		$(abs_builddir)/ServingGWFunctionSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -153,6 +154,10 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDDSpecification.json \
 			-r EUtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ServingGWFunctionSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
