@@ -27,7 +27,8 @@
 		parse_state :: term(),
 		dn_prefix = [] :: string(),
 		subnet = []:: string(),
-		stack = [] :: list()}).
+		stack = [] :: list(),
+		specs = [] :: [specification_ref()]}).
 -type state() :: #state{}.
 
 %%----------------------------------------------------------------------
