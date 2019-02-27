@@ -1141,6 +1141,12 @@
 				}
 			]
 		},
+		"EP_RP_EPS": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/EP_RP_EPS"
+			}
+		},
 		"QCISet": {
 			"allOf": [
 				{
