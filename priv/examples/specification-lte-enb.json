@@ -48,12 +48,12 @@
 		},
 		{
 			"name": "intraANRSwitch",
-			"description": "Whether the intra E-UTRAN ANR function is activated or deactivated.",
+			"description": "Whether the intra E-UTRAN ANR function is activated or deactivated",
 			"valueType": "boolean"
 		},
 		{
 			"name": "iRATANRSwitch",
-			"description": "Whether the IRAT ANR function is activated or deactivated.",
+			"description": "Whether the IRAT ANR function is activated or deactivated",
 			"valueType": "boolean"
 		},
 		{
@@ -111,7 +111,7 @@
 		},
 		{
 			"name": "EUtranCellTDD",
-			"description": "UMTS Time Division Duplex (TDD) Radio Cells",
+			"description": "LTE Time Division Duplex (TDD) Radio Cells",
 			"valueType": "EUtranCellTDDList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellTDDList"
 		},

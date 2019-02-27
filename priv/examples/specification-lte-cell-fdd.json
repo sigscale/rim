@@ -191,14 +191,14 @@
 		},
 		{
 			"name": "earfcnDl",
-			"description": "Channel number for central DL frequency (3GPP 36.101)",
+			"description": "Channel number for central downlink (DL) frequency (3GPP 36.101)",
 			"valueType": "integer",
 			"valueFrom": -32768,
 			"valueTo": 32767
 		},
 		{
 			"name": "earfcnUl",
-			"description": "Channel number for central UL frequency (3GPP 36.101)",
+			"description": "Channel number for central uplink (UL) frequency (3GPP 36.101)",
 			"valueType": "integer",
 			"valueFrom": -32768,
 			"valueTo": 32767
@@ -218,13 +218,13 @@
 		{
 			"name": "GsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
-			"valueType": "GsmRelations",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationsList"
+			"valueType": "GsmRelationList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
 			"name": "UtranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
-			"valueType": "UtranRelations",
+			"valueType": "UtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{

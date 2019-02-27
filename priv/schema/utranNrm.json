@@ -830,10 +830,10 @@
 							}
 						},
 						"UtranRelation": {
-							"$ref": "#/definitions/UtranRelations"
+							"$ref": "#/definitions/UtranRelationList"
 						},
 						"GsmRelation": {
-							"$ref": "geranNrm#/definitions/GsmRelations"
+							"$ref": "geranNrm#/definitions/GsmRelationList"
 						},
 						"UtranGenericCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranGenericCellOptionallyContainedNrmClassList"
@@ -1109,7 +1109,7 @@
 				}
 			]
 		},
-		"UtranRelations": {
+		"UtranRelationList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/UtranRelation"

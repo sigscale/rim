@@ -246,19 +246,19 @@
 		},
 		{
 			"name": "uarfcnUl",
-			"description": "Upload (UL) UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
+			"description": "Uplink (UL) UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
 			"valueType": "uarfcnAnyMode",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/uarfcnAnyMode"
 		},
 		{
 			"name": "uarfcnDl",
-			"description": "Download (DL) UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
+			"description": "Downlink (DL) UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
 			"valueType": "uarfcnAnyMode",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/uarfcnAnyMode"
 		},
 		{
 			"name": "primaryScramblingCode",
-			"description": "Primary download (DL) scrambling code (3GPP 25.433)",
+			"description": "Primary downlink (DL) scrambling code (3GPP 25.433)",
 			"valueType": "primaryScramblingCode",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/primaryScramblingCode"
 		},
@@ -344,7 +344,7 @@
 			"name": "GsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationsList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
 			"name": "VsDataContainer",
