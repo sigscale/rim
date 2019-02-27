@@ -182,7 +182,7 @@ class candidateList extends PolymerElement {
 						var newRecord = new Object();
 						newRecord.candidateName = request.response[index].name;
 						newRecord.candidateDescription = request.response[index].description;
-						newRecord.candidateClass = request.response[index]["@baseType"];
+						newRecord.candidateClass = request.response[index]["@type"];
 						newRecord.candidateStatus = request.response[index].lifecycleStatus;
 						vaadinItems[index] = newRecord;
 					}
