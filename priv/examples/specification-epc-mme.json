@@ -1,0 +1,87 @@
+{
+	"name": "MMEFunction",
+	"description": "Mobility Management Entity (MME) (3GPP 23.401)",
+	"@type": "ServingGwFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "EPC",
+	"targetResourceSchema": {
+		"@type": "ServingGwFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "pLMNIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PLMNIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+		},
+		{
+			"name": "mMEC",
+			"description": "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
+			"valueType": "integer",
+			"minimum": -9223372036854775808,
+			"maximum": 9223372036854775808
+		},
+		{
+			"name": "mMEPool",
+			"description": "DN of a MMEPool instance",
+			"valueType": "dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+		},
+		{
+			"name": "MMEFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "MMEFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/MMEFunctionOptionallyContainedNrmClassList"
+		},
+		{
+			"name": "EP_RP_EPS",
+			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
+			"valueType": "EP_RP_EPSList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
+		},
+		{
+			"name": "EP_N26",
+			"description": "N26 interface between AMF and MME (3GPP 23.501)",
+			"valueType": "EP_N26List",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/EP_N26List"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

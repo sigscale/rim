@@ -1,0 +1,46 @@
+{
+	"$id": "http://sigscale.org/schema/MMEFunctionSpecification",
+	"title": "EPC SGW Specification",
+	"description": "EPC Mobility Management Entity (MME) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"pLMNIdList",
+											"mMEC",
+											"mMEPool",
+											"MMEFunctionOptionallyContainedNrmClass",
+											"EP_RP_EPS",
+											"EP_N26",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
