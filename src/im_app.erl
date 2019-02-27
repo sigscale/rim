@@ -482,9 +482,9 @@ force([]) ->
 		Reason :: term().
 %% @doc Add 3GPP NRM `ResourceFunctionSpecification's to resource table.
 add_specifications() ->
-	add_bss().
+	add_bss([]).
 %% @hidden
-add_bss() ->
+add_bss(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -514,12 +514,12 @@ add_bss() ->
 			characteristic = Chars},
 	case im:add_specification(BssFunctionSpecification) of
 		{ok, _} ->
-			add_bts();
+			add_bts(["BssFunction" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_bts() ->
+add_bts(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -566,12 +566,12 @@ add_bts() ->
 			characteristic = Chars},
 	case im:add_specification(BtsSiteMgrSpecification) of
 		{ok, _} ->
-			add_gsmcell();
+			add_gsmcell(["BtsSiteMgr" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_gsmcell() ->
+add_gsmcell(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -674,12 +674,12 @@ add_gsmcell() ->
 			characteristic = Chars},
 	case im:add_specification(GsmCellSpecification) of
 		{ok, _} ->
-			add_rnc();
+			add_rnc(["GsmCell" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_rnc() ->
+add_rnc(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -751,12 +751,12 @@ add_rnc() ->
 			characteristic = Chars},
 	case im:add_specification(RncFunctionSpecification) of
 		{ok, _} ->
-			add_nodeb();
+			add_nodeb(["RncFunction" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_nodeb() ->
+add_nodeb(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -791,12 +791,12 @@ add_nodeb() ->
 			characteristic = Chars},
 	case im:add_specification(NodeBFunctionSpecification) of
 		{ok, _} ->
-			add_utrancellfdd();
+			add_utrancellfdd(["NodeBFunction" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_utrancellfdd() ->
+add_utrancellfdd(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1041,12 +1041,12 @@ add_utrancellfdd() ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellFDDSpecification) of
 		{ok, _} ->
-			add_utrancelltddlcr();
+			add_utrancelltddlcr(["UtranCellFDD" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_utrancelltddlcr() ->
+add_utrancelltddlcr(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1273,12 +1273,12 @@ add_utrancelltddlcr() ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellTDDLcrSpecification) of
 		{ok, _} ->
-			add_utrancelltddhcr();
+			add_utrancelltddhcr(["UtranCellTDDLcr" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_utrancelltddhcr() ->
+add_utrancelltddhcr(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1505,12 +1505,12 @@ add_utrancelltddhcr() ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellTDDHcrSpecification) of
 		{ok, _} ->
-			add_enb();
+			add_enb(["UtranCellTDDHcr" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_enb() ->
+add_enb(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1630,12 +1630,12 @@ add_enb() ->
 			characteristic = Chars},
 	case im:add_specification(ENBFunctionSpecification) of
 		{ok, _} ->
-			add_ltecellfdd();
+			add_ltecellfdd(["ENBFunction" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_ltecellfdd() ->
+add_ltecellfdd(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1802,12 +1802,12 @@ add_ltecellfdd() ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellFDDSpecification) of
 		{ok, _} ->
-			add_ltecelltdd();
+			add_ltecelltdd(["EUtranCellFDD" | NrmClasses]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-add_ltecelltdd() ->
+add_ltecelltdd(NrmClasses) ->
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1978,7 +1978,9 @@ add_ltecelltdd() ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellTDDSpecification) of
 		{ok, _} ->
-			ok;
+			NewNrmClasses = lists:reverse(["EUtranCellTDD" | NrmClasses]),
+			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
+					{classes, NewNrmClasses}]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
