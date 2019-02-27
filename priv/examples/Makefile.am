@@ -20,6 +20,9 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-umts-cell-fdd.json \
 		$(abs_builddir)/specification-umts-cell-tdd-lcr.json \
 		$(abs_builddir)/specification-umts-cell-tdd-hcr.json \
+		$(abs_builddir)/specification-lte-enb.json \
+		$(abs_builddir)/specification-lte-cell-fdd.json \
+		$(abs_builddir)/specification-lte-cell-tdd.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -87,6 +90,20 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-tdd-hcr.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-lte-enb.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellFDDSpecification.json \
+				-r $(top_builddir)/priv/schema/EUtranGenericCellSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-lte-cell-fdd.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellTDDSpecification.json \
+				-r $(top_builddir)/priv/schema/EUtranGenericCellSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-lte-cell-tdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \

@@ -41,6 +41,10 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/UtranCellTDDSpecification.json \
 		$(abs_builddir)/UtranCellTDDLcrSpecification.json \
 		$(abs_builddir)/UtranCellTDDHcrSpecification.json \
+		$(abs_builddir)/ENBFunctionSpecification.json \
+		$(abs_builddir)/EUtranGenericCellSpecification.json \
+		$(abs_builddir)/EUtranCellFDDSpecification.json \
+		$(abs_builddir)/EUtranCellTDDSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -128,6 +132,24 @@ check_DATA = .validation_ok
 		if ! ajv compile -s UtranCellTDDHcrSpecification.json \
 			-r UtranCellTDDSpecification.json \
 			-r UtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ENBFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EUtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EUtranCellFDDSpecification.json \
+			-r EUtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EUtranCellTDDSpecification.json \
+			-r EUtranGenericCellSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
