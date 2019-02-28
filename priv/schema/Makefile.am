@@ -52,6 +52,9 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/MMEFunctionSpecification.json \
 		$(abs_builddir)/PCRFFunctionSpecification.json \
 		$(abs_builddir)/MscServerFunctionSpecification.json \
+		$(abs_builddir)/CsMgwFunctionSpecification.json \
+		$(abs_builddir)/SgsnFunctionSpecification.json \
+		$(abs_builddir)/GgsnFunctionSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -181,6 +184,18 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MscServerFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s CsMgwFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SgsnFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GgsnFunctionSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \

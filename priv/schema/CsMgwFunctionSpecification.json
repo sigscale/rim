@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/CsMgwFunctionSpecification",
+	"title": "Core CS-MGW Specification",
+	"description": "Core Circuit Switched (CS) Media Gateway (MGW) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"csMgwFunctionMscServerFunction",
+											"csMgwFunctionIucsLink",
+											"csMgwFunctionALink",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
