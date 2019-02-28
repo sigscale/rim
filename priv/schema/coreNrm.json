@@ -393,9 +393,6 @@
 								},
 								"proceduralStatus": {
 									"$ref": "statemanagementIRP#/definitions/proceduralStatusType"
-								},
-								"defaultMsc": {
-									"$ref": "#/definitions/defaultMscType"
 								}
 							}
 						},
