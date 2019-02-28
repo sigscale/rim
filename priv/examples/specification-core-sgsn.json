@@ -96,14 +96,14 @@
 		{
 			"name": "proceduralStatus",
 			"description": "Procedural status of the object instance (ITU-T X.731)",
-			"valueType": "defaultMscType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/defaultMscType"
+			"valueType": "proceduralStatus",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/proceduralStatus"
 		},
 		{
 			"name": "GbLink",
 			"description": "Gb interface link connecting SGSN to the GERAN (3GPP 23.002)",
-			"valueType": "ALinkList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/ALinkList"
+			"valueType": "GbLinkList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/GbLinkList"
 		},
 		{
 			"name": "IupsLink",

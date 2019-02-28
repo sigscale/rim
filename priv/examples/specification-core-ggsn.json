@@ -43,8 +43,8 @@
 		{
 			"name": "proceduralStatus",
 			"description": "Procedural status of the object instance (ITU-T X.731)",
-			"valueType": "defaultMscType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/defaultMscType"
+			"valueType": "proceduralStatus",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/proceduralStatus"
 		},
 		{
 			"name": "VsDataContainer",
