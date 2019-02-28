@@ -26,6 +26,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-epc-sgw.json \
 		$(abs_builddir)/specification-epc-pgw.json \
 		$(abs_builddir)/specification-epc-mme.json \
+		$(abs_builddir)/specification-epc-pcrf.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -119,6 +120,10 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PCRFFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-pcrf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \
