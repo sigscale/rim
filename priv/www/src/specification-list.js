@@ -23,7 +23,8 @@ class specificationList extends PolymerElement {
 			<style include="style-element">
 			</style>
 			<vaadin-grid
-					id="specificationGrid">
+					id="specificationGrid"
+					active-item="{{activeItem}}">
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
@@ -166,7 +167,22 @@ class specificationList extends PolymerElement {
 			etag: {
 				type: String,
 				value: null
+			},
+			activeItem: {
+				type: Object,
+				notify: true,
+				observer: '_activeItemChanged'
 			}
+
+		}
+	}
+
+	_activeItemChanged(item) {
+		if(item) {
+			var grid = this.$.specificationGrid;
+			grid.selectedItems = item ? [item] : [];	
+			var updateSpec = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec');
+			updateSpec.shadowRoot.getElementById('updateSpecModal').open();
 		}
 	}
 
@@ -227,6 +243,7 @@ class specificationList extends PolymerElement {
 					newRecord.specStatus = request.response[index].lifecycleStatus;
 					newRecord.specCat = request.response[index].category;
 					newRecord.specBundle = request.response[index].isBundle;
+					newRecord.specChars = request.response[index].resourceSpecCharacteristic;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);

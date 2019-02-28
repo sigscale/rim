@@ -35,6 +35,23 @@ styleElement.innerHTML = `<template>
 			paper-dialog {
             overflow: auto;
          }
+			paper-dialog iron-collapse {
+				--paper-input-container-underline: {
+					display: none;
+				};
+         }
+			paper-dialog iron-collapse > div hr {
+				border-top: 1px solid blue;
+			}
+			paper-dialog iron-collapse > div:first-child hr {
+				display: none;
+			}
+			paper-dialog iron-collapse > div {
+				padding-top: 25px
+			}
+			paper-dialog iron-collapse > div:first-child {
+				padding-top: 0px
+			}
          paper-item {
             padding-right: 10px;
          }
