@@ -514,7 +514,7 @@ add_bss(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(BssFunctionSpecification) of
 		{ok, _} ->
-			add_bts(["BssFunction" | NrmClasses]);
+			add_bts(NrmClasses ++ " BssFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -566,7 +566,7 @@ add_bts(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(BtsSiteMgrSpecification) of
 		{ok, _} ->
-			add_gsmcell(["BtsSiteMgr" | NrmClasses]);
+			add_gsmcell([NrmClasses ++ " BtsSiteMgr"]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -674,7 +674,7 @@ add_gsmcell(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(GsmCellSpecification) of
 		{ok, _} ->
-			add_rnc(["GsmCell" | NrmClasses]);
+			add_rnc(NrmClasses ++ ", GsmCell");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -751,7 +751,7 @@ add_rnc(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(RncFunctionSpecification) of
 		{ok, _} ->
-			add_nodeb(["RncFunction" | NrmClasses]);
+			add_nodeb(NrmClasses ++ ", RncFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -791,7 +791,7 @@ add_nodeb(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(NodeBFunctionSpecification) of
 		{ok, _} ->
-			add_utrancellfdd(["NodeBFunction" | NrmClasses]);
+			add_utrancellfdd(NrmClasses ++ ", NodeBFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1041,7 +1041,7 @@ add_utrancellfdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellFDDSpecification) of
 		{ok, _} ->
-			add_utrancelltddlcr(["UtranCellFDD" | NrmClasses]);
+			add_utrancelltddlcr(NrmClasses ++ ", UtranCellFDD");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1273,7 +1273,7 @@ add_utrancelltddlcr(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellTDDLcrSpecification) of
 		{ok, _} ->
-			add_utrancelltddhcr(["UtranCellTDDLcr" | NrmClasses]);
+			add_utrancelltddhcr(NrmClasses ++ ", UtranCellTDDLcr");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1505,7 +1505,7 @@ add_utrancelltddhcr(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellTDDHcrSpecification) of
 		{ok, _} ->
-			add_enb(["UtranCellTDDHcr" | NrmClasses]);
+			add_enb(NrmClasses ++ ", UtranCellTDDHcr");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1630,7 +1630,7 @@ add_enb(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(ENBFunctionSpecification) of
 		{ok, _} ->
-			add_ltecellfdd(["ENBFunction" | NrmClasses]);
+			add_ltecellfdd(NrmClasses ++ ", ENBFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1802,7 +1802,7 @@ add_ltecellfdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellFDDSpecification) of
 		{ok, _} ->
-			add_ltecelltdd(["EUtranCellFDD" | NrmClasses]);
+			add_ltecelltdd(NrmClasses ++ ", EUtranCellFDD");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1978,7 +1978,7 @@ add_ltecelltdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellTDDSpecification) of
 		{ok, _} ->
-			add_sgw(["EUtranCellTDD" | NrmClasses]);
+			add_sgw(NrmClasses ++ ", EUtranCellTDD");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2026,7 +2026,7 @@ add_sgw(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(ServingGWFunctionSpecification) of
 		{ok, _} ->
-			add_pgw(["ServingGWFunction" | NrmClasses]);
+			add_pgw(NrmClasses ++ ", ServingGWFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2066,7 +2066,7 @@ add_pgw(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(PGWFunctionSpecification) of
 		{ok, _} ->
-			add_mme(["PGWFunction" | NrmClasses]);
+			add_mme(NrmClasses ++ ", PGWFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2118,7 +2118,7 @@ add_mme(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(MMEFunctionSpecification) of
 		{ok, _} ->
-			add_pcrf(["MMEFunction" | NrmClasses]);
+			add_pcrf(NrmClasses ++ ", MMEFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2162,7 +2162,7 @@ add_pcrf(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(PCRFFunctionSpecification) of
 		{ok, _} ->
-			add_msc(["PCRFFunction" | NrmClasses]);
+			add_msc(NrmClasses ++ ", PCRFFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2252,7 +2252,7 @@ add_msc(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(MscServerFunctionSpecification) of
 		{ok, _} ->
-			add_mgw(["MscServerFunction" | NrmClasses]);
+			add_mgw(NrmClasses ++ ", MscServerFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2296,7 +2296,7 @@ add_mgw(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(CsMgwFunctionSpecification) of
 		{ok, _} ->
-			add_sgsn(["CsMgwFunction" | NrmClasses]);
+			add_sgsn(NrmClasses ++ ", CsMgwFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2377,7 +2377,7 @@ add_sgsn(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(SgsnFunctionSpecification) of
 		{ok, _} ->
-			add_ggsn(["SgsnFunction" | NrmClasses]);
+			add_ggsn(NrmClasses ++ ", SgsnFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -2413,7 +2413,7 @@ add_ggsn(NrmClasses) ->
 	case im:add_specification(GgsnFunctionSpecification) of
 		{ok, _} ->
 			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
-					{classes, lists:reverse(["GgsnFunction" | NrmClasses])}]);
+					{classes,  NrmClasses ++ ", GgsnFunction"}]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
