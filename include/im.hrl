@@ -161,7 +161,7 @@
 		class_type :: string() | undefined | '_',
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
-		status :: string() | undefined | '_',
+		status :: catalog_status() | undefined | '_',
 		version :: string() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
 		end_date :: pos_integer() | undefined | '_',
