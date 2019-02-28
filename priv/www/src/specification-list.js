@@ -25,7 +25,7 @@ class specificationList extends PolymerElement {
 			<vaadin-grid
 					id="specificationGrid"
 					active-item="{{activeItem}}">
-				<vaadin-grid-column>
+				<vaadin-grid-column width="8ex" flex-grow="2">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="specName">
@@ -44,7 +44,7 @@ class specificationList extends PolymerElement {
 					</template>
 					<template>[[item.specName]]</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column width="20ex" flex-grow="5">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="specDesc">
@@ -63,7 +63,7 @@ class specificationList extends PolymerElement {
 					</template>
 					<template>[[item.specDesc]]</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column width="12ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="specClass">
@@ -84,7 +84,7 @@ class specificationList extends PolymerElement {
 						[[item.specClass]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column width="8ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="specStatus">
@@ -105,7 +105,7 @@ class specificationList extends PolymerElement {
 						[[item.specStatus]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column width="8ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="specCat">
@@ -126,7 +126,7 @@ class specificationList extends PolymerElement {
 						[[item.specCat]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column width="6ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="specBundle">
