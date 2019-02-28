@@ -74,23 +74,6 @@ styleElement.innerHTML = `<template>
 			.drawer-list iron-collapse#catalog {
 				padding-left: 36px;
 			}
-			#restError {
-				--paper-toast-background-color: var(--paper-red-a400);
-			}
-			paper-dropdown-menu {
-				--paper-input-container-label: {
-					font-size: 24px;
-				};
-				--paper-input-container-input: {
-					font-size: 24px;
-					font-weight: 400;
-				};
-			}
-			.grouptitle {
-				text-align: center;
-				border-bottom-style: solid;
-				border-color: var(--paper-yellow-900);
-			}
 			vaadin-grid {
 				height: 100vh;
 				font-size: inherit;
@@ -112,14 +95,6 @@ styleElement.innerHTML = `<template>
 			.timestamp {
             direction: rtl;
          }
-			paper-card {
-				margin: 4px;
-				vertical-align: top;
-			}
-			paper-icon-item {
-				--paper-item-icon-width: 32px;
-				--paper-item-min-height: 1em;
-			}
 			paper-fab {
 				background: var(--paper-lime-a700);
 				color: black;
@@ -130,10 +105,17 @@ styleElement.innerHTML = `<template>
 				bottom: 5%;
 				z-index: 100;
 			}
-			.labelName {
-				font-style: normal;
-				font-weight: 700;
-			}
+			.update-button {
+            background-color: var(--paper-lime-a700);
+            color: black;
+         }
+			.cancel-button {
+            color: black;
+         }
+         .delete-button {
+            background: #EF5350;
+            color: black;
+         }
 		</style>
 	</template>`;
 
