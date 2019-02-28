@@ -1,8 +1,8 @@
 {
 	"name": "MMEFunction",
 	"description": "Mobility Management Entity (MME) (3GPP 23.401)",
-	"@type": "ServingGwFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunctionSpecification",
+	"@type": "MMEFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MMEFunctionSpecification",
 	"@baseType": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
@@ -13,8 +13,8 @@
 	"isBundle": false,
 	"category": "EPC",
 	"targetResourceSchema": {
-		"@type": "ServingGwFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunction"
+		"@type": "MMEFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MMEFunction"
 	},
 	"relatedParty": [
 		{
