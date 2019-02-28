@@ -2118,8 +2118,52 @@ add_mme(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(MMEFunctionSpecification) of
 		{ok, _} ->
+			add_pcrf(["MMEFunction" | NrmClasses]);
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_pcrf(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	LinkList = #specification_char{name = "linkList",
+			description = "List of communication link or reference point to other network entities",
+			value_type = "linkListType",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/linkListType"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "PCRFFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "PCRFFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PCRFFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
+			EP_RP_EPS, VsDataContainer],
+	PCRFFunctionSpecification= #specification{name = "PCRFFunction",
+			description = "EPC Policy Control Rules Function (PCRF)",
+			class_type = "PCRFFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/PCRFFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = "Active",
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "PCRFFunction",
+					schema = "/resourceInventoryManagement/v3/schema/PCRFFunction"},
+			characteristic = Chars},
+	case im:add_specification(PCRFFunctionSpecification) of
+		{ok, _} ->
 			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
-					{classes, lists:reverse(["MMEFunction" | NrmClasses])}]);
+					{classes, lists:reverse(["PCRFFunction" | NrmClasses])}]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
