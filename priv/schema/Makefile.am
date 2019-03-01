@@ -33,6 +33,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/stateManagementIRP.json \
 		$(abs_builddir)/epcNrm.json \
 		$(abs_builddir)/coreNrm.json \
+		$(abs_builddir)/imsNrm.json \
 		$(abs_builddir)/ResourceFunctionSpecification.json \
 		$(abs_builddir)/BssFunctionSpecification.json \
 		$(abs_builddir)/BtsSiteMgrSpecification.json \
@@ -100,6 +101,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s epcNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s coreNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s imsNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
