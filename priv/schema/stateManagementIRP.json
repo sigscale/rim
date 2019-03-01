@@ -1,0 +1,137 @@
+{
+	"title": "State Management IRP",
+	"description": "",
+	"definitions": {
+		"operationalStateType": {
+			"type": "string",
+			"enum": [
+				"enabled",
+				"disabled"
+			]
+		},
+		"administrativeStateType": {
+			"type": "string",
+			"enum": [
+				"idle",
+				"active",
+				"busy"
+			]
+		},
+		"alarmStatusType": {
+			"type": "string",
+			"enum": [
+			]
+		},
+		"administrativeStateType": {
+			"type": "string",
+			"enum": [
+				"locked",
+				"unlocked",
+				"shuttingDown"
+			]
+		},
+		"alarmStatusType": {
+			"type": "string",
+			"enum": [
+				"cleared",
+				"indeterminate",
+				"warning",
+				"minor",
+				"major",
+				"critical"
+			]
+		},
+		"proceduralStatusElementType": {
+			"type": "string",
+			"enum": [
+				"initializationRequired",
+				"notInitialized ",
+				"initializing",
+				"reporting",
+				"terminating"
+			]
+		},
+		"proceduralStatusType": {
+			"type": "array",
+			"maxItems": 5,
+			"items": {
+				"$ref": "#/definitions/proceduralStatusElementType"
+			}
+		},
+		"availabilityStatusElementType": {
+			"type": "string",
+			"enum": [
+				"inTest",
+				"failed",
+				"powerOff",
+				"offLine",
+				"offDuty",
+				"dependency",
+				"degraded",
+				"notInstalled",
+				"logFull"
+			]
+		},
+		"availabilityStatusType": {
+			"type": "array",
+			"maxItems": 9,
+			"items": {
+				"$ref": "#/definitions/availabilityStatusElementType"
+			}
+		},
+		"controlStatusElementType": {
+			"type": "string",
+			"enum": [
+				"subjectToTest",
+				"partOfServicesLocked",
+				"reservedForTest",
+				"suspended"
+			]
+		},
+		"controlStatusType": {
+			"type": "array",
+			"maxItems": 4,
+			"items": {
+				"$ref": "#/definitions/controlStatusElementType"
+			}
+		},
+		"standbyStatusType": {
+			"type": "string",
+			"enum": [
+				"hotStandby",
+				"coldStandby",
+				"providingService"
+			]
+		},
+		"unknownStatusType": {
+			"type": "boolean"
+		},
+		"operationalState": {
+			"$ref": "#/definitions/operationalStateType"
+		},
+		"usageState": {
+			"$ref": "#/definitions/usageStateType"
+		},
+		"administrativeState": {
+			"$ref": "#/definitions/administrativeStateType"
+		},
+		"alarmStatus": {
+			"$ref": "#/definitions/alarmStatusType"
+		},
+		"proceduralStatus": {
+			"$ref": "#/definitions/proceduralStatusType"
+		},
+		"availabilityStatus": {
+			"$ref": "#/definitions/availabilityStatusType"
+		},
+		"controlStatus": {
+			"$ref": "#/definitions/controlStatusType"
+		},
+		"standbyStatus": {
+			"$ref": "#/definitions/standbyStatusType"
+		},
+		"unknownStatus": {
+			"$ref": "#/definitions/unknownStatusType"
+		}
+	}
+}
