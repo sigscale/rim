@@ -23,6 +23,14 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-lte-enb.json \
 		$(abs_builddir)/specification-lte-cell-fdd.json \
 		$(abs_builddir)/specification-lte-cell-tdd.json \
+		$(abs_builddir)/specification-epc-sgw.json \
+		$(abs_builddir)/specification-epc-pgw.json \
+		$(abs_builddir)/specification-epc-mme.json \
+		$(abs_builddir)/specification-epc-pcrf.json \
+		$(abs_builddir)/specification-core-msc.json \
+		$(abs_builddir)/specification-core-mgw.json \
+		$(abs_builddir)/specification-core-sgsn.json \
+		$(abs_builddir)/specification-core-ggsn.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -104,6 +112,38 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-cell-tdd.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ServingGWFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-sgw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PGWFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-pgw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/MMEFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PCRFFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-pcrf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/MscServerFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-msc.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/CsMgwFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-mgw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SgsnFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-sgsn.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-ggsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \

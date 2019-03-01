@@ -1,0 +1,74 @@
+{
+	"name": "ServingGwFunction",
+	"description": "Serving GW (SGW) is the gateway which terminates the interface towards E-UTRAN (3GPP 23.401)",
+	"@type": "ServingGwFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "EPC",
+	"targetResourceSchema": {
+		"@type": "ServingGwFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "pLMNIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PLMNIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+		},
+		{
+			"name": "tACList",
+			"description": "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
+			"valueType": "TACList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/TACList"
+		},
+		{
+			"name": "ServingGWFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "ServingGWFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"
+		},
+		{
+			"name": "EP_RP_EPS",
+			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
+			"valueType": "EP_RP_EPSList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

@@ -102,7 +102,8 @@ class InventoryManagement extends PolymerElement {
 						<specification-list
 								id="specificationList"
 								loading="{{specificationLoading}}"
-								name="specificationView">
+								name="specificationView"
+								active-item="{{activeItem}}">
 						</specification-list>
 						<inventory-list
 								id="inventoryList"
@@ -176,6 +177,8 @@ class InventoryManagement extends PolymerElement {
 					</iron-selector>
 				</app-drawer>
 			</app-drawer-layout>
+			<!-- Model Definiations -->
+			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
 		`;
 	}
 
@@ -319,6 +322,7 @@ class InventoryManagement extends PolymerElement {
 				break;
 			case 'specificationView':
 				import('./specification-list.js');
+				import('./specification-update.js');
 				break;
 			case 'inventoryView':
 				import('./inventory-list.js');

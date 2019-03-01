@@ -1,0 +1,2050 @@
+{
+	"title": "IMS NRM",
+	"description": "IP Multimedia Subsystem (IMS) Network Resource Model (NRM)",
+	"definitions": {
+		"ASFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"ASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ASFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"CAMELIMSSFASFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"ASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ASFunctionOptionallyContainedNrmClassList"
+						},
+						"CAMELIMSSFASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/CAMELIMSSFASFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"OSASCSASFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"ASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ASFunctionOptionallyContainedNrmClassList"
+						},
+						"OSASCSASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/OSASCSASFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SIPASFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"ASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ASFunctionOptionallyContainedNrmClassList"
+						},
+						"SIPASFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/SIPASFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"BGCFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"BGCFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/BGCFFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ICSCFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"ICSCFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ICSCFFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"IMSMGWFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"IMSMGWFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/IMSMGWFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MGCFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"MGCFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MGCFFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MRFCFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"MRFCFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MRFCFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MRFPFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"MRFPFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/MRFPFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"PCSCFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"PCSCFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/PCSCFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SCSCFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"SCSCFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/SCSCFFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ECSCFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"ECSCFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/ECSCFFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SLFFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"SLFFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/SLFFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_AS_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_AS_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_AS_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_AS_SLF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_AS_SLFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_AS_SLFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_BGCF_BGCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_BGCF_BGCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_BGCF_BGCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_BGCF_MGCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_BGCF_MGCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_BGCF_MGCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_BGCF_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_BGCF_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_BGCF_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_ICSCF_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_ICSCF_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ICSCF_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_ICSCF_MGCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_ICSCF_MGCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ICSCF_MGCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_ICSCF_PCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_ICSCF_PCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ICSCF_PCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_PCSCF_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_PCSCF_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_PCSCF_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_ICSCF_SLF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_ICSCF_SLFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_ICSCF_SLFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_IMSMGW_MGCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_IMSMGW_MGCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_IMSMGW_MGCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MGCF_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MGCF_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MGCF_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MRFC_MRFP": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MRFC_MRFPOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MRFC_MRFPOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MRFC_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MRFC_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MRFC_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_SCSCF_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_SCSCF_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_SCSCF_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_SCSCF_SLF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_SCSCF_SLFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_SCSCF_SLFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"HSSFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"linkList": {
+									"$ref": "genericNrm#/definitions/linkListType"
+								}
+							}
+						},
+						"HSSFunctionOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/HSSFunctionOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_HSS_SCSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_HSS_SCSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_HSS_SCSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_HSS_ICSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_HSS_ICSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_HSS_ICSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_HSS_SIPAS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_HSS_SIPASOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_HSS_SIPASOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_HSS_OSASCSAS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_HSS_OSASCSASOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_HSS_OSASCSASOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_CAMELIMSSFAS_HSS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_AS_ICSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_AS_ICSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_AS_ICSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_PCSCF_ECSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_PCSCF_ECSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_PCSCF_ECSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_BGCF_ECSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_BGCF_ECSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_BGCF_ECSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_MGCF_ECSCF": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"Link_MGCF_ECSCFOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_MGCF_ECSCFOptionallyContainedNrmClassList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ASFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"ASFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ASFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"SIPASFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"SIPASFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/SIPASFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"OSASCSASFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"OSASCSASFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/OSASCSASFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"CAMELIMSSFASFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"CAMELIMSSFASFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/CAMELIMSSFASFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"BGCFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"BGCFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/BGCFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ICSCFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"ICSCFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ICSCFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"IMSMGWFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"IMSMGWFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/IMSMGWFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"MGCFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"MGCFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MGCFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"MRFCFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"MRFCFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MRFCFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"MRFPFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"MRFPFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/MRFPFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"PCSCFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"PCSCFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/PCSCFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"SCSCFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"SCSCFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/SCSCFFunctionOptionallyContainedNrmClassList"
+			}
+		},
+		"SLFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"SLFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/SLFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"ECSCFFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"ECSCFFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ECSCFFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"Link_AS_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_AS_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_AS_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_AS_SLFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_AS_SLFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_AS_SLFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_BGCF_BGCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_BGCF_BGCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_BGCF_BGCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_BGCF_MGCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_BGCF_MGCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_BGCF_MGCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_BGCF_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_BGCF_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_BGCF_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ICSCF_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_ICSCF_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ICSCF_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ICSCF_MGCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_ICSCF_MGCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ICSCF_MGCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ICSCF_PCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_ICSCF_PCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ICSCF_PCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_PCSCF_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_PCSCF_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_PCSCF_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_ICSCF_SLFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_ICSCF_SLFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_ICSCF_SLFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_IMSMGW_MGCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_IMSMGW_MGCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_IMSMGW_MGCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MGCF_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_MGCF_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MGCF_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MRFC_MRFPOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_MRFC_MRFPOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MRFC_MRFPOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MRFC_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_MRFC_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MRFC_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_SCSCF_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_SCSCF_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_SCSCF_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_SCSCF_SLFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_SCSCF_SLFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_SCSCF_SLFOptionallyContainedNrmClass"
+			}
+		},
+		"HSSFunctionOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"HSSFunctionOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/HSSFunctionOptionallyContainedNrmClass"
+			}
+		},
+		"Link_HSS_SCSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_HSS_SCSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_HSS_SCSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_HSS_ICSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_HSS_ICSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_HSS_ICSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_HSS_SIPASOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_HSS_SIPASOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_HSS_SIPASOptionallyContainedNrmClass"
+			}
+		},
+		"Link_HSS_OSASCSASOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_HSS_OSASCSASOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_HSS_OSASCSASOptionallyContainedNrmClass"
+			}
+		},
+		"Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_CAMELIMSSFAS_HSSOptionallyContainedNrmClass"
+			}
+		},
+		"Link_AS_ICSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_AS_ICSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_AS_ICSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_PCSCF_ECSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_PCSCF_ECSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_PCSCF_ECSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_BGCF_ECSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_BGCF_ECSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_BGCF_ECSCFOptionallyContainedNrmClass"
+			}
+		},
+		"Link_MGCF_ECSCFOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"  
+		},
+		"Link_MGCF_ECSCFOptionallyContainedNrmClassList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/Link_MGCF_ECSCFOptionallyContainedNrmClass"
+			}
+		}
+	}
+}

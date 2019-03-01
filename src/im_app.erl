@@ -506,7 +506,7 @@ add_bss(NrmClasses) ->
 			class_type = "BssFunctionSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/BssFunctionSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BssFunction",
@@ -514,7 +514,7 @@ add_bss(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(BssFunctionSpecification) of
 		{ok, _} ->
-			add_bts(["BssFunction" | NrmClasses]);
+			add_bts(NrmClasses ++ " BssFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -558,7 +558,7 @@ add_bts(NrmClasses) ->
 			class_type = "BtsSiteMgrSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BtsSiteManager",
@@ -566,7 +566,7 @@ add_bts(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(BtsSiteMgrSpecification) of
 		{ok, _} ->
-			add_gsmcell(["BtsSiteMgr" | NrmClasses]);
+			add_gsmcell([NrmClasses ++ " BtsSiteMgr"]);
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -666,7 +666,7 @@ add_gsmcell(NrmClasses) ->
 			class_type = "GsmCellSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/GsmCellSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GsmCell",
@@ -674,7 +674,7 @@ add_gsmcell(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(GsmCellSpecification) of
 		{ok, _} ->
-			add_rnc(["GsmCell" | NrmClasses]);
+			add_rnc(NrmClasses ++ ", GsmCell");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -743,7 +743,7 @@ add_rnc(NrmClasses) ->
 			class_type = "RncFunctionSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/RncFunctionSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "RncFunction",
@@ -751,7 +751,7 @@ add_rnc(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(RncFunctionSpecification) of
 		{ok, _} ->
-			add_nodeb(["RncFunction" | NrmClasses]);
+			add_nodeb(NrmClasses ++ ", RncFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -783,7 +783,7 @@ add_nodeb(NrmClasses) ->
 			class_type = "NodeBFunctionSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/NodeBFunctionSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NodeBFunction",
@@ -791,7 +791,7 @@ add_nodeb(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(NodeBFunctionSpecification) of
 		{ok, _} ->
-			add_utrancellfdd(["NodeBFunction" | NrmClasses]);
+			add_utrancellfdd(NrmClasses ++ ", NodeBFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1033,7 +1033,7 @@ add_utrancellfdd(NrmClasses) ->
 			class_type = "UtranCellFDDSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/UtranCellFDDSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellFDD",
@@ -1041,7 +1041,7 @@ add_utrancellfdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellFDDSpecification) of
 		{ok, _} ->
-			add_utrancelltddlcr(["UtranCellFDD" | NrmClasses]);
+			add_utrancelltddlcr(NrmClasses ++ ", UtranCellFDD");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1265,7 +1265,7 @@ add_utrancelltddlcr(NrmClasses) ->
 			class_type = "UtranCellTDDLcrSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/UtranCellTDDLcrSpecification",
 			base_type = "UtranCellTDDSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellTDDLcr",
@@ -1273,7 +1273,7 @@ add_utrancelltddlcr(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellTDDLcrSpecification) of
 		{ok, _} ->
-			add_utrancelltddhcr(["UtranCellTDDLcr" | NrmClasses]);
+			add_utrancelltddhcr(NrmClasses ++ ", UtranCellTDDLcr");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1497,7 +1497,7 @@ add_utrancelltddhcr(NrmClasses) ->
 			class_type = "UtranCellTDDHcrSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/UtranCellTDDHcrSpecification",
 			base_type = "UtranCellTDDSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellTDDHcr",
@@ -1505,7 +1505,7 @@ add_utrancelltddhcr(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(UtranCellTDDHcrSpecification) of
 		{ok, _} ->
-			add_enb(["UtranCellTDDHcr" | NrmClasses]);
+			add_enb(NrmClasses ++ ", UtranCellTDDHcr");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1622,7 +1622,7 @@ add_enb(NrmClasses) ->
 			class_type = "ENBFunctionSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/ENBFunctionSpecification",
 			base_type = "ResourceFunctionSpecification",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "ENBFunction",
@@ -1630,7 +1630,7 @@ add_enb(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(ENBFunctionSpecification) of
 		{ok, _} ->
-			add_ltecellfdd(["ENBFunction" | NrmClasses]);
+			add_ltecellfdd(NrmClasses ++ ", ENBFunction");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1794,7 +1794,7 @@ add_ltecellfdd(NrmClasses) ->
 			class_type = "EUtranCellFDDSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/EUtranCellFDDSpecification",
 			base_type = "EUtranGenericCell",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "EUtranCellFDD",
@@ -1802,7 +1802,7 @@ add_ltecellfdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellFDDSpecification) of
 		{ok, _} ->
-			add_ltecelltdd(["EUtranCellFDD" | NrmClasses]);
+			add_ltecelltdd(NrmClasses ++ ", EUtranCellFDD");
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1970,7 +1970,7 @@ add_ltecelltdd(NrmClasses) ->
 			class_type = "EUtranCellTDDSpecification",
 			schema = "/resourceCatalogManagement/v3/schema/EUtranCellTDDSpecification",
 			base_type = "EUtranGenericCell",
-			status = "Active",
+			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "EUtranCellTDD",
@@ -1978,10 +1978,442 @@ add_ltecelltdd(NrmClasses) ->
 			characteristic = Chars},
 	case im:add_specification(EUtranCellTDDSpecification) of
 		{ok, _} ->
-			NewNrmClasses = lists:reverse(["EUtranCellTDD" | NrmClasses]),
-			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
-					{classes, NewNrmClasses}]);
+			add_sgw(NrmClasses ++ ", EUtranCellTDD");
 		{error, Reason} ->
 			{error, Reason}
 	end.
-
+%% @hidden
+add_sgw(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	PLMNIdList = #specification_char{name = "pLMNIdList",
+			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			value_type = "PLMNIdList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"},
+	TACList = #specification_char{name = "tACList",
+			description = "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
+			value_type = "TACList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/TACList"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "ServingGWFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "ServingGWFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, PLMNIdList, TACList,
+			ContainedNrmClass, EP_RP_EPS, VsDataContainer],
+	ServingGWFunctionSpecification= #specification{name = "ServingGWFunction",
+			description = "EPC Serving Gateway (SGW)",
+			class_type = "ServingGWFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/ServingGWFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "ServingGWFunction",
+					schema = "/resourceInventoryManagement/v3/schema/ServingGWFunction"},
+			characteristic = Chars},
+	case im:add_specification(ServingGWFunctionSpecification) of
+		{ok, _} ->
+			add_pgw(NrmClasses ++ ", ServingGWFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_pgw(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "PGWFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "PGWFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PGWFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, ContainedNrmClass,
+			EP_RP_EPS, VsDataContainer],
+	PGWFunctionSpecification= #specification{name = "PGWFunction",
+			description = "EPC PDN Gateway (PGW)",
+			class_type = "PGWFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/PGWFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "PGWFunction",
+					schema = "/resourceInventoryManagement/v3/schema/PGWFunction"},
+			characteristic = Chars},
+	case im:add_specification(PGWFunctionSpecification) of
+		{ok, _} ->
+			add_mme(NrmClasses ++ ", PGWFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_mme(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	MMEC = #specification_char{name = "mMEC",
+			description = "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
+			value_type = "integer",
+			char_value = [#spec_char_value{from = -9223372036854775808, to = 9223372036854775808}]},
+	MMEPool = #specification_char{name = "mMEPool",
+			description = "DN of a MMEPool instance",
+			value_type = "dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "MMEFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "MMEFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/MMEFunctionOptionallyContainedNrmClassList"},
+	EP_N26 = #specification_char{name = "EP_N26",
+			description = "N26 interface between AMF and MME (3GPP 23.501)",
+			value_type = "EP_N26List",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_N26List"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, MMEC, MMEPool, ContainedNrmClass,
+			EP_RP_EPS, EP_N26, VsDataContainer],
+	MMEFunctionSpecification= #specification{name = "MMEFunction",
+			description = "EPC Mobility Management Entity (MME)",
+			class_type = "MMEFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/MMEFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "MMEFunction",
+					schema = "/resourceInventoryManagement/v3/schema/MMEFunction"},
+			characteristic = Chars},
+	case im:add_specification(MMEFunctionSpecification) of
+		{ok, _} ->
+			add_pcrf(NrmClasses ++ ", MMEFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_pcrf(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	LinkList = #specification_char{name = "linkList",
+			description = "List of communication link or reference point to other network entities",
+			value_type = "linkListType",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/linkListType"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "PCRFFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "PCRFFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PCRFFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
+			EP_RP_EPS, VsDataContainer],
+	PCRFFunctionSpecification= #specification{name = "PCRFFunction",
+			description = "EPC Policy Control Rules Function (PCRF)",
+			class_type = "PCRFFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/PCRFFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "PCRFFunction",
+					schema = "/resourceInventoryManagement/v3/schema/PCRFFunction"},
+			characteristic = Chars},
+	case im:add_specification(PCRFFunctionSpecification) of
+		{ok, _} ->
+			add_msc(NrmClasses ++ ", PCRFFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_msc(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	MccList = #specification_char{name = "mccList",
+			description = "List of Mobile Country Codes (MCC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	MncList = #specification_char{name = "mncList",
+			description = "List of Mobile Network Codes (MNC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	LacList = #specification_char{name = "lacList",
+			description = "List of Location Area Codes (LAC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	SacList = #specification_char{name = "sacList",
+			description = "List of Service Area Codes (SAC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	GcaList = #specification_char{name = "gcaList",
+			description = "List of Group Call Area (GCA) Codes (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	MscId  = #specification_char{name = "mscId",
+			description = "Unique MSC ID (3GPP 23.002)",
+			value_type = "integer"},
+	MscServerFunctionGsmCell = #specification_char{name = "mscServerFunctionGsmCell",
+			description = "This holds a set of DNs of GsmCell",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	MscServerFunctionExternalGsmCell = #specification_char{name = "mscServerFunctionExternalGsmCell",
+			description = "This holds a set of DNs of ExternalGsmCell",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	MscServerFunctionCsMgwFunction = #specification_char{name = "mscServerFunctionCsMgwFunction",
+			description = "This holds a set of DNs of CsMgwFunction",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	NriList = #specification_char{name = "nriList",
+			description = "NRI shall be part of the TMSI (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	MscServerFunctionMscPool = #specification_char{name = "mscServerFunctionMscPool",
+			description = "This holds a set of DNs of MscPool",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	DefaultMsc = #specification_char{name = "defaultMsc",
+			description = "Whether this MSC-Server is default CN node in MscPool or not (3GPP 23.236)",
+			value_type = "defaultMscType",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/defaultMscType"},
+	IucsLink = #specification_char{name = "IucsLink",
+			description = "Iu-cs interface link connecting MSCserver to RNC, BSC and HNB GW (3GPP 23.002)",
+			value_type = "IucsLinkList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/IucsLinkList"},
+	ALink = #specification_char{name = "ALink",
+			description = "A interface link connecting an MSC to GERAN (3GPP 23.002)",
+			value_type = "ALinkList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/ALinkList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, MccList, MncList, LacList,
+			SacList, GcaList, MscId, MscServerFunctionGsmCell,
+			MscServerFunctionExternalGsmCell, MscServerFunctionCsMgwFunction,
+			NriList, MscServerFunctionMscPool, DefaultMsc, IucsLink,
+			ALink, VsDataContainer],
+	MscServerFunctionSpecification = #specification{name = "MscServerFunction",
+			description = "Core Mobile Switching Center (MSC) Server",
+			class_type = "MscServerFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/MscServerFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "MscServerFunction",
+					schema = "/resourceInventoryManagement/v3/schema/MscServerFunction"},
+			characteristic = Chars},
+	case im:add_specification(MscServerFunctionSpecification) of
+		{ok, _} ->
+			add_mgw(NrmClasses ++ ", MscServerFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_mgw(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	CsMgwFunctionMscServerFunction = #specification_char{name = "csMgwFunctionMscServerFunction",
+			description = "This holds the DN of an MscServerFunction",
+			value_type = "dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"},
+	CsMgwFunctionIucsLink = #specification_char{name = "csMgwFunctionIucsLink",
+			description = "This holds a set of DNs of IucsLink",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	CsMgwFunctionALink = #specification_char{name = "csMgwFunctionALink",
+			description = "This holds a set of DNs of ALink",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, CsMgwFunctionMscServerFunction,
+			CsMgwFunctionIucsLink, CsMgwFunctionALink, VsDataContainer],
+	CsMgwFunctionSpecification = #specification{name = "CsMgwFunction",
+			description = "Core Circuit Switched (CS) Media Gateway (MGW)",
+			class_type = "CsMgwFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/CsMgwFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "CsMgwFunction",
+					schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction"},
+			characteristic = Chars},
+	case im:add_specification(CsMgwFunctionSpecification) of
+		{ok, _} ->
+			add_sgsn(NrmClasses ++ ", CsMgwFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_sgsn(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	MccList = #specification_char{name = "mccList",
+			description = "List of Mobile Country Codes (MCC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	MncList = #specification_char{name = "mncList",
+			description = "List of Mobile Network Codes (MNC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	LacList = #specification_char{name = "lacList",
+			description = "List of Location Area Codes (LAC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	SacList = #specification_char{name = "sacList",
+			description = "List of Service Area Codes (SAC) (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	SgsnId = #specification_char{name = "sgsnId",
+			description = "Unique SGSN ID (3GPP 23.002)",
+			value_type = "integer"},
+	SgsnFunctionGsmCell = #specification_char{name = "sgsnFunctionGsmCell",
+			description = "This holds a set of DNs of GsmCell",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	SgsnFunctionExternalGsmCell = #specification_char{name = "sgsnFunctionExternalGsmCell",
+			description = "This holds a set of DNs of ExternalGsmCell",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	SgsnFunctionMscPool = #specification_char{name = "sgsnFunctionMscPool",
+			description = "This holds a set of DNs of SgsnPool",
+			value_type = "dnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"},
+	NriList = #specification_char{name = "nriList",
+			description = "NRI shall be part of the TMSI (3GPP 23.003)",
+			value_type = "longList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"},
+	ProceduralStatus = #specification_char{name = "proceduralStatus",
+			description = "Procedural status of the object instance (ITU-T X.731)",
+			value_type = "proceduralStatus",
+			value_schema = "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/proceduralStatus"},
+	IupsLink = #specification_char{name = "IupsLink",
+			description = "Iu-cs interface link connecting MSCserver to RNC, BSC and HNB GW (3GPP 23.002)",
+			value_type = "IupsLinkList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/IupsLinkList"},
+	GbLink = #specification_char{name = "GbLink",
+			description = "Gb interface link connecting SGSN to the GERAN (3GPP 23.002)",
+			value_type = "GbLinkList",
+			value_schema = "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/GbLinkList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, MccList, MncList, LacList,
+			SacList, SgsnId, SgsnFunctionGsmCell, SgsnFunctionExternalGsmCell,
+			SgsnFunctionMscPool, NriList, ProceduralStatus, IupsLink, GbLink,
+			VsDataContainer],
+	SgsnFunctionSpecification = #specification{name = "SgsnFunction",
+			description = "Core Serving GPRS Support Node (SGSN)",
+			class_type = "SgsnFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/SgsnFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "SgsnFunction",
+					schema = "/resourceInventoryManagement/v3/schema/SgsnFunction"},
+			characteristic = Chars},
+	case im:add_specification(SgsnFunctionSpecification) of
+		{ok, _} ->
+			add_ggsn(NrmClasses ++ ", SgsnFunction");
+		{error, Reason} ->
+			{error, Reason}
+	end.
+%% @hidden
+add_ggsn(NrmClasses) ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	ProceduralStatus = #specification_char{name = "proceduralStatus",
+			description = "Procedural status of the object instance (ITU-T X.731)",
+			value_type = "proceduralStatus",
+			value_schema = "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/proceduralStatus"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, ProceduralStatus, VsDataContainer],
+	GgsnFunctionSpecification = #specification{name = "GgsnFunction",
+			description = "Core Gateway GPRS Support Node (GGSN)",
+			class_type = "GgsnFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/GgsnFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "GgsnFunction",
+					schema = "/resourceInventoryManagement/v3/schema/GgsnFunction"},
+			characteristic = Chars},
+	case im:add_specification(GgsnFunctionSpecification) of
+		{ok, _} ->
+			error_logger:info_report(["Added 3GPP NRM Classes to specification table",
+					{classes,  NrmClasses ++ ", GgsnFunction"}]);
+		{error, Reason} ->
+			{error, Reason}
+	end.

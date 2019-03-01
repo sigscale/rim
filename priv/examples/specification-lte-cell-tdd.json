@@ -256,7 +256,7 @@
 			"name": "EUtranCellTDDOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "EUtranCellTDDOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/EUtranCellTDDOptionallyContainedNrmClassList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellTDDOptionallyContainedNrmClassList"
 		}
 	]
 }

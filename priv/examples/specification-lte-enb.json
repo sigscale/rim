@@ -161,7 +161,7 @@
 			"name": "ENBFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "ENBFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/ENBFunctionOptionallyContainedNrmClassList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/ENBFunctionOptionallyContainedNrmClassList"
 		},
 		{
 			"name": "DeNBCapability",

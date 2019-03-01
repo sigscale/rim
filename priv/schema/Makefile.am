@@ -30,6 +30,10 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/utranNrm.json \
 		$(abs_builddir)/eutranNrm.json \
 		$(abs_builddir)/sonPolicyNrm.json \
+		$(abs_builddir)/stateManagementIRP.json \
+		$(abs_builddir)/epcNrm.json \
+		$(abs_builddir)/coreNrm.json \
+		$(abs_builddir)/imsNrm.json \
 		$(abs_builddir)/ResourceFunctionSpecification.json \
 		$(abs_builddir)/BssFunctionSpecification.json \
 		$(abs_builddir)/BtsSiteMgrSpecification.json \
@@ -45,6 +49,14 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EUtranGenericCellSpecification.json \
 		$(abs_builddir)/EUtranCellFDDSpecification.json \
 		$(abs_builddir)/EUtranCellTDDSpecification.json \
+		$(abs_builddir)/ServingGWFunctionSpecification.json \
+		$(abs_builddir)/PGWFunctionSpecification.json \
+		$(abs_builddir)/MMEFunctionSpecification.json \
+		$(abs_builddir)/PCRFFunctionSpecification.json \
+		$(abs_builddir)/MscServerFunctionSpecification.json \
+		$(abs_builddir)/CsMgwFunctionSpecification.json \
+		$(abs_builddir)/SgsnFunctionSpecification.json \
+		$(abs_builddir)/GgsnFunctionSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -83,6 +95,14 @@ check_DATA = .validation_ok
 		if ! ajv compile -s eutranNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s sonPolicyNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s stateManagementIRP.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s epcNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s coreNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s imsNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
@@ -150,6 +170,38 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDDSpecification.json \
 			-r EUtranGenericCellSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ServingGWFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s PGWFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MMEFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s PCRFFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MscServerFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s CsMgwFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SgsnFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GgsnFunctionSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \

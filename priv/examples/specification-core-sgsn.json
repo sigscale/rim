@@ -1,0 +1,121 @@
+{
+	"name": "SgsnFunction",
+	"description": "Core Serving GPRS Support Node (SGSN) (3GPP 23.002)",
+	"@type": "SgsnFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SgsnFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "SgsnFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SgsnFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "mccList",
+			"description": "List of Mobile Country Codes (MCC) (3GPP 23.003)",
+			"valueType": "longList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+		},
+		{
+			"name": "mncList",
+			"description": "List of Mobile Network Codes (MNC) (3GPP 23.003)",
+			"valueType": "longList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+		},
+		{
+			"name": "lacList",
+			"description": "List of Location Area Codes (LAC) (3GPP 23.003)",
+			"valueType": "longList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+		},
+		{
+			"name": "sacList",
+			"description": "List of Service Area Codes (SAC) (3GPP 23.003)",
+			"valueType": "longList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+		},
+		{
+			"name": "sgsnId",
+			"description": "Unique SGSN ID (3GPP 23.002)",
+			"valueType": "integer"
+		},
+		{
+			"name": "sgsnFunctionGsmCell",
+			"description": "This holds a set of DNs of GsmCell",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "sgsnFunctionExternalGsmCell",
+			"description": "This holds a set of DNs of ExternalGsmCell",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "sgsnFunctionSgsnPool",
+			"description": "This holds a set of DNs of SgsnPool",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "nriList",
+			"description": "NRI shall be part of the TMSI (3GPP 23.003)",
+			"valueType": "longList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+		},
+		{
+			"name": "proceduralStatus",
+			"description": "Procedural status of the object instance (ITU-T X.731)",
+			"valueType": "proceduralStatus",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/proceduralStatus"
+		},
+		{
+			"name": "GbLink",
+			"description": "Gb interface link connecting SGSN to the GERAN (3GPP 23.002)",
+			"valueType": "GbLinkList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/GbLinkList"
+		},
+		{
+			"name": "IupsLink",
+			"description": "Iu-cs interface link connecting MSCserver to RNC, BSC and HNB GW (3GPP 23.002)",
+			"valueType": "IucsLinkList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/IucsLinkList"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

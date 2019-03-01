@@ -1,0 +1,1366 @@
+{
+	"title": "Core Network NRM",
+	"description": "Core Network Network Resource Model (NRM)",
+	"definitions": {
+		"longList": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"em": {
+						"type": "integer",
+							"minimum": -9223372036854775808,
+							"maximum": 9223372036854775807
+					}
+				}
+			}
+		},
+		"PLMNId": {
+			"type": "object",
+			"properties": {
+				"mcc": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				},
+				"mnc": {
+					"type": "integer",
+					"minimum": -32768,
+					"maximum": 32767
+				}
+			}
+		},
+		"PLMNIdList": {
+			"type": "object",
+			"properties": {
+				"pLMNId": {
+					"type": "array",
+					"maxItems": 6,
+					"items": {
+						"$ref": "#/definitions/PLMNId"
+					}
+				}
+			}
+		},
+		"defaultMscType": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 1
+		},
+		"MscServerFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"mccList",
+								"mncList",
+								"lacList",
+								"sacList",
+								"mscId",
+								"mscServerFunctionGsmCell",
+								"mscServerFunctionExternalGsmCell",
+								"mscServerFunctionCsMgwFunction",
+								"nriList"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"mccList": {
+									"$ref": "#/definitions/longList"
+								},
+								"mncList": {
+									"$ref": "#/definitions/longList"
+								},
+								"lacList": {
+									"$ref": "#/definitions/longList"
+								},
+								"sacList": {
+									"$ref": "#/definitions/longList"
+								},
+								"gcaList": {
+									"$ref": "#/definitions/longList"
+								},
+								"mscId": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"mscServerFunctionGsmCell": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"mscServerFunctionExternalGsmCell": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"mscServerFunctionCsMgwFunction": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"nriList": {
+									"$ref": "#/definitions/longList"
+								},
+								"mscServerFunctionMscPool": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"defaultMsc": {
+									"$ref": "#/definitions/defaultMscType"
+								}
+							}
+						},
+						"IucsLink": {
+							"$ref": "#/definitions/IucsLinkList"
+						},
+						"ALink": {
+							"$ref": "#/definitions/ALinkList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"HlrFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"VlrFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"AucFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EirFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SmsIwmscFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SmsGmscFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"GmscFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SgsnFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"mccList",
+								"mncList",
+								"lacList",
+								"sacList",
+								"sgsnId",
+								"sgsnFunctionGsmCell",
+								"sgsnFunctionExternalGsmCell",
+								"sgsnFunctionSgsnPool",
+								"nriList",
+								"proceduralStatus"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"mccList": {
+									"$ref": "#/definitions/longList"
+								},
+								"mncList": {
+									"$ref": "#/definitions/longList"
+								},
+								"lacList": {
+									"$ref": "#/definitions/longList"
+								},
+								"sacList": {
+									"$ref": "#/definitions/longList"
+								},
+								"sgsnId": {
+									"type": "integer",
+									"minimum": -9223372036854775808,
+									"maximum": 9223372036854775807
+								},
+								"sgsnFunctionGsmCell": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"sgsnFunctionExternalGsmCell": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"sgsnFunctionSgsnPool": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"nriList": {
+									"$ref": "#/definitions/longList"
+								},
+								"proceduralStatus": {
+									"$ref": "statemanagementIRP#/definitions/proceduralStatusType"
+								}
+							}
+						},
+						"GbLink": {
+							"$ref": "#/definitions/GbLinkList"
+						},
+						"IupsLink": {
+							"$ref": "#/definitions/IupsLinkList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"GgsnFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"proceduralStatus"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"proceduralStatus": {
+									"$ref": "statemanagementIRP#/definitions/proceduralStatusType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"BgFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SmlcFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"GmlcFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ScfFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"IucsLink": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"connectedRnc": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"connectedBssc": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"connectedHNBGW": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"IucsLinkList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/IucsLink"
+			}
+		},
+		"IupsLink": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"connectedRnc": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"connectedBssc": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"connectedHNBGW": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"IupsLinkList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/IupsLink"
+			}
+		},
+		"IubcLink": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"connectedRnc"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"connectedRnc": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"connectedHNBGW": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"IubcLinkList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/IubcLink"
+			}
+		},
+		"ALink": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"connectedBss"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"connectedBss": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"ALinkList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ALink"
+			}
+		},
+		"GbLink": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"connectedBss"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"connectedBss": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"GbLinkList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/GbLinkList"
+			}
+		},
+		"SrfFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"CbcFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"IubcLink": {
+							"$ref": "#/definitions/IubcLinkList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"CgfFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"GmscServerFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"IwfFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"MnpSrfFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"NpdbFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SgwFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SsfFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"BsFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"CsMgwFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel",
+								"csMgwFunctionMscServerFunction",
+								"csMgwFunctionIucsLink",
+								"csMgwFunctionALink"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"csMgwFunctionMscServerFunction": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"csMgwFunctionIucsLink": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"csMgwFunctionALink": {
+									"$ref": "genericNrm#/definitions/dnList"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"BmScFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"userLabel"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_BmSc_Ggsn": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_Ggsn_Sgsn": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"aEnd",
+								"userLabel",
+								"zEnd"
+							],
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"CircuitEndPointSubgroup": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"circuitEndPointSubgroupId"
+							],
+							"properties": {
+								"circuitEndPointSubgroupId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"MscPool": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"mscPoolMscServerFunction"
+							],
+							"properties": {
+								"mscPoolMscServerFunction": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"MscPoolArea": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"lacList",
+								"mscPoolAreaMscPool"
+							],
+							"properties": {
+								"mscPoolMscServerFunction": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"lacList": {
+									"$ref": "#/definitions/longList"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"SgsnPool": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"sgsnPoolSgsnFunction"
+							],
+							"properties": {
+								"sgsnPoolSgsnFunction": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"SgsnPoolArea": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"requires": [
+								"racList",
+								"sgsnPoolAreaSgsnPool"
+							],
+							"properties": {
+								"racList": {
+									"$ref": "#/definitions/longList"
+								},
+								"pLMNIdList": {
+									"$ref": "#/definitions/PLMNIdList"
+								},
+								"sgsnPoolAreaSgsnPool": {
+									"$ref": "genericNrm#/definitions/dnList"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		}
+	}
+}
