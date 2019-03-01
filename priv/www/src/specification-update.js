@@ -45,7 +45,7 @@ class specUpdateList extends PolymerElement {
 				</paper-input>
 				<paper-input
 						id="addSpecType"
-						label="Type"
+						label="Class"
 						value="{{specification.specClass}}">
 				</paper-input>
 				<paper-dropdown-menu
@@ -56,14 +56,14 @@ class specUpdateList extends PolymerElement {
 					<paper-listbox
 							id="updateStatus"
 							slot="dropdown-content">
-						<paper-item> in_study </paper-item>
-						<paper-item> in_design </paper-item>
-						<paper-item> in_test </paper-item>
-						<paper-item> rejected </paper-item>
-						<paper-item> active </paper-item>
-						<paper-item> launched </paper-item>
-						<paper-item> retired </paper-item>
-						<paper-item> obsolete </paper-item>
+						<paper-item>In study</paper-item>
+						<paper-item>In design</paper-item>
+						<paper-item>Intest</paper-item>
+						<paper-item>Rejected</paper-item>
+						<paper-item>Active</paper-item>
+						<paper-item>Launched</paper-item>
+						<paper-item>Retired</paper-item>
+						<paper-item>Obsolete</paper-item>
 					</paper-listbox>
 				</paper-dropdown-menu>
 				<paper-checkbox
