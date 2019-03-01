@@ -388,7 +388,7 @@ parse_gsm_cell_rel([{characters, Chars} | T], "lac" = Attr, Acc) ->
 		Acc#gsm_relation{lac = list_to_integer(Chars)});
 parse_gsm_cell_rel([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
 	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{lac = list_to_atom(Chars)});
+		Acc#gsm_relation{is_remove_allowed = list_to_atom(Chars)});
 parse_gsm_cell_rel([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
 	parse_gsm_cell_rel(T, Attr,
 		Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
