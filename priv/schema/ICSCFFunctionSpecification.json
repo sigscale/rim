@@ -1,0 +1,42 @@
+{
+	"$id": "http://sigscale.org/schema/ICSCFFunctionSpecification",
+	"title": "IMS ICSCF Specification",
+	"description": "IMS Interrogating Call Session Control Function (I-CSCF) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"linkList",
+											"ICSCFFunctionOptionallyContainedNrmClass",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
