@@ -1160,7 +1160,7 @@
 								"userLabel": {
 									"type": "string"
 								},
-								"aEnd": {
+								"zEnd": {
 									"$ref": "genericNrm#/definitions/dn"
 								}
 							}
@@ -1203,7 +1203,7 @@
 								"userLabel": {
 									"type": "string"
 								},
-								"aEnd": {
+								"zEnd": {
 									"$ref": "genericNrm#/definitions/dn"
 								}
 							}

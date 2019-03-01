@@ -33,6 +33,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/stateManagementIRP.json \
 		$(abs_builddir)/epcNrm.json \
 		$(abs_builddir)/coreNrm.json \
+		$(abs_builddir)/imsNrm.json \
 		$(abs_builddir)/ResourceFunctionSpecification.json \
 		$(abs_builddir)/BssFunctionSpecification.json \
 		$(abs_builddir)/BtsSiteMgrSpecification.json \
@@ -56,6 +57,11 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/CsMgwFunctionSpecification.json \
 		$(abs_builddir)/SgsnFunctionSpecification.json \
 		$(abs_builddir)/GgsnFunctionSpecification.json \
+		$(abs_builddir)/ASFunctionSpecification.json \
+		$(abs_builddir)/HSSFunctionSpecification.json \
+		$(abs_builddir)/PCSCFFunctionSpecification.json \
+		$(abs_builddir)/SCSCFFunctionSpecification.json \
+		$(abs_builddir)/ICSCFFunctionSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -100,6 +106,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s epcNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s coreNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s imsNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
@@ -199,6 +207,26 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GgsnFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ASFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s HSSFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s PCSCFFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SCSCFFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s PCSCFFunctionSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \

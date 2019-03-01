@@ -31,6 +31,11 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-core-mgw.json \
 		$(abs_builddir)/specification-core-sgsn.json \
 		$(abs_builddir)/specification-core-ggsn.json \
+		$(abs_builddir)/specification-ims-as.json \
+		$(abs_builddir)/specification-ims-hss.json \
+		$(abs_builddir)/specification-ims-pcscf.json \
+		$(abs_builddir)/specification-ims-scscf.json \
+		$(abs_builddir)/specification-ims-icscf.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -144,6 +149,30 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-ggsn.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-ggsn.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-ims-as.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/HSSFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-ims-hss.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PCSCFFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-ims-pcscf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SCSCFFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-ims-scscf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ICSCFFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-ims-icscf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \
