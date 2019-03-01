@@ -337,7 +337,7 @@ parse_gsm_cell_rels(CellStack,
 				Acc1;
 			(gsmRel, R, Acc1) ->
 				[#resource_char{name = "gsmRelation", value = R} | Acc1];
-			(utranReln, [], Acc1) ->
+			(utranRel, [], Acc1) ->
 				Acc1;
 			(utranRel, R, Acc1) ->
 				[#resource_char{name = "utranRelation", value = R} | Acc1];
