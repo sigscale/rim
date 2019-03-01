@@ -1,0 +1,42 @@
+{
+	"$id": "http://sigscale.org/schema/ASFunctionSpecification",
+	"title": "IMS AS Specification",
+	"description": "IMS Application Server (AS) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"linkList",
+											"ASFunctionOptionallyContainedNrmClass",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

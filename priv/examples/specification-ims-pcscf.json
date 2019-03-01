@@ -1,0 +1,62 @@
+{
+	"name": "PCSCFFunction",
+	"description": "IMS Proxy Call Session Control Function (CSCF)",
+	"@type": "PCSCFFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PCSCFFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "IMS",
+	"targetResourceSchema": {
+		"@type": "PCSCFFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/PCSCFFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "linkList",
+			"description": "List of related link object distiguished names (DN)",
+			"valueType": "linkList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/linkListType"
+		},
+		{
+			"name": "PCSCFFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "PCSCFFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/imsNrm#/definitions/PCSCFFunctionOptionallyContainedNrmClassList"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

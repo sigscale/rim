@@ -1,0 +1,42 @@
+{
+	"$id": "http://sigscale.org/schema/SCSCFFunctionSpecification",
+	"title": "IMS SCSCF Specification",
+	"description": "IMS Serving Call Session Control Function (S-CSCF) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"linkList",
+											"SCSCFFunctionOptionallyContainedNrmClass",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
