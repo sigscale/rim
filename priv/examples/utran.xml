@@ -47,6 +47,23 @@
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
+				<un:NodeBFunction id="1">
+					<un:attributes>
+						<un:userLabel>Paris NK1</un:userLabel>
+						<un:vnfParametersList>
+							<xn:vnfInstanceId>oiurqw</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</un:vnfParametersList>
+					</un:attributes>
+					<!--  Vendor specific data for NodeBFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=6</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV5</xn:vsDataFormatVersion>
+							<xn:vsData />
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</un:NodeBFunction>
 				<un:RncFunction id="1">
 					<un:attributes>
 						<un:userLabel>Paris SMN1</un:userLabel>
