@@ -29,6 +29,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/geranNrm.json \
 		$(abs_builddir)/utranNrm.json \
 		$(abs_builddir)/eutranNrm.json \
+		$(abs_builddir)/nrNrm.json \
 		$(abs_builddir)/sonPolicyNrm.json \
 		$(abs_builddir)/stateManagementIRP.json \
 		$(abs_builddir)/epcNrm.json \
@@ -62,6 +63,11 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/PCSCFFunctionSpecification.json \
 		$(abs_builddir)/SCSCFFunctionSpecification.json \
 		$(abs_builddir)/ICSCFFunctionSpecification.json \
+		$(abs_builddir)/GNBDUFunctionSpecification.json \
+		$(abs_builddir)/GNBCUCPFunctionSpecification.json \
+		$(abs_builddir)/GNBCUUPFunctionSpecification.json \
+		$(abs_builddir)/NRCellDUSpecification.json \
+		$(abs_builddir)/NRCellCUSpecification.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -98,6 +104,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s utranNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s eutranNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s nrNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s sonPolicyNrm.json; \
 			then exit 1; fi; \
@@ -227,6 +235,26 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GNBDUFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GNBCUCPFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GNBCUUPFunctionSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s NRCellDUSpecification.json \
+			-r ResourceFunctionSpecification.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s NRCellCUSpecification.json \
 			-r ResourceFunctionSpecification.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \

@@ -1,0 +1,69 @@
+{
+	"$id": "http://sigscale.org/schema/NRCellDUSpecification",
+	"title": "NR Cell DU Specification",
+	"description": "NR Cell Distributed Unit (DU) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"nCGI",
+											"operationalState",
+											"administrativeState",
+											"availabilityStatus",
+											"pLMNIdList",
+											"nSSAIList",
+											"nRpci",
+											"nRTac",
+											"bSChannelBw",
+											"fDDCarrierDL",
+											"fDDCarrierUL",
+											"cyclicPrefixDL",
+											"cyclicPrefixUL",
+											"fDDBwpCommonCarrierFreqDL",
+											"fDDBwpCommonCarrierFreqUL",
+											"fDDBwpCommonChannelBwDL",
+											"fDDBwpCommonChannelBwUL",
+											"tDDBwpCommonCarrierFreq",
+											"tDDBwpCommonChannelBw",
+											"fDDBwpDedicatedCarrierFreqDL",
+											"fDDBwpDedicatedCarrierFreqUL",
+											"fDDBwpDedicatedChannelBwDL",
+											"fDDBwpDedicatedChannelBwUL",
+											"tDDBwpDedicatedCarrierFreq",
+											"tDDBwpDedicatedChannelBw",
+											"rRMPolicy",
+											"VsDataContainer",
+											"nRSectorCarrier",
+											"EnergySavingProperties",
+											"ESPolicies"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

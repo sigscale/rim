@@ -1,0 +1,48 @@
+{
+	"$id": "http://sigscale.org/schema/GNBCUUPFunctionSpecification",
+	"title": "NR gNB-CU-UP Specification",
+	"description": "NR gNB Central Unit (CU) User Plane (UP) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"peeParametersList",
+											"gNBId",
+											"EP_E1",
+											"EP_F1U",
+											"EP_XnU",
+											"EP_NgU",
+											"EP_X2U",
+											"EP_S1U",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
