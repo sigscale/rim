@@ -359,10 +359,10 @@
 									"type": "integer"
 								},
 								"cyclicPrefixDL": {
-									"type": "integer"
+									"$ref": "#/definitions/CyclicPrefix"
 								},
 								"cyclicPrefixUL": {
-									"type": "integer"
+									"$ref": "#/definitions/CyclicPrefix"
 								},
 								"fDDBwpCommonCarrierFreqDL": {
 									"type": "integer"
