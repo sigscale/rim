@@ -1,0 +1,754 @@
+{
+	"title": "NR NRM",
+	"description": "5G New Radio (NR) Network Resource Model (NRM)",
+	"definitions": {
+		"GnbId": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 4294967295
+		},
+		"Nci": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 68719476735 
+		},
+		"Ncgi": {
+			"type": "object",
+			"properties": {
+				"plmnId": {
+					"$ref": "eutranNrm#/definitions/PLMNId"
+				},
+				"Nci": {
+					"$ref": "#/definitions/Nci"
+				}
+			}
+		},
+		"Nci": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 503 
+		},
+		"NgTac": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 16777215
+		},
+		"GnbDuId": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 68719476735
+		},
+		"GnbName": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 150
+		},
+		"CyclicPrefix": {
+			"type": "integer",
+			"enum": [
+				15,
+				30,
+				60,
+				120
+			]
+		},
+		"IpEndPoint": {
+			"type": "object",
+			"required": [
+				"ipv4Address",
+				"ipv6Address",
+				"port",
+				"vlanId"
+			],
+			"properties": {
+				"ipv4Address": {
+					"type": "string"
+				},
+				"ipv6Address": {
+					"type": "string"
+				},
+				"ipv6Prefix": {
+					"type": "string"
+				},
+				"port": {
+					"type": "integer"
+				},
+				"vlanId": {
+					"type": "integer"
+				}
+			}
+		},
+		"GNBDUFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"gnbId",
+								"gnbDUId"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								},
+								"gnbId": {
+									"$ref": "#/definitions/GnbId"
+								},
+								"gnbDUId": {
+									"$ref": "#/definitions/GnbDUId"
+								},
+								"gnbDuName": {
+									"$ref": "#/definitions/GnbName"
+								}
+							}
+						},
+						"NRCellDU": {
+							"$ref": "#/definitions/NRCellDUList"
+						},
+						"EP_F1C": {
+							"$ref": "#/definitions/EP_F1CList"
+						},
+						"EP_F1U": {
+							"$ref": "#/definitions/EP_F1UList"
+						}
+					}
+				}
+			]
+		},
+		"GNBCUCPFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"gnbId",
+								"pLMNIdList"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								},
+								"gnbId": {
+									"$ref": "#/definitions/GnbId"
+								},
+								"gnbCuName": {
+									"$ref": "#/definitions/GnbName"
+								},
+								"pLMNIdList": {
+									"$ref": "eutran#/definitions/PLMNIdList"
+								}
+							}
+						},
+						"NRCellCU": {
+							"$ref": "#/definitions/NRCellDUList"
+						},
+						"EP_F1C": {
+							"$ref": "#/definitions/EP_F1CList"
+						},
+						"EP_E1": {
+							"$ref": "#/definitions/EP_E1List"
+						},
+						"EP_XnC": {
+							"$ref": "#/definitions/EP_XnCList"
+						},
+						"EP_X2C": {
+							"$ref": "#/definitions/EP_X2CList"
+						},
+						"EP_NgC": {
+							"$ref": "#/definitions/EP_NgCList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"GNBCUUPFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"pLMNIdList",
+								"gNBId"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"peeParametersList": {
+									"$ref": "genericNrm#/definitions/peeParametersListType"
+								},
+								"pLMNIdList": {
+									"$ref": "eutran#/definitions/PLMNIdList"
+								},
+								"gNBId": {
+									"$ref": "#/definitions/gnbId"
+								}
+							}
+						},
+						"EP_E1": {
+							"$ref": "#/definitions/EP_E1List"
+						},
+						"EP_F1U": {
+							"$ref": "#/definitions/EP_F1UList"
+						},
+						"EP_XnU": {
+							"$ref": "#/definitions/XnUList"
+						},
+						"EP_NgU": {
+							"$ref": "#/definitions/EP_NgUList"
+						},
+						"EP_X2U": {
+							"$ref": "#/definitions/EP_X2UList"
+						},
+						"EP_S1U": {
+							"$ref": "#/definitions/EP_S1UList"
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"NRCellCU": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"nCGI",
+								"pLMNIdList"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"nCGI": {
+									"$ref": "#/definitions/Ncgi"
+								},
+								"pLMNIdList": {
+									"$ref": "eutran#/definitions/PLMNIdList"
+								},
+								"nSSAIList": {
+									"$ref": "ngc#/definitions/NssaiList"
+								},
+								"rRMPolicy": {
+									"type": "string"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						},
+						"EnergySavingProperties": {
+							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
+						},
+						"ESPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						}
+					}
+				}
+			]
+		},
+		"NRCellDU": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"nCGI",
+								"pLMNIdList",
+								"nRpci",
+								"nRTac",
+								"bSChannelBw",
+								"fDDCarrierDL",
+								"fDDCarrierUL",
+								"cyclicPrefixDL",
+								"cyclicPrefixUL",
+								"rRMPolicy"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"nCGI": {
+									"$ref": "#/definitions/Ncgi"
+								},
+								"operationalState": {
+									"$ref": "statemanagementIRP#/definitions/operationalStateType"
+								},
+								"administrativeState": {
+									"$ref": "statemanagementIRP#/definitions/administrativeStateType"
+								},
+								"availabilityStatus": {
+									"$ref": "statemanagementIRP#/definitions/availabilityStatusType"
+								},
+								"pLMNIdList": {
+									"$ref": "eutran#/definitions/PLMNIdList"
+								},
+								"nSSAIList": {
+									"$ref": "ngc#/definitions/NssaiList"
+								},
+								"nRpci": {
+									"$ref": "#/definitions/Pci"
+								},
+								"nRTac": {
+									"$ref": "#/definitions/NgTac"
+								},
+								"bSChannelBw": {
+									"type": "integer"
+								},
+								"fDDCarrierDL": {
+									"type": "integer"
+								},
+								"fDDCarrierUL": {
+									"type": "integer"
+								},
+								"cyclicPrefixDL": {
+									"type": "integer"
+								},
+								"cyclicPrefixUL": {
+									"type": "integer"
+								},
+								"fDDBwpCommonCarrierFreqDL": {
+									"type": "integer"
+								},
+								"fDDBwpCommonCarrierFreqUL": {
+									"type": "integer"
+								},
+								"fDDBwpCommonChannelBwDL": {
+									"type": "integer"
+								},
+								"fDDBwpCommonChannelBwUL": {
+									"type": "integer"
+								},
+								"tDDBwpCommonCarrierFreq": {
+									"type": "integer"
+								},
+								"tDDBwpCommonChannelBw": {
+									"type": "integer"
+								},
+								"fDDBwpDedicatedCarrierFreqDL": {
+									"type": "integer"
+								},
+								"fDDBwpDedicatedCarrierFreqUL": {
+									"type": "integer"
+								},
+								"fDDBwpDedicatedChannelBwDL": {
+									"type": "integer"
+								},
+								"fDDBwpDedicatedChannelBwUL": {
+									"type": "integer"
+								},
+								"tDDBwpDedicatedCarrierFreq": {
+									"type": "integer"
+								},
+								"tDDBwpDedicatedChannelBw": {
+									"type": "integer"
+								},
+								"rRMPolicy": {
+									"type": "string"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						},
+						"nRSectorCarrier": {
+							"$ref": "genericNrm#/definitions/dnList"
+						},
+						"EnergySavingProperties": {
+							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
+						},
+						"ESPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						}
+					}
+				}
+			]
+		},
+		"NRSectorCarrier": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"configuredMaxTxPowerl"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/vnfParametersListType"
+								},
+								"configuredMaxTxPower": {
+									"type": "integer"
+								},
+								"pointAArfcnDLFDD": {
+									"type": "integer"
+								},
+								"pointAArfcnULFDD": {
+									"type": "integer"
+								},
+								"pointAArfcnTDD": {
+									"type": "integer"
+								},
+								"fDDBwpTxStartDL": {
+									"type": "integer"
+								},
+								"fDDBwpTxStartUL": {
+									"type": "integer"
+								},
+								"fDDBwpTxBwDL": {
+									"type": "integer"
+								},
+								"fDDBwpTxBwUL": {
+									"type": "integer"
+								},
+								"tDDBwpTxStart": {
+									"type": "integer"
+								},
+								"tDDBwpTxBw": {
+									"type": "integer"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						},
+						"sectorEquipmentFunction": {
+							"$ref": "genericNrm#/definitions/dnList"
+						},
+						"EnergySavingProperties": {
+							"$ref": "sonPolicyNrm#/definitions/EnergySavingProperties"
+						},
+						"ESPolicies": {
+							"$ref": "sonPolicyNrm#/definitions/ESPolicies"
+						}
+					}
+				}
+			]
+		},
+		"EP_E1": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_XnC": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_XnU": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_NgC": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_NgU": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_F1C": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_F1U": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_S1U": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_X2C": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"EP_X2U": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/EP_RP"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"localAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								},
+								"remoteAddress": {
+									"$ref": "#/definitions/IpEndPoint"
+								}
+							}
+						},
+						"VsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		}
+	}
+}
