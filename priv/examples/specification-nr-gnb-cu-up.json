@@ -66,7 +66,7 @@
 		},
 		{
 			"name": "EP_F1U",
-			"description": "Local end point of user plane interface (F1-U) between DU and CU or CU-UP.",
+			"description": "Local end point of user plane interface (F1-U) between DU and CU or CU-UP",
 			"valueType": "EP_F1UList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1UList"
 		},

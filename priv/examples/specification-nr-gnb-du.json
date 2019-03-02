@@ -72,7 +72,7 @@
 		},
 		{
 			"name": "EP_F1C",
-			"description": "Local end point of control plane interface (F1-C) between DU and CU or CU-UP.",
+			"description": "Local end point of control plane interface (F1-C) between DU and CU or CU-UP",
 			"valueType": "EP_F1CList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1CList"
 		},
