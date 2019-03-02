@@ -6,6 +6,7 @@
 modhtml = im_app.html \
 			im_sup.html \
 			im.html \
+			im_specification.html \
 			im_xml_cm_bulk.html \
 			im_xml_geran.html \
 			im_server.html \
