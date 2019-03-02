@@ -1109,7 +1109,7 @@
 		"EP_RP_EPS": {
 			"allOf": [
 				{
-					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+					"$ref": "genericNrm#/definitions/EP_RP"
 				},
 				{
 					"type": "object",
@@ -1119,12 +1119,6 @@
 							"properties": {
 								"farEndEntity": {
 									"$ref": "genericNrm#/definitions/dn"
-								},
-								"userLabel": {
-									"type": "string"
-								},
-								"farEndNeIpAddr": {
-									"type": "string"
 								}
 							}
 						},

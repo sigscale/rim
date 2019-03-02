@@ -417,6 +417,29 @@
 				"$ref": "#/definitions/VsDataContainer"
 			}
 		},
+		"EP_RP": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"farEndEntity": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"userLabel": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
 		"systemDN": {
 			"$ref": "#/definitions/dn"
 		},
