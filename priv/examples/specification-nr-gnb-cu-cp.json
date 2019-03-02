@@ -1,0 +1,110 @@
+{
+	"name": "GNBCUCPFunction",
+	"description": "NR gNB Central Unit (CU) Control Plane (CP) resource function specification",
+	"@type": "GNBCUCPFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUCPFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "GNBCUCPFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUCPFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "peeParametersList",
+			"description": "Parameter list for the control and monitoring of power, energy and environment",
+			"valueType": "peeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+		},
+		{
+			"name": "gnbId",
+			"description": "Identifies a gNB within a PLMN (3GPP 38.300)",
+			"valueType": "GnbId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbId"
+		},
+		{
+			"name": "gnbCuName",
+			"description": "Identifies the Central Entity of an NR node (3GPP 38.473)",
+			"valueType": "GnbName",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbName"
+		},
+		{
+			"name": "pLMNIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PLMNIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+		},
+		{
+			"name": "NRCellCU",
+			"description": "Information required by CU responsible for management of inter-cell mobility and neighbour relations via ANR",
+			"valueType": "NRCellCUList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/NRCellCUList"
+		},
+		{
+			"name": "EP_F1C",
+			"description": "Local end point of control plane interface (F1-C) between DU and CU or CU-UP.",
+			"valueType": "EP_F1CList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1CList"
+		},
+		{
+			"name": "EP_E1",
+			"description": "Local end point of E1 interface between gNB-CU-CP and gNB-CU-UP",
+			"valueType": "EP_E1List",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_E1List"
+		},
+		{
+			"name": "EP_XnC",
+			"description": "Local end point of Xn Application protocols to a neighbour gNB node",
+			"valueType": "EP_XnCList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_XnCList"
+		},
+		{
+			"name": "EP_X2C",
+			"description": "Local end point of X2-C application protocols to a neighbour eNB or en-gNB node",
+			"valueType": "EP_X2CList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_X2CList"
+		},
+		{
+			"name": "EP_NgC",
+			"description": "Local end point of control plane interface (NG-C) between gNB and NG-Core entity",
+			"valueType": "EP_NgCList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_NgCList"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

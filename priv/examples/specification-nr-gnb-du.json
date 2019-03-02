@@ -1,0 +1,86 @@
+{
+	"name": "GNBDUFunction",
+	"description": "NR gNB Distributed Unit (DU) resource function specification",
+	"@type": "GNBDUFunctionSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBDUFunctionSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "GNBDUFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBDUFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "peeParametersList",
+			"description": "Parameter list for the control and monitoring of power, energy and environment",
+			"valueType": "peeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+		},
+		{
+			"name": "gnbId",
+			"description": "Identifies a gNB within a PLMN (3GPP 38.300)",
+			"valueType": "GnbId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbId"
+		},
+		{
+			"name": "gnbDUId",
+			"description": "Identifies the DU at least within a gNB (3GPP 38.473)",
+			"valueType": "GnbDUId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbDUId"
+		},
+		{
+			"name": "gnbDuName",
+			"description": "Identifies the Distributed Entity of an NR node (3GPP 38.473)",
+			"valueType": "GnbName",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbName"
+		},
+		{
+			"name": "NRCellDU",
+			"description": "Represents the information of a cell known by DU",
+			"valueType": "NRCellDUList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/NRCellDUList"
+		},
+		{
+			"name": "EP_F1C",
+			"description": "Local end point of control plane interface (F1-C) between DU and CU or CU-UP.",
+			"valueType": "EP_F1CList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1CList"
+		},
+		{
+			"name": "EP_F1U",
+			"description": "Local end point of user plane interface (F1-U) between DU and CU or CU-UP",
+			"valueType": "EP_F1UList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1UList"
+		}
+	]
+}

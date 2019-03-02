@@ -1,0 +1,85 @@
+{
+	"name": "NRCellCU",
+	"description": "NR Cell Central Unit (CU) resource function specification",
+	"@type": "NRCellCUSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellCUSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "NRCellCU",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellCU"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "nCGI",
+			"description": "Uniquely identifies a NR cell within a PLMN (3GPP 38.300)",
+			"valueType": "Ncgi",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/Ncgi"
+		},
+		{
+			"name": "pLMNIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PLMNIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+		},
+		{
+			"name": "nSSAIList",
+			"description": "Network Slice Selection Assistance Information",
+			"valueType": "NssaiList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/NssaiList"
+		},
+		{
+			"name": "rRMPolicy",
+			"description": "Radio Resources Management (RRM) policy",
+			"valueType": "string"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+		{
+			"name": "EnergySavingProperties",
+			"description": "Energy saving properties of a network element supporting Energy Saving Management",
+			"valueType": "EnergySavingPropertiesList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
+		},
+		{
+			"name": "ESPolicies",
+			"description": "Energy saving policies information",
+			"valueType": "ESPoliciesList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"
+		}
+	]
+}

@@ -36,6 +36,11 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-ims-pcscf.json \
 		$(abs_builddir)/specification-ims-scscf.json \
 		$(abs_builddir)/specification-ims-icscf.json \
+		$(abs_builddir)/specification-nr-gnb-du.json \
+		$(abs_builddir)/specification-nr-gnb-cu-cp.json \
+		$(abs_builddir)/specification-nr-gnb-cu-up.json \
+		$(abs_builddir)/specification-nr-cell-cu.json \
+		$(abs_builddir)/specification-nr-cell-du.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -173,6 +178,26 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-icscf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GNBDUFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-gnb-du.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUCPFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-gnb-cu-cp.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUUPFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-gnb-cu-up.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellCUSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-cell-cu.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellDUSpecification.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpecification.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-cell-du.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \

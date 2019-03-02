@@ -1,0 +1,208 @@
+{
+	"name": "NRCellDU",
+	"description": "NR Cell Distributed Unit (DU) resource function specification",
+	"@type": "NRCellDUSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellDUSpecification",
+	"@baseType": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "NRCellDU",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellDU"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "nCGI",
+			"description": "Uniquely identifies a NR cell within a PLMN (3GPP 38.300)",
+			"valueType": "Ncgi",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/Ncgi"
+		},
+		{
+			"name": "operationalState",
+			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
+			"valueType": "operationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/operationalStateType"
+		},
+		{
+			"name": "administrativeState",
+			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
+			"valueType": "administrativeStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/administrativeStateType"
+		},
+		{
+			"name": "availabilityStatus",
+			"description": "Indicates the availability status of the object instance (ITU-T X.731)",
+			"valueType": "availabilityStatusType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/availabilityStatusType"
+		},
+		{
+			"name": "pLMNIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PLMNIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+		},
+		{
+			"name": "nSSAIList",
+			"description": "Network Slice Selection Assistance Information",
+			"valueType": "NssaiList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/NssaiList"
+		},
+		{
+			"name": "nRpci",
+			"description": "Physical Cell Identity (PCI) of NR cell (3GPP 36.211)",
+			"valueType": "Pci",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/Pci"
+		},
+		{
+			"name": "nRTac",
+			"description": "Identity of the common Tracking Area Code (TAC) for the PLMNs.",
+			"valueType": "NgTac",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/NgTac"
+		},
+		{
+			"name": "bSChannelBw",
+			"description": "BS Channel bandwidth in MHz (3GPP 38.104)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDCarrierDL",
+			"description": "Frequency Division Duplex (FDD) carrier downlink (DL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDCarrierUL",
+			"description": "Frequency Division Duplex (FDD) carrier uplink (UL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "cyclicPrefixDL",
+			"description": "Cyclic prefix for downlink (3GPP 38.211)",
+			"valueType": "CyclicPrefix",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/CyclicPrefix"
+		},
+		{
+			"name": "cyclicPrefixUL",
+			"description": "Cyclic prefix for uplink (3GPP 38.211)",
+			"valueType": "CyclicPrefix",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/CyclicPrefix"
+		},
+		{
+			"name": "fDDBwpCommonCarrierFreqDL",
+			"description": "FDD Bandwidth Part (BWP) common carrier frequency of downlink (DL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpCommonCarrierFreqUL",
+			"description": "FDD Bandwidth Part (BWP) common carrier frequency of uplink (UL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpCommonChannelBwDL",
+			"description": "FDD Bandwidth Part (BWP) common channel bandwidth of downlink (DL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpCommonChannelBwUL",
+			"description": "FDD Bandwidth Part (BWP) common channel bandwidth of uplink (UL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "tDDBwpCommonCarrierFreq",
+			"description": "TDD Bandwidth Part (BWP) common carrier frequency",
+			"valueType": "integer"
+		},
+		{
+			"name": "tDDBwpCommonChannelBw",
+			"description": "FDD Bandwidth Part (BWP) common channel bandwidth",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpDedicatedCarrierFreqDL",
+			"description": "FDD Bandwidth Part (BWP) dedicated carrier frequency of downlink (DL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpDedicatedCarrierFreqUL",
+			"description": "FDD Bandwidth Part (BWP) dedicated carrier frequency of uplink (UL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpDedicatedChannelBwDL",
+			"description": "FDD Bandwidth Part (BWP) dedicated channel bandwidth of downlink (DL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpDedicatedChannelBwUL",
+			"description": "FDD Bandwidth Part (BWP) dedicated channel bandwidth of uplink (UL)",
+			"valueType": "integer"
+		},
+		{
+			"name": "tDDBwpDedicatedCarrierFreq",
+			"description": "TDD Bandwidth Part (BWP) dedicated carrier frequency",
+			"valueType": "integer"
+		},
+		{
+			"name": "tDDBwpDedicatedChannelBw",
+			"description": "TDD Bandwidth Part (BWP) dedicated channel bandwidth",
+			"valueType": "integer"
+		},
+		{
+			"name": "rRMPolicy",
+			"description": "Radio Resources Management (RRM) policy",
+			"valueType": "string"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		},
+		{
+			"name": "nRSectorCarrier",
+			"description": "Represents the resources of each transmission point included in the cell",
+			"valueType": "dnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+		},
+		{
+			"name": "EnergySavingProperties",
+			"description": "Energy saving properties of a network element supporting Energy Saving Management",
+			"valueType": "EnergySavingPropertiesList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
+		},
+		{
+			"name": "ESPolicies",
+			"description": "Energy saving policies information",
+			"valueType": "ESPoliciesList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"
+		}
+	]
+}
