@@ -35,7 +35,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/epcNrm.json \
 		$(abs_builddir)/coreNrm.json \
 		$(abs_builddir)/imsNrm.json \
-		$(abs_builddir)/ResourceFunctionSpecification.json \
+		$(abs_builddir)/ResourceFunctionSpec.json \
 		$(abs_builddir)/BssFunctionSpecification.json \
 		$(abs_builddir)/BtsSiteMgrSpecification.json \
 		$(abs_builddir)/GsmCellSpecification.json \
@@ -119,143 +119,143 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s ResourceFunctionSpecification.json \
+		if ! ajv compile -s ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BssFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BtsSiteMgrSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GsmCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s RncFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NodeBFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellFDDSpecification.json \
 			-r UtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDSpecification.json \
 			-r UtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDLcrSpecification.json \
 			-r UtranCellTDDSpecification.json \
 			-r UtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDHcrSpecification.json \
 			-r UtranCellTDDSpecification.json \
 			-r UtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ENBFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellFDDSpecification.json \
 			-r EUtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDDSpecification.json \
 			-r EUtranGenericCellSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ServingGWFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PGWFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MMEFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCRFFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MscServerFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CsMgwFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SgsnFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GgsnFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ASFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HSSFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SCSCFFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBDUFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUCPFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUUPFunctionSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellDUSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellCUSpecification.json \
-			-r ResourceFunctionSpecification.json \
+			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceInventoryManagement.json; \
