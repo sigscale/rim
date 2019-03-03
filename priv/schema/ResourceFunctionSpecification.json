@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/ResourceFunctionSpecification",
+	"$id": "http://sigscale.org/schema/ResourceFunctionSpec",
 	"title": "Resource Function Specification",
-	"description": "Specifies a function as a behaviour to transform inputs of any nature into outputs of any nature independently from the way it is provided.",
+	"description": "Specifies a function as a behaviour to transform inputs of any nature into outputs of any nature independently from the way it is provided (TR225)",
 	"type": "object",
 	"allOf": [
 		{
@@ -10,11 +10,12 @@
 		{
 			"type": "object",
 			"properties": {
-				"sap": {
+				"connectivity": {
 					"type": "array",
+					"description": "Adjacency Graph as defined in TR255A",
 					"items": [
 						{
-							"$ref": "#/definitions/SapRef"
+							"$ref": "#/definitions/ConnectivitySpec"
 						}
 					]
 				}
@@ -22,22 +23,80 @@
 		}
 	],
 	"definitions": {
-		"SapRef": {
+		"ConnectivitySpec": {
 			"type": "object",
-			"title": "SAP Reference",
-			"description": "Service Access Point (SAP) reference",
+			"title": "Connectivity Specification",
+			"description": "Predefines adjacency relationships among components",
+			"required": [
+				"name",
+				"endPoint"
+			],
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"endPoint": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/EndpointSpec"
+					}
+				}
+			}
+		},
+		"EndpointSpec": {
+			"type": "object",
+			"title": "Endpoint Specification",
+			"description": "Endpoint in a communications link",
 			"properties": {
 				"id": {
 					"type": "string"
 				},
 				"href": {
 					"type": "string"
+				},
+				"@type": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"isRoot": {
+					"type": "boolean",
+					"description": "False if endpoint is a sink (only), true if endpoint is (also) a source"
+				},
+				"connectionPoint": {
+					"type": "array",
+					"items": {
+						"#/definitions/ConnectionPointSpec"
+					}
 				}
-			},
+			}
+		},
+		"ConnectionPointSpec": {
+			"type": "object",
+			"title": "Connection Point Specification",
 			"required": [
 				"id",
 				"href"
-			]
+			],
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"href": {
+					"type": "string"
+				},
+				"@type": {
+					"type": "string",
+					"description": "ConnectionPointSpec class or subclass thereof"
+				},
+				"name": {
+					"type": "string"
+				}
+			}
 		}
-	}
+	]
 }
