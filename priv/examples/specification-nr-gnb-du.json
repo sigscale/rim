@@ -3,7 +3,7 @@
 	"description": "NR gNB Distributed Unit (DU) resource function specification",
 	"@type": "GNBDUFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBDUFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

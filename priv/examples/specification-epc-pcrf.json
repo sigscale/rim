@@ -3,7 +3,7 @@
 	"description": "Policy and Charging Rules Function (PCRF) (3GPP 23.401)",
 	"@type": "PCRFFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PCRFFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

@@ -3,7 +3,7 @@
 	"description": "UMTS Radio Network Controller (RNC) resource function specification",
 	"@type": "RncFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/RncFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

@@ -2,7 +2,7 @@
 	"description": "EPC PDN Gateway (PGW) (3GPP 23.401)",
 	"@type": "PGWFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PGWFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

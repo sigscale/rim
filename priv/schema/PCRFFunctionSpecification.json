@@ -5,7 +5,7 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpecification"
+			"$ref": "ResourceFunctionSpec"
 		},
 		{
 			"type": "object",

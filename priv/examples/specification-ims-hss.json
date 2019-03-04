@@ -3,7 +3,7 @@
 	"description": "IMS Home Subscriber Server (HSS)",
 	"@type": "HSSFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/HSSFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

@@ -3,7 +3,7 @@
 	"description": "Core Serving GPRS Support Node (SGSN) (3GPP 23.002)",
 	"@type": "SgsnFunctionSpecification",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SgsnFunctionSpecification",
-	"@baseType": "ResourceFunctionSpecification",
+	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
