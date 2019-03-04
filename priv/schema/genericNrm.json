@@ -417,6 +417,43 @@
 				"$ref": "#/definitions/VsDataContainer"
 			}
 		},
+		"Link": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"userLabel",
+								"aEnd",
+								"zEnd"
+							],
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/linkType"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/dn"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
 		"EP_RP": {
 			"allOf": [
 				{
@@ -427,6 +464,9 @@
 					"properties": {
 						"attributes": {
 							"type": "object",
+							"required": [
+								"userLabel"
+							],
 							"properties": {
 								"farEndEntity": {
 									"$ref": "genericNrm#/definitions/dn"
