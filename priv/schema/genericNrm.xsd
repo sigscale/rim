@@ -258,47 +258,6 @@
 		</complexType>
 	</element>
 
-	<element name="Link">
-		<complexType>
-			<complexContent>
-				<extension base="xn:NrmClass">
-					<sequence>
-						<element name="attributes" minOccurs="0">
-							<complexType>
-								<all>
-									<element name="userLabel"/>
-									<element name="linkType" type="xn:linkType" minOccurs="0"/>
-									<element name="protocolVersion" type="string" minOccurs="0"/>
-									<element name="aEnd" type="xn:dn"/>
-									<element name="zEnd" type="xn:dn"/>
-								</all>
-							</complexType>
-						</element>
-					</sequence>
-				</extension>
-			</complexContent>
-		</complexType>
-	</element>
-
-	<element name="EP_RP">
-		<complexType>
-			<complexContent>
-				<extension base="xn:NrmClass">
-					<sequence>
-						<element name="attributes" minOccurs="0">
-							<complexType>
-								<all>
-									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
-									<element name="userLabel"/>
-								</all>
-							</complexType>
-						</element>
-					</sequence>
-				</extension>
-			</complexContent>
-		</complexType>
-	</element>
-
 	<!-- IRPAgent IOC attributes -->
 	<element name="systemDN" type="xn:dn"/>
 
