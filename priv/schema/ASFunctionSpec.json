@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/GNBDUFunctionSpecification",
-	"title": "NR gNB-DU Specification",
-	"description": "NR gNB Distributed Unit (DU) resource function specification",
+	"$id": "http://sigscale.org/schema/ASFunctionSpec",
+	"title": "IMS AS Specification",
+	"description": "IMS Application Server (AS) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,13 +26,9 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"peeParametersList",
-											"gnbId",
-											"gnbDUId",
-											"gnbDuName",
-											"NRCellDU",
-											"EP_F1C",
-											"EP_F1U"
+											"linkList",
+											"ASFunctionOptionallyContainedNrmClass",
+											"VsDataContainer"
 										]
 									}
 								}

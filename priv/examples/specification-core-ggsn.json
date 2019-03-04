@@ -1,8 +1,8 @@
 {
 	"name": "GgsnFunction",
 	"description": "Core Gateway GPRS Support Node (GGSN) (3GPP 23.002)",
-	"@type": "GgsnFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GgsnFunctionSpecification",
+	"@type": "GgsnFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GgsnFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

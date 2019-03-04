@@ -71,130 +71,130 @@ check_DATA = .validation_ok
 				-d category.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d candidate.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-bss.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/BtsSiteMgrSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/BtsSiteMgrSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-bts.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-cell.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/RncFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/RncFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-rnc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NodeBFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/NodeBFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-nodeb.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellFDDSpecification.json \
-				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellFDDSpec.json \
+				-r $(top_builddir)/priv/schema/UtranGenericCellSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-fdd.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDLcrSpecification.json \
-				-r $(top_builddir)/priv/schema/UtranCellTDDSpecification.json \
-				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDLcrSpec.json \
+				-r $(top_builddir)/priv/schema/UtranCellTDDSpec.json \
+				-r $(top_builddir)/priv/schema/UtranGenericCellSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-tdd-lcr.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDHcrSpecification.json \
-				-r $(top_builddir)/priv/schema/UtranCellTDDSpecification.json \
-				-r $(top_builddir)/priv/schema/UtranGenericCellSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDHcrSpec.json \
+				-r $(top_builddir)/priv/schema/UtranCellTDDSpec.json \
+				-r $(top_builddir)/priv/schema/UtranGenericCellSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-tdd-hcr.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-enb.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellFDDSpecification.json \
-				-r $(top_builddir)/priv/schema/EUtranGenericCellSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellFDDSpec.json \
+				-r $(top_builddir)/priv/schema/EUtranGenericCellSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-cell-fdd.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellTDDSpecification.json \
-				-r $(top_builddir)/priv/schema/EUtranGenericCellSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellTDDSpec.json \
+				-r $(top_builddir)/priv/schema/EUtranGenericCellSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-cell-tdd.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ServingGWFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ServingGWFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-sgw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/PGWFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PGWFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-pgw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MMEFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/MMEFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-mme.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/PCRFFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PCRFFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-pcrf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MscServerFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/MscServerFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-msc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/CsMgwFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/CsMgwFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-mgw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/SgsnFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SgsnFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-sgsn.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-ggsn.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-ggsn.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-as.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/HSSFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/HSSFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-hss.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/PCSCFFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/PCSCFFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-pcscf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/SCSCFFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SCSCFFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-scscf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ICSCFFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ICSCFFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-icscf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GNBDUFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GNBDUFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-gnb-du.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUCPFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUCPFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-gnb-cu-cp.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUUPFunctionSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUUPFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-gnb-cu-up.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellCUSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellCUSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-cell-cu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellDUSpecification.json \
+		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellDUSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-cell-du.json; then exit 1; fi; \

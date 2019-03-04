@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/ASFunctionSpecification",
-	"title": "IMS AS Specification",
-	"description": "IMS Application Server (AS) resource function specification",
+	"$id": "http://sigscale.org/schema/HSSFunctionSpec",
+	"title": "IMS HSS Specification",
+	"description": "IMS Home Subscriber Server (HSS) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -27,7 +27,7 @@
 											"userLabel",
 											"vnfParametersList",
 											"linkList",
-											"ASFunctionOptionallyContainedNrmClass",
+											"HSSFunctionOptionallyContainedNrmClass",
 											"VsDataContainer"
 										]
 									}

@@ -1,8 +1,8 @@
 {
 	"name": "ICSCFFunction",
 	"description": "IMS Interrogating Call Session Control Function (CSCF)",
-	"@type": "ICSCFFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ICSCFFunctionSpecification",
+	"@type": "ICSCFFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ICSCFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

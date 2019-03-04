@@ -1,8 +1,8 @@
 {
 	"name": "ENBFunction",
 	"description": "LTE eNB resource function specification",
-	"@type": "ENBFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ENBFunctionSpecification",
+	"@type": "ENBFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ENBFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

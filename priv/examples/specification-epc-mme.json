@@ -1,8 +1,8 @@
 {
 	"name": "MMEFunction",
 	"description": "Mobility Management Entity (MME) (3GPP 23.401)",
-	"@type": "MMEFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MMEFunctionSpecification",
+	"@type": "MMEFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MMEFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

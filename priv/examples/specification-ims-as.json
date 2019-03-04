@@ -1,8 +1,8 @@
 {
 	"name": "ASFunction",
 	"description": "IMS Application Server (AS)",
-	"@type": "ASFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ASFunctionSpecification",
+	"@type": "ASFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ASFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

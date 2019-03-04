@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/PCSCFFunctionSpecification",
-	"title": "IMS PCSCF Specification",
-	"description": "IMS Proxy Call Session Control Function (P-CSCF) resource function specification",
+	"$id": "http://sigscale.org/schema/MscServerFunctionSpec",
+	"title": "Core MSC-Server Specification",
+	"description": "Core Mobile Switching Center (MSC) Server resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,8 +26,20 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"linkList",
-											"PCSCFFunctionOptionallyContainedNrmClass",
+											"mccList",
+											"mncList",
+											"lacList",
+											"sacList",
+											"gcaList",
+											"mscId",
+											"mscServerFunctionGsmCell",
+											"mscServerFunctionExternalGsmCell",
+											"mscServerFunctionCsMgwFunction",
+											"nriList",
+											"mscServerFunctionMscPool",
+											"defaultMsc",
+											"IucsLink",
+											"ALink",
 											"VsDataContainer"
 										]
 									}

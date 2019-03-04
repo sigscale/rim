@@ -1,8 +1,8 @@
 {
 	"name": "ServingGwFunction",
 	"description": "Serving GW (SGW) is the gateway which terminates the interface towards E-UTRAN (3GPP 23.401)",
-	"@type": "ServingGwFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunctionSpecification",
+	"@type": "ServingGwFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

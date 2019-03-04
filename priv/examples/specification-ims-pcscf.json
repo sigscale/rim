@@ -1,8 +1,8 @@
 {
 	"name": "PCSCFFunction",
 	"description": "IMS Proxy Call Session Control Function (CSCF)",
-	"@type": "PCSCFFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PCSCFFunctionSpecification",
+	"@type": "PCSCFFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PCSCFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

@@ -1,11 +1,11 @@
 {
-	"$id": "http://sigscale.org/schema/UtranCellTDDLcrSpecification",
+	"$id": "http://sigscale.org/schema/UtranCellTDDLcrSpec",
 	"title": "UTRAN TDD LCR Cell Specification",
 	"description": "UMTS Time Division Duplex (TDD) low chip rate (HCR) radio resource function specification",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "UtranCellTDDSpecification"
+			"$ref": "UtranCellTDDSpec"
 		},
 		{
 			"type": "object",
@@ -15,10 +15,10 @@
 					"items": {
 						"oneOf": [
 							{
-								"$ref": "UtranGenericCellSpecification#/definitions/ResourceSpecCharacteristic"
+								"$ref": "UtranGenericCellSpec#/definitions/ResourceSpecCharacteristic"
 							},
 							{
-								"$ref": "UtranCellTDDSpecification#/definitions/ResourceSpecCharacteristic"
+								"$ref": "UtranCellTDDSpec#/definitions/ResourceSpecCharacteristic"
 							},
 							{
 								"type": "object",

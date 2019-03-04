@@ -1,8 +1,8 @@
 {
 	"name": "NRCellDU",
 	"description": "NR Cell Distributed Unit (DU) resource function specification",
-	"@type": "NRCellDUSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellDUSpecification",
+	"@type": "NRCellDUSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellDUSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

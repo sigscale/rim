@@ -1,8 +1,8 @@
 {
 	"name": "GNBCUCPFunction",
 	"description": "NR gNB Central Unit (CU) Control Plane (CP) resource function specification",
-	"@type": "GNBCUCPFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUCPFunctionSpecification",
+	"@type": "GNBCUCPFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUCPFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

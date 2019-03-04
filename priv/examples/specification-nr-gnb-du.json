@@ -1,8 +1,8 @@
 {
 	"name": "GNBDUFunction",
 	"description": "NR gNB Distributed Unit (DU) resource function specification",
-	"@type": "GNBDUFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBDUFunctionSpecification",
+	"@type": "GNBDUFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBDUFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

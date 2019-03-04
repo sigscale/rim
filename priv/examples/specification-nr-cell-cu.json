@@ -1,8 +1,8 @@
 {
 	"name": "NRCellCU",
 	"description": "NR Cell Central Unit (CU) resource function specification",
-	"@type": "NRCellCUSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellCUSpecification",
+	"@type": "NRCellCUSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellCUSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

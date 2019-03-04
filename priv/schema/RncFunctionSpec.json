@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/SCSCFFunctionSpecification",
-	"title": "IMS SCSCF Specification",
-	"description": "IMS Serving Call Session Control Function (S-CSCF) resource function specification",
+	"$id": "http://sigscale.org/schema/RncFunctionSpec",
+	"title": "UTRAN RNC Specification",
+	"description": "UTRAN Radio Network Controller (RNC) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,8 +26,18 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"linkList",
-											"SCSCFFunctionOptionallyContainedNrmClass",
+											"peeParametersList",
+											"mcc",
+											"mnc",
+											"rncId",
+											"siptoSupported",
+											"tceIDMappingInfoList",
+											"sharNetTceMappingInfoList",
+											"UtranCellFDD",
+											"UtranCellTDDLcr",
+											"UtranCellTDDHcr",
+											"IubLink",
+											"RncFunctionOptionallyContainedNrmClass",
 											"VsDataContainer"
 										]
 									}

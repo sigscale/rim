@@ -1,10 +1,10 @@
 {
-	"$id": "http://sigscale.org/schema/EUtranCellFDDSpecification",
+	"$id": "http://sigscale.org/schema/EUtranCellFDDSpec",
 	"title": "EUTRAN FDD Cell Specification",
 	"description": "LTE Frequency Division Duplex (FDD) radio resource function specification",
 	"allOf": [
 		{
-			"$ref": "EUtranGenericCellSpecification"
+			"$ref": "EUtranGenericCellSpec"
 		},
 		{
 			"type": "object",
@@ -14,7 +14,7 @@
 					"items": {
 						"oneOf": [
 							{
-								"$ref": "EUtranGenericCellSpecification#/definitions/ResourceSpecCharacteristic"
+								"$ref": "EUtranGenericCellSpec#/definitions/ResourceSpecCharacteristic"
 							},
 							{
 								"type": "object",

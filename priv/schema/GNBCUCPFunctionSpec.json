@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/CsMgwFunctionSpecification",
-	"title": "Core CS-MGW Specification",
-	"description": "Core Circuit Switched (CS) Media Gateway (MGW) resource function specification",
+	"$id": "http://sigscale.org/schema/GNBCUCPFunctionSpec",
+	"title": "NR gNB-CU-CP Specification",
+	"description": "NR gNB Central Unit (CU) Control Plane (CP) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,9 +26,16 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"csMgwFunctionMscServerFunction",
-											"csMgwFunctionIucsLink",
-											"csMgwFunctionALink",
+											"peeParametersList",
+											"gnbId",
+											"gnbCuName",
+											"pLMNIdList",
+											"NRCellCU",
+											"EP_F1C",
+											"EP_E1",
+											"EP_XnC",
+											"EP_X2C",
+											"EP_NgC",
 											"VsDataContainer"
 										]
 									}

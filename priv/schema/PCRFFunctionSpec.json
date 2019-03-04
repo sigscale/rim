@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/HSSFunctionSpecification",
-	"title": "IMS HSS Specification",
-	"description": "IMS Home Subscriber Server (HSS) resource function specification",
+	"$id": "http://sigscale.org/schema/PCRFFunctionSpec",
+	"title": "EPC PCRF Specification",
+	"description": "EPC Policy and Charging Control (PCRF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -27,7 +27,8 @@
 											"userLabel",
 											"vnfParametersList",
 											"linkList",
-											"HSSFunctionOptionallyContainedNrmClass",
+											"PCRFFunctionOptionallyContainedNrmClass",
+											"EP_RP_EPS",
 											"VsDataContainer"
 										]
 									}

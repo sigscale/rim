@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/NodeBFunction",
-	"title": "UMTS NodeB Specification",
-	"description": "UMTS NodeB resource function specification",
+	"$id": "http://sigscale.org/schema/BtsSiteMgrSpec",
+	"title": "GSM BTS Specification",
+	"description": "GSM Base Transceiver Station (BTS) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,11 +26,12 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"peeParametersList",
-											"ManagedElements",
-											"nodeBFunctionIubLink",
-											"NodeBFunctionOptionallyContainedNrmClass",
-											"VsDataContainer"
+											"latitude",
+											"longitude",
+											"operationalState",
+											"GsmCell",
+											"VsDataContainer",
+											"InterRatEsPolicies"
 										]
 									}
 								}

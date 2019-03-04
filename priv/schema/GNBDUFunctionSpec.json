@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/BtsSiteMgrSpecification",
-	"title": "GSM BTS Specification",
-	"description": "GSM Base Transceiver Station (BTS) resource function specification",
+	"$id": "http://sigscale.org/schema/GNBDUFunctionSpec",
+	"title": "NR gNB-DU Specification",
+	"description": "NR gNB Distributed Unit (DU) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,12 +26,13 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"latitude",
-											"longitude",
-											"operationalState",
-											"GsmCell",
-											"VsDataContainer",
-											"InterRatEsPolicies"
+											"peeParametersList",
+											"gnbId",
+											"gnbDUId",
+											"gnbDuName",
+											"NRCellDU",
+											"EP_F1C",
+											"EP_F1U"
 										]
 									}
 								}

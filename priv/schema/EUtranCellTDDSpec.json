@@ -1,10 +1,10 @@
 {
-	"$id": "http://sigscale.org/schema/EUtranCellTDDSpecification",
+	"$id": "http://sigscale.org/schema/EUtranCellTDDSpec",
 	"title": "EUTRAN TDD Cell Specification",
 	"description": "LTE Time Division Duplex (TDD) radio resource function specification",
 	"allOf": [
 		{
-			"$ref": "EUtranGenericCellSpecification"
+			"$ref": "EUtranGenericCellSpec"
 		},
 		{
 			"type": "object",
@@ -14,7 +14,7 @@
 					"items": {
 						"oneOf": [
 							{
-								"$ref": "EUtranGenericCellSpecification#/definitions/ResourceSpecCharacteristic"
+								"$ref": "EUtranGenericCellSpec#/definitions/ResourceSpecCharacteristic"
 							},
 							{
 								"type": "object",

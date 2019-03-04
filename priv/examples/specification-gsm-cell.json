@@ -1,8 +1,8 @@
 {
 	"name": "GsmCell",
 	"description": "GSM radio resource function specification",
-	"@type": "GsmCellSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GsmCellSpecification",
+	"@type": "GsmCellSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GsmCellSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

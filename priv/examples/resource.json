@@ -18,7 +18,7 @@
 		"id": "798115636",
 		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115636",
 		"name": "resourceSpecification",
-		"@type": "BssFunctionSpecification",
+		"@type": "BssFunctionSpec",
 		"version": "1.0"
 	},
 	"resourceCharacteristic": [

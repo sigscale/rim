@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/RncFunctionSpecification",
-	"title": "UTRAN RNC Specification",
-	"description": "UTRAN Radio Network Controller (RNC) resource function specification",
+	"$id": "http://sigscale.org/schema/ICSCFFunctionSpec",
+	"title": "IMS ICSCF Specification",
+	"description": "IMS Interrogating Call Session Control Function (I-CSCF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,18 +26,8 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"peeParametersList",
-											"mcc",
-											"mnc",
-											"rncId",
-											"siptoSupported",
-											"tceIDMappingInfoList",
-											"sharNetTceMappingInfoList",
-											"UtranCellFDD",
-											"UtranCellTDDLcr",
-											"UtranCellTDDHcr",
-											"IubLink",
-											"RncFunctionOptionallyContainedNrmClass",
+											"linkList",
+											"ICSCFFunctionOptionallyContainedNrmClass",
 											"VsDataContainer"
 										]
 									}

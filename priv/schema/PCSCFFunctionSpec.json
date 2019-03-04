@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/BssFunctionSpecification",
-	"title": "GSM BSS Specification",
-	"description": "GSM Base Station Subsystem (BSS) resource function specification",
+	"$id": "http://sigscale.org/schema/PCSCFFunctionSpec",
+	"title": "IMS PCSCF Specification",
+	"description": "IMS Proxy Call Session Control Function (P-CSCF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,7 +26,8 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"BtsSiteMgr",
+											"linkList",
+											"PCSCFFunctionOptionallyContainedNrmClass",
 											"VsDataContainer"
 										]
 									}

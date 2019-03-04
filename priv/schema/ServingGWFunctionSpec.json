@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/MscServerFunctionSpecification",
-	"title": "Core MSC-Server Specification",
-	"description": "Core Mobile Switching Center (MSC) Server resource function specification",
+	"$id": "http://sigscale.org/schema/ServingGWFunctionSpec",
+	"title": "EPC SGW Specification",
+	"description": "EPC Serving Gateway (SGW) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,20 +26,10 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"mccList",
-											"mncList",
-											"lacList",
-											"sacList",
-											"gcaList",
-											"mscId",
-											"mscServerFunctionGsmCell",
-											"mscServerFunctionExternalGsmCell",
-											"mscServerFunctionCsMgwFunction",
-											"nriList",
-											"mscServerFunctionMscPool",
-											"defaultMsc",
-											"IucsLink",
-											"ALink",
+											"pLMNIdList",
+											"tACList",
+											"ServingGWFunctionOptionallyContainedNrmClass",
+											"EP_RP_EPS",
 											"VsDataContainer"
 										]
 									}

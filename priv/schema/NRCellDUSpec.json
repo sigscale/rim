@@ -1,5 +1,5 @@
 {
-	"$id": "http://sigscale.org/schema/NRCellDUSpecification",
+	"$id": "http://sigscale.org/schema/NRCellDUSpec",
 	"title": "NR Cell DU Specification",
 	"description": "NR Cell Distributed Unit (DU) resource function specification",
 	"type": "object",

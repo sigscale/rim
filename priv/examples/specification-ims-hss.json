@@ -1,8 +1,8 @@
 {
 	"name": "HSSFunction",
 	"description": "IMS Home Subscriber Server (HSS)",
-	"@type": "HSSFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/HSSFunctionSpecification",
+	"@type": "HSSFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/HSSFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

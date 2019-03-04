@@ -1,8 +1,8 @@
 {
 	"name": "EUtranCellTDD",
 	"description": "LTE Time Division Duplex (TDD) Cell resource function specification",
-	"@type": "EUtranCellTDDSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EUtranCellTDDSpecification",
+	"@type": "EUtranCellTDDSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EUtranCellTDDSpec",
 	"@baseType": "EUtranGenericCell",
 	"version": "0.1",
 	"validFor": {

@@ -1,9 +1,9 @@
 {
 	"name": "UtranCellFDD",
 	"description": "UMTS Frequency Division Duplex (FDD) radio cell resource function specification",
-	"@type": "UtranCellFDDSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/UtranCellFDDSpecification",
-	"@baseType": "UtranGenericCellSpecification",
+	"@type": "UtranCellFDDSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/UtranCellFDDSpec",
+	"@baseType": "UtranGenericCellSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

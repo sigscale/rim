@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/PGWFunctionSpecification",
-	"title": "EPC PGW Specification",
-	"description": "EPC PDN Gateway (PGW) resource function specification",
+	"$id": "http://sigscale.org/schema/SgsnFunctionSpec",
+	"title": "Core SGSN Specification",
+	"description": "Core Serving GPRS Support Node (SGSN) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,8 +26,19 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"PGWFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
+											"mccList",
+											"mncList",
+											"lacList",
+											"sacList",
+											"sgsnId",
+											"sgsnFunctionGsmCell",
+											"sgsnFunctionExternalGsmCell",
+											"sgsnFunctionSgsnPool",
+											"nriList",
+											"proceduralStatus",
+											"defaultMsc",
+											"GbLink",
+											"IupsLink",
 											"VsDataContainer"
 										]
 									}

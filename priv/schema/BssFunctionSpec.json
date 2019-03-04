@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/GNBCUUPFunctionSpecification",
-	"title": "NR gNB-CU-UP Specification",
-	"description": "NR gNB Central Unit (CU) User Plane (UP) resource function specification",
+	"$id": "http://sigscale.org/schema/BssFunctionSpec",
+	"title": "GSM BSS Specification",
+	"description": "GSM Base Station Subsystem (BSS) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,15 +26,7 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"peeParametersList",
-											"pLMNIdList",
-											"gNBId",
-											"EP_E1",
-											"EP_F1U",
-											"EP_XnU",
-											"EP_NgU",
-											"EP_X2U",
-											"EP_S1U",
+											"BtsSiteMgr",
 											"VsDataContainer"
 										]
 									}

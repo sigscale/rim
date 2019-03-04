@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/ICSCFFunctionSpecification",
-	"title": "IMS ICSCF Specification",
-	"description": "IMS Interrogating Call Session Control Function (I-CSCF) resource function specification",
+	"$id": "http://sigscale.org/schema/NRCellCUSpec",
+	"title": "NR Cell CU Specification",
+	"description": "NR Cell Central Unit (CU) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,9 +26,13 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"linkList",
-											"ICSCFFunctionOptionallyContainedNrmClass",
-											"VsDataContainer"
+											"nCGI",
+											"pLMNIdList",
+											"nSSAIList",
+											"rRMPolicy",
+											"VsDataContainer",
+											"EnergySavingProperties",
+											"ESPolicies"
 										]
 									}
 								}

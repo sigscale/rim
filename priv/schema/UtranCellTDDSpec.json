@@ -1,8 +1,8 @@
 {
-	"$id": "http://sigscale.org/schema/UtranCellTDDSpecification",
+	"$id": "http://sigscale.org/schema/UtranCellTDDSpec",
 	"title": "UTRAN TDD Cell Specification",
 	"description": "UMTS Time Division Duplex (TDD) radio resource function specification",
-	"$ref": "UtranGenericCellSpecification",
+	"$ref": "UtranGenericCellSpec",
 	"definitions": {
 		"ResourceSpecCharacteristic": {
 			"type": "object",

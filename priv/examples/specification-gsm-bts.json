@@ -1,8 +1,8 @@
 {
 	"name": "BtsSiteMgr",
 	"description": "GSM Base Transceiver Station (BTS) resource specification",
-	"@type": "BtsSiteMgrSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpecification",
+	"@type": "BtsSiteMgrSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BtsSiteMgrSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

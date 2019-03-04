@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/PCRFFunctionSpecification",
-	"title": "EPC PCRF Specification",
-	"description": "EPC Policy and Charging Control (PCRF) resource function specification",
+	"$id": "http://sigscale.org/schema/GgsnFunctionSpec",
+	"title": "Core GGSN Specification",
+	"description": "Core Gateway GPRS Support Node (SGSN) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,9 +26,7 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"linkList",
-											"PCRFFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
+											"proceduralStatus",
 											"VsDataContainer"
 										]
 									}

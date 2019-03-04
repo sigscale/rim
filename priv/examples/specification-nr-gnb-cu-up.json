@@ -1,8 +1,8 @@
 {
 	"name": "GNBCUUPFunction",
 	"description": "NR gNB Central Unit (CU) User Plane (UP) resource function specification",
-	"@type": "GNBCUUPFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUUPFunctionSpecification",
+	"@type": "GNBCUUPFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUUPFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

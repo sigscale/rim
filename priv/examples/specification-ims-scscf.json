@@ -1,8 +1,8 @@
 {
 	"name": "SCSCFFunction",
 	"description": "IMS Serving Call Session Control Function (CSCF)",
-	"@type": "SCSCFFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SCSCFFunctionSpecification",
+	"@type": "SCSCFFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SCSCFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {

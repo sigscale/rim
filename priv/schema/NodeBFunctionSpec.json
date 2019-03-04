@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/NRCellCUSpecification",
-	"title": "NR Cell CU Specification",
-	"description": "NR Cell Central Unit (CU) resource function specification",
+	"$id": "http://sigscale.org/schema/NodeBFunctionSpec",
+	"title": "UMTS NodeB Specification",
+	"description": "UMTS NodeB resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,13 +26,11 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"nCGI",
-											"pLMNIdList",
-											"nSSAIList",
-											"rRMPolicy",
-											"VsDataContainer",
-											"EnergySavingProperties",
-											"ESPolicies"
+											"peeParametersList",
+											"ManagedElements",
+											"nodeBFunctionIubLink",
+											"NodeBFunctionOptionallyContainedNrmClass",
+											"VsDataContainer"
 										]
 									}
 								}

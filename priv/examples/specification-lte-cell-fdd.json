@@ -1,8 +1,8 @@
 {
 	"name": "EUtranCellFDD",
 	"description": "LTE Frequency Division Duplex (FDD) Cell resource function specification",
-	"@type": "EUtranCellFDDSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EUtranCellFDDSpecification",
+	"@type": "EUtranCellFDDSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EUtranCellFDDSpec",
 	"@baseType": "EUtranGenericCell",
 	"version": "0.1",
 	"validFor": {

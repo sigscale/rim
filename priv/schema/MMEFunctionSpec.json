@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/GgsnFunctionSpecification",
-	"title": "Core GGSN Specification",
-	"description": "Core Gateway GPRS Support Node (SGSN) resource function specification",
+	"$id": "http://sigscale.org/schema/MMEFunctionSpec",
+	"title": "EPC SGW Specification",
+	"description": "EPC Mobility Management Entity (MME) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -26,7 +26,12 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"proceduralStatus",
+											"pLMNIdList",
+											"mMEC",
+											"mMEPool",
+											"MMEFunctionOptionallyContainedNrmClass",
+											"EP_RP_EPS",
+											"EP_N26",
 											"VsDataContainer"
 										]
 									}

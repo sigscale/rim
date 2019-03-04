@@ -1,5 +1,5 @@
 {
-	"$id": "http://sigscale.org/schema/EUtranGenericCellSpecification",
+	"$id": "http://sigscale.org/schema/EUtranGenericCellSpec",
 	"title": "EUTRAN Generic Cell Specification",
 	"description": "LTE radio cell common properties resource function specification",
 	"type": "object",

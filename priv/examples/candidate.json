@@ -23,7 +23,7 @@
 	"resourceSpecification": {
 		"id": "154995556288077",
 		"href": "/resourceCatalogManagement/v3/specification/154995556288077",
-		"name": "BssFunctionSpecification",
+		"name": "BssFunctionSpec",
 		"version": "0.1"
 	}
 }

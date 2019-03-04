@@ -1,8 +1,8 @@
 {
 	"name": "MscServerFunction",
 	"description": "Core Mobile Switching Center (MSC) Server (3GPP 23.002)",
-	"@type": "MscServerFunctionSpecification",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MscServerFunctionSpecification",
+	"@type": "MscServerFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MscServerFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
