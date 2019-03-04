@@ -70,7 +70,7 @@
 				"connectionPoint": {
 					"type": "array",
 					"items": {
-						"#/definitions/ConnectionPointSpec"
+						"$ref": "#/definitions/ConnectionPointSpec"
 					}
 				}
 			}
@@ -98,5 +98,5 @@
 				}
 			}
 		}
-	]
+	}
 }
