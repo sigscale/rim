@@ -1437,6 +1437,46 @@
 				}
 			]
 		},
+		"EP_IuCS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"connMscNumber": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"EP_IuPS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/NrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"connSgsnNumber": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			]
+		},
 		"EP_Iur": {
 			"allOf": [
 				{
