@@ -13,7 +13,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_rnc/2, parse_fdd/2]).
+-export([parse_rnc/2, parse_fdd/2, parse_nodeb/2]).
 %parse_gsm_cell/2]).
 
 -export([fraction1/1]).
@@ -32,6 +32,7 @@
 
 -record(utran_state,
 		{rnc = [] :: string(),
+		nodeb = [] :: string(),
 		fdd = [] :: string(),
 		fdds = [] :: [string()]}).
 -type utran_state() :: #utran_state{}.
@@ -39,6 +40,105 @@
 %%----------------------------------------------------------------------
 %%  The im private API
 %%----------------------------------------------------------------------
+
+%% @hidden
+parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",NodeBFunction=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_nodeb,
+			parse_state = #utran_state{nodeb = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_nodeb({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+%parse_nodeb({startElement,  _Uri, "UtranCellFDD", QName,
+%		[{[], [], "id", Id}] = Attributes},
+%		#state{parse_state = ParseState,
+%		stack = Stack} = State) ->
+%	DnComponent = ",UtranCellFDD=" ++ Id,
+%	State#state{parse_module = ?MODULE, parse_function = parse_fdd,
+%			parse_state = ParseState#utran_state{fdd = DnComponent},
+%			stack = [{startElement, QName, Attributes} | Stack]};
+parse_nodeb({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_nodeb_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_nodeb({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_nodeb_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_nodeb_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_nodeb_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	parse_nodeb_attr1(T, Attr, State, Acc);
+parse_nodeb_attr1([{endElement, {"un", "peeParametersList"}} | T],
+		undefined, State, Acc) ->
+	% @todo peeParametersListType
+	parse_nodeb_attr1(T, undefined, State, Acc);
+parse_nodeb_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_nodeb_attr1([{characters, Chars} | T],
+		"mcc" = Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nodeb_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_nodeb_attr1([{startElement, {"xn", "vnfInstanceId"}, _} | T],
+		Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, Acc);
+parse_nodeb_attr1([{startElement, {"xn", "autoScalable"}, _} | T],
+		Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, Acc);
+parse_nodeb_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_nodeb_attr1(T, undefined, State, Acc);
+parse_nodeb_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_nodeb_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, Acc);
+parse_nodeb_attr1([{endElement, {"xn", "autoScalable"}} | T],
+		Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, Acc);
+parse_nodeb_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
+		Attr, State, Acc) ->
+	parse_nodeb_attr1(T, Attr, State, Acc);
+parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
+		subnet = SubId, parse_state = #utran_state{nodeb = NodebId},
+		spec_cache = Cache} = State, _Acc) ->
+	NodebDn = DnPrefix ++ SubId ++ NodebId,
+	ClassType = "NodeBFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = NodebDn,
+			description = "UMTS Telecommunication Nodes",
+			category = "NodeB",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			specification = Spec},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			State#state{parse_module = im_xml_cm_bulk,
+					parse_function = parse_generic,
+					parse_state = #utran_state{nodeb = NodebDn},
+					spec_cache = NewCache};
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 %% @hidden
 parse_rnc({startElement, _Uri, "RncFunction", QName,
@@ -75,10 +175,10 @@ parse_rnc_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_rnc_attr1(Attributes, undefined, State, Acc).
 % @hidden
-parse_rnc_attr1([{endElement, {"un", "vnfParametersList"}} | T],
+parse_rnc_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
 		undefined, State, Acc) ->
 	% @todo vnfParametersListType
-	parse_rnc_attr1(T, undefined, State, Acc);
+	parse_rnc_attr1(T, Attr, State, Acc);
 parse_rnc_attr1([{endElement, {"un", "peeParametersList"}} | T],
 		undefined, State, Acc) ->
 	% @todo peeParametersListType
@@ -115,6 +215,16 @@ parse_rnc_attr1([{characters, "1"} | T],
 		"siptoSupported" = Attr, State, Acc) ->
 	parse_rnc_attr1(T, Attr, State, [#resource_char{name = Attr,
 			value = 1} | Acc]);
+parse_rnc_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_rnc_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_rnc_attr1([{startElement, {"xn", "vnfInstanceId"}, _} | T],
+		Attr, State, Acc) ->
+	parse_rnc_attr1(T, Attr, State, Acc);
+parse_rnc_attr1([{startElement, {"xn", "autoScalable"}, _} | T],
+		Attr, State, Acc) ->
+	parse_rnc_attr1(T, Attr, State, Acc);
 parse_rnc_attr1([{startElement, {"un", Attr}, _} | T],
 		Attr, State, Acc) ->
 	parse_rnc_attr1(T, undefined, State, Acc);
@@ -123,6 +233,12 @@ parse_rnc_attr1([{endElement, {"un", "attributes"}}],
 	State;
 parse_rnc_attr1([{endElement, {"un", Attr}} | T],
 		undefined, State, Acc) ->
+	parse_rnc_attr1(T, Attr, State, Acc);
+parse_rnc_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
+		Attr, State, Acc) ->
+	parse_rnc_attr1(T, Attr, State, Acc);
+parse_rnc_attr1([{endElement, {"xn", "autoScalable"}} | T],
+		Attr, State, Acc) ->
 	parse_rnc_attr1(T, Attr, State, Acc);
 parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		subnet = SubId, parse_state = ParseState,
@@ -144,6 +260,8 @@ parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = im_xml_cm_bulk,
 					parse_function = parse_generic,
+%			State#state{parse_module = ?MODULE,
+%					parse_function = parse_nodeb,
 					parse_state = #utran_state{rnc = RncDn, fdds = []},
 					spec_cache = NewCache};
 		{error, Reason} ->
@@ -504,7 +622,8 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 			characteristic = NewCharacteristics},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
-			State#state{parse_state = ParseState#utran_state{
+			State#state{parse_module = ?MODULE, parse_function = parse_rnc,
+					parse_state = ParseState#utran_state{
 					fdds = [FddDn | Fdds]}, spec_cache = NewCache};
 		{error, Reason} ->
 			{error, Reason}
