@@ -115,7 +115,7 @@ get_catalog() ->
 		CatalogID :: string(),
 		Result :: {ok, Catalog} | {error, Reason},
 		Catalog :: catalog(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Resource Catalog.
 get_catalog(CatalogID) when is_list(CatalogID) ->
 	F = fun() ->
@@ -125,7 +125,9 @@ get_catalog(CatalogID) when is_list(CatalogID) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Catalog]} ->
-			{ok, Catalog}
+			{ok, Catalog};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec get_catalog_name(CatalogName) -> Result
@@ -133,7 +135,7 @@ get_catalog(CatalogID) when is_list(CatalogID) ->
 		CatalogName :: string(),
 		Result :: {ok, Catalog} | {error, Reason},
 		Catalog :: category(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Catalog by name.
 get_catalog_name(CatalogName) when is_list(CatalogName) ->
 	F = fun() ->
@@ -143,7 +145,9 @@ get_catalog_name(CatalogName) when is_list(CatalogName) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Catalog]} ->
-			{ok, Catalog}
+			{ok, Catalog};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec query_catalog(Continuation, Size, MatchHead, MatchConditions) -> Result
@@ -256,7 +260,7 @@ get_category() ->
 		CategoryID :: string(),
 		Result :: {ok, Category} | {error, Reason},
 		Category :: category(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Resource Category.
 get_category(CategoryID) when is_list(CategoryID) ->
 	F = fun() ->
@@ -266,7 +270,9 @@ get_category(CategoryID) when is_list(CategoryID) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Category]} ->
-			{ok, Category}
+			{ok, Category};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec get_category_name(CategoryName) -> Result
@@ -274,7 +280,7 @@ get_category(CategoryID) when is_list(CategoryID) ->
 		CategoryName :: string(),
 		Result :: {ok, Category} | {error, Reason},
 		Category :: category(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Category by name.
 get_category_name(CategoryName) when is_list(CategoryName) ->
 	F = fun() ->
@@ -284,7 +290,9 @@ get_category_name(CategoryName) when is_list(CategoryName) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Category]} ->
-			{ok, Category}
+			{ok, Category};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec query_category(Continuation, Size, MatchHead, MatchConditions) -> Result
@@ -397,7 +405,7 @@ get_candidate() ->
 		CandidateID :: string(),
 		Result :: {ok, Candidate} | {error, Reason},
 		Candidate :: candidate(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Resource Candidate.
 get_candidate(CandidateID) when is_list(CandidateID) ->
 	F = fun() ->
@@ -407,7 +415,9 @@ get_candidate(CandidateID) when is_list(CandidateID) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Candidate]} ->
-			{ok, Candidate}
+			{ok, Candidate};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec get_candidate_name(CandidateName) -> Result
@@ -415,7 +425,7 @@ get_candidate(CandidateID) when is_list(CandidateID) ->
 		CandidateName :: string(),
 		Result :: {ok, Candidate} | {error, Reason},
 		Candidate :: candidate(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Candidate by name.
 get_candidate_name(CandidateName) when is_list(CandidateName) ->
 	F = fun() ->
@@ -425,7 +435,9 @@ get_candidate_name(CandidateName) when is_list(CandidateName) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Candidate]} ->
-			{ok, Candidate}
+			{ok, Candidate};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec query_candidate(Continuation, Size, MatchHead, MatchConditions) -> Result
@@ -538,7 +550,7 @@ get_specification() ->
 		SpecificationID :: string(),
 		Result :: {ok, Specification} | {error, Reason},
 		Specification :: specification(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Resource Specification.
 get_specification(SpecificationID) when is_list(SpecificationID) ->
 	F = fun() ->
@@ -548,7 +560,9 @@ get_specification(SpecificationID) when is_list(SpecificationID) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Specification]} ->
-			{ok, Specification}
+			{ok, Specification};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec get_specification_name(SpecName) -> Result
@@ -556,7 +570,7 @@ get_specification(SpecificationID) when is_list(SpecificationID) ->
 		SpecName :: string(),
 		Result :: {ok, Specification} | {error, Reason},
 		Specification :: specification(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Specification by name.
 get_specification_name(SpecName) when is_list(SpecName) ->
 	F = fun() ->
@@ -566,7 +580,9 @@ get_specification_name(SpecName) when is_list(SpecName) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Specification]} ->
-			{ok, Specification}
+			{ok, Specification};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec query_specification(Continuation, Size, MatchHead, MatchConditions) -> Result
@@ -679,7 +695,7 @@ get_resource() ->
 		ResourceID :: string(),
 		Result :: {ok, Resource} | {error, Reason},
 		Resource :: resource(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Resource by identifier.
 get_resource(ResourceID) when is_list(ResourceID) ->
 	F = fun() ->
@@ -689,7 +705,9 @@ get_resource(ResourceID) when is_list(ResourceID) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Resource]} ->
-			{ok, Resource}
+			{ok, Resource};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec get_resource_name(ResourceName) -> Result
@@ -697,7 +715,7 @@ get_resource(ResourceID) when is_list(ResourceID) ->
 		ResourceName :: string(),
 		Result :: {ok, Resource} | {error, Reason},
 		Resource :: resource(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @doc Get a Resource by name.
 get_resource_name(ResourceName) when is_list(ResourceName) ->
 	F = fun() ->
@@ -707,7 +725,9 @@ get_resource_name(ResourceName) when is_list(ResourceName) ->
 		{aborted, Reason} ->
 			{error, Reason};
 		{atomic, [Resource]} ->
-			{ok, Resource}
+			{ok, Resource};
+		{atomic, []} ->
+			{error, not_found}
 	end.
 
 -spec query_resource(Continuation, Size, MatchHead, MatchConditions) -> Result
