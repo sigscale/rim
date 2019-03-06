@@ -132,6 +132,11 @@ parse_generic({startElement, _, "BssFunction", _, _Attributes} = Event, State) -
 	F = parse_bss,
 	NewState = State#state{parse_module = Mod, parse_function = F},
 	Mod:F(Event, NewState);
+parse_generic({startElement, _, "NodeBFunction", _, _Attributes} = Event, State) ->
+	Mod = im_xml_utran,
+	F = parse_nodeb,
+	NewState = State#state{parse_module = Mod, parse_function = F},
+	Mod:F(Event, NewState);
 parse_generic({startElement, _, "RncFunction", _, _Attributes} = Event, State) ->
 	Mod = im_xml_utran,
 	F = parse_rnc,

@@ -777,6 +777,8 @@ bulk_cm_utran(Config) ->
 			#xmlAttribute.name, FddAttr),
 	NodeBName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",NodeBFunction=", NodeBId]),
+	RncName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
+			",RncFunction=", RncId]),
 	FddName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",RncFunction=", RncId, ",UtranCellFDD=", FddId]),
 	#xmlElement{content = _URelation,
@@ -784,11 +786,9 @@ bulk_cm_utran(Config) ->
 			#xmlElement.name, FddContent),
 	#xmlAttribute{value = UrId} = lists:keyfind(id,
 			#xmlAttribute.name, UrAttr),
-	RelationName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
-			",RncFunction=", RncId, ",UtranCellFDD=", FddId, ",UtranRelation=", UrId]),
 	{ok, #resource{name = NodeBName}} = im:get_resource_name(NodeBName),
-	{ok, #resource{name = FddName}} = im:get_resource_name(FddName),
-	{ok, #resource{name = RelationName}} = im:get_resource_name(RelationName).
+	{ok, #resource{name = RncName}} = im:get_resource_name(RncName),
+	{ok, #resource{name = FddName}} = im:get_resource_name(FddName).
 
 bulk_cm_eutran() ->
 	[{userdata, [{doc, "Import bulk CM for eutran network resources"}]}].
