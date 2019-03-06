@@ -64,22 +64,22 @@
 						</xn:attributes>
 					</xn:VsDataContainer>
 				</un:NodeBFunction>
-				<!--un:IubLink id="1">
+				<un:IubLink id="1">
 					<un:attributes>
 						<un:userLabel>Paris NI1</un:userLabel>
 						<un:iubLinkUtranCell>
 							<xn:dn>ManagedElement=1,IubLink=1</xn:dn>
 						</un:iubLinkUtranCell>
-					</un:attributes-->
+					</un:attributes>
 					<!--  Vendor specific data for IubLink-->
-					<!--xn:VsDataContainer id="1">
+					<xn:VsDataContainer id="1">
 						<xn:attributes>
 							<xn:vsDataType>DataType=8</xn:vsDataType>
 							<xn:vsDataFormatVersion>DFV7</xn:vsDataFormatVersion>
 							<xn:vsData />
 						</xn:attributes>
 					</xn:VsDataContainer>
-				</un:IubLink-->
+				</un:IubLink>
 				<un:RncFunction id="1">
 					<un:attributes>
 						<un:userLabel>Paris SMN1</un:userLabel>
