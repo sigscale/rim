@@ -293,7 +293,7 @@ init_per_testcase(bulk_cm_utran, Config) ->
 													[Indent7, {'xn:vnfInstanceId', [generate_identity(7)]},
 													Indent7, {'xn:autoScalable', ["true"]}, Indent6]},
 											Indent6, {'un:mcc', ["999"]},
-											Indent6, {'un:rncId', [generate_identity(7)]}, Indent5]} | CellFDD]},
+											Indent6, {'un:rncId', ["777"]}, Indent5]} | CellFDD]},
 							Indent4, {'xn:VsDataContainer', [{id, "1"}],
 									[Indent5, {'xn:attributes', [],
 											[Indent6, {'xn:vsDataType', ["DataType=6"]},
