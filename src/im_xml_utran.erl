@@ -13,7 +13,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_rnc/2, parse_fdd/2, parse_nodeb/2]).
+-export([parse_rnc/2, parse_fdd/2, parse_nodeb/2, parse_iub/2]).
 %parse_gsm_cell/2]).
 
 -export([fraction1/1]).
@@ -33,6 +33,7 @@
 -record(utran_state,
 		{rnc = [] :: string(),
 		nodeb = [] :: string(),
+		iub = [] :: string(),
 		fdd = [] :: string(),
 		fdds = [] :: [string()]}).
 -type utran_state() :: #utran_state{}.
@@ -40,6 +41,96 @@
 %%----------------------------------------------------------------------
 %%  The im private API
 %%----------------------------------------------------------------------
+
+%% @hidden
+parse_iub({startElement, _Uri, "IubLink", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",IubLink=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_iub,
+			parse_state = #utran_state{iub = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_iub({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_iub({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_iub({endElement, _Uri, "IubLink", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_iub_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_iub({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_iub_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_iub_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_iub_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{endElement, {"un", "iubLinkUtranCell" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo dnList
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"iubLinkATMChannelTerminationPoint" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"iubLinkNodeBFunction" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{startElement, {"xn", "dn"}, _} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, undefined, State, Acc);
+parse_iub_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_iub_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
+		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		spec_cache = Cache} = State, _Acc) ->
+	IubDn = DnPrefix ++ SubId ++ IubId,
+	ClassType = "IubLink",
+%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IubDn,
+			description = "UMTS IUB interface",
+			category = "Iub",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
+%			specification = Spec},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			State#state{parse_module = im_xml_cm_bulk,
+					parse_function = parse_generic,
+					parse_state = #utran_state{iub = IubDn},
+					spec_cache = Cache};
+%					spec_cache = NewCache};
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 %% @hidden
 parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
@@ -51,14 +142,6 @@ parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_nodeb({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
-%parse_nodeb({startElement,  _Uri, "UtranCellFDD", QName,
-%		[{[], [], "id", Id}] = Attributes},
-%		#state{parse_state = ParseState,
-%		stack = Stack} = State) ->
-%	DnComponent = ",UtranCellFDD=" ++ Id,
-%	State#state{parse_module = ?MODULE, parse_function = parse_fdd,
-%			parse_state = ParseState#utran_state{fdd = DnComponent},
-%			stack = [{startElement, QName, Attributes} | Stack]};
 parse_nodeb({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
@@ -260,8 +343,6 @@ parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = im_xml_cm_bulk,
 					parse_function = parse_generic,
-%			State#state{parse_module = ?MODULE,
-%					parse_function = parse_nodeb,
 					parse_state = #utran_state{rnc = RncDn, fdds = []},
 					spec_cache = NewCache};
 		{error, Reason} ->
@@ -742,7 +823,7 @@ pop(Element, QName, [H | T], Acc) ->
 		Cache :: [SpecRef],
 		Result :: {SpecRef, Cache} | {error, Reason},
 		SpecRef :: specification_ref(),
-		Reason :: term().
+		Reason :: not_found | term().
 %% @hidden
 get_specification_ref(Name, Cache) ->
 	case lists:keyfind(Name, #specification_ref.name, Cache) of
