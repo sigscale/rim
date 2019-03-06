@@ -280,7 +280,7 @@ init_per_testcase(bulk_cm_utran, Config) ->
 									[Indent5, {'un:attributes', [],
 											[Indent6, {'un:userLabel', ["BSC " ++ generate_identity(5)]},
 											Indent6, {'un:iubLinkUtranCell', [],
-													[Indent7, {'xn:vnfInstanceId', [generate_identity(7)]}, Indent6]}, Indent5]},
+													[Indent7, {'xn:dn', [generate_identity(7)]}, Indent6]}, Indent5]},
 									Indent5, {'xn:VsDataContainer', [{id, "1"}],
 											[Indent6, {'xn:attributes', [],
 													[Indent7, {'xn:vsDataType', ["DataType=8"]},
