@@ -24,6 +24,7 @@
 		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
 		xmlns:sl="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#sliceNrm"
 		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
+		xmlns:vsRHO11="http://www.companyNN.com/xmlschemas/NNRncHandOver"
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		elementFormDefault="qualified">
 
@@ -65,6 +66,8 @@
 			schemaLocation="sliceNrm.xsd" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm"
 			schemaLocation="inventoryNrm.xsd" />
+	<import namespace="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1"
+			schemaLocation="NNRncHandOver.xsd" />
 
 	<!-- Configuration data file root XML element -->
 	<element name="bulkCmConfigDataFile">

@@ -10,6 +10,7 @@
 		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
 		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
 		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+		xmlns:vsRHO11="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1"
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
 		elementFormDefault="qualified">
 
@@ -19,6 +20,8 @@
 			schemaLocation="geranNrm.xsd" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
 			schemaLocation="stateManagementIRP.xsd" />
+	<import namespace="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1"
+			schemaLocation="NNRncHandOver.xsd" />
 
 	<!-- UTRAN Network Resources IRP NRM attribute related XML types -->
 	<simpleType name="localCellId">

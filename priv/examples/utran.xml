@@ -6,7 +6,8 @@
 <bulkCmConfigDataFile
 		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm">
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		xmlns:vsRHO11="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1">
 
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
@@ -167,6 +168,17 @@
 							</xn:attributes>
 						</xn:VsDataContainer>
 					</un:UtranCellFDD>
+					<!--  Vendor specific data for RncFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>RncHandOver</xn:vsDataType>
+							<xn:vsDataFormatVersion>NNRncHandOver.1.1</xn:vsDataFormatVersion>
+							<vsRHO11:vsDataRHO>
+								<vsRHO11:abcMin>12</vsRHO11:abcMin>
+								<vsRHO11:abcMax>34</vsRHO11:abcMax>
+							</vsRHO11:vsDataRHO>
+						</xn:attributes>
+					</xn:VsDataContainer>
 				</un:RncFunction>
 				<!--  Vendor specific data for ManagedElement-->
 				<xn:VsDataContainer id="1">

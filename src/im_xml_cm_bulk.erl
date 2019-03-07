@@ -132,6 +132,11 @@ parse_generic({startElement, _, "BssFunction", _, _Attributes} = Event, State) -
 	F = parse_bss,
 	NewState = State#state{parse_module = Mod, parse_function = F},
 	Mod:F(Event, NewState);
+parse_generic({startElement, _, "UtranCellTDDLcr", _, _Attributes} = Event, State) ->
+	Mod = im_xml_utran,
+	F = parse_tdd_lcr,
+	NewState = State#state{parse_module = Mod, parse_function = F},
+	Mod:F(Event, NewState);
 parse_generic({startElement, _, "IubLink", _, _Attributes} = Event, State) ->
 	Mod = im_xml_utran,
 	F = parse_iub,
