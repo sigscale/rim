@@ -13,8 +13,8 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_rnc/2, parse_fdd/2, parse_nodeb/2, parse_iub/2]).
-%parse_gsm_cell/2]).
+-export([parse_rnc/2, parse_fdd/2, parse_nodeb/2, parse_iub/2,
+			parse_tdd_hcr/2, parse_tdd_lcr/2]).
 
 -export([fraction1/1]).
 
@@ -32,6 +32,8 @@
 
 -record(utran_state,
 		{rnc = [] :: string(),
+		tdd_lcr = [] :: string(),
+		tdd_hcr = [] :: string(),
 		nodeb = [] :: string(),
 		iub = [] :: string(),
 		fdd = [] :: string(),
@@ -42,95 +44,6 @@
 %%  The im private API
 %%----------------------------------------------------------------------
 
-%% @hidden
-parse_iub({startElement, _Uri, "IubLink", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{stack = Stack} = State) ->
-	DnComponent = ",IubLink=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_iub,
-			parse_state = #utran_state{iub = DnComponent},
-			stack = [{startElement, QName, Attributes} | Stack]};
-parse_iub({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
-parse_iub({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_iub({endElement, _Uri, "IubLink", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_iub_attr(T, undefined, State#state{stack = NewStack}, []);
-parse_iub({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
-
-% @hidden
-parse_iub_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
-		undefined, State, Acc) ->
-	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_iub_attr1(Attributes, undefined, State, Acc).
-% @hidden
-parse_iub_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
-		undefined, State, Acc) ->
-	% @todo vnfParametersListType
-	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([{endElement, {"un", "iubLinkUtranCell" = Attr}} | T],
-		undefined, State, Acc) ->
-	% @todo dnList
-	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
-			value = Chars} | Acc]);
-parse_iub_attr1([{characters, Chars} | T],
-		"iubLinkATMChannelTerminationPoint" = Attr, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
-			value = Chars} | Acc]);
-parse_iub_attr1([{characters, Chars} | T],
-		"iubLinkNodeBFunction" = Attr, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
-			value = Chars} | Acc]);
-parse_iub_attr1([{characters, Chars} | T],
-		Attr, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
-			value = Chars} | Acc]);
-parse_iub_attr1([{startElement, {"xn", "dn"}, _} | T],
-		Attr, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([{startElement, {"un", Attr}, _} | T],
-		Attr, State, Acc) ->
-	parse_iub_attr1(T, undefined, State, Acc);
-parse_iub_attr1([{endElement, {"un", "attributes"}}],
-		undefined, State, _Acc) ->
-	State;
-parse_iub_attr1([{endElement, {"un", Attr}} | T],
-		undefined, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
-		Attr, State, Acc) ->
-	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = #utran_state{iub = IubId},
-		spec_cache = Cache} = State, _Acc) ->
-	IubDn = DnPrefix ++ SubId ++ IubId,
-	ClassType = "IubLink",
-%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = IubDn,
-			description = "UMTS IUB interface",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
-%			specification = Spec},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_cm_bulk,
-					parse_function = parse_generic,
-					parse_state = #utran_state{iub = IubDn},
-					spec_cache = Cache};
-%					spec_cache = NewCache};
-		{error, Reason} ->
-			{error, Reason}
-	end.
 
 %% @hidden
 parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
@@ -656,6 +569,668 @@ parse_fdd_attr1([{endElement, {"un", Attr}} | T],
 parse_fdd_attr1([], _Attr, FddStack, State, Acc) ->
 	parse_fdd_rels(FddStack, State, Acc,
 			#{gsmRel => [], utranRel => []}).
+
+%% @hidden
+parse_tdd_hcr({startElement, _Uri, "UtranCellTDDLcr", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",UtranCellTDDLcr=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_tdd_hcr,
+			parse_state = #utran_state{tdd_lcr = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_tdd_hcr({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_tdd_hcr({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_tdd_hcr({endElement, _Uri, "UtranCellTDDLcr", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_tdd_hcr_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_tdd_hcr({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_tdd_hcr_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_tdd_hcr_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_tdd_hcr_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	parse_tdd_hcr_attr1(T, Attr, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "uraList"}} | T],
+		undefined, State, Acc) ->
+	% @todo uraList
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "relatedAntennaList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo relatedAntennaList
+	parse_tdd_hcr_attr1(T, Attr, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "relatedTmaList"}} | T],
+		undefined, State, Acc) ->
+	% @todo relatedTmaList
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "snaInformation"}} | T],
+		undefined, State, Acc) ->
+	% @todo snaInformation
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "nsPlmnIdList"}} | T],
+		undefined, State, Acc) ->
+	% @todo NsPlmnIdListType
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "cellCapabilityContainerTDD"}} | T],
+		undefined, State, Acc) ->
+	% @todo cellCapabilityContainerTDD 
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "timeSlotLCRList"}} | T],
+		undefined, State, Acc) ->
+	% @todo timeSlotLCRList
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"cId" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"localCellId" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"maximumTransmissionPower" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, "FDDMode"} | T],
+		"cellMode" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "FDDMode"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "3-84McpsTDDMode"} | T],
+		"cellMode" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "3-84McpsTDDMode"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "1-28McpsTDDMode"} | T],
+		"cellMode" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "1-28McpsTDDMode"} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"pichPower" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"pchPower" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"fachPower" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"lac" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"rac" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"sac" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"utranCellIubLink" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_hcr_attr1([{characters, "enabled"} | T],
+		"operationalState" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "enabled"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "disabled"} | T],
+		"operationalState" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "disabled"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "0"} | T],
+		"hsFlag" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 0} | Acc]);
+parse_tdd_hcr_attr1([{characters, "1"} | T],
+		"hsFlag" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 1} | Acc]);
+parse_tdd_hcr_attr1([{characters, "1"} | T],
+		"hsEnable" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 1} | Acc]);
+parse_tdd_hcr_attr1([{characters, "0"} | T],
+		"hsEnable" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 0} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"numOfHspdschs" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"numOfHsscchs" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"frameOffset" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"cellIndividualOffset" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"hcsPrio" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"maximumAllowedUlTxPower" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"qrxlevMin" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"deltaQrxlevmin" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"qhcs" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"penaltyTime" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"referenceTimeDifferenceToCell" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, "TRUE"} | T],
+		"readSFNIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "TRUE"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "FALSE"} | T],
+		"readSFNIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "FALSE"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "cellReservedForOperatorUse"} | T],
+		"restrictionStateIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "cellReservedForOperatorUse"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "cellAccessible"} | T],
+		"restrictionStateIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "cellAccessible"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "dpcModeChangeSupported"} | T],
+		"dpcModechangeSupportIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "dpcModeChangeSupported"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "dpcModeChangeNotSupported"} | T],
+		"dpcModechangeSupportIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "dpcModeChangeNotSupported"} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"relatedSectorEquipment" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"uarfcn" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"cellParameterId" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"primaryCcpchPower" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, "active"} | T],
+		"sctdIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "active"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "inactive"} | T],
+		"sctdIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "inactive"} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"dpchConstantValue" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, "active"} | T],
+		"tstdIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "active"} | Acc]);
+parse_tdd_hcr_attr1([{characters, "inactive"} | T],
+		"tstdIndicator" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "inactive"} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_hcr_attr1([{startElement, {"xn", "dn"}, _} | T],
+		Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, Acc);
+parse_tdd_hcr_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, undefined, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_tdd_hcr_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, Acc);
+parse_tdd_hcr_attr1([{endElement, {"xn", "dn"}} | T],
+		Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, Acc);
+parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
+		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		spec_cache = Cache} = State, _Acc) ->
+	IubDn = DnPrefix ++ SubId ++ IubId,
+	ClassType = "IubLink",
+%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IubDn,
+			description = "UMTS IUB interface",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
+%			specification = Spec},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			State#state{parse_module = im_xml_cm_bulk,
+					parse_function = parse_generic,
+					parse_state = #utran_state{iub = IubDn},
+					spec_cache = Cache};
+%					spec_cache = NewCache};
+		{error, Reason} ->
+			{error, Reason}
+	end.
+
+%% @hidden
+parse_tdd_lcr({startElement, _Uri, "UtranCellTDDLcr", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",UtranCellTDDLcr=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_tdd_lcr,
+			parse_state = #utran_state{tdd_lcr = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_tdd_lcr({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_tdd_lcr({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_tdd_lcr_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_tdd_lcr({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_tdd_lcr_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_tdd_lcr_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_tdd_lcr_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	parse_tdd_lcr_attr1(T, Attr, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "uraList"}} | T],
+		undefined, State, Acc) ->
+	% @todo uraList
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "relatedAntennaList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo relatedAntennaList
+	parse_tdd_lcr_attr1(T, Attr, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "relatedTmaList"}} | T],
+		undefined, State, Acc) ->
+	% @todo relatedTmaList
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "snaInformation"}} | T],
+		undefined, State, Acc) ->
+	% @todo snaInformation
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "nsPlmnIdList"}} | T],
+		undefined, State, Acc) ->
+	% @todo NsPlmnIdListType
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "cellCapabilityContainerTDD"}} | T],
+		undefined, State, Acc) ->
+	% @todo cellCapabilityContainerTDD 
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "timeSlotLCRList"}} | T],
+		undefined, State, Acc) ->
+	% @todo timeSlotLCRList
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"cId" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"localCellId" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"maximumTransmissionPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, "FDDMode"} | T],
+		"cellMode" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "FDDMode"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "3-84McpsTDDMode"} | T],
+		"cellMode" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "3-84McpsTDDMode"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "1-28McpsTDDMode"} | T],
+		"cellMode" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "1-28McpsTDDMode"} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"pichPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"pchPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"fachPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"lac" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"rac" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"sac" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"utranCellIubLink" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_lcr_attr1([{characters, "enabled"} | T],
+		"operationalState" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "enabled"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "disabled"} | T],
+		"operationalState" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "disabled"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "0"} | T],
+		"hsFlag" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 0} | Acc]);
+parse_tdd_lcr_attr1([{characters, "1"} | T],
+		"hsFlag" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 1} | Acc]);
+parse_tdd_lcr_attr1([{characters, "1"} | T],
+		"hsEnable" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 1} | Acc]);
+parse_tdd_lcr_attr1([{characters, "0"} | T],
+		"hsEnable" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = 0} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"numOfHspdschs" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"numOfHsscchs" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"frameOffset" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"cellIndividualOffset" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"hcsPrio" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"maximumAllowedUlTxPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"qrxlevMin" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"deltaQrxlevmin" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"qhcs" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"penaltyTime" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"referenceTimeDifferenceToCell" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, "TRUE"} | T],
+		"readSFNIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "TRUE"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "FALSE"} | T],
+		"readSFNIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "FALSE"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "cellReservedForOperatorUse"} | T],
+		"restrictionStateIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "cellReservedForOperatorUse"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "cellAccessible"} | T],
+		"restrictionStateIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "cellAccessible"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "dpcModeChangeSupported"} | T],
+		"dpcModechangeSupportIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "dpcModeChangeSupported"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "dpcModeChangeNotSupported"} | T],
+		"dpcModechangeSupportIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "dpcModeChangeNotSupported"} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"relatedSectorEquipment" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"uarfcn" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"cellParameterId" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"primaryCcpchPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, "active"} | T],
+		"sctdIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "active"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "inactive"} | T],
+		"sctdIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "inactive"} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"dpchConstantValue" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, "active"} | T],
+		"tstdIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "active"} | Acc]);
+parse_tdd_lcr_attr1([{characters, "inactive"} | T],
+		"tstdIndicator" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "inactive"} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_tdd_lcr_attr1([{startElement, {"xn", "dn"}, _} | T],
+		Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, Acc);
+parse_tdd_lcr_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_tdd_lcr_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"xn", "dn"}} | T],
+		Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, Acc);
+parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
+		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		spec_cache = Cache} = State, _Acc) ->
+	IubDn = DnPrefix ++ SubId ++ IubId,
+	ClassType = "IubLink",
+%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IubDn,
+			description = "UMTS IUB interface",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
+%			specification = Spec},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			State#state{parse_module = im_xml_cm_bulk,
+					parse_function = parse_generic,
+					parse_state = #utran_state{iub = IubDn},
+					spec_cache = Cache};
+%					spec_cache = NewCache};
+		{error, Reason} ->
+			{error, Reason}
+	end.
+
+%% @hidden
+parse_iub({startElement, _Uri, "IubLink", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{stack = Stack} = State) ->
+	DnComponent = ",IubLink=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_iub,
+			parse_state = #utran_state{iub = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_iub({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_iub({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_iub({endElement, _Uri, "IubLink", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_iub_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_iub({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_iub_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_iub_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_iub_attr1([{endElement, {"un", "vnfParametersList" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo vnfParametersListType
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{endElement, {"un", "iubLinkUtranCell" = Attr}} | T],
+		undefined, State, Acc) ->
+	% @todo dnList
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"iubLinkATMChannelTerminationPoint" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"iubLinkNodeBFunction" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{startElement, {"xn", "dn"}, _} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, undefined, State, Acc);
+parse_iub_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_iub_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
+		Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
+		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		spec_cache = Cache} = State, _Acc) ->
+	IubDn = DnPrefix ++ SubId ++ IubId,
+	ClassType = "IubLink",
+%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IubDn,
+			description = "UMTS IUB interface",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
+%			specification = Spec},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			State#state{parse_module = im_xml_cm_bulk,
+					parse_function = parse_generic,
+					parse_state = #utran_state{iub = IubDn},
+					spec_cache = Cache};
+%					spec_cache = NewCache};
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 % @hidden
 parse_fdd_rels([{startElement,
