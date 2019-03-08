@@ -1570,7 +1570,7 @@
 		</complexType>
 	</element>
 
-	<element name="EP_IuCS" substitutionGroup="RncFunctionOptionallyContainedNrmClass">
+	<element name="EP_IuCS" substitutionGroup="un:RncFunctionOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1582,7 +1582,7 @@
 									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<!-- End of inherited attributes from EP_RP-->
-									<element name="connMscNumber" type="string" minOccurs="0"/>
+									<element name="connMscNumber" type="integer" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -1592,7 +1592,7 @@
 		</complexType>
 	</element>
 
-	<element name="EP_IuPS" substitutionGroup="RncFunctionOptionallyContainedNrmClass">
+	<element name="EP_IuPS" substitutionGroup="un:RncFunctionOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1604,7 +1604,7 @@
 									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<!-- End of inherited attributes from EP_RP-->
-									<element name="connSgsnNumber" type="string" minOccurs="0"/>
+									<element name="connSgsnNumber" type="integer" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -1614,7 +1614,7 @@
 		</complexType>
 	</element>
 	
-	<element name="EP_Iur" substitutionGroup="RncFunctionOptionallyContainedNrmClass">
+	<element name="EP_Iur" substitutionGroup="un:RncFunctionOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">

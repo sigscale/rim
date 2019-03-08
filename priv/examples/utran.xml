@@ -75,12 +75,35 @@
 						<un:mcc>999</un:mcc>
 						<un:rncId>777</un:rncId>
 					</un:attributes>
+					<un:EP_IuCS id="1">
+						<un:attributes>
+							<un:farEndEntity>vzmnbc</un:farEndEntity>
+							<un:userLabel>Paris EPIUPS</un:userLabel>
+							<un:connMscNumber>3254</un:connMscNumber>
+						</un:attributes>
+					</un:EP_IuCS>
+					<un:EP_IuPS id="1">
+						<un:attributes>
+							<un:farEndEntity>lkjsdgf</un:farEndEntity>
+							<un:userLabel>Paris EPIUCS</un:userLabel>
+							<un:connSgsnNumber>9842</un:connSgsnNumber>
+						</un:attributes>
+					</un:EP_IuPS>
+					<un:EP_Iur id="1">
+						<un:attributes>
+							<un:farEndEntity>vzmnbc</un:farEndEntity>
+							<un:userLabel>Paris EPIUPS</un:userLabel>
+							<un:connectedRncId>powrfs</un:connectedRncId>
+						</un:attributes>
+					</un:EP_Iur>
 					<un:IubLink id="1">
 						<un:attributes>
 							<un:userLabel>Paris NI1</un:userLabel>
 							<un:iubLinkUtranCell>
 								<xn:dn>ManagedElement=1,IubLink=1</xn:dn>
 							</un:iubLinkUtranCell>
+							<un:aEnd>yiuml</un:aEnd>
+							<un:zEnd>iuyw</un:zEnd>
 						</un:attributes>
 						<!--  Vendor specific data for IubLink-->
 						<xn:VsDataContainer id="1">
