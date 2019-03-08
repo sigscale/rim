@@ -10,6 +10,7 @@
 		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"
 		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
 		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+		xmlns:vsRHO11="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1"
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
 		elementFormDefault="qualified">
 
@@ -19,6 +20,8 @@
 			schemaLocation="geranNrm.xsd" />
 	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
 			schemaLocation="stateManagementIRP.xsd" />
+	<import namespace="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1"
+			schemaLocation="NNRncHandOver.xsd" />
 
 	<!-- UTRAN Network Resources IRP NRM attribute related XML types -->
 	<simpleType name="localCellId">
@@ -1080,7 +1083,7 @@
 		</complexType>
 	</element>
 
-	<element name="IubLink" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="IubLink">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1088,6 +1091,15 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
+									<!-- Inherited attributes from TopologicalLink_-->
+									<element name="layerProtocolNameList" type="string" minOccurs="0"/>
+									<element name="aEnd" type="xn:dn"/>
+									<element name="zEnd" type="xn:dn"/>
+									<!-- End of inherited attributes from TopologicalLink_-->
+									<!-- Inherited attributes from Link-->
+									<element name="linkType" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from Link-->
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="iubLinkUtranCell" type="xn:dnList" minOccurs="0"/>
@@ -1558,7 +1570,7 @@
 		</complexType>
 	</element>
 
-	<element name="EP_IuCS">
+	<element name="EP_IuCS" substitutionGroup="un:RncFunctionOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1566,7 +1578,11 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="connMscNumber" type="string" minOccurs="0"/>
+									<!-- Inherited attributes from EP_RP-->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP-->
+									<element name="connMscNumber" type="integer" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -1576,7 +1592,7 @@
 		</complexType>
 	</element>
 
-	<element name="EP_IuPS">
+	<element name="EP_IuPS" substitutionGroup="un:RncFunctionOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1584,7 +1600,11 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="connSgsnNumber" type="string" minOccurs="0"/>
+									<!-- Inherited attributes from EP_RP-->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP-->
+									<element name="connSgsnNumber" type="integer" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -1594,7 +1614,7 @@
 		</complexType>
 	</element>
 	
-	<element name="EP_Iur">
+	<element name="EP_Iur" substitutionGroup="un:RncFunctionOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1602,6 +1622,10 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
+									<!-- Inherited attributes from EP_RP-->
+									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<!-- End of inherited attributes from EP_RP-->
 									<element name="connectedRncId" type="string" minOccurs="0"/>
 								</all>
 							</complexType>

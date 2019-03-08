@@ -25,6 +25,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/stateManagementIRP.xsd \
 		$(abs_builddir)/inventoryNrm.xsd \
 		$(abs_builddir)/inventoryNrmAlt2.xsd \
+		$(abs_builddir)/NNRncHandOver.xsd \
 		$(abs_builddir)/genericNrm.json \
 		$(abs_builddir)/geranNrm.json \
 		$(abs_builddir)/utranNrm.json \

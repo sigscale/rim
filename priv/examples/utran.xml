@@ -6,7 +6,8 @@
 <bulkCmConfigDataFile
 		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm">
+		xmlns:un="http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"
+		xmlns:vsRHO11="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1">
 
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
@@ -36,9 +37,9 @@
 				<xn:attributes>
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>BSS</xn:managedElementType>
+						<xn:managedElementType>RNS</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
+					<xn:userLabel>RNS dlkjdRN1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Champ de Mars</xn:locationName>
@@ -64,22 +65,6 @@
 						</xn:attributes>
 					</xn:VsDataContainer>
 				</un:NodeBFunction>
-				<un:IubLink id="1">
-					<un:attributes>
-						<un:userLabel>Paris NI1</un:userLabel>
-						<un:iubLinkUtranCell>
-							<xn:dn>ManagedElement=1,IubLink=1</xn:dn>
-						</un:iubLinkUtranCell>
-					</un:attributes>
-					<!--  Vendor specific data for IubLink-->
-					<xn:VsDataContainer id="1">
-						<xn:attributes>
-							<xn:vsDataType>DataType=8</xn:vsDataType>
-							<xn:vsDataFormatVersion>DFV7</xn:vsDataFormatVersion>
-							<xn:vsData />
-						</xn:attributes>
-					</xn:VsDataContainer>
-				</un:IubLink>
 				<un:RncFunction id="1">
 					<un:attributes>
 						<un:userLabel>Paris SMN1</un:userLabel>
@@ -90,6 +75,85 @@
 						<un:mcc>999</un:mcc>
 						<un:rncId>777</un:rncId>
 					</un:attributes>
+					<un:EP_IuCS id="1">
+						<un:attributes>
+							<un:farEndEntity>vzmnbc</un:farEndEntity>
+							<un:userLabel>Paris EPIUPS</un:userLabel>
+							<un:connMscNumber>3254</un:connMscNumber>
+						</un:attributes>
+					</un:EP_IuCS>
+					<un:EP_IuPS id="1">
+						<un:attributes>
+							<un:farEndEntity>lkjsdgf</un:farEndEntity>
+							<un:userLabel>Paris EPIUCS</un:userLabel>
+							<un:connSgsnNumber>9842</un:connSgsnNumber>
+						</un:attributes>
+					</un:EP_IuPS>
+					<un:EP_Iur id="1">
+						<un:attributes>
+							<un:farEndEntity>vzmnbc</un:farEndEntity>
+							<un:userLabel>Paris EPIUPS</un:userLabel>
+							<un:connectedRncId>powrfs</un:connectedRncId>
+						</un:attributes>
+					</un:EP_Iur>
+					<un:IubLink id="1">
+						<un:attributes>
+							<un:userLabel>Paris NI1</un:userLabel>
+							<un:iubLinkUtranCell>
+								<xn:dn>ManagedElement=1,IubLink=1</xn:dn>
+							</un:iubLinkUtranCell>
+							<un:aEnd>yiuml</un:aEnd>
+							<un:zEnd>iuyw</un:zEnd>
+						</un:attributes>
+						<!--  Vendor specific data for IubLink-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=8</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV7</xn:vsDataFormatVersion>
+								<xn:vsData />
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</un:IubLink>
+					<un:UtranCellTDDLcr id="1">
+						<un:attributes>
+							<un:userLabel>Paris UCTL1</un:userLabel>
+							<un:cId>3545</un:cId>
+							<un:pichPower>2.9</un:pichPower>
+							<un:relatedAntennaList>
+								<xn:dn>ManagedElement=1,UtranCellTDDLcr=1</xn:dn>
+							</un:relatedAntennaList>
+							<un:uarfcn>6874</un:uarfcn>
+							<un:tstdIndicator>inactive</un:tstdIndicator>
+						</un:attributes>
+						<!--  Vendor specific data for UtranCellTDDLcr-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=10</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV9</xn:vsDataFormatVersion>
+								<xn:vsData />
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</un:UtranCellTDDLcr>
+					<un:UtranCellTDDHcr id="1">
+						<un:attributes>
+							<un:userLabel>Paris UCTH1</un:userLabel>
+							<un:cId>6871</un:cId>
+							<un:pichPower>1.5</un:pichPower>
+							<un:relatedAntennaList>
+								<xn:dn>ManagedElement=1,UtranCellTDDHcr=1</xn:dn>
+							</un:relatedAntennaList>
+							<un:uarfcn>3451</un:uarfcn>
+							<un:syncCase>SCH and PCCPCH allocated in a single TS</un:syncCase>
+						</un:attributes>
+						<!--  Vendor specific data for UtranCellTDDLcr-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=11</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV10</xn:vsDataFormatVersion>
+								<xn:vsData />
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</un:UtranCellTDDHcr>
 					<!-- Multiple UtranCellFDD in a RNC-->
 					<un:UtranCellFDD id="1">
 						<un:attributes>
@@ -127,8 +191,19 @@
 							</xn:attributes>
 						</xn:VsDataContainer>
 					</un:UtranCellFDD>
+					<!--  Vendor specific data for RncFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>RncHandOver</xn:vsDataType>
+							<xn:vsDataFormatVersion>NNRncHandOver.1.1</xn:vsDataFormatVersion>
+							<vsRHO11:vsDataRHO>
+								<vsRHO11:abcMin>12</vsRHO11:abcMin>
+								<vsRHO11:abcMax>34</vsRHO11:abcMax>
+							</vsRHO11:vsDataRHO>
+						</xn:attributes>
+					</xn:VsDataContainer>
 				</un:RncFunction>
-				<!--  Vendor specific data for RNC-->
+				<!--  Vendor specific data for ManagedElement-->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
 						<xn:vsDataType>abc</xn:vsDataType>

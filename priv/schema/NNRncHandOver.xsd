@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Configuration data file vendor-specific XML schema example
+	NNRncHandOver.xsd
+-->
+<schema
+		targetNamespace="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1"
+		elementFormDefault="qualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm">
+
+	<import namespace=
+			"http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm" />
+
+	<!-- RncHandOver version 1.1 company NN vendor-specific data -->
+	<element name="vsDataRHO" substitutionGroup="xn:vsData">
+		<complexType>
+			<complexContent>
+				<extension base="xn:vsData">
+					<all>
+						<element name="abcMin" minOccurs="0"/>
+						<element name="abcMax" minOccurs="0"/>
+					</all>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>
