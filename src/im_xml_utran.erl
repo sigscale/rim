@@ -154,6 +154,30 @@ parse_rnc({startElement,  _Uri, "UtranCellFDD", QName,
 	State#state{parse_module = ?MODULE, parse_function = parse_fdd,
 			parse_state = ParseState#utran_state{fdd = DnComponent},
 			stack = [{startElement, QName, Attributes} | Stack]};
+parse_rnc({startElement,  _Uri, "IubLink", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{parse_state = ParseState,
+		stack = Stack} = State) ->
+	DnComponent = ",IubLink=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_iub,
+			parse_state = ParseState#utran_state{iub = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_rnc({startElement,  _Uri, "UtranCellTDDLcr", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{parse_state = ParseState,
+		stack = Stack} = State) ->
+	DnComponent = ",UtranCellTDDLcr=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_tdd_lcr,
+			parse_state = ParseState#utran_state{tdd_lcr = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_rnc({startElement,  _Uri, "UtranCellTDDHcr", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{parse_state = ParseState,
+		stack = Stack} = State) ->
+	DnComponent = ",UtranCellTDDHcr=" ++ Id,
+	State#state{parse_module = ?MODULE, parse_function = parse_tdd_hcr,
+			parse_state = ParseState#utran_state{tdd_hcr = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
@@ -571,19 +595,12 @@ parse_fdd_attr1([], _Attr, FddStack, State, Acc) ->
 			#{gsmRel => [], utranRel => []}).
 
 %% @hidden
-parse_tdd_hcr({startElement, _Uri, "UtranCellTDDLcr", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{stack = Stack} = State) ->
-	DnComponent = ",UtranCellTDDLcr=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_tdd_hcr,
-			parse_state = #utran_state{tdd_lcr = DnComponent},
-			stack = [{startElement, QName, Attributes} | Stack]};
 parse_tdd_hcr({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_tdd_hcr({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_tdd_hcr({endElement, _Uri, "UtranCellTDDLcr", QName},
+parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 		#state{stack = Stack} = State) ->
 	{[_ | T], NewStack} = pop(startElement, QName, Stack),
 	parse_tdd_hcr_attr(T, undefined, State#state{stack = NewStack}, []);
@@ -625,9 +642,9 @@ parse_tdd_hcr_attr1([{endElement, {"un", "cellCapabilityContainerTDD"}} | T],
 		undefined, State, Acc) ->
 	% @todo cellCapabilityContainerTDD 
 	parse_tdd_hcr_attr1(T, undefined, State, Acc);
-parse_tdd_hcr_attr1([{endElement, {"un", "timeSlotLCRList"}} | T],
+parse_tdd_hcr_attr1([{endElement, {"un", "timeSlotHCRList"}} | T],
 		undefined, State, Acc) ->
-	% @todo timeSlotLCRList
+	% @todo timeSlotHCRList
 	parse_tdd_hcr_attr1(T, undefined, State, Acc);
 parse_tdd_hcr_attr1([{characters, Chars} | T],
 		"userLabel" = Attr, State, Acc) ->
@@ -805,14 +822,31 @@ parse_tdd_hcr_attr1([{characters, Chars} | T],
 		"dpchConstantValue" = Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_tdd_hcr_attr1([{characters, "active"} | T],
-		"tstdIndicator" = Attr, State, Acc) ->
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"schPower" = Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
-			value = "active"} | Acc]);
-parse_tdd_hcr_attr1([{characters, "inactive"} | T],
-		"tstdIndicator" = Attr, State, Acc) ->
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"temporaryOffset1" = Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
-			value = "inactive"} | Acc]);
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, "SCH and PCCPCH allocated in a single TS"} | T],
+		"syncCase" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "SCH and PCCPCH allocated in a single TS"} | Acc]);
+parse_tdd_hcr_attr1([{characters,
+		"SCH and PCCPCH allocated in two TS, TS#k and TS#k+8"} | T],
+		"syncCase" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = "SCH and PCCPCH allocated in two TS, TS#k and TS#k+8"} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"timeSlotForSch" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_hcr_attr1([{characters, Chars} | T],
+		"schTimeSlot" = Attr, State, Acc) ->
+	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
 parse_tdd_hcr_attr1([{characters, Chars} | T],
 		Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, [#resource_char{name = Attr,
@@ -833,37 +867,30 @@ parse_tdd_hcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, Acc);
 parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		subnet = SubId, parse_state = ParseState,
 		spec_cache = Cache} = State, _Acc) ->
-	IubDn = DnPrefix ++ SubId ++ IubId,
-	ClassType = "IubLink",
-%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = IubDn,
-			description = "UMTS IUB interface",
+	#utran_state{rnc = RncId, tdd_hcr = TddHcrId} = ParseState,
+	TddHcrDn = DnPrefix ++ SubId ++ RncId ++ TddHcrId,
+	ClassType = "UtranCellTDDHcr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = TddHcrDn,
+			description = "UMTS Time Division Duplex High Chip Rate",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
-%			specification = Spec},
+			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_cm_bulk,
-					parse_function = parse_generic,
-					parse_state = #utran_state{iub = IubDn},
-					spec_cache = Cache};
-%					spec_cache = NewCache};
+			State#state{parse_module = ?MODULE,
+					parse_function = parse_rnc,
+					parse_state = ParseState#utran_state{tdd_hcr = TddHcrDn},
+					spec_cache = NewCache};
 		{error, Reason} ->
 			{error, Reason}
 	end.
 
 %% @hidden
-parse_tdd_lcr({startElement, _Uri, "UtranCellTDDLcr", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{stack = Stack} = State) ->
-	DnComponent = ",UtranCellTDDLcr=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_tdd_lcr,
-			parse_state = #utran_state{tdd_lcr = DnComponent},
-			stack = [{startElement, QName, Attributes} | Stack]};
 parse_tdd_lcr({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_tdd_lcr({startElement, _, _, QName, Attributes},
@@ -910,6 +937,10 @@ parse_tdd_lcr_attr1([{endElement, {"un", "nsPlmnIdList"}} | T],
 parse_tdd_lcr_attr1([{endElement, {"un", "cellCapabilityContainerTDD"}} | T],
 		undefined, State, Acc) ->
 	% @todo cellCapabilityContainerTDD 
+	parse_tdd_lcr_attr1(T, undefined, State, Acc);
+parse_tdd_lcr_attr1([{endElement, {"un", "uarfcnLCRList"}} | T],
+		undefined, State, Acc) ->
+	% @todo uarfcnLCRList
 	parse_tdd_lcr_attr1(T, undefined, State, Acc);
 parse_tdd_lcr_attr1([{endElement, {"un", "timeSlotLCRList"}} | T],
 		undefined, State, Acc) ->
@@ -1091,6 +1122,14 @@ parse_tdd_lcr_attr1([{characters, Chars} | T],
 		"dpchConstantValue" = Attr, State, Acc) ->
 	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"fpachPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
+parse_tdd_lcr_attr1([{characters, Chars} | T],
+		"dwPchPower" = Attr, State, Acc) ->
+	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = fraction1(Chars)} | Acc]);
 parse_tdd_lcr_attr1([{characters, "active"} | T],
 		"tstdIndicator" = Attr, State, Acc) ->
 	parse_tdd_lcr_attr1(T, Attr, State, [#resource_char{name = Attr,
@@ -1119,37 +1158,30 @@ parse_tdd_lcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_lcr_attr1(T, Attr, State, Acc);
 parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		subnet = SubId, parse_state = ParseState,
 		spec_cache = Cache} = State, _Acc) ->
-	IubDn = DnPrefix ++ SubId ++ IubId,
-	ClassType = "IubLink",
-%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = IubDn,
-			description = "UMTS IUB interface",
+	#utran_state{rnc = RncId, tdd_lcr = TddLcrId} = ParseState,
+	TddLcrDn = DnPrefix ++ SubId ++ RncId ++ TddLcrId,
+	ClassType = "UtranCellTDDLcr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = TddLcrDn,
+			description = "UMTS Time Division Duplex Low Chip Rate",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink"},
-%			specification = Spec},
+			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
+			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_cm_bulk,
-					parse_function = parse_generic,
-					parse_state = #utran_state{iub = IubDn},
-					spec_cache = Cache};
-%					spec_cache = NewCache};
+			State#state{parse_module = ?MODULE,
+					parse_function = parse_rnc,
+					parse_state = ParseState#utran_state{tdd_lcr = TddLcrDn},
+					spec_cache = NewCache};
 		{error, Reason} ->
 			{error, Reason}
 	end.
 
 %% @hidden
-parse_iub({startElement, _Uri, "IubLink", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{stack = Stack} = State) ->
-	DnComponent = ",IubLink=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_iub,
-			parse_state = #utran_state{iub = DnComponent},
-			stack = [{startElement, QName, Attributes} | Stack]};
 parse_iub({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_iub({startElement, _, _, QName, Attributes},
@@ -1209,9 +1241,10 @@ parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_iub_attr1(T, Attr, State, Acc);
 parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = #utran_state{iub = IubId},
+		subnet = SubId, parse_state = ParseState,
 		spec_cache = Cache} = State, _Acc) ->
-	IubDn = DnPrefix ++ SubId ++ IubId,
+	#utran_state{rnc = RncId, iub = IubId} = ParseState,
+	IubDn = DnPrefix ++ SubId ++ RncId ++ IubId,
 	ClassType = "IubLink",
 %	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = IubDn,
@@ -1223,9 +1256,9 @@ parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
 %			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_cm_bulk,
-					parse_function = parse_generic,
-					parse_state = #utran_state{iub = IubDn},
+			State#state{parse_module = ?MODULE,
+					parse_function = parse_rnc,
+					parse_state = ParseState#utran_state{iub = IubDn},
 					spec_cache = Cache};
 %					spec_cache = NewCache};
 		{error, Reason} ->
