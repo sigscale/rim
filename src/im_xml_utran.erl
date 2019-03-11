@@ -1447,14 +1447,15 @@ parse_iur_attr1([], undefined, State, _Acc) ->
 
 % @hidden
 parse_fdd_rels([{startElement,
-		{"gn", "GsmRelation"} = QName, XmlAttr} | T1],
-		State, Characteristics, #{gsmRel := GsmRels} = Acc) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, QName, T1),
-	Relation = parse_gsm_rel(Attributes,
-			undefined, #gsm_relation{id = RelID}),
+		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
+		#state{dn_prefix = DnPrefix, subnet = SubId,
+		parse_state = #utran_state{rnc = RncId, fdd = FddId}} = State,
+		Characteristics, #{gsmRel := GsmRels} = Acc) ->
+	FddDn = DnPrefix ++ SubId ++ RncId ++ FddId,
+	{Attributes, T} = pop(endElement, QName, Stack),
+	Relation = gsm_relation(FddDn, Attributes),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
-	parse_fdd_rels(T2, State, Characteristics, NewAcc);
+	parse_fdd_rels(T, State, Characteristics, NewAcc);
 parse_fdd_rels([{startElement,
 		{"un", "UtranRelation"} = QName, _} | _] = Stack,
 		#state{dn_prefix = DnPrefix, subnet = SubId,
@@ -1503,39 +1504,61 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 			throw({add_resource, Reason})
 	end.
 
-% @hidden
-parse_gsm_rel([{endElement, {"gn", "attributes"}} | T],
-		undefined, Acc) ->
-	parse_gsm_rel(T, undefined, Acc);
-parse_gsm_rel([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-	parse_gsm_rel(T, Attr, Acc);
-parse_gsm_rel([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr, Acc#gsm_relation{adjacent_cell = Chars});
-parse_gsm_rel([{characters, Chars} | T], "bcch_frequency" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{bcch_frequency = list_to_integer(Chars)});
-parse_gsm_rel([{characters, Chars} | T], "ncc" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{ncc = list_to_integer(Chars)});
-parse_gsm_rel([{characters, Chars} | T], "bcc" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{bcc = list_to_integer(Chars)});
-parse_gsm_rel([{characters, Chars} | T], "lac" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{lac = list_to_integer(Chars)});
-parse_gsm_rel([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{is_remove_allowed = list_to_atom(Chars)});
-parse_gsm_rel([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
-parse_gsm_rel([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
-	parse_gsm_rel(T, Attr,
-		Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
-parse_gsm_rel([{startElement, {"gn", Attr}, []} | T], Attr, Acc) ->
-	parse_gsm_rel(T, undefined, Acc);
-parse_gsm_rel([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
-	Acc.
+%% @hidden
+gsm_relation(DnPrefix, Stack) ->
+	gsm_relation(Stack, [], DnPrefix, #{}).
+%% @hidden
+gsm_relation([{endElement, {"un", "GsmRelation"} = QName} | T] = _Stack,
+		[] = _State, DnPrefix, Acc) ->
+	gsm_relation(T, [QName], DnPrefix, Acc);
+gsm_relation([{endElement, {"xn", "VsDataContainer"} = QName} | _] = Stack,
+		State, DnPrefix, Acc) ->
+	{VsStack, T} = pop(startElement, QName, Stack),
+	NewAcc = Acc#{"VsDataContainer" => vendor_specific(VsStack, DnPrefix)},
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
+	gsm_relation(T, [QName | State], DnPrefix, Acc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "adjacentCell"}, {"un", "attributes"},
+		{"un", "UtranRelation"}] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("adjacentCell", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "bcchFrequency"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("bcchFrequency", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "ncc"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("ncc", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "bcc"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("bcc", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "lac"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("lac", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "isRemoveAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isRemoveAllowed", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "isHOAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isHOAllowed", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"un", "isESCoveredBy"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isESCoveredBy", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{startElement, {"un", "UtranRelation"} = QName, XmlAttr}],
+		[QName], _DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", RelId} = lists:keyfind("id", 3, XmlAttr),
+	#{"@type" => "GsmRelation",
+			"@schemaLocation" => ?PathInventorySchema ++ "#/definitions/GsmRelation",
+			"value" => Acc#{"id" => RelId}};
+gsm_relation([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
+	gsm_relation(T, State, DnPrefix, Acc).
 
 %% @hidden
 utran_relation(DnPrefix, Stack) ->
@@ -1573,7 +1596,7 @@ vendor_specific([{startElement, {"xn", "VsDataContainer"} = QName,
 		XmlAttr} | T] = _Stack, [], DnPrefix, Acc) ->
 	{_Uri, _Prefix, "id", ID} = lists:keyfind("id", 3, XmlAttr),
 	vendor_specific(T, [QName], DnPrefix, Acc#{"id" => ID});
-vendor_specific([{startElement, QName, XmlAttr} | T] = _Stack,
+vendor_specific([{startElement, QName, _XmlAttr} | T] = _Stack,
 		State, DnPrefix, Acc) ->
 	vendor_specific(T, [QName | State], DnPrefix, Acc);
 vendor_specific([{characters, Chars} | T],
