@@ -21,6 +21,9 @@
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
 
+-define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
+-define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+
 -record(state,
 		{parse_module :: atom(),
 		parse_function :: atom(),
@@ -1276,14 +1279,15 @@ parse_fdd_rels([{startElement,
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
 	parse_fdd_rels(T2, State, Characteristics, NewAcc);
 parse_fdd_rels([{startElement,
-		{"un", "UtranRelation"} = QName, XmlAttr} | T1],
-		State, Characteristics, #{utranRel := UtranRels} = Acc) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, QName, T1),
-	Relation = parse_utran_rel(Attributes,
-			undefined, #utran_relation{id = RelID}),
+		{"un", "UtranRelation"} = QName, _} | _] = Stack,
+		#state{dn_prefix = DnPrefix, subnet = SubId,
+		parse_state = #utran_state{rnc = RncId, fdd = FddId}} = State,
+		Characteristics, #{utranRel := UtranRels} = Acc) ->
+	FddDn = DnPrefix ++ SubId ++ RncId ++ FddId,
+	{Attributes, T} = pop(endElement, QName, Stack),
+	Relation = utran_relation(FddDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
-	parse_fdd_rels(T2, State, Characteristics, NewAcc);
+	parse_fdd_rels(T, State, Characteristics, NewAcc);
 parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 		parse_state = #utran_state{rnc = RncId,
 		fdd = FddId, fdds = Fdds} = ParseState,
@@ -1291,13 +1295,17 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
 			(gsmRel, R, Acc1) ->
-				[#resource_char{name = "gsmRelation", value = R} | Acc1];
+				[#resource_char{name = "gsmRelation",
+						value = lists:reverse(R)} | Acc1];
 			(utranRel, [], Acc1) ->
 				Acc1;
 			(utranRel, R, Acc1) ->
-				[#resource_char{name = "utranRelation", value = R} | Acc1]
+				[#resource_char{name = "utranRelation",
+						class_type = "UtranRelationList",
+						schema = ?PathInventorySchema ++ "#definitions/UtranRelationList",
+						value = lists:reverse(R)} | Acc1]
 	end,
-	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
+	NewCharacteristics = Characteristics ++ maps:fold(F1, [], Acc),
 	FddDn = DnPrefix ++ SubId ++ RncId ++ FddId,
 	ClassType = "UtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -1352,48 +1360,65 @@ parse_gsm_rel([{startElement, {"gn", Attr}, []} | T], Attr, Acc) ->
 parse_gsm_rel([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
 	Acc.
 
+%% @hidden
+utran_relation(DnPrefix, Stack) ->
+	utran_relation(Stack, [], DnPrefix, #{}).
+%% @hidden
+utran_relation([{endElement, {"un", "UtranRelation"} = QName} | T] = _Stack,
+		[] = _State, DnPrefix, Acc) ->
+	utran_relation(T, [QName], DnPrefix, Acc);
+utran_relation([{endElement, {"xn", "VsDataContainer"} = QName} | _] = Stack,
+		State, DnPrefix, Acc) ->
+	{VsStack, T} = pop(startElement, QName, Stack),
+	NewAcc = Acc#{"VsDataContainer" => vendor_specific(VsStack, DnPrefix)},
+	utran_relation(T, State, DnPrefix, NewAcc);
+utran_relation([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
+	utran_relation(T, [QName | State], DnPrefix, Acc);
+utran_relation([{characters, Chars} | T],
+		[{"un", "adjacentCell"}, {"un", "attributes"},
+		{"un", "UtranRelation"}] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("adjacentCell", Chars, Acc),
+	utran_relation(T, State, DnPrefix, NewAcc);
+utran_relation([{startElement, {"un", "UtranRelation"} = QName, XmlAttr}],
+		[QName], _DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", RelId} = lists:keyfind("id", 3, XmlAttr),
+	#{"@type" => "UtranRelation",
+			"@schemaLocation" => ?PathInventorySchema ++ "#/definitions/UtranRelation",
+			"value" => Acc#{"id" => RelId}};
+utran_relation([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
+	utran_relation(T, State, DnPrefix, Acc).
+
 % @hidden
-parse_utran_rel([{endElement, {"un", "attributes"}} | T],
-		undefined, Acc) ->
-	parse_utran_rel(T, undefined, Acc);
-parse_utran_rel([{endElement, {"un", Attr}} | T],
-		undefined, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{endElement, {"xn", "VsDataContainer" = Attr}} | T],
-		undefined, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{endElement, {"xn", "attributes"}} | T],
-		Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{endElement, {"xn", "vsData"}} | T],
-		Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{endElement, {"xn", "vsDataFormatVersion"}} | T],
-		Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{endElement, {"xn", "vsDataType"}} | T],
-		Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{characters, Chars} | T],
-		"adjacentCell" = Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
-parse_utran_rel([{characters, Chars} | T],
-		Attr, Acc) ->
-	% @todo vsDataContainer
-	parse_utran_rel(T, Attr, Acc#utran_relation{vs_data_container = Chars});
-parse_utran_rel([{startElement, {"un", "attributes"}, []} | T],
-		undefined, Acc) ->
-	parse_utran_rel(T, undefined, Acc);
-parse_utran_rel([{startElement, {"xn", "attributes"}, []} | T], Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{startElement, {"xn", "vsDataType"}, []} | T], Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{startElement, {"xn", "vsDataFormatVersion"}, []} | T], Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{startElement, {"xn", "vsData"}, []} | T], Attr, Acc) ->
-	parse_utran_rel(T, Attr, Acc);
-parse_utran_rel([{startElement, {"xn", "VsDataContainer"}, _} | _], _Attr, Acc) ->
-	Acc.
+vendor_specific(Stack, DnPrefix) ->
+	vendor_specific(Stack, [], DnPrefix, #{}).
+% @hidden
+vendor_specific([{startElement, {"xn", "VsDataContainer"} = QName,
+		XmlAttr} | T] = _Stack, [], DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", ID} = lists:keyfind("id", 3, XmlAttr),
+	vendor_specific(T, [QName], DnPrefix, Acc#{"id" => ID});
+vendor_specific([{startElement, QName, XmlAttr} | T] = _Stack,
+		State, DnPrefix, Acc) ->
+	vendor_specific(T, [QName | State], DnPrefix, Acc);
+vendor_specific([{characters, Chars} | T],
+		[{"xn", "vsDataType"}, {"xn", "attributes"},
+		{"xn", "VsDataContainer"} | _] = State, DnPrefix, Acc) ->
+	vendor_specific(T, State, DnPrefix, Acc#{"vsDataType" => Chars});
+vendor_specific([{characters, Chars} | T],
+		[{"xn", "vsDataFormatVersion"}, {"xn", "attributes"},
+		{"xn", "VsDataContainer"} | _] = State,
+		DnPrefix, Acc) ->
+	vendor_specific(T, State, DnPrefix, Acc#{"vsDataFormatVersion" => Chars});
+vendor_specific([{characters, _Chars} | T], [{"xn", "vsData"},
+		{"xn", "attributes"}, {"xn", "VsDataContainer"} | _] = State,
+		DnPrefix, Acc) ->
+	% @todo handle vsData
+	vendor_specific(T, State, DnPrefix, Acc);
+vendor_specific([{endElement, {"xn", "VsDataContainer"} = QName}],
+		[QName], _DnPrefix, Acc) ->
+	Acc;
+vendor_specific([{endElement, QName} | T],
+		[QName | State], DnPrefix, Acc) ->
+	vendor_specific(T, State, DnPrefix, Acc).
 
 %%----------------------------------------------------------------------
 %%  internal functions
@@ -1471,3 +1496,15 @@ fraction1(Fraction) when is_list(Fraction) ->
 		[Int] ->
 			list_to_integer(Int) * 10
 	end.
+
+-spec attribute_add(Attribute, Value, NrmMap) -> NrmMap
+	when
+		Attribute :: string(),
+		Value :: term(),
+		NrmMap :: map().
+%% @doc Add `Attribute' and `Value' to possibly missing attribute.
+attribute_add(Attribute, Value, #{"attributes" := Attributes} = NrmMap) ->
+	NrmMap#{"attributes" => Attributes#{Attribute => Value}};
+attribute_add(Attribute, Value, #{} = NrmMap) ->
+	NrmMap#{"attributes" => #{Attribute => Value}}.
+
