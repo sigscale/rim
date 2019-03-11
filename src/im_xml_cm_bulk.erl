@@ -62,7 +62,7 @@ import(File) when is_list(File) ->
 					{line, LineNo}, {entity, EntityName},
 					{tags, EndTags}, {error, Reason}]),
 			{error, Reason};
-		{fatal_error, Reason} ->
+		{error, Reason} ->
 			error_logger:error_report(["Error parsing import file",
 					{file, File}, {error, Reason}]),
 			{error, Reason}
