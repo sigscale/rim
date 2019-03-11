@@ -891,7 +891,7 @@ parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
 			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
@@ -1222,6 +1222,26 @@ parse_iub_attr1([{endElement, {"un", "iubLinkUtranCell" = Attr}} | T],
 		undefined, State, Acc) ->
 	% @todo dnList
 	parse_iub_attr1(T, Attr, State, Acc);
+parse_iub_attr1([{characters, Chars} | T],
+		"layerProtocolNameList" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"aEnd" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"zEnd" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"linkType" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"protocolVersion" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
 parse_iub_attr1([{characters, Chars} | T],
 		"userLabel" = Attr, State, Acc) ->
 	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
