@@ -14,7 +14,8 @@
 
 %% export the im private API
 -export([parse_rnc/2, parse_fdd/2, parse_nodeb/2, parse_iub/2,
-			parse_tdd_hcr/2, parse_tdd_lcr/2]).
+			parse_iucs/2, parse_iups/2, parse_iur/2, parse_tdd_hcr/2,
+			parse_tdd_lcr/2]).
 
 -export([fraction1/1]).
 
@@ -156,6 +157,18 @@ parse_rnc({startElement,  _Uri, "UtranCellFDD", QName,
 	DnComponent = ",UtranCellFDD=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_fdd,
 			parse_state = ParseState#utran_state{fdd = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_rnc({startElement,  _Uri, "EP_IuCS", QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{parse_module = ?MODULE, parse_function = parse_iucs,
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_rnc({startElement,  _Uri, "EP_IuPS", QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{parse_module = ?MODULE, parse_function = parse_iups,
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_rnc({startElement,  _Uri, "EP_Iur", QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{parse_module = ?MODULE, parse_function = parse_iur,
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement,  _Uri, "IubLink", QName,
 		[{[], [], "id", Id}] = Attributes},
@@ -881,7 +894,7 @@ parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
 			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
@@ -1213,6 +1226,26 @@ parse_iub_attr1([{endElement, {"un", "iubLinkUtranCell" = Attr}} | T],
 	% @todo dnList
 	parse_iub_attr1(T, Attr, State, Acc);
 parse_iub_attr1([{characters, Chars} | T],
+		"layerProtocolNameList" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"aEnd" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"zEnd" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"linkType" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"protocolVersion" = Attr, State, Acc) ->
+	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
 		"userLabel" = Attr, State, Acc) ->
 	parse_iub_attr1(T, Attr, State, [#resource_char{name = Attr,
 			value = Chars} | Acc]);
@@ -1267,6 +1300,150 @@ parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
+
+%% @hidden
+parse_iucs({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_iucs({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_iucs({endElement, _Uri, "EP_IuCS", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_iucs_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_iucs({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_iucs_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_iucs_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_iucs_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_iucs_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iucs_attr1([{characters, Chars} | T],
+		"farEndEntity" = Attr, State, Acc) ->
+	parse_iucs_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iucs_attr1([{characters, Chars} | T],
+		"connMscNumber" = Attr, State, Acc) ->
+	parse_iucs_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_iucs_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_iucs_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iucs_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_iucs_attr1(T, undefined, State, Acc);
+parse_iucs_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_iucs_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_iucs_attr1(T, Attr, State, Acc);
+parse_iucs_attr1([], undefined, State, _Acc) ->
+	State#state{parse_module = ?MODULE, parse_function = parse_rnc}.
+
+%% @hidden
+parse_iups({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_iups({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_iups({endElement, _Uri, "EP_IuPS", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_iups_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_iups({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_iups_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_iups_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_iups_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_iups_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iups_attr1([{characters, Chars} | T],
+		"farEndEntity" = Attr, State, Acc) ->
+	parse_iups_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iups_attr1([{characters, Chars} | T],
+		"connSgsnNumber" = Attr, State, Acc) ->
+	parse_iups_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_iups_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_iups_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iups_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_iups_attr1(T, undefined, State, Acc);
+parse_iups_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_iups_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_iups_attr1(T, Attr, State, Acc);
+parse_iups_attr1([], undefined, State, _Acc) ->
+	State#state{parse_module = ?MODULE, parse_function = parse_rnc}.
+
+%% @hidden
+parse_iur({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_iur({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_iur({endElement, _Uri, "EP_Iur", QName},
+		#state{stack = Stack} = State) ->
+	{[_ | T], NewStack} = pop(startElement, QName, Stack),
+	parse_iur_attr(T, undefined, State#state{stack = NewStack}, []);
+parse_iur({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+% @hidden
+parse_iur_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
+		undefined, State, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_iur_attr1(Attributes, undefined, State, Acc).
+% @hidden
+parse_iur_attr1([{characters, Chars} | T],
+		"userLabel" = Attr, State, Acc) ->
+	parse_iur_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iur_attr1([{characters, Chars} | T],
+		"farEndEntity" = Attr, State, Acc) ->
+	parse_iur_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iur_attr1([{characters, Chars} | T],
+		"connectedRncId" = Attr, State, Acc) ->
+	parse_iur_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iur_attr1([{characters, Chars} | T],
+		Attr, State, Acc) ->
+	parse_iur_attr1(T, Attr, State, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
+parse_iur_attr1([{startElement, {"un", Attr}, _} | T],
+		Attr, State, Acc) ->
+	parse_iur_attr1(T, undefined, State, Acc);
+parse_iur_attr1([{endElement, {"un", "attributes"}}],
+		undefined, State, _Acc) ->
+	State;
+parse_iur_attr1([{endElement, {"un", Attr}} | T],
+		undefined, State, Acc) ->
+	parse_iur_attr1(T, Attr, State, Acc);
+parse_iur_attr1([], undefined, State, _Acc) ->
+	State#state{parse_module = ?MODULE, parse_function = parse_rnc}.
 
 % @hidden
 parse_fdd_rels([{startElement,
