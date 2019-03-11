@@ -40,16 +40,24 @@
 		File :: string(),
 		Result :: ok | ignore | {error, Reason},
 		Reason :: term().
-%% @doc Import a file in the inventory table.
+%% @doc Import a file into the inventory table.
 import(File) when is_list(File) ->
 	Options = [{event_fun, fun parse_xml/3},
 		{event_state, #state{}}],
 	case xmerl_sax_parser:file(File, Options) of
 		{ok, _EventState, _Rest} ->
 			ok;
-		{fatal_error, {CurrentLocation, EntityName, LineNo},
+		{Tag, {CurrentLocation, EntityName, LineNo},
 				Reason, EndTags, _EventState} ->
-			error_logger:error_report(["Error parsing import file",
+			Message = case Tag of
+				get_specification_name ->
+					"Error getting specification for resource";
+				add_resource ->
+					"Error adding resource";
+				fatal_error ->
+					"Error parsing import file"
+			end,
+			error_logger:error_report([Message,
 					{file, File}, {location, CurrentLocation},
 					{line, LineNo}, {entity, EntityName},
 					{tags, EndTags}, {error, Reason}]),

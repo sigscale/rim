@@ -133,7 +133,7 @@ parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
 					parse_state = #utran_state{nodeb = NodebDn},
 					spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 %% @hidden
@@ -283,7 +283,7 @@ parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
 					parse_state = #utran_state{rnc = RncDn, fdds = []},
 					spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 %% @hidden
@@ -887,7 +887,7 @@ parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
 					parse_state = ParseState#utran_state{tdd_hcr = TddHcrDn},
 					spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 %% @hidden
@@ -1178,7 +1178,7 @@ parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
 					parse_state = ParseState#utran_state{tdd_lcr = TddLcrDn},
 					spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 %% @hidden
@@ -1262,7 +1262,7 @@ parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
 					spec_cache = Cache};
 %					spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 % @hidden
@@ -1315,7 +1315,7 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 					parse_state = ParseState#utran_state{
 					fdds = [FddDn | Fdds]}, spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 % @hidden
@@ -1445,7 +1445,7 @@ get_specification_ref(Name, Cache) ->
 							version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
-					{error, Reason}
+					throw({get_specification_name, Reason})
 			end
 	end.
 

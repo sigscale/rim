@@ -115,7 +115,7 @@ parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
 					parse_state = #geran_state{bss = BssDn, btss = []},
 					spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 %% @hidden
@@ -196,7 +196,7 @@ parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
 					parse_state = ParseState#geran_state{btss = [BtsDn | Btss],
 					cells = []}, spec_cache = NewCache};
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 
 %% @hidden
@@ -364,7 +364,7 @@ parse_gsm_cell_rels(CellStack,
 					cells = [CellDn | Cells]}, spec_cache = NewCache},
 			parse_gsm_cell_pol(NewCharacteristics, CellStack, NewState);
 		{error, Reason} ->
-			{error, Reason}
+			throw({add_resource, Reason})
 	end.
 % @hidden
 parse_gsm_cell_rel([{endElement, {"gn", "attributes"}} | T],
@@ -519,6 +519,6 @@ get_specification_ref(Name, Cache) ->
 							version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
-					{error, Reason}
+					throw({get_specification_name, Reason})
 			end
 	end.
