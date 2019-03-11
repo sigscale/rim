@@ -651,16 +651,16 @@
 							}
 						},
 						"UtranCellFDD": {
-							"$ref": "#/definitions/UtranCellFDDList"
+							"$ref": "genericNrm#/definitions/dnList"
 						},
 						"UtranCellTDDLcr": {
-							"$ref": "#/definitions/UtranCellTDDLcrList"
+							"$ref": "genericNrm#/definitions/dnList"
 						},
 						"UtranCellTDDHcr": {
-							"$ref": "#/definitions/UtranCellTDDHcrList"
+							"$ref": "genericNrm#/definitions/dnList"
 						},
 						"IubLink": {
-							"$ref": "#/definitions/IubLinkList"
+							"$ref": "genericNrm#/definitions/dnList"
 						},
 						"RncFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/RncFunctionOptionallyContainedNrmClassList"
@@ -910,12 +910,6 @@
 				}
 			]
 		},
-		"UtranCellFDDList": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/UtranCellFDD"
-			}
-		},
 		"UtranCellTDD": {
 			"allOf": [
 				{
@@ -989,12 +983,6 @@
 				}
 			]
 		},
-		"UtranCellTDDLcrList": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/UtranCellTDDLcr"
-			}
-		},
 		"UtranCellTDDHcr": {
 			"allOf": [
 				{
@@ -1033,12 +1021,6 @@
 				}
 			]
 		},
-		"UtranCellTDDHcrList": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/UtranCellTDDHcr"
-			}
-		},
 		"IubLink": {
 			"allOf": [
 				{
@@ -1076,12 +1058,6 @@
 					}
 				}
 			]
-		},
-		"IubLinkList": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/IubLink"
-			}
 		},
 		"UtranRelation": {
 			"allOf": [
