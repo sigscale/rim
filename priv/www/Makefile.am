@@ -36,6 +36,11 @@ yarn.lock:
 $(abs_builddir)/build/polymer.json: package.json $(abs_builddir)/index.html ${patsubst %,$(abs_builddir)/src/%,$(MODULES)}
 	yarn run build:static
 
+check_DATA = .polymer_lint_ok
+
+.polymer_lint_ok:
+	yarn run lint
+
 install-data-local:
 	$(MKDIR_P) $(DESTDIR)$(wwwdir)
 	cp -R $(abs_builddir)/build/esm-bundled/* $(DESTDIR)$(wwwdir)
