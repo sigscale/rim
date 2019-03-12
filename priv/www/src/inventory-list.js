@@ -277,19 +277,20 @@ class inventoryList extends PolymerElement {
 					delete inventoryList.headers['If-Range'];
 				}
 				return inventoryList.generateRequest().completes;
-				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+			},
+			handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			inventoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (inventoryList1.etag && params.page > 0) {
+				inventoryList.headers['If-Range'] = inventoryList1.etag;
 			} else {
-				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
-				inventoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (inventoryList1.etag && params.page > 0) {
-               inventoryList.headers['If-Range'] = inventoryList1.etag;
-            } else {
-               delete inventoryList.headers['If-Range'];
-            }
-				inventoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
-				}
+				delete inventoryList.headers['If-Range'];
 			}
+			inventoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+		}
+	}
 }
 
 window.customElements.define('inventory-list', inventoryList);
