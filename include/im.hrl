@@ -257,36 +257,6 @@
 		countryCity :: string() | undefined | '_'}).
 -type sites() :: #sites{}.
 
--record(gsm_relation,
-		{id :: string() | undefined | '_',
-		adjacent_cell :: string() | undefined | '_',
-		bcch_frequency :: integer() | undefined | '_',
-		ncc :: integer() | undefined | '_',
-		bcc :: integer() | undefined | '_',
-		lac :: integer() | undefined | '_',
-		is_remove_allowed :: boolean() | undefined | '_',
-		is_hoa_allowed :: boolean() | undefined | '_',
-		is_covered_by :: no | yes | partial | undefined | '_',
-		vs_data_container :: [term()] | undefined | '_'}).
-
--record(utran_relation,
-		{id :: string() | undefined | '_',
-		adjacent_cell :: string() | undefined | '_',
-		vs_data_container :: [term()] | undefined | '_'}).
-
--record(eutran_relation,
-		{id :: string() | undefined | '_',
-		tci :: integer() | undefined | '_',
-		is_remove_allowed :: boolean() | undefined | '_',
-		is_hoa_allowed :: boolean() | undefined | '_',
-		is_icic_information_send_allowed :: boolean() | undefined | '_',
-		is_lb_allowed :: boolean() | undefined | '_',
-		adjacent_cell :: string() | undefined | '_',
-		is_es_covered_by :: no | yes | partial | undefined | '_',
-		cell_individual_offset :: string() | undefined | '_',
-		q_offset :: string() | undefined | '_',
-		vs_data_container :: [term()] | undefined | '_'}).
-
 -record(inter_rat_es_policies,
 		{id :: string() | undefined | '_',
 		act_original_cell_params :: relative_cell_load_parameters() | undefined | '_',
