@@ -18,6 +18,9 @@
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
 
+-define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
+-define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+
 -record(state,
 		{parse_module :: atom(),
 		parse_function :: atom(),
@@ -302,32 +305,38 @@ parse_gsm_cell_attr1([], _Attr, CellStack, State, Acc) ->
 
 % @hidden
 parse_gsm_cell_rels([{startElement,
-		{"gn", "GsmRelation"} = QName, XmlAttr} | T1],
-		State, Characteristics, #{gsmRel := GsmRels} = Acc) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, QName, T1),
-	Relation = parse_gsm_cell_rel(Attributes,
-			undefined, #gsm_relation{id = RelID}),
+		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
+		#state{dn_prefix = DnPrefix, subnet = SubId,
+		parse_state = #geran_state{bss = BssId, bts = BtsId,
+		cell = CellId}} = State, Characteristics,
+		#{gsmRel := GsmRels} = Acc) ->
+	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	{Attributes, T} = pop(endElement, QName, Stack),
+	Relation = gsm_relation(CellDn, Attributes),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
-	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
-		{"un", "UtranRelation"} = QName, XmlAttr} | T1],
-		State, Characteristics, #{utranRel := UtranRels} = Acc) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, QName, T1),
-	Relation = parse_utran_cell_rel(Attributes,
-			undefined, #utran_relation{id = RelID}),
+		{"un", "UtranRelation"} = QName, _} | _] = Stack,
+		#state{dn_prefix = DnPrefix, subnet = SubId,
+		parse_state = #geran_state{bss = BssId, bts = BtsId,
+		cell = CellId}} = State, Characteristics,
+		#{utranRel := UtranRels} = Acc) ->
+	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	{Attributes, T} = pop(endElement, QName, Stack),
+	Relation = utran_relation(CellDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
-	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
-		{"en", "EutranRelation"} = QName, XmlAttr} | T1],
-		State, Characteristics, #{eutranRel := EutranRels} = Acc) ->
-	{_Uri, _Prefix, "id", RelID} = lists:keyfind("id", 3, XmlAttr),
-	{[_ | Attributes], T2} = pop(endElement, QName, T1),
-	Relation = parse_eutran_cell_rel(Attributes,
-			undefined, #eutran_relation{id = RelID}),
+		{"en", "EutranRelation"} = QName, _} | _] = Stack,
+		#state{dn_prefix = DnPrefix, subnet = SubId,
+		parse_state = #geran_state{bss = BssId, bts = BtsId,
+		cell = CellId}} = State, Characteristics,
+		#{eutranRel := EutranRels} = Acc) ->
+	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	{Attributes, T} = pop(endElement, QName, Stack),
+	Relation = eutran_relation(CellDn, Attributes),
 	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
-	parse_gsm_cell_rels(T2, State, Characteristics, NewAcc);
+	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels(CellStack,
 		#state{dn_prefix = DnPrefix, subnet = SubId,
 				parse_state = #geran_state{bss = BssId, bts = BtsId,
@@ -336,15 +345,24 @@ parse_gsm_cell_rels(CellStack,
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
 			(gsmRel, R, Acc1) ->
-				[#resource_char{name = "gsmRelation", value = R} | Acc1];
+				[#resource_char{name = "gsmRelation",
+						class_type = "GsmRelationList",
+						schema = ?PathInventorySchema ++ "#definitions/GsmRelationList",
+						value = lists:reverse(R)} | Acc1];
 			(utranRel, [], Acc1) ->
 				Acc1;
 			(utranRel, R, Acc1) ->
-				[#resource_char{name = "utranRelation", value = R} | Acc1];
+				[#resource_char{name = "utranRelation",
+						class_type = "UtranRelationList",
+						schema = ?PathInventorySchema ++ "#definitions/UtranRelationList",
+						value = lists:reverse(R)} | Acc1];
 			(eutranRel, [], Acc1) ->
 				Acc1;
 			(eutranRel, R, Acc1) ->
-				[#resource_char{name = "eUtranRelation", value = R} | Acc1]
+				[#resource_char{name = "eUtranRelation",
+						class_type = "EUtranRelationList",
+						schema = ?PathInventorySchema ++ "#definitions/EUtranRelationList",
+						value = R} | Acc1]
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
 	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
@@ -366,100 +384,215 @@ parse_gsm_cell_rels(CellStack,
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
-% @hidden
-parse_gsm_cell_rel([{endElement, {"gn", "attributes"}} | T],
-		undefined, Acc) ->
-	parse_gsm_cell_rel(T, undefined, Acc);
-parse_gsm_cell_rel([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-	parse_gsm_cell_rel(T, Attr, Acc);
-parse_gsm_cell_rel([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr, Acc#gsm_relation{adjacent_cell = Chars});
-parse_gsm_cell_rel([{characters, Chars} | T], "bcch_frequency" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{bcch_frequency = list_to_integer(Chars)});
-parse_gsm_cell_rel([{characters, Chars} | T], "ncc" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{ncc = list_to_integer(Chars)});
-parse_gsm_cell_rel([{characters, Chars} | T], "bcc" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{bcc = list_to_integer(Chars)});
-parse_gsm_cell_rel([{characters, Chars} | T], "lac" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{lac = list_to_integer(Chars)});
-parse_gsm_cell_rel([{characters, Chars} | T], "is_remove_allowed" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{is_remove_allowed = list_to_atom(Chars)});
-parse_gsm_cell_rel([{characters, Chars} | T], "is_hoa_allowed" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{is_hoa_allowed = list_to_atom(Chars)});
-parse_gsm_cell_rel([{characters, Chars} | T], "is_covered_by" = Attr, Acc) ->
-	parse_gsm_cell_rel(T, Attr,
-		Acc#gsm_relation{is_covered_by = list_to_atom(Chars)});
-parse_gsm_cell_rel([{startElement, {"gn", Attr}, []} | T], Attr, Acc) ->
-	parse_gsm_cell_rel(T, undefined, Acc);
-parse_gsm_cell_rel([{startElement, {"gn", "attributes"}, []}], _Attr, Acc) ->
-	Acc.
+
+%% @hidden
+gsm_relation(DnPrefix, Stack) ->
+	gsm_relation(Stack, [], DnPrefix, #{}).
+%% @hidden
+gsm_relation([{endElement, {"gn", "GsmRelation"} = QName} | T] = _Stack,
+		[] = _State, DnPrefix, Acc) ->
+	gsm_relation(T, [QName], DnPrefix, Acc);
+gsm_relation([{endElement, {"xn", "VsDataContainer"} = QName} | _] = Stack,
+		State, DnPrefix, Acc) ->
+	{VsStack, T} = pop(startElement, QName, Stack),
+	NewAcc = Acc#{"VsDataContainer" => vendor_specific(VsStack, DnPrefix)},
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
+	gsm_relation(T, [QName | State], DnPrefix, Acc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "adjacentCell"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("adjacentCell", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "bcchFrequency"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("bcchFrequency", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "ncc"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("ncc", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "bcc"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("bcc", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "lac"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("lac", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "isRemoveAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isRemoveAllowed", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "isHOAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isHOAllowed", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{characters, Chars} | T],
+		[{"gn", "isESCoveredBy"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isESCoveredBy", Chars, Acc),
+	gsm_relation(T, State, DnPrefix, NewAcc);
+gsm_relation([{startElement, {"gn", "GsmRelation"} = QName, XmlAttr}],
+		[QName], _DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", RelId} = lists:keyfind("id", 3, XmlAttr),
+	#{"@type" => "GsmRelation",
+			"@schemaLocation" => ?PathInventorySchema ++ "#/definitions/GsmRelation",
+			"value" => Acc#{"id" => RelId}};
+gsm_relation([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
+	gsm_relation(T, State, DnPrefix, Acc).
+
+%% @hidden
+utran_relation(DnPrefix, Stack) ->
+	utran_relation(Stack, [], DnPrefix, #{}).
+%% @hidden
+utran_relation([{endElement, {"un", "UtranRelation"} = QName} | T] = _Stack,
+		[] = _State, DnPrefix, Acc) ->
+	utran_relation(T, [QName], DnPrefix, Acc);
+utran_relation([{endElement, {"xn", "VsDataContainer"} = QName} | _] = Stack,
+		State, DnPrefix, Acc) ->
+	{VsStack, T} = pop(startElement, QName, Stack),
+	NewAcc = Acc#{"VsDataContainer" => vendor_specific(VsStack, DnPrefix)},
+	utran_relation(T, State, DnPrefix, NewAcc);
+utran_relation([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
+	utran_relation(T, [QName | State], DnPrefix, Acc);
+utran_relation([{characters, Chars} | T],
+		[{"un", "adjacentCell"}, {"un", "attributes"},
+		{"un", "UtranRelation"}] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("adjacentCell", Chars, Acc),
+	utran_relation(T, State, DnPrefix, NewAcc);
+utran_relation([{startElement, {"un", "UtranRelation"} = QName, XmlAttr}],
+		[QName], _DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", RelId} = lists:keyfind("id", 3, XmlAttr),
+	#{"@type" => "UtranRelation",
+			"@schemaLocation" => ?PathInventorySchema ++ "#/definitions/UtranRelation",
+			"value" => Acc#{"id" => RelId}};
+utran_relation([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
+	utran_relation(T, State, DnPrefix, Acc).
+
+%% @hidden
+eutran_relation(DnPrefix, Stack) ->
+	eutran_relation(Stack, [], DnPrefix, #{}).
+%% @hidden
+eutran_relation([{endElement, {"en", "EUtranRelation"} = QName} | T] = _Stack,
+		[] = _State, DnPrefix, Acc) ->
+	eutran_relation(T, [QName], DnPrefix, Acc);
+eutran_relation([{endElement, {"xn", "VsDataContainer"} = QName} | _] = Stack,
+		State, DnPrefix, Acc) ->
+	{VsStack, T} = pop(startElement, QName, Stack),
+	NewAcc = Acc#{"VsDataContainer" => vendor_specific(VsStack, DnPrefix)},
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
+	eutran_relation(T, [QName | State], DnPrefix, Acc);
+eutran_relation([{characters, Chars} | T],
+		[{"en", "tCI"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("tCI", list_to_integer(Chars), Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "true"} | T],
+		[{"en", "isRemoveAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isRemoveAllowed", true, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "false"} | T],
+		[{"en", "isRemoveAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isRemoveAllowed", false, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "true"} | T],
+		[{"en", "isHOAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isHOAllowed", true, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "false"} | T],
+		[{"en", "isHOAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isHOAllowed", false, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "true"} | T],
+		[{"en", "isICICInformationSendAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isICICInformationSendAllowed", true, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "false"} | T],
+		[{"en", "isICICInformationSendAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isICICInformationSendAllowed", false, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "true"} | T],
+		[{"en", "isLBAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isLBAllowed", true, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "false"} | T],
+		[{"en", "isLBAllowed"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isLBAllowed", false, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, Chars} | T],
+		[{"en", "adjacentCell"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("adjacentCell", Chars, Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "no"} | T],
+		[{"en", "isEsCoveredBy"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isEsCoveredBy", "no", Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "partial"} | T],
+		[{"en", "isEsCoveredBy"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isEsCoveredBy", "partial", Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, "yes"} | T],
+		[{"en", "isEsCoveredBy"} | _] = State, DnPrefix, Acc) ->
+	NewAcc = attribute_add("isEsCoveredBy", "yes", Acc),
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, Chars} | T],
+		[{"en", "cellIndividualOffset"} | _] = State, DnPrefix, Acc) ->
+	case is_member(Chars) of
+		true ->
+			NewAcc = attribute_add("cellIndividualOffset", Chars, Acc);
+		false ->
+			NewAcc = attribute_add("cellIndividualOffset", undefined, Acc)
+	end,
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{characters, Chars} | T],
+		[{"en", "qOffset"} | _] = State, DnPrefix, Acc) ->
+	case is_member(Chars) of
+		true ->
+			NewAcc = attribute_add("qOffset", Chars, Acc);
+		false ->
+			NewAcc = attribute_add("qOffset", undefined, Acc)
+	end,
+	eutran_relation(T, State, DnPrefix, NewAcc);
+eutran_relation([{startElement, {"en", "EUtranRelation"} = QName, XmlAttr}],
+		[QName], _DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", RelId} = lists:keyfind("id", 3, XmlAttr),
+	#{"@type" => "EUtranRelation",
+			"@schemaLocation" => ?PathInventorySchema ++ "#/definitions/EUtranRelation",
+			"value" => Acc#{"id" => RelId}};
+eutran_relation([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
+	eutran_relation(T, State, DnPrefix, Acc).
 
 % @hidden
-parse_utran_cell_rel([{endElement, {"un", "attributes"}} | T],
-		undefined, Acc) ->
-	parse_utran_cell_rel(T, undefined, Acc);
-parse_utran_cell_rel([{endElement, {"un", Attr}} | T],
-		undefined, Acc) ->
-	parse_utran_cell_rel(T, Attr, Acc);
-parse_utran_cell_rel([{characters, Chars} | T],
-		"adjacentCell" = Attr, Acc) ->
-	parse_utran_cell_rel(T, Attr, Acc#utran_relation{adjacent_cell = Chars});
-parse_utran_cell_rel([{startElement, {"un", "attributes"}, []}],
-		_Attr, Acc) ->
-	Acc.
-
+vendor_specific(Stack, DnPrefix) ->
+	vendor_specific(Stack, [], DnPrefix, #{}).
 % @hidden
-parse_eutran_cell_rel([{endElement, {"en", "attributes"}} | T],
-		undefined, Acc) ->
-	parse_eutran_cell_rel(T, undefined, Acc);
-parse_eutran_cell_rel([{endElement, {"en", Attr}} | T],
-		undefined, Acc) ->
-	parse_eutran_cell_rel(T, Attr, Acc);
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"tci" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-		Acc#eutran_relation{tci = list_to_integer(Chars)});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"isRemoveAllowed" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{is_remove_allowed = list_to_atom(Chars)});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"isHoaAllowed" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{is_hoa_allowed = list_to_atom(Chars)});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"isIcicInformationSendAllowed" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{is_icic_information_send_allowed = list_to_atom(Chars)});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"isLbAllowed" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{is_lb_allowed = list_to_atom(Chars)});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"adjacentCell" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{adjacent_cell = Chars});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"isEsCoveredBy" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{is_es_covered_by = list_to_atom(Chars)});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"cellIndividualOffset" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{cell_individual_offset = Chars});
-parse_eutran_cell_rel([{characters, Chars} | T],
-		"qOffset" = Attr, Acc) ->
-	parse_eutran_cell_rel(T, Attr,
-			Acc#eutran_relation{q_offset = Chars});
-parse_eutran_cell_rel([{startElement, {"en", "attributes"}, []}],
-		_Attr, Acc) ->
-	Acc.
+vendor_specific([{startElement, {"xn", "VsDataContainer"} = QName,
+		XmlAttr} | T] = _Stack, [], DnPrefix, Acc) ->
+	{_Uri, _Prefix, "id", ID} = lists:keyfind("id", 3, XmlAttr),
+	vendor_specific(T, [QName], DnPrefix, Acc#{"id" => ID});
+vendor_specific([{startElement, QName, _XmlAttr} | T] = _Stack,
+		State, DnPrefix, Acc) ->
+	vendor_specific(T, [QName | State], DnPrefix, Acc);
+vendor_specific([{characters, Chars} | T],
+		[{"xn", "vsDataType"}, {"xn", "attributes"},
+		{"xn", "VsDataContainer"} | _] = State, DnPrefix, Acc) ->
+	vendor_specific(T, State, DnPrefix, Acc#{"vsDataType" => Chars});
+vendor_specific([{characters, Chars} | T],
+		[{"xn", "vsDataFormatVersion"}, {"xn", "attributes"},
+		{"xn", "VsDataContainer"} | _] = State,
+		DnPrefix, Acc) ->
+	vendor_specific(T, State, DnPrefix, Acc#{"vsDataFormatVersion" => Chars});
+vendor_specific([{characters, _Chars} | T], [{"xn", "vsData"},
+		{"xn", "attributes"}, {"xn", "VsDataContainer"} | _] = State,
+		DnPrefix, Acc) ->
+	% @todo handle vsData
+	vendor_specific(T, State, DnPrefix, Acc);
+vendor_specific([{endElement, {"xn", "VsDataContainer"} = QName}],
+		[QName], _DnPrefix, Acc) ->
+	Acc;
+vendor_specific([{endElement, QName} | T],
+		[QName | State], DnPrefix, Acc) ->
+	vendor_specific(T, State, DnPrefix, Acc).
+
 
 %% @hidden
 parse_gsm_cell_pol(_Characteristics,
@@ -522,3 +655,26 @@ get_specification_ref(Name, Cache) ->
 					throw({get_specification_name, Reason})
 			end
 	end.
+
+-spec attribute_add(Attribute, Value, NrmMap) -> NrmMap
+	when
+		Attribute :: string(),
+		Value :: term(),
+		NrmMap :: map().
+%% @doc Add `Attribute' and `Value' to possibly missing attribute.
+attribute_add(Attribute, Value, #{"attributes" := Attributes} = NrmMap) ->
+	NrmMap#{"attributes" => Attributes#{Attribute => Value}};
+attribute_add(Attribute, Value, #{} = NrmMap) ->
+	NrmMap#{"attributes" => #{Attribute => Value}}.
+
+-spec is_member(Element) -> Boolean
+	when
+		Element :: string(),
+		Boolean :: boolean().
+%% @doc check whether `Element' is a member of the list.
+is_member(Element) when is_list(Element) ->
+	List = ["dB-24", "dB-22", "dB-20", "dB-18", "dB-16", "dB-14", "dB-12",
+			"dB-10", "dB-8", "dB-6", "dB-5", "dB-4", "dB-3", "dB-2", "dB-1",
+			"dB0", "dB1", "dB2", "dB3", "dB4", "dB5", "dB6", "dB8", "dB10",
+			"dB12", "dB14", "dB16", "dB18", "dB20", "dB22", "dB24"],
+	lists:member(Element, List).
