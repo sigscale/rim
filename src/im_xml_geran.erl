@@ -610,52 +610,61 @@ parse_gsm_cell_pol(_Stack, State, _Characteristics) ->
 inter_rates_policy(DnPrefix, Stack) ->
 	inter_rates_policy(Stack, [], DnPrefix, #{}).
 %% @hidden
-inter_rates_policy([{endElement, {"sp", "InterRatEsPolicies"} = QName} | T] = _Stack,
+inter_rates_policy([{endElement,
+		{"sp", "InterRatEsPolicies"} = QName} | T] = _Stack,
 		[] = _State, DnPrefix, Acc) ->
 	inter_rates_policy(T, [QName], DnPrefix, Acc);
-inter_rates_policy([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
+inter_rates_policy([{endElement, QName} | T] = _Stack, State,
+		DnPrefix, Acc) ->
 	inter_rates_policy(T, [QName | State], DnPrefix, Acc);
 inter_rates_policy([{characters, Chars} | T],
 		[{"sp", "LoadThreshold"},
-		{"sp", "interRatEsActivationOriginalCellParameters"} | _] = State, DnPrefix, Acc) ->
+		{"sp", "interRatEsActivationOriginalCellParameters"} | _] = State,
+		DnPrefix, Acc) ->
 	NewAcc = Acc#{"interRatEsActivationOriginalCellParameters" =>
 			#{"LoadThreshold" => list_to_integer(Chars)}},
 	inter_rates_policy(T, State, DnPrefix, NewAcc);
 inter_rates_policy([{characters, Chars} | T],
 		[{"sp", "TimeDuration"},
-		{"sp", "interRatEsActivationOriginalCellParameters"} | _] = State, DnPrefix, Acc) ->
+		{"sp", "interRatEsActivationOriginalCellParameters"} | _] = State,
+		DnPrefix, Acc) ->
 	NewAcc = Acc#{"interRatEsActivationOriginalCellParameters" =>
 			#{"TimeDuration" => list_to_integer(Chars)}},
 	inter_rates_policy(T, State, DnPrefix, NewAcc);
 inter_rates_policy([{characters, Chars} | T],
 		[{"sp", "LoadThreshold"},
-		{"sp", "interRatEsActivationCandidateCellParameters"} | _] = State, DnPrefix, Acc) ->
+		{"sp", "interRatEsActivationCandidateCellParameters"} | _] = State,
+		DnPrefix, Acc) ->
 	NewAcc = Acc#{"interRatEsActivationCandidateCellParameters" =>
 			#{"LoadThreshold" => list_to_integer(Chars)}},
 	inter_rates_policy(T, State, DnPrefix, NewAcc);
 inter_rates_policy([{characters, Chars} | T],
 		[{"sp", "TimeDuration"},
-		{"sp", "interRatEsActivationCandidateCellParameters"} | _] = State, DnPrefix, Acc) ->
+		{"sp", "interRatEsActivationCandidateCellParameters"} | _] = State,
+		DnPrefix, Acc) ->
 	NewAcc = Acc#{"interRatEsActivationCandidateCellParameters" =>
 			#{"TimeDuration" => list_to_integer(Chars)}},
 	inter_rates_policy(T, State, DnPrefix, NewAcc);
 inter_rates_policy([{characters, Chars} | T],
 		[{"sp", "LoadThreshold"},
-		{"sp", "interRatEsDeactivationCandidateCellParameters"} | _] = State, DnPrefix, Acc) ->
+		{"sp", "interRatEsDeactivationCandidateCellParameters"} | _] = State,
+		DnPrefix, Acc) ->
 	NewAcc = Acc#{"interRatEsDeactivationCandidateCellParameters" =>
 			#{"LoadThreshold" => list_to_integer(Chars)}},
 	inter_rates_policy(T, State, DnPrefix, NewAcc);
 inter_rates_policy([{characters, Chars} | T],
 		[{"sp", "TimeDuration"},
-		{"sp", "interRatEsDeactivationCandidateCellParameters"} | _] = State, DnPrefix, Acc) ->
+		{"sp", "interRatEsDeactivationCandidateCellParameters"} | _] = State,
+		DnPrefix, Acc) ->
 	NewAcc = Acc#{"interRatEsDeactivationCandidateCellParameters" =>
 			#{"TimeDuration" => list_to_integer(Chars)}},
 	inter_rates_policy(T, State, DnPrefix, NewAcc);
-inter_rates_policy([{startElement, {"sp", "InterRatEsPolicies"} = QName, XmlAttr}],
-		[QName], _DnPrefix, Acc) ->
+inter_rates_policy([{startElement, {"sp", "InterRatEsPolicies"} = QName,
+		XmlAttr}], [QName], _DnPrefix, Acc) ->
 	{_Uri, _Prefix, "id", Id} = lists:keyfind("id", 3, XmlAttr),
 	Acc#{id => Id};
-inter_rates_policy([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
+inter_rates_policy([{startElement, QName, _} | T], [QName | State],
+		DnPrefix, Acc) ->
 	inter_rates_policy(T, State, DnPrefix, Acc).
 
 %%----------------------------------------------------------------------
