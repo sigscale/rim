@@ -72,6 +72,13 @@ class InventoryManagement extends PolymerElement {
 									icon="my-icons:refresh"
 									on-click="refreshClick">
 							</paper-icon-button>
+							<paper-icon-button	
+									toggles
+									id="overFlowIcon"
+									active="{{overFlowActive}}"
+									on-click="_overFlowMenu"
+									icon="my-icons:overFlowMenu">
+							</paper-icon-button>
 						</app-toolbar>
 						<paper-progress
 							indeterminate
@@ -179,6 +186,7 @@ class InventoryManagement extends PolymerElement {
 			</app-drawer-layout>
 			<!-- Model Definiations -->
 			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
+			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></fault-help>
 		`;
 	}
 
@@ -190,6 +198,10 @@ class InventoryManagement extends PolymerElement {
 		} else {
 			catObj.hide();
 		}
+	}
+
+	_overFlowMenu() {
+		import('./inventory-help.js');
 	}
 
 	refreshClick() {

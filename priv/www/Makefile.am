@@ -14,6 +14,7 @@ MODULES = inventory-management.js \
 		candidate-list.js \
 		specification-list.js \
 		specification-update.js \
+		inventory-help.js \
 		user-list.js \
 		style-element.js
 
@@ -52,4 +53,8 @@ clean-local:
 			rm $$i; \
 		fi; \
 	done
-	
+
+$(abs_builddir)/src/inventory-help.js: $(srcdir)/src/inventory-help.js-in
+	sed -e 's!%VERSION%!$(VERSION)!' \
+			-e 's!%PACKAGE%!$(PACKAGE)!' < $< > $@
+

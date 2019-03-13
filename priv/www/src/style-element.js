@@ -33,8 +33,18 @@ styleElement.innerHTML = `<template>
 				top: 64px;
 			}
 			paper-dialog {
+				position: fixed;
+            min-width: 20em;
+            right: -36px;
+            top: 41px;
             overflow: auto;
+            padding: 0px;
+            display: inline-grid;
          }
+			paper-dialog > *:first-child {
+				margin-top: 0px;
+			}
+			
 			paper-dialog iron-collapse {
 				--paper-input-container-underline: {
 					display: none;
