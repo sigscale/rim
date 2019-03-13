@@ -72,7 +72,7 @@ class InventoryManagement extends PolymerElement {
 									icon="my-icons:refresh"
 									on-click="refreshClick">
 							</paper-icon-button>
-							<paper-icon-button	
+							<paper-icon-button
 									toggles
 									id="overFlowIcon"
 									active="{{overFlowActive}}"
