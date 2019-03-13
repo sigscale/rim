@@ -257,12 +257,6 @@
 		countryCity :: string() | undefined | '_'}).
 -type sites() :: #sites{}.
 
--record(inter_rat_es_policies,
-		{id :: string() | undefined | '_',
-		act_original_cell_params :: relative_cell_load_parameters() | undefined | '_',
-		act_candidate_cell_params :: relative_cell_load_parameters() | undefined | '_',
-		deact_candidate_cell_params :: relative_cell_load_parameters() | undefined | '_'}).
-
 -record(rel_cell_load_params,
 		{load_threshold :: 0..10000 | undefined | '_',
 		time_duration :: 0..900 | undefined | '_'}).
