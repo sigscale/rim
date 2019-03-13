@@ -215,6 +215,9 @@ class inventoryList extends PolymerElement {
 		}
 	}
 
+	_filterChanged() {
+	}
+
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
