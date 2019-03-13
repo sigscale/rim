@@ -32,29 +32,6 @@ class inventoryList extends PolymerElement {
 						<dd>{{item.inventoryDetails}}</dd>
 					</dl>
 				</template>
-				<vaadin-grid-column width="11ex" flex-grow="2">
-					<template class="header">
-						<vaadin-grid-sorter
-								path="id">
-							<vaadin-grid-filter
-									id="filterId"
-									aria-label="Id"
-									path="id"
-									value="{{_filterId}}">
-								<input
-										slot="filter"
-										placeholder="Id"
-										value="{{_filterId::input}}"
-										focus-target>
-							</vaadin-grid-filter>
-						</vaadin-grid-sorter>
-					</template>
-					<template>
-						<div>
-							[[item.id]]
-						</div>
-					</template>
-				</vaadin-grid-column>
 				<vaadin-grid-column width="13ex" flex-grow="2">
 					<template class="header">
 						<vaadin-grid-sorter
