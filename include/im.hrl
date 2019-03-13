@@ -257,11 +257,6 @@
 		countryCity :: string() | undefined | '_'}).
 -type sites() :: #sites{}.
 
--record(rel_cell_load_params,
-		{load_threshold :: 0..10000 | undefined | '_',
-		time_duration :: 0..900 | undefined | '_'}).
--type relative_cell_load_parameters() :: #inter_rat_es_policies{}.
-
 -record('BssFunction',
 		{user_label:: string() | undefined | '_',
 		vs_data_container :: [term()] | undefined | '_'}).
