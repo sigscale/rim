@@ -34,22 +34,21 @@ styleElement.innerHTML = `<template>
 			}
 			paper-dialog {
 				position: fixed;
-            min-width: 20em;
-            right: -36px;
-            top: 41px;
-            overflow: auto;
-            padding: 0px;
-            display: inline-grid;
-         }
+				min-width: 20em;
+				right: -36px;
+				top: 41px;
+				overflow: auto;
+				padding: 0px;
+				display: inline-grid;
+			}
 			paper-dialog > *:first-child {
 				margin-top: 0px;
 			}
-			
 			paper-dialog iron-collapse {
 				--paper-input-container-underline: {
 					display: none;
 				};
-         }
+			}
 			paper-dialog iron-collapse > div hr {
 				border-top: 1px solid blue;
 			}
@@ -62,17 +61,17 @@ styleElement.innerHTML = `<template>
 			paper-dialog iron-collapse > div:first-child {
 				padding-top: 0px
 			}
-         paper-item {
-            padding-right: 10px;
-         }
-         paper-toolbar{
-            margin-top: 0px;
-            color: white;
-            background-color: #bc5100;
-         }
-         .cancel-button {
-            color: black;
-         }
+			paper-item {
+				padding-right: 10px;
+			}
+			paper-toolbar{
+				margin-top: 0px;
+				color: white;
+				background-color: #bc5100;
+			}
+			.cancel-button {
+				color: black;
+			}
 			paper-progress {
 				display: block;
 				width: 100%;
@@ -113,15 +112,15 @@ styleElement.innerHTML = `<template>
 			}
 			vaadin-grid input::placeholder {
 				color: black;
-            font-weight: bold;
-            font-size: inherit;
+				font-weight: bold;
+				font-size: inherit;
 			}
 			[part="row"]:last-child [part~="header-cell"] {
 				background-color: #ffb04c;
 			}
 			.timestamp {
-            direction: rtl;
-         }
+				direction: rtl;
+			}
 			paper-fab {
 				background: var(--paper-lime-a700);
 				color: black;
@@ -133,16 +132,16 @@ styleElement.innerHTML = `<template>
 				z-index: 100;
 			}
 			.update-button {
-            background-color: var(--paper-lime-a700);
-            color: black;
-         }
+				background-color: var(--paper-lime-a700);
+				color: black;
+			}
 			.cancel-button {
-            color: black;
-         }
-         .delete-button {
-            background: #EF5350;
-            color: black;
-         }
+				color: black;
+			}
+			.delete-button {
+				background: #EF5350;
+				color: black;
+			}
 		</style>
 	</template>`;
 
