@@ -26,7 +26,10 @@
 		parse_function :: atom(),
 		parse_state :: geran_state(),
 		dn_prefix = [] :: string(),
-      subnet = []:: string(),
+      subnet = [] :: string(),
+      me_context = [] :: string(),
+      managed_element = [] :: string(),
+      vs_data = [] :: string(),
 		stack = [] :: list(),
 		spec_cache = [] :: [specification_ref()]}).
 
@@ -95,11 +98,11 @@ parse_bss_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_bss_attr1(T, Attr, State, Acc);
 parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = GeranState,
+		subnet = SubId, managed_element = MeId, parse_state = GeranState,
 		spec_cache = Cache} = State, Acc) ->
 	#geran_state{bss = BssId, btss = Btss} = GeranState,
 	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
-	BssDn = DnPrefix ++ SubId ++ BssId,
+	BssDn = DnPrefix ++ SubId ++ MeId ++ BssId,
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BssDn,
@@ -178,11 +181,12 @@ parse_bts_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_bts_attr1(T, Attr, State, Acc);
 parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
-		parse_state = ParseState, spec_cache = Cache} = State, Acc) ->
+		managed_element = MeId, parse_state = ParseState,
+		spec_cache = Cache} = State, Acc) ->
 	#geran_state{bss = BssId, bts = BtsId, btss = Btss,
 			cells = Cells} = ParseState,
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
-	BtsDn = DnPrefix ++ SubId ++ BssId ++ BtsId,
+	BtsDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId,
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
@@ -306,39 +310,39 @@ parse_gsm_cell_attr1([], _Attr, CellStack, State, Acc) ->
 % @hidden
 parse_gsm_cell_rels([{startElement,
 		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
 		parse_state = #geran_state{bss = BssId, bts = BtsId,
 		cell = CellId}} = State, Characteristics,
 		#{gsmRel := GsmRels} = Acc) ->
-	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = gsm_relation(CellDn, Attributes),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
 	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
 		{"un", "UtranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
 		parse_state = #geran_state{bss = BssId, bts = BtsId,
 		cell = CellId}} = State, Characteristics,
 		#{utranRel := UtranRels} = Acc) ->
-	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = utran_relation(CellDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
 		{"en", "EutranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
 		parse_state = #geran_state{bss = BssId, bts = BtsId,
 		cell = CellId}} = State, Characteristics,
 		#{eutranRel := EutranRels} = Acc) ->
-	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = eutran_relation(CellDn, Attributes),
 	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
 	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels(CellStack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
 				parse_state = #geran_state{bss = BssId, bts = BtsId,
 				cell = CellId, cells = Cells} = ParseState,
 				spec_cache = Cache} = State, Characteristics, Acc) ->
@@ -365,7 +369,7 @@ parse_gsm_cell_rels(CellStack,
 						value = R} | Acc1]
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
-	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = CellDn,

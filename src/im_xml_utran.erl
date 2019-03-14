@@ -31,6 +31,9 @@
 		parse_state :: utran_state(),
 		dn_prefix = [] :: string(),
       subnet = []:: string(),
+      me_context = [] :: string(),
+      managed_element = [] :: string(),
+      vs_data = [] :: string(),
 		stack = [] :: list(),
 		spec_cache = [] :: [specification_ref()]}).
 
@@ -47,7 +50,6 @@
 %%----------------------------------------------------------------------
 %%  The im private API
 %%----------------------------------------------------------------------
-
 
 %% @hidden
 parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
@@ -118,9 +120,10 @@ parse_nodeb_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
 		Attr, State, Acc) ->
 	parse_nodeb_attr1(T, Attr, State, Acc);
 parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = #utran_state{nodeb = NodebId},
+		subnet = SubId, managed_element = MeId,
+		parse_state = #utran_state{nodeb = NodebId},
 		spec_cache = Cache} = State, _Acc) ->
-	NodebDn = DnPrefix ++ SubId ++ NodebId,
+	NodebDn = DnPrefix ++ SubId ++ MeId ++ NodebId,
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = NodebDn,
@@ -133,7 +136,7 @@ parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = im_xml_cm_bulk,
-					parse_function = parse_generic,
+					parse_function = parse_managed_element,
 					parse_state = #utran_state{nodeb = NodebDn},
 					spec_cache = NewCache};
 		{error, Reason} ->
@@ -277,11 +280,11 @@ parse_rnc_attr1([{endElement, {"xn", "autoScalable"}} | T],
 		Attr, State, Acc) ->
 	parse_rnc_attr1(T, Attr, State, Acc);
 parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = ParseState,
+		subnet = SubId, managed_element = MeId, parse_state = ParseState,
 		spec_cache = Cache} = State, Acc) ->
 	#utran_state{rnc = RncId, fdds = Fdds} = ParseState,
 	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
-	RncDn = DnPrefix ++ SubId ++ RncId,
+	RncDn = DnPrefix ++ SubId ++ MeId ++ RncId,
 	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = RncDn,
@@ -883,10 +886,10 @@ parse_tdd_hcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, Acc);
 parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = ParseState,
+		subnet = SubId, managed_element = MeId, parse_state = ParseState,
 		spec_cache = Cache} = State, _Acc) ->
 	#utran_state{rnc = RncId, tdd_hcr = TddHcrId} = ParseState,
-	TddHcrDn = DnPrefix ++ SubId ++ RncId ++ TddHcrId,
+	TddHcrDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ TddHcrId,
 	ClassType = "UtranCellTDDHcr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = TddHcrDn,
@@ -1174,10 +1177,10 @@ parse_tdd_lcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_lcr_attr1(T, Attr, State, Acc);
 parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = ParseState,
+		subnet = SubId, managed_element = MeId, parse_state = ParseState,
 		spec_cache = Cache} = State, _Acc) ->
 	#utran_state{rnc = RncId, tdd_lcr = TddLcrId} = ParseState,
-	TddLcrDn = DnPrefix ++ SubId ++ RncId ++ TddLcrId,
+	TddLcrDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ TddLcrId,
 	ClassType = "UtranCellTDDLcr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = TddLcrDn,
@@ -1277,10 +1280,10 @@ parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_iub_attr1(T, Attr, State, Acc);
 parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, parse_state = ParseState,
+		subnet = SubId, managed_element = MeId, parse_state = ParseState,
 		spec_cache = Cache} = State, _Acc) ->
 	#utran_state{rnc = RncId, iub = IubId} = ParseState,
-	IubDn = DnPrefix ++ SubId ++ RncId ++ IubId,
+	IubDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ IubId,
 	ClassType = "IubLink",
 %	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = IubDn,
@@ -1448,26 +1451,26 @@ parse_iur_attr1([], undefined, State, _Acc) ->
 % @hidden
 parse_fdd_rels([{startElement,
 		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
 		parse_state = #utran_state{rnc = RncId, fdd = FddId}} = State,
 		Characteristics, #{gsmRel := GsmRels} = Acc) ->
-	FddDn = DnPrefix ++ SubId ++ RncId ++ FddId,
+	FddDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ FddId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = gsm_relation(FddDn, Attributes),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
 	parse_fdd_rels(T, State, Characteristics, NewAcc);
 parse_fdd_rels([{startElement,
 		{"un", "UtranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
+		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
 		parse_state = #utran_state{rnc = RncId, fdd = FddId}} = State,
 		Characteristics, #{utranRel := UtranRels} = Acc) ->
-	FddDn = DnPrefix ++ SubId ++ RncId ++ FddId,
+	FddDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ FddId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = utran_relation(FddDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_fdd_rels(T, State, Characteristics, NewAcc);
 parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
-		parse_state = #utran_state{rnc = RncId,
+		managed_element = MeId, parse_state = #utran_state{rnc = RncId,
 		fdd = FddId, fdds = Fdds} = ParseState,
 		spec_cache = Cache} = State, Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
@@ -1486,7 +1489,7 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 						value = lists:reverse(R)} | Acc1]
 	end,
 	NewCharacteristics = Characteristics ++ maps:fold(F1, [], Acc),
-	FddDn = DnPrefix ++ SubId ++ RncId ++ FddId,
+	FddDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ FddId,
 	ClassType = "UtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = FddDn,
