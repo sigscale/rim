@@ -88,7 +88,7 @@ import(File) when is_list(File) ->
 %% @doc Parse xml.
 parse_xml(startDocument = _Event, _Location, State) ->
 	State;
-parse_xml({startElement, _, "bulkCmConfigDataFile", _, []}, _,
+parse_xml({startElement, _, "bulkCmConfigDataFile", _, _} = _Event, _Location,
 		#state{parse_function = undefined} = State) ->
 	 State#state{parse_module = ?MODULE,
 			parse_function = parse_bulk_cm};
