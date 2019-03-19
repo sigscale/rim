@@ -12,8 +12,10 @@ beam_DATA = im_app.beam \
 			im.beam \
 			im_specification.beam \
 			im_xml_cm_bulk.beam \
+			im_xml_generic.beam \
 			im_xml_geran.beam \
 			im_xml_utran.beam \
+			im_xml_zte.beam \
 			im_server.beam \
 			mod_im_rest_accepted_content.beam \
 			mod_im_rest_get.beam \
