@@ -21,21 +21,10 @@
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
+-include("im_xml.hrl").
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
-
--record(state,
-		{parse_module :: atom(),
-		parse_function :: atom(),
-		parse_state :: utran_state(),
-		dn_prefix = [] :: string(),
-      subnet = []:: string(),
-      me_context = [] :: string(),
-      managed_element = [] :: string(),
-      vs_data = [] :: string(),
-		stack = [] :: list(),
-		spec_cache = [] :: [specification_ref()]}).
 
 -record(utran_state,
 		{rnc = [] :: string(),
@@ -45,7 +34,6 @@
 		iub = [] :: string(),
 		fdd = [] :: string(),
 		fdds = [] :: [string()]}).
--type utran_state() :: #utran_state{}.
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -54,10 +42,9 @@
 %% @hidden
 parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{stack = Stack} = State) ->
+		#state{parse_state = StateStack, stack = Stack} = State) ->
 	DnComponent = ",NodeBFunction=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_nodeb,
-			parse_state = #utran_state{nodeb = DnComponent},
+	State#state{parse_state = [#utran_state{nodeb = DnComponent} | StateStack],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_nodeb({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
@@ -119,11 +106,10 @@ parse_nodeb_attr1([{endElement, {"xn", "autoScalable"}} | T],
 parse_nodeb_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
 		Attr, State, Acc) ->
 	parse_nodeb_attr1(T, Attr, State, Acc);
-parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, managed_element = MeId,
-		parse_state = #utran_state{nodeb = NodebId},
+parse_nodeb_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{nodeb = NodebId} = UtranState | T],
 		spec_cache = Cache} = State, _Acc) ->
-	NodebDn = DnPrefix ++ SubId ++ MeId ++ NodebId,
+	NodebDn = CurrentDn ++ NodebId,
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = NodebDn,
@@ -135,9 +121,9 @@ parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_cm_bulk,
+			State#state{parse_module = im_xml_generic,
 					parse_function = parse_managed_element,
-					parse_state = #utran_state{nodeb = NodebDn},
+					parse_state = [UtranState#utran_state{nodeb = NodebDn} | T],
 					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -146,20 +132,19 @@ parse_nodeb_attr1([], undefined, #state{dn_prefix = DnPrefix,
 %% @hidden
 parse_rnc({startElement, _Uri, "RncFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{stack = Stack} = State) ->
+		#state{parse_state = StateStack, stack = Stack} = State) ->
 	DnComponent = ",RncFunction=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_rnc,
-			parse_state = #utran_state{rnc = DnComponent},
+	State#state{parse_state = [#utran_state{rnc = DnComponent} | StateStack],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_rnc({startElement,  _Uri, "UtranCellFDD", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState,
+		#state{parse_state = [#utran_state{} = UtranState | T],
 		stack = Stack} = State) ->
 	DnComponent = ",UtranCellFDD=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_fdd,
-			parse_state = ParseState#utran_state{fdd = DnComponent},
+			parse_state = [UtranState#utran_state{fdd = DnComponent} | T],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement,  _Uri, "EP_IuCS", QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -175,27 +160,27 @@ parse_rnc({startElement,  _Uri, "EP_Iur", QName, Attributes},
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement,  _Uri, "IubLink", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState,
+		#state{parse_state = [#utran_state{} = UtranState | T],
 		stack = Stack} = State) ->
 	DnComponent = ",IubLink=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_iub,
-			parse_state = ParseState#utran_state{iub = DnComponent},
+			parse_state = [UtranState#utran_state{iub = DnComponent} | T],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement,  _Uri, "UtranCellTDDLcr", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState,
+		#state{parse_state = [#utran_state{} = UtranState | T],
 		stack = Stack} = State) ->
 	DnComponent = ",UtranCellTDDLcr=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_tdd_lcr,
-			parse_state = ParseState#utran_state{tdd_lcr = DnComponent},
+			parse_state = [UtranState#utran_state{tdd_lcr = DnComponent} | T],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement,  _Uri, "UtranCellTDDHcr", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState,
+		#state{parse_state = [#utran_state{} = UtranState | T],
 		stack = Stack} = State) ->
 	DnComponent = ",UtranCellTDDHcr=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_tdd_hcr,
-			parse_state = ParseState#utran_state{tdd_hcr = DnComponent},
+			parse_state = [UtranState#utran_state{tdd_hcr = DnComponent} | T],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_rnc({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -279,12 +264,11 @@ parse_rnc_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
 parse_rnc_attr1([{endElement, {"xn", "autoScalable"}} | T],
 		Attr, State, Acc) ->
 	parse_rnc_attr1(T, Attr, State, Acc);
-parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, managed_element = MeId, parse_state = ParseState,
+parse_rnc_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId, fdds = Fdds} = UtranState | T],
 		spec_cache = Cache} = State, Acc) ->
-	#utran_state{rnc = RncId, fdds = Fdds} = ParseState,
 	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
-	RncDn = DnPrefix ++ SubId ++ MeId ++ RncId,
+	RncDn = CurrentDn ++ RncId,
 	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = RncDn,
@@ -297,9 +281,9 @@ parse_rnc_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			characteristic = lists:reverse([UtranCellFDD | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_cm_bulk,
-					parse_function = parse_generic,
-					parse_state = #utran_state{rnc = RncDn, fdds = []},
+			State#state{parse_module = im_xml_generic,
+					parse_function = parse_managed_element,
+					parse_state = [UtranState#utran_state{rnc = RncDn, fdds = []} | T],
 					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -885,11 +869,11 @@ parse_tdd_hcr_attr1([{endElement, {"un", Attr}} | T],
 parse_tdd_hcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, Acc);
-parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, managed_element = MeId, parse_state = ParseState,
+parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId,
+		tdd_hcr = TddHcrId} = UtranState | T],
 		spec_cache = Cache} = State, _Acc) ->
-	#utran_state{rnc = RncId, tdd_hcr = TddHcrId} = ParseState,
-	TddHcrDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ TddHcrId,
+	TddHcrDn = CurrentDn ++ RncId ++ TddHcrId,
 	ClassType = "UtranCellTDDHcr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = TddHcrDn,
@@ -903,7 +887,7 @@ parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = ?MODULE,
 					parse_function = parse_rnc,
-					parse_state = ParseState#utran_state{tdd_hcr = TddHcrDn},
+					parse_state = [UtranState#utran_state{tdd_hcr = TddHcrDn} | T],
 					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -1176,11 +1160,11 @@ parse_tdd_lcr_attr1([{endElement, {"un", Attr}} | T],
 parse_tdd_lcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_lcr_attr1(T, Attr, State, Acc);
-parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, managed_element = MeId, parse_state = ParseState,
+parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId,
+		tdd_lcr = TddLcrId} = UtranState | T],
 		spec_cache = Cache} = State, _Acc) ->
-	#utran_state{rnc = RncId, tdd_lcr = TddLcrId} = ParseState,
-	TddLcrDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ TddLcrId,
+	TddLcrDn = CurrentDn ++ RncId ++ TddLcrId,
 	ClassType = "UtranCellTDDLcr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = TddLcrDn,
@@ -1194,7 +1178,7 @@ parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = ?MODULE,
 					parse_function = parse_rnc,
-					parse_state = ParseState#utran_state{tdd_lcr = TddLcrDn},
+					parse_state = [UtranState#utran_state{tdd_lcr = TddLcrDn} | T],
 					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -1279,11 +1263,10 @@ parse_iub_attr1([{endElement, {"un", Attr}} | T],
 parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, managed_element = MeId, parse_state = ParseState,
+parse_iub_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId, iub = IubId} = UtranState | T],
 		spec_cache = Cache} = State, _Acc) ->
-	#utran_state{rnc = RncId, iub = IubId} = ParseState,
-	IubDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ IubId,
+	IubDn = CurrentDn ++ RncId ++ IubId,
 	ClassType = "IubLink",
 %	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = IubDn,
@@ -1297,7 +1280,7 @@ parse_iub_attr1([], undefined, #state{dn_prefix = DnPrefix,
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = ?MODULE,
 					parse_function = parse_rnc,
-					parse_state = ParseState#utran_state{iub = IubDn},
+					parse_state = [UtranState#utran_state{iub = IubDn} | T],
 					spec_cache = Cache};
 %					spec_cache = NewCache};
 		{error, Reason} ->
@@ -1451,27 +1434,27 @@ parse_iur_attr1([], undefined, State, _Acc) ->
 % @hidden
 parse_fdd_rels([{startElement,
 		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
-		parse_state = #utran_state{rnc = RncId, fdd = FddId}} = State,
+		#state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId, fdd = FddId} | _T]} = State,
 		Characteristics, #{gsmRel := GsmRels} = Acc) ->
-	FddDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ FddId,
+	FddDn = CurrentDn ++ RncId ++ FddId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = gsm_relation(FddDn, Attributes),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
 	parse_fdd_rels(T, State, Characteristics, NewAcc);
 parse_fdd_rels([{startElement,
 		{"un", "UtranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
-		parse_state = #utran_state{rnc = RncId, fdd = FddId}} = State,
+		#state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId, fdd = FddId} | _T]} = State,
 		Characteristics, #{utranRel := UtranRels} = Acc) ->
-	FddDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ FddId,
+	FddDn = CurrentDn ++ RncId ++ FddId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = utran_relation(FddDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_fdd_rels(T, State, Characteristics, NewAcc);
-parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
-		managed_element = MeId, parse_state = #utran_state{rnc = RncId,
-		fdd = FddId, fdds = Fdds} = ParseState,
+parse_fdd_rels(_FddStack, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#utran_state{rnc = RncId, fdd = FddId,
+		fdds = Fdds} = UtranState | T],
 		spec_cache = Cache} = State, Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
@@ -1489,7 +1472,7 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 						value = lists:reverse(R)} | Acc1]
 	end,
 	NewCharacteristics = Characteristics ++ maps:fold(F1, [], Acc),
-	FddDn = DnPrefix ++ SubId ++ MeId ++ RncId ++ FddId,
+	FddDn = CurrentDn ++ RncId ++ FddId,
 	ClassType = "UtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = FddDn,
@@ -1503,8 +1486,8 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = DnPrefix, subnet = SubId,
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
 			State#state{parse_module = ?MODULE, parse_function = parse_rnc,
-					parse_state = ParseState#utran_state{
-					fdds = [FddDn | Fdds]}, spec_cache = NewCache};
+					parse_state = [UtranState#utran_state{fdds = [FddDn | Fdds]} | T],
+					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.

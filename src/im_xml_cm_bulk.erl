@@ -20,19 +20,7 @@
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
-
--record(state,
-		{parse_module :: atom(),
-		parse_function :: atom(),
-		parse_state :: term(),
-		dn_prefix = [] :: string(),
-		subnet = [] :: string(),
-		me_context = [] :: string(),
-		managed_element = [] :: string(),
-		vs_data = [] :: string(),
-		stack = [] :: list(),
-		spec_cache = [] :: [specification_ref()]}).
--type state() :: #state{}.
+-include("im_xml.hrl").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -109,23 +97,23 @@ parse_xml(_Event, _Location, #state{parse_module = Mod, parse_function = F} = St
 %% @hidden
 parse_bulk_cm({startElement, _, "fileHeader", _, _}, State) ->
 	State;
-parse_bulk_cm({startElement, _, "configData", _, Attributes},
+parse_bulk_cm({startElement, _, "configData", _, Attributes} = Event,
 		#state{dn_prefix = [], stack = Stack} = State) ->
 	case lists:keyfind("dnPrefix", 3, Attributes) of
 		{_Uri, _Prefix, "dnPrefix", Dn} ->
 			M = im_xml_generic,
 			F = parse_generic,
 			NewState = State#state{parse_module = M,
-					parse_function = F, dn_prefix = Dn,
+					parse_function = F, dn_prefix = [Dn],
 					stack = [{startElement, "configData", Attributes} | Stack]},
-			M:F(NewState);
+			M:F(Event, NewState);
 		false ->
 			M = im_xml_generic,
 			F = parse_generic,
 			NewState = State#state{parse_module = M,
 					parse_function = F, dn_prefix = [],
 					stack = [{startElement, "configData", Attributes} | Stack]},
-			M:F(NewState)
+			M:F(Event, NewState)
 	end;
 parse_bulk_cm({startElement, _, "fileFooter", _, _}, State) ->
 	State;

@@ -17,21 +17,10 @@
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
+-include("im_xml.hrl").
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
-
--record(state,
-		{parse_module :: atom(),
-		parse_function :: atom(),
-		parse_state :: geran_state(),
-		dn_prefix = [] :: string(),
-      subnet = [] :: string(),
-      me_context = [] :: string(),
-      managed_element = [] :: string(),
-      vs_data = [] :: string(),
-		stack = [] :: list(),
-		spec_cache = [] :: [specification_ref()]}).
 
 -record(geran_state,
 		{bss = [] :: string(),
@@ -39,7 +28,6 @@
 		cell = [] :: string(),
 		btss = [] :: [string()],
 		cells = [] :: [string()]}).
--type geran_state() :: #geran_state{}.
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -48,20 +36,20 @@
 %% @hidden
 parse_bss({startElement, _Uri, "BssFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = _GeranState, stack = Stack} = State) ->
+		#state{parse_state = StateStack, stack = Stack} = State) ->
 	DnComponent = ",BssFunction=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_bss,
-			parse_state = #geran_state{bss = DnComponent},
+			parse_state = [#geran_state{bss = DnComponent} | StateStack],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_bss({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_bss({startElement,  _Uri, "BtsSiteMgr", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState,
+		#state{parse_state = [#geran_state{} = GeranState | T],
 		stack = Stack} = State) ->
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_bts,
-			parse_state = ParseState#geran_state{bts = DnComponent},
+			parse_state = [GeranState#geran_state{bts = DnComponent} | T],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_bss({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -97,12 +85,11 @@ parse_bss_attr1([{endElement, {"gn", "attributes"}}],
 parse_bss_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_bss_attr1(T, Attr, State, Acc);
-parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
-		subnet = SubId, managed_element = MeId, parse_state = GeranState,
+parse_bss_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#geran_state{bss = BssId, btss = Btss} = GeranState | T],
 		spec_cache = Cache} = State, Acc) ->
-	#geran_state{bss = BssId, btss = Btss} = GeranState,
 	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
-	BssDn = DnPrefix ++ SubId ++ MeId ++ BssId,
+	BssDn = CurrentDn ++ BssId,
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BssDn,
@@ -115,10 +102,10 @@ parse_bss_attr1([], undefined, #state{dn_prefix = DnPrefix,
 			characteristic = lists:reverse([BtsSiteMgr | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			Mod = im_xml_cm_bulk,
-			F = parse_generic,
+			Mod = im_xml_generic,
+			F = parse_managed_element,
 			State#state{parse_module = Mod, parse_function = F,
-					parse_state = #geran_state{bss = BssDn, btss = []},
+					parse_state = [GeranState#geran_state{bss = BssDn, btss = []} | T],
 					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -129,10 +116,11 @@ parse_bts({characters, Chars}, #state{stack = Stack} = State) ->
 	State#state{stack = [{characters, Chars} | Stack]};
 parse_bts({startElement, _Uri, "GsmCell", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState, stack = Stack} = State) ->
+		#state{parse_state = [#geran_state{} = GeranState | T],
+		stack = Stack} = State) ->
 	DnComponent = ",GsmCell=" ++ Id,
 	State#state{parse_module = ?MODULE, parse_function = parse_gsm_cell,
-			parse_state = ParseState#geran_state{cell = DnComponent},
+			parse_state = [GeranState#geran_state{cell = DnComponent} | T],
 			stack = [{startElement, QName, Attributes} | Stack]};
 parse_bts({startElement, _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
@@ -180,13 +168,12 @@ parse_bts_attr1([{endElement, {"gn", "attributes"}}],
 parse_bts_attr1([{endElement, {"gn", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_bts_attr1(T, Attr, State, Acc);
-parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
-		managed_element = MeId, parse_state = ParseState,
+parse_bts_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
+		parse_state = [#geran_state{bss = BssId, bts = BtsId, btss = Btss,
+		cells = Cells} = GeranState | T],
 		spec_cache = Cache} = State, Acc) ->
-	#geran_state{bss = BssId, bts = BtsId, btss = Btss,
-			cells = Cells} = ParseState,
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
-	BtsDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId,
+	BtsDn = CurrentDn ++ BssId ++ BtsId,
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
@@ -200,8 +187,8 @@ parse_bts_attr1([], undefined, #state{dn_prefix = DnPrefix, subnet = SubId,
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			State#state{parse_module = ?MODULE, parse_function = parse_bss,
-					parse_state = ParseState#geran_state{btss = [BtsDn | Btss],
-					cells = []}, spec_cache = NewCache};
+					parse_state = [GeranState#geran_state{btss = [BtsDn | Btss],
+					cells = []} | T], spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
@@ -310,41 +297,41 @@ parse_gsm_cell_attr1([], _Attr, CellStack, State, Acc) ->
 % @hidden
 parse_gsm_cell_rels([{startElement,
 		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
-		parse_state = #geran_state{bss = BssId, bts = BtsId,
-		cell = CellId}} = State, Characteristics,
+		#state{dn_prefix = [CurrentDn | _],
+		parse_state = [#geran_state{bss = BssId, bts = BtsId,
+		cell = CellId} | _]} = State, Characteristics,
 		#{gsmRel := GsmRels} = Acc) ->
-	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
+	CellDn = CurrentDn ++ BssId ++ BtsId ++ CellId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = gsm_relation(CellDn, Attributes),
 	NewAcc = Acc#{gsmRel := [Relation | GsmRels]},
 	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
 		{"un", "UtranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
-		parse_state = #geran_state{bss = BssId, bts = BtsId,
-		cell = CellId}} = State, Characteristics,
+		#state{dn_prefix = [CurrentDn | _],
+		parse_state = [#geran_state{bss = BssId, bts = BtsId,
+		cell = CellId} | _]} = State, Characteristics,
 		#{utranRel := UtranRels} = Acc) ->
-	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
+	CellDn = CurrentDn ++ BssId ++ BtsId ++ CellId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = utran_relation(CellDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels([{startElement,
 		{"en", "EutranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
-		parse_state = #geran_state{bss = BssId, bts = BtsId,
-		cell = CellId}} = State, Characteristics,
+		#state{dn_prefix = [CurrentDn | _],
+		parse_state = [#geran_state{bss = BssId, bts = BtsId,
+		cell = CellId} | _]} = State, Characteristics,
 		#{eutranRel := EutranRels} = Acc) ->
-	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
+	CellDn = CurrentDn ++ BssId ++ BtsId ++ CellId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = eutran_relation(CellDn, Attributes),
 	NewAcc = Acc#{eutranRel := [Relation | EutranRels]},
 	parse_gsm_cell_rels(T, State, Characteristics, NewAcc);
 parse_gsm_cell_rels(CellStack,
-		#state{dn_prefix = DnPrefix, subnet = SubId, managed_element = MeId,
-				parse_state = #geran_state{bss = BssId, bts = BtsId,
-				cell = CellId, cells = Cells} = ParseState,
+		#state{dn_prefix = [CurrentDn | _],
+				parse_state = [#geran_state{bss = BssId, bts = BtsId,
+				cell = CellId, cells = Cells} = GeranState | T],
 				spec_cache = Cache} = State, Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
@@ -369,7 +356,7 @@ parse_gsm_cell_rels(CellStack,
 						value = R} | Acc1]
 	end,
 	NewCharacteristics = maps:fold(F1, Characteristics, Acc),
-	CellDn = DnPrefix ++ SubId ++ MeId ++ BssId ++ BtsId ++ CellId,
+	CellDn = CurrentDn ++ BssId ++ BtsId ++ CellId,
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = CellDn,
@@ -382,8 +369,8 @@ parse_gsm_cell_rels(CellStack,
 			characteristic = NewCharacteristics},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
-			NewState = State#state{parse_state = ParseState#geran_state{
-					cells = [CellDn | Cells]}, spec_cache = NewCache},
+			NewState = State#state{parse_state = [GeranState#geran_state{
+					cells = [CellDn | Cells]} | T], spec_cache = NewCache},
 			parse_gsm_cell_pol(CellStack, NewState, NewCharacteristics);
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -600,10 +587,10 @@ vendor_specific([{endElement, QName} | T],
 %% @hidden
 parse_gsm_cell_pol([{startElement,
 		{"sp", "InterRatEsPolicies"} = QName, _} | _] = Stack,
-		#state{dn_prefix = DnPrefix, subnet = SubId,
-		parse_state = #geran_state{bss = BssId, bts = BtsId,
-		cell = CellId}} = State, _Characteristics) ->
-	CellDn = DnPrefix ++ SubId ++ BssId ++ BtsId ++ CellId,
+		#state{dn_prefix = [CurrentDn | _], 
+		parse_state = [#geran_state{bss = BssId, bts = BtsId,
+		cell = CellId} | _]} = State, _Characteristics) ->
+	CellDn = CurrentDn ++ BssId ++ BtsId ++ CellId,
 	{Attributes, _T} = pop(endElement, QName, Stack),
 	inter_rates_policy(CellDn, Attributes),
 	State#state{parse_function = parse_bts};
