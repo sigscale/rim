@@ -14,8 +14,7 @@
 
 %% export the im private API
 -export([parse_generic/2, parse_subnetwork/2, parse_mecontext/2,
-			parse_managed_element/2]).
-%			parse_managed_element/2, parse_vsdata/2, parse_vsdata1/2]).
+			parse_managed_element/2, parse_vsdata/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -36,7 +35,6 @@ parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
 parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes},
 		#state{parse_state = StateStack, stack = Stack} = State) ->
-erlang:display({?MODULE, ?LINE, "SubNetwork"}),
 	DnComponent = ",SubNetwork=" ++ Id,
 	State#state{parse_function = parse_subnetwork,
 			parse_state = [#generic_state{subnet = [DnComponent]} | StateStack],
@@ -58,7 +56,7 @@ parse_generic({startElement, _Uri, "ManagedElement", QName,
 parse_generic({startElement,  _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_generic({endElement,  _Uri, _LocalName, QName},
+parse_generic({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
@@ -87,7 +85,6 @@ parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 		managed_element = MgdElement} = GenericState | T],
 		stack = Stack} = State) ->
 	DnComponent = ",ManagedElement=" ++ Id,
-erlang:display({?MODULE, ?LINE, GenericState}),
 	State#state{parse_function = parse_managed_element,
 			parse_state = [GenericState#generic_state{
 			managed_element = [DnComponent | MgdElement]} | T],
@@ -160,28 +157,115 @@ parse_managed_element({startElement, _, "RncFunction", _, _Attributes} = Event,
 	Mod:F(Event, NewState);
 parse_managed_element({startElement, _, "RncFunction", _, _Attributes} = Event,
 		State) ->
-erlang:display({?MODULE, ?LINE, State}),
 	Mod = im_xml_utran,
 	F = parse_rnc,
 	NewState = State#state{parse_module = Mod, parse_function = F},
 	Mod:F(Event, NewState);
-%parse_managed_element({startElement, _, "VsDataContainer", QName,
-%		[{[], [], "id", Id}] = Attributes},
-%		#state{parse_state = [#generic_state{vs_data = VsData} = GeranState | T],
-%		stack = Stack} = State) ->
-%	DnComponent = ",VsDataContainer=" ++ Id,
-%	State#state{parse_function = parse_vsdata,
-%			parse_state = #{vsData => []},
-%			parse_state = [GeranState#generic_state{
-%			vs_data = [DnComponent | VsData]} | T],
-%			stack = [{startElement, QName, Attributes} | Stack]};
+parse_managed_element({startElement, _, "VsDataContainer", _QName,
+		_Attributes} = Event, State) ->
+	NewState = State#state{parse_function = parse_vsdata},
+	parse_vsdata(Event, NewState);
+parse_managed_element({endElement, _, "VsDataContainer", _QName} = Event, State) ->
+	NewState = State#state{parse_function = parse_vsdata},
+	parse_vsdata(Event, NewState);
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_managed_element({endElement, _Uri, "ManagedElement", _QName}, State) ->
-%	State;
+parse_managed_element({endElement, _Uri, "ManagedElement", _QName},
+		#state{parse_state = [GenericState | _]} = State) ->
+erlang:display({?MODULE, ?LINE, GenericState#generic_state.vs_data}),
 	State#state{parse_function = parse_generic};
 parse_managed_element({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
+%% @hidden
+parse_vsdata({startElement, _, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		#state{parse_state = ParseState, stack = Stack} = State) ->
+	VsDataContainer = #{"id" => Id},
+	GenericState = #generic_state{vs_data = [VsDataContainer]},
+	State#state{parse_state = [GenericState | ParseState],
+			stack = [{startElement, QName, Attributes} | Stack]};
+parse_vsdata({startElement, _, _, QName, Attributes},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+parse_vsdata({characters, Chars}, #state{stack = Stack} = State) ->
+	State#state{stack = [{characters, Chars} | Stack]};
+parse_vsdata({endElement, _Uri, "attributes", QName},
+		#state{parse_state = [#generic_state{
+		vs_data = [VsDataContainer | T2]} = GenericState | T1],
+		stack = Stack} = State) ->
+	NewStack = [{endElement, QName} | Stack],
+	{Attributes, _NextStack} = pop(startElement, QName, NewStack),
+	VsAttr = parse_vsdata_attr(VsDataContainer, Attributes),
+	State#state{parse_state = [GenericState#generic_state{
+			vs_data = [VsDataContainer#{"attributes" => VsAttr} | T2]} | T1],
+			stack = NewStack};
+parse_vsdata({endElement, _Uri, "VsDataContainer", QName},
+		#state{parse_state = [GenericState1, GenericState2 | ParseState],
+		stack = Stack} = State) ->
+	#generic_state{vs_data = [VsDataContainer | T]} = GenericState2,
+	State#state{parse_state = [GenericState2#generic_state{
+			vs_data = [VsDataContainer#{container => GenericState1} | T]} | ParseState],
+			parse_function = parse_managed_element,
+			stack = [{endElement, QName} | Stack]};
+parse_vsdata({endElement, _Uri, _LocalName, QName},
+		#state{stack = Stack} = State) ->
+	State#state{stack = [{endElement, QName} | Stack]}.
+
+%% @hidden
+parse_vsdata_attr(VsDataContainer, Stack) ->
+	parse_vsdata_attr(Stack, [], [], VsDataContainer).
+%% @hidden
+parse_vsdata_attr([{startElement, QName, _} = Event | T],
+		State, OutStack, Acc) ->
+	parse_vsdata_attr(T, [QName | State], [Event | OutStack], Acc);
+parse_vsdata_attr([{characters, Chars} | T],
+		[{"xn", "vsDataType"}, {"xn","attributes"}] = State, OutStack, Acc) ->
+	NewAcc = Acc#{"vsDataType" => Chars},
+	parse_vsdata_attr(T, State, OutStack, NewAcc);
+parse_vsdata_attr([{characters, Chars} | T],
+		[{"xn", "vsDataFormatVersion"}, {"xn", "vsDataType"},
+		{"xn","attributes"}] = State, OutStack, Acc) ->
+	NewAcc = Acc#{"vsDataFormatVersion" => Chars},
+	parse_vsdata_attr(T, State, OutStack, NewAcc);
+parse_vsdata_attr([{characters, _Chars} = Event | T],
+		State, OutStack, Acc) ->
+	parse_vsdata_attr(T, State, [Event | OutStack], Acc);
+parse_vsdata_attr([], _State, OutStack,
+		#{"vsDataFormatVersion" := "ZTESpecificAttributes"} = Acc) ->
+	im_xml_zte:parse_zte_attr(OutStack, Acc);
+parse_vsdata_attr([{endElement, _QName} = Event | T] = _InStack,
+		State, OutStack, Acc) ->
+	parse_vsdata_attr(T, State, [Event | OutStack], Acc).
+
+%%----------------------------------------------------------------------
+%%  internal functions
+%%----------------------------------------------------------------------
+
+-type event() :: {startElement,
+		QName :: {Prefix :: string(), LocalName :: string()},
+		Attributes :: [tuple()]} | {endElement,
+		QName :: {Prefix :: string(), LocalName :: string()}}
+		| {characters, string()}.
+-spec pop(Element, QName, Stack) -> Result
+	when
+		Element :: startElement | endElement,
+		QName :: {Prefix, LocalName},
+		Prefix :: string(),
+		LocalName :: string(),
+		Stack :: [event()],
+		Result :: {Value, NewStack},
+		Value :: [event()],
+		NewStack :: [event()].
+%% @doc Pops all events up to an including `{Element, QName, ...}'.
+%% @private
+pop(Element, QName, Stack) ->
+	pop(Element, QName, Stack, []).
+%% @hidden
+pop(Element, QName, [H | T], Acc)
+		when element(1, H) == Element, element(2, H) == QName->
+	{[H | Acc], T};
+pop(Element, QName, [H | T], Acc) ->
+	pop(Element, QName, T, [H | Acc]).

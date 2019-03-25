@@ -13,7 +13,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_zte_attr/3]).
+-export([parse_zte_attr/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -25,128 +25,119 @@
 %%  The im private API
 %%----------------------------------------------------------------------
 
-parse_zte_attr(Stack, DnPrefix, Acc) ->
-	parse_zte_attr(Stack, [], DnPrefix, Acc).
+parse_zte_attr(Stack, Acc) ->
+	parse_zte_attr(Stack, [], Acc).
 %% @hidden
 parse_zte_attr([{endElement, {"zs", "vsDataBtsFunction"} = QName} | T] = _Stack,
-		[] = _State, DnPrefix, Acc) ->
-	parse_zte_attr(T, [QName], DnPrefix, Acc);
-parse_zte_attr([{endElement, QName} | T] = _Stack, State, DnPrefix, Acc) ->
-	parse_zte_attr(T, [QName | State], DnPrefix, Acc);
+		[] = _State, Acc) ->
+	parse_zte_attr(T, [QName], Acc);
+parse_zte_attr([{endElement, QName} | T] = _Stack, State, Acc) ->
+	parse_zte_attr(T, [QName | State], Acc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "usedPwrCountSwitch"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "usedPwrCountSwitch"} | _] = State, Acc) ->
 	NewAcc = attribute_add("usedPwrCountSwitch", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isSupportLinkBackup"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isSupportLinkBackup"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isSupportLinkBackup", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "CpuThreshold"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "CpuThreshold"} | _] = State, Acc) ->
 	NewAcc = attribute_add("CpuThreshold", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isAssignedByTrxPriority"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isAssignedByTrxPriority"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isAssignedByTrxPriority", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "backupLinkSwitch"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "backupLinkSwitch"} | _] = State, Acc) ->
 	NewAcc = attribute_add("backupLinkSwitch", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "operState"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "operState"} | _] = State, Acc) ->
 	NewAcc = attribute_add("operState", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "productStatus"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "productStatus"} | _] = State, Acc) ->
 	NewAcc = attribute_add("productStatus", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "AirSoftSyncAjustTime"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "AirSoftSyncAjustTime"} | _] = State, Acc) ->
 	NewAcc = attribute_add("AirSoftSyncAjustTime", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "description"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "description"} | _] = State, Acc) ->
 	NewAcc = attribute_add("description", Chars, Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "switchBackMode"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "switchBackMode"} | _] = State, Acc) ->
 	NewAcc = attribute_add("switchBackMode", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "autoSwitchTimer"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "autoSwitchTimer"} | _] = State, Acc) ->
 	NewAcc = attribute_add("autoSwitchTimer", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "availStatus"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "availStatus"} | _] = State, Acc) ->
 	NewAcc = attribute_add("availStatus", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "adminState"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "adminState"} | _] = State, Acc) ->
 	NewAcc = attribute_add("adminState", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isSwitchBackOnlyIdle"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isSwitchBackOnlyIdle"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isSwitchBackOnlyIdle", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "siteId"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "siteId"} | _] = State, Acc) ->
 	NewAcc = attribute_add("siteId", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "switchMode"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "switchMode"} | _] = State, Acc) ->
 	NewAcc = attribute_add("switchMode", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isProtectTrxMax"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isProtectTrxMax"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isProtectTrxMax", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isTrafficControlByCpu"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isTrafficControlByCpu"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isTrafficControlByCpu", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isEnableEUIPBackup"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isEnableEUIPBackup"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isEnableEUIPBackup", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isAntPrimSecMeas"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isAntPrimSecMeas"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isAntPrimSecMeas", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "isRUMeasStart"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "isRUMeasStart"} | _] = State, Acc) ->
 	NewAcc = attribute_add("isRUMeasStart", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "autoSwitchBackTimer"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "autoSwitchBackTimer"} | _] = State, Acc) ->
 	NewAcc = attribute_add("autoSwitchBackTimer", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "bpSavingElectricitySwitch"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "bpSavingElectricitySwitch"} | _] = State, Acc) ->
 	NewAcc = attribute_add("bpSavingElectricitySwitch", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", "bscMode"} | _] = State, DnPrefix, Acc) ->
+		[{"zs", "bscMode"} | _] = State, Acc) ->
 	NewAcc = attribute_add("bscMode", list_to_integer(Chars), Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
+	parse_zte_attr(T, State, NewAcc);
 parse_zte_attr([{characters, Chars} | T],
-		[{"zs", Attr} | _] = State, DnPrefix, Acc) ->
+		[{"zs", Attr} | _] = State, Acc) ->
 %default character handler
 	NewAcc = attribute_add(Attr, Chars, Acc),
-	parse_zte_attr(T, State, DnPrefix, NewAcc);
-parse_zte_attr([{startElement, {"xn", "VsDataContainer"} = _QName, [{[],[],"id", Id}]} | _],
-%		[QName], _DnPrefix, Acc) ->
-		_State, _DnPrefix, Acc) ->
-%	{_Uri, _Prefix, "id", Id} = lists:keyfind("id", 3, XmlAttr),
-	Acc#{"id" => Id};
-parse_zte_attr([], _State, _DnPrefix, Acc) ->
-	#{"@type" => "VsDataContainer",
-			"@schemaLocation" => ?PathInventorySchema ++ "#/definitions/VsDataContainer",
-			"value" => Acc};
-parse_zte_attr([{startElement, _QName, _} | T], State, DnPrefix, Acc) ->
-%parse_zte_attr([{startElement, QName, _} | T], [QName | State], DnPrefix, Acc) ->
-%	parse_zte_attr(T, [QName | State], DnPrefix, Acc).
-	parse_zte_attr(T, State, DnPrefix, Acc).
+	parse_zte_attr(T, State, NewAcc);
+parse_zte_attr([], _State, Acc) ->
+	Acc;
+parse_zte_attr([{startElement, _QName, _} | T], State, Acc) ->
+	parse_zte_attr(T, State, Acc).
 
 %%----------------------------------------------------------------------
 %%  internal functions
@@ -159,6 +150,7 @@ parse_zte_attr([{startElement, _QName, _} | T], State, DnPrefix, Acc) ->
 		NrmMap :: map().
 %% @doc Add `Attribute' and `Value' to possibly missing attribute.
 attribute_add(Attribute, Value, #{"attributes" := Attributes} = NrmMap) ->
+%attribute_add(Attribute, Value, #{"attributes" := Attributes} = NrmMap) ->
 	NrmMap#{"attributes" => Attributes#{Attribute => Value}};
-attribute_add(Attribute, Value, #{} = NrmMap) ->
+attribute_add(Attribute, Value, NrmMap) ->
 	NrmMap#{"attributes" => #{Attribute => Value}}.
