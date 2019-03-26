@@ -34,7 +34,7 @@
 %% @doc Import a file into the inventory table.
 import(File) when is_list(File) ->
 	Options = [{event_fun, fun parse_xml/3},
-		{event_state, #state{}}],
+		{event_state, [#state{}]}],
 	case xmerl_sax_parser:file(File, Options) of
 		{ok, _EventState, _Rest} ->
 			ok;
@@ -70,18 +70,18 @@ import(File) when is_list(File) ->
 		CurrentLocation :: string(),
 		Entityname :: string(),
 		LineNo :: integer(),
-		State :: state(),
+		State :: [state()],
 		NewState :: state().
 %% @doc Parse xml.
 parse_xml(startDocument = _Event, _Location, State) ->
 	State;
 parse_xml({startElement, _, "bulkCmConfigDataFile", _, _} = _Event, _Location,
-		#state{parse_function = undefined} = State) ->
-	 State#state{parse_module = ?MODULE,
-			parse_function = parse_bulk_cm};
+		[#state{parse_function = undefined} = State | T]) ->
+	 [State#state{parse_module = ?MODULE,
+			parse_function = parse_bulk_cm} | T];
 parse_xml(endDocument = _Event, _Location, State) ->
 	State;
-parse_xml(_Event, _Location, #state{parse_function = undefined} = State) ->
+parse_xml(_Event, _Location, [#state{parse_function = undefined} | _] = State) ->
 	State;
 parse_xml({startPrefixMapping, _Prefix, _Uri}, _, State) ->
 	State;
@@ -91,36 +91,37 @@ parse_xml({ignorableWhitespace, _}, _, State) ->
 	State;
 parse_xml({comment, _Comment}, _, State) ->
 	State;
-parse_xml(_Event, _Location, #state{parse_module = Mod, parse_function = F} = State) ->
+parse_xml(_Event, _Location, [#state{parse_module = Mod, parse_function = F} | _] = State) ->
 	Mod:F(_Event, State).
 
 %% @hidden
 parse_bulk_cm({startElement, _, "fileHeader", _, _}, State) ->
 	State;
 parse_bulk_cm({startElement, _, "configData", _, Attributes} = Event,
-		#state{dn_prefix = [], stack = Stack} = State) ->
+		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
 	case lists:keyfind("dnPrefix", 3, Attributes) of
 		{_Uri, _Prefix, "dnPrefix", Dn} ->
 			M = im_xml_generic,
 			F = parse_generic,
+erlang:display({?MODULE, ?LINE, State}),
 			NewState = State#state{parse_module = M,
 					parse_function = F, dn_prefix = [Dn],
 					stack = [{startElement, "configData", Attributes} | Stack]},
-			M:F(Event, NewState);
+			M:F(Event, [NewState | T]);
 		false ->
 			M = im_xml_generic,
 			F = parse_generic,
 			NewState = State#state{parse_module = M,
 					parse_function = F, dn_prefix = [],
 					stack = [{startElement, "configData", Attributes} | Stack]},
-			M:F(Event, NewState)
+			M:F(Event, [NewState | T])
 	end;
 parse_bulk_cm({startElement, _, "fileFooter", _, _}, State) ->
 	State;
 parse_bulk_cm({endElement, _, "configData", _}, State) ->
 	State;
-parse_bulk_cm(_Event, #state{parse_module = ?MODULE,
-		parse_function = parse_bulk_cm} = State) ->
+parse_bulk_cm(_Event, [#state{parse_module = ?MODULE,
+		parse_function = parse_bulk_cm} | _] = State) ->
 	State.
 
 %%----------------------------------------------------------------------

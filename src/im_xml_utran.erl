@@ -41,23 +41,22 @@
 
 %% @hidden
 parse_nodeb({startElement, _Uri, "NodeBFunction", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = StateStack, stack = Stack} = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{stack = Stack} = State | T]) ->
 	DnComponent = ",NodeBFunction=" ++ Id,
-	State#state{parse_state = [#utran_state{nodeb = DnComponent} | StateStack],
-			stack = [{startElement, QName, Attributes} | Stack]};
-parse_nodeb({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+	[State#state{parse_state = #utran_state{nodeb = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_nodeb({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_nodeb({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_nodeb_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_nodeb_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_nodeb({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_nodeb_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -106,9 +105,9 @@ parse_nodeb_attr1([{endElement, {"xn", "autoScalable"}} | T],
 parse_nodeb_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
 		Attr, State, Acc) ->
 	parse_nodeb_attr1(T, Attr, State, Acc);
-parse_nodeb_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{nodeb = NodebId} = UtranState | T],
-		spec_cache = Cache} = State, _Acc) ->
+parse_nodeb_attr1([], undefined, [#state{dn_prefix = [CurrentDn | _],
+		parse_state = UtranState, spec_cache = Cache} = State | T], _Acc) ->
+	#utran_state{nodeb = NodebId} = UtranState,
 	NodebDn = CurrentDn ++ NodebId,
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -121,77 +120,72 @@ parse_nodeb_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
 			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_generic,
+			[State#state{parse_module = im_xml_generic,
 					parse_function = parse_managed_element,
-					parse_state = [UtranState#utran_state{nodeb = NodebDn} | T],
-					spec_cache = NewCache};
+					parse_state = UtranState#utran_state{nodeb = NodebDn},
+					spec_cache = NewCache} | T];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
 
 %% @hidden
 parse_rnc({startElement, _Uri, "RncFunction", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = StateStack, stack = Stack} = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{stack = Stack} = State | T]) ->
 	DnComponent = ",RncFunction=" ++ Id,
-	State#state{parse_state = [#utran_state{rnc = DnComponent} | StateStack],
-			stack = [{startElement, QName, Attributes} | Stack]};
-parse_rnc({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+	[State#state{parse_state = #utran_state{rnc = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_rnc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_rnc({startElement,  _Uri, "UtranCellFDD", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#utran_state{} = UtranState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = UtranState, stack = Stack} = State | T]) ->
 	DnComponent = ",UtranCellFDD=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_fdd,
-			parse_state = [UtranState#utran_state{fdd = DnComponent} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_fdd,
+			parse_state = UtranState#utran_state{fdd = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({startElement,  _Uri, "EP_IuCS", QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{parse_module = ?MODULE, parse_function = parse_iucs,
-			stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{parse_function = parse_iucs,
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({startElement,  _Uri, "EP_IuPS", QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{parse_module = ?MODULE, parse_function = parse_iups,
-			stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{parse_function = parse_iups,
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({startElement,  _Uri, "EP_Iur", QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{parse_module = ?MODULE, parse_function = parse_iur,
-			stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{parse_function = parse_iups,
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({startElement,  _Uri, "IubLink", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#utran_state{} = UtranState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = UtranState, stack = Stack} = State | T]) ->
 	DnComponent = ",IubLink=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_iub,
-			parse_state = [UtranState#utran_state{iub = DnComponent} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_iub,
+			parse_state = UtranState#utran_state{iub = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({startElement,  _Uri, "UtranCellTDDLcr", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#utran_state{} = UtranState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = UtranState, stack = Stack} = State | T]) ->
 	DnComponent = ",UtranCellTDDLcr=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_tdd_lcr,
-			parse_state = [UtranState#utran_state{tdd_lcr = DnComponent} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
-parse_rnc({startElement,  _Uri, "UtranCellTDDHcr", QName,
+	[State#state{parse_function = parse_tdd_lcr,
+			parse_state = UtranState#utran_state{tdd_lcr = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_rnc({startElement, _Uri, "UtranCellTDDHcr", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#utran_state{} = UtranState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = UtranState, stack = Stack} = State | T]) ->
 	DnComponent = ",UtranCellTDDHcr=" ++ Id,
-	State#state{parse_module = ?MODULE, parse_function = parse_tdd_hcr,
-			parse_state = [UtranState#utran_state{tdd_hcr = DnComponent} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_tdd_hcr,
+			parse_state = UtranState#utran_state{tdd_hcr = DnComponent},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({endElement, _Uri, "RncFunction", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_rnc_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_rnc_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_rnc({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_rnc_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -264,9 +258,9 @@ parse_rnc_attr1([{endElement, {"xn", "vnfInstanceId"}} | T],
 parse_rnc_attr1([{endElement, {"xn", "autoScalable"}} | T],
 		Attr, State, Acc) ->
 	parse_rnc_attr1(T, Attr, State, Acc);
-parse_rnc_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId, fdds = Fdds} = UtranState | T],
-		spec_cache = Cache} = State, Acc) ->
+parse_rnc_attr1([], undefined, [#state{dn_prefix = [CurrentDn | _],
+		parse_state = UtranState, spec_cache = Cache} = State | T], Acc) ->
+	#utran_state{rnc = RncId, fdds = Fdds} = UtranState,
 	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
 	RncDn = CurrentDn ++ RncId,
 	ClassType = "RncFunction",
@@ -281,27 +275,27 @@ parse_rnc_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
 			characteristic = lists:reverse([UtranCellFDD | Acc])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = im_xml_generic,
+			[State#state{parse_module = im_xml_generic,
 					parse_function = parse_managed_element,
-					parse_state = [UtranState#utran_state{rnc = RncDn, fdds = []} | T],
-					spec_cache = NewCache};
+					parse_state = UtranState#utran_state{rnc = RncDn, fdds = []},
+					spec_cache = NewCache} | T];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
 
 %% @hidden
-parse_fdd({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_fdd({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_fdd({startElement, _Uri, _LocalName, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_fdd({endElement,  _Uri, "UtranCellFDD", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_fdd_attr(T, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_fdd_attr(T2, [State#state{stack = NewStack} | T1], []);
 parse_fdd({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_fdd_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -598,18 +592,18 @@ parse_fdd_attr1([], _Attr, FddStack, State, Acc) ->
 			#{gsmRel => [], utranRel => []}).
 
 %% @hidden
-parse_tdd_hcr({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_tdd_hcr({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_tdd_hcr({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_tdd_hcr_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_tdd_hcr_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_tdd_hcr({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_tdd_hcr_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -869,10 +863,9 @@ parse_tdd_hcr_attr1([{endElement, {"un", Attr}} | T],
 parse_tdd_hcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_hcr_attr1(T, Attr, State, Acc);
-parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId,
-		tdd_hcr = TddHcrId} = UtranState | T],
-		spec_cache = Cache} = State, _Acc) ->
+parse_tdd_hcr_attr1([], undefined, [#state{dn_prefix = [CurrentDn | _],
+		parse_state = UtranState, spec_cache = Cache} = State | T], _Acc) ->
+	#utran_state{rnc = RncId, tdd_hcr = TddHcrId} = UtranState,
 	TddHcrDn = CurrentDn ++ RncId ++ TddHcrId,
 	ClassType = "UtranCellTDDHcr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -885,27 +878,26 @@ parse_tdd_hcr_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
 			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = ?MODULE,
-					parse_function = parse_rnc,
-					parse_state = [UtranState#utran_state{tdd_hcr = TddHcrDn} | T],
-					spec_cache = NewCache};
+			[State#state{parse_function = parse_rnc,
+					parse_state = UtranState#utran_state{tdd_hcr = TddHcrDn},
+					spec_cache = NewCache} | T];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
 
 %% @hidden
-parse_tdd_lcr({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_tdd_lcr({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_tdd_lcr({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_tdd_lcr_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_tdd_lcr_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_tdd_lcr({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_tdd_lcr_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -1160,10 +1152,10 @@ parse_tdd_lcr_attr1([{endElement, {"un", Attr}} | T],
 parse_tdd_lcr_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_tdd_lcr_attr1(T, Attr, State, Acc);
-parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId,
-		tdd_lcr = TddLcrId} = UtranState | T],
-		spec_cache = Cache} = State, _Acc) ->
+parse_tdd_lcr_attr1([], undefined, [#state{dn_prefix = [CurrentDn | _],
+		parse_state = UtranState,
+		spec_cache = Cache} = State | T], _Acc) ->
+	#utran_state{rnc = RncId, tdd_lcr = TddLcrId} = UtranState,
 	TddLcrDn = CurrentDn ++ RncId ++ TddLcrId,
 	ClassType = "UtranCellTDDLcr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -1176,27 +1168,26 @@ parse_tdd_lcr_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
 			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = ?MODULE,
-					parse_function = parse_rnc,
-					parse_state = [UtranState#utran_state{tdd_lcr = TddLcrDn} | T],
-					spec_cache = NewCache};
+			[State#state{parse_function = parse_rnc,
+					parse_state = UtranState#utran_state{tdd_lcr = TddLcrDn},
+					spec_cache = NewCache} | T];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
 
 %% @hidden
-parse_iub({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_iub({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_iub({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_iub({endElement, _Uri, "IubLink", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_iub_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_iub_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_iub({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_iub_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -1263,9 +1254,9 @@ parse_iub_attr1([{endElement, {"un", Attr}} | T],
 parse_iub_attr1([{endElement, {"xn", "dn"}} | T],
 		Attr, State, Acc) ->
 	parse_iub_attr1(T, Attr, State, Acc);
-parse_iub_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId, iub = IubId} = UtranState | T],
-		spec_cache = Cache} = State, _Acc) ->
+parse_iub_attr1([], undefined, [#state{dn_prefix = [CurrentDn | _],
+		parse_state = UtranState, spec_cache = Cache} = State | T], _Acc) ->
+	#utran_state{rnc = RncId, iub = IubId} = UtranState,
 	IubDn = CurrentDn ++ RncId ++ IubId,
 	ClassType = "IubLink",
 %	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -1278,28 +1269,27 @@ parse_iub_attr1([], undefined, #state{dn_prefix = [CurrentDn | _],
 %			specification = Spec},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			State#state{parse_module = ?MODULE,
-					parse_function = parse_rnc,
-					parse_state = [UtranState#utran_state{iub = IubDn} | T],
-					spec_cache = Cache};
+			[State#state{parse_function = parse_rnc,
+					parse_state = UtranState#utran_state{iub = IubDn},
+					spec_cache = Cache} | T];
 %					spec_cache = NewCache};
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.
 
 %% @hidden
-parse_iucs({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_iucs({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_iucs({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_iucs({endElement, _Uri, "EP_IuCS", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_iucs_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_iucs_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_iucs({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_iucs_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -1332,22 +1322,22 @@ parse_iucs_attr1([{endElement, {"un", "attributes"}}],
 parse_iucs_attr1([{endElement, {"un", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_iucs_attr1(T, Attr, State, Acc);
-parse_iucs_attr1([], undefined, State, _Acc) ->
-	State#state{parse_module = ?MODULE, parse_function = parse_rnc}.
+parse_iucs_attr1([], undefined, [State | T], _Acc) ->
+	[State#state{parse_function = parse_rnc} | T].
 
 %% @hidden
-parse_iups({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_iups({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_iups({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_iups({endElement, _Uri, "EP_IuPS", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_iups_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_iups_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_iups({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_iups_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -1380,22 +1370,22 @@ parse_iups_attr1([{endElement, {"un", "attributes"}}],
 parse_iups_attr1([{endElement, {"un", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_iups_attr1(T, Attr, State, Acc);
-parse_iups_attr1([], undefined, State, _Acc) ->
-	State#state{parse_module = ?MODULE, parse_function = parse_rnc}.
+parse_iups_attr1([], undefined, [State | T], _Acc) ->
+	[State#state{parse_function = parse_rnc} | T].
 
 %% @hidden
-parse_iur({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_iur({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_iur({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_iur({endElement, _Uri, "EP_Iur", QName},
-		#state{stack = Stack} = State) ->
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	parse_iur_attr(T, undefined, State#state{stack = NewStack}, []);
+		[#state{stack = Stack} = State | T1]) ->
+	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	parse_iur_attr(T2, undefined, [State#state{stack = NewStack} | T1], []);
 parse_iur({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_iur_attr([{startElement, {"un", "attributes"} = QName, []} | T1],
@@ -1428,14 +1418,14 @@ parse_iur_attr1([{endElement, {"un", "attributes"}}],
 parse_iur_attr1([{endElement, {"un", Attr}} | T],
 		undefined, State, Acc) ->
 	parse_iur_attr1(T, Attr, State, Acc);
-parse_iur_attr1([], undefined, State, _Acc) ->
-	State#state{parse_module = ?MODULE, parse_function = parse_rnc}.
+parse_iur_attr1([], undefined, [State | T], _Acc) ->
+	[State#state{parse_function = parse_rnc} | T].
 
 % @hidden
 parse_fdd_rels([{startElement,
 		{"gn", "GsmRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId, fdd = FddId} | _T]} = State,
+		[#state{dn_prefix = [CurrentDn | _],
+		parse_state = #utran_state{rnc = RncId, fdd = FddId}} | T] = State,
 		Characteristics, #{gsmRel := GsmRels} = Acc) ->
 	FddDn = CurrentDn ++ RncId ++ FddId,
 	{Attributes, T} = pop(endElement, QName, Stack),
@@ -1444,18 +1434,17 @@ parse_fdd_rels([{startElement,
 	parse_fdd_rels(T, State, Characteristics, NewAcc);
 parse_fdd_rels([{startElement,
 		{"un", "UtranRelation"} = QName, _} | _] = Stack,
-		#state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId, fdd = FddId} | _T]} = State,
+		[#state{dn_prefix = [CurrentDn | _],
+		parse_state = #utran_state{rnc = RncId, fdd = FddId}} | T] = State,
 		Characteristics, #{utranRel := UtranRels} = Acc) ->
 	FddDn = CurrentDn ++ RncId ++ FddId,
 	{Attributes, T} = pop(endElement, QName, Stack),
 	Relation = utran_relation(FddDn, Attributes),
 	NewAcc = Acc#{utranRel := [Relation | UtranRels]},
 	parse_fdd_rels(T, State, Characteristics, NewAcc);
-parse_fdd_rels(_FddStack, #state{dn_prefix = [CurrentDn | _],
-		parse_state = [#utran_state{rnc = RncId, fdd = FddId,
-		fdds = Fdds} = UtranState | T],
-		spec_cache = Cache} = State, Characteristics, Acc) ->
+parse_fdd_rels(_FddStack, [#state{dn_prefix = [CurrentDn | _],
+		parse_state = UtranState, spec_cache = Cache} = State | T],
+		Characteristics, Acc) ->
 	F1 = fun(gsmRel, [], Acc1) ->
 				Acc1;
 			(gsmRel, R, Acc1) ->
@@ -1472,6 +1461,7 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = [CurrentDn | _],
 						value = lists:reverse(R)} | Acc1]
 	end,
 	NewCharacteristics = Characteristics ++ maps:fold(F1, [], Acc),
+	#utran_state{rnc = RncId, fdd = FddId, fdds = Fdds} = UtranState,
 	FddDn = CurrentDn ++ RncId ++ FddId,
 	ClassType = "UtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -1485,9 +1475,9 @@ parse_fdd_rels(_FddStack, #state{dn_prefix = [CurrentDn | _],
 			characteristic = NewCharacteristics},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
-			State#state{parse_module = ?MODULE, parse_function = parse_rnc,
-					parse_state = [UtranState#utran_state{fdds = [FddDn | Fdds]} | T],
-					spec_cache = NewCache};
+			[State#state{parse_module = ?MODULE, parse_function = parse_rnc,
+					parse_state = UtranState#utran_state{fdds = [FddDn | Fdds]},
+					spec_cache = NewCache} | T];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end.

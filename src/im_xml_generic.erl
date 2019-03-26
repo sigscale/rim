@@ -30,186 +30,207 @@
 %%  The im public API
 %%----------------------------------------------------------------------
 
-parse_generic({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_generic({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = StateStack, stack = Stack} = State) ->
+		[#state{parse_state = undefined, stack = Stack} = State | T]) ->
 	DnComponent = ",SubNetwork=" ++ Id,
-	State#state{parse_function = parse_subnetwork,
-			parse_state = [#generic_state{subnet = [DnComponent]} | StateStack],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_subnetwork,
+			parse_state = #generic_state{subnet = [DnComponent]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_generic({startElement, _Uri, "SubNetwork", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{parse_state = ParseState, stack = Stack} = State | T]) ->
+	DnComponent = ",SubNetwork=" ++ Id,
+	[State#state{parse_function = parse_subnetwork,
+			parse_state = ParseState#generic_state{subnet = [DnComponent]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_generic({startElement, _Uri, "MeContext", QName,
 		[{[], [], "id", Id}] = Attributes} = _Event,
-		#state{parse_state = StateStack, stack = Stack} = State) ->
+		[#state{parse_state = undefined, stack = Stack} = State | T]) ->
 	DnComponent = ",MeContext=" ++ Id,
-	State#state{parse_function = parse_mecontext,
-			parse_state = [#generic_state{me_context = [DnComponent]} | StateStack],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_mecontext,
+			parse_state = #generic_state{me_context = [DnComponent]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_generic({startElement, _Uri, "MeContext", QName,
+		[{[], [], "id", Id}] = Attributes} = _Event,
+		[#state{parse_state = ParseState, stack = Stack} = State | T]) ->
+	DnComponent = ",MeContext=" ++ Id,
+	[State#state{parse_function = parse_mecontext,
+			parse_state = ParseState#generic_state{me_context = [DnComponent]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_generic({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = StateStack, stack = Stack} = State) ->
+		[#state{parse_state = undefined, stack = Stack} = State | T]) ->
 	DnComponent = ",ManagedElement=" ++ Id,
-	State#state{parse_function = parse_managed_element,
-			parse_state = [#generic_state{managed_element = [DnComponent]} | StateStack],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_managed_element,
+			parse_state = #generic_state{managed_element = [DnComponent]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_generic({startElement, _Uri, "ManagedElement", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{parse_state = ParseState, stack = Stack} = State | T]) ->
+	DnComponent = ",ManagedElement=" ++ Id,
+	[State#state{parse_function = parse_managed_element,
+			parse_state = ParseState#generic_state{managed_element = [DnComponent]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_generic({startElement,  _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_generic({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
-parse_subnetwork({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_subnetwork({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_subnetwork({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#generic_state{subnet = SubNetwork} = GenericState | T],
-		stack = Stack} = State) ->
-	DnComponent = SubNetwork ++ "," ++ Id,
-	State#state{parse_state = [GenericState#generic_state{subnet = DnComponent} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+		[#state{parse_state = #generic_state{subnet = SubNetwork},
+		stack = Stack} = State | T]) ->
+	GenericState = State#state.parse_state,
+	[H | _] = SubNetwork,
+	DnComponent = H ++ "," ++ Id,
+	[State#state{parse_state = GenericState#generic_state{
+			subnet = [DnComponent | SubNetwork]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_subnetwork({startElement, _Uri, "MeContext", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#generic_state{me_context = MeContext} = GenericState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = #generic_state{me_context = MeContext},
+		stack = Stack} = State | T]) ->
+	GenericState = State#state.parse_state,
 	DnComponent = ",MeContext=" ++ Id,
-	State#state{parse_function = parse_mecontext,
-			parse_state = [GenericState#generic_state{
-			me_context = [DnComponent | MeContext]} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_mecontext,
+			parse_state = GenericState#generic_state{
+			me_context = [DnComponent | MeContext]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#generic_state{
-		managed_element = MgdElement} = GenericState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = #generic_state{managed_element = MgdElement},
+		stack = Stack} = State | T]) ->
+	GenericState = State#state.parse_state,
 	DnComponent = ",ManagedElement=" ++ Id,
-	State#state{parse_function = parse_managed_element,
+	[State#state{parse_function = parse_managed_element,
 			parse_state = [GenericState#generic_state{
 			managed_element = [DnComponent | MgdElement]} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_subnetwork({startElement,  _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_subnetwork({endElement, _Uri, "SubNetwork", _QName}, State) ->
-	State#state{parse_function = parse_generic};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{parse_function = parse_generic,
+			stack = [{endElement, QName} | Stack]} | T];
 parse_subnetwork({endElement,  _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
-parse_mecontext({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_mecontext({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_mecontext({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = [#generic_state{managed_element = MgdEle} = GenericState | T],
-		stack = Stack} = State) ->
+		[#state{parse_state = #generic_state{managed_element = MgdEle},
+		stack = Stack} = State | T]) ->
+	GenericState = State#state.parse_state,
 	DnComponent = ",ManagedElement=" ++ Id,
-	State#state{parse_function = parse_managed_element,
-			parse_state = [GenericState#generic_state{
-			managed_element = [DnComponent | MgdEle]} | T],
-			stack = [{startElement, QName, Attributes} | Stack]};
+	[State#state{parse_function = parse_managed_element,
+			parse_state = GenericState#generic_state{
+			managed_element = [DnComponent | MgdEle]},
+			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mecontext({startElement,  _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_mecontext({endElement, _Uri, "MeContext", _QName}, State) ->
-	State#state{parse_function = parse_generic};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_mecontext({endElement, _Uri, "MeContext", QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{parse_function = parse_generic,
+			stack = [{endElement, QName} | Stack]} | T];
 parse_mecontext({endElement,  _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
-parse_managed_element({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+parse_managed_element({characters, Chars},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_managed_element({startElement, _, "BssFunction", _, _Attributes} = Event,
-		#state{parse_state = [#generic_state{subnet = [SubId | _],
-		managed_element = [MeId | _]} | _], dn_prefix = [DnPrefix]} = State) ->
+		[#state{parse_state = #generic_state{subnet = [SubId | _],
+		managed_element = [MeId | _]},
+		dn_prefix = [DnPrefix | _]} | _T] = State) ->
 	Mod = im_xml_geran,
 	F = parse_bss,
 	CurrentDn = DnPrefix ++ SubId ++ MeId,
-	NewState = State#state{parse_module = Mod, parse_function = F,
-			dn_prefix = [CurrentDn | State#state.dn_prefix]},
-	Mod:F(Event, NewState);
+	NewState = #state{parse_module = Mod, parse_function = F,
+			dn_prefix = [CurrentDn]},
+	Mod:F(Event, [NewState | State]);
 parse_managed_element({startElement, _, "NodeBFunction", _, _Attributes} = Event,
-		#state{parse_state = [#generic_state{subnet = [SubId | _],
-		managed_element = [MeId | _]} | _], dn_prefix = [DnPrefix]} = State) ->
+		[#state{parse_state = #generic_state{subnet = [SubId | _],
+		managed_element = [MeId | _]},
+		dn_prefix = [DnPrefix | _]} | _T] = State) ->
 	Mod = im_xml_utran,
 	F = parse_nodeb,
 	CurrentDn = DnPrefix ++ SubId ++ MeId,
-	NewState = State#state{parse_module = Mod, parse_function = F,
-			dn_prefix = [CurrentDn | State#state.dn_prefix]},
-	Mod:F(Event, NewState);
-parse_managed_element({startElement, _, "NodeBFunction", _, _Attributes} = Event,
-		State) ->
-	Mod = im_xml_utran,
-	F = parse_nodeb,
-	NewState = State#state{parse_module = Mod, parse_function = F},
-	Mod:F(Event, NewState);
+	NewState = #state{parse_module = Mod, parse_function = F,
+			dn_prefix = [CurrentDn]},
+	Mod:F(Event, [NewState | State]);
 parse_managed_element({startElement, _, "RncFunction", _, _Attributes} = Event,
-		#state{parse_state = [#generic_state{subnet = [SubId | _],
-		managed_element = [MeId | _]} | _], dn_prefix = [DnPrefix]} = State) ->
+		[#state{parse_state = #generic_state{subnet = [SubId | _],
+		managed_element = [MeId | _]}, dn_prefix = [DnPrefix | _]} | _T] = State) ->
 	Mod = im_xml_utran,
 	F = parse_rnc,
 	CurrentDn = DnPrefix ++ SubId ++ MeId,
 	NewState = State#state{parse_module = Mod, parse_function = F,
-			dn_prefix = [CurrentDn | State#state.dn_prefix]},
-	Mod:F(Event, NewState);
-parse_managed_element({startElement, _, "RncFunction", _, _Attributes} = Event,
-		State) ->
-	Mod = im_xml_utran,
-	F = parse_rnc,
-	NewState = State#state{parse_module = Mod, parse_function = F},
-	Mod:F(Event, NewState);
-parse_managed_element({startElement, _, "VsDataContainer", _QName,
-		_Attributes} = Event, State) ->
-	NewState = State#state{parse_function = parse_vsdata},
-	parse_vsdata(Event, NewState);
-parse_managed_element({endElement, _, "VsDataContainer", _QName} = Event, State) ->
-	NewState = State#state{parse_function = parse_vsdata},
-	parse_vsdata(Event, NewState);
+			dn_prefix = [CurrentDn]},
+	Mod:F(Event, [NewState | State]);
+parse_managed_element({startElement, _, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes} = _Event, State) ->
+% create new #state{} for VsDataContainer and push to state stack
+% initialize #state.parse_state{vs_data = #{"id" => ID}
+	[#state{parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => Id}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_managed_element({endElement, _Uri, "ManagedElement", _QName},
-		#state{parse_state = [GenericState | _]} = State) ->
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_managed_element({endElement, _, "VsDataContainer", _QName} = _Event,
+		[State1, #state{parse_state = #generic_state{vs_data = VsDataContainer}} = State2 | T]) ->
+% pop the VsConatainer state
+	#state{parse_state = #generic_state{vs_data = VsData}} = State1,
+	NewState = State2#state{parse_state = #generic_state{vs_data = [VsData | VsDataContainer]}},
+	[NewState | T];
+parse_managed_element({endElement, _Uri, "ManagedElement", QName},
+		[#state{parse_state = GenericState, stack = Stack} = State | T]) ->
 erlang:display({?MODULE, ?LINE, GenericState#generic_state.vs_data}),
-	State#state{parse_function = parse_generic};
+	[State#state{parse_function = parse_generic,
+			stack = [{endElement, QName} | Stack]} | T];
 parse_managed_element({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
 
 %% @hidden
 parse_vsdata({startElement, _, "VsDataContainer", QName,
-		[{[], [], "id", Id}] = Attributes},
-		#state{parse_state = ParseState, stack = Stack} = State) ->
-	VsDataContainer = #{"id" => Id},
-	GenericState = #generic_state{vs_data = [VsDataContainer]},
-	State#state{parse_state = [GenericState | ParseState],
-			stack = [{startElement, QName, Attributes} | Stack]};
+		[{[], [], "id", Id}] = Attributes}, State) ->
+	[#state{parse_state = #generic_state{vs_data = #{"id" => Id}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_vsdata({startElement, _, _, QName, Attributes},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{startElement, QName, Attributes} | Stack]};
-parse_vsdata({characters, Chars}, #state{stack = Stack} = State) ->
-	State#state{stack = [{characters, Chars} | Stack]};
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_vsdata({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_vsdata({endElement, _Uri, "attributes", QName},
-		#state{parse_state = [#generic_state{
-		vs_data = [VsDataContainer | T2]} = GenericState | T1],
-		stack = Stack} = State) ->
+		[#state{parse_state = #generic_state{
+		vs_data = [VsDataContainer | T2]}, stack = Stack} = State | T]) ->
+	GenericState = State#state.parse_state,
 	NewStack = [{endElement, QName} | Stack],
 	{Attributes, _NextStack} = pop(startElement, QName, NewStack),
 	VsAttr = parse_vsdata_attr(VsDataContainer, Attributes),
-	State#state{parse_state = [GenericState#generic_state{
-			vs_data = [VsDataContainer#{"attributes" => VsAttr} | T2]} | T1],
-			stack = NewStack};
-parse_vsdata({endElement, _Uri, "VsDataContainer", QName},
-		#state{parse_state = [GenericState1, GenericState2 | ParseState],
-		stack = Stack} = State) ->
-	#generic_state{vs_data = [VsDataContainer | T]} = GenericState2,
-	State#state{parse_state = [GenericState2#generic_state{
-			vs_data = [VsDataContainer#{container => GenericState1} | T]} | ParseState],
-			parse_function = parse_managed_element,
-			stack = [{endElement, QName} | Stack]};
+	[State#state{parse_state = GenericState#generic_state{
+			vs_data = [VsDataContainer#{"attributes" => VsAttr} | T2]},
+			stack = NewStack} | T];
+parse_vsdata({endElement, _Uri, "VsDataContainer", _QName} = Event,
+		[_State, #state{parse_module = M, parse_function = F} | _T] = State) ->
+% peek into previous state for parse_function and call it
+	M:F(Event, State);
 parse_vsdata({endElement, _Uri, _LocalName, QName},
 		#state{stack = Stack} = State) ->
 	State#state{stack = [{endElement, QName} | Stack]}.
