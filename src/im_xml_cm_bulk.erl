@@ -103,7 +103,6 @@ parse_bulk_cm({startElement, _, "configData", _, Attributes} = Event,
 		{_Uri, _Prefix, "dnPrefix", Dn} ->
 			M = im_xml_generic,
 			F = parse_generic,
-erlang:display({?MODULE, ?LINE, State}),
 			NewState = State#state{parse_module = M,
 					parse_function = F, dn_prefix = [Dn],
 					stack = [{startElement, "configData", Attributes} | Stack]},
