@@ -20,11 +20,6 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--record(generic_state,
-		{subnet = [] :: [string()],
-		me_context = [] :: [string()],
-		managed_element = [] :: [string()],
-		vs_data = [] :: [string()]}).
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -111,8 +106,8 @@ parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 	GenericState = State#state.parse_state,
 	DnComponent = ",ManagedElement=" ++ Id,
 	[State#state{parse_function = parse_managed_element,
-			parse_state = [GenericState#generic_state{
-			managed_element = [DnComponent | MgdElement]} | T],
+			parse_state = GenericState#generic_state{
+			managed_element = [DnComponent | MgdElement]},
 			stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_subnetwork({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -153,41 +148,44 @@ parse_mecontext({endElement,  _Uri, _LocalName, QName},
 parse_managed_element({characters, Chars},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_managed_element({startElement, _, "BssFunction", _, _Attributes} = Event,
+parse_managed_element({startElement, _, "BssFunction", QName,
+		[{[], [], "id", Id}] = Attributes} = _Event,
 		[#state{parse_state = #generic_state{subnet = [SubId | _],
 		managed_element = [MeId | _]},
 		dn_prefix = [DnPrefix | _]} | _T] = State) ->
-	Mod = im_xml_geran,
-	F = parse_bss,
-	CurrentDn = DnPrefix ++ SubId ++ MeId,
-	NewState = #state{parse_module = Mod, parse_function = F,
-			dn_prefix = [CurrentDn]},
-	Mod:F(Event, [NewState | State]);
-parse_managed_element({startElement, _, "NodeBFunction", _, _Attributes} = Event,
+	DnComponent = ",BssFunction=" ++ Id,
+	CurrentDn = DnPrefix ++ SubId ++ MeId ++ DnComponent,
+	[#state{parse_module = im_xml_geran, parse_function = parse_bss,
+			dn_prefix = [CurrentDn],
+			parse_state = #geran_state{bss = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "NodeBFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
 		[#state{parse_state = #generic_state{subnet = [SubId | _],
 		managed_element = [MeId | _]},
 		dn_prefix = [DnPrefix | _]} | _T] = State) ->
-	Mod = im_xml_utran,
-	F = parse_nodeb,
-	CurrentDn = DnPrefix ++ SubId ++ MeId,
-	NewState = #state{parse_module = Mod, parse_function = F,
-			dn_prefix = [CurrentDn]},
-	Mod:F(Event, [NewState | State]);
-parse_managed_element({startElement, _, "RncFunction", _, _Attributes} = Event,
+	DnComponent = ",NodeBFunction=" ++ Id,
+	CurrentDn = DnPrefix ++ SubId ++ MeId ++ DnComponent,
+	[#state{parse_module = im_xml_utran, parse_function = parse_nodeb,
+			dn_prefix = [CurrentDn],
+			parse_state = #utran_state{nodeb = #{"id" => CurrentDn}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "RncFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
 		[#state{parse_state = #generic_state{subnet = [SubId | _],
 		managed_element = [MeId | _]}, dn_prefix = [DnPrefix | _]} | _T] = State) ->
-	Mod = im_xml_utran,
-	F = parse_rnc,
-	CurrentDn = DnPrefix ++ SubId ++ MeId,
-	NewState = State#state{parse_module = Mod, parse_function = F,
-			dn_prefix = [CurrentDn]},
-	Mod:F(Event, [NewState | State]);
+	DnComponent = ",RncFunction=" ++ Id,
+	CurrentDn = DnPrefix ++ SubId ++ MeId ++ DnComponent,
+	[#state{parse_module = im_xml_utran, parse_function = parse_rnc,
+			dn_prefix = [CurrentDn],
+			parse_state = #utran_state{rnc = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes} = _Event, State) ->
 % create new #state{} for VsDataContainer and push to state stack
 % initialize #state.parse_state{vs_data = #{"id" => ID}
-	[#state{parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = #{"id" => Id}},
+	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = [#{"id" => Id}]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -195,22 +193,86 @@ parse_managed_element({startElement,  _, _, QName, Attributes},
 parse_managed_element({endElement, _, "VsDataContainer", _QName} = _Event,
 		[State1, #state{parse_state = #generic_state{vs_data = VsDataContainer}} = State2 | T]) ->
 % pop the VsConatainer state
-	#state{parse_state = #generic_state{vs_data = VsData}} = State1,
+	#state{parse_state = #generic_state{vs_data = [VsData | _]}} = State1,
 	NewState = State2#state{parse_state = #generic_state{vs_data = [VsData | VsDataContainer]}},
 	[NewState | T];
+parse_managed_element({endElement, _, "BssFunction", _QName},
+		[#state{dn_prefix = [BssDn | _],
+		parse_state = #geran_state{bss = #{"attributes" := BssAttr},
+		btss = Btss}, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T]) ->
+	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
+	ClassType = "BssFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = BssDn,
+			description = "GSM Base Station Subsystem (BSS)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+			specification = Spec,
+			characteristic = lists:reverse([BtsSiteMgr | BssAttr])},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_managed_element({endElement, _, "NodeBFunction", _QName},
+		[#state{dn_prefix = [NodebDn | _],
+		parse_state = #utran_state{nodeb = #{"attributes" := NodeBAttr}},
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T]) ->
+	ClassType = "NodeBFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = NodebDn,
+			description = "UMTS Telecommunication Nodes",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			specification = Spec,
+			characteristic = [NodeBAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_managed_element({endElement, _, "RncFunction", _QName},
+		[#state{dn_prefix = [RncDn | _],
+		parse_state = #utran_state{rnc = #{"attributes" := RncAttr},
+		fdds = Fdds}, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T]) ->
+	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
+	ClassType = "RncFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = RncDn,
+			description = "UMTS Radio Network Controller (RNC)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			specification = Spec,
+			characteristic = lists:reverse([UtranCellFDD | RncAttr])},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_managed_element({endElement, _Uri, "ManagedElement", QName},
-		[#state{parse_state = GenericState, stack = Stack} = State | T]) ->
-erlang:display({?MODULE, ?LINE, GenericState#generic_state.vs_data}),
+%		[#state{parse_state = GenericState, stack = Stack} = State | T]) ->
+		[#state{stack = Stack} = State | T]) ->
 	[State#state{parse_function = parse_generic,
 			stack = [{endElement, QName} | Stack]} | T];
 parse_managed_element({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
 parse_vsdata({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes}, State) ->
-	[#state{parse_state = #generic_state{vs_data = #{"id" => Id}},
+	[#state{parse_state = #generic_state{vs_data = [#{"id" => Id}]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_vsdata({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -232,8 +294,8 @@ parse_vsdata({endElement, _Uri, "VsDataContainer", _QName} = Event,
 % peek into previous state for parse_function and call it
 	M:F(Event, State);
 parse_vsdata({endElement, _Uri, _LocalName, QName},
-		#state{stack = Stack} = State) ->
-	State#state{stack = [{endElement, QName} | Stack]}.
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
 parse_vsdata_attr(VsDataContainer, Stack) ->
@@ -257,6 +319,8 @@ parse_vsdata_attr([{characters, _Chars} = Event | T],
 parse_vsdata_attr([], _State, OutStack,
 		#{"vsDataFormatVersion" := "ZTESpecificAttributes"} = Acc) ->
 	im_xml_zte:parse_zte_attr(OutStack, Acc);
+parse_vsdata_attr([], _State, _OutStack, Acc) ->
+	Acc;
 parse_vsdata_attr([{endElement, _QName} = Event | T] = _InStack,
 		State, OutStack, Acc) ->
 	parse_vsdata_attr(T, State, [Event | OutStack], Acc).
@@ -290,3 +354,27 @@ pop(Element, QName, [H | T], Acc)
 	{[H | Acc], T};
 pop(Element, QName, [H | T], Acc) ->
 	pop(Element, QName, T, [H | Acc]).
+
+-spec get_specification_ref(Name, Cache) -> Result
+	when
+		Name :: string(),
+		Cache :: [SpecRef],
+		Result :: {SpecRef, Cache} | {error, Reason},
+		SpecRef :: specification_ref(),
+		Reason :: term().
+%% @hidden
+get_specification_ref(Name, Cache) ->
+	case lists:keyfind(Name, #specification_ref.name, Cache) of
+		#specification_ref{name = Name} = SpecRef ->
+			{SpecRef, Cache};
+		false ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Id, href = Href, name = Name,
+						version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
+							version = Version},
+					{SpecRef, [SpecRef | Cache]};
+				{error, Reason} ->
+					throw({get_specification_name, Reason})
+			end
+	end.
