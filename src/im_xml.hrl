@@ -13,7 +13,8 @@
 		{subnet = [] :: [string()],
 		me_context = [] :: [string()],
 		managed_element = [] :: [string()],
-		vs_data = [] :: [map()]}).
+		vs_data :: map(),
+		vs_data_container = [] :: [map()]}).
 -type generic_state() :: #generic_state{}.
 
 -record(geran_state,

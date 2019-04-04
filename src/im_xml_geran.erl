@@ -192,7 +192,7 @@ parse_gsm_cell({startElement, _Uri, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes}, State) ->
 	DnComponent = ",VsDataContainer=" ++ Id,
 	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = [#{"id" => DnComponent}]},
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_gsm_cell({startElement, _Uri, "attributes", QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -208,11 +208,11 @@ parse_gsm_cell({endElement, _Uri, "GsmRelation", _QName},
 	[PrevState#state{parse_state = GeranState#geran_state{
 			cell = NewCell}} | T];
 parse_gsm_cell({endElement, _Uri, "VsDataContainer", _QName},
-		[#state{parse_state = #generic_state{vs_data = VsData}},
+		[#state{parse_state = #generic_state{vs_data = #{"id" := VsDn}}},
 		#state{parse_state = GeranState} = PrevState | T]) ->
 	#geran_state{cells = Cells} = GeranState,
 	[PrevState#state{parse_state = #geran_state{
-			cells = [VsData | Cells]}} | T];
+			cells = [VsDn | Cells]}} | T];
 parse_gsm_cell({endElement, _Uri, "GsmCell", QName} = Event,
 		[#state{stack = Stack, parse_state = GeranState} = State,
 		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->

@@ -196,7 +196,7 @@ parse_managed_element({startElement, _, "RncFunction", QName,
 parse_managed_element({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes} = _Event, State) ->
 	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = [#{"id" => Id}]},
+			parse_state = #generic_state{vs_data = #{"id" => Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -204,9 +204,9 @@ parse_managed_element({startElement,  _, _, QName, Attributes},
 parse_managed_element({endElement, _, "VsDataContainer", _QName},
 		[#state{parse_state = #generic_state{vs_data = VsData}},
 		#state{parse_state = GenericState} = PrevState | T]) ->
-	#generic_state{vs_data = VsDataContainer} = GenericState,
+	#generic_state{vs_data_container = VsDataContainer} = GenericState,
 	[PrevState#state{parse_state = GenericState#generic_state{
-			vs_data = VsData ++ VsDataContainer}} | T];
+			vs_data_container = [VsData | VsDataContainer]}} | T];
 parse_managed_element({endElement, _, "BssFunction", _QName},
 		[#state{dn_prefix = [BssDn | _],
 		parse_state = #geran_state{bss = #{"attributes" := BssAttr},
@@ -285,7 +285,7 @@ parse_managed_element({endElement, _Uri, _LocalName, QName},
 parse_vsdata({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes}, State) ->
 	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = [#{"id" => Id}]},
+			parse_state = #generic_state{vs_data = #{"id" => Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_vsdata({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -293,22 +293,22 @@ parse_vsdata({startElement, _, _, QName, Attributes},
 parse_vsdata({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_vsdata({endElement, _Uri, "attributes", QName},
-		[#state{parse_state = #generic_state{
-		vs_data = [VsData | T2]}, stack = Stack} = State | T]) ->
+		[#state{parse_state = #generic_state{vs_data = VsData},
+		stack = Stack} = State | T]) ->
 	GenericState = State#state.parse_state,
 	NewStack = [{endElement, QName} | Stack],
 	{Attributes, _NextStack} = pop(startElement, QName, NewStack),
 	NewVsData = parse_vsdata_attr(VsData, Attributes),
 	[State#state{parse_state = GenericState#generic_state{
-			vs_data = [NewVsData | T2]},
+			vs_data = NewVsData},
 			stack = NewStack} | T];
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[#state{parse_state = #generic_state{vs_data = VsData}},
 		#state{parse_module = ?MODULE, parse_function = parse_vsdata,
 		parse_state = GenericState} = PrevState | T]) ->
-	#generic_state{vs_data = VsDataContainer} = GenericState,
+	#generic_state{vs_data_container = VsDataContainer} = GenericState,
 	[PrevState#state{parse_state = GenericState#generic_state{
-			vs_data = VsData ++ VsDataContainer}} | T];
+			vs_data_container = [VsData | VsDataContainer]}} | T];
 parse_vsdata({endElement, _Uri, "VsDataContainer", _QName} = Event,
 		[_State, #state{parse_module = M, parse_function = F} | _T] = StateStack) ->
 	M:F(Event, StateStack);
