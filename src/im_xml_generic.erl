@@ -207,70 +207,6 @@ parse_managed_element({endElement, _, "VsDataContainer", _QName},
 	#generic_state{vs_data_container = VsDataContainer} = GenericState,
 	[PrevState#state{parse_state = GenericState#generic_state{
 			vs_data_container = [VsData | VsDataContainer]}} | T];
-parse_managed_element({endElement, _, "BssFunction", _QName},
-		[#state{dn_prefix = [BssDn | _],
-		parse_state = #geran_state{bss = #{"attributes" := BssAttr},
-		btss = Btss}, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T]) ->
-	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
-	ClassType = "BssFunction",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = BssDn,
-			description = "GSM Base Station Subsystem (BSS)",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
-			specification = Spec,
-			characteristic = lists:reverse([BtsSiteMgr | BssAttr])},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_managed_element({endElement, _, "NodeBFunction", _QName},
-		[#state{dn_prefix = [NodebDn | _],
-		parse_state = #utran_state{nodeb = #{"attributes" := NodeBAttr}},
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T]) ->
-	ClassType = "NodeBFunction",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = NodebDn,
-			description = "UMTS Telecommunication Nodes",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
-			specification = Spec,
-			characteristic = [NodeBAttr]},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_managed_element({endElement, _, "RncFunction", _QName},
-		[#state{dn_prefix = [RncDn | _],
-		parse_state = #utran_state{rnc = #{"attributes" := RncAttr},
-		fdds = Fdds}, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T]) ->
-	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
-	ClassType = "RncFunction",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = RncDn,
-			description = "UMTS Radio Network Controller (RNC)",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
-			specification = Spec,
-			characteristic = lists:reverse([UtranCellFDD | RncAttr])},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
 parse_managed_element({endElement, _Uri, "ManagedElement", QName} = Event,
 		[#state{stack = Stack} = State,
 		#state{parse_module = M, parse_function = F} = PrevState | T]) ->
@@ -373,27 +309,3 @@ pop(Element, QName, [H | T], Acc)
 	{[H | Acc], T};
 pop(Element, QName, [H | T], Acc) ->
 	pop(Element, QName, T, [H | Acc]).
-
--spec get_specification_ref(Name, Cache) -> Result
-	when
-		Name :: string(),
-		Cache :: [SpecRef],
-		Result :: {SpecRef, Cache} | {error, Reason},
-		SpecRef :: specification_ref(),
-		Reason :: term().
-%% @hidden
-get_specification_ref(Name, Cache) ->
-	case lists:keyfind(Name, #specification_ref.name, Cache) of
-		#specification_ref{name = Name} = SpecRef ->
-			{SpecRef, Cache};
-		false ->
-			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
-					{SpecRef, [SpecRef | Cache]};
-				{error, Reason} ->
-					throw({get_specification_name, Reason})
-			end
-	end.

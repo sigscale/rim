@@ -37,17 +37,27 @@ parse_nodeb({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_nodeb({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_nodeb({endElement, _Uri, "NodeBFunction", QName} = Event,
-		[#state{stack = Stack, parse_state = UtranState} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{nodeb = NodeB} = UtranState,
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
+		[#state{dn_prefix = [NodebDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NodeBAttr = parse_nodeb_attr(T2, undefined, []),
-	StateStack = [State#state{stack = NewStack,
-			parse_state = UtranState#utran_state{
-			nodeb = NodeB#{"attributes" => NodeBAttr}}},
-			PrevState | T1],
-	M:F(Event, StateStack);
+	ClassType = "NodeBFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = NodebDn,
+			description = "UMTS Telecommunication Nodes",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			specification = Spec,
+			characteristic = NodeBAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_nodeb({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -168,121 +178,29 @@ parse_rnc({startElement, _Uri, "UtranCellTDDHcr", QName,
 parse_rnc({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_rnc({endElement, _Uri, "EP_IuCS", _QName},
-		[#state{parse_state = #utran_state{iucs = Iucs}},
-		#state{parse_state = UtranState} = PrevState | T]) ->
-	#utran_state{rnc = Rnc} = UtranState,
-	NewRnc = choice_add(Iucs, Rnc),
-	[PrevState#state{parse_state = UtranState#utran_state{
-			rnc = NewRnc}} | T];
-parse_rnc({endElement, _Uri, "EP_IuPS", _QName},
-		[#state{parse_state = #utran_state{iups = Iups}},
-		#state{parse_state = UtranState} = PrevState | T]) ->
-	#utran_state{rnc = Rnc} = UtranState,
-	NewRnc = choice_add(Iups, Rnc),
-	[PrevState#state{parse_state = UtranState#utran_state{
-			rnc = NewRnc}} | T];
-parse_rnc({endElement, _Uri, "EP_Iur", _QName},
-		[#state{parse_state = #utran_state{iur = Iur}},
-		#state{parse_state = UtranState} = PrevState | T]) ->
-	#utran_state{rnc = Rnc} = UtranState,
-	NewRnc = choice_add(Iur, Rnc),
-	[PrevState#state{parse_state = UtranState#utran_state{
-			rnc = NewRnc}} | T];
-parse_rnc({endElement, _Uri, "UtranCellFDD", _QName},
-		[#state{dn_prefix = [FddDn | _], parse_state = #utran_state{
-		fdd = #{"attributes" := FddAttr, "choice" := Choice}},
-		spec_cache = Cache},
-		#state{spec_cache = PrevCache, parse_state = UtranState} = PrevState | T]) ->
-	#utran_state{fdds = Fdds} = UtranState,
-	ClassType = "UtranCellFDD",
+parse_rnc({endElement, _Uri, "RncFunction", QName},
+		[#state{parse_state =  #utran_state{fdds = Fdds},
+		dn_prefix = [RncDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
+	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = FddDn,
-			description = "UMTS radio",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
-			specification = Spec,
-			characteristic = [FddAttr | Choice]},
-	case im:add_resource(Resource) of
-		{ok, #resource{}} ->
-			[PrevState#state{
-					parse_state = UtranState#utran_state{fdds = [FddDn | Fdds]},
-					spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_rnc({endElement, _Uri, "IubLink", _QName},
-		[#state{dn_prefix = [IubDn | _], parse_state = #utran_state{
-		iub = #{"attributes" := IubAttr}}, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T]) ->
-	ClassType = "IubLink",
-%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = IubDn,
-			description = "UMTS IUB interface",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink",
-%			specification = Spec,
-			characteristic = [IubAttr]},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [Cache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_rnc({endElement, _Uri, "UtranCellTDDHcr", _QName},
-		[#state{dn_prefix = [TddHcrDn | _], parse_state = #utran_state{
-		tdd_hcr = #{"attributes" := TddHcrAttr}}, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T]) ->
-	ClassType = "UtranCellTDDHcr",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = TddHcrDn,
-			description = "UMTS Time Division Duplex High Chip Rate",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
-			specification = Spec,
-			characteristic = [TddHcrAttr]},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_rnc({endElement, _Uri, "UtranCellTDDLcr", _QName},
-		[#state{dn_prefix = [TddLcrDn | _], parse_state = #utran_state{
-		tdd_lcr = #{"attributes" := TddLcrAttr}}, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T]) ->
-	ClassType = "UtranCellTDDLcr",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = TddLcrDn,
-			description = "UMTS Time Division Duplex Low Chip Rate",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
-			specification = Spec,
-			characteristic = [TddLcrAttr]},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_rnc({endElement, _Uri, "RncFunction", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{rnc = Rnc} = UtranState,
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	RncAttr = parse_rnc_attr(T2, undefined, []),
-	StateStack = [State#state{stack = NewStack,
-			parse_state = UtranState#utran_state{
-			rnc = Rnc#{"attributes" => RncAttr}}}, PrevState | T1],
-	M:F(Event, StateStack);
+	Resource = #resource{name = RncDn,
+			description = "UMTS Radio Network Controller (RNC)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			specification = Spec,
+			characteristic = lists:reverse([UtranCellFDD | RncAttr])},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_rnc({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -369,30 +287,31 @@ parse_fdd({startElement, _Uri, "GsmRelation", QName,
 parse_fdd({startElement, _Uri, _LocalName, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_fdd({endElement, _Uri, "UtranRelation", _QName},
-		[#state{parse_state = #utran_state{utran_rel = UtranRel}},
-		#state{parse_state = UtranState} = PrevState | T]) ->
-	#utran_state{fdd = Fdd} = UtranState,
-	NewFdd = choice_add(UtranRel, Fdd),
-	[PrevState#state{parse_state = UtranState#utran_state{
-			fdd = NewFdd}} | T];
-parse_fdd({endElement, _Uri, "GsmRelation", _QName},
-		[#state{parse_state = #geran_state{gsm_rel = GsmRel}},
-		#state{parse_state = UtranState} = PrevState | T]) ->
-	#utran_state{fdd = Fdd} = UtranState,
-	NewFdd = choice_add(GsmRel, Fdd),
-	[PrevState#state{parse_state = UtranState#utran_state{
-			fdd = NewFdd}} | T];
-parse_fdd({endElement, _Uri, "UtranCellFDD", QName} = Event,
-		[#state{stack = Stack, parse_state = UtranState} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{fdd = Fdd} = UtranState,
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
+		[#state{dn_prefix = [FddDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = UtranState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#utran_state{fdds = Fdds} = UtranState,
+	ClassType = "UtranCellFDD",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	FddAttr = parse_fdd_attr(T2, []),
-	StateStack = [State#state{stack = NewStack,
-			parse_state = UtranState#utran_state{
-			fdd = Fdd#{"attributes" => FddAttr}}}, PrevState | T1],
-	M:F(Event, StateStack);
+	Resource = #resource{name = FddDn,
+			description = "UMTS radio",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+			specification = Spec,
+			characteristic = FddAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{}} ->
+			[PrevState#state{
+					parse_state = UtranState#utran_state{fdds = [FddDn | Fdds]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_fdd({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -654,15 +573,15 @@ parse_utran_rel({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_utran_rel({startElement, _Uri, _LocalName, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_utran_rel({endElement, _Uri, "UtranRelation", QName} = Event,
-		[#state{stack = Stack, parse_state = UtranState} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{utran_rel = UtranRel} = UtranState,
-	{[_ | T], NewStack} = pop(startElement, QName, Stack),
-	NewUtranRel = parse_utran_rel_attr(T, undefined, UtranRel),
-	StateStack = [State#state{stack = NewStack, parse_state = UtranState#utran_state{
-			utran_rel = NewUtranRel}}, PrevState | T1],
-	M:F(Event, StateStack);
+parse_utran_rel({endElement, _Uri, "UtranRelation", QName},
+		[#state{stack = Stack, parse_state = #utran_state{utran_rel = UtranRel}},
+		#state{parse_state = UtranState} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	NewUtranRel = parse_utran_rel_attr(T2, undefined, UtranRel),
+	#utran_state{fdd = Fdd} = UtranState,
+	NewFdd = choice_add(NewUtranRel, Fdd),
+	[PrevState#state{parse_state = UtranState#utran_state{
+			fdd = NewFdd}} | T1];
 parse_utran_rel({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -689,16 +608,27 @@ parse_tdd_hcr({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_tdd_hcr({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
-	HcrAttr = parse_tdd_hcr_attr(T2, undefined, []),
-	#utran_state{tdd_hcr = TddHcr} = UtranState,
-	StateStack = [State#state{stack = NewStack,
-			parse_state = UtranState#utran_state{
-			tdd_hcr = TddHcr#{"attributes" => HcrAttr}}}, PrevState | T1],
-	M:F(Event, StateStack);
+parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
+		[#state{dn_prefix = [TddHcrDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	TddHcrAttr = parse_tdd_hcr_attr(T2, undefined, []),
+	ClassType = "UtranCellTDDHcr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = TddHcrDn,
+			description = "UMTS Time Division Duplex High Chip Rate",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
+			specification = Spec,
+			characteristic = TddHcrAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_tdd_hcr({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -963,16 +893,27 @@ parse_tdd_lcr({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_tdd_lcr({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
+		[#state{dn_prefix = [TddLcrDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	TddLcrAttr = parse_tdd_lcr_attr(T2, undefined, []),
-	#utran_state{tdd_lcr = TddLcr} = UtranState,
-	StateStack = [State#state{stack = NewStack,
-			parse_state = UtranState#utran_state{
-			tdd_lcr = TddLcr#{"attributes" => TddLcrAttr}}}, PrevState | T1],
-	M:F(Event, StateStack);
+	ClassType = "UtranCellTDDLcr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = TddLcrDn,
+			description = "UMTS Time Division Duplex Low Chip Rate",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
+			specification = Spec,
+			characteristic = TddLcrAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_tdd_lcr({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -1232,16 +1173,27 @@ parse_iub({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_iub({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_iub({endElement, _Uri, "IubLink", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_iub({endElement, _Uri, "IubLink", QName},
+		[#state{dn_prefix = [IubDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	IubAttr = parse_iub_attr(T2, undefined, []),
-	#utran_state{iub = Iub} = UtranState,
-	StateStack = [State#state{stack = NewStack,
-			parse_state = UtranState#utran_state{
-			iub = Iub#{"attributes" => IubAttr}}}, PrevState | T1],
-	M:F(Event, StateStack);
+	ClassType = "IubLink",
+%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IubDn,
+			description = "UMTS IUB interface",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "SubNetwork",
+			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+%			specification = Spec,
+			characteristic = IubAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [Cache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_iub({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -1307,15 +1259,14 @@ parse_iucs({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_iucs({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_iucs({endElement, _Uri, "EP_IuCS", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{iucs = Iucs} = UtranState,
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_iucs({endElement, _Uri, "EP_IuCS", QName},
+		[#state{parse_state = #utran_state{iucs = Iucs}, stack = Stack},
+		#state{parse_state = UtranState} = PrevState | T1]) ->
+	#utran_state{rnc = Rnc} = UtranState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NewIucs = parse_iucs_attr(T2, undefined, Iucs),
-	StateStack = [State#state{stack = NewStack, parse_state = UtranState#utran_state{
-			iucs = NewIucs}}, PrevState | T1],
-	M:F(Event, StateStack);
+	NewRnc = choice_add(NewIucs, Rnc),
+	[PrevState#state{parse_state = UtranState#utran_state{rnc = NewRnc}} | T1];
 parse_iucs({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -1351,15 +1302,15 @@ parse_iups({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_iups({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_iups({endElement, _Uri, "EP_IuPS", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{iups = Iups} = UtranState,
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_iups({endElement, _Uri, "EP_IuPS", QName},
+		[#state{parse_state = #utran_state{iups = Iups}, stack = Stack},
+		#state{parse_state = UtranState} = PrevState | T1]) ->
+	#utran_state{rnc = Rnc} = UtranState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NewIups = parse_iups_attr(T2, undefined, Iups),
-	StateStack = [State#state{stack = NewStack, parse_state = UtranState#utran_state{
-			iups = NewIups}}, PrevState | T1],
-	M:F(Event, StateStack);
+	NewRnc = choice_add(NewIups, Rnc),
+	[PrevState#state{parse_state = UtranState#utran_state{
+			rnc = NewRnc}} | T1];
 parse_iups({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -1395,15 +1346,15 @@ parse_iur({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_iur({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_iur({endElement, _Uri, "EP_Iur", QName} = Event,
-		[#state{parse_state = UtranState, stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T1]) ->
-	#utran_state{iur = Iur} = UtranState,
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
+parse_iur({endElement, _Uri, "EP_Iur", QName},
+		[#state{parse_state = #utran_state{iur = Iur}, stack = Stack},
+		#state{parse_state = UtranState} = PrevState | T1]) ->
+	#utran_state{rnc = Rnc} = UtranState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NewIur = parse_iur_attr(T2, undefined, Iur),
-	StateStack = [State#state{stack = NewStack, parse_state = UtranState#utran_state{
-			iur = NewIur}}, PrevState | T1],
-	M:F(Event, StateStack);
+	NewRnc = choice_add(NewIur, Rnc),
+	[PrevState#state{parse_state = UtranState#utran_state{
+			rnc = NewRnc}} | T1];
 parse_iur({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
