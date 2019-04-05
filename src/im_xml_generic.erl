@@ -58,15 +58,6 @@ parse_generic({startElement, _Uri, "ManagedElement", QName,
 parse_generic({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_generic({endElement, _Uri, "SubNetwork", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
-parse_generic({endElement, _Uri, "MeContext", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
-parse_generic({endElement, _Uri, "ManagedElement", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
 parse_generic({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -105,26 +96,9 @@ parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 parse_subnetwork({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_subnetwork({endElement, _Uri, "meContext", _QName},
-		[_State, PrevState | T]) ->
-% only for zte xml files
-	[PrevState | T];
-parse_subnetwork({endElement, _Uri, "MeContext", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
-parse_subnetwork({endElement, _Uri, "ManagedElement", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
 parse_subnetwork({endElement, _Uri, "SubNetwork", _QName},
-		[_State, #state{parse_module = ?MODULE,
-		parse_function = parse_subnetwork} = PrevState | T]) ->
+		[_State, PrevState | T]) ->
 	[PrevState | T];
-parse_subnetwork({endElement, _Uri, "SubNetwork", QName} = Event,
-		[#state{stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T]) ->
-	StateStack = [State#state{stack = [{endElement, QName} | Stack]},
-			PrevState | T],
-	M:F(Event, StateStack);
 parse_subnetwork({endElement,  _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -142,20 +116,11 @@ parse_mecontext({startElement, _Uri, "ManagedElement", QName,
 parse_mecontext({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_mecontext({endElement, _Uri, "meContext", QName} = Event,
-		[#state{stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T]) ->
+parse_mecontext({endElement, _Uri, "meContext", _QName},
+		[_State, PrevState | T]) ->
 % only for zte xml files
-	StateStack = [State#state{stack = [{endElement, QName} | Stack]},
-			PrevState | T],
-	M:F(Event, StateStack);
-parse_mecontext({endElement, _Uri, "MeContext", QName} = Event,
-		[#state{stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T]) ->
-	StateStack = [State#state{stack = [{endElement, QName} | Stack]},
-			PrevState | T],
-	M:F(Event, StateStack);
-parse_mecontext({endElement, _Uri, "ManagedElement", _QName},
+	[PrevState | T];
+parse_mecontext({endElement, _Uri, "MeContext", _QName},
 		[_State, PrevState | T]) ->
 	[PrevState | T];
 parse_mecontext({endElement, _Uri, _LocalName, QName},
@@ -201,18 +166,9 @@ parse_managed_element({startElement, _, "VsDataContainer", QName,
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_managed_element({endElement, _, "VsDataContainer", _QName},
-		[#state{parse_state = #generic_state{vs_data = VsData}},
-		#state{parse_state = GenericState} = PrevState | T]) ->
-	#generic_state{vs_data_container = VsDataContainer} = GenericState,
-	[PrevState#state{parse_state = GenericState#generic_state{
-			vs_data_container = [VsData | VsDataContainer]}} | T];
-parse_managed_element({endElement, _Uri, "ManagedElement", QName} = Event,
-		[#state{stack = Stack} = State,
-		#state{parse_module = M, parse_function = F} = PrevState | T]) ->
-	StateStack = [State#state{stack = [{endElement, QName} | Stack]},
-			PrevState | T],
-	M:F(Event, StateStack);
+parse_managed_element({endElement, _Uri, "ManagedElement", _QName},
+		[_State, PrevState | T]) ->
+	[PrevState | T];
 parse_managed_element({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
@@ -239,15 +195,8 @@ parse_vsdata({endElement, _Uri, "attributes", QName},
 			vs_data = NewVsData},
 			stack = NewStack} | T];
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
-		[#state{parse_state = #generic_state{vs_data = VsData}},
-		#state{parse_module = ?MODULE, parse_function = parse_vsdata,
-		parse_state = GenericState} = PrevState | T]) ->
-	#generic_state{vs_data_container = VsDataContainer} = GenericState,
-	[PrevState#state{parse_state = GenericState#generic_state{
-			vs_data_container = [VsData | VsDataContainer]}} | T];
-parse_vsdata({endElement, _Uri, "VsDataContainer", _QName} = Event,
-		[_State, #state{parse_module = M, parse_function = F} | _T] = StateStack) ->
-	M:F(Event, StateStack);
+		[_State, PrevState | T]) ->
+	[PrevState | T];
 parse_vsdata({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
