@@ -23,7 +23,7 @@
 					<xn:userLabel>EMS LTE 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Montparnasse</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
 						<xn:dn>SubNetwork=1,ENBFunction=1</xn:dn>
 					</xn:managedElements>
@@ -39,7 +39,7 @@
 					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Champ de Mars</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>

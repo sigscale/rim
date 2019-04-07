@@ -26,7 +26,7 @@
 					<xn:userLabel>EMS UMTS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Montparnasse</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
 						<xn:dn>SubNetwork=1,NodeBFunction=1</xn:dn>
 						<xn:dn>SubNetwork=1,RncFunction=1</xn:dn>
@@ -43,7 +43,7 @@
 					<xn:userLabel>RNS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Champ de Mars</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
