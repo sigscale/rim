@@ -14,18 +14,18 @@
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Paris SN1</xn:userLabel>
-				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
+				<xn:userLabel>SN 1</xn:userLabel>
+				<xn:userDefinedNetworkType>LTE</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
+					<xn:userLabel>EMS LTE 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Montparnasse</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,ENBFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -34,9 +34,9 @@
 				<xn:attributes>
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>BSS</xn:managedElementType>
+						<xn:managedElementType>ENB</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
+					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Champ de Mars</xn:locationName>
@@ -47,7 +47,7 @@
 				</xn:attributes>
 				<en:ENBFunction id="1">
 					<en:attributes>
-						<en:userLabel>Paris SN1</en:userLabel>
+						<en:userLabel>ENB 1</en:userLabel>
 						<en:iRATANRSwitch>true</en:iRATANRSwitch>
 						<en:x2BlackList>
 							<xn:dn>ENBFunction=1,x2BlackList</xn:dn>
@@ -65,7 +65,7 @@
 					<!-- Multiple EUtranCellTDD -->
 					<en:EUtranCellTDD id="1">
 						<en:attributes>
-							<en:userLabel>Paris MNO1</en:userLabel>
+							<en:userLabel>TDD 1</en:userLabel>
 							<en:cellLocalId>211</en:cellLocalId>
 							<en:cellSize>verysmall</en:cellSize>
 							<en:pLMNIdList>

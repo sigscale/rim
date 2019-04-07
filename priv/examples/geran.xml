@@ -14,13 +14,13 @@
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Gotham</xn:userLabel>
+				<xn:userLabel>SN 1</xn:userLabel>
 				<xn:userDefinedNetworkType>GSM</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>EMS 1</xn:userLabel>
+					<xn:userLabel>EMS GSM 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
@@ -58,7 +58,7 @@
 						</gn:attributes>
 						<gn:GsmCell id="1">
 							<gn:attributes>
-								<gn:userLabel>Cell TnDRg</gn:userLabel>
+								<gn:userLabel>Cell 1</gn:userLabel>
 								<gn:cellIdentity>35701</gn:cellIdentity>
 								<gn:cellAllocation>8 22 24 28 30 30 44 52 66 77 83 94 109 119 123</gn:cellAllocation>
 								<gn:ncc>4</gn:ncc>

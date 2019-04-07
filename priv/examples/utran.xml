@@ -17,18 +17,19 @@
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Paris SN1</xn:userLabel>
+				<xn:userLabel>SN 1</xn:userLabel>
 				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
+					<xn:userLabel>EMS UMTS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Montparnasse</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,NodeBFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,RncFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -39,7 +40,7 @@
 					<xn:managedElementTypeList>
 						<xn:managedElementType>RNS</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>RNS dlkjdRN1</xn:userLabel>
+					<xn:userLabel>RNS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Champ de Mars</xn:locationName>
@@ -50,7 +51,7 @@
 				</xn:attributes>
 				<un:NodeBFunction id="1">
 					<un:attributes>
-						<un:userLabel>Paris NK1</un:userLabel>
+						<un:userLabel>NodeB 1</un:userLabel>
 						<un:vnfParametersList>
 							<xn:vnfInstanceId>oiurqw</xn:vnfInstanceId>
 							<xn:autoScalable>false</xn:autoScalable>
@@ -67,7 +68,7 @@
 				</un:NodeBFunction>
 				<un:RncFunction id="1">
 					<un:attributes>
-						<un:userLabel>Paris SMN1</un:userLabel>
+						<un:userLabel>RNC 1</un:userLabel>
 						<un:vnfParametersList>
 							<xn:vnfInstanceId>lkajjfa</xn:vnfInstanceId>
 							<xn:autoScalable>true</xn:autoScalable>
@@ -78,27 +79,27 @@
 					<un:EP_IuCS id="1">
 						<un:attributes>
 							<un:farEndEntity>vzmnbc</un:farEndEntity>
-							<un:userLabel>Paris EPIUPS</un:userLabel>
+							<un:userLabel>IuCS 1</un:userLabel>
 							<un:connMscNumber>3254</un:connMscNumber>
 						</un:attributes>
 					</un:EP_IuCS>
 					<un:EP_IuPS id="1">
 						<un:attributes>
 							<un:farEndEntity>lkjsdgf</un:farEndEntity>
-							<un:userLabel>Paris EPIUCS</un:userLabel>
+							<un:userLabel>IuPS 1</un:userLabel>
 							<un:connSgsnNumber>9842</un:connSgsnNumber>
 						</un:attributes>
 					</un:EP_IuPS>
 					<un:EP_Iur id="1">
 						<un:attributes>
 							<un:farEndEntity>vzmnbc</un:farEndEntity>
-							<un:userLabel>Paris EPIUPS</un:userLabel>
+							<un:userLabel>Iur 1</un:userLabel>
 							<un:connectedRncId>powrfs</un:connectedRncId>
 						</un:attributes>
 					</un:EP_Iur>
 					<un:IubLink id="1">
 						<un:attributes>
-							<un:userLabel>Paris NI1</un:userLabel>
+							<un:userLabel>Iub 1</un:userLabel>
 							<un:iubLinkUtranCell>
 								<xn:dn>ManagedElement=1,IubLink=1</xn:dn>
 							</un:iubLinkUtranCell>
@@ -116,7 +117,7 @@
 					</un:IubLink>
 					<un:UtranCellTDDLcr id="1">
 						<un:attributes>
-							<un:userLabel>Paris UCTL1</un:userLabel>
+							<un:userLabel>TDDlcr 1</un:userLabel>
 							<un:cId>3545</un:cId>
 							<un:pichPower>2.9</un:pichPower>
 							<un:relatedAntennaList>
@@ -136,7 +137,7 @@
 					</un:UtranCellTDDLcr>
 					<un:UtranCellTDDHcr id="1">
 						<un:attributes>
-							<un:userLabel>Paris UCTH1</un:userLabel>
+							<un:userLabel>TDDhcr 1</un:userLabel>
 							<un:cId>6871</un:cId>
 							<un:pichPower>1.5</un:pichPower>
 							<un:relatedAntennaList>
@@ -157,7 +158,7 @@
 					<!-- Multiple UtranCellFDD in a RNC-->
 					<un:UtranCellFDD id="1">
 						<un:attributes>
-							<un:userLabel>Paris MN7</un:userLabel>
+							<un:userLabel>FDD 1</un:userLabel>
 							<un:localCellId>268435455</un:localCellId>
 							<un:cellMode>3-84McpsTDDMode</un:cellMode>
 							<un:fachPower>150</un:fachPower>

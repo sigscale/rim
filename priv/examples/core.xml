@@ -14,18 +14,18 @@
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Paris SN1</xn:userLabel>
-				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
+				<xn:userLabel>SN 1</xn:userLabel>
+				<xn:userDefinedNetworkType>Core</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
+					<xn:userLabel>EMS Core 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Montparnasse</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,MscFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -34,9 +34,9 @@
 				<xn:attributes>
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>BSS</xn:managedElementType>
+						<xn:managedElementType>MscServer</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
+					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Champ de Mars</xn:locationName>
@@ -47,7 +47,7 @@
 				</xn:attributes>
 				<cn:MscServerFunction id="1">
 					<cn:attributes>
-						<cn:userLabel>Paris SN1</cn:userLabel>
+						<cn:userLabel>MSC 1</cn:userLabel>
 						<cn:mccList>
 							<cn:em>8564132</cn:em>
 						</cn:mccList>
@@ -77,7 +77,7 @@
 					<!-- Multiple IucsLink in a MSCS  -->
 					<cn:IucsLink id="1">
 						<cn:attributes>
-							<cn:userLabel>Paris MNO5</cn:userLabel>
+							<cn:userLabel>IuCS 1</cn:userLabel>
 							<cn:vnfParametersList>
 								<xn:vnfInstanceId>plkasfjh</xn:vnfInstanceId>
 								<xn:autoScalable>true</xn:autoScalable>
