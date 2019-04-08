@@ -70,7 +70,7 @@
 				</epc:EPDGFunction>
 				<epc:MMEFunction id="1">
 					<epc:attributes>
-						<epc:userLabel>Paris PN1</epc:userLabel>
+						<epc:userLabel>MME 1</epc:userLabel>
 						<epc:vnfParametersList>
 							<xn:vnfInstanceId>oitrqwjf</xn:vnfInstanceId>
 							<xn:autoScalable>false</xn:autoScalable>
@@ -94,7 +94,7 @@
 				</epc:MMEFunction>
 				<epc:PCRFFunction id="1">
 					<epc:attributes>
-						<epc:userLabel>Paris SMN1</epc:userLabel>
+						<epc:userLabel>PCRF 1</epc:userLabel>
 						<epc:linkList>
 							<xn:dn>hgfsbvcl</xn:dn>
 						</epc:linkList>
@@ -116,7 +116,7 @@
 				</epc:PCRFFunction>
 				<epc:PGWFunction id="1">
 					<epc:attributes>
-						<epc:userLabel>Paris ASN1</epc:userLabel>
+						<epc:userLabel>PGW 1</epc:userLabel>
 						<epc:vnfParametersList>
 							<xn:vnfInstanceId>nmbkhd</xn:vnfInstanceId>
 							<xn:autoScalable>true</xn:autoScalable>
@@ -139,7 +139,7 @@
 				</epc:PGWFunction>
 				<epc:ServingGWFunction id="1">
 					<epc:attributes>
-						<epc:userLabel>Paris SMN1</epc:userLabel>
+						<epc:userLabel>ServiceGW 1</epc:userLabel>
 						<epc:tACList>
 							<epc:tAC>568912</epc:tAC>
 						</epc:tACList>

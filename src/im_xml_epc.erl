@@ -13,7 +13,8 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_epdg/2, parse_mme/2, parse_pcrf/2, parse_pgw/2, parse_sgw/2,
+%-export([parse_epdg/2]).
+-export([parse_mme/2, parse_pcrf/2, parse_pgw/2, parse_sgw/2,
 		parse_eprpeps/2]).
 
 -include("im.hrl").
@@ -27,74 +28,72 @@
 %%  The im private API
 %%----------------------------------------------------------------------
 
-%% @hidden
-parse_epdg({characters, Chars}, [#state{stack = Stack} = State | T]) ->
-	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_epdg({startElement,  _Uri, "EP_RP_EPS", QName,
-		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",EP_RP_EPS=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = im_xml_epc, parse_function = parse_eprpeps,
-			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_epdg({startElement, _, _, QName, Attributes},
-		[#state{stack = Stack} = State | T]) ->
-	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_epdg({endElement, _Uri, "EPDGFunction", QName},
-		[#state{dn_prefix = [EpdgDn | _], stack = Stack, parse_state = EpcState,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
-	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	EpdgAttr = parse_epdg_attr(T2, undefined, []),
-	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
-	ClassType = "EPDGFunction",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = EpdgDn,
-			description = "GSM Base Station Subsystem (BSS)",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "SubNetwork",
-			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
-			specification = Spec,
-			characteristic = lists:reverse([EpRpEps | EpdgAttr])},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_epdg({endElement, _Uri, _LocalName, QName} = _Event,
-		[#state{stack = Stack} = State | T]) ->
-	[State#state{stack = [{endElement, QName} | Stack]} | T].
+%parse_epdg({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+%	[State#state{stack = [{characters, Chars} | Stack]} | T];
+%parse_epdg({startElement,  _Uri, "EP_RP_EPS", QName,
+%		[{[], [], "id", Id}] = Attributes},
+%		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+%	DnComponent = ",EP_RP_EPS=" ++ Id,
+%	NewDn = CurrentDn ++ DnComponent,
+%	[#state{dn_prefix = [NewDn],
+%			parse_module = im_xml_epc, parse_function = parse_eprpeps,
+%			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
+%			stack = [{startElement, QName, Attributes}]} | State];
+%parse_epdg({startElement, _, _, QName, Attributes},
+%		[#state{stack = Stack} = State | T]) ->
+%	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+%parse_epdg({endElement, _Uri, "EPDGFunction", QName},
+%		[#state{dn_prefix = [EpdgDn | _], stack = Stack, parse_state = EpcState,
+%		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+%	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
+%	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+%	EpdgAttr = parse_epdg_attr(T2, undefined, []),
+%	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
+%	ClassType = "EPDGFunction",
+%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+%	Resource = #resource{name = EpdgDn,
+%			description = "GSM Base Station Subsystem (BSS)",
+%			category = "RAN",
+%			class_type = ClassType,
+%			base_type = "SubNetwork",
+%			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+%			specification = Spec,
+%			characteristic = lists:reverse([EpRpEps | EpdgAttr])},
+%	case im:add_resource(Resource) of
+%		{ok, #resource{} = _R} ->
+%			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+%		{error, Reason} ->
+%			throw({add_resource, Reason})
+%	end;
+%parse_epdg({endElement, _Uri, _LocalName, QName} = _Event,
+%		[#state{stack = Stack} = State | T]) ->
+%	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
-% @hidden
-parse_epdg_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
-		undefined, Acc) ->
-	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_epdg_attr1(Attributes, undefined, Acc).
-% @hidden
-parse_epdg_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
-		undefined, Acc) ->
-	% @todo vnfParametersListType
-	parse_epdg_attr1(T, undefined, Acc);
-parse_epdg_attr1([{endElement, {"gn", "linkList"}} | T],
-		undefined, Acc) ->
-	% @todo linkListType
-	parse_epdg_attr1(T, undefined, Acc);
-parse_epdg_attr1([{endElement, {"gn", Attr}} | T],
-		undefined, Acc) ->
-	parse_epdg_attr1(T, Attr, Acc);
-parse_epdg_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
-	parse_epdg_attr1(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_epdg_attr1([{startElement, {"gn", Attr}, _} | T],
-		Attr, Acc) ->
-	parse_epdg_attr1(T, undefined, Acc);
-parse_epdg_attr1([], undefined, Acc) ->
-	Acc.
+%parse_epdg_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
+%		undefined, Acc) ->
+%	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+%	parse_epdg_attr1(Attributes, undefined, Acc).
+%% hidden
+%parse_epdg_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
+%		undefined, Acc) ->
+%	% todo vnfParametersListType
+%	parse_epdg_attr1(T, undefined, Acc);
+%parse_epdg_attr1([{endElement, {"epc", "linkList"}} | T],
+%		undefined, Acc) ->
+%	% todo linkListType
+%	parse_epdg_attr1(T, undefined, Acc);
+%parse_epdg_attr1([{endElement, {"epc", Attr}} | T],
+%		undefined, Acc) ->
+%	parse_epdg_attr1(T, Attr, Acc);
+%parse_epdg_attr1([{characters, Chars} | T],
+%		"userLabel" = Attr, Acc) ->
+%	parse_epdg_attr1(T, Attr,
+%			[#resource_char{name = Attr, value = Chars} | Acc]);
+%parse_epdg_attr1([{startElement, {"epc", Attr}, _} | T],
+%		Attr, Acc) ->
+%	parse_epdg_attr1(T, undefined, Acc);
+%parse_epdg_attr1([], undefined, Acc) ->
+%	Acc.
 
 %% @hidden
 parse_mme({characters, Chars}, [#state{stack = Stack} = State | T]) ->
@@ -139,20 +138,22 @@ parse_mme({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_mme_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_mme_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_mme_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_mme_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+parse_mme_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
 	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{endElement, {"gn", "pLMNIdList"}} | T],
+parse_mme_attr1([{endElement, {"epc", "pLMNIdList"}} | T],
 		undefined, Acc) ->
 	% @todo PLMNIdList
 	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{endElement, {"gn", Attr}} | T],
+parse_mme_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
+	parse_mme_attr1(T, undefined, Acc);
+parse_mme_attr1([{endElement, {"epc", Attr}} | T],
 		undefined, Acc) ->
 	parse_mme_attr1(T, Attr, Acc);
 parse_mme_attr1([{characters, Chars} | T],
@@ -167,7 +168,15 @@ parse_mme_attr1([{characters, Chars} | T],
 		"mMEPool" = Attr, Acc) ->
 	parse_mme_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_mme_attr1([{startElement, {"gn", Attr}, _} | T],
+parse_mme_attr1([{characters, _Chars} | T],
+		undefined, Acc) ->
+	parse_mme_attr1(T, undefined, Acc);
+parse_mme_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
+	parse_mme_attr1(T, undefined, Acc);
+parse_mme_attr1([{startElement, {"epc", "vnfParametersList"}, _} | T],
+		undefined, Acc) ->
+	parse_mme_attr1(T, undefined, Acc);
+parse_mme_attr1([{startElement, {"epc", Attr}, _} | T],
 		Attr, Acc) ->
 	parse_mme_attr1(T, undefined, Acc);
 parse_mme_attr1([], undefined, Acc) ->
@@ -216,28 +225,33 @@ parse_pcrf({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_pcrf_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_pcrf_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_pcrf_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_pcrf_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+parse_pcrf_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
 	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{endElement, {"gn", "linkList"}} | T],
-		undefined, Acc) ->
+parse_pcrf_attr1([{endElement, {"epc", "linkList"}} | T], undefined, Acc) ->
 	% @todo linkListType
 	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{endElement, {"gn", Attr}} | T],
-		undefined, Acc) ->
+parse_pcrf_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
+	parse_pcrf_attr1(T, undefined, Acc);
+parse_pcrf_attr1([{endElement, {"epc", Attr}} | T], undefined, Acc) ->
 	parse_pcrf_attr1(T, Attr, Acc);
-parse_pcrf_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
+parse_pcrf_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_pcrf_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_pcrf_attr1([{startElement, {"gn", Attr}, _} | T],
-		Attr, Acc) ->
+parse_pcrf_attr1([{characters, _Chars} | T], undefined, Acc) ->
+	parse_pcrf_attr1(T, undefined, Acc);
+parse_pcrf_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
+	parse_pcrf_attr1(T, undefined, Acc);
+parse_pcrf_attr1([{startElement, {"epc", "linkList"}, _} | T],
+		undefined, Acc) ->
+	parse_pcrf_attr1(T, undefined, Acc);
+parse_pcrf_attr1([{startElement, {"epc", Attr}, _} | T], Attr, Acc) ->
 	parse_pcrf_attr1(T, undefined, Acc);
 parse_pcrf_attr1([], undefined, Acc) ->
 	Acc.
@@ -285,24 +299,31 @@ parse_pgw({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_pgw_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_pgw_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_pgw_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_pgw_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+parse_pgw_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
 	parse_pgw_attr1(T, undefined, Acc);
-parse_pgw_attr1([{endElement, {"gn", Attr}} | T],
+parse_pgw_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
+	parse_pgw_attr1(T, undefined, Acc);
+parse_pgw_attr1([{endElement, {"epc", Attr}} | T],
 		undefined, Acc) ->
 	parse_pgw_attr1(T, Attr, Acc);
-parse_pgw_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
+parse_pgw_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_pgw_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_pgw_attr1([{startElement, {"gn", Attr}, _} | T],
-		Attr, Acc) ->
+parse_pgw_attr1([{characters, _Chars} | T], undefined, Acc) ->
+	parse_pgw_attr1(T, undefined, Acc);
+parse_pgw_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
+	parse_pgw_attr1(T, undefined, Acc);
+parse_pgw_attr1([{startElement, {"epc", "vnfParametersList"}, _} | T],
+		undefined, Acc) ->
+	parse_pgw_attr1(T, undefined, Acc);
+parse_pgw_attr1([{startElement, {"epc", Attr}, _} | T], Attr, Acc) ->
 	parse_pgw_attr1(T, undefined, Acc);
 parse_pgw_attr1([], undefined, Acc) ->
 	Acc.
@@ -350,32 +371,36 @@ parse_sgw({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_sgw_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_sgw_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_sgw_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_sgw_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+parse_sgw_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
 	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"gn", "pLMNIdList"}} | T],
+parse_sgw_attr1([{endElement, {"epc", "pLMNIdList"}} | T],
 		undefined, Acc) ->
 	% @todo PLMNIdList
 	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"gn", "tACList"}} | T],
+parse_sgw_attr1([{endElement, {"epc", "tACList"}} | T],
 		undefined, Acc) ->
 	% @todo TACList
 	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"gn", Attr}} | T],
+parse_sgw_attr1([{endElement, {"epc", "tAC"}} | T], undefined, Acc) ->
+	parse_sgw_attr1(T, undefined, Acc);
+parse_sgw_attr1([{endElement, {"epc", Attr}} | T],
 		undefined, Acc) ->
 	parse_sgw_attr1(T, Attr, Acc);
-parse_sgw_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
+parse_sgw_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_sgw_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_sgw_attr1([{startElement, {"gn", Attr}, _} | T],
-		Attr, Acc) ->
+parse_sgw_attr1([{characters, _Chars} | T], undefined, Acc) ->
+	parse_sgw_attr1(T, undefined, Acc);
+parse_sgw_attr1([{startElement, {"epc", _Attr}, _} | T], undefined, Acc) ->
+	parse_sgw_attr1(T, undefined, Acc);
+parse_sgw_attr1([{startElement, {"epc", Attr}, _} | T], Attr, Acc) ->
 	parse_sgw_attr1(T, undefined, Acc);
 parse_sgw_attr1([], undefined, Acc) ->
 	Acc.
@@ -395,58 +420,12 @@ parse_eprpeps({startElement, _Uri, "VsDataContainer", QName,
 parse_eprpeps({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_eprpeps({endElement, _Uri, "EP_RP_EPS", QName},
-		[#state{dn_prefix = [EpRpEpsDn | _], stack = Stack,
-		spec_cache = Cache}, #state{parse_state = EpcState,
-		spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
-	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	EpRpEpsAttr = parse_eprpeps_attr(T2, undefined, []),
-	ClassType = "EP_RP_EPS",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = EpRpEpsDn,
-			description = "GSM Base Transceiver Station (BTS)",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_RP_EPS",
-			specification = Spec,
-			characteristic = EpRpEpsAttr},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{parse_state = EpcState#epc_state{
-			ep_rp_epss = [EpRpEpsDn | EpRpEpss]}, spec_cache = [NewCache | PrevCache]} | T1];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
+parse_eprpeps({endElement, _Uri, "EP_RP_EPS", _QName},
+		[_State, PrevState | T]) ->
+	[PrevState | T];
 parse_eprpeps({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
-
-% @hidden
-parse_eprpeps_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
-		undefined, Acc) ->
-	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_eprpeps_attr1(Attributes, undefined, Acc).
-% @hidden
-parse_eprpeps_attr1([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
-	parse_eprpeps_attr1(T, Attr, Acc);
-parse_eprpeps_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
-	parse_eprpeps_attr1(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_eprpeps_attr1([{characters, Chars} | T],
-		"farEndEntity" = Attr, Acc) ->
-	parse_eprpeps_attr1(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_eprpeps_attr1([{characters, Chars} | T],
-		"farEndNeIpAddr" = Attr, Acc) ->
-	parse_eprpeps_attr1(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_eprpeps_attr1([{startElement, {"gn", Attr}, _} | T], Attr, Acc) ->
-	parse_eprpeps_attr1(T, undefined, Acc);
-parse_eprpeps_attr1([], undefined, Acc) ->
-	Acc.
 
 %%----------------------------------------------------------------------
 %%  internal functions
