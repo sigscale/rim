@@ -15,6 +15,7 @@ beam_DATA = im_app.beam \
 			im_xml_generic.beam \
 			im_xml_geran.beam \
 			im_xml_utran.beam \
+			im_xml_epc.beam \
 			im_xml_zte.beam \
 			im_server.beam \
 			mod_im_rest_accepted_content.beam \

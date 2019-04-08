@@ -39,3 +39,13 @@
 		iur :: map(),
 		fdds = [] :: [string()]}).
 -type utran_state() :: #utran_state{}.
+
+-record(epc_state,
+		{epdg :: map(),
+		mme :: map(),
+		pcrf :: map(),
+		pgw :: map(),
+		sgw :: map(),
+		ep_rp_eps :: map(),
+		ep_rp_epss :: [string()]}).
+-type epc_state() :: #epc_state{}.
