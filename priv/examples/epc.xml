@@ -70,11 +70,102 @@
 					<epc:EP_RP_EPS id="2">
 					</epc:EP_RP_EPS>
 				</epc:EPDGFunction>
-				<!--  Vendor specific data for EPDG-->
+				<epc:MMEFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>Paris PN1</epc:userLabel>
+						<epc:vnfParametersList>
+							<xn:vnfInstanceId>oitrqwjf</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</epc:vnfParametersList>
+						<epc:mMEC>89426</epc:mMEC>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>FdgEE</epc:farEndEntity>
+							<epc:userLabel>Paris KLO8</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=1</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV2</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:MMEFunction>
+				<epc:PCRFFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>Paris SMN1</epc:userLabel>
+						<epc:linkList>
+							<xn:dn>hgfsbvcl</xn:dn>
+						</epc:linkList>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>FEEryqt</epc:farEndEntity>
+							<epc:userLabel>Paris EPMNO8</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=2</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV3</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:PCRFFunction>
+				<epc:PGWFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>Paris ASN1</epc:userLabel>
+						<epc:vnfParametersList>
+							<xn:vnfInstanceId>nmbkhd</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</epc:vnfParametersList>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>iutwFEE</epc:farEndEntity>
+							<epc:userLabel>Paris ASMNO8</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=3</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV4</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:PGWFunction>
+				<epc:ServingGWFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>Paris SMN1</epc:userLabel>
+						<epc:tACList>
+							<epc:tAC>568912</epc:tAC>
+						</epc:tACList>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>FEoiuewE</epc:farEndEntity>
+							<epc:userLabel>Paris UN6</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=5</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:ServingGWFunction>
+				<!--  Vendor specific data for ManagedElement-->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
-						<xn:vsDataType>abc</xn:vsDataType>
-						<xn:vsDataFormatVersion>abc.1.1</xn:vsDataFormatVersion>
+						<xn:vsDataType>qrst</xn:vsDataType>
+						<xn:vsDataFormatVersion>qrst.1.1</xn:vsDataFormatVersion>
 						<xn:vsData />
 					</xn:attributes>
 				</xn:VsDataContainer>
