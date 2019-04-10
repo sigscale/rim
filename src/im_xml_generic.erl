@@ -29,6 +29,7 @@ parse_generic({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = []} | _] = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
+erlang:display({?MODULE, ?LINE, DnComponent}),
 	[#state{dn_prefix = [DnComponent],
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
@@ -38,6 +39,7 @@ parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
 	[#state{dn_prefix = [NewDn],
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
@@ -66,9 +68,13 @@ parse_generic({endElement, _Uri, _LocalName, QName},
 parse_subnetwork({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_subnetwork({startElement, _Uri, "SubNetwork", QName,
-		[{[], [], "id", Id}] = Attributes}, State) ->
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
-	[#state{parse_module = im_xml_generic, parse_function = parse_subnetwork,
+	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "meContext", QName,
@@ -81,6 +87,7 @@ parse_subnetwork({startElement, _Uri, "meContext", QName,
 parse_subnetwork({startElement, _Uri, "MeContext", QName,
 		[{[], [], "id", Id}] = Attributes}, State) ->
 	DnComponent = ",MeContext=" ++ Id,
+erlang:display({?MODULE, ?LINE, DnComponent}),
 	[#state{parse_module = im_xml_generic, parse_function = parse_mecontext,
 			parse_state = #generic_state{me_context = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -88,6 +95,7 @@ parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",ManagedElement=" ++ Id,
+erlang:display({?MODULE, ?LINE, DnComponent}),
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{dn_prefix = [NewDn],
 			parse_module = im_xml_generic, parse_function = parse_managed_element,
@@ -172,6 +180,7 @@ parse_managed_element({startElement, _, "MMEFunction", QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
 	DnComponent = ",MMEFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
 	[#state{parse_module = im_xml_epc, parse_function = parse_mme,
 			dn_prefix = [NewDn],
 			parse_state = #epc_state{mme = #{"id" => DnComponent}},
@@ -202,6 +211,46 @@ parse_managed_element({startElement, _, "ServingGWFunction", QName,
 	[#state{parse_module = im_xml_epc, parse_function = parse_sgw,
 			dn_prefix = [NewDn],
 			parse_state = #epc_state{sgw = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "MscServerFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",MscServerFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
+	[#state{parse_module = im_xml_core, parse_function = parse_msc,
+			dn_prefix = [NewDn],
+			parse_state = #core_state{msc = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "CsMgwFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",CsMgwFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
+	[#state{parse_module = im_xml_core, parse_function = parse_mgw,
+			dn_prefix = [NewDn],
+			parse_state = #core_state{mgw = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "GgsnFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",GgsnFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
+	[#state{parse_module = im_xml_core, parse_function = parse_ggsn,
+			dn_prefix = [NewDn],
+			parse_state = #core_state{ggsn = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "SgsnFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",SgsnFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+erlang:display({?MODULE, ?LINE, DnComponent}),
+	[#state{parse_module = im_xml_core, parse_function = parse_sgsn,
+			dn_prefix = [NewDn],
+			parse_state = #core_state{sgsn = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes} = _Event, State) ->

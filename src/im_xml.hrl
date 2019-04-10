@@ -49,3 +49,12 @@
 		ep_rp_eps :: map(),
 		ep_rp_epss :: [string()]}).
 -type epc_state() :: #epc_state{}.
+
+-record(core_state,
+		{msc :: map(),
+		iucs :: map(),
+		mgw :: map(),
+		ggsn :: map(),
+		sgsn :: map(),
+		iups :: map()}).
+-type core_state() :: #core_state{}.
