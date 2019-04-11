@@ -14,18 +14,18 @@
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Metro</xn:userLabel>
-				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
+				<xn:userLabel>SN 1</xn:userLabel>
+				<xn:userDefinedNetworkType>EPC</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>EMS 1</xn:userLabel>
+					<xn:userLabel>EMS EPC 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,EPDGFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -34,12 +34,12 @@
 				<xn:attributes>
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>BSS</xn:managedElementType>
+						<xn:managedElementType>EPDG</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
+					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Champ de Mars</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
@@ -47,7 +47,7 @@
 				</xn:attributes>
 				<epc:EPDGFunction id="1">
 					<epc:attributes>
-						<epc:userLabel>Paris SMN1</epc:userLabel>
+						<epc:userLabel>EPDG 1</epc:userLabel>
 						<epc:vnfParametersList>
 							<xn:vnfInstanceId>lkajjfa</xn:vnfInstanceId>
 							<xn:autoScalable>true</xn:autoScalable>
@@ -56,7 +56,7 @@
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
 							<epc:farEndEntity>FEE</epc:farEndEntity>
-							<epc:userLabel>Paris MNO8</epc:userLabel>
+							<epc:userLabel>EP RP EPS 1</epc:userLabel>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -67,14 +67,103 @@
 							</xn:attributes>
 						</xn:VsDataContainer>
 					</epc:EP_RP_EPS>
-					<epc:EP_RP_EPS id="2">
-					</epc:EP_RP_EPS>
 				</epc:EPDGFunction>
-				<!--  Vendor specific data for EPDG-->
+				<epc:MMEFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>MME 1</epc:userLabel>
+						<epc:vnfParametersList>
+							<xn:vnfInstanceId>oitrqwjf</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</epc:vnfParametersList>
+						<epc:mMEC>89426</epc:mMEC>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>FdgEE</epc:farEndEntity>
+							<epc:userLabel>Paris KLO8</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=1</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV2</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:MMEFunction>
+				<epc:PCRFFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>PCRF 1</epc:userLabel>
+						<epc:linkList>
+							<xn:dn>hgfsbvcl</xn:dn>
+						</epc:linkList>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>FEEryqt</epc:farEndEntity>
+							<epc:userLabel>Paris EPMNO8</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=2</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV3</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:PCRFFunction>
+				<epc:PGWFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>PGW 1</epc:userLabel>
+						<epc:vnfParametersList>
+							<xn:vnfInstanceId>nmbkhd</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</epc:vnfParametersList>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>iutwFEE</epc:farEndEntity>
+							<epc:userLabel>Paris ASMNO8</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=3</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV4</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:PGWFunction>
+				<epc:ServingGWFunction id="1">
+					<epc:attributes>
+						<epc:userLabel>ServiceGW 1</epc:userLabel>
+						<epc:tACList>
+							<epc:tAC>568912</epc:tAC>
+						</epc:tACList>
+					</epc:attributes>
+					<epc:EP_RP_EPS id="1">
+						<epc:attributes>
+							<epc:farEndEntity>FEoiuewE</epc:farEndEntity>
+							<epc:userLabel>Paris UN6</epc:userLabel>
+						</epc:attributes>
+						<!--  Vendor specific data for EP_RP_EPS-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=5</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+				</epc:ServingGWFunction>
+				<!--  Vendor specific data for ManagedElement-->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
-						<xn:vsDataType>abc</xn:vsDataType>
-						<xn:vsDataFormatVersion>abc.1.1</xn:vsDataFormatVersion>
+						<xn:vsDataType>qrst</xn:vsDataType>
+						<xn:vsDataFormatVersion>qrst.1.1</xn:vsDataFormatVersion>
 						<xn:vsData />
 					</xn:attributes>
 				</xn:VsDataContainer>

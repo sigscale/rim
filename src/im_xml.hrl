@@ -13,7 +13,8 @@
 		{subnet = [] :: [string()],
 		me_context = [] :: [string()],
 		managed_element = [] :: [string()],
-		vs_data = [] :: [map()]}).
+		vs_data :: map(),
+		vs_data_container = [] :: [map()]}).
 -type generic_state() :: #generic_state{}.
 
 -record(geran_state,
@@ -38,3 +39,22 @@
 		iur :: map(),
 		fdds = [] :: [string()]}).
 -type utran_state() :: #utran_state{}.
+
+-record(epc_state,
+		{epdg :: map(),
+		mme :: map(),
+		pcrf :: map(),
+		pgw :: map(),
+		sgw :: map(),
+		ep_rp_eps :: map(),
+		ep_rp_epss :: [string()]}).
+-type epc_state() :: #epc_state{}.
+
+-record(core_state,
+		{msc :: map(),
+		iucs :: map(),
+		mgw :: map(),
+		ggsn :: map(),
+		sgsn :: map(),
+		iups :: map()}).
+-type core_state() :: #core_state{}.

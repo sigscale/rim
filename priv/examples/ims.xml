@@ -16,18 +16,18 @@
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">
 			<xn:attributes>
-				<xn:userLabel>Paris SN1</xn:userLabel>
-				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
+				<xn:userLabel>SN 1</xn:userLabel>
+				<xn:userDefinedNetworkType>IMS</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>Paris MN1 GSM</xn:userLabel>
+					<xn:userLabel>EMS IMS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Montparnasse</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,BssFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,AsFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -36,12 +36,12 @@
 				<xn:attributes>
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>BSS</xn:managedElementType>
+						<xn:managedElementType>AS</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>BSS dlkjdRN1</xn:userLabel>
+					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Champ de Mars</xn:locationName>
+					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
@@ -49,7 +49,7 @@
 				</xn:attributes>
 				<im:ASFunction id="1">
 					<im:attributes>
-						<im:userLabel>Paris SQN1</im:userLabel>
+						<im:userLabel>AS 1</im:userLabel>
 						<im:vnfParametersList>
 							<xn:vnfInstanceId>qrekajjfa</xn:vnfInstanceId>
 							<xn:autoScalable>false</xn:autoScalable>
