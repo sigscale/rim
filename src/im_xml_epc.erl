@@ -129,6 +129,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			characteristic = lists:reverse([EpRpEps | MmeAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
+erlang:display({?MODULE, ?LINE, MmeDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -138,46 +139,40 @@ parse_mme({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_mme_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
+parse_mme_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_mme_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_mme_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
+parse_mme_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{endElement, {"epc", "pLMNIdList"}} | T],
+	{[_ | _VnfParameterList], T2} = pop(startElement, QName, T1),
+	parse_mme_attr1(T2, undefined, Acc);
+parse_mme_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo PLMNIdList
-	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
-	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{endElement, {"epc", Attr}} | T],
-		undefined, Acc) ->
+	{[_ | _pLMNIdList], T2} = pop(startElement, QName, T1),
+	parse_mme_attr1(T2, undefined, Acc);
+parse_mme_attr1([{endElement, {_, "strItem"}} | T], Attr, Acc) ->
 	parse_mme_attr1(T, Attr, Acc);
-parse_mme_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
+parse_mme_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_mme_attr1(T, Attr, Acc);
+parse_mme_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_mme_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_mme_attr1([{characters, Chars} | T],
-		"mMEC" = Attr, Acc) ->
+parse_mme_attr1([{characters, Chars} | T], "mMEC" = Attr, Acc) ->
 	parse_mme_attr1(T, Attr,
 			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
-parse_mme_attr1([{characters, Chars} | T],
-		"mMEPool" = Attr, Acc) ->
+parse_mme_attr1([{characters, Chars} | T], "mMEPool" = Attr, Acc) ->
 	parse_mme_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_mme_attr1([{characters, _Chars} | T],
-		undefined, Acc) ->
-	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
-	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{startElement, {"epc", "vnfParametersList"}, _} | T],
-		undefined, Acc) ->
-	parse_mme_attr1(T, undefined, Acc);
-parse_mme_attr1([{startElement, {"epc", Attr}, _} | T],
-		Attr, Acc) ->
+parse_mme_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_mme_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_mme_attr1([{startElement, {_, "strItem"}, _} | T], Attr, Acc) ->
+	parse_mme_attr1(T, Attr, Acc);
+parse_mme_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_mme_attr1(T, undefined, Acc);
 parse_mme_attr1([], undefined, Acc) ->
 	Acc.
@@ -225,33 +220,29 @@ parse_pcrf({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_pcrf_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
+parse_pcrf_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_pcrf_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_pcrf_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
+parse_pcrf_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{endElement, {"epc", "linkList"}} | T], undefined, Acc) ->
+	{[_ | _VnfParameterList], T2} = pop(startElement, QName, T1),
+	parse_pcrf_attr1(T2, undefined, Acc);
+parse_pcrf_attr1([{endElement, {_, "linkList"} = QName} | T1],
+		undefined, Acc) ->
 	% @todo linkListType
-	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
-	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{endElement, {"epc", Attr}} | T], undefined, Acc) ->
+	{[_ | _linkList], T2} = pop(startElement, QName, T1),
+	parse_pcrf_attr1(T2, undefined, Acc);
+parse_pcrf_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_pcrf_attr1(T, Attr, Acc);
 parse_pcrf_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_pcrf_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
 parse_pcrf_attr1([{characters, _Chars} | T], undefined, Acc) ->
 	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
-	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{startElement, {"epc", "linkList"}, _} | T],
-		undefined, Acc) ->
-	parse_pcrf_attr1(T, undefined, Acc);
-parse_pcrf_attr1([{startElement, {"epc", Attr}, _} | T], Attr, Acc) ->
+parse_pcrf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_pcrf_attr1(T, undefined, Acc);
 parse_pcrf_attr1([], undefined, Acc) ->
 	Acc.
@@ -299,31 +290,25 @@ parse_pgw({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_pgw_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
+parse_pgw_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_pgw_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_pgw_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
+parse_pgw_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_pgw_attr1(T, undefined, Acc);
-parse_pgw_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
-	parse_pgw_attr1(T, undefined, Acc);
-parse_pgw_attr1([{endElement, {"epc", Attr}} | T],
-		undefined, Acc) ->
+	{[_ | _VnfParameterList], T2} = pop(startElement, QName, T1),
+	parse_pgw_attr1(T2, undefined, Acc);
+parse_pgw_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_pgw_attr1(T, Attr, Acc);
 parse_pgw_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_pgw_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_pgw_attr1([{characters, _Chars} | T], undefined, Acc) ->
-	parse_pgw_attr1(T, undefined, Acc);
-parse_pgw_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
-	parse_pgw_attr1(T, undefined, Acc);
-parse_pgw_attr1([{startElement, {"epc", "vnfParametersList"}, _} | T],
-		undefined, Acc) ->
-	parse_pgw_attr1(T, undefined, Acc);
-parse_pgw_attr1([{startElement, {"epc", Attr}, _} | T], Attr, Acc) ->
+parse_pgw_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_pgw_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_pgw_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_pgw_attr1(T, undefined, Acc);
 parse_pgw_attr1([], undefined, Acc) ->
 	Acc.
@@ -362,6 +347,7 @@ parse_sgw({endElement, _Uri, "ServingGWFunction", QName},
 			characteristic = lists:reverse([EpRpEps | SgwAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
+erlang:display({?MODULE, ?LINE, SgwDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -371,36 +357,34 @@ parse_sgw({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_sgw_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
+parse_sgw_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_sgw_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_sgw_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
+parse_sgw_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"epc", "pLMNIdList"}} | T],
+	{[_ | _VnfParameterList], T2} = pop(startElement, QName, T1),
+	parse_sgw_attr1(T2, undefined, Acc);
+parse_sgw_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo PLMNIdList
-	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"epc", "tACList"}} | T],
-		undefined, Acc) ->
+	{[_ | _pLMNIdList], T2} = pop(startElement, QName, T1),
+	parse_sgw_attr1(T2, undefined, Acc);
+parse_sgw_attr1([{endElement, {_, "tACList"} = QName} | T1], undefined, Acc) ->
 	% @todo TACList
-	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"epc", "tAC"}} | T], undefined, Acc) ->
-	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{endElement, {"epc", Attr}} | T],
-		undefined, Acc) ->
+	{[_ | _tACList], T2} = pop(startElement, QName, T1),
+	parse_sgw_attr1(T2, undefined, Acc);
+parse_sgw_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_sgw_attr1(T, Attr, Acc);
 parse_sgw_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_sgw_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_sgw_attr1([{characters, _Chars} | T], undefined, Acc) ->
-	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{startElement, {"epc", _Attr}, _} | T], undefined, Acc) ->
-	parse_sgw_attr1(T, undefined, Acc);
-parse_sgw_attr1([{startElement, {"epc", Attr}, _} | T], Attr, Acc) ->
+parse_sgw_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_sgw_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_sgw_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_sgw_attr1(T, undefined, Acc);
 parse_sgw_attr1([], undefined, Acc) ->
 	Acc.

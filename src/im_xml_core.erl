@@ -68,54 +68,61 @@ parse_msc({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_msc_attr([{startElement, {"cn", "attributes"} = QName, []} | T1],
+parse_msc_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_msc_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_msc_attr1([{endElement, {"cn", "vnfParametersList"}} | T],
+parse_msc_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "mccList"}} | T], undefined, Acc) ->
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "mccList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "mncList"}} | T], undefined, Acc) ->
+	{[_ | _mccList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "mncList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "lacList"}} | T], undefined, Acc) ->
+	{[_ | _mncList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "lacList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "sacList"}} | T], undefined, Acc) ->
+	{[_ | _lacList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "sacList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "gcaList"}} | T], undefined, Acc) ->
+	{[_ | _sacList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "gcaList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "mscServerFunctionGsmCell"}} | T],
+	{[_ | _gcaList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "mscServerFunctionGsmCell"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo dnList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "mscServerFunctionExternalGsmCell"}} | T],
+	{[_ | _mscServerFunctionGsmCell], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement,
+		{_, "mscServerFunctionExternalGsmCell"} = QName} | T1], undefined, Acc) ->
+	% @todo dnList
+	{[_ | _MscsFunction], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement,
+		{_, "mscServerFunctionCsMgwFunction"} = QName} | T1], undefined, Acc) ->
+	% @todo dnList
+	{[_ | _MscsfcsmgwFunction], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "mscServerFunctionMscPool"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo dnList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "mscServerFunctionCsMgwFunction"}} | T],
-		undefined, Acc) ->
-	% @todo dnList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "mscServerFunctionMscPool"}} | T],
-		undefined, Acc) ->
-	% @todo dnList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "nriList"}} | T], undefined, Acc) ->
+	{[_ | _MscsfmscPool], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, "nriList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", "em"}} | T], undefined, Acc) ->
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"xn", "dn"}} | T], undefined, Acc) ->
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{endElement, {"cn", Attr}} | T], undefined, Acc) ->
+	{[_ | _NriList], T2} = pop(startElement, QName, T1),
+	parse_msc_attr1(T2, undefined, Acc);
+parse_msc_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_msc_attr1(T, Attr, Acc);
 parse_msc_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_msc_attr1(T, Attr,
@@ -129,13 +136,7 @@ parse_msc_attr1([{characters, "1"} | T], "defaultMscType" = Attr, Acc) ->
 parse_msc_attr1([{characters, "0"} | T], "defaultMscType" = Attr, Acc) ->
 	parse_msc_attr1(T, Attr,
 			[#resource_char{name = Attr, value = 0} | Acc]);
-parse_msc_attr1([{characters, _Chars} | T], undefined, Acc) ->
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{startElement, {"cn", _Attr}, _} | T], undefined, Acc) ->
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
-	parse_msc_attr1(T, undefined, Acc);
-parse_msc_attr1([{startElement, {"cn", Attr}, _} | T], Attr, Acc) ->
+parse_msc_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_msc_attr1(T, undefined, Acc);
 parse_msc_attr1([], undefined, Acc) ->
 	Acc.
@@ -203,26 +204,27 @@ parse_mgw({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_mgw_attr([{startElement, {"cn", "attributes"} = QName, []} | T1],
+parse_mgw_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_mgw_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_mgw_attr1([{endElement, {"cn", "vnfParametersList"}} | T],
+parse_mgw_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{endElement, {"cn", "csMgwFunctionIucsLink"}} | T],
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_mgw_attr1(T2, undefined, Acc);
+parse_mgw_attr1([{endElement, {_, "csMgwFunctionIucsLink"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo dnList
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{endElement, {"cn", "csMgwFunctionALink"}} | T],
+	{[_ | _CsmgwfiucsLink], T2} = pop(startElement, QName, T1),
+	parse_mgw_attr1(T2, undefined, Acc);
+parse_mgw_attr1([{endElement, {_, "csMgwFunctionALink"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo dnList
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{endElement, {"xn", "dn"}} | T], undefined, Acc) ->
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{endElement, {"cn", Attr}} | T], undefined, Acc) ->
+	{[_ | _CsmgfaLink], T2} = pop(startElement, QName, T1),
+	parse_mgw_attr1(T2, undefined, Acc);
+parse_mgw_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_mgw_attr1(T, Attr, Acc);
 parse_mgw_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_mgw_attr1(T, Attr,
@@ -231,13 +233,7 @@ parse_mgw_attr1([{characters, Chars} | T],
 		"csMgwFunctionMscServerFunction" = Attr, Acc) ->
 	parse_mgw_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_mgw_attr1([{characters, _Chars} | T], undefined, Acc) ->
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{startElement, {"cn", _Attr}, _} | T], undefined, Acc) ->
-	parse_mgw_attr1(T, undefined, Acc);
-parse_mgw_attr1([{startElement, {"cn", Attr}, _} | T], Attr, Acc) ->
+parse_mgw_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_mgw_attr1(T, undefined, Acc);
 parse_mgw_attr1([], undefined, Acc) ->
 	Acc.
@@ -245,7 +241,7 @@ parse_mgw_attr1([], undefined, Acc) ->
 %% @hidden
 parse_ggsn({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_ggsn({startElement,  _Uri, "VsDataContainer", QName,
+parse_ggsn({startElement, _Uri, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",VsDataContainer=" ++ Id,
@@ -274,6 +270,7 @@ parse_ggsn({endElement, _Uri, "GgsnFunction", QName},
 			characteristic = GgsnAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
+erlang:display({?MODULE, ?LINE, GgsnDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -283,33 +280,40 @@ parse_ggsn({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_ggsn_attr([{startElement, {"cn", "attributes"} = QName, []} | T1],
+parse_ggsn_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_ggsn_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_ggsn_attr1([{endElement, {"cn", "vnfParametersList"}} | T],
+parse_ggsn_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_ggsn_attr1(T, undefined, Acc);
-parse_ggsn_attr1([{endElement, {"cn", "proceduralStatus"}} | T],
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_ggsn_attr1(T2, undefined, Acc);
+parse_ggsn_attr1([{endElement, {_, "proceduralStatus"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo proceduralStatusType
-	parse_ggsn_attr1(T, undefined, Acc);
-parse_ggsn_attr1([{endElement, {"sm", _Attr}} | T], undefined, Acc) ->
-	parse_ggsn_attr1(T, undefined, Acc);
-parse_ggsn_attr1([{endElement, {"cn", Attr}} | T], undefined, Acc) ->
+	{[_ | _ProceduralStatus], T2} = pop(startElement, QName, T1),
+	parse_ggsn_attr1(T2, undefined, Acc);
+parse_ggsn_attr1([{endElement, {_, "apnInfoList"} = QName} | T1],
+		undefined, Acc) ->
+	% zte specific attributes
+	{[_ | _ApniList], T2} = pop(startElement, QName, T1),
+	parse_ggsn_attr1(T2, undefined, Acc);
+parse_ggsn_attr1([{endElement, {_, "ggsnPortInfo"} = QName} | T1],
+		undefined, Acc) ->
+	% zte specific attributes
+	{[_ | _GgsnpInfo], T2} = pop(startElement, QName, T1),
+	parse_ggsn_attr1(T2, undefined, Acc);
+parse_ggsn_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_ggsn_attr1(T, Attr, Acc);
 parse_ggsn_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_ggsn_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_ggsn_attr1([{characters, _Chars} | T], undefined, Acc) ->
-	parse_ggsn_attr1(T, undefined, Acc);
-parse_ggsn_attr1([{startElement, {"cn", _Attr}, _} | T], undefined, Acc) ->
-	parse_ggsn_attr1(T, undefined, Acc);
-parse_ggsn_attr1([{startElement, {"sm", _Attr}, _} | T], undefined, Acc) ->
-	parse_ggsn_attr1(T, undefined, Acc);
-parse_ggsn_attr1([{startElement, {"cn", Attr}, _} | T], Attr, Acc) ->
+parse_ggsn_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_ggsn_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ggsn_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_ggsn_attr1(T, undefined, Acc);
 parse_ggsn_attr1([], undefined, Acc) ->
 	Acc.
@@ -346,8 +350,10 @@ parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
 			characteristic = SgsnAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
+erlang:display({?MODULE, ?LINE, SgsnDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
+erlang:display({?MODULE, ?LINE, SgsnDn}),
 			throw({add_resource, Reason})
 	end;
 parse_sgsn({endElement, _Uri, _LocalName, QName} = _Event,
@@ -355,52 +361,61 @@ parse_sgsn({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_sgsn_attr([{startElement, {"cn", "attributes"} = QName, []} | T1],
+parse_sgsn_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_sgsn_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_sgsn_attr1([{endElement, {"cn", "vnfParametersList"}} | T],
+parse_sgsn_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "mccList"}} | T], undefined, Acc) ->
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "mccList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "mncList"}} | T], undefined, Acc) ->
+	{[_ | _MccList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "mncList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "lacList"}} | T], undefined, Acc) ->
+	{[_ | _MncList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "lacList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "racList"}} | T], undefined, Acc) ->
+	{[_ | _LacList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "racList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "sacList"}} | T], undefined, Acc) ->
+	{[_ | _RacList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "sacList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "sgsnFunctionGsmCell"}} | T],
+	{[_ | _SacList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "sgsnFunctionGsmCell"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo dnList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "sgsnFunctionExternalGsmCell"}} | T],
+	{[_ | _SgsnfgsmCell], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "sgsnFunctionExternalGsmCell"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo dnList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "proceduralStatus"}} | T],
+	{[_ | _SgsnfegsmCell], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "proceduralStatus"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo proceduralStatusType
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "nriList"}} | T], undefined, Acc) ->
+	{[_ | _ProceduralStatus], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "nriList"} = QName} | T1], undefined, Acc) ->
 	% @todo longList
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"sm", _Attr}} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"xn", _Attr}} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", "em"}} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{endElement, {"cn", Attr}} | T], undefined, Acc) ->
+	{[_ | _NriList], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, "sgsnPortInfo"} = QName} | T1],
+		undefined, Acc) ->
+	% zte specific complex attributes
+	{[_ | _SgsnpInfo], T2} = pop(startElement, QName, T1),
+	parse_sgsn_attr1(T2, undefined, Acc);
+parse_sgsn_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_sgsn_attr1(T, Attr, Acc);
 parse_sgsn_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_sgsn_attr1(T, Attr,
@@ -411,15 +426,10 @@ parse_sgsn_attr1([{characters, Chars} | T], "sgsnId" = Attr, Acc) ->
 parse_sgsn_attr1([{characters, Chars} | T], "sgsnFunctionSgsnPool" = Attr, Acc) ->
 	parse_sgsn_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_sgsn_attr1([{characters, _Chars} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{startElement, {"sm", _Attr}, _} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{startElement, {"xn", _Attr}, _} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{startElement, {"cn", _Attr}, _} | T], undefined, Acc) ->
-	parse_sgsn_attr1(T, undefined, Acc);
-parse_sgsn_attr1([{startElement, {"cn", Attr}, _} | T], Attr, Acc) ->
+parse_sgsn_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_sgsn_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_sgsn_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_sgsn_attr1(T, undefined, Acc);
 parse_sgsn_attr1([], undefined, Acc) ->
 	Acc.

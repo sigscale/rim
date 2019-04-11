@@ -303,12 +303,12 @@ parse_vsdata_attr([{startElement, QName, _} = Event | T],
 		State, OutStack, Acc) ->
 	parse_vsdata_attr(T, [QName | State], [Event | OutStack], Acc);
 parse_vsdata_attr([{characters, Chars} | T],
-		[{"xn", "vsDataType"}, {"xn","attributes"}] = State, OutStack, Acc) ->
+		[{_, "vsDataType"}, {_,"attributes"}] = State, OutStack, Acc) ->
 	NewAcc = Acc#{"vsDataType" => Chars},
 	parse_vsdata_attr(T, State, OutStack, NewAcc);
 parse_vsdata_attr([{characters, Chars} | T],
-		[{"xn", "vsDataFormatVersion"}, {"xn", "vsDataType"},
-		{"xn","attributes"}] = State, OutStack, Acc) ->
+		[{_, "vsDataFormatVersion"}, {_, "vsDataType"},
+		{_,"attributes"}] = State, OutStack, Acc) ->
 	NewAcc = Acc#{"vsDataFormatVersion" => Chars},
 	parse_vsdata_attr(T, State, OutStack, NewAcc);
 parse_vsdata_attr([{characters, _Chars} = Event | T],

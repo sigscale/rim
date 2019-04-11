@@ -69,7 +69,7 @@ parse_bss({endElement, _Uri, _LocalName, QName} = _Event,
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_bss_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_bss_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_bss_attr1(Attributes, undefined, Acc).
@@ -78,15 +78,14 @@ parse_bss_attr1([{characters, Chars} | T],
 		"userLabel" = Attr, Acc) ->
 	parse_bss_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_bss_attr1([{startElement, {"gn", Attr}, _} | T],
-		Attr, Acc) ->
+parse_bss_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_bss_attr1(T, undefined, Acc);
-parse_bss_attr1([{endElement, {"gn", "vnfParametersList"}} | T],
+parse_bss_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_bss_attr1(T, undefined, Acc);
-parse_bss_attr1([{endElement, {"gn", Attr}} | T],
-		undefined, Acc) ->
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_bss_attr1(T2, undefined, Acc);
+parse_bss_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_bss_attr1(T, Attr, Acc);
 parse_bss_attr1([], undefined, Acc) ->
 	Acc.
@@ -146,7 +145,7 @@ parse_bts({endElement, _Uri, _LocalName, QName},
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_bts_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_bts_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		undefined, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_bts_attr1(Attributes, undefined, Acc).
@@ -162,12 +161,14 @@ parse_bts_attr1([{characters, Chars} | T],
 	parse_bts_attr1(T, Attr, [#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
 parse_bts_attr1([{characters, Chars} | T], "operationalState" = Attr, Acc) ->
 	parse_bts_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
-parse_bts_attr1([{startElement, {"gn", Attr}, _} | T], Attr, Acc) ->
+parse_bts_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_bts_attr1(T, undefined, Acc);
-parse_bts_attr1([{endElement, {"gn", "vnfParametersList"}} | T], undefined, Acc) ->
+parse_bts_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
 	% @todo vnfParametersListType
-	parse_bts_attr1(T, undefined, Acc);
-parse_bts_attr1([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_bts_attr1(T2, undefined, Acc);
+parse_bts_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_bts_attr1(T, Attr, Acc);
 parse_bts_attr1([], undefined, Acc) ->
 	Acc.
@@ -215,68 +216,55 @@ parse_gsm_cell({endElement, _Uri, _LocalName, QName},
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_gsm_cell_attr([{startElement, {"gn", "attributes"} = QName, []} | T1],
+parse_gsm_cell_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
 	parse_gsm_cell_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_gsm_cell_attr1([{endElement, {"gn", "hoppingSequenceList"} = QName} | T1],
+parse_gsm_cell_attr1([{endElement, {_, "hoppingSequenceList"} = QName} | T1],
 		undefined, Acc) ->
 	{[_ | _HsList], T2} = pop(startElement, QName, T1),
 	% @todo Implement hoppingSequenceList
 	parse_gsm_cell_attr1(T2, undefined, Acc);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = Chars} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"cellIdentity" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "cellIdentity" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"cellAllocation" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
 	CellAllocation = [list_to_integer(C)
 			|| C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = CellAllocation} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"ncc" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "ncc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"bcc" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "bcc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"lac" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "lac" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"mcc" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "mcc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"mnc" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "mnc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"rac" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "rac" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"racc" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "racc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"tsc" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "tsc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"rxLevAccessMin" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "rxLevAccessMin" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"msTxPwrMaxCCH" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "msTxPwrMaxCCH" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
 parse_gsm_cell_attr1([{characters, "false"} | T],
@@ -287,15 +275,12 @@ parse_gsm_cell_attr1([{characters, "true"} | T],
 		"rfHoppingEnabled" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = true} | Acc]);
-parse_gsm_cell_attr1([{characters, Chars} | T],
-		"plmnPermitted" = Attr, Acc) ->
+parse_gsm_cell_attr1([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
-parse_gsm_cell_attr1([{startElement, {"gn", Attr}, _} | T],
-		Attr, Acc) ->
+parse_gsm_cell_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_gsm_cell_attr1(T, undefined, Acc);
-parse_gsm_cell_attr1([{endElement, {"gn", Attr}} | T],
-		undefined, Acc) ->
+parse_gsm_cell_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, Acc);
 parse_gsm_cell_attr1([], _Attr, Acc) ->
 	Acc.
@@ -329,12 +314,12 @@ parse_gsm_rel({endElement, _Uri, _LocalName, QName},
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_gsm_rel_attr([{startElement, {"gn", "attributes"} = QName, []} | T],
+parse_gsm_rel_attr([{startElement, {_, "attributes"} = QName, []} | T],
 		undefined, Acc) ->
 	{[_ | Attributes], _Rest} = pop(endElement, QName, T),
 	parse_gsm_rel_attr1(Attributes, undefined, Acc).
 % @hidden
-parse_gsm_rel_attr1([{endElement, {"gn", Attr}} | T], undefined, Acc) ->
+parse_gsm_rel_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_gsm_rel_attr1(T, Attr, Acc);
 parse_gsm_rel_attr1([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
 	NewAcc = attribute_add("adjacentCell", Chars, Acc),
@@ -369,7 +354,7 @@ parse_gsm_rel_attr1([{characters, "true"} | T], "is_covered_by" = Attr, Acc) ->
 parse_gsm_rel_attr1([{characters, "false"} | T], "is_covered_by" = Attr, Acc) ->
 	NewAcc = attribute_add("is_covered_by", "false", Acc),
 	parse_gsm_rel_attr1(T, Attr, NewAcc);
-parse_gsm_rel_attr1([{startElement, {"gn", Attr}, []} | T], Attr, Acc) ->
+parse_gsm_rel_attr1([{startElement, {_, Attr}, []} | T], Attr, Acc) ->
 	parse_gsm_rel_attr1(T, undefined, Acc);
 parse_gsm_rel_attr1([],  _Attr, Acc) ->
 	Acc.
