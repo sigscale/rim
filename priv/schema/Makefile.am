@@ -33,6 +33,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/nrNrm.json \
 		$(abs_builddir)/sonPolicyNrm.json \
 		$(abs_builddir)/stateManagementIRP.json \
+		$(abs_builddir)/sliceNrm.json \
 		$(abs_builddir)/epcNrm.json \
 		$(abs_builddir)/coreNrm.json \
 		$(abs_builddir)/imsNrm.json \
@@ -111,6 +112,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s sonPolicyNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s stateManagementIRP.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s sliceNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s epcNrm.json; \
 			then exit 1; fi; \

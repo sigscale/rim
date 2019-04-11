@@ -1,0 +1,275 @@
+{
+	"title": "5G Slice NRM",
+	"description": "5G Network Slice Network Resource Model (NRM)",
+	"definitions": {
+		"networkSlice": {
+			"type": "object",
+			"properties": {
+				"dnPrefix": {
+					"type": "string"
+				},
+					"userLabel": {
+					"type": "string"
+				},
+				"userDefinedNetworkType": {
+					"type": "string"
+				},
+				"setOfMcc": {
+					"type": "string"
+				},
+				"nSSIId": {
+					"$ref": "genericNrm#/definitions/Dn"
+				},
+				"operationalState": {
+					"$ref": "stateManagementNrm#/definitions/OperationalState" 
+				},
+				"administrativeState": {
+					"$ref": "stateManagementNrm#/definitions/AdministrativeState"
+				},
+				"serviceProfileList": {
+					"$ref": "#/definitions/ServiceProfileList"
+				},
+				"sst": {
+					"$ref": "ngcNrm#/definitions/Sst"
+				}
+			},
+			"required": [
+				"userLabel",
+				"userDefinedNetworkType",
+				"nSSIId",
+				"operationalState",
+				"administrativeState",
+				"serviceProfileList",
+				"sst"
+			]
+		},
+		"networkSliceSubnet": {
+			"type": "object",
+			"properties": {
+				"dnPrefix": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"userDefinedNetworkType": {
+					"type": "string"
+				},
+				"setOfMcc": {
+					"type": "string"
+				},
+				"mFIdList": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"constituentNSSIIdList": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"state": {
+					"$ref": "stateManagementNrm#/definitions/OperationalState"
+				},
+				"nsInfo": {
+					"$ref": "#/definitions/NsInfo"
+				},
+				"sliceProfileList": {
+					"$ref": "#/definitions/ServiceProfileList"
+				},
+				"sst": {
+					"$ref": "ngcNrm#/definitions/Sst"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"mFIdList",
+				"constituentNSSIIdList",
+				"state",
+				"sliceProfileList",
+				"sst"
+			]
+		},
+		"MobilityLevel": {
+			"type": "string",
+			"enum": [
+				"STATIONARY",
+				"NOMADIC",
+				"RESTRICTED MOBILITY",
+				"FULLY MOBILITY"
+			]
+		},
+		"SharingLevel": {
+			"type": "string", 
+			"enum": [
+				"SHARED",
+				"NON-SHARED"
+			]
+		},
+		"PrefReq": {
+			"type": "object",
+			"properties": {
+				"prefReqEmbb": {
+					"$ref": "#/definitions/PrefReqEmbb"
+				},
+				"prefReqUrllc": {
+					"$ref": "#/definitions/PrefReqUrllc"
+				}
+			}
+		},
+		"PerfReqEmbb":{
+			"type": "object",
+			"properties": {
+				"expDataRateDL": {
+					"type": "number"
+				},
+				"expDataRateUL": {
+					"type": "number"
+				},
+				"areaTrafficCapDL": {
+					"type": "number"
+				},
+				"areaTrafficCapUL": {
+					"type": "number"
+				},
+				"userDensity": {
+					"type": "number"
+				},
+				"activityFactor": {
+					"type": "number"
+				},
+				"uESpeed": {
+					"type": "number"
+				},
+				"coverage": {
+					"type": "string"
+				}
+			}
+		},
+		"PerfReqUrrlc":{
+			"type": "object",
+			"properties": {
+				"e2eLatency": {
+					"type": "number"
+				},
+				"jitter": {
+					"type": "number"
+				},
+				"survivalTime": {
+					"type": "number"
+				},
+				"areaTrafficCapUL": {
+					"type": "number"
+				},
+				"cSAvailability": {
+					"type": "number"
+				},
+				"reliability": {
+					"type": "number"
+				},
+				"expDataRate": {
+					"type": "number"
+				},
+				"payloadSize": {
+					"type": "number"
+				},
+				"trafficDensity": {
+					"type": "string"
+				},
+				"connDensity": {
+					"type": "number"
+				}, 
+				"serviceDimension": {
+					"type": "string"
+				}
+			}
+		},
+		"ServiceProfile": {
+			"type": "object",
+			"properties": {
+				"serviceProfileId": {
+					"type": "string"
+				},
+				"nSSAI": {
+					"$ref": "nrNrm#/definitions/Nssai"
+				},
+				"pLMNId": {
+					"$ref": "eutranNrm#/definitions/PLMNId"
+				},
+				"perfReq": {
+					"$ref": "#/definitions/PrefReq"
+				},
+				"maxNumberofUEs": {
+					"type": "number"
+				},
+				"coverageAreaTAList": {
+					"$ref": "ngcNrm#/definitions/TACList"
+				},
+				"latency": {
+					"type": "number"
+				},
+				"uEMobilityLevel": {
+					"type": "number"
+				},
+				"resourceSharingLevel": {
+					"type": "integer"
+				}
+			}
+		},
+		"ServiceProfileList": {
+			"type": "array",
+			"item": {
+				"$ref": "#/definitions/ServiceProfile"
+			}
+		},
+		"SliceProfile": {
+			"type": "object",
+			"properties": {
+				"sliceProfileId": {
+					"type": "string"
+				},
+				"nSSAI": {
+					"$ref": "nrNrm#/definitions/Nssai"
+				},
+				"pLMNId": {
+					"$ref": "eutranNrm#/definitions/PLMNId"
+				},
+				"perfReq": {
+					"$ref": "#/definitions/PrefReq"
+				},
+				"maxNumberofUEs": {
+					"type": "number"
+				},
+				"coverageAreaTAList": {
+					"$ref": "ngcNrm#/definitions/TACList"
+				},
+				"latency": {
+					"type": "number"
+				},
+				"uEMobilityLevel": {
+					"type": "number"
+				},
+				"resourceSharingLevel": {
+					"type": "integer"
+				}
+			}
+		},
+		"SliceProfileList": {
+			"type": "array",
+			"item": { 
+				"$ref": "#/definitions/SliceProfile"
+			}
+		},
+		"NsInfo": {
+			"type": "object",
+			"properties": {
+				"nsInstanceId": {
+					"type": "string"
+				},
+				"nsName": {
+					"type": "string"
+				},
+				"description ": {
+					"type": "string"
+				}
+			}
+		}
+	}
+} 
