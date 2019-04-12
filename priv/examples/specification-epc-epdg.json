@@ -1,0 +1,67 @@
+{ "name": "EPDGFunction",
+	"description": "EPC evolved Packet Data Gateway (ePDG) (3GPP 23.402)",
+	"@type": "EPDGFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EPDGFunctionSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "EPC",
+	"targetResourceSchema": {
+		"@type": "EPDGFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EPDGFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+		},
+		{
+			"name": "linkList",
+			"description": "",
+			"valueType": "LinkListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/linkListType"
+		},
+		{
+			"name": "EPDGFunctionOptionallyContainedNrmClass",
+			"description": "List of optionally contained NRM Class objects",
+			"valueType": "EPDGFunctionOptionallyContainedNrmClassList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EPDGFunctionOptionallyContainedNrmClassList"
+		},
+		{
+			"name": "EP_RP_EPS",
+			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
+			"valueType": "EP_RP_EPSList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
+		},
+		{
+			"name": "VsDataContainer",
+			"description": "Container for vendor specific data",
+			"valueType": "VsDataContainerList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+		}
+	]
+}

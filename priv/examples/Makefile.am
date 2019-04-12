@@ -25,6 +25,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-lte-cell-tdd.json \
 		$(abs_builddir)/specification-epc-sgw.json \
 		$(abs_builddir)/specification-epc-pgw.json \
+		$(abs_builddir)/specification-epc-epdg.json \
 		$(abs_builddir)/specification-epc-mme.json \
 		$(abs_builddir)/specification-epc-pcrf.json \
 		$(abs_builddir)/specification-core-msc.json \
@@ -130,6 +131,10 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-pgw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EPDGFunctionSpec.json\
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-epdg.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MMEFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \

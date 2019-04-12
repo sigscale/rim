@@ -54,6 +54,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EUtranCellTDDSpec.json \
 		$(abs_builddir)/ServingGWFunctionSpec.json \
 		$(abs_builddir)/PGWFunctionSpec.json \
+		$(abs_builddir)/EPDGFunctionSpec.json\
 		$(abs_builddir)/MMEFunctionSpec.json \
 		$(abs_builddir)/PCRFFunctionSpec.json \
 		$(abs_builddir)/MscServerFunctionSpec.json \
@@ -195,6 +196,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PGWFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EPDGFunctionSpec.json\
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \

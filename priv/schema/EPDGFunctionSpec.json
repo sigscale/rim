@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/EPDGFunctionSpec",
+	"title": "EPC EPDG Specification",
+	"description": "EPC evolved Packet Data Gateway (ePDG) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"linkList",
+											"EPDGFunctionOptionallyContainedNrmClass",
+											"EP_RP_EPS",
+											"VsDataContainer"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
