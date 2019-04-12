@@ -50,13 +50,13 @@
 					"plmnIdList": {
 						"$ref": "eutranNrm#/definitions/PlmnIdList"
 					}
-				},
-				"required":[
-					"userLabel",
-					"gnbId",
-					"plmnIdList"
-				]
-			}
+				}
+			},
+			"required": [
+				"userLabel",
+				"gnbId",
+				"plmnIdList"
+			]
 		},
 		"gnbCuUpFunction": {
 			"type": "object",
@@ -75,13 +75,13 @@
 					"plmnIdList": {
 						"$ref": "eutranNrm#/definitions/PlmnIdList"
 					}
-				},
-				"required":[
-					"userLabel",
-					"gnbId",
-					"plmnIdList"
-				]
-			}
+				}
+			},
+			"required":[
+				"userLabel",
+				"gnbId",
+				"plmnIdList"
+			]
 		},
 		"nrCellCu": {
 			"type": "object",
@@ -278,7 +278,7 @@
 				"remoteAddress": {
 					"$ref": "#/definitions/IpEndPoint"
 				}
-			},
+			}
 		},
 		"eP_XnC": {
 			"type": "object",
@@ -295,7 +295,7 @@
 				"remoteAddress": {
 					"$ref": "#/definitions/IpEndPoint"
 				}
-			},
+			}
 		},
 		"eP_XnU": {
 			"type": "object",
@@ -329,7 +329,7 @@
 				"remoteAddress": {
 					"$ref": "#/definitions/IpEndPoint"
 				}
-			},
+			}
 		},
 		"eP_NgU": {
 			"type": "object",
@@ -433,13 +433,13 @@
 		},
 		"GnbName": {
 			"type": "string",
-			"maxLength": "150"
+			"maxLength": 150
 		},
 		"GnbDuId": {
 			"type": "number",
 			"description": "GnbDuId represents the gNB-DU ID defined in TS 38.473",
-			"minimum":0,
-			"maximum":68719476735
+			"minimum": 0,
+			"maximum": 68719476735
 		},
 		"NCgi": {
 			"type": "object",
@@ -461,7 +461,7 @@
 		},
 		"RrmPolicy": {
 			"type": "string",
-			"description": "RrmPolicy represents RRM policy which includes guidance for split of radio resources between multiple slices the cell supports. The RRM policy is implementation dependent",
+			"description": "RrmPolicy represents RRM policy which includes guidance for split of radio resources between multiple slices the cell supports. The RRM policy is implementation dependent"
 		},
 		"IpEndPoint": {
 			"type": "object",
@@ -488,15 +488,15 @@
 		},
 		"NrPci": {
 			"type": "integer",
-			"maximum": "503"
+			"maximum": 503
 		},
 		"NrTac": {
 			"type": "integer",
-			"maximum": "16777215"
+			"maximum": 16777215
 		},
 		"NrCellId": {
 			"type": "integer",
-			"maximum": "68719476735"
+			"maximum": 68719476735
 		},
 		"Snssai": {
 			"type": "object",
