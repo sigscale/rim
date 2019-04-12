@@ -50,7 +50,6 @@ parse_epdg({endElement, _Uri, "EPDGFunction", QName},
 	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
 	ClassType = "EPDGFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-erlang:display({?MODULE, ?LINE, EpdgDn}),
 	Resource = #resource{name = EpdgDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "EPC",
@@ -61,7 +60,6 @@ erlang:display({?MODULE, ?LINE, EpdgDn}),
 			characteristic = lists:reverse([EpRpEps | EpdgAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, EpdgDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -129,7 +127,6 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			characteristic = lists:reverse([EpRpEps | MmeAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, MmeDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -347,7 +344,6 @@ parse_sgw({endElement, _Uri, "ServingGWFunction", QName},
 			characteristic = lists:reverse([EpRpEps | SgwAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, SgwDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})

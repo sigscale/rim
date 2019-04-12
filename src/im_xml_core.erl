@@ -270,7 +270,6 @@ parse_ggsn({endElement, _Uri, "GgsnFunction", QName},
 			characteristic = GgsnAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, GgsnDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -350,10 +349,8 @@ parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
 			characteristic = SgsnAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, SgsnDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
-erlang:display({?MODULE, ?LINE, SgsnDn}),
 			throw({add_resource, Reason})
 	end;
 parse_sgsn({endElement, _Uri, _LocalName, QName} = _Event,
