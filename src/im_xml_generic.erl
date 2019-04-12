@@ -166,15 +166,15 @@ parse_managed_element({startElement, _, "RncFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #utran_state{rnc = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
-%parse_managed_element({startElement, _, "EPDGFunction", QName,
-%		[{[], [], "id", Id}] = Attributes},
-%		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
-%	DnComponent = ",EPDGFunction=" ++ Id,
-%	NewDn = CurrentDn ++ DnComponent,
-%	[#state{parse_module = im_xml_epc, parse_function = parse_epdg,
-%			dn_prefix = [NewDn],
-%			parse_state = #epc_state{epdg = #{"id" => DnComponent}},
-%			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "EPDGFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",EPDGFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_epc, parse_function = parse_epdg,
+			dn_prefix = [NewDn],
+			parse_state = #epc_state{epdg = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "MMEFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->

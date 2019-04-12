@@ -13,8 +13,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
-%-export([parse_epdg/2]).
--export([parse_mme/2, parse_pcrf/2, parse_pgw/2, parse_sgw/2,
+-export([parse_epdg/2, parse_mme/2, parse_pcrf/2, parse_pgw/2, parse_sgw/2,
 		parse_eprpeps/2]).
 
 -include("im.hrl").
@@ -28,72 +27,73 @@
 %%  The im private API
 %%----------------------------------------------------------------------
 
-%parse_epdg({characters, Chars}, [#state{stack = Stack} = State | T]) ->
-%	[State#state{stack = [{characters, Chars} | Stack]} | T];
-%parse_epdg({startElement,  _Uri, "EP_RP_EPS", QName,
-%		[{[], [], "id", Id}] = Attributes},
-%		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-%	DnComponent = ",EP_RP_EPS=" ++ Id,
-%	NewDn = CurrentDn ++ DnComponent,
-%	[#state{dn_prefix = [NewDn],
-%			parse_module = im_xml_epc, parse_function = parse_eprpeps,
-%			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
-%			stack = [{startElement, QName, Attributes}]} | State];
-%parse_epdg({startElement, _, _, QName, Attributes},
-%		[#state{stack = Stack} = State | T]) ->
-%	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-%parse_epdg({endElement, _Uri, "EPDGFunction", QName},
-%		[#state{dn_prefix = [EpdgDn | _], stack = Stack, parse_state = EpcState,
-%		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-%	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
-%	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-%	EpdgAttr = parse_epdg_attr(T2, undefined, []),
-%	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
-%	ClassType = "EPDGFunction",
-%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-%	Resource = #resource{name = EpdgDn,
-%			description = "GSM Base Station Subsystem (BSS)",
-%			category = "EPC",
-%			class_type = ClassType,
-%			base_type = "ResourceFunction",
-%			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
-%			specification = Spec,
-%			characteristic = lists:reverse([EpRpEps | EpdgAttr])},
-%	case im:add_resource(Resource) of
-%		{ok, #resource{} = _R} ->
-%			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
-%		{error, Reason} ->
-%			throw({add_resource, Reason})
-%	end;
-%parse_epdg({endElement, _Uri, _LocalName, QName} = _Event,
-%		[#state{stack = Stack} = State | T]) ->
-%	[State#state{stack = [{endElement, QName} | Stack]} | T].
+parse_epdg({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_epdg({startElement,  _Uri, "EP_RP_EPS", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_RP_EPS=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_epc, parse_function = parse_eprpeps,
+			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_epdg({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_epdg({endElement, _Uri, "EPDGFunction", QName},
+		[#state{dn_prefix = [EpdgDn | _], stack = Stack, parse_state = EpcState,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpdgAttr = parse_epdg_attr(T2, undefined, []),
+	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
+	ClassType = "EPDGFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+erlang:display({?MODULE, ?LINE, EpdgDn}),
+	Resource = #resource{name = EpdgDn,
+			description = "GSM Base Station Subsystem (BSS)",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EPDGFunction",
+			specification = Spec,
+			characteristic = lists:reverse([EpRpEps | EpdgAttr])},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+erlang:display({?MODULE, ?LINE, EpdgDn}),
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_epdg({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
-%parse_epdg_attr([{startElement, {"epc", "attributes"} = QName, []} | T1],
-%		undefined, Acc) ->
-%	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-%	parse_epdg_attr1(Attributes, undefined, Acc).
-%% hidden
-%parse_epdg_attr1([{endElement, {"epc", "vnfParametersList"}} | T],
-%		undefined, Acc) ->
-%	% todo vnfParametersListType
-%	parse_epdg_attr1(T, undefined, Acc);
-%parse_epdg_attr1([{endElement, {"epc", "linkList"}} | T],
-%		undefined, Acc) ->
-%	% todo linkListType
-%	parse_epdg_attr1(T, undefined, Acc);
-%parse_epdg_attr1([{endElement, {"epc", Attr}} | T],
-%		undefined, Acc) ->
-%	parse_epdg_attr1(T, Attr, Acc);
-%parse_epdg_attr1([{characters, Chars} | T],
-%		"userLabel" = Attr, Acc) ->
-%	parse_epdg_attr1(T, Attr,
-%			[#resource_char{name = Attr, value = Chars} | Acc]);
-%parse_epdg_attr1([{startElement, {"epc", Attr}, _} | T],
-%		Attr, Acc) ->
-%	parse_epdg_attr1(T, undefined, Acc);
-%parse_epdg_attr1([], undefined, Acc) ->
-%	Acc.
+parse_epdg_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_epdg_attr1(Attributes, undefined, Acc).
+%% @hidden
+parse_epdg_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfParameterList], T2} = pop(startElement, QName, T1),
+	parse_epdg_attr1(T2, undefined, Acc);
+parse_epdg_attr1([{endElement, {_, "linkList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo linkListType
+	{[_ | _linkList], T2} = pop(startElement, QName, T1),
+	parse_epdg_attr1(T2, undefined, Acc);
+parse_epdg_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_epdg_attr1(T, Attr, Acc);
+parse_epdg_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+	parse_epdg_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_epdg_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_epdg_attr1(T, undefined, Acc);
+parse_epdg_attr1([], undefined, Acc) ->
+	Acc.
 
 %% @hidden
 parse_mme({characters, Chars}, [#state{stack = Stack} = State | T]) ->
