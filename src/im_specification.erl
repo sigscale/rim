@@ -27,7 +27,7 @@
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
 		nr_cell_cu/0, nr_cell_du/0]).
--export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0]).
+-export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 
@@ -1948,6 +1948,46 @@ epc_pgw() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "PGWFunction",
 					schema = "/resourceInventoryManagement/v3/schema/PGWFunction"},
+			characteristic = Chars}.
+
+-spec epc_epdg() -> specification().
+%% @doc EPC evolved Packet Data Gateway (ePDG) resource specification.
+epc_epdg() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersListType",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"},
+	LinkList = #specification_char{name = "linkList",
+			description = "",
+			value_type = "LinkListType",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkListType"},
+	EP_RP_EPS = #specification_char{name = "EP_RP_EPS",
+			description = "Endpoint of reference point in EPS (3GPP 23.401)",
+			value_type = "EP_RP_EPSList",
+			value_schema = "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"},
+	ContainedNrmClass = #specification_char{name = "EPDGFunctionOptionallyContainedNrmClass",
+			description = "List of optionally contained NRM Class objects",
+			value_type = "EPDGFunctionOptionallyContainedNrmClassList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EPDGFunctionOptionallyContainedNrmClassList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
+			EP_RP_EPS, VsDataContainer],
+	#specification{name = "EPDGFunction",
+			description = "EPC evolved Packet Data Gateway (ePDG)",
+			class_type = "EPDGFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/EPDGFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "EPDGFunction",
+					schema = "/resourceInventoryManagement/v3/schema/EPDGFunction"},
 			characteristic = Chars}.
 
 -spec epc_mme() -> specification().
