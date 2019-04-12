@@ -43,7 +43,7 @@
 			"name": "linkList",
 			"description": "",
 			"valueType": "LinkListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/linkListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkListType"
 		},
 		{
 			"name": "EPDGFunctionOptionallyContainedNrmClass",
