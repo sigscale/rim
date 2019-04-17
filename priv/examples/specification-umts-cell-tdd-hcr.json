@@ -43,182 +43,182 @@
 		{
 			"name": "cId",
 			"description": "Identifier of a cell in one RNC ('C-ID' in 3GPP 25.433)",
-			"valueType": "cId",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/cId"
+			"valueType": "CId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/CId"
 		},
 		{
 			"name": "localCellId",
 			"description": "Uniquely identify a cell in a Node B ('Local Cell ID' in 3GPP 25.433)",
-			"valueType": "localCellId",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/localCellId"
+			"valueType": "LocalCellId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/LocalCellId"
 		},
 		{
 			"name": "maximumTransmissionPower",
 			"description": "Maximum power for all downlink channels ('Maximum Transmission Power' in 3GPP 25.433)",
-			"valueType": "maximumTransmissionPower",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/maximumTransmissionPower"
+			"valueType": "MaximumTransmissionPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/MaximumTransmissionPower"
 		},
 		{
 			"name": "cellMode",
 			"description": "Identifies the cell mode",
-			"valueType": "cellMode",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/cellMode"
+			"valueType": "CellMode",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/CellMode"
 		},
 		{
 			"name": "pichPower",
 			"description": "Power of the PICH channel in the cell ('PICH Power' in 3GPP 25.433)",
-			"valueType": "pichPower",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/pichPower"
+			"valueType": "PichPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/PichPower"
 		},
 		{
 			"name": "pchPower",
 			"description": "PCH transport channel in the cell ('PCH Power' in 3GPP 25.433)",
-			"valueType": "pchPower",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/pchPower"
+			"valueType": "PchPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/PchPower"
 		},
 		{
 			"name": "fachPower",
 			"description": "Maximum power of FACH transport channel ('Max FACH Power' in 3GPP 25.433)",
-			"valueType": "fachPower",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/fachPower"
+			"valueType": "FachPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/FachPower"
 		},
 		{
 			"name": "lac",
 			"description": "Location Area Code (LAC) (3GPP 23.003)",
-			"valueType": "lac",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/lac"
+			"valueType": "Lac",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/Lac"
 		},
 		{
 			"name": "rac",
 			"description": "Routing Area Code (RAC) (3GPP 23.003)",
-			"valueType": "rac",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/rac"
+			"valueType": "Rac",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/Rac"
 		},
 		{
 			"name": "sac",
 			"description": "Service Area Code (SAC) (3GPP 23.003)",
-			"valueType": "sac",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/sac"
+			"valueType": "Sac",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/Sac"
 		},
 		{
 			"name": "uraList",
 			"description": "UTRAN Registration Area identities ('URA identity' in 3GPP 25.331)",
-			"valueType": "uraList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/uraList"
+			"valueType": "UraList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UraList"
 		},
 		{
 			"name": "utranCellIubLink",
 			"description": "Distinguished Name (DN) of IubLink",
-			"valueType": "dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "relatedAntennaList",
 			"description": "Distinguished Names (DN) of AntennaFunction(s) (3GPP 28.662)",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "relatedTmaList",
 			"description": "Distinguished Names (DN) of ('TmaFunction' in 3GPP 28.662)",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "operationalState",
 			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
-			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/operationalStateType"
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
 		},
 		{
 			"name": "hsFlag",
 			"description": "High-Speed Downlink Packet Access (HSDPA) supported flag",
-			"valueType": "hsFlag",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/hsFlag"
+			"valueType": "HsFlag",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/HsFlag"
 		},
 		{
 			"name": "hsEnable",
 			"description": "High-Speed Downlink Packet Access (HSDPA) enabled flag",
-			"valueType": "hsEnable",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/hsEnable"
+			"valueType": "HsEnable",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/HsEnable"
 		},
 		{
 			"name": "numOfHspdschs",
 			"description": "In FDD the number of codes, in TDD the number of HS-PDSCHs (3GPP 25.433)",
-			"valueType": "numOfHspdschs",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/numOfHspdschs"
+			"valueType": "NumOfHspdschs",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/NumOfHspdschs"
 		},
 		{
 			"name": "numOfHsscchs",
 			"description": "Number of HS-SCCHs for one cell (3GPP 25.433)",
-			"valueType": "numOfHsscchs",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/numOfHsscchs"
+			"valueType": "NumOfHsscchs",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/NumOfHsscchs"
 		},
 		{
 			"name": "frameOffset",
 			"description": "Required offset in neighbouring cells monitoring (3GPP 25.423)",
-			"valueType": "frameOffset",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/frameOffset"
+			"valueType": "FrameOffset",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/FrameOffset"
 		},
 		{
 			"name": "cellIndividualOffset",
 			"description": "Relevant for hand over (HO) decision (3GPP 25.331)",
-			"valueType": "cellIndividualOffset",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/cellIndividualOffset"
+			"valueType": "CellIndividualOffset",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/CellIndividualOffset"
 		},
 		{
 			"name": "hcsPrio",
 			"description": "Hierarchical cell structure (HCS) priority in cell (re)selection (3GPP 25.331)",
-			"valueType": "hcsPrio",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/hcsPrio"
+			"valueType": "HcsPrio",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/HcsPrio"
 		},
 		{
 			"name": "maximumAllowedUlTxPower",
 			"description": "Maximum allowed uplink transmit power in cell (re)selection (3GPP 25.331)",
-			"valueType": "maximumAllowedUlTxPower",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/maximumAllowedUlTxPower"
+			"valueType": "MaximumAllowedUlTxPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/MaximumAllowedUlTxPower"
 		},
 		{
 			"name": "snaInformation",
 			"description": "List of Shared Networks Access Control (SNAC) (3GPP 25.423)",
-			"valueType": "snaInformation",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/snaInformation"
+			"valueType": "SnaInformation",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SnaInformation"
 		},
 		{
 			"name": "qrxlevMin",
 			"description": "Minimum required RX level in cell (re)selection ('QrxlevMin' in 3GPP 25.331)",
-			"valueType": "qrxlevMin",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/qrxlevMin"
+			"valueType": "QrxlevMin",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/QrxlevMin"
 		},
 		{
 			"name": "deltaQrxlevmin",
 			"description": "Delta required RX level in cell (re)selection ('DeltaQrxlevmin' in 3GPP 25.331)",
-			"valueType": "deltaQrxlevmin",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/deltaQrxlevmin"
+			"valueType": "DeltaQrxlevmin",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/DeltaQrxlevmin"
 		},
 		{
 			"name": "qhcs",
 			"description": "Quality threshold levels in cell (re)selection ('Qhcs' in 3GPP 25.331)",
-			"valueType": "qhcs",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/qhcs"
+			"valueType": "Qhcs",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/Qhcs"
 		},
 		{
 			"name": "penaltyTime",
 			"description": "Penalty time duration in cell (re)selection ('Penalty_time' in 3GPP 25.331)",
-			"valueType": "penaltyTime",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/penaltyTime"
+			"valueType": "PenaltyTime",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/PenaltyTime"
 		},
 		{
 			"name": "referenceTimeDifferenceToCell",
 			"description": "Reference time difference to cell in neighbouring cells monitoring (3GPP 25.331)",
-			"valueType": "referenceTimeDifferenceToCell",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/referenceTimeDifferenceToCell"
+			"valueType": "ReferenceTimeDifferenceToCell",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/ReferenceTimeDifferenceToCell"
 		},
 		{
 			"name": "readSFNIndicator",
 			"description": "Read SFN indicator in neighbouring cells monitoring (3GPP 25.331)",
-			"valueType": "readSFNIndicator",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/readSFNIndicator"
+			"valueType": "ReadSFNIndicator",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/ReadSFNIndicator"
 		},
 		{
 			"name": "nsPlmnIdList",
@@ -229,107 +229,107 @@
 		{
 			"name": "restrictionStateIndicator",
 			"description": "Indicates if cell reserved for operator use in Cell Access Control (3GPP 25.423)",
-			"valueType": "restrictionStateIndicator",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/restrictionStateIndicator"
+			"valueType": "RestrictionStateIndicator",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/RestrictionStateIndicator"
 		},
 		{
 			"name": "dpcModechangeSupportIndicator",
 			"description": "Indicates support for DPC mode change in Power Control (3GPP 25.423)",
-			"valueType": "dpcModeChangeSupport",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/dpcModeChangeSupport"
+			"valueType": "DpcModeChangeSupport",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/DpcModeChangeSupport"
 		},
 		{
 			"name": "relatedSectorEquipment",
 			"description": "Distinguished Name (DN) of sector equipment ('relatedSectorEquipment' in 3GPP 28.662)",
-			"valueType": "dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "uarfcn",
 			"description": "UTRA absolute radio frequency channel number (UARFCN) (3GPP 25.433)",
-			"valueType": "uarfcnAnyMode",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/uarfcnAnyMode"
+			"valueType": "UarfcnAnyMode",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UarfcnAnyMode"
 		},
 		{
 			"name": "cellParameterId",
 			"description": "Unambiguously identifies the cell ('Cell Parameter ID' in TS 25.433)",
-			"valueType": "cellParameterId",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/cellParameterId"
+			"valueType": "CellParameterId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/CellParameterId"
 		},
 		{
 			"name": "primaryCcpchPower",
 			"description": "Power of the primary CCPCH channel ('PCCPCH Power' in 3GPP 25.433)",
-			"valueType": "primaryCcpchPower",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/primaryCcpchPower"
+			"valueType": "PrimaryCcpchPower",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/PrimaryCcpchPower"
 		},
 		{
 			"name": "cellCapabilityContainerTDD",
 			"description": "Bitfield indicating support of particular functionality (3GPP 25.423)",
-			"valueType": "cellCapabilityContainerTDD",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/cellCapabilityContainerTDD"
+			"valueType": "CellCapabilityContainerTDD",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/CellCapabilityContainerTDD"
 		},
 		{
 			"name": "sctdIndicator",
 			"description": "Indicates whether SCTD is used ('SCDT Indicator' in 3GPP 25.433)",
-			"valueType": "sctdIndicator",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/sctdIndicator"
+			"valueType": "SctdIndicator",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SctdIndicator"
 		},
 		{
 			"name": "dpchConstantValue",
 			"description": "Power margin used by a UE ('DPCH Constant Valuer' in 3GPP 25.433)",
-			"valueType": "dpchConstantValue",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/dpchConstantValue"
+			"valueType": "DpchConstantValue",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/DpchConstantValue"
 		},
 		{
 			"name": "temporaryOffset1",
 			"description": "Offset applied to hierarchical cell structure (HCS) in cell (re)selection (3GPP 25.331)",
-			"valueType": "temporaryOffset1",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/temporaryOffset1"
+			"valueType": "TemporaryOffset1",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/TemporaryOffset1"
 		},
 		{
 			"name": "syncCase",
 			"description": "SCH and PCCPCH mapped on one or two downlink slots per frame ('Synch Case' in 3GPP 25.433)",
-			"valueType": "syncCase",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/syncCase"
+			"valueType": "SyncCase",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SyncCase"
 		},
 		{
 			"name": "timeSlotForSch",
 			"description": "Time interval assigned to a physical channel for SCH ('SCH Time Slot' in 3GPP 25.433)",
-			"valueType": "timeSlotForSch",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/timeSlotForSch"
+			"valueType": "TimeSlotForSch",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/TimeSlotForSch"
 		},
 		{
 			"name": "schTimeSlot",
 			"description": "First time slot assigned to the Physical Channel SCH ('SCH Time Slot' in TS 25.433 )",
-			"valueType": "schTimeSlot",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/schTimeSlot"
+			"valueType": "SchTimeSlot",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SchTimeSlot"
 		},
 		{
 			"name": "timeSlotHCRList",
 			"description": "Defines the time slot configuration information (3GPP 25.433)",
-			"valueType": "timeSlotHCRList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/timeSlotHCRList"
+			"valueType": "TimeSlotHCRList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/TimeSlotHCRList"
 		},
 		{
-			"name": "UtranRelation",
+			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
 			"valueType": "UtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
-			"name": "GsmRelation",
+			"name": "gsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "UtranCellTDDHcrOptionallyContainedNrmClass",
+			"name": "utranCellTDDHcrOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "UtranCellTDDHcrOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDHcrOptionallyContainedNrmClassList"

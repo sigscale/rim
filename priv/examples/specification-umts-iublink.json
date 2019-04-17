@@ -43,29 +43,29 @@
 		{
 			"name": "iubLinkUTRANGenericCell",
 			"description": "Associated UTRAN radio cells",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "iubLinkNodeBFunction",
 			"description": "Connected UTRAN NodeB",
-			"valueType": "dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "iubLinkATMChannelTerminationPoint",
 			"description": "Associated ATM termination point",
-			"valueType": "dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
-			"name": "IubLinkOptionallyContainedNrmClass",
+			"name": "iubLinkOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "IubLinkOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/IubLinkOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

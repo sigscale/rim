@@ -30,9 +30,9 @@
 											"gnbId",
 											"gnbDUId",
 											"gnbDuName",
-											"NRCellDU",
-											"EP_F1C",
-											"EP_F1U"
+											"nRCellDU",
+											"eP_F1C",
+											"eP_F1U"
 										]
 									}
 								}

@@ -64,19 +64,19 @@
 			"valueType": "string"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "EnergySavingProperties",
+			"name": "energySavingProperties",
 			"description": "Energy saving properties of a network element supporting Energy Saving Management",
 			"valueType": "EnergySavingPropertiesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 		},
 		{
-			"name": "ESPolicies",
+			"name": "eSPolicies",
 			"description": "Energy saving policies information",
 			"valueType": "ESPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"

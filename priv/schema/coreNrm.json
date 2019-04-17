@@ -42,7 +42,7 @@
 				}
 			}
 		},
-		"defaultMscType": {
+		"DefaultMscType": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 1
@@ -74,22 +74,22 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"mccList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"mncList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"lacList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"sacList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"gcaList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"mscId": {
 									"type": "integer",
@@ -97,32 +97,32 @@
 									"maximum": 9223372036854775807
 								},
 								"mscServerFunctionGsmCell": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"mscServerFunctionExternalGsmCell": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"mscServerFunctionCsMgwFunction": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"nriList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"mscServerFunctionMscPool": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"defaultMsc": {
-									"$ref": "#/definitions/defaultMscType"
+									"$ref": "#/definitions/DefaultMscType"
 								}
 							}
 						},
-						"IucsLink": {
+						"iucsLink": {
 							"$ref": "#/definitions/IucsLinkList"
 						},
-						"ALink": {
+						"aLink": {
 							"$ref": "#/definitions/ALinkList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -147,11 +147,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -176,11 +176,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -205,11 +205,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -234,11 +234,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -263,11 +263,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -292,11 +292,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -321,11 +321,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -360,19 +360,19 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"mccList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"mncList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"lacList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"sacList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"sgsnId": {
 									"type": "integer",
@@ -380,29 +380,29 @@
 									"maximum": 9223372036854775807
 								},
 								"sgsnFunctionGsmCell": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"sgsnFunctionExternalGsmCell": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"sgsnFunctionSgsnPool": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"nriList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"proceduralStatus": {
-									"$ref": "statemanagementIRP#/definitions/proceduralStatusType"
+									"$ref": "statemanagementIRP#/definitions/ProceduralStatusType"
 								}
 							}
 						},
-						"GbLink": {
+						"gbLink": {
 							"$ref": "#/definitions/GbLinkList"
 						},
-						"IupsLink": {
+						"iupsLink": {
 							"$ref": "#/definitions/IupsLinkList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -428,14 +428,14 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"proceduralStatus": {
-									"$ref": "statemanagementIRP#/definitions/proceduralStatusType"
+									"$ref": "statemanagementIRP#/definitions/ProceduralStatusType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -460,11 +460,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -489,11 +489,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -518,11 +518,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -547,11 +547,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -576,20 +576,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"connectedRnc": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"connectedBssc": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"connectedHNBGW": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -620,20 +620,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"connectedRnc": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"connectedBssc": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"connectedHNBGW": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -665,17 +665,17 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"connectedRnc": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"connectedHNBGW": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -707,14 +707,14 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"connectedBss": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -746,14 +746,14 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"connectedBss": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -784,11 +784,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -813,14 +813,14 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"IubcLink": {
+						"iubcLink": {
 							"$ref": "#/definitions/IubcLinkList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -845,11 +845,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -874,11 +874,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -903,11 +903,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -932,11 +932,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -961,11 +961,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -990,11 +990,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1019,11 +1019,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1048,11 +1048,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1080,20 +1080,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"csMgwFunctionMscServerFunction": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"csMgwFunctionIucsLink": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"csMgwFunctionALink": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1118,11 +1118,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1146,10 +1146,10 @@
 							],
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1161,11 +1161,11 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1189,10 +1189,10 @@
 							],
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1204,11 +1204,11 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1253,10 +1253,10 @@
 							],
 							"properties": {
 								"mscPoolMscServerFunction": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						}
@@ -1280,16 +1280,16 @@
 							],
 							"properties": {
 								"mscPoolMscServerFunction": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"lacList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						}
@@ -1312,14 +1312,14 @@
 							],
 							"properties": {
 								"sgsnPoolSgsnFunction": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1342,20 +1342,20 @@
 							],
 							"properties": {
 								"racList": {
-									"$ref": "#/definitions/longList"
+									"$ref": "#/definitions/LongList"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
 								},
 								"sgsnPoolAreaSgsnPool": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}

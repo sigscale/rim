@@ -38,9 +38,9 @@
 											"nriList",
 											"mscServerFunctionMscPool",
 											"defaultMsc",
-											"IucsLink",
-											"ALink",
-											"VsDataContainer"
+											"iucsLink",
+											"aLink",
+											"vsDataContainer"
 										]
 									}
 								}

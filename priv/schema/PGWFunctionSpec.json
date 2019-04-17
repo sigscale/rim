@@ -26,9 +26,9 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"PGWFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
-											"VsDataContainer"
+											"pGWFunctionOptionallyContainedNrmClass",
+											"eP_RP_EPS",
+											"vsDataContainer"
 										]
 									}
 								}

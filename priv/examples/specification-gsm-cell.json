@@ -189,37 +189,37 @@
 			]
 		},
 		{
-			"name": "GsmRelation",
+			"name": "gsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
-			"name": "UtranRelation",
+			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranCell",
 			"valueType": "UtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
-			"name": "EUtranRelation",
+			"name": "eUtranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target EUtranCell",
 			"valueType": "EUtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranRelationList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "GsmCellOptionallyContainedNrmClass",
+			"name": "gsmCellOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "GsmCellOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmCellOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "InterRatEsPolicies",
+			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information",
 			"valueType": "InterRatEsPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"

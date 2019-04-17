@@ -23,17 +23,17 @@
 				}
 			}
 		},
-		"dn": {
+		"Dn": {
 			"type": "string",
 			"maxLength": 400
 		},
-		"dnList": {
+		"DnList": {
 			"type": "array",
 			"items": {
-				"$ref": "#/definitions/dn"
+				"$ref": "#/definitions/Dn"
 			}
 		},
-		"linkType": {
+		"LinkType": {
 			"type": "array",
 			"items": {
 				"type": "string",
@@ -45,11 +45,11 @@
 				]
 			}			
 		},
-		"linkListType": {
+		"LinkListType": {
 			"type": "array",
 			"properties": {
 				"dn": {
-					"$ref": "#/definitions/dn"
+					"$ref": "#/definitions/Dn"
 				}
 			}
 		},
@@ -67,7 +67,7 @@
 				}
 			}
 		},
-		"vnfParametersListType": {
+		"VnfParametersListType": {
 			"type": "array",
 			"items": {
 				"type": "object",
@@ -92,17 +92,17 @@
 			},
 			"minItems": 1
 		},
-		"latitude": {
+		"Latitude": {
 			"type": "number",
 			"minimum": -90.0000,
 			"maximum": 90.0000
 		},
-		"longitude": {
+		"Longitude": {
 			"type": "number",
 			"minimum": -180.0000,
 			"maximum": 180.0000
 		},
-		"peeParametersListType": {
+		"PeeParametersListType": {
 			"type": "array",
 			"items": {
 				"type": "object",
@@ -118,10 +118,10 @@
 						"type": "string"
 					},
 					"siteLatitude": {
-						"$ref": "#/definitions/latitude"
+						"$ref": "#/definitions/Latitude"
 					},
 					"siteLongitude": {
-						"$ref": "#/definitions/longitude"
+						"$ref": "#/definitions/Longitude"
 					},
 					"siteDescription": {
 						"type": "string"
@@ -155,7 +155,7 @@
 							],
 							"properties": {
 								"dnPrefix": {
-									"$ref": "#/definitions/dn"
+									"$ref": "#/definitions/Dn"
 								},
 								"userLabel": {
 									"type": "string"
@@ -173,28 +173,28 @@
 								}
 							}
 						},
-						"SubNetwork": {
+						"subNetwork": {
 							"$ref": "#/definitions/SubNetworkList"
 						},
-						"ManagedElement": {
+						"managedElement": {
 							"$ref": "#/definitions/ManagedElementList"
 						},
-						"MeContext": {
+						"meContext": {
 							"$ref": "#/definitions/MeContextList"
 						},
-						"ManagementNode": {
+						"managementNode": {
 							"$ref": "#/definitions/ManagementNodeList"
 						},
-						"IRPAgent": {
+						"iRPAgent": {
 							"$ref": "#/definitions/IRPAgentList"
 						},
-						"SubNetworkOptionallyContainedNrmClass": {
+						"subNetworkOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/SubNetworkOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "#/definitions/VsDataContainerList"
 						},
-						"ESPolicies": {
+						"eSPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
@@ -227,10 +227,10 @@
 							],
 							"properties": {
 								"dnPrefix": {
-									"$ref": "#/definitions/dn"
+									"$ref": "#/definitions/Dn"
 								},
 								"managedElementTypeList": {
-									"$ref": "#/definitions/managedElementTypeListType"
+									"$ref": "#/definitions/ManagedElementTypeListType"
 								},
 								"userLabel": {
 									"type": "string"
@@ -245,17 +245,17 @@
 									"type": "string"
 								},
 								"managedBy": {
-									"$ref": "#/definitions/dnList"
+									"$ref": "#/definitions/DnList"
 								}
 							}
 						},
-						"IRPAgent": {
+						"iRPAgent": {
 							"$ref": "#/definitions/IRPAgentList"
 						},
-						"ManagedElementOptionallyContainedNrmClass": {
+						"managedElementOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ManagedElementOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "#/definitions/VsDataContainerList"
 						}
 					}
@@ -280,11 +280,11 @@
 							"type": "object",
 							"properties": {
 								"dnPrefix": {
-									"$ref": "#/definitions/dn"
+									"$ref": "#/definitions/Dn"
 								}
 							}
 						},
-						"ManagedElement": {
+						"managedElement": {
 							"$ref": "#/definitions/ManagedElementList"
 						}
 					}
@@ -325,7 +325,7 @@
 									"type": "string"
 								},
 								"managedElements": {
-									"$ref": "#/definitions/dnList"
+									"$ref": "#/definitions/DnList"
 								},
 								"swVersion": {
 									"type": "string"
@@ -335,10 +335,10 @@
 								}
 							}
 						},
-						"IRPAgent": {
+						"iRPAgent": {
 							"$ref": "#/definitions/IRPAgentList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "#/definitions/VsDataContainerList"
 						}
 					}
@@ -363,7 +363,7 @@
 							"type": "object",
 							"properties": {
 								"systemDN": {
-									"$ref": "#/definitions/systemDN"
+									"$ref": "#/definitions/SystemDN"
 								}
 							}
 						}
@@ -400,11 +400,11 @@
 									"type": "string"
 								},
 								"vsData": {
-									"$ref": "#/definitions/vsData"
+									"$ref": "#/definitions/VsData"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "#/definitions/VsDataContainerList"
 						}
 					}
@@ -437,16 +437,16 @@
 									"type": "string"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolVersion": {
 									"type": "string"
 								},
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						}
@@ -469,7 +469,7 @@
 							],
 							"properties": {
 								"farEndEntity": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"userLabel": {
 									"type": "string"
@@ -480,10 +480,10 @@
 				}
 			]
 		},
-		"systemDN": {
-			"$ref": "#/definitions/dn"
+		"SystemDN": {
+			"$ref": "#/definitions/Dn"
 		},
-		"vsData": {
+		"VsData": {
 		},
 		"SubNetworkOptionallyContainedNrmClass": {
 			"$ref": "#/definitions/NrmClass"

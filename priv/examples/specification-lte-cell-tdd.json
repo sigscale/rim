@@ -55,8 +55,8 @@
 		{
 			"name": "cellSize",
 			"description": "Cell-Size (3GPP 36.423)",
-			"valueType": "cellSize",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/cellSize"
+			"valueType": "CellSize",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/CellSize"
 		},
 		{
 			"name": "pLMNIdList",
@@ -120,68 +120,68 @@
 		{
 			"name": "relatedTmaList",
 			"description": "List DNs of TmaFunction(s) (3GPP 28.662)",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "relatedAntennaList",
 			"description": "List DNs of AntennaFunction(s) (3GPP 28.662)",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "relatedSector",
 			"description": "List DNs of SectorEquipmentFunction (3GPP 28.662)",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "operationalState",
 			"description": "Indicates the operational state of the object instance (ITU-T X.731)",
-			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/operationalStateType"
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
 		},
 		{
 			"name": "administrativeState",
 			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
-			"valueType": "administrativeStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/administrativeStateType"
+			"valueType": "AdministrativeStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
 		},
 		{
 			"name": "availabilityStatus",
 			"description": "Indicates the availability status of the object instance (ITU-T X.731)",
-			"valueType": "availabilityStatusType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/availabilityStatusType"
+			"valueType": "AvailabilityStatusType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AvailabilityStatusType"
 		},
 		{
 			"name": "allowedAccessClasses",
 			"description": "Holds information for access classes allowed (3GPP 22.011)",
-			"valueType": "allowedAccessClassesType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/allowedAccessClassesType"
+			"valueType": "AllowedAccessClassesType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/AllowedAccessClassesType"
 		},
 		{
 			"name": "cellResvInfo",
 			"description": "Represents whether the cell is MBSFN Area Reserved Cell (3GPP 36.00)",
-			"valueType": "cellResvInfoType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/cellResvInfoType"
+			"valueType": "CellResvInfoType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/CellResvInfoType"
 		},
 		{
 			"name": "nbIoTcellFlag",
 			"description": "Represents whether the cell is supporting NB-IoT or not (3GPP 36.300)",
-			"valueType": "yesNoType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/yesNoType"
+			"valueType": "YesNoType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/YesNoType"
 		},
 		{
 			"name": "isChangeForEnergySavingAllowed",
 			"description": "Prohibit or allow configuration changes of the cell for ESM purposes",
-			"valueType": "yesNoType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/yesNoType"
+			"valueType": "YesNoType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/YesNoType"
 		},
 		{
 			"name": "ngranCellFlag",
 			"description": "Represents whether the cell is provided by ng-eNB or not (3GPP 38.300)",
-			"valueType": "yesNoType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/yesNoType"
+			"valueType": "YesNoType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/YesNoType"
 		},
 		{
 			"name": "nSSAI",
@@ -211,49 +211,49 @@
 			"valueTo": 32767
 		},
 		{
-			"name": "EUtranRelation",
+			"name": "eUtranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target EUtranGenericCell",
 			"valueType": "EUtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranRelationList"
 		},
 		{
-			"name": "Cdma2000Relation",
+			"name": "cdma2000Relation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target CDMA200 sector (3GPP2 TS S.S0028)",
 			"valueType": "Cdma2000RelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/Cdma2000RelationList"
 		},
 		{
-			"name": "GsmRelation",
+			"name": "gsmRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
 			"valueType": "GsmRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
 		},
 		{
-			"name": "UtranRelation",
+			"name": "utranRelation",
 			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
 			"valueType": "UtranRelationList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "EnergySavingProperties",
+			"name": "energySavingProperties",
 			"description": "Energy saving properties of a network element supporting Energy Saving Management",
 			"valueType": "EnergySavingPropertiesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 		},
 		{
-			"name": "ESPolicies",
+			"name": "eSPolicies",
 			"description": "Energy saving policies information",
 			"valueType": "ESPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"
 		},
 		{
-			"name": "EUtranCellTDDOptionallyContainedNrmClass",
+			"name": "eUtranCellTDDOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "EUtranCellTDDOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellTDDOptionallyContainedNrmClassList"

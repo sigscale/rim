@@ -39,7 +39,7 @@
 											"temporaryOffset2",
 											"sttdSupportIndicator",
 											"closedLoopModelSupportIndicator",
-											"UtranCellFDDOptionallyContainedNrmClass"
+											"utranCellFDDOptionallyContainedNrmClass"
 										]
 									}
 								}

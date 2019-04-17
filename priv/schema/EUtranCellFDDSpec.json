@@ -26,7 +26,7 @@
 										"enum": [
 											"earfcnDl",
 											"earfcnUl",
-											"EUtranCellFDDOptionallyContainedNrmClass"
+											"eUtranCellFDDOptionallyContainedNrmClass"
 										]
 									}
 								}

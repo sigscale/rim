@@ -28,9 +28,9 @@
 											"vnfParametersList",
 											"pLMNIdList",
 											"tACList",
-											"ServingGWFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
-											"VsDataContainer"
+											"servingGWFunctionOptionallyContainedNrmClass",
+											"eP_RP_EPS",
+											"vsDataContainer"
 										]
 									}
 								}

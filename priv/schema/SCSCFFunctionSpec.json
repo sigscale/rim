@@ -27,8 +27,8 @@
 											"userLabel",
 											"vnfParametersList",
 											"linkList",
-											"SCSCFFunctionOptionallyContainedNrmClass",
-											"VsDataContainer"
+											"sCSCFFunctionOptionallyContainedNrmClass",
+											"vsDataContainer"
 										]
 									}
 								}

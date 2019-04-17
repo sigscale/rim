@@ -49,20 +49,20 @@
 		{
 			"name": "operationalState",
 			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
-			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/operationalStateType"
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
 		},
 		{
 			"name": "administrativeState",
 			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
-			"valueType": "administrativeStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/administrativeStateType"
+			"valueType": "AdministrativeStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
 		},
 		{
 			"name": "availabilityStatus",
 			"description": "Indicates the availability status of the object instance (ITU-T X.731)",
-			"valueType": "availabilityStatusType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/availabilityStatusType"
+			"valueType": "AvailabilityStatusType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AvailabilityStatusType"
 		},
 		{
 			"name": "pLMNIdList",
@@ -181,7 +181,7 @@
 			"valueType": "string"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
@@ -189,17 +189,17 @@
 		{
 			"name": "nRSectorCarrier",
 			"description": "Represents the resources of each transmission point included in the cell",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "EnergySavingProperties",
+			"name": "energySavingProperties",
 			"description": "Energy saving properties of a network element supporting Energy Saving Management",
 			"valueType": "EnergySavingPropertiesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 		},
 		{
-			"name": "ESPolicies",
+			"name": "eSPolicies",
 			"description": "Energy saving policies information",
 			"valueType": "ESPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"

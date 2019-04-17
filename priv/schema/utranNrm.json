@@ -2,87 +2,87 @@
 	"title": "UTRAN NRM",
 	"description": "Universal Terrestrial Radio Access Network (UTRAN) Network Resource Model (NRM)",
 	"definitions": {
-		"mcc": {
+		"Mcc": {
 			"type": "integer",
 			"minimum": 1,
 			"maximum": 999 
 		},
-		"mnc": {
+		"Mnc": {
 			"type": "integer",
 			"minimum": 1,
 			"maximum": 999 
 		},
-		"localCellId": {
+		"LocalCellId": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 268435455 
 		},
-		"cId": {
+		"CId": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 65535 
 		},
-		"uarfcnAnyMode": {
+		"UarfcnAnyMode": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 16383 
 		},
-		"primaryScramblingCode": {
+		"PrimaryScramblingCode": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 511 
 		},
-		"primaryCpichPower": {
+		"PrimaryCpichPower": {
 			"type": "integer",
 			"minimum": -10,
 			"maximum": 50 
 		},
-		"maximumTransmissionPower": {
+		"MaximumTransmissionPower": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 50 
 		},
-		"primarySchPower": {
+		"PrimarySchPower": {
 			"type": "integer",
 			"minimum": -35,
 			"maximum": 15 
 		},
-		"secondarySchPower": {
+		"SecondarySchPower": {
 			"type": "integer",
 			"minimum": -35,
 			"maximum": 15
 		},
-		"bchPower": {
+		"BchPower": {
 			"type": "integer",
 			"minimum": -35,
 			"maximum": 15 
 		},
-		"aichPower": {
+		"AichPower": {
 			"type": "integer",
 			"minimum": -22,
 			"maximum": 5 
 		},
-		"fpachPower": {
+		"FpachPower": {
 			"type": "integer",
 			"minimum": -150,
 			"maximum": 400 
 		},
-		"pichPower": {
+		"PichPower": {
 			"type": "integer",
 			"minimum": -10,
 			"maximum": 5 
 		},
-		"pchPower": {
+		"PchPower": {
 			"type": "integer",
 			"minimum": -350,
 			"maximum": 150 
 		},
-		"fachPower": {
+		"FachPower": {
 			"type": "integer",
 			"minimum": -350,
 			"maximum": 150 
 		},
-		"lac": {
+		"Lac": {
 			"allOf": [
 				{
 					"type": "integer",
@@ -96,17 +96,17 @@
 				}
 			]
 		},
-		"rac": {
+		"Rac": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 255
 		},
-		"sac": {
+		"Sac": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 65535
 		},
-		"uraList": {
+		"UraList": {
 			"type": "array",
 			"maxItems": 8,
 			"items": {
@@ -115,7 +115,7 @@
 				"maximum": 65535
 			}			
 		},
-		"cellMode": {
+		"CellMode": {
 			"type": "string",
 			"enum": [
 				"FDDMode",
@@ -123,27 +123,27 @@
 				"1-28McpsTDDMode"
 			]
 		},
-		"cellParameterId": {
+		"CellParameterId": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 127 
 		},
-		"primaryCcpchPower": {
+		"PrimaryCcpchPower": {
 			"type": "integer",
 			"minimum": -15,
 			"maximum": 40 
 		},
-		"dwPchPower": {
+		"DwPchPower": {
 			"type": "integer",
 			"minimum": -15,
 			"maximum": 40 
 		},
-		"schPower": {
+		"SchPower": {
 			"type": "integer",
 			"minimum": -35,
 			"maximum": 15
 		},
-		"timeSlotLCRList": {
+		"TimeSlotLCRList": {
 			"type": "object",
 			"properties": {
 				"timeSlot": {
@@ -181,7 +181,7 @@
 				}
 			}
 		},
-		"timeSlotHCRList": {
+		"TimeSlotHCRList": {
 			"type": "object",
 			"properties": {
 				"timeSlot": {
@@ -219,87 +219,87 @@
 				}
 			}
 		},
-		"restrictionStateIndicator": {
+		"RestrictionStateIndicator": {
 			"type": "string",
 			"enum": [
 				"cellReservedForOperatorUse",
 				"cellAccessible"
 			]
 		},
-		"dpcModeChangeSupport": {
+		"DpcModeChangeSupport": {
 			"type": "string",
 			"enum": [
 				"dpcModeChangeSupported",
 				"dpcModeChangeNotSupported"
 			]
 		},
-		"sttdSupport": {
+		"SttdSupport": {
 			"type": "string",
 			"enum": [
 				"active",
 				"inactive"
 			]
 		},
-		"closedLoopMode1": {
+		"ClosedLoopMode1": {
 			"type": "string",
 			"enum": [
 				"closedLoopMode1Supported",
 				"closedLoopMode1NotSupported"
 			]
 		},
-		"frameOffset": {
+		"FrameOffset": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 225
 		},
-		"cellIndividualOffset": {
+		"CellIndividualOffset": {
 			"type": "integer",
 			"minimum": -10,
 			"maximum": 10
 		},
-		"hcsPrio": {
+		"HcsPrio": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 7
 		},
-		"maximumAllowedUlTxPower": {
+		"MaximumAllowedUlTxPower": {
 			"type": "integer",
 			"minimum": -50,
 			"maximum": 33
 		},
-		"qrxlevMin": {
+		"QrxlevMin": {
 			"type": "integer",
 			"minimum": -115,
 			"maximum": -25
 		},
-		"deltaQrxlevmin": {
+		"DeltaQrxlevmin": {
 			"type": "integer",
 			"minimum": -4,
 			"maximum": -2
 		},
-		"qhcs": {
+		"Qhcs": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 99
 		},
-		"penaltyTime": {
+		"PenaltyTime": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 60
 		},
-		"referenceTimeDifferenceToCell": {
+		"ReferenceTimeDifferenceToCell": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 38400
 		},
-		"readSFNIndicator": {
+		"ReadSFNIndicator": {
 			"type": "string",
 			"enum": [
 				"TRUE",
 				"FALSE"
 			]
 		},
-		"snaList": {
+		"SnaList": {
 			"type": "object",
 			"properties": {
 				"snac": {
@@ -315,7 +315,7 @@
 				}
 			}
 		},
-		"snaInformation": {
+		"SnaInformation": {
 			"type": "object",
 			"properties": {
 				"snac": {
@@ -329,26 +329,26 @@
 					"maximum": 999 
 				},
 				"snaList": {
-					"$ref": "#/definitions/snaList"
+					"$ref": "#/definitions/SnaList"
 				}
 			}
 		},
-		"qqualMin": {
+		"QqualMin": {
 			"type": "integer",
 			"minimum": -24,
 			"maximum": 0
 		},
-		"temporaryOffset1": {
+		"TemporaryOffset1": {
 			"type": "integer",
 			"minimum": 3,
 			"maximum": 21
 		},
-		"temporaryOffset2": {
+		"TemporaryOffset2": {
 			"type": "integer",
 			"minimum": 2,
 			"maximum": 12 
 		},
-		"txDiversityIndicator": {
+		"TxDiversityIndicator": {
 			"type": "string",
 			"enum": [
 				"none",
@@ -357,7 +357,7 @@
 				"TstdAppliedToPrimarySchAndSecondarySch"
 			]
 		},
-		"cellCapabilityContainerFDD": {
+		"CellCapabilityContainerFDD": {
 			"allOf": [
 				{
 					"$ref": "genericNrm#/definitions/NrmClass"
@@ -368,67 +368,67 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"Flexible_Hard_Split_Support_Indicator": {
+								"flexible_Hard_Split_Support_Indicator": {
 									"type": "string"
 								},
-								"Delayed_Activation_Support_Indicator": {
+								"delayed_Activation_Support_Indicator": {
 									"type": "string"
 								},
-								"HS_DSCH_Support_Indicator": {
+								"hS_DSCH_Support_Indicator": {
 									"type": "string"
 								},
-								"DSCH_Support_Indicator": {
+								"dSCH_Support_Indicator": {
 									"type": "string"
 								},
-								"F_DPCH_Support_Indicator": {
+								"f_DPCH_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_Support_Indicator": {
+								"e_DCH_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_TTI2ms_Support_Indicator": {
+								"e_DCH_TTI2ms_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_2sf2_and_all_inferior_SFs_Support_Indicator": {
+								"e_DCH_2sf2_and_all_inferior_SFs_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_2sf4_and_all_inferior_SFs_Support_Indicator": {
+								"e_DCH_2sf4_and_all_inferior_SFs_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_sf4_and_all_inferior_SFs_Support_Indicator": {
+								"e_DCH_sf4_and_all_inferior_SFs_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_sf8_and_all_inferior_SFs_Support_Indicator": {
+								"e_DCH_sf8_and_all_inferior_SFs_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_HARQ_IR_Combining_Support_Indicator": {
+								"e_DCH_HARQ_IR_Combining_Support_Indicator": {
 									"type": "string"
 								},
-								"E_DCH_HARQ_Chase_Combining_Support_Indicator": {
+								"e_DCH_HARQ_Chase_Combining_Support_Indicator": {
 									"type": "string"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
 			]
 		},
-		"sctdIndicator": {
+		"SctdIndicator": {
 			"type": "string",
 			"enum": [
 				"active",
 				"inactive"
 			]
 		},
-		"dpchConstantValue": {
+		"DpchConstantValue": {
 			"type": "integer",
 			"minimum": -10,
 			"maximum": 10
 		},
-		"cellCapabilityContainerTDD": {
+		"CellCapabilityContainerTDD": {
 			"allOf": [
 				{
 					"$ref": "#/definitions/NrmClass"
@@ -439,59 +439,59 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"Delayed_Activation_Support_Indicator": {
+								"delayed_Activation_Support_Indicator": {
 									"type": "string"
 								},
-								"HS_DSCH_Support_Indicator": {
+								"hS_DSCH_Support_Indicator": {
 									"type": "string"
 								},
-								"DSCH_Support_Indicator": {
+								"dSCH_Support_Indicator": {
 									"type": "string"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
 				}
 			]
 		},
-		"tstdIndicator": {
+		"TstdIndicator": {
 			"type": "string",
 			"enum": [
 				"active",
 				"inactive"
 			]
 		},
-		"timeSlotForSch": {
+		"TimeSlotForSch": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 14
 		},
-		"schTimeSlot": {
+		"SchTimeSlot": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 6
 		},
-		"syncCase": {
+		"SyncCase": {
 			"type": "string",
 			"enum": [
 				"SCH and PCCPCH allocated in a single TS",
 				"SCH and PCCPCH allocated in two TS, TS#k and TS#k+8"
 			]
 		},
-		"hsFlag": {
+		"HsFlag": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 1
 		},
-		"hsEnable": {
+		"HsEnable": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 1
 		},
-		"numOfHspdschs": {
+		"NumOfHspdschs": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 95
@@ -500,10 +500,10 @@
 			"type": "object",
 			"properties": {
 				"mcc": {
-					"$ref": "#/definitions/mcc"
+					"$ref": "#/definitions/Mcc"
 				},
 				"mnc": {
-					"$ref": "#/definitions/mnc"
+					"$ref": "#/definitions/Mnc"
 				}
 			}
 		},
@@ -519,12 +519,12 @@
 				}
 			}
 		},
-		"numOfHspdschs": {
+		"NumOfHspdschs": {
 			"type": "integer",
 			"minimum": 1,
 			"maximum": 32
 		},
-		"eightOctets": {
+		"EightOctets": {
 			"type": "array",
 			"minItems": 8,
 			"maxItems": 8,
@@ -535,7 +535,7 @@
 			
 			}
 		},
-		"uarfcnLCRList": {
+		"UarfcnLCRList": {
 			"type": "object",
 			"properties": {
 				"uarfcnLCR": {
@@ -548,17 +548,17 @@
 						],
 						"properties": {
 							"uarfcn": {
-								"$ref": "#/definitions/uarfcnAnyMode"
+								"$ref": "#/definitions/UarfcnAnyMode"
 							},
 							"timeSlotLCRList": {
-								"$ref": "#/definitions/timeSlotLCRList"
+								"$ref": "#/definitions/TimeSlotLCRList"
 							}
 						}
 					}
 				}
 			}
 		},
-		"siptoSupported": {
+		"SiptoSupported": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 1
@@ -600,7 +600,7 @@
 				}
 			}
 		},
-		"SharNetTceMappingInfoList": {
+		"sharNetTceMappingInfoList": {
 			"type": "object",
 			"properties": {
 				"SharNetTceMappingInfo": {
@@ -623,16 +623,16 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"peeParametersList": {
-									"$ref": "genericNrm#/definitions/peeParametersListType"
+									"$ref": "genericNrm#/definitions/PeeParametersListType"
 								},
 								"mcc": {
-									"$ref": "#/definitions/mcc"
+									"$ref": "#/definitions/Mcc"
 								},
 								"mnc": {
-									"$ref": "#/definitions/mnc"
+									"$ref": "#/definitions/Mnc"
 								},
 								"rncId": {
 									"type": "integer",
@@ -640,7 +640,7 @@
 									"maximum": 4095 
 								},
 								"siptoSupported": {
-									"$ref": "#/definitions/siptoSupported"
+									"$ref": "#/definitions/SiptoSupported"
 								},
 								"tceIDMappingInfoList": {
 									"$ref": "#/definitions/TceIDMappingInfoList"
@@ -650,22 +650,22 @@
 								}
 							}
 						},
-						"UtranCellFDD": {
-							"$ref": "genericNrm#/definitions/dnList"
+						"utranCellFDD": {
+							"$ref": "genericNrm#/definitions/DnList"
 						},
-						"UtranCellTDDLcr": {
-							"$ref": "genericNrm#/definitions/dnList"
+						"utranCellTDDLcr": {
+							"$ref": "genericNrm#/definitions/DnList"
 						},
-						"UtranCellTDDHcr": {
-							"$ref": "genericNrm#/definitions/dnList"
+						"utranCellTDDHcr": {
+							"$ref": "genericNrm#/definitions/DnList"
 						},
-						"IubLink": {
-							"$ref": "genericNrm#/definitions/dnList"
+						"iubLink": {
+							"$ref": "genericNrm#/definitions/DnList"
 						},
-						"RncFunctionOptionallyContainedNrmClass": {
+						"rncFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/RncFunctionOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -687,21 +687,21 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"peeParametersList": {
 									"type": "string",
-									"$ref": "genericNrm#/definitions/peeParametersListType"
+									"$ref": "genericNrm#/definitions/PeeParametersListType"
 								},
 								"nodeBFunctionIubLink": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"NodeBFunctionOptionallyContainedNrmClass": {
+						"nodeBFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/NodeBFunctionOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -723,122 +723,122 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"cId": {
-									"$ref": "#/definitions/cId"
+									"$ref": "#/definitions/CId"
 								},
 								"localCellId": {
-									"$ref": "#/definitions/localCellId"
+									"$ref": "#/definitions/LocalCellId"
 								},
 								"maximumTransmissionPower": {
-									"$ref": "#/definitions/maximumTransmissionPower"
+									"$ref": "#/definitions/MaximumTransmissionPower"
 								},
 								"cellMode": {
-									"$ref": "#/definitions/cellMode"
+									"$ref": "#/definitions/CellMode"
 								},
 								"pichPower": {
-									"$ref": "#/definitions/pichPower"
+									"$ref": "#/definitions/PichPower"
 								},
 								"pchPower": {
-									"$ref": "#/definitions/pchPower"
+									"$ref": "#/definitions/PchPower"
 								},
 								"fachPower": {
-									"$ref": "#/definitions/fachPower"
+									"$ref": "#/definitions/FachPower"
 								},
 								"lac": {
-									"$ref": "#/definitions/lac"
+									"$ref": "#/definitions/Lac"
 								},
 								"rac": {
-									"$ref": "#/definitions/rac"
+									"$ref": "#/definitions/Rac"
 								},
 								"sac": {
-									"$ref": "#/definitions/sac"
+									"$ref": "#/definitions/Sac"
 								},
 								"uraList": {
-									"$ref": "#/definitions/uraList"
+									"$ref": "#/definitions/UraList"
 								},
 								"utranCellIubLink": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"relatedAntennaList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"relatedTmaList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"operationalState": {
-									"$ref": "stateManagementIRP#/definitions/operationalStateType"
+									"$ref": "stateManagementIRP#/definitions/OperationalStateType"
 								},
 								"hsFlag": {
-									"$ref": "#/definitions/hsFlag"
+									"$ref": "#/definitions/HsFlag"
 								},
 								"hsEnable": {
-									"$ref": "#/definitions/hsEnable"
+									"$ref": "#/definitions/HsEnable"
 								},
 								"numOfHspdschs": {
-									"$ref": "#/definitions/numOfHspdschs"
+									"$ref": "#/definitions/NumOfHspdschs"
 								},
 								"numOfHsscchs": {
-									"$ref": "#/definitions/numOfHsscchs"
+									"$ref": "#/definitions/NumOfHsscchs"
 								},
 								"frameOffset": {
-									"$ref": "#/definitions/frameOffset"
+									"$ref": "#/definitions/FrameOffset"
 								},
 								"cellIndividualOffset": {
-									"$ref": "#/definitions/cellIndividualOffset"
+									"$ref": "#/definitions/CellIndividualOffset"
 								},
 								"hcsPrio": {
-									"$ref": "#/definitions/hcsPrio"
+									"$ref": "#/definitions/HcsPrio"
 								},
 								"maximumAllowedUlTxPower": {
-									"$ref": "#/definitions/maximumAllowedUlTxPower"
+									"$ref": "#/definitions/MaximumAllowedUlTxPower"
 								},
 								"snaInformation": {
-									"$ref": "#/definitions/snaInformation"
+									"$ref": "#/definitions/SnaInformation"
 								},
 								"qrxlevMin": {
-									"$ref": "#/definitions/qrxlevMin"
+									"$ref": "#/definitions/QrxlevMin"
 								},
 								"deltaQrxlevmin": {
-									"$ref": "#/definitions/deltaQrxlevmin"
+									"$ref": "#/definitions/DeltaQrxlevmin"
 								},
 								"qhcs": {
-									"$ref": "#/definitions/qhcs"
+									"$ref": "#/definitions/Qhcs"
 								},
 								"penaltyTime": {
-									"$ref": "#/definitions/penaltyTime"
+									"$ref": "#/definitions/PenaltyTime"
 								},
 								"referenceTimeDifferenceToCell": {
-									"$ref": "#/definitions/referenceTimeDifferenceToCell"
+									"$ref": "#/definitions/ReferenceTimeDifferenceToCell"
 								},
 								"readSFNIndicator": {
-									"$ref": "#/definitions/readSFNIndicator"
+									"$ref": "#/definitions/ReadSFNIndicator"
 								},
 								"nsPlmnIdList": {
 									"$ref": "#/definitions/NsPlmnIdListType"
 								},
 								"restrictionStateIndicator": {
-									"$ref": "#/definitions/restrictionStateIndicator"
+									"$ref": "#/definitions/RestrictionStateIndicator"
 								},
 								"dpcModechangeSupportIndicator": {
-									"$ref": "#/definitions/dpcModeChangeSupport"
+									"$ref": "#/definitions/DpcModeChangeSupport"
 								},
 								"relatedSectorEquipment": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"UtranRelation": {
+						"utranRelation": {
 							"$ref": "#/definitions/UtranRelationList"
 						},
-						"GsmRelation": {
+						"gsmRelation": {
 							"$ref": "geranNrm#/definitions/GsmRelationList"
 						},
-						"UtranGenericCellOptionallyContainedNrmClass": {
+						"utranGenericCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranGenericCellOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -857,53 +857,53 @@
 							"type": "object",
 							"properties": {
 								"uarfcnUl": {
-									"$ref": "#/definitions/uarfcnAnyMode"
+									"$ref": "#/definitions/UarfcnAnyMode"
 								},
 								"uarfcnDl": {
-									"$ref": "#/definitions/uarfcnAnyMode"
+									"$ref": "#/definitions/UarfcnAnyMode"
 								},
 								"primaryScramblingCode": {
-									"$ref": "#/definitions/primaryScramblingCode"
+									"$ref": "#/definitions/PrimaryScramblingCode"
 								},
 								"primaryCpichPower": {
-									"$ref": "#/definitions/primaryCpichPower"
+									"$ref": "#/definitions/PrimaryCpichPower"
 								},
 								"primarySchPower": {
-									"$ref": "#/definitions/primarySchPower"
+									"$ref": "#/definitions/PrimarySchPower"
 								},
 								"secondarySchPower": {
-									"$ref": "#/definitions/secondarySchPower"
+									"$ref": "#/definitions/SecondarySchPower"
 								},
 								"bchPower": {
-									"$ref": "#/definitions/bchPower"
+									"$ref": "#/definitions/BchPower"
 								},
 								"aichPower": {
-									"$ref": "#/definitions/aichPower"
+									"$ref": "#/definitions/AichPower"
 								},
 								"qqualMin": {
-									"$ref": "#/definitions/qqualMin"
+									"$ref": "#/definitions/QqualMin"
 								},
 								"cellCapabilityContainerFDD": {
-									"$ref": "#/definitions/cellCapabilityContainerFDD"
+									"$ref": "#/definitions/CellCapabilityContainerFDD"
 								},
 								"txDiversityIndicator": {
-									"$ref": "#/definitions/txDiversityIndicator"
+									"$ref": "#/definitions/TxDiversityIndicator"
 								},
 								"temporaryOffset1": {
-									"$ref": "#/definitions/temporaryOffset1"
+									"$ref": "#/definitions/TemporaryOffset1"
 								},
 								"temporaryOffset2": {
-									"$ref": "#/definitions/temporaryOffset2"
+									"$ref": "#/definitions/TemporaryOffset2"
 								},
 								"sttdSupportIndicator": {
-									"$ref": "#/definitions/sttdSupport"
+									"$ref": "#/definitions/SttdSupport"
 								},
 								"closedLoopModelSupportIndicator": {
-									"$ref": "#/definitions/closedLoopMode1"
+									"$ref": "#/definitions/ClosedLoopMode1"
 								}
 							}
 						},
-						"UtranCellFDDOptionallyContainedNrmClass": {
+						"utranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -922,26 +922,26 @@
 							"type": "object",
 							"properties": {
 								"uarfcn": {
-									"$ref": "#/definitions/uarfcnAnyMode"
+									"$ref": "#/definitions/UarfcnAnyMode"
 								},
 								"cellParameterId": {
-									"$ref": "#/definitions/cellParameterId"
+									"$ref": "#/definitions/CellParameterId"
 								},
 								"primaryCcpchPower": {
-									"$ref": "#/definitions/primaryCcpchPower"
+									"$ref": "#/definitions/PrimaryCcpchPower"
 								},
 								"cellCapabilityContainerTDD": {
-									"$ref": "#/definitions/cellCapabilityContainerTDD"
+									"$ref": "#/definitions/CellCapabilityContainerTDD"
 								},
 								"sctdIndicator": {
-									"$ref": "#/definitions/sctdIndicator"
+									"$ref": "#/definitions/SctdIndicator"
 								},
 								"dpchConstantValue": {
-									"$ref": "#/definitions/dpchConstantValue"
+									"$ref": "#/definitions/DpchConstantValue"
 								}
 							}
 						},
-						"UtranCellTDDOptionallyContainedNrmClass": {
+						"utranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -960,19 +960,19 @@
 							"type": "object",
 							"properties": {
 								"uarfcnLCRList": {
-									"$ref": "#/definitions/uarfcnLCRList"
+									"$ref": "#/definitions/UarfcnLCRList"
 								},
 								"fpachPower": {
-									"$ref": "#/definitions/fpachPower"
+									"$ref": "#/definitions/FpachPower"
 								},
 								"dwPchPower": {
-									"$ref": "#/definitions/dwPchPower"
+									"$ref": "#/definitions/DwPchPower"
 								},
 								"tstdIndicator": {
-									"$ref": "#/definitions/tstdIndicator"
+									"$ref": "#/definitions/TstdIndicator"
 								},
 								"timeSlotLCRList": {
-									"$ref": "#/definitions/timeSlotLCRList"
+									"$ref": "#/definitions/TimeSlotLCRList"
 								}
 							}
 						},
@@ -995,26 +995,26 @@
 							"type": "object",
 							"properties": {
 								"schPower": {
-									"$ref": "#/definitions/schPower"
+									"$ref": "#/definitions/SchPower"
 								},
 								"temporaryOffset1": {
-									"$ref": "#/definitions/temporaryOffset1"
+									"$ref": "#/definitions/TemporaryOffset1"
 								},
 								"syncCase": {
-									"$ref": "#/definitions/syncCase"
+									"$ref": "#/definitions/SyncCase"
 								},
 								"timeSlotForSch": {
-									"$ref": "#/definitions/timeSlotForSch"
+									"$ref": "#/definitions/TimeSlotForSch"
 								},
 								"schTimeSlot": {
-									"$ref": "#/definitions/schTimeSlot"
+									"$ref": "#/definitions/SchTimeSlot"
 								},
 								"timeSlotHCRList": {
-									"$ref": "#/definitions/timeSlotHCRList"
+									"$ref": "#/definitions/TimeSlotHCRList"
 								}
 							}
 						},
-						"UtranCellTDDHcrOptionallyContainedNrmClass": {
+						"utranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranCellTDDHcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1036,23 +1036,23 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"iubLinkUtranCell": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"iubLinkATMChannelTerminationPoint": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"iubLinkNodeBFunction": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"IubLinkOptionallyContainedNrmClass": {
+						"iubLinkOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/IubLinkOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1071,14 +1071,14 @@
 							"type": "object",
 							"properties": {
 								"adjacentCell": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"UtranRelationOptionallyContainedNrmClass": {
+						"utranRelationOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/UtranRelationOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1106,16 +1106,16 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"cId": {
-									"$ref": "#/definitions/cId"
+									"$ref": "#/definitions/CId"
 								},
 								"mcc": {
-									"$ref": "#/definitions/mcc"
+									"$ref": "#/definitions/Mcc"
 								},
 								"mnc": {
-									"$ref": "#/definitions/mnc"
+									"$ref": "#/definitions/Mnc"
 								},
 								"rncId": {
 									"type": "integer",
@@ -1123,65 +1123,65 @@
 									"maximum": 4095 
 								},
 								"cellMode": {
-									"$ref": "#/definitions/cellMode"
+									"$ref": "#/definitions/CellMode"
 								},
 								"lac": {
-									"$ref": "#/definitions/lac"
+									"$ref": "#/definitions/Lac"
 								},
 								"rac": {
-									"$ref": "#/definitions/rac"
+									"$ref": "#/definitions/Rac"
 								},
 								"controllingRnc": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"hsFlag": {
-									"$ref": "#/definitions/hsFlag"
+									"$ref": "#/definitions/HsFlag"
 								},
 								"frameOffset": {
-									"$ref": "#/definitions/frameOffset"
+									"$ref": "#/definitions/FrameOffset"
 								},
 								"cellIndividualOffset": {
-									"$ref": "#/definitions/cellIndividualOffset"
+									"$ref": "#/definitions/CellIndividualOffset"
 								},
 								"hcsPrio": {
-									"$ref": "#/definitions/hcsPrio"
+									"$ref": "#/definitions/HcsPrio"
 								},
 								"maximumAllowedUlTxPower": {
-									"$ref": "#/definitions/maximumAllowedUlTxPower"
+									"$ref": "#/definitions/MaximumAllowedUlTxPower"
 								},
 								"snaInformation": {
-									"$ref": "#/definitions/snaInformation"
+									"$ref": "#/definitions/SnaInformation"
 								},
 								"qrxlevMin": {
-									"$ref": "#/definitions/qrxlevMin"
+									"$ref": "#/definitions/QrxlevMin"
 								},
 								"deltaQrxlevmin": {
-									"$ref": "#/definitions/deltaQrxlevmin"
+									"$ref": "#/definitions/DeltaQrxlevmin"
 								},
 								"qhcs": {
-									"$ref": "#/definitions/qhcs"
+									"$ref": "#/definitions/Qhcs"
 								},
 								"penaltyTime": {
-									"$ref": "#/definitions/penaltyTime"
+									"$ref": "#/definitions/PenaltyTime"
 								},
 								"referenceTimeDifferenceToCell": {
-									"$ref": "#/definitions/referenceTimeDifferenceToCell"
+									"$ref": "#/definitions/ReferenceTimeDifferenceToCell"
 								},
 								"readSFNIndicator": {
-									"$ref": "#/definitions/readSFNIndicator"
+									"$ref": "#/definitions/ReadSFNIndicator"
 								},
 								"restrictionStateIndicator": {
-									"$ref": "#/definitions/restrictionStateIndicator"
+									"$ref": "#/definitions/RestrictionStateIndicator"
 								},
 								"dpcModechangeSupportIndicator": {
-									"$ref": "#/definitions/dpcModeChangeSupport"
+									"$ref": "#/definitions/DpcModeChangeSupport"
 								}
 							}
 						},
-						"ExternalUtranGenericCellOptionallyContainedNrmClass": {
+						"externalUtranGenericCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranGenericCellOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1200,44 +1200,44 @@
 							"type": "object",
 							"properties": {
 								"uarfcnUl": {
-									"$ref": "#/definitions/uarfcnAnyMode"
+									"$ref": "#/definitions/UarfcnAnyMode"
 								},
 								"uarfcnDl": {
-									"$ref": "#/definitions/uarfcnAnyMode"
+									"$ref": "#/definitions/UarfcnAnyMode"
 								},
 								"primaryScramblingCode": {
-									"$ref": "#/definitions/primaryScramblingCode"
+									"$ref": "#/definitions/PrimaryScramblingCode"
 								},
 								"primaryCpichPower": {
-									"$ref": "#/definitions/primaryCpichPower"
+									"$ref": "#/definitions/PrimaryCpichPower"
 								},
 								"aichPower": {
-									"$ref": "#/definitions/aichPower"
+									"$ref": "#/definitions/AichPower"
 								},
 								"qqualMin": {
-									"$ref": "#/definitions/qqualMin"
+									"$ref": "#/definitions/QqualMin"
 								},
 								"cellCapabilityContainerFDD": {
-									"$ref": "#/definitions/cellCapabilityContainerFDD"
+									"$ref": "#/definitions/CellCapabilityContainerFDD"
 								},
 								"txDiversityIndicator": {
-									"$ref": "#/definitions/txDiversityIndicator"
+									"$ref": "#/definitions/TxDiversityIndicator"
 								},
 								"temporaryOffset1": {
-									"$ref": "#/definitions/temporaryOffset1"
+									"$ref": "#/definitions/TemporaryOffset1"
 								},
 								"temporaryOffset2": {
-									"$ref": "#/definitions/temporaryOffset2"
+									"$ref": "#/definitions/TemporaryOffset2"
 								},
 								"sttdSupportIndicator": {
-									"$ref": "#/definitions/sttdSupport"
+									"$ref": "#/definitions/SttdSupport"
 								},
 								"closedLoopModelSupportIndicator": {
-									"$ref": "#/definitions/closedLoopMode1"
+									"$ref": "#/definitions/ClosedLoopMode1"
 								}
 							}
 						},
-						"ExternalUtranCellFDDOptionallyContainedNrmClass": {
+						"externalUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1262,26 +1262,26 @@
 							"type": "object",
 							"properties": {
 								"uarfcn": {
-									"$ref": "#/definitions/uarfcnAnyMode"
+									"$ref": "#/definitions/UarfcnAnyMode"
 								},
 								"cellParameterId": {
-									"$ref": "#/definitions/cellParameterId"
+									"$ref": "#/definitions/CellParameterId"
 								},
 								"primaryCcpchPower": {
-									"$ref": "#/definitions/primaryCcpchPower"
+									"$ref": "#/definitions/PrimaryCcpchPower"
 								},
 								"cellCapabilityContainerTDD": {
-									"$ref": "#/definitions/cellCapabilityContainerTDD"
+									"$ref": "#/definitions/CellCapabilityContainerTDD"
 								},
 								"sctdIndicator": {
-									"$ref": "#/definitions/sctdIndicator"
+									"$ref": "#/definitions/SctdIndicator"
 								},
 								"dpchConstantValue": {
-									"$ref": "#/definitions/dpchConstantValue"
+									"$ref": "#/definitions/DpchConstantValue"
 								}
 							}
 						},
-						"ExternalUtranCellTDDOptionallyContainedNrmClass": {
+						"externalUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1300,23 +1300,23 @@
 							"type": "object",
 							"properties": {
 								"temporaryOffset1": {
-									"$ref": "#/definitions/temporaryOffset1"
+									"$ref": "#/definitions/TemporaryOffset1"
 								},
 								"syncCase": {
-									"$ref": "#/definitions/syncCase"
+									"$ref": "#/definitions/SyncCase"
 								},
 								"timeSlotForSch": {
-									"$ref": "#/definitions/timeSlotForSch"
+									"$ref": "#/definitions/TimeSlotForSch"
 								},
 								"schTimeSlot": {
-									"$ref": "#/definitions/schTimeSlot"
+									"$ref": "#/definitions/SchTimeSlot"
 								},
 								"timeSlotHCRList": {
-									"$ref": "#/definitions/timeSlotHCRList"
+									"$ref": "#/definitions/TimeSlotHCRList"
 								}
 							}
 						},
-						"ExternalUtranCellTDDHcrOptionallyContainedNrmClass": {
+						"externalUtranCellTDDHcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDHcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1341,14 +1341,14 @@
 							"type": "object",
 							"properties": {
 								"tstdIndicator": {
-									"$ref": "#/definitions/tstdIndicator"
+									"$ref": "#/definitions/TstdIndicator"
 								},
 								"timeSlotLCRList": {
-									"$ref": "#/definitions/timeSlotLCRList"
+									"$ref": "#/definitions/TimeSlotLCRList"
 								}
 							}
 						},
-						"ExternalUtranCellTDDLcrOptionallyContainedNrmClass": {
+						"externalUtranCellTDDLcrOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalUtranCellTDDLcrOptionallyContainedNrmClassList"
 						}
 					}
@@ -1376,13 +1376,13 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"mcc": {
-									"$ref": "#/definitions/mcc"
+									"$ref": "#/definitions/Mcc"
 								},
 								"mnc": {
-									"$ref": "#/definitions/mnc"
+									"$ref": "#/definitions/Mnc"
 								},
 								"rncId": {
 									"type": "integer",
@@ -1390,23 +1390,23 @@
 									"maximum": 4095 
 								},
 								"controlledCellList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								}
 							}
 						},
-						"ExternalUtranCellFDD": {
+						"externalUtranCellFDD": {
 							"$ref": "#/definitions/ExternalUtranCellFDDList"
 						},
-						"ExternalUtranCellTDDHcr": {
+						"externalUtranCellTDDHcr": {
 							"$ref": "#/definitions/ExternalUtranCellTDDHcrList"
 						},
-						"ExternalUtranCellTDDLcr": {
+						"externalUtranCellTDDLcr": {
 							"$ref": "#/definitions/ExternalUtranCellTDDLcrList"
 						},
-						"ExternalRncFunctionOptionallyContainedNrmClass": {
+						"externalRncFunctionOptionallyContainedNrmClass": {
 								"$ref": "#/definitions/ExternalRncFunctionOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}

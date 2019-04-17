@@ -43,23 +43,23 @@
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
-			"valueType": "peeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+			"valueType": "PeeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "nodeBFunctionIubLink",
 			"description": "DN of a logical link to an RNC as seen by a NodeB",
-			"valueType": "dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
-			"name": "NodeBFunctionOptionallyContainedNrmClass",
+			"name": "nodeBFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "NodeBFunctionOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/NodeBFunctionOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

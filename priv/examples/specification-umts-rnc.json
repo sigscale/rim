@@ -43,8 +43,8 @@
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
-			"valueType": "peeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+			"valueType": "PeeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "mcc",
@@ -97,37 +97,37 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
 		},
 		{
-			"name": "UtranCellFDD",
+			"name": "utranCellFDD",
 			"description": "Frequency Division Duplex (FDD) radio cells controlled by an RNC",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "UtranCellTDDLcr",
+			"name": "utranCellTDDLcr",
 			"description": "Time Division Duplex (TDD) low chip rate (LCR) radio cell controlled by an RNC",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "UtranCellTDDHcr",
+			"name": "utranCellTDDHcr",
 			"description": "Time Division Duplex (TDD) high chip rate (HCR) radio cell controlled by an RNC",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "IubLink",
+			"name": "iubLink",
 			"description": "Logical link to a NodeB as seen from the RNC",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "RncFunctionOptionallyContainedNrmClass",
+			"name": "rncFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "RncFunctionOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/RncFunctionOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

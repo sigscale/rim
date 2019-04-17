@@ -37,9 +37,9 @@
 											"nriList",
 											"proceduralStatus",
 											"defaultMsc",
-											"GbLink",
-											"IupsLink",
-											"VsDataContainer"
+											"gbLink",
+											"iupsLink",
+											"vsDataContainer"
 										]
 									}
 								}

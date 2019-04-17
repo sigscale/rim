@@ -43,17 +43,17 @@
 		{
 			"name": "linkList",
 			"description": "List of related link object distiguished names (DN)",
-			"valueType": "linkList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/linkListType"
+			"valueType": "LinkListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkListType"
 		},
 		{
-			"name": "HSSFunctionOptionallyContainedNrmClass",
+			"name": "hSSFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "HSSFunctionOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/imsNrm#/definitions/HSSFunctionOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

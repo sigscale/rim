@@ -41,12 +41,12 @@
 											"rfHoppingEnabled",
 											"hoppingSequenceList",
 											"plmnPermitted",
-											"GsmRelation",
-											"UtranRelation",
-											"EUtranRelation",
-											"GsmCellOptionallyContainedNrmClass",
-											"VsDataContainer",
-											"InterRatEsPolicies"
+											"gsmRelation",
+											"utranRelation",
+											"eUtranRelation",
+											"gsmCellOptionallyContainedNrmClass",
+											"vsDataContainer",
+											"interRatEsPolicies"
 										]
 									}
 								}

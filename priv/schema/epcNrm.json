@@ -84,20 +84,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"linkList": {
-									"$ref": "genericNrm#/definitions/linkListType"
+									"$ref": "genericNrm#/definitions/LinkListType"
 								}
 							}
 						},
-						"EPDGFunctionOptionallyContainedNrmClass": {
+						"ePDGFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EPDGFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -119,7 +119,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -130,20 +130,20 @@
 									"maximum": 9223372036854775807
 								},
 								"mMEPool": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"MMEFunctionOptionallyContainedNrmClass": {
+						"mMEFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MMEFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"EP_N26": {
+						"eP_N26": {
 							"$ref": "ngcNrm#/definitions/EP_N26List"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -165,20 +165,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"linkList": {
-									"$ref": "genericNrm#/definitions/linkListType"
+									"$ref": "genericNrm#/definitions/LinkListType"
 								}
 							}
 						},
-						"PCRFFunctionOptionallyContainedNrmClass": {
+						"pCRFFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/PCRFFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -200,17 +200,17 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"PGWFunctionOptionallyContainedNrmClass": {
+						"pGWFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/PGWFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -232,17 +232,17 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"PGWCFunctionOptionallyContainedNrmClass": {
+						"pGWCFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/PGWCFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -264,11 +264,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -290,11 +290,11 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -316,7 +316,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -326,13 +326,13 @@
 								}
 							}
 						},
-						"ServingGWFunctionOptionallyContainedNrmClass": {
+						"servingGWFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -354,7 +354,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -364,13 +364,13 @@
 								}
 							}
 						},
-						"ServingGwCFunctionOptionallyContainedNrmClass": {
+						"servingGwCFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ServingGwCFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -392,17 +392,17 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"ServingGwUFunctionOptionallyContainedNrmClass": {
+						"servingGwUFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ServingGwUFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -424,7 +424,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -434,7 +434,7 @@
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -456,7 +456,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -466,7 +466,7 @@
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -514,7 +514,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -525,11 +525,11 @@
 									"maximum": 9223372036854775807
 								},
 								"mMEPool": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -551,7 +551,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"mMEGI": {
 									"type": "integer",
@@ -559,17 +559,17 @@
 									"maximum": 9223372036854775807
 								},
 								"mMEPoolMemberList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"mMEPoolAreaList": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"MMEPoolOptionallyContainedNrmClass": {
+						"mMEPoolOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MMEPoolOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -591,10 +591,10 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"mMEPool": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"tACList": {
 									"$ref": "#/definitions/TACList"
@@ -604,10 +604,10 @@
 								}
 							}
 						},
-						"MMEPoolAreaOptionallyContainedNrmClass": {
+						"mMEPoolAreaOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MMEPoolAreaOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -626,10 +626,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -641,14 +641,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_ENB_MMEOptionallyContainedNrmClass": {
+						"link_ENB_MMEOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_ENB_MMEOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -667,10 +667,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -682,14 +682,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_ENB_ServingGWOptionallyContainedNrmClass": {
+						"link_ENB_ServingGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_ENB_ServingGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -708,10 +708,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -723,14 +723,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_EPDG_PCRFOptionallyContainedNrmClass": {
+						"link_EPDG_PCRFOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_EPDG_PCRFOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -749,10 +749,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -764,14 +764,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_EPDG_PGWOptionallyContainedNrmClass": {
+						"link_EPDG_PGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_EPDG_PGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -790,10 +790,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -805,14 +805,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_HSS_MMEOptionallyContainedNrmClass": {
+						"link_HSS_MMEOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_HSS_MMEOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -831,10 +831,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -846,14 +846,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_MME_MMEOptionallyContainedNrmClass": {
+						"link_MME_MMEOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MME_MMEOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -872,10 +872,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -887,14 +887,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_MME_SGSNOptionallyContainedNrmClass": {
+						"link_MME_SGSNOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MME_SGSNOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -913,10 +913,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -928,14 +928,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_MME_ServingGWOptionallyContainedNrmClass": {
+						"link_MME_ServingGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MME_ServingGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -954,10 +954,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -969,14 +969,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_PCRF_ServingGWOptionallyContainedNrmClass": {
+						"link_PCRF_ServingGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_PCRF_ServingGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -995,10 +995,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1010,14 +1010,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_PCRF_PGWOptionallyContainedNrmClass": {
+						"link_PCRF_PGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_PCRF_PGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1036,10 +1036,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1051,14 +1051,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_PGW_ServingGWOptionallyContainedNrmClass": {
+						"link_PGW_ServingGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_PGW_ServingGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1077,10 +1077,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1092,14 +1092,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_SGSN_ServingGWOptionallyContainedNrmClass": {
+						"link_SGSN_ServingGWOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_SGSN_ServingGWOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1118,17 +1118,17 @@
 							"type": "object",
 							"properties": {
 								"farEndEntity": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_RP_EPSOptionallyContainedNrmClass": {
+						"eP_RP_EPSOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_RP_EPSOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1156,17 +1156,17 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"qCIList": {
 									"$ref": "#/definitions/QCIListType"
 								}
 							}
 						},
-						"QCISetOptionallyContainedNrmClass": {
+						"qCISetOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/QCISetOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1188,20 +1188,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"linkList": {
-									"$ref": "genericNrm#/definitions/linkListType"
+									"$ref": "genericNrm#/definitions/LinkListType"
 								}
 							}
 						},
-						"MBMSGWFunctionOptionallyContainedNrmClass": {
+						"mBMSGWFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MBMSGWFunctionOptionallyContainedNrmClassList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "#/definitions/EP_RP_EPSList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1220,10 +1220,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1235,14 +1235,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_MBMSGW_ENBOptionallyContainedNrmClass": {
+						"link_MBMSGW_ENBOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MBMSGW_ENBOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1261,10 +1261,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1276,14 +1276,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_SxaOptionallyContainedNrmClass": {
+						"eP_SxaOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_SxaOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1302,10 +1302,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1317,14 +1317,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_SxbOptionallyContainedNrmClass": {
+						"eP_SxbOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_SxbOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1343,10 +1343,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1358,14 +1358,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S4cOptionallyContainedNrmClass": {
+						"eP_S4cOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S4cOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1384,10 +1384,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1399,14 +1399,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S4uOptionallyContainedNrmClass": {
+						"eP_S4uOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S4uOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1425,10 +1425,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1440,14 +1440,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S11cOptionallyContainedNrmClass": {
+						"eP_S11cOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S11cOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1466,10 +1466,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1481,14 +1481,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S11uOptionallyContainedNrmClass": {
+						"eP_S11uOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S11uOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1507,10 +1507,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1522,14 +1522,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S1uOptionallyContainedNrmClass": {
+						"eP_S1uOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S1uOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1548,10 +1548,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1563,14 +1563,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S2bcOptionallyContainedNrmClass": {
+						"eP_S2bcOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S2bcOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1589,10 +1589,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1604,14 +1604,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_PGWC_SGWCOptionallyContainedNrmClass": {
+						"eP_PGWC_SGWCOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_PGWC_SGWCOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1630,10 +1630,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1645,14 +1645,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_PGWU_SGWUOptionallyContainedNrmClass": {
+						"eP_PGWU_SGWUOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_PGWU_SGWUOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1671,10 +1671,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1686,14 +1686,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_S2buOptionallyContainedNrmClass": {
+						"eP_S2buOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_S2buOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1712,10 +1712,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1727,14 +1727,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_GxOptionallyContainedNrmClass": {
+						"eP_GxOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_GxOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}

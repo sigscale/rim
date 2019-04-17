@@ -27,8 +27,8 @@
 											"userLabel",
 											"vnfParametersList",
 											"linkList",
-											"HSSFunctionOptionallyContainedNrmClass",
-											"VsDataContainer"
+											"hSSFunctionOptionallyContainedNrmClass",
+											"vsDataContainer"
 										]
 									}
 								}

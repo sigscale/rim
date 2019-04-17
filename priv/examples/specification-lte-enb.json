@@ -43,8 +43,8 @@
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
-			"valueType": "peeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+			"valueType": "PeeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "intraANRSwitch",
@@ -65,20 +65,20 @@
 		{
 			"name": "x2BlackList",
 			"description": "List of target nodes prohibited X2 connections",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "x2WhiteList",
 			"description": "List of target nodes allowed X2 connections",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "x2HOBlackList",
 			"description": "List of target nodes prohibited handover",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "x2IpAddressList",
@@ -104,79 +104,79 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/NetListeningRSForRIBS"
 		},
 		{
-			"name": "EUtranCellFDD",
+			"name": "eUtranCellFDD",
 			"description": "LTE Frequency Division Duplex (FDD) Radio Cells",
 			"valueType": "EUtranCellFDDList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellFDDList"
 		},
 		{
-			"name": "EUtranCellTDD",
+			"name": "eUtranCellTDD",
 			"description": "LTE Time Division Duplex (TDD) Radio Cells",
 			"valueType": "EUtranCellTDDList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranCellTDDList"
 		},
 		{
-			"name": "EP_RP_EPS",
+			"name": "eP_RP_EPS",
 			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
 			"valueType": "EP_RP_EPSList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
 		},
 		{
-			"name": "EP_X2C",
+			"name": "eP_X2C",
 			"description": "Endpoint of X2-C logical link to neighbour eNB or en-gNB node (3GPP 36.423)",
 			"valueType": "EP_X2CList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_X2CList"
 		},
 		{
-			"name": "EP_X2U",
+			"name": "eP_X2U",
 			"description": "Endpoint of X2 user plane (X2-U) logical link (3GPP 36.425)",
 			"valueType": "EP_X2UList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_X2UList"
 		},
 		{
-			"name": "EP_NgC",
+			"name": "eP_NgC",
 			"description": "Endpoint of NG control plane (NG-C) between gNB and NG-Core entity (3GPP 38.470)",
 			"valueType": "EP_NgCList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_NgCList"
 		},
 		{
-			"name": "EP_NgU",
+			"name": "eP_NgU",
 			"description": "Endpoint of NG user plane (NG-U) between gNB and UPGW (3GPP 38.470)",
 			"valueType": "EP_NgUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_NgUList"
 		},
 		{
-			"name": "EP_XnC",
+			"name": "eP_XnC",
 			"description": "Endpoint of Xn Application protocols between neighbour gNB nodes (3GPP 38.420)",
 			"valueType": "EP_XnCList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnCList"
 		},
 		{
-			"name": "EP_XnU",
+			"name": "eP_XnU",
 			"description": "Endpoint of Xn user plane (Xn-U) logical link (3GPP 38.420)",
 			"valueType": "EP_XnUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_XnUList"
 		},
 		{
-			"name": "ENBFunctionOptionallyContainedNrmClass",
+			"name": "eNBFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "ENBFunctionOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/ENBFunctionOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "DeNBCapability",
+			"name": "deNBCapability",
 			"description": "Capability for eNodeB to act as Donor eNodeB (DeNB) (3GPP 36.300)",
 			"valueType": "DeNBCapabilityList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/DeNBCapabilityList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "ESPolicies",
+			"name": "eSPolicies",
 			"description": "Energy saving policies information",
 			"valueType": "ESPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"

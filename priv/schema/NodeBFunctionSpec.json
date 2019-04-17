@@ -27,10 +27,10 @@
 											"userLabel",
 											"vnfParametersList",
 											"peeParametersList",
-											"ManagedElements",
+											"managedElements",
 											"nodeBFunctionIubLink",
-											"NodeBFunctionOptionallyContainedNrmClass",
-											"VsDataContainer"
+											"nodeBFunctionOptionallyContainedNrmClass",
+											"vsDataContainer"
 										]
 									}
 								}

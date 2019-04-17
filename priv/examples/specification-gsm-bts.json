@@ -43,35 +43,35 @@
 		{
 			"name": "latitude",
 			"description": "Latitude of the site manager location based on (WGS 84) global reference frame",
-			"valueType": "latitude",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/latitude"
+			"valueType": "Latitude",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Latitude"
 		},
 		{
 			"name": "longitude",
 			"description": "Longitude of the site manager location based on (WGS 84) global reference frame",
-			"valueType": "longitude",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/longitude"
+			"valueType": "Longitude",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Longitude"
 		},
 		{
 			"name": "operationalState",
 			"description": "Indicates the operational state of the object instance (ITU-T X.731)",
-			"valueType": "operationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/operationalStateType"
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
 		},
 		{
-			"name": "GsmCell",
+			"name": "gsmCell",
 			"description": "GSM Radio Cell",
 			"valueType": "GsmCellList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmCellList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		},
 		{
-			"name": "InterRatEsPolicies",
+			"name": "interRatEsPolicies",
 			"description": "Inter-RAT energy saving policies information.",
 			"valueType": "InterRatEsPoliciesList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"

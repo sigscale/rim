@@ -52,10 +52,10 @@
 											"tDDBwpDedicatedCarrierFreq",
 											"tDDBwpDedicatedChannelBw",
 											"rRMPolicy",
-											"VsDataContainer",
+											"vsDataContainer",
 											"nRSectorCarrier",
-											"EnergySavingProperties",
-											"ESPolicies"
+											"energySavingProperties",
+											"eSPolicies"
 										]
 									}
 								}

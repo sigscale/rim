@@ -43,32 +43,32 @@
 		{
 			"name": "mccList",
 			"description": "List of Mobile Country Codes (MCC) (3GPP 23.003)",
-			"valueType": "longList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+			"valueType": "LongList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mncList",
 			"description": "List of Mobile Network Codes (MNC) (3GPP 23.003)",
-			"valueType": "longList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+			"valueType": "LongList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "lacList",
 			"description": "List of Location Area Codes (LAC) (3GPP 23.003)",
-			"valueType": "longList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+			"valueType": "LongList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "sacList",
 			"description": "List of Service Area Codes (SAC) (3GPP 23.003)",
-			"valueType": "longList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+			"valueType": "LongList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "gcaList",
 			"description": "List of Group Call Area (GCA) Codes  (3GPP 23.003)",
-			"valueType": "longList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+			"valueType": "LongList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mscId",
@@ -78,53 +78,53 @@
 		{
 			"name": "mscServerFunctionGsmCell",
 			"description": "This holds a set of DNs of GsmCell",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "mscServerFunctionExternalGsmCell",
 			"description": "This holds a set of DNs of ExternalGsmCell",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "mscServerFunctionCsMgwFunction",
 			"description": "This holds a set of DNs of CsMgwFunction",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "nriList",
 			"description": "NRI shall be part of the TMSI (3GPP 23.003)",
-			"valueType": "longList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/longList"
+			"valueType": "LongList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mscServerFunctionMscPool",
 			"description": "This holds a set of DNs of MscPool",
-			"valueType": "dnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dnList"
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "defaultMsc",
 			"description": "Whether this MSC-Server is default CN node in MscPool or not (3GPP 23.236)",
-			"valueType": "defaultMscType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/defaultMscType"
+			"valueType": "DefaultMscType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/DefaultMscType"
 		},
 		{
-			"name": "IucsLink",
+			"name": "iucsLink",
 			"description": "Iu-cs interface link connecting MSCserver to RNC, BSC and HNB GW (3GPP 23.002)",
 			"valueType": "IucsLinkList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/IucsLinkList"
 		},
 		{
-			"name": "ALink",
+			"name": "aLink",
 			"description": "A interface link connecting an MSC to GERAN (3GPP 23.002)",
 			"valueType": "ALinkList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/ALinkList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

@@ -43,8 +43,8 @@
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
-			"valueType": "peeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+			"valueType": "PeeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "pLMNIdList",
@@ -59,43 +59,43 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbId"
 		},
 		{
-			"name": "EP_E1",
+			"name": "eP_E1",
 			"description": "Local end point of E1 interface between gNB-CU-CP and gNB-CU-UP",
 			"valueType": "EP_E1List",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_E1List"
 		},
 		{
-			"name": "EP_F1U",
+			"name": "eP_F1U",
 			"description": "Local end point of user plane interface (F1-U) between DU and CU or CU-UP",
 			"valueType": "EP_F1UList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1UList"
 		},
 		{
-			"name": "EP_XnU",
+			"name": "eP_XnU",
 			"description": "Local end point of Xn user plane (Xn-U) interface between two NG-RAN nodes",
 			"valueType": "EP_XnUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_XnUList"
 		},
 		{
-			"name": "EP_NgU",
+			"name": "eP_NgU",
 			"description": "Local end point of NG user plane (NG-U) interface between gNB and UPGW",
 			"valueType": "EP_NgUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_NgUList"
 		},
 		{
-			"name": "EP_X2U",
+			"name": "eP_X2U",
 			"description": "Local end point of X2 user plane (X2-U) interface",
 			"valueType": "EP_X2UList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_X2UList"
 		},
 		{
-			"name": "EP_S1U",
+			"name": "eP_S1U",
 			"description": "Local end point of S1-U interface towards S-GW node",
 			"valueType": "EP_S1UList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_S1UList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

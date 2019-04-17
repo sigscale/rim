@@ -33,7 +33,7 @@
 				}
 			}
 		},
-		"cellSize": {
+		"CellSize": {
 			"type": "string",
 			"enum": [
 				"verysmall",
@@ -42,7 +42,7 @@
 				"large"
 			]
 		},
-		"allowedAccessClassesElementType": {
+		"AllowedAccessClassesElementType": {
 			"type": "string",
 			"enum": [
 				"EmergencyCall",
@@ -53,7 +53,7 @@
 				"PLMNStaff"
 			]
 		},
-		"allowedAccessClassesType": {
+		"AllowedAccessClassesType": {
 			"type": "object",
 			"properties": {
 				"allowedAccessClassesElement": {
@@ -61,7 +61,7 @@
 					"minItems": 0,
 					"maxItems": 6,
 					"items": {
-						"$ref": "#/definitions/allowedAccessClassesElementType"
+						"$ref": "#/definitions/AllowedAccessClassesElementType"
 					}
 				}
 			}
@@ -151,14 +151,14 @@
 				}
 			}
 		},
-		"cellResvInfoType": {
+		"CellResvInfoType": {
 			"type": "string",
 			"enum": [
 				"reservedCell",
 				"nonReservedCell"
 			]
 		},
-		"mbsfnAreaIdType": {
+		"MbsfnAreaIdType": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 255
@@ -186,7 +186,7 @@
 				}
 			}
 		},
-		"isEsCoveredByEnumType": {
+		"IsEsCoveredByEnumType": {
 			"type": "string",
 			"enum": [
 				"no",
@@ -194,7 +194,7 @@
 				"yes"
 			]
 		},
-		"yesNoType": {
+		"YesNoType": {
 			"type": "string",
 			"enum": [
 				"yes",
@@ -538,7 +538,7 @@
 				}
 			}
 		},
-		"cellOutageCompensationState": {
+		"CellOutageCompensationState": {
 			"type": "string",
 			"enum": [
 				"cOCActivating",
@@ -547,14 +547,14 @@
 				"cOCDeactive"
 			]
 		},
-		"cellOutageCompensationStatus": {
+		"CellOutageCompensationStatus": {
 			"type": "object",
 			"properties": {
 				"cellOutageCompensationState": {
-					"$ref": "#/definitions/cellOutageCompensationState"
+					"$ref": "#/definitions/CellOutageCompensationState"
 				},
 				"errorList": {
-					"$ref": "genericNrm#/definitions/dnList"
+					"$ref": "genericNrm#/definitions/DnList"
 				}
 			}
 		},
@@ -574,7 +574,7 @@
 							],
 							"properties": {
 								"cellOutageCompensationStatus": {
-									"$ref": "#/definitions/cellOutageCompensationStatus"
+									"$ref": "#/definitions/CellOutageCompensationStatus"
 								},
 								"isCOCAllowed": {
 									"type": "boolean"
@@ -600,7 +600,7 @@
 			"type": "object",
 			"properties": {
 				"prsSupported": {
-					"$ref": "#/definitions/yesNoType"
+					"$ref": "#/definitions/YesNoType"
 				}
 			}
 		},
@@ -859,10 +859,10 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"peeParametersList": {
-									"$ref": "genericNrm#/definitions/peeParametersListType"
+									"$ref": "genericNrm#/definitions/PeeParametersListType"
 								},
 								"intraANRSwitch": {
 									"type": "boolean"
@@ -874,13 +874,13 @@
 									"$ref": "#/definitions/ENBId"
 								},
 								"x2BlackList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"x2WhiteList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"x2HOBlackList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"x2IpAddressList": {
 									"type": "string"
@@ -896,43 +896,43 @@
 								}
 							}
 						},
-						"EUtranCellFDD": {
+						"eUtranCellFDD": {
 							"$ref": "#/definitions/EUtranCellFDDList"
 						},
-						"EUtranCellTDD": {
+						"eUtranCellTDD": {
 							"$ref": "#/definitions/EUtranCellTDDList"
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
-						"EP_X2C": {
+						"eP_X2C": {
 							"$ref": "nrNrm#/definitions/EP_X2CList"
 						},
-						"EP_X2U": {
+						"eP_X2U": {
 							"$ref": "nrNrm#/definitions/EP_X2UList"
 						},
-						"EP_NgC": {
+						"eP_NgC": {
 							"$ref": "nrNrm#/definitions/EP_NgCList"
 						},
-						"EP_NgU": {
+						"eP_NgU": {
 							"$ref": "nrNrm#/definitions/EP_NgUList"
 						},
-						"EP_XnC": {
+						"eP_XnC": {
 							"$ref": "nrNrm#/definitions/EP_XnCList"
 						},
-						"EP_XnU": {
+						"eP_XnU": {
 							"$ref": "nrNrm#/definitions/EP_XnUList"
 						},
-						"ENBFunctionOptionallyContainedNrmClass": {
+						"eNBFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ENBFunctionOptionallyContainedNrmClassList"
 						},
-						"DeNBCapability": {
+						"deNBCapability": {
 							"$ref": "#/definitions/DeNBCapabilityList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"ESPolicies": {
+						"eSPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
@@ -958,23 +958,23 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"peeParametersList": {
-									"$ref": "genericNrm#/definitions/peeParametersListType"
+									"$ref": "genericNrm#/definitions/PeeParametersListType"
 								},
 								"servingCell": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
-						"RNFunctionOptionallyContainedNrmClass": {
+						"rNFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/RNFunctionOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1000,13 +1000,13 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"peeParametersList": {
-									"$ref": "genericNrm#/definitions/peeParametersListType"
+									"$ref": "genericNrm#/definitions/PeeParametersListType"
 								},
 								"servedRN": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"maxNbrRNAllowed": {
 									"type": "integer",
@@ -1043,20 +1043,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"candidateDeNBCells": {
 									"$ref": "#/definitions/EcgiList"
 								}
 							}
 						},
-						"EP_RP_EPS": {
+						"eP_RP_EPS": {
 							"$ref": "epcNrm#/definitions/EP_RP_EPSList"
 						},
-						"ExternalRNFunctionOptionallyContainedNrmClass": {
+						"externalRNFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalRNFunctionOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1081,26 +1081,26 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"eNBId": {
 									"$ref": "#/definitions/ENBId"
 								}
 							}
 						},
-						"ExternalEUtranCellFDD": {
+						"externalEUtranCellFDD": {
 							"$ref": "#/definitions/ExternalEUtranCellFDDList"
 						},
-						"ExternalEUtranCellTDD": {
+						"externalEUtranCellTDD": {
 							"$ref": "#/definitions/ExternalEUtranCellTDDList"
 						},
-						"ExternalENBFunctionOptionallyContainedNrmClass": {
+						"externalENBFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalENBFunctionOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"InterRatEsPolicies": {
+						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -1135,7 +1135,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"cellLocalId": {
 									"$ref": "#/definitions/CellLocalId"
@@ -1144,7 +1144,7 @@
 									"$ref": "#/definitions/CellLocalIdList"
 								},
 								"cellSize": {
-									"$ref": "#/definitions/cellSize"
+									"$ref": "#/definitions/CellSize"
 								},
 								"pLMNIdList": {
 									"$ref": "#/definitions/PLMNIdList"
@@ -1184,62 +1184,62 @@
 									"maximum": 32767
 								},
 								"relatedTmaList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"relatedAntennaList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								},
 								"relatedSector": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"operationalState": {
-									"$ref": "stateManagementIRP#/definitions/operationalStateType"
+									"$ref": "stateManagementIRP#/definitions/OperationalStateType"
 								},
 								"administrativeState": {
-									"$ref": "stateManagementIRP#/definitions/administrativeStateType"
+									"$ref": "stateManagementIRP#/definitions/AdministrativeStateType"
 								},
 								"availabilityStatus": {
-									"$ref": "stateManagementIRP#/definitions/availabilityStatusType"
+									"$ref": "stateManagementIRP#/definitions/AvailabilityStatusType"
 								},
 								"allowedAccessClasses": {
-									"$ref": "#/definitions/allowedAccessClassesType"
+									"$ref": "#/definitions/AllowedAccessClassesType"
 								},
 								"cellResvInfo": {
-									"$ref": "#/definitions/cellResvInfoType"
+									"$ref": "#/definitions/CellResvInfoType"
 								},
 								"nbIoTcellFlag": {
-									"$ref": "#/definitions/yesNoType"
+									"$ref": "#/definitions/YesNoType"
 								},
 								"isChangeForEnergySavingAllowed": {
-									"$ref": "#/definitions/yesNoType"
+									"$ref": "#/definitions/YesNoType"
 								},
 								"ngranCellFlag": {
-									"$ref": "#/definitions/yesNoType"
+									"$ref": "#/definitions/YesNoType"
 								},
 								"nSSAI": {
 									"$ref": "ngcNrm#/definitions/NssaiList"
 								}
 							}
 						},
-						"EUtranRelation": {
+						"eUtranRelation": {
 							"$ref": "#/definitions/EUtranRelationList"
 						},
-						"Cdma2000Relation": {
+						"cdma2000Relation": {
 							"$ref": "#/definitions/Cdma2000RelationList"
 						},
-						"GsmRelation": {
+						"gsmRelation": {
 							"$ref": "geranNrm#/definitions/GsmRelationList"
 						},
-						"UtranRelation": {
+						"utranRelation": {
 							"$ref": "utranNrm#/definitions/UtranRelationList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"EnergySavingProperties": {
+						"energySavingProperties": {
 							"$ref": "sonPolicyNrm#/definitions/EnergySavingPropertiesList"
 						},
-						"ESPolicies": {
+						"eSPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 						}
 					}
@@ -1273,7 +1273,7 @@
 								}
 							}
 						},
-						"EUtranCellFDDOptionallyContainedNrmClass": {
+						"eUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1308,7 +1308,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"pci": {
 									"$ref": "#/definitions/Pci"
@@ -1327,13 +1327,13 @@
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"CellOutageCompensationInformation": {
+						"cellOutageCompensationInformation": {
 							"$ref": "#/definitions/CellOutageCompensationInformationList"
 						},
-						"InterRatEsPolicies": {
+						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -1367,7 +1367,7 @@
 								}
 							}
 						},
-						"ExternalEUtranCellFDDOptionallyContainedNrmClass": {
+						"externalEUtranCellFDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalEUtranCellFDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1413,7 +1413,7 @@
 								}
 							}
 						},
-						"EUtranCellTDDOptionallyContainedNrmClass": {
+						"eUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1423,7 +1423,7 @@
 		"EUtranCellTDDList": {
 			"type": "array",
 			"items": {
-				"$ref": "#/definitions/EUtranCellTDD"
+				"$ref": "#/definitions/eUtranCellTDD"
 			}
 		},
 		"ExternalEUtranCellTDD": {
@@ -1447,7 +1447,7 @@
 								}
 							}
 						},
-						"ExternalEUtranCellTDDOptionallyContainedNrmClass": {
+						"externalEUtranCellTDDOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/ExternalEUtranCellTDDOptionallyContainedNrmClassList"
 						}
 					}
@@ -1492,10 +1492,10 @@
 									"type": "boolean"
 								},
 								"adjacentCell": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"isEsCoveredBy": {
-									"$ref": "#/definitions/isEsCoveredByEnumType"
+									"$ref": "#/definitions/IsEsCoveredByEnumType"
 								},
 								"cellIndividualOffset": {
 									"$ref": "#/definitions/QOffsetEnumType"
@@ -1505,10 +1505,10 @@
 								}
 							}
 						},
-						"EUtranRelationOptionallyContainedNrmClass": {
+						"eUtranRelationOptionallyContainedNrmClass": {
 								"$ref": "#/definitions/EUtranRelationOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1536,14 +1536,14 @@
 							],
 							"properties": {
 								"adjacentCell": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Cdma2000RelationOptionallyContainedNrmClass": {
+						"cdma2000RelationOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Cdma2000RelationOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1573,10 +1573,10 @@
 							],
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1588,14 +1588,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_ENB_ENBOptionallyContainedNrmClass": {
+						"link_ENB_ENBOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_ENB_ENBOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1617,20 +1617,20 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"peeParametersList": {
-									"$ref": "genericNrm#/definitions/peeParametersListType"
+									"$ref": "genericNrm#/definitions/PeeParametersListType"
 								}
 							}
 						},
-						"MCEFunctionOptionallyContainedNrmClass": {
+						"mCEFunctionOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MCEFunctionOptionallyContainedNrmClassList"
 						},
-						"MBSFNArea": {
+						"mBSFNArea": {
 							"$ref": "#/definitions/MBSFNAreaList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1649,17 +1649,17 @@
 							"type": "object",
 							"properties": {
 								"mbsfnAreaId": {
-									"$ref": "#/definitions/mbsfnAreaIdType"
+									"$ref": "#/definitions/MbsfnAreaIdType"
 								},
 								"cellIdList": {
-									"$ref": "genericNrm#/definitions/dnList"
+									"$ref": "genericNrm#/definitions/DnList"
 								}
 							}
 						},
-						"MBSFNAreaOptionallyContainedNrmClass": {
+						"mBSFNAreaOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/MBSFNAreaOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1684,10 +1684,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1699,14 +1699,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_MCE_ENBOptionallyContainedNrmClass": {
+						"link_MCE_ENBOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MCE_ENBOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1725,10 +1725,10 @@
 							"type": "object",
 							"properties": {
 								"aEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"linkType": {
-									"$ref": "genericNrm#/definitions/linkType"
+									"$ref": "genericNrm#/definitions/LinkType"
 								},
 								"protocolName": {
 									"type": "string"
@@ -1740,14 +1740,14 @@
 									"type": "string"
 								},
 								"zEnd": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								}
 							}
 						},
-						"Link_MCE_MMEOptionallyContainedNrmClass": {
+						"link_MCE_MMEOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/Link_MCE_MMEOptionallyContainedNrmClassList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -1766,21 +1766,21 @@
 							"type": "object",
 							"required": [
 								"userLabel",
-								"QciDscpMappingList"
+								"qciDscpMappingList"
 							],
 							"properties": {
 								"userLabel": {
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
-								"QciDscpMappingList": {
+								"qciDscpMappingList": {
 									"$ref": "#/definitions/QciDscpMappingListType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}

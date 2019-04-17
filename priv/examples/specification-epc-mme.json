@@ -56,29 +56,29 @@
 		{
 			"name": "mMEPool",
 			"description": "DN of a MMEPool instance",
-			"valueType": "dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/dn"
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
-			"name": "MMEFunctionOptionallyContainedNrmClass",
+			"name": "mMEFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "MMEFunctionOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/MMEFunctionOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "EP_RP_EPS",
+			"name": "eP_RP_EPS",
 			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
 			"valueType": "EP_RP_EPSList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
 		},
 		{
-			"name": "EP_N26",
+			"name": "eP_N26",
 			"description": "N26 interface between AMF and MME (3GPP 23.501)",
 			"valueType": "EP_N26List",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/EP_N26List"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

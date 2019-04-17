@@ -2,14 +2,14 @@
 	"title": "State Management IRP",
 	"description": "",
 	"definitions": {
-		"operationalStateType": {
+		"OperationalStateType": {
 			"type": "string",
 			"enum": [
 				"enabled",
 				"disabled"
 			]
 		},
-		"administrativeStateType": {
+		"AdministrativeStateType": {
 			"type": "string",
 			"enum": [
 				"idle",
@@ -17,12 +17,12 @@
 				"busy"
 			]
 		},
-		"alarmStatusType": {
+		"AlarmStatusType": {
 			"type": "string",
 			"enum": [
 			]
 		},
-		"administrativeStateType": {
+		"AdministrativeStateType": {
 			"type": "string",
 			"enum": [
 				"locked",
@@ -30,7 +30,7 @@
 				"shuttingDown"
 			]
 		},
-		"alarmStatusType": {
+		"AlarmStatusType": {
 			"type": "string",
 			"enum": [
 				"cleared",
@@ -41,7 +41,7 @@
 				"critical"
 			]
 		},
-		"proceduralStatusElementType": {
+		"ProceduralStatusElementType": {
 			"type": "string",
 			"enum": [
 				"initializationRequired",
@@ -51,14 +51,14 @@
 				"terminating"
 			]
 		},
-		"proceduralStatusType": {
+		"ProceduralStatusType": {
 			"type": "array",
 			"maxItems": 5,
 			"items": {
-				"$ref": "#/definitions/proceduralStatusElementType"
+				"$ref": "#/definitions/ProceduralStatusElementType"
 			}
 		},
-		"availabilityStatusElementType": {
+		"AvailabilityStatusElementType": {
 			"type": "string",
 			"enum": [
 				"inTest",
@@ -72,14 +72,14 @@
 				"logFull"
 			]
 		},
-		"availabilityStatusType": {
+		"AvailabilityStatusType": {
 			"type": "array",
 			"maxItems": 9,
 			"items": {
-				"$ref": "#/definitions/availabilityStatusElementType"
+				"$ref": "#/definitions/AvailabilityStatusElementType"
 			}
 		},
-		"controlStatusElementType": {
+		"ControlStatusElementType": {
 			"type": "string",
 			"enum": [
 				"subjectToTest",
@@ -88,14 +88,14 @@
 				"suspended"
 			]
 		},
-		"controlStatusType": {
+		"ControlStatusType": {
 			"type": "array",
 			"maxItems": 4,
 			"items": {
-				"$ref": "#/definitions/controlStatusElementType"
+				"$ref": "#/definitions/ControlStatusElementType"
 			}
 		},
-		"standbyStatusType": {
+		"StandbyStatusType": {
 			"type": "string",
 			"enum": [
 				"hotStandby",
@@ -103,35 +103,35 @@
 				"providingService"
 			]
 		},
-		"unknownStatusType": {
+		"UnknownStatusType": {
 			"type": "boolean"
 		},
-		"operationalState": {
-			"$ref": "#/definitions/operationalStateType"
+		"OperationalState": {
+			"$ref": "#/definitions/OperationalStateType"
 		},
-		"usageState": {
-			"$ref": "#/definitions/usageStateType"
+		"UsageState": {
+			"$ref": "#/definitions/UsageStateType"
 		},
-		"administrativeState": {
-			"$ref": "#/definitions/administrativeStateType"
+		"AdministrativeState": {
+			"$ref": "#/definitions/AdministrativeStateType"
 		},
-		"alarmStatus": {
-			"$ref": "#/definitions/alarmStatusType"
+		"AlarmStatus": {
+			"$ref": "#/definitions/AlarmStatusType"
 		},
-		"proceduralStatus": {
-			"$ref": "#/definitions/proceduralStatusType"
+		"ProceduralStatus": {
+			"$ref": "#/definitions/ProceduralStatusType"
 		},
-		"availabilityStatus": {
-			"$ref": "#/definitions/availabilityStatusType"
+		"AvailabilityStatus": {
+			"$ref": "#/definitions/AvailabilityStatusType"
 		},
-		"controlStatus": {
-			"$ref": "#/definitions/controlStatusType"
+		"ControlStatus": {
+			"$ref": "#/definitions/ControlStatusType"
 		},
-		"standbyStatus": {
-			"$ref": "#/definitions/standbyStatusType"
+		"StandbyStatus": {
+			"$ref": "#/definitions/StandbyStatusType"
 		},
-		"unknownStatus": {
-			"$ref": "#/definitions/unknownStatusType"
+		"UnknownStatus": {
+			"$ref": "#/definitions/UnknownStatusType"
 		}
 	}
 }

@@ -64,10 +64,10 @@
 						"restrictionStateIndicator",
 						"dpcModechangeSupportIndicator",
 						"relatedSectorEquipment",
-						"UtranRelation",
-						"GsmRelation",
-						"UtranGenericCellOptionallyContainedNrmClass",
-						"VsDataContainer"
+						"utranRelation",
+						"gsmRelation",
+						"utranGenericCellOptionallyContainedNrmClass",
+						"vsDataContainer"
 					]
 				}
 			}

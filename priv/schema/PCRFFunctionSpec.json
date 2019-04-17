@@ -27,9 +27,9 @@
 											"userLabel",
 											"vnfParametersList",
 											"linkList",
-											"PCRFFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
-											"VsDataContainer"
+											"pCRFFunctionOptionallyContainedNrmClass",
+											"eP_RP_EPS",
+											"vsDataContainer"
 										]
 									}
 								}

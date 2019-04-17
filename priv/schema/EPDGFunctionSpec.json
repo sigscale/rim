@@ -27,9 +27,9 @@
 											"userLabel",
 											"vnfParametersList",
 											"linkList",
-											"EPDGFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
-											"VsDataContainer"
+											"ePDGFunctionOptionallyContainedNrmClass",
+											"eP_RP_EPS",
+											"vsDataContainer"
 										]
 									}
 								}

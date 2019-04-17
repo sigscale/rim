@@ -43,8 +43,8 @@
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
-			"valueType": "peeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/peeParametersListType"
+			"valueType": "PeeParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "gnbId",
@@ -65,43 +65,43 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
 		},
 		{
-			"name": "NRCellCU",
+			"name": "nRCellCU",
 			"description": "Information required by CU responsible for management of inter-cell mobility and neighbour relations via ANR",
 			"valueType": "NRCellCUList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/NRCellCUList"
 		},
 		{
-			"name": "EP_F1C",
+			"name": "eP_F1C",
 			"description": "Local end point of control plane interface (F1-C) between DU and CU or CU-UP.",
 			"valueType": "EP_F1CList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1CList"
 		},
 		{
-			"name": "EP_E1",
+			"name": "eP_E1",
 			"description": "Local end point of E1 interface between gNB-CU-CP and gNB-CU-UP",
 			"valueType": "EP_E1List",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_E1List"
 		},
 		{
-			"name": "EP_XnC",
+			"name": "eP_XnC",
 			"description": "Local end point of Xn Application protocols to a neighbour gNB node",
 			"valueType": "EP_XnCList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_XnCList"
 		},
 		{
-			"name": "EP_X2C",
+			"name": "eP_X2C",
 			"description": "Local end point of X2-C application protocols to a neighbour eNB or en-gNB node",
 			"valueType": "EP_X2CList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_X2CList"
 		},
 		{
-			"name": "EP_NgC",
+			"name": "eP_NgC",
 			"description": "Local end point of control plane interface (NG-C) between gNB and NG-Core entity",
 			"valueType": "EP_NgCList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_NgCList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

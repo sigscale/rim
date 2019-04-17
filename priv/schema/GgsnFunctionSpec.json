@@ -27,7 +27,7 @@
 											"userLabel",
 											"vnfParametersList",
 											"proceduralStatus",
-											"VsDataContainer"
+											"vsDataContainer"
 										]
 									}
 								}

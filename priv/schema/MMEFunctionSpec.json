@@ -29,10 +29,10 @@
 											"pLMNIdList",
 											"mMEC",
 											"mMEPool",
-											"MMEFunctionOptionallyContainedNrmClass",
-											"EP_RP_EPS",
-											"EP_N26",
-											"VsDataContainer"
+											"mMEFunctionOptionallyContainedNrmClass",
+											"eP_RP_EPS",
+											"eP_N26",
+											"vsDataContainer"
 										]
 									}
 								}

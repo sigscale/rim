@@ -46,19 +46,19 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkListType"
 		},
 		{
-			"name": "EPDGFunctionOptionallyContainedNrmClass",
+			"name": "ePDGFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "EPDGFunctionOptionallyContainedNrmClassList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EPDGFunctionOptionallyContainedNrmClassList"
 		},
 		{
-			"name": "EP_RP_EPS",
+			"name": "eP_RP_EPS",
 			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
 			"valueType": "EP_RP_EPSList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
 		},
 		{
-			"name": "VsDataContainer",
+			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"

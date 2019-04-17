@@ -29,13 +29,13 @@
 											"peeParametersList",
 											"pLMNIdList",
 											"gNBId",
-											"EP_E1",
-											"EP_F1U",
-											"EP_XnU",
-											"EP_NgU",
-											"EP_X2U",
-											"EP_S1U",
-											"VsDataContainer"
+											"eP_E1",
+											"eP_F1U",
+											"eP_XnU",
+											"eP_NgU",
+											"eP_X2U",
+											"eP_S1U",
+											"vsDataContainer"
 										]
 									}
 								}

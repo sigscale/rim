@@ -2,22 +2,22 @@
 	"title": "SON Policy NRM", 
 	"description": "Self Organizing Networks (SON) Policy Network Resource Model (NRM)",
 	"definitions": {
-		"cacRange": {
+		"CacRange": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 10000 
 		},
-		"relativeCellLoadRange": {
+		"RelativeCellLoadRange": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 10000 
 		},
-		"timeDurationRange": {
+		"TimeDurationRange": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 900 
 		},
-		"rateRange": {
+		"RateRange": {
 			"type": "integer",
 			"minimum": 0,
 			"maximum": 100 
@@ -56,15 +56,15 @@
 			"type": "object",
 			"properties": {
 				"lowerEndOfCacRange": {
-					"$ref": "#/definitions/cacRange"
+					"$ref": "#/definitions/CacRange"
 				},
 				"upperEndOfCacRange": {
-					"$ref": "#/definitions/cacRange"
+					"$ref": "#/definitions/CacRange"
 				},
-				"Rate": {
-					"$ref": "#/definitions/rateRange"
+				"rate": {
+					"$ref": "#/definitions/RateRange"
 				},
-				"Weight": {
+				"weight": {
 					"type": "integer"
 				}
 			}
@@ -72,10 +72,10 @@
 		"LBOLinkTarget": {
 			"type": "object",
 			"properties": {
-				"UplinkTarget": {
+				"uplinkTarget": {
 					"$ref": "#/definitions/LBOTarget"
 				},
-				"DownlinkTarget": {
+				"downlinkTarget": {
 					"$ref": "#/definitions/LBOTarget"
 				}
 			}
@@ -83,10 +83,10 @@
 		"HooTarget": {
 			"type": "object",
 			"properties": {
-				"Rate": {
-					"$ref": "#/definitions/rateRange"
+				"rate": {
+					"$ref": "#/definitions/RateRange"
 				},
-				"Weight": {
+				"weight": {
 					"type": "integer"
 				}
 			}
@@ -94,10 +94,10 @@
 		"CellLoadParameters": {
 			"type": "object",
 			"properties": {
-				"Rate": {
-					"$ref": "#/definitions/rateRange"
+				"rate": {
+					"$ref": "#/definitions/RateRange"
 				},
-				"TimeDuration": {
+				"timeDuration": {
 					"type": "integer"
 				}
 			}
@@ -105,10 +105,10 @@
 		"RelativeCellLoadParameters": {
 			"type": "object",
 			"properties": {
-				"Rate": {
-					"$ref": "#/definitions/rateRange"
+				"rate": {
+					"$ref": "#/definitions/RateRange"
 				},
-				"TimeDuration": {
+				"timeDuration": {
 					"type": "integer"
 				}
 			}
@@ -127,10 +127,10 @@
 		"TimePeriod": {
 			"type": "object",
 			"properties": {
-				"Day": {
+				"day": {
 					"$ref": "#/definitions/WeekDayList"
 				},
-				"PeriodOfDay": {
+				"periodOfDay": {
 					"$ref": "#/definitions/DailyPeriod"
 				}
 			}
@@ -138,7 +138,7 @@
 		"ESNotAllowedTimePeriod": {
 			"type": "object",
 			"properties": {
-				"TimePeriodList": {
+				"timePeriodList": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/TimePeriod"
@@ -154,10 +154,10 @@
 		"AccessDelayProbabilityROTarget": {
 			"type": "object",
 			"properties": {
-				"Probability": {
+				"probability": {
 					"$ref": "#/definitions/ROProbability"
 				},
-				"AccessDelay": {
+				"accessDelay": {
 					"$ref": "#/definitions/AccessDelayRange"
 				}
 			}
@@ -166,7 +166,7 @@
 			"type": "array",
 			"maxItems": 4,
 			"items": {
-				"AccessDelayProbabilityTarget": {
+				"accessDelayProbabilityTarget": {
 					"$ref": "#/definitions/AccessDelayProbabilityROTarget"
 				}
 			}
@@ -179,10 +179,10 @@
 		"AccessProbabilityROTarget": {
 			"type": "object",
 			"properties": {
-				"Probability": {
+				"probability": {
 					"$ref": "#/definitions/ROProbability"
 				},
-				"AccessNumber": {
+				"accessNumber": {
 					"$ref": "#/definitions/AccessNumberAttemptRange"
 				}
 			}
@@ -191,12 +191,12 @@
 			"type": "array",
 			"maxItems": 4,
 			"items": {
-				"AccessProbabilityTarget": {
+				"accessProbabilityTarget": {
 					"$ref": "#/definitions/AccessProbabilityROTarget"
 				}
 			}
 		},
-		"rachOptTarget": {
+		"RachOptTarget": {
 			"type": "array",
 			"maxItems": 4,
 			"properties": {
@@ -211,13 +211,13 @@
 		"AasTarget": {
 			"type": "object",
 			"properties": {
-				"TargetLowerThreshold": {
-					"$ref": "#/definitions/rateRange"
+				"targetLowerThreshold": {
+					"$ref": "#/definitions/RateRange"
 				},
-				"TargetUpperThreshold": {
-					"$ref": "#/definitions/rateRange"
+				"targetUpperThreshold": {
+					"$ref": "#/definitions/RateRange"
 				},
-				"Weight": {
+				"weight": {
 					"type": "integer"
 				}
 			}
@@ -262,10 +262,10 @@
 		"AntennaPowerRangeType": {
 			"type": "object",
 			"properties": {
-				"AntennaPowerLowerThreshold": {
+				"antennaPowerLowerThreshold": {
 					"$ref": "#/definitions/AntennaPowerType"
 				},
-				"AntennaPowerUpperThreshold": {
+				"antennaPowerUpperThreshold": {
 					"$ref": "#/definitions/AntennaPowerType"
 				}
 			}
@@ -273,19 +273,19 @@
 		"AntennaCovConfigType": {
 			"type": "object",
 			"properties": {
-				"SateID": {
+				"sateID": {
 					"$ref": "#/definitions/CellCovStateType"
 				},
-				"HorizontalHBW": {
+				"horizontalHBW": {
 					"$ref": "#/definitions/Beamwidth"
 				},
-				"VerticalHBW": {
+				"verticalHBW": {
 					"$ref": "#/definitions/Beamwidth"
 				},
-				"MaxTransmissionPowerRange": {
+				"maxTransmissionPowerRange": {
 					"$ref": "#/definitions/AntennaPowerRangeType"
 				},
-				"ReferenceSignalPowerRange": {
+				"referenceSignalPowerRange": {
 					"$ref": "#/definitions/AntennaPowerRangeType"
 				}
 			}
@@ -294,19 +294,19 @@
 			"type": "array",
 			"maxItems": 16,
 			"items": {
-				"AntennaCovConfig": {
+				"antennaCovConfig": {
 					"$ref": "#/definitions/AntennaCovConfigType"
 				}
 			}
 		},
-		"energySavingStateEnumType": {
+		"EnergySavingStateEnumType": {
 			"type": "string",
 			"enum": [
 				"isEnergySaving",
 				"isNotEnergySaving"
 			]
 		},
-		"energySavingControlEnumType": {
+		"EnergySavingControlEnumType": {
 			"type": "string",
 			"enum": [
 				"isEnergySaving",
@@ -519,10 +519,10 @@
 							"type": "object",
 							"properties": {
 								"energySavingState": {
-									"$ref": "#/definitions/energySavingStateEnumType"
+									"$ref": "#/definitions/EnergySavingStateEnumType"
 								},
 								"energySavingControl": {
-									"$ref": "#/definitions/energySavingControlEnumType"
+									"$ref": "#/definitions/EnergySavingControlEnumType"
 								},
 								"isProbingCapable": {
 									"type": "boolean"

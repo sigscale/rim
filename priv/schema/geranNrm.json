@@ -2,7 +2,7 @@
 	"title": "GERAN NRM", 
 	"description": "GSM-EDGE Radio Access Network (GERAN) Network Resource Model (NRM)",
 	"definitions": {
-		"isESCoveredByEnumType": {
+		"IsESCoveredByEnumType": {
 			"type": "string",
 			"enum": [
 				"no",
@@ -55,14 +55,14 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"BtsSiteMgr": {
-							"$ref": "genericNrm#/definitions/dnList"
+						"btsSiteMgr": {
+							"$ref": "genericNrm#/definitions/DnList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -87,26 +87,26 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"latitude": {
-									"$ref": "genericNrm#/definitions/latitude"
+									"$ref": "genericNrm#/definitions/Latitude"
 								},
 								"longitude": {
-									"$ref": "genericNrm#/definitions/longitude"
+									"$ref": "genericNrm#/definitions/Longitude"
 								},
 								"operationalState": {
-									"$ref": "stateManagementIRP#/definitions/operationalStateType"
+									"$ref": "stateManagementIRP#/definitions/OperationalStateType"
 								}
 							}
 						},
-						"GsmCell": {
-							"$ref": "genericNrm#/definitions/dnList"
+						"gsmCell": {
+							"$ref": "genericNrm#/definitions/DnList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"InterRatEsPolicies": {
+						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -143,7 +143,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"cellIdentity": {
 									"type": "integer",
@@ -219,22 +219,22 @@
 								}
 							}
 						},
-						"GsmRelation": {
+						"gsmRelation": {
 							"$ref": "#/definitions/GsmRelationList"
 						},
-						"UtranRelation": {
+						"utranRelation": {
 							"$ref": "utranNrm#/definitions/UtranRelationList"
 						},
-						"EUtranRelation": {
+						"eUtranRelation": {
 							"$ref": "eutranNrm#/definitions/EUtranRelationList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"GsmCellOptionallyContainedNrmClass": {
+						"gsmCellOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/GsmCellOptionallyContainedNrmClassList"
 						},
-						"InterRatEsPolicies": {
+						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -256,7 +256,7 @@
 							],
 							"properties": {
 								"adjacentCell": {
-									"$ref": "genericNrm#/definitions/dn"
+									"$ref": "genericNrm#/definitions/Dn"
 								},
 								"bcchFrequency": {
 									"type": "integer"
@@ -283,11 +283,11 @@
 									"type": "boolean"
 								},
 								"isESCoveredBy": {
-									"$ref": "#/definitions/isESCoveredByEnumType"
+									"$ref": "#/definitions/IsESCoveredByEnumType"
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						}
 					}
@@ -325,7 +325,7 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								},
 								"cellIdentity": {
 									"type": "integer",
@@ -372,10 +372,10 @@
 								}
 							}
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
 						},
-						"InterRatEsPolicies": {
+						"interRatEsPolicies": {
 							"$ref": "sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 						}
 					}
@@ -406,14 +406,14 @@
 									"type": "string"
 								},
 								"vnfParametersList": {
-									"$ref": "genericNrm#/definitions/vnfParametersListType"
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
 								}
 							}
 						},
-						"ExternalGsmCell": {
+						"externalGsmCell": {
 							"$ref": "#/definitions/ExternalGsmCellList"
 						},
-						"VsDataContainer": {
+						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainer"
 						}
 					}

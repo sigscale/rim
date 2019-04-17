@@ -30,13 +30,13 @@
 											"gnbId",
 											"gnbCuName",
 											"pLMNIdList",
-											"NRCellCU",
-											"EP_F1C",
-											"EP_E1",
-											"EP_XnC",
-											"EP_X2C",
-											"EP_NgC",
-											"VsDataContainer"
+											"nRCellCU",
+											"eP_F1C",
+											"eP_E1",
+											"eP_XnC",
+											"eP_X2C",
+											"eP_NgC",
+											"vsDataContainer"
 										]
 									}
 								}
