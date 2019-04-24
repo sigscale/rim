@@ -1,0 +1,84 @@
+{
+	"name": "NetworkSlice",
+	"description": "5G Core (5GC) Network Slice resource function specification",
+	"@type": "NetworkSliceSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSliceSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "NetworkSlice",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSlice"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "dnPrefix",
+			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "userDefinedNetworkType",
+			"description": "User defined network type (3GPP 28.620)",
+			"valueType": "string"
+		},
+		{
+			"name": "setOfMcc",
+			"description": "All Mobile Country Codes (MCC) included", 
+			"valueType": "string"
+		},
+		{
+			"name": "nSSIId",
+			"description": "This RDN uniquely identifies the NetworkSliceSubnet",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		},
+		{
+			"name": "operationalState",
+			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
+		},
+		{
+			"name": "administrativeState",
+			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
+			"valueType": "AdministrativeStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
+		},
+		{
+			"name": "serviceProfileList",
+			"description": "List of ServiceProfile supported by the network slice",
+			"valueType": "ServiceProfileList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
+		},
+		{
+			"name": "sst",
+			"description": "Slice/service type of the network slice (3GPP 23.501 5.15.2)",
+			"valueType": "Sst",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/Sst"
+		}
+	]
+}
