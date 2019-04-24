@@ -75,10 +75,13 @@ parse_subnetwork({startElement, _Uri, "SubNetwork", QName,
 			parse_state = #generic_state{subnet = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "meContext", QName,
-		[{[], [], "id", Id}] = Attributes}, State) ->
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 % only for zte xml files
 	DnComponent = ",meContext=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_generic, parse_function = parse_mecontext,
+			dn_prefix = [NewDn],
 			parse_state = #generic_state{me_context = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "MeContext", QName,
@@ -110,9 +113,11 @@ parse_subnetwork({endElement,  _Uri, _LocalName, QName},
 parse_mecontext({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_mecontext({startElement, _Uri, "ManagedElement", QName,
-		[{[], [], "id", Id}] = Attributes}, State) ->
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",ManagedElement=" ++ Id,
-	[#state{parse_module = im_xml_generic,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn], parse_module = im_xml_generic,
 			parse_function = parse_managed_element,
 			parse_state = #generic_state{managed_element = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -243,9 +248,13 @@ parse_managed_element({startElement, _, "SgsnFunction", QName,
 			parse_state = #core_state{sgsn = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "VsDataContainer", QName,
-		[{[], [], "id", Id}] = Attributes} = _Event, State) ->
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = #{"id" => Id}},
+			dn_prefix = [NewDn],
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -258,26 +267,20 @@ parse_managed_element({endElement, _Uri, _LocalName, QName},
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
-parse_vsdata({startElement, _, "VsDataContainer", QName,
-		[{[], [], "id", Id}] = Attributes}, State) ->
-	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = #{"id" => Id}},
-			stack = [{startElement, QName, Attributes}]} | State];
 parse_vsdata({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_vsdata({characters, "ZTESpecificAttributes" = Chars},
+		[#state{dn_prefix = [CurrentDn | _],
+		parse_state = #generic_state{vs_data = VsData},
+		stack = [{startElement, {_, "vsDataFormatVersion"}, _} | _]}
+		= CurrentState | T]) ->
+	#state{stack = Stack} = CurrentState,
+	[#state{parse_module = im_xml_zte, parse_function = parse_vsdata,
+			dn_prefix = [CurrentDn], parse_state = #zte_state{vs_data = VsData},
+			stack = [{characters, Chars} | Stack]} | T];
 parse_vsdata({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_vsdata({endElement, _Uri, "attributes", QName},
-		[#state{parse_state = #generic_state{vs_data = VsData},
-		stack = Stack} = State | T]) ->
-	GenericState = State#state.parse_state,
-	NewStack = [{endElement, QName} | Stack],
-	{Attributes, _NextStack} = pop(startElement, QName, NewStack),
-	NewVsData = parse_vsdata_attr(VsData, Attributes),
-	[State#state{parse_state = GenericState#generic_state{
-			vs_data = NewVsData},
-			stack = NewStack} | T];
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[_State, PrevState | T]) ->
 	[PrevState | T];
@@ -285,60 +288,7 @@ parse_vsdata({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
-%% @hidden
-parse_vsdata_attr(VsDataContainer, Stack) ->
-	parse_vsdata_attr(Stack, [], [], VsDataContainer).
-%% @hidden
-parse_vsdata_attr([{startElement, QName, _} = Event | T],
-		State, OutStack, Acc) ->
-	parse_vsdata_attr(T, [QName | State], [Event | OutStack], Acc);
-parse_vsdata_attr([{characters, Chars} | T],
-		[{_, "vsDataType"}, {_,"attributes"}] = State, OutStack, Acc) ->
-	NewAcc = Acc#{"vsDataType" => Chars},
-	parse_vsdata_attr(T, State, OutStack, NewAcc);
-parse_vsdata_attr([{characters, Chars} | T],
-		[{_, "vsDataFormatVersion"}, {_, "vsDataType"},
-		{_,"attributes"}] = State, OutStack, Acc) ->
-	NewAcc = Acc#{"vsDataFormatVersion" => Chars},
-	parse_vsdata_attr(T, State, OutStack, NewAcc);
-parse_vsdata_attr([{characters, _Chars} = Event | T],
-		State, OutStack, Acc) ->
-	parse_vsdata_attr(T, State, [Event | OutStack], Acc);
-parse_vsdata_attr([], _State, OutStack,
-		#{"vsDataFormatVersion" := "ZTESpecificAttributes"} = Acc) ->
-	im_xml_zte:parse_zte_attr(OutStack, Acc);
-parse_vsdata_attr([], _State, _OutStack, Acc) ->
-	Acc;
-parse_vsdata_attr([{endElement, _QName} = Event | T] = _InStack,
-		State, OutStack, Acc) ->
-	parse_vsdata_attr(T, State, [Event | OutStack], Acc).
-
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
 
--type event() :: {startElement,
-		QName :: {Prefix :: string(), LocalName :: string()},
-		Attributes :: [tuple()]} | {endElement,
-		QName :: {Prefix :: string(), LocalName :: string()}}
-		| {characters, string()}.
--spec pop(Element, QName, Stack) -> Result
-	when
-		Element :: startElement | endElement,
-		QName :: {Prefix, LocalName},
-		Prefix :: string(),
-		LocalName :: string(),
-		Stack :: [event()],
-		Result :: {Value, NewStack},
-		Value :: [event()],
-		NewStack :: [event()].
-%% @doc Pops all events up to an including `{Element, QName, ...}'.
-%% @private
-pop(Element, QName, Stack) ->
-	pop(Element, QName, Stack, []).
-%% @hidden
-pop(Element, QName, [H | T], Acc)
-		when element(1, H) == Element, element(2, H) == QName->
-	{[H | Acc], T};
-pop(Element, QName, [H | T], Acc) ->
-	pop(Element, QName, T, [H | Acc]).
