@@ -58,3 +58,11 @@
 		sgsn :: map(),
 		iups :: map()}).
 -type core_state() :: #core_state{}.
+
+-record(zte_state,
+		{bts :: map(),
+		vs_data :: map(),
+		cell :: map(),
+		cells = [] :: [string()],
+		vs_data_container = [] :: [map()]}).
+-type zte_state() :: #zte_state{}.
