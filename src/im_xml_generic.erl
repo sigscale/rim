@@ -28,7 +28,7 @@ parse_generic({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = []} | _] = State) ->
-	DnComponent = ",SubNetwork=" ++ Id,
+	DnComponent = "SubNetwork=" ++ Id,
 	[#state{dn_prefix = [DnComponent],
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
