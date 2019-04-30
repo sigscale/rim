@@ -35,7 +35,7 @@
 		get_resource_name/1, query_resource/4, query_resource/1]).
 -export([add_user/3, del_user/1, get_user/0, get_user/1,
 		query_user/4, query_user/1]).
--export([import/1]).
+-export([import/1, import/2]).
 -export([generate_password/0, generate_identity/0]).
 
 -include("im.hrl").
@@ -938,9 +938,27 @@ query_user(Continuation) ->
 		File :: string(),
 		Result :: ok | ignore | {error, Reason},
 		Reason :: term().
-%% @doc Import a file in the inventory table.
+%% @doc @equiv import(File, [{type, '3gpp'}]).
 import(File) when is_list(File) ->
-	im_xml_cm_bulk:import(File).
+	import(File, [{type, '3gpp'}]).
+
+-spec import(File, Options) -> Result
+	when
+		File :: string(),
+		Options :: [Option],
+		Option :: {type, Type},
+		Type :: '3gpp' | huawei,
+		Result :: ok | ignore | {error, Reason},
+		Reason :: term().
+%% @doc Import a file in the inventory table.
+import(File, Options) when is_list(File), is_list(Options) ->
+erlang:display({?MODULE, ?LINE, Options}),
+	case proplists:get_value(type, Options, '3gpp') of
+		'3gpp' ->
+			im_xml_cm_bulk:import(File);
+		huawei ->
+			im_xml_huawei:import(File)
+	end.
 
 -type password() :: [50..57 | 97..104 | 106..107 | 109..110 | 112..116 | 119..122].
 -spec generate_password() -> password().

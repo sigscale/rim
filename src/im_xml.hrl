@@ -66,3 +66,10 @@
 		cells = [] :: [string()],
 		vs_data_container = [] :: [map()]}).
 -type zte_state() :: #zte_state{}.
+
+-record(huawei_state,
+		{gsm_function :: map(),
+		umts_function :: map(),
+		bts :: map()}).
+		nodeb :: map()}).
+-type huawei_state() :: #huawei_state{}.
