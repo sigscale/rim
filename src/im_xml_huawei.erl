@@ -34,7 +34,6 @@
 		Reason :: term().
 %% @doc Import a file into the inventory table.
 import(File) when is_list(File) ->
-erlang:display({?MODULE, ?LINE, File}),
 	Options = [{event_fun, fun parse_xml/3},
 		{event_state, [#state{}]}],
 	case xmerl_sax_parser:file(File, Options) of
@@ -111,7 +110,6 @@ parse_mo({startElement, _, "MO", QName,
 parse_mo({startElement, _, "MO", QName,
 		[{[], [], "className", "BSC6910UMTSNE"} | _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
-erlang:display({?MODULE, ?LINE, QName}),
 		[State#state{parse_module = ?MODULE, parse_function = parse_gsm_mo,
 		dn_prefix = ["BSC6900GSMNE"],
 		stack = [{startElement, QName, Attributes} | Stack]} | T];
@@ -125,7 +123,6 @@ parse_gsm_mo({startElement, _Uri, _, QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",BSC6910GSMFunction",
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [NewDn],
 			parse_module = ?MODULE, parse_function = parse_gsm_function,
 			parse_state = #huawei_state{gsm_function = #{"id" => DnComponent}},
@@ -135,7 +132,6 @@ parse_gsm_mo({startElement, _Uri, _, QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",BSC6910GSMBTS",
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [DnComponent],
 			parse_module = ?MODULE, parse_function = parse_gsm_bts,
 			parse_state = #huawei_state{bts = #{"id" => DnComponent}},
@@ -145,7 +141,6 @@ parse_gsm_mo({startElement, _Uri, _, QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",BSC6900GSMFunction",
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [NewDn],
 			parse_module = ?MODULE, parse_function = parse_gsm_function,
 			parse_state = #huawei_state{gsm_function = #{"id" => DnComponent}},
@@ -155,7 +150,6 @@ parse_gsm_mo({startElement, _Uri, _, QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",BSC6900GSMBTS",
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [DnComponent],
 			parse_module = ?MODULE, parse_function = parse_gsm_bts,
 			parse_state = #huawei_state{bts = #{"id" => DnComponent}},
@@ -170,7 +164,6 @@ parse_umts_mo({startElement, _Uri, _, QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",BSC6910UMTSFunction",
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [NewDn],
 			parse_module = ?MODULE, parse_function = parse_umts_function,
 			parse_state = #huawei_state{umts_function = #{"id" => DnComponent}},
@@ -180,7 +173,6 @@ parse_umts_mo({startElement, _Uri, _, QName,
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
 	DnComponent = ",BSC6910UMTSNODEB",
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [DnComponent],
 			parse_module = ?MODULE, parse_function = parse_umts_nodeb,
 			parse_state = #huawei_state{nodeb = #{"id" => DnComponent}},
@@ -202,7 +194,6 @@ parse_gsm_function({endElement, _Uri, "MO", QName},
 	GsmFunAttr = parse_gsm_function_attr(T2, undefined, []),
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-erlang:display({?MODULE, ?LINE, GsmFunDn}),
 	Resource = #resource{name = GsmFunDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
@@ -213,7 +204,6 @@ erlang:display({?MODULE, ?LINE, GsmFunDn}),
 			characteristic = [GsmFunAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, GsmFunDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -259,7 +249,6 @@ parse_gsm_bts({endElement, _Uri, "MO", QName},
 	GsmBtsAttr = parse_gsm_bts_attr(T2, undefined, []),
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-erlang:display({?MODULE, ?LINE, BtsDn}),
 	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
@@ -270,7 +259,6 @@ erlang:display({?MODULE, ?LINE, BtsDn}),
 			characteristic = [GsmBtsAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, BtsDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -367,7 +355,6 @@ parse_umts_function({endElement, _Uri, "MO", QName},
 	UmtsFunAttr = parse_umts_function_attr(T2, undefined, []),
 	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-erlang:display({?MODULE, ?LINE, UmtsFunDn}),
 	Resource = #resource{name = UmtsFunDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
@@ -378,7 +365,6 @@ erlang:display({?MODULE, ?LINE, UmtsFunDn}),
 			characteristic = [UmtsFunAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, UmtsFunDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -424,7 +410,6 @@ parse_umts_nodeb({endElement, _Uri, "MO", QName},
 	UmtsNodebAttr = parse_umts_nodeb_attr(T2, undefined, []),
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-erlang:display({?MODULE, ?LINE, UmtsNodebDn}),
 	Resource = #resource{name = UmtsNodebDn,
 			description = "UMTS Telecommunication Nodes",
 			category = "RAN",
@@ -435,7 +420,6 @@ erlang:display({?MODULE, ?LINE, UmtsNodebDn}),
 			characteristic = [UmtsNodebAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-erlang:display({?MODULE, ?LINE, UmtsFunDn}),
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
