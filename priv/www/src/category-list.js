@@ -243,7 +243,7 @@ class categoryList extends PolymerElement {
 				var startRange = params.page * params.pageSize + 1;
 				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
 				if (categoryList.etag && params.page > 0) {
-					ajax.headers['If-Range'] = userList1.etag;
+					ajax.headers['If-Range'] = categoryList.etag;
 				} else {
 					delete ajax.headers['If-Range'];
 				}
@@ -254,7 +254,7 @@ class categoryList extends PolymerElement {
 			var endRange = startRange + params.pageSize - 1;
 			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
 			if (categoryList.etag && params.page > 0) {
-				ajax.headers['If-Range'] = userList1.etag;
+				ajax.headers['If-Range'] = categoryList.etag;
 			} else {
 				delete ajax.headers['If-Range'];
 			}

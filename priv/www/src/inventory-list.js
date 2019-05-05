@@ -206,7 +206,7 @@ class inventoryList extends PolymerElement {
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
 		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
 		if(inventoryList.etag && params.page > 0) {
-			ajax.headers['If-Range'] = userList.etag;
+			ajax.headers['If-Range'] = inventoryList.etag;
 		}
 		var handleAjaxResponse = function(request) {
 			if(request) {
