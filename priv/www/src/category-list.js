@@ -17,7 +17,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
-class categoryList extends PolymerElement {
+class categoryListAjax extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -173,7 +173,7 @@ class categoryList extends PolymerElement {
 
 	_getCategory(params, callback) {
 		var grid = this;
-		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
+		var categoryListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "categoryName" || param.path == "categoryDescription"
@@ -200,10 +200,10 @@ class categoryList extends PolymerElement {
 		if(categoryList.etag && params.page > 0) {
 			headers['If-Range'] = categoryList.etag;
 		}
-		var categoryList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
+		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				categoryList1.etag = request.xhr.getResponseHeader('ETag');
+				categoryList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -230,7 +230,7 @@ class categoryList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			categoryList1.etag = null;
+			categoryList.etag = null;
 			var toast;
 			toast.text = "error";
 			toast.open();
@@ -246,7 +246,7 @@ class categoryList extends PolymerElement {
 				if (categoryList1.etag && params.page > 0) {
 					categoryList.headers['If-Range'] = userList1.etag;
 				} else {
-					delete categoryList.headers['If-Range'];
+					delete categoryListAjax.headers['If-Range'];
 				}
 				return categoryList.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
@@ -264,4 +264,4 @@ class categoryList extends PolymerElement {
 	}
 }
 
-window.customElements.define('category-list', categoryList);
+window.customElements.define('category-list', categoryListAjax);

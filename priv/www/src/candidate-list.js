@@ -17,7 +17,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
-class candidateList extends PolymerElement {
+class candidateListAjax extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -139,7 +139,7 @@ class candidateList extends PolymerElement {
 
 	_getCandidate(params, callback) {
 		var grid = this;
-		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
+		var candidateListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "candidateName" || param.path == "candidateDescription"
@@ -157,18 +157,18 @@ class candidateList extends PolymerElement {
 		if(query) {
 			if(query.includes("like=[%")) {
 				delete params.filters[0];
-				candidateList.params['filter'] = "resourceCatalogManagement/v3/candidate";
+				candidateListAjax.params['filter'] = "resourceCatalogManagement/v3/candidate";
 			} else {
-				candidateList.params['filter'] = "\"" + query + "]}]\"";
+				candidateListAjax.params['filter'] = "\"" + query + "]}]\"";
 			}
 		}
-		if(candidateList.etag && params.page > 0) {
-			headers['If-Range'] = candidateList.etag;
+		if(candidateListAjax.etag && params.page > 0) {
+			headers['If-Range'] = candidateListAjax.etag;
 		}
-		var candidateList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
+		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				candidateList1.etag = request.xhr.getResponseHeader('ETag');
+				candidateList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -193,7 +193,7 @@ class candidateList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			candidateList1.etag = null;
+			candidateList.etag = null;
 			var toast;
 			toast.text = "error";
 			toast.open();
@@ -227,4 +227,4 @@ class candidateList extends PolymerElement {
 	}
 }
 
-window.customElements.define('candidate-list', candidateList);
+window.customElements.define('candidate-list', candidateListAjax);

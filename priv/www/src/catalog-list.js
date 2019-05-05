@@ -17,7 +17,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
-class catalogList extends PolymerElement {
+class catalogListAjax extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -107,6 +107,9 @@ class catalogList extends PolymerElement {
 					on-tap = "showAddCatalogModal">
 				</paper-fab>
 			</div>
+			<paper-toast
+					id="catalogError">
+			</paper-toast>
 			<iron-ajax
 				id="getCatalogAjax"
 				url="resourceCatalogManagement/v3/resourceCatalog"
@@ -133,7 +136,7 @@ class catalogList extends PolymerElement {
 
 	_getCatalog(params, callback) {
 		var grid = this;
-		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var catalogListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "catalogName" || param.path == "catalogDescription"
@@ -159,7 +162,7 @@ class catalogList extends PolymerElement {
 		if(catalogList.etag && params.page > 0) {
 			headers['If-Range'] = catalogList.etag;
 		}
-		var catalogList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
+		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
 				catalogList1.etag = request.xhr.getResponseHeader('ETag');
@@ -187,9 +190,9 @@ class catalogList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			catalogList1.etag = null;
-			var toast;
-			toast.text = "error";
+			catalogList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('catalogError');
+			toast.text = error;
 			toast.open();
 			if(!grid.size) {
 				grid.size = 0;
@@ -221,4 +224,4 @@ class catalogList extends PolymerElement {
 	}
 } 
 
-window.customElements.define('catalog-list', catalogList);
+window.customElements.define('catalog-list', catalogListAjax);
