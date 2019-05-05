@@ -220,7 +220,7 @@ class specificationList extends PolymerElement {
 			}
 		}
 		if(specificationList.etag && params.page > 0) {
-			headers['If-Range'] = specificationList.etag;
+			ajax.headers['If-Range'] = specificationList.etag;
 		}
 		var handleAjaxResponse = function(request) {
 			if(request) {

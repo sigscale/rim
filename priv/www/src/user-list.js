@@ -78,7 +78,7 @@ class userList extends PolymerElement {
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
 		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
 		if(userList.etag && params.page > 0) {
-			headers['If-Range'] = userList.etag;
+			ajax.headers['If-Range'] = userList.etag;
 		}
 		var handleAjaxResponse = function(request) {
 			if(request) {
