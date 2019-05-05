@@ -257,8 +257,7 @@ class inventoryList extends PolymerElement {
 					delete inventoryList.headers['If-Range'];
 				}
 				return inventoryList.generateRequest().completes;
-			},
-			handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;

@@ -200,28 +200,28 @@ class candidateList extends PolymerElement {
 			if(!grid.size) {
 				grid.size = 0;
 			}
-		callback([]);
+			callback([]);
 		}
 		if(candidateList.loading) {
 			candidateList.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			candidateList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (candidateList1.etag && params.page > 0) {
-					candidateList.headers['If-Range'] = candidateList1.etag;
-				} else {
-					delete candidateList.headers['If-Range'];
-				}
-				return candidateList.generateRequest().completes;
-				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-			} else {
 				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
 				candidateList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (candidateList1.etag && params.page > 0) {
-					candidateList.headers['If-Range'] = candidateList1.etag;
-				} else {
-					delete candidateList.headers['If-Range'];
-				}
+					if (candidateList1.etag && params.page > 0) {
+						candidateList.headers['If-Range'] = candidateList1.etag;
+					} else {
+						delete candidateList.headers['If-Range'];
+					}
+					return candidateList.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			candidateList.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (candidateList1.etag && params.page > 0) {
+				candidateList.headers['If-Range'] = candidateList1.etag;
+			} else {
+				delete candidateList.headers['If-Range'];
+			}
 			candidateList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}

@@ -176,27 +176,27 @@ class categoryList extends PolymerElement {
 		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
 		var query = "";
 		function checkHead(param) {
-         return param.path == "categoryName" || param.path == "categoryDescription"
-            || param.path == "categoryClass" || param.path == "categoryStatus"
-				|| param.path == "categoryParent" || param.path == "categoryRoot";
-      }
-      params.filters.filter(checkHead).forEach(function(filter) {
-         if(filter.value) {
-            if (query) {
-               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
-            } else {
-               query = "[{" + filter.path + ".like=[" + filter.value + "%";
-            }
-         }
-      });
-      if(query) {
-         if(query.includes("like=[%")) {
-            delete params.filters[0];
-            categoryList.params['filter'] = "resourceCatalogManagement/v3/category";
-         } else {
-            categoryList.params['filter'] = "\"" + query + "]}]\"";
-         }
-      }
+			return param.path == "categoryName" || param.path == "categoryDescription"
+					|| param.path == "categoryClass" || param.path == "categoryStatus"
+					|| param.path == "categoryParent" || param.path == "categoryRoot";
+		}
+		params.filters.filter(checkHead).forEach(function(filter) {
+			if(filter.value) {
+				if (query) {
+					query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+				} else {
+					query = "[{" + filter.path + ".like=[" + filter.value + "%";
+				}
+			}
+		});
+		if(query) {
+			if(query.includes("like=[%")) {
+				delete params.filters[0];
+				categoryList.params['filter'] = "resourceCatalogManagement/v3/category";
+			} else {
+				categoryList.params['filter'] = "\"" + query + "]}]\"";
+			}
+		}
 		if(categoryList.etag && params.page > 0) {
 			headers['If-Range'] = categoryList.etag;
 		}
@@ -237,28 +237,28 @@ class categoryList extends PolymerElement {
 			if(!grid.size) {
 				grid.size = 0;
 			}
-		callback([]);
+			callback([]);
 		}
 		if(categoryList.loading) {
 			categoryList.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (categoryList1.etag && params.page > 0) {
-				categoryList.headers['If-Range'] = userList1.etag;
-			} else {
-				delete categoryList.headers['If-Range'];
-			}
-				return categoryList.generateRequest().completes;
-			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-			} else {
 				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
 				categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
 				if (categoryList1.etag && params.page > 0) {
 					categoryList.headers['If-Range'] = userList1.etag;
 				} else {
 					delete categoryList.headers['If-Range'];
 				}
+				return categoryList.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (categoryList1.etag && params.page > 0) {
+				categoryList.headers['If-Range'] = userList1.etag;
+			} else {
+				delete categoryList.headers['If-Range'];
+			}
 			categoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
