@@ -18,7 +18,7 @@
 				im_rest_pagination_sup,
 				im_rest_pagination_server]},
 		{registered, [im, im_rest_pagination_sup]},
-		{applications, [inets, ssl]},
+		{applications, []},
 		{env, [{rest_page_size, 1000},
 				{rest_page_timeout, 60000},
 				{fault_log_dir, "log/fault"},
