@@ -17,7 +17,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
-class catalogListAjax extends PolymerElement {
+class catalogList extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -135,7 +135,8 @@ class catalogListAjax extends PolymerElement {
 
 	_getCatalog(params, callback) {
 		var grid = this;
-		var catalogListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "catalogName" || param.path == "catalogDescription"
@@ -153,18 +154,17 @@ class catalogListAjax extends PolymerElement {
 		if(query) {
 			if(query.includes("like=[%")) {
 				delete params.filters[0];
-				catalogList.params['filter'] = "resourceCatalogManagement/v3/catalog";
+				ajax.params['filter'] = "resourceCatalogManagement/v3/catalog";
 			} else {
-				catalogList.params['filter'] = "\"" + query + "]}]\"";
+				ajax.params['filter'] = "\"" + query + "]}]\"";
 			}
 		}
 		if(catalogList.etag && params.page > 0) {
-			headers['If-Range'] = catalogList.etag;
+			ajax.headers['If-Range'] = catalogList.etag;
 		}
-		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				catalogList1.etag = request.xhr.getResponseHeader('ETag');
+				catalogList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -190,7 +190,7 @@ class catalogListAjax extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			catalogList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('catalogError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {
@@ -198,29 +198,29 @@ class catalogListAjax extends PolymerElement {
 			}
 			callback([]);
 		}
-		if(catalogList.loading) {
-			catalogList.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 					var startRange = params.page * params.pageSize + 1;
-					catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
-					if (catalogList1.etag && params.page > 0) {
-						catalogList.headers['If-Range'] = userList1.etag;
+					ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+					if (catalogList.etag && params.page > 0) {
+						ajax.headers['If-Range'] = catalogList.etag;
 					} else {
-						delete catalogList.headers['If-Range'];
+						delete ajax.headers['If-Range'];
 					}
-					return catalogList.generateRequest().completes;
+					return ajax.generateRequest().completes;
 				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
-			catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (catalogList1.etag && params.page > 0) {
-				catalogList.headers['If-Range'] = userList1.etag;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (catalogList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = catalogList.etag;
 			} else {
-				delete catalogList.headers['If-Range'];
+				delete ajax.headers['If-Range'];
 			}
-			catalogList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 } 
 
-window.customElements.define('catalog-list', catalogListAjax);
+window.customElements.define('catalog-list', catalogList);

@@ -15,7 +15,7 @@ import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import './style-element.js';
 
-class userListAjax extends PolymerElement {
+class userList extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -75,14 +75,14 @@ class userListAjax extends PolymerElement {
 
 	_getLog(params, callback) {
 		var grid = this;
-		var userListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
-		if(userListAjax.etag && params.page > 0) {
-			headers['If-Range'] = userListAjax.etag;
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
+		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
+		if(userList.etag && params.page > 0) {
+			headers['If-Range'] = userList.etag;
 		}
-		var userListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				userListAjax.etag = request.xhr.getResponseHeader('ETag');
+				userList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -111,7 +111,7 @@ class userListAjax extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			userListAjax.etag = null;
+			userList.etag = null;
 			var toast;
 			toast.text = "error";
 			toast.open();
@@ -120,29 +120,29 @@ class userListAjax extends PolymerElement {
 			}
 			callback([]);
 		}
-		if(userListAjax.loading) {
-			userListAjax.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				userListAjax.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (userListAjax.etag && params.page > 0) {
-					userListAjax.headers['If-Range'] = userListAjax.etag;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (userList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = userList.etag;
 				} else {
-					delete userListAjax.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return userListAjax.generateRequest().completes;
+				return ajax.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
-			userListAjax.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (userListAjax.etag && params.page > 0) {
-				userListAjax.headers['If-Range'] = userListAjax.etag;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (userList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = userList.etag;
 			} else {
-				delete userListAjax.headers['If-Range'];
+				delete ajax.headers['If-Range'];
 			}
-			userListAjax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }
 
-window.customElements.define('user-list', userListAjax);
+window.customElements.define('user-list', userList);

@@ -18,7 +18,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-column-group.js';
 import './style-element.js';
 
-class inventoryListAjax extends PolymerElement {
+class inventoryList extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -203,11 +203,11 @@ class inventoryListAjax extends PolymerElement {
 
 	_getInventoryList(params, callback) {
 		var grid = this;
-		var inventoryListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
-		if(inventoryListAjax.etag && params.page > 0) {
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
+		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
+		if(inventoryList.etag && params.page > 0) {
 			headers['If-Range'] = userList.etag;
 		}
-		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
 				inventoryList.etag = request.xhr.getResponseHeader('ETag');
@@ -236,7 +236,7 @@ class inventoryListAjax extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			inventoryListAjax.etag = null;
+			inventoryList.etag = null;
 			var toast;
 			toast.text = "error";
 			toast.open();
@@ -245,30 +245,30 @@ class inventoryListAjax extends PolymerElement {
 			}
 			callback([]);
 		}
-		if(inventoryListAjax.loading) {
-			inventoryListAjax.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
 				var endRange = startRange + params.pageSize - 1;
-				inventoryListAjax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
 				if (inventoryList.etag && params.page > 0) {
-					inventoryListAjax.headers['If-Range'] = inventoryList.etag;
+					ajax.headers['If-Range'] = inventoryList.etag;
 				} else {
-					delete inventoryListAjax.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return inventoryList.generateRequest().completes;
+				return ajax.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
-			inventoryListAjax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
 			if (inventoryList.etag && params.page > 0) {
-				inventoryListAjax.headers['If-Range'] = inventoryList.etag;
+				ajax.headers['If-Range'] = inventoryList.etag;
 			} else {
-				delete inventoryListAjax.headers['If-Range'];
+				delete ajax.headers['If-Range'];
 			}
-			inventoryListAjax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }
 
-window.customElements.define('inventory-list', inventoryListAjax);
+window.customElements.define('inventory-list', inventoryList);

@@ -17,7 +17,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
-class specificationListAjax extends PolymerElement {
+class specificationList extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -194,7 +194,8 @@ class specificationListAjax extends PolymerElement {
 
 	_getSpecification(params, callback) {
 		var grid = this;
-		var specificationListAjax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "specName" || param.path == "specDesc"
@@ -213,15 +214,14 @@ class specificationListAjax extends PolymerElement {
 		if(query) {
 			if(query.includes("like=[%")) {
 				delete params.filters[0];
-				specificationListAjax.params['filter'] = "resourceCatalogManagement/v3/specification";
+				ajax.params['filter'] = "resourceCatalogManagement/v3/specification";
 			} else {
-				specificationListAjax.params['filter'] = "\"" + query + "]}]\"";
+				ajax.params['filter'] = "\"" + query + "]}]\"";
 			}
 		}
-		if(specificationListAjax.etag && params.page > 0) {
-			headers['If-Range'] = specificationListAjax.etag;
+		if(specificationList.etag && params.page > 0) {
+			headers['If-Range'] = specificationList.etag;
 		}
-		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
 				specificationList.etag = request.xhr.getResponseHeader('ETag');
@@ -261,29 +261,29 @@ class specificationListAjax extends PolymerElement {
 		}
 		callback([]);
 	}
-	if(specificationListAjax.loading) {
-		specificationListAjax.lastRequest.completes.then(function(request) {
+	if(ajax.loading) {
+		ajax.lastRequest.completes.then(function(request) {
 			var startRange = params.page * params.pageSize + 1;
-			specificationListAjax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
 				if (specificationList.etag && params.page > 0) {
-					specificationListAjax.headers['If-Range'] = userList1.etag;
+					ajax.headers['If-Range'] = userList1.etag;
 				} else {
-					delete specificationListAjax.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return specificationListAjax.generateRequest().completes;
+				return ajax.generateRequest().completes;
 				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 			} else {
 				var startRange = params.page * params.pageSize + 1;
 				var endRange = startRange + params.pageSize - 1;
-				specificationListAjax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
 				if (specificationList.etag && params.page > 0) {
-					specificationListAjax.headers['If-Range'] = userList1.etag;
+					ajax.headers['If-Range'] = userList1.etag;
 				} else {
-					delete specificationListAjax.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-			specificationListAjax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 } 
 
-window.customElements.define('specification-list', specificationListAjax);
+window.customElements.define('specification-list', specificationList);
