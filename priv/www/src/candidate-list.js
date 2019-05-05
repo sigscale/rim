@@ -133,7 +133,6 @@ class candidateListAjax extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('candidateGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getCandidateAjax');
 		grid.dataProvider = this._getCandidate;
 	}
 

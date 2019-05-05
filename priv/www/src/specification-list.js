@@ -189,7 +189,6 @@ class specificationListAjax extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('specificationGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getSpecificationAjax');
 		grid.dataProvider = this._getSpecification;
 	}
 

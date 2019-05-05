@@ -130,7 +130,6 @@ class catalogListAjax extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('catalogGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getCatalogAjax');
 		grid.dataProvider = this._getCatalog;
 	}
 

@@ -167,7 +167,6 @@ class categoryListAjax extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('categoryGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getCategoryAjax');
 		grid.dataProvider = this._getCategory;
 	}
 

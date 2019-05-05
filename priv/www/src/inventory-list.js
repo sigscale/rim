@@ -198,7 +198,6 @@ class inventoryListAjax extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getInventoryAjax');
 		grid.dataProvider = this._getInventoryList;
 	}
 

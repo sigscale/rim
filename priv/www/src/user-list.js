@@ -65,7 +65,6 @@ class userListAjax extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('userGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getUserAjax');
 		grid.dataProvider = this._getLog;
 	}
 
