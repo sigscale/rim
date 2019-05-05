@@ -246,41 +246,41 @@ class specificationList extends PolymerElement {
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
-		} else {
-			grid.size = 0;
+			} else {
+				grid.size = 0;
+				callback([]);
+			}
+		};
+		var handleAjaxError = function(error) {
+			specificationList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
+			toast.open();
+			if(!grid.size) {
+				grid.size = 0;
+			}
 			callback([]);
 		}
-	};
-	var handleAjaxError = function(error) {
-		specificationList.etag = null;
-		var toast;
-		toast.text = "error";
-		toast.open();
-		if(!grid.size) {
-			grid.size = 0;
-		}
-		callback([]);
-	}
-	if(ajax.loading) {
-		ajax.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (specificationList.etag && params.page > 0) {
-					ajax.headers['If-Range'] = userList1.etag;
-				} else {
-					delete ajax.headers['If-Range'];
-				}
-				return ajax.generateRequest().completes;
-				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-			} else {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
 				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (specificationList.etag && params.page > 0) {
-					ajax.headers['If-Range'] = userList1.etag;
-				} else {
-					delete ajax.headers['If-Range'];
-				}
+					if (specificationList.etag && params.page > 0) {
+						ajax.headers['If-Range'] = userList1.etag;
+					} else {
+						delete ajax.headers['If-Range'];
+					}
+					return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (specificationList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = userList1.etag;
+			} else {
+				delete ajax.headers['If-Range'];
+			}
 			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}

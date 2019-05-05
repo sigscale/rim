@@ -193,8 +193,8 @@ class candidateList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			candidateList.etag = null;
-			var toast;
-			toast.text = "error";
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
 			toast.open();
 			if(!grid.size) {
 				grid.size = 0;
