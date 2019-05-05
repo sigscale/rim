@@ -190,12 +190,7 @@ class categoryList extends PolymerElement {
 			}
 		});
 		if(query) {
-			if(query.includes("like=[%")) {
-				delete params.filters[0];
-				ajax.params['filter'] = "resourceCatalogManagement/v3/category";
-			} else {
-				ajax.params['filter'] = "\"" + query + "]}]\"";
-			}
+			ajax.params['filter'] = "\"" + query + "]}]\"";
 		}
 		if(categoryList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = categoryList.etag;

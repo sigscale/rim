@@ -212,12 +212,7 @@ class specificationList extends PolymerElement {
 			}
 		});
 		if(query) {
-			if(query.includes("like=[%")) {
-				delete params.filters[0];
-				ajax.params['filter'] = "resourceCatalogManagement/v3/specification";
-			} else {
-				ajax.params['filter'] = "\"" + query + "]}]\"";
-			}
+			ajax.params['filter'] = "\"" + query + "]}]\"";
 		}
 		if(specificationList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = specificationList.etag;

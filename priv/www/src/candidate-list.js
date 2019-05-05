@@ -155,12 +155,7 @@ class candidateList extends PolymerElement {
 			}
 		});
 		if(query) {
-			if(query.includes("like=[%")) {
-				delete params.filters[0];
-				ajax.params['filter'] = "resourceCatalogManagement/v3/candidate";
-			} else {
-				ajax.params['filter'] = "\"" + query + "]}]\"";
-			}
+			ajax.params['filter'] = "\"" + query + "]}]\"";
 		}
 		if(candidateList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = candidateList.etag;
