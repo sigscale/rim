@@ -133,13 +133,13 @@ class candidateList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('candidateGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getCandidateAjax');
 		grid.dataProvider = this._getCandidate;
 	}
 
 	_getCandidate(params, callback) {
 		var grid = this;
-		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
+		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "candidateName" || param.path == "candidateDescription"
@@ -157,18 +157,17 @@ class candidateList extends PolymerElement {
 		if(query) {
 			if(query.includes("like=[%")) {
 				delete params.filters[0];
-				candidateList.params['filter'] = "resourceCatalogManagement/v3/candidate";
+				ajax.params['filter'] = "resourceCatalogManagement/v3/candidate";
 			} else {
-				candidateList.params['filter'] = "\"" + query + "]}]\"";
+				ajax.params['filter'] = "\"" + query + "]}]\"";
 			}
 		}
 		if(candidateList.etag && params.page > 0) {
-			headers['If-Range'] = candidateList.etag;
+			ajax.headers['If-Range'] = candidateList.etag;
 		}
-		var candidateList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				candidateList1.etag = request.xhr.getResponseHeader('ETag');
+				candidateList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -193,36 +192,36 @@ class candidateList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			candidateList1.etag = null;
-			var toast;
-			toast.text = "error";
+			candidateList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
 			toast.open();
 			if(!grid.size) {
 				grid.size = 0;
 			}
-		callback([]);
+			callback([]);
 		}
-		if(candidateList.loading) {
-			candidateList.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			candidateList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (candidateList1.etag && params.page > 0) {
-					candidateList.headers['If-Range'] = candidateList1.etag;
-				} else {
-					delete candidateList.headers['If-Range'];
-				}
-				return candidateList.generateRequest().completes;
-				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-			} else {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
-				candidateList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (candidateList1.etag && params.page > 0) {
-					candidateList.headers['If-Range'] = candidateList1.etag;
-				} else {
-					delete candidateList.headers['If-Range'];
-				}
-			candidateList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+					if (candidateList.etag && params.page > 0) {
+						ajax.headers['If-Range'] = candidateList.etag;
+					} else {
+						delete ajax.headers['If-Range'];
+					}
+					return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (candidateList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = candidateList.etag;
+			} else {
+				delete ajax.headers['If-Range'];
+			}
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }

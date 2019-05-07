@@ -180,7 +180,7 @@ class specificationList extends PolymerElement {
 	_activeItemChanged(item) {
 		if(item) {
 			var grid = this.$.specificationGrid;
-			grid.selectedItems = item ? [item] : [];	
+			grid.selectedItems = item ? [item] : [];
 			var updateSpec = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec');
 			updateSpec.shadowRoot.getElementById('updateSpecModal').open();
 		}
@@ -189,13 +189,13 @@ class specificationList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('specificationGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getSpecificationAjax');
 		grid.dataProvider = this._getSpecification;
 	}
 
 	_getSpecification(params, callback) {
 		var grid = this;
-		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
 		var query = "";
 		function checkHead(param) {
 			return param.path == "specName" || param.path == "specDesc"
@@ -214,18 +214,17 @@ class specificationList extends PolymerElement {
 		if(query) {
 			if(query.includes("like=[%")) {
 				delete params.filters[0];
-				specificationList.params['filter'] = "resourceCatalogManagement/v3/specification";
+				ajax.params['filter'] = "resourceCatalogManagement/v3/specification";
 			} else {
-				specificationList.params['filter'] = "\"" + query + "]}]\"";
+				ajax.params['filter'] = "\"" + query + "]}]\"";
 			}
 		}
 		if(specificationList.etag && params.page > 0) {
-			headers['If-Range'] = specificationList.etag;
+			ajax.headers['If-Range'] = specificationList.etag;
 		}
-		var specificationList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				specificationList1.etag = request.xhr.getResponseHeader('ETag');
+				specificationList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -247,42 +246,42 @@ class specificationList extends PolymerElement {
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
-		} else {
-			grid.size = 0;
+			} else {
+				grid.size = 0;
+				callback([]);
+			}
+		};
+		var handleAjaxError = function(error) {
+			specificationList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
+			toast.open();
+			if(!grid.size) {
+				grid.size = 0;
+			}
 			callback([]);
 		}
-	};
-	var handleAjaxError = function(error) {
-		specificationList1.etag = null;
-		var toast;
-		toast.text = "error";
-		toast.open();
-		if(!grid.size) {
-			grid.size = 0;
-		}
-		callback([]);
-	}
-	if(specificationList.loading) {
-		specificationList.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			specificationList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (specificationList1.etag && params.page > 0) {
-					specificationList.headers['If-Range'] = userList1.etag;
-				} else {
-					delete specificationList.headers['If-Range'];
-				}
-				return specificationList.generateRequest().completes;
-				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-			} else {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
-				specificationList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (specificationList1.etag && params.page > 0) {
-					specificationList.headers['If-Range'] = userList1.etag;
-				} else {
-					delete specificationList.headers['If-Range'];
-				}
-			specificationList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+					if (specificationList.etag && params.page > 0) {
+						ajax.headers['If-Range'] = specificationList.etag;
+					} else {
+						delete ajax.headers['If-Range'];
+					}
+					return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (specificationList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = specificationList.etag;
+			} else {
+				delete ajax.headers['If-Range'];
+			}
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 } 

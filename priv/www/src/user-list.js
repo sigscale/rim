@@ -44,7 +44,7 @@ class userList extends PolymerElement {
 					icon="add"
 					on-tap = "showAddUserModal">
 				</paper-fab>
-         </div>
+			</div>
 			<iron-ajax
 				id="getUserAjax"
 				url="partyManagement/v2/individual"
@@ -65,7 +65,6 @@ class userList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('userGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getUserAjax');
 		grid.dataProvider = this._getLog;
 	}
 
@@ -76,14 +75,14 @@ class userList extends PolymerElement {
 
 	_getLog(params, callback) {
 		var grid = this;
-		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
+		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
 		if(userList.etag && params.page > 0) {
-			headers['If-Range'] = userList.etag;
+			ajax.headers['If-Range'] = userList.etag;
 		}
-		var userList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				userList1.etag = request.xhr.getResponseHeader('ETag');
+				userList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -112,37 +111,37 @@ class userList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			userList1.etag = null;
-			var toast;
-			toast.text = "error";
+			userList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
 			toast.open();
 			if(!grid.size) {
 				grid.size = 0;
 			}
 			callback([]);
 		}
-		if(userList.loading) {
-			userList.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				userList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (userList1.etag && params.page > 0) {
-					userList.headers['If-Range'] = userList1.etag;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (userList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = userList.etag;
 				} else {
-					delete userList.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return userList.generateRequest().completes;
-				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+				return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (userList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = userList.etag;
 			} else {
-				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
-				userList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (userList1.etag && params.page > 0) {
-					userList.headers['If-Range'] = userList1.etag;
-				} else {
-					delete userList.headers['If-Range'];
-				}
-				userList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+				delete ajax.headers['If-Range'];
 			}
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+		}
 	}
 }
 

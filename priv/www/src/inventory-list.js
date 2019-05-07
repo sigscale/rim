@@ -198,20 +198,19 @@ class inventoryList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getInventoryAjax');
 		grid.dataProvider = this._getInventoryList;
 	}
 
 	_getInventoryList(params, callback) {
 		var grid = this;
-		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
+		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
 		if(inventoryList.etag && params.page > 0) {
-			headers['If-Range'] = userList.etag;
+			ajax.headers['If-Range'] = inventoryList.etag;
 		}
-		var inventoryList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				inventoryList1.etag = request.xhr.getResponseHeader('ETag');
+				inventoryList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -237,38 +236,37 @@ class inventoryList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			alarmList1.etag = null;
-			var toast;
-			toast.text = "error";
+			inventoryList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
 			toast.open();
 			if(!grid.size) {
 				grid.size = 0;
 			}
 			callback([]);
 		}
-		if(inventoryList.loading) {
-			inventoryList.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
 				var endRange = startRange + params.pageSize - 1;
-				inventoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (inventoryList1.etag && params.page > 0) {
-					inventoryList.headers['If-Range'] = inventoryList1.etag;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (inventoryList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = inventoryList.etag;
 				} else {
-					delete inventoryList.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return inventoryList.generateRequest().completes;
-			},
-			handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+				return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
-			inventoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (inventoryList1.etag && params.page > 0) {
-				inventoryList.headers['If-Range'] = inventoryList1.etag;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (inventoryList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = inventoryList.etag;
 			} else {
-				delete inventoryList.headers['If-Range'];
+				delete ajax.headers['If-Range'];
 			}
-			inventoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }

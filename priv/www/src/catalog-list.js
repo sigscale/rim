@@ -127,42 +127,41 @@ class catalogList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('catalogGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getCatalogAjax');
 		grid.dataProvider = this._getCatalog;
 	}
 
 	_getCatalog(params, callback) {
 		var grid = this;
-		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
 		var query = "";
 		function checkHead(param) {
-         return param.path == "catalogName" || param.path == "catalogDescription"
-            || param.path == "catalogClass" || param.path == "catalogStatus";
-      }
-      params.filters.filter(checkHead).forEach(function(filter) {
-         if(filter.value) {
-            if (query) {
-               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
-            } else {
-               query = "[{" + filter.path + ".like=[" + filter.value + "%";
-            }
-         }
-      });
-      if(query) {
-         if(query.includes("like=[%")) {
-            delete params.filters[0];
-            catalogList.params['filter'] = "resourceCatalogManagement/v3/catalog";
-         } else {
-            catalogList.params['filter'] = "\"" + query + "]}]\"";
-         }
-      }
-		if(catalogList.etag && params.page > 0) {
-			headers['If-Range'] = catalogList.etag;
+			return param.path == "catalogName" || param.path == "catalogDescription"
+					|| param.path == "catalogClass" || param.path == "catalogStatus";
 		}
-		var catalogList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
+		params.filters.filter(checkHead).forEach(function(filter) {
+			if(filter.value) {
+				if (query) {
+					query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+				} else {
+					query = "[{" + filter.path + ".like=[" + filter.value + "%";
+				}
+			}
+		});
+		if(query) {
+			if(query.includes("like=[%")) {
+				delete params.filters[0];
+				ajax.params['filter'] = "resourceCatalogManagement/v3/catalog";
+			} else {
+				ajax.params['filter'] = "\"" + query + "]}]\"";
+			}
+		}
+		if(catalogList.etag && params.page > 0) {
+			ajax.headers['If-Range'] = catalogList.etag;
+		}
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				catalogList1.etag = request.xhr.getResponseHeader('ETag');
+				catalogList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -181,42 +180,42 @@ class catalogList extends PolymerElement {
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
-		} else {
-			grid.size = 0;
+			} else {
+				grid.size = 0;
+				callback([]);
+			}
+		};
+		var handleAjaxError = function(error) {
+			catalogList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
+			toast.open();
+			if(!grid.size) {
+				grid.size = 0;
+			}
 			callback([]);
 		}
-	};
-	var handleAjaxError = function(error) {
-		catalogList1.etag = null;
-		var toast;
-		toast.text = "error";
-		toast.open();
-		if(!grid.size) {
-			grid.size = 0;
-		}
-		callback([]);
-	}
-	if(catalogList.loading) {
-		catalogList.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (catalogList1.etag && params.page > 0) {
-					catalogList.headers['If-Range'] = userList1.etag;
-				} else {
-					delete catalogList.headers['If-Range'];
-				}
-				return catalogList.generateRequest().completes;
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
+					var startRange = params.page * params.pageSize + 1;
+					ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+					if (catalogList.etag && params.page > 0) {
+						ajax.headers['If-Range'] = catalogList.etag;
+					} else {
+						delete ajax.headers['If-Range'];
+					}
+					return ajax.generateRequest().completes;
 				}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (catalogList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = catalogList.etag;
 			} else {
-				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
-				catalogList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (catalogList1.etag && params.page > 0) {
-					catalogList.headers['If-Range'] = userList1.etag;
-				} else {
-					delete catalogList.headers['If-Range'];
-				}
-			catalogList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+				delete ajax.headers['If-Range'];
+			}
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 } 

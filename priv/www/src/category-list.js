@@ -167,43 +167,42 @@ class categoryList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('categoryGrid');
-		var ajaxGrid = this.shadowRoot.getElementById('getCategoryAjax');
 		grid.dataProvider = this._getCategory;
 	}
 
 	_getCategory(params, callback) {
 		var grid = this;
-		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
+		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
 		var query = "";
 		function checkHead(param) {
-         return param.path == "categoryName" || param.path == "categoryDescription"
-            || param.path == "categoryClass" || param.path == "categoryStatus"
-				|| param.path == "categoryParent" || param.path == "categoryRoot";
-      }
-      params.filters.filter(checkHead).forEach(function(filter) {
-         if(filter.value) {
-            if (query) {
-               query = query + "]," + filter.path + ".like=[" + filter.value + "%";
-            } else {
-               query = "[{" + filter.path + ".like=[" + filter.value + "%";
-            }
-         }
-      });
-      if(query) {
-         if(query.includes("like=[%")) {
-            delete params.filters[0];
-            categoryList.params['filter'] = "resourceCatalogManagement/v3/category";
-         } else {
-            categoryList.params['filter'] = "\"" + query + "]}]\"";
-         }
-      }
-		if(categoryList.etag && params.page > 0) {
-			headers['If-Range'] = categoryList.etag;
+			return param.path == "categoryName" || param.path == "categoryDescription"
+					|| param.path == "categoryClass" || param.path == "categoryStatus"
+					|| param.path == "categoryParent" || param.path == "categoryRoot";
 		}
-		var categoryList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
+		params.filters.filter(checkHead).forEach(function(filter) {
+			if(filter.value) {
+				if (query) {
+					query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+				} else {
+					query = "[{" + filter.path + ".like=[" + filter.value + "%";
+				}
+			}
+		});
+		if(query) {
+			if(query.includes("like=[%")) {
+				delete params.filters[0];
+				ajax.params['filter'] = "resourceCatalogManagement/v3/category";
+			} else {
+				ajax.params['filter'] = "\"" + query + "]}]\"";
+			}
+		}
+		if(categoryList.etag && params.page > 0) {
+			ajax.headers['If-Range'] = categoryList.etag;
+		}
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				categoryList1.etag = request.xhr.getResponseHeader('ETag');
+				categoryList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -230,36 +229,36 @@ class categoryList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			categoryList1.etag = null;
-			var toast;
-			toast.text = "error";
+			categoryList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			toast.text = error;
 			toast.open();
 			if(!grid.size) {
 				grid.size = 0;
 			}
-		callback([]);
+			callback([]);
 		}
-		if(categoryList.loading) {
-			categoryList.lastRequest.completes.then(function(request) {
-			var startRange = params.page * params.pageSize + 1;
-			categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (categoryList1.etag && params.page > 0) {
-				categoryList.headers['If-Range'] = userList1.etag;
-			} else {
-				delete categoryList.headers['If-Range'];
-			}
-				return categoryList.generateRequest().completes;
-			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
-			} else {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				var endRange = startRange + params.pageSize - 1;
-				categoryList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (categoryList1.etag && params.page > 0) {
-					categoryList.headers['If-Range'] = userList1.etag;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (categoryList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = categoryList.etag;
 				} else {
-					delete categoryList.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-			categoryList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+				return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (categoryList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = categoryList.etag;
+			} else {
+				delete ajax.headers['If-Range'];
+			}
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }
