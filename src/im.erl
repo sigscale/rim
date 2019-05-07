@@ -952,7 +952,6 @@ import(File) when is_list(File) ->
 		Reason :: term().
 %% @doc Import a file in the inventory table.
 import(File, Options) when is_list(File), is_list(Options) ->
-erlang:display({?MODULE, ?LINE, Options}),
 	case proplists:get_value(type, Options, '3gpp') of
 		'3gpp' ->
 			im_xml_cm_bulk:import(File);
