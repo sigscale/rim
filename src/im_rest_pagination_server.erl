@@ -284,13 +284,7 @@ range_request({StartRange, EndRange}, From,
 				when is_integer(EndRange), is_integer(StartRange) ->
 			(EndRange - StartRange) + 1
 	end,
-	ApplyArgs = case Cont1 of
-		start ->
-			[Cont1, Size | Args];
-		_ ->
-			[Cont1]
-	end,
-	case apply(Module, Function, ApplyArgs) of
+	case apply(Module, Function, [Cont1, Size | Args]) of
 		{error, _Reason} ->
 			{stop, shutdown, {error, 500}, State};
 		{Cont2, Items} when is_list(Items) ->

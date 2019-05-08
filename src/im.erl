@@ -23,18 +23,17 @@
 
 %% export the im public API
 -export([add_catalog/1, del_catalog/1, get_catalog/0, get_catalog/1,
-		get_catalog_name/1, query_catalog/4, query_catalog/1]).
+		get_catalog_name/1]).
 -export([add_category/1, del_category/1, get_category/0, get_category/1,
-		get_category_name/1, query_category/4, query_category/1]).
+		get_category_name/1]).
 -export([add_candidate/1, del_candidate/1, get_candidate/0, get_candidate/1,
-		get_candidate_name/1, query_candidate/4, query_candidate/1]).
+		get_candidate_name/1]).
 -export([add_specification/1, del_specification/1, get_specification/0,
-		get_specification/1, get_specification_name/1,
-		query_specification/4, query_specification/1]).
+		get_specification/1, get_specification_name/1]).
 -export([add_resource/1, del_resource/1, get_resource/0, get_resource/1,
-		get_resource_name/1, query_resource/4, query_resource/1]).
--export([add_user/3, del_user/1, get_user/0, get_user/1,
-		query_user/4, query_user/1]).
+		get_resource_name/1]).
+-export([add_user/3, del_user/1, get_user/0, get_user/1]).
+-export([query/5, query/6]).
 -export([import/1, import/2]).
 -export([generate_password/0, generate_identity/0]).
 
@@ -150,54 +149,104 @@ get_catalog_name(CatalogName) when is_list(CatalogName) ->
 			{error, not_found}
 	end.
 
--spec query_catalog(Continuation, Size, MatchHead, MatchConditions) -> Result
+-spec query(Table, Cont, Size, Sort, MatchSpec) -> Result
 	when
-		Continuation :: start | ets:continuation(),
+		Table :: atom(),
+		Cont :: start | any(),
 		Size :: pos_integer() | undefined,
-		MatchHead :: ets:match_pattern(),
-		MatchConditions :: [tuple()],
-		Result :: {NextContinuation, [#catalog{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
+		Sort :: [integer()] | [],
+		MatchSpec :: ets:match_spec() | '_',
+		Result :: {Cont1, [term()], Total} | {error, Reason},
+		Cont1 :: eof | any(),
+		Total :: non_neg_integer(),
 		Reason :: term().
-%% @doc Query the Resource Catalog.
-query_catalog(start = _Continuation, undefined, MatchHead, MatchConditions) ->
-	query_catalog(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
-query_catalog(start = _Continuation, Size, MatchHead, MatchConditions)
-		when is_integer(Size), Size > 0,
-		(is_record(MatchHead,  catalog) orelse (MatchHead == '_')),
-		is_list(MatchConditions) ->
-	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
-	F = fun() ->
-			 mnesia:select(catalog, MatchExpression, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Catalogs, NextContinuation} ->
-			{NextContinuation, Catalogs}
-	end.
+%% @equiv query(Table, Cont, Size, Sort, MatchHead, MatchConditions, false)
+query(Table, Cont, Size, Sort, MatchSpec) ->
+	query(Table, Cont, Size, Sort, MatchSpec, false).
 
--spec query_catalog(Continuation) -> Result
+-spec query(Cont, Size, Table, Sort, MatchSpec, CountOnly) -> Result
 	when
-		Continuation :: ets:continuation(),
-		Result :: {NextContinuation, [#catalog{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
+		Cont :: start | any(),
+		Size :: pos_integer() | undefined,
+		Table :: atom(),
+		Sort :: [integer()],
+		MatchSpec :: ets:match_pattern() | '_',
+		CountOnly :: boolean(),
+		Result :: {Cont1, [term()], Total} | {error, Reason},
+		Cont1 :: eof | any(),
+		Total :: non_neg_integer(),
 		Reason :: term().
-%% @doc Get the next results using a previous query of the Resource Catalog.
-query_catalog(Continuation) ->
+%% @doc Query the `Table'.
+%%
+%%		The result list will be sorted by the record elements listed in `Sort', in order.
+query(Cont, undefined, Table, Sort, MatchSpec, CountOnly)
+		when is_atom(Table), is_list(Sort), is_boolean(CountOnly) ->
+	{ok, Size} = application:get_env(sigscale_fm, rest_page_size),
+	query1(Cont, Size, Table, Sort, MatchSpec, CountOnly);
+query(Cont, Size, Table, Sort, MatchSpec, CountOnly)
+		when is_atom(Table), is_integer(Size),
+		is_list(Sort), is_boolean(CountOnly) ->
+	query1(Cont, Size, Table, Sort, MatchSpec, CountOnly).
+%% @hidden
+query1(start, Size, Table, [], '_', true) ->
+	{eof, Size, mnesia:table_info(Table, size)};
+query1(start, Size, Table, [], '_', false) ->
+	Arity = mnesia:table_info(Table, arity),
+	MatchHead = erlang:make_tuple(Arity, '_', [{1, Table}]),
+	MatchSpec = [{MatchHead, [], ['$_']}],
 	F = fun() ->
-			 mnesia:select(Continuation)
+			{mnesia:select(Table, MatchSpec, Size, read),
+					mnesia:table_info(Table, size)}
 	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Catalogs, NextContinuation} ->
-			{NextContinuation, Catalogs}
-	end.
+	query2(mnesia:ets(F), [], false);
+query1(start, Size, Table, [], MatchSpec, false)
+		when is_integer(Size) ->
+	F = fun() ->
+		{mnesia:select(Table, MatchSpec, Size, read), undefined}
+	end,
+	query2(mnesia:ets(F), [], false);
+query1(start, _Size, Table, Sort, MatchSpec, CountOnly) ->
+	F = fun() ->
+		{mnesia:select(Table, MatchSpec, read), undefined}
+	end,
+	query2(mnesia:ets(F), Sort, CountOnly);
+query1(Cont, _Size, Table, Sort, '_', CountOnly) ->
+	F = fun() ->
+		{mnesia:select(Cont), mnesia:table_info(Table, size)}
+	end,
+	query2(mnesia:ets(F), Sort, CountOnly);
+query1(Cont, _Size, _Table, Sort, _MatchSpec, CountOnly) ->
+	F = fun() ->
+		{mnesia:select(Cont), undefined}
+	end,
+	query2(mnesia:ets(F), Sort, CountOnly).
+
+%% @hidden
+query2({Objects, undefined}, _Sort, true)
+		when is_list(Objects) ->
+	Total = length(Objects),
+	{eof, Total, Total};
+query2({Objects, undefined}, Sort, false)
+		when is_list(Objects) ->
+	Total = length(Objects),
+	query3(eof, Objects, Total, lists:reverse(Sort));
+query2({{Objects, Cont}, Total}, _Sort, true)
+		when is_integer(Total) ->
+	{Cont, length(Objects), Total};
+query2({{Objects, Cont}, Total}, Sort, false) ->
+	query3(Cont, Objects, Total, lists:reverse(Sort));
+query2({'$end_of_table', _Total},
+		_Sort, _CountOnly) ->
+	{eof, []}.
+%% @hidden
+query3(Cont, Objects, Total, [H | T]) when H > 0 ->
+	query3(Cont, lists:keysort(H, Objects), Total, T);
+query3(Cont, Objects, Total, [H | T]) when H < 0 ->
+	query3(Cont, lists:reverse(lists:keysort(-H, Objects)), Total, T);
+query3(Cont, Objects, undefined, []) ->
+	{Cont, Objects};
+query3(Cont, Objects, Total, []) ->
+	{Cont, Objects, Total}.
 
 -spec add_category(Category) -> Result
 	when
@@ -293,55 +342,6 @@ get_category_name(CategoryName) when is_list(CategoryName) ->
 			{ok, Category};
 		{atomic, []} ->
 			{error, not_found}
-	end.
-
--spec query_category(Continuation, Size, MatchHead, MatchConditions) -> Result
-	when
-		Continuation :: start | ets:continuation(),
-		Size :: pos_integer() | undefined,
-		MatchHead :: ets:match_pattern(),
-		MatchConditions :: [tuple()],
-		Result :: {NextContinuation, [#category{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Query the Resource Categories.
-query_category(start = _Continuation, undefined, MatchHead, MatchConditions) ->
-	query_category(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
-query_category(start = _Continuation, Size, MatchHead, MatchConditions)
-		when is_integer(Size), Size > 0,
-		(is_record(MatchHead,  category) orelse (MatchHead == '_')),
-		is_list(MatchConditions) ->
-	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
-	F = fun() ->
-			 mnesia:select(category, MatchExpression, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Categories, NextContinuation} ->
-			{NextContinuation, Categories}
-	end.
-
--spec query_category(Continuation) -> Result
-	when
-		Continuation :: ets:continuation(),
-		Result :: {NextContinuation, [#category{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Get the next results using a previous query of Resource Categories.
-query_category(Continuation) ->
-	F = fun() ->
-			 mnesia:select(Continuation)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Categories, NextContinuation} ->
-			{NextContinuation, Categories}
 	end.
 
 -spec add_candidate(Candidate) -> Result
@@ -440,55 +440,6 @@ get_candidate_name(CandidateName) when is_list(CandidateName) ->
 			{error, not_found}
 	end.
 
--spec query_candidate(Continuation, Size, MatchHead, MatchConditions) -> Result
-	when
-		Continuation :: start | ets:continuation(),
-		Size :: pos_integer() | undefined,
-		MatchHead :: ets:match_pattern(),
-		MatchConditions :: [tuple()],
-		Result :: {NextContinuation, [#candidate{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Query the Resource Candidates.
-query_candidate(start = _Continuation, undefined, MatchHead, MatchConditions) ->
-	query_candidate(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
-query_candidate(start = _Continuation, Size, MatchHead, MatchConditions)
-		when is_integer(Size), Size > 0,
-		(is_record(MatchHead,  candidate) orelse (MatchHead == '_')),
-		is_list(MatchConditions) ->
-	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
-	F = fun() ->
-			 mnesia:select(candidate, MatchExpression, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Categories, NextContinuation} ->
-			{NextContinuation, Categories}
-	end.
-
--spec query_candidate(Continuation) -> Result
-	when
-		Continuation :: ets:continuation(),
-		Result :: {NextContinuation, [#candidate{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Get the next results using a previous query of Resource Candidates.
-query_candidate(Continuation) ->
-	F = fun() ->
-			 mnesia:select(Continuation)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Candidates, NextContinuation} ->
-			{NextContinuation, Candidates}
-	end.
-
 -spec add_specification(Specification) -> Result
 	when
 		Result :: {ok, Specification} | {error, Reason},
@@ -585,55 +536,6 @@ get_specification_name(SpecName) when is_list(SpecName) ->
 			{error, not_found}
 	end.
 
--spec query_specification(Continuation, Size, MatchHead, MatchConditions) -> Result
-	when
-		Continuation :: start | ets:continuation(),
-		Size :: pos_integer() | undefined,
-		MatchHead :: ets:match_pattern(),
-		MatchConditions :: [tuple()],
-		Result :: {NextContinuation, [#specification{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Query the Resource Specifications.
-query_specification(start = _Continuation, undefined, MatchHead, MatchConditions) ->
-	query_specification(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
-query_specification(start = _Continuation, Size, MatchHead, MatchConditions)
-		when is_integer(Size), Size > 0,
-		(is_record(MatchHead,  specification) orelse (MatchHead == '_')),
-		is_list(MatchConditions) ->
-	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
-	F = fun() ->
-			 mnesia:select(specification, MatchExpression, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Categories, NextContinuation} ->
-			{NextContinuation, Categories}
-	end.
-
--spec query_specification(Continuation) -> Result
-	when
-		Continuation :: ets:continuation(),
-		Result :: {NextContinuation, [#specification{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Get the next results using a previous query of Resource Specifications.
-query_specification(Continuation) ->
-	F = fun() ->
-			 mnesia:select(Continuation)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Specifications, NextContinuation} ->
-			{NextContinuation, Specifications}
-	end.
-
 -spec add_resource(Resource) -> Result
 	when
 		Result :: {ok, Resource} | {error, Reason},
@@ -728,55 +630,6 @@ get_resource_name(ResourceName) when is_list(ResourceName) ->
 			{ok, Resource};
 		{atomic, []} ->
 			{error, not_found}
-	end.
-
--spec query_resource(Continuation, Size, MatchHead, MatchConditions) -> Result
-	when
-		Continuation :: start | ets:continuation(),
-		Size :: pos_integer() | undefined,
-		MatchHead :: ets:match_pattern(),
-		MatchConditions :: [tuple()],
-		Result :: {NextContinuation, [#resource{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Query the inventory Resources.
-query_resource(start = _Continuation, undefined, MatchHead, MatchConditions) ->
-	query_resource(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
-query_resource(start = _Continuation, Size, MatchHead, MatchConditions)
-		when is_integer(Size), Size > 0,
-		(is_record(MatchHead,  resource) orelse (MatchHead == '_')),
-		is_list(MatchConditions) ->
-	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
-	F = fun() ->
-			 mnesia:select(resource, MatchExpression, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Categories, NextContinuation} ->
-			{NextContinuation, Categories}
-	end.
-
--spec query_resource(Continuation) -> Result
-	when
-		Continuation :: ets:continuation(),
-		Result :: {NextContinuation, [#resource{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Get the next results using a previous query of inventory Resources.
-query_resource(Continuation) ->
-	F = fun() ->
-			 mnesia:select(Continuation)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Resources, NextContinuation} ->
-			{NextContinuation, Resources}
 	end.
 
 -spec add_user(Username, Password, Locale) -> Result
@@ -884,55 +737,6 @@ get_user(Username, {Port, Address, Dir, _}) ->
 get_user(_, {error, Reason}) ->
 	{error, Reason}.
 
--spec query_user(Continuation, Size, MatchHead, MatchConditions) -> Result
-	when
-		Continuation :: start | ets:continuation(),
-		Size :: pos_integer() | undefined,
-		MatchHead :: ets:match_pattern(),
-		MatchConditions :: [tuple()],
-		Result :: {NextContinuation, [#httpd_user{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Query the REST Users.
-query_user(start = _Continuation, undefined, MatchHead, MatchConditions) ->
-	query_user(start = _Continuation, ?CHUNKSIZE, MatchHead, MatchConditions);
-query_user(start = _Continuation, Size, MatchHead, MatchConditions)
-		when is_integer(Size), Size > 0,
-		(is_record(MatchHead,  httpd_user) orelse (MatchHead == '_')),
-		is_list(MatchConditions) ->
-	MatchExpression = [{MatchHead, MatchConditions, ['$_']}],
-	F = fun() ->
-			 mnesia:select(httpd_user, MatchExpression, Size, read)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Users, NextContinuation} ->
-			{NextContinuation, Users}
-	end.
-
--spec query_user(Continuation) -> Result
-	when
-		Continuation :: ets:continuation(),
-		Result :: {NextContinuation, [#httpd_user{}]} | {error, Reason},
-		NextContinuation:: eof | ets:continuation(),
-		Reason :: term().
-%% @doc Get the next results using a previous query of REST Users.
-query_user(Continuation) ->
-	F = fun() ->
-			 mnesia:select(Continuation)
-	end,
-	case mnesia:ets(F) of
-		{error, Reason} ->
-			{error, Reason};
-		'$end_of_table' ->
-			{eof, []};
-		{Users, NextContinuation} ->
-			{NextContinuation, Users}
-	end.
-
 -spec import(File) -> Result
 	when
 		File :: string(),
@@ -952,7 +756,6 @@ import(File) when is_list(File) ->
 		Reason :: term().
 %% @doc Import a file in the inventory table.
 import(File, Options) when is_list(File), is_list(Options) ->
-erlang:display({?MODULE, ?LINE, Options}),
 	case proplists:get_value(type, Options, '3gpp') of
 		'3gpp' ->
 			im_xml_cm_bulk:import(File);
