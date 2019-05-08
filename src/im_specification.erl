@@ -27,7 +27,7 @@
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
 		nr_cell_cu/0, nr_cell_du/0]).
--export([ngc_slice/0]).
+-export([ngc_slice/0, ngc_slice_subnet/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -1919,6 +1919,60 @@ ngc_slice() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "NetworkSlice",
 					schema = "/resourceInventoryManagement/v3/schema/NetworkSlice"},
+			characteristic = Chars}.
+
+-spec ngc_slice_subnet() -> specification().
+%% @doc 5G Core (5GC) Network Slice Subnet resource function specification.
+ngc_slice_subnet() ->
+	DnPrefix = #specification_char{name = "dnPrefix",
+			description = "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	UserDefinedNetworkType = #specification_char{name = "userDefinedNetworkType",
+			description = "User defined network type (3GPP 28.620)",
+			value_type = "string"},
+	SetOfMcc = #specification_char{name = "setOfMcc",
+			description = "All Mobile Country Codes (MCC) included",
+			value_type = "string"},
+	MFIdList = #specification_char{name = "mFIdList",
+			description = "",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	ConstituentNSSIIdList = #specification_char{name = "constituentNSSIIdList",
+			description = "",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	State = #specification_char{name = "state",
+			description = "",
+			value_type = "OperationalState",
+			value_schema = "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalState"},
+	NsInfo = #specification_char{name = "nsInfo",
+			description = "",
+			value_type = "NsInfo",
+			value_schema = "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/NsInfo"},
+	SliceProfileList = #specification_char{name = "sliceProfileList",
+			description = "",
+			value_type = "ServiceProfileList",
+			value_schema = "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"},
+	Sst = #specification_char{name = "sst",
+			description = "Slice/service type of the network slice (3GPP 23.501 5.15.2)",
+			value_type = "Sst",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/Sst"},
+	Chars = [DnPrefix, UserLabel, UserDefinedNetworkType, SetOfMcc, MFIdList,
+			ConstituentNSSIIdList, State, NsInfo, SliceProfileList, Sst],
+	#specification{name = "NetworkSliceSubnet",
+			description = "5G Core (5GC) Network Slice Subnet",
+			class_type = "NetworkSliceSubnetSpec",
+			schema = "/resourceCatalogManagement/v3/schema/NetworkSliceSubnetSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "NetworkSliceSubnet",
+					schema = "/resourceInventoryManagement/v3/schema/NetworkSliceSubnet"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
