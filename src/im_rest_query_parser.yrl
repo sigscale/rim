@@ -1,7 +1,7 @@
 Header
 "%%% vim: ts=3: "
 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-"%%% @copyright 2018-2019 SigScale Global Inc."
+"%%% @copyright 2018 SigScale Global Inc."
 "%%% @end"
 "%%% Licensed under the Apache License, Version 2.0 (the \"License\");"
 "%%% you may not use this file except in compliance with the License."
@@ -35,16 +35,16 @@ Header
 "%%%    <li><tt>Token = {Category, LineNumber, Symbol}"
 "%%%        | {Symbol, LineNumber}</tt></li>"
 "%%%    <li><tt>Category = word</tt></li>"
-"%%%    <li><tt>Symbol = '\"' | '[' | ']' | '{' | '}' | '.' | ','"
+"%%%    <li><tt>Symbol = '\"' | '[' | ']' | '{' | '}' | '.' | ',' | ';'"
 "%%%        | Operator</tt></li>"
 "%%%    <li><tt>Result = {ok, Filters}"
 "%%%        | {error, {LineNumber, Module, Message}}</tt></li>"
 "%%%    <li><tt>Filters = [Filter]</tt></li>"
 "%%%    <li><tt>Filter = Simple | Complex | Array</tt></li>"
-"%%%    <li><tt>Simple = {LHS, Operator, RHS}</tt></li>"
+"%%%    <li><tt>Simple = {Operator, LHS, RHS}</tt></li>"
 "%%%    <li><tt>LHS = string()</tt></li>"
 "%%%    <li><tt>Operator = exact | notexact | lt | lte | gt | gte"
-"%%%        | regex | like | notlike | in | notin"
+"%%%        | regex | like | notlike | in | notin | all | any"
 "%%%        | contains | notcontain | containsall</tt></li>"
 "%%%    <li><tt>RHS = integer() | string() | boolean()"
 "%%%        | Complex | Filters</tt></li>"
@@ -62,7 +62,7 @@ Header
 
 Nonterminals param filters filter array complex field value values simple.
 
-Terminals '"' '[' ']' '{' '}' ',' '.' word
+Terminals '"' '[' ']' '{' '}' ',' ';' '.' word
 	exact notexact lt lte gt gte regex like notlike
 	in notin contains notcontain containsall.
 
@@ -77,7 +77,9 @@ param -> '"' filters '"' :
 filters -> filter :
 	['$1'].
 filters -> filter ',' filters :
-	['$1' | '$3'].
+	{all, ['$1' | '$3']}.
+filters -> filter ';' filters :
+	{any, ['$1' | '$3']}.
 
 filter -> simple :
 	'$1'.
@@ -87,33 +89,33 @@ filter -> complex :
 	'$1'.
 
 simple -> field exact value :
-	{'$1', exact, '$3'}.
+	{exact, '$1', '$3'}.
 simple -> field notexact value :
-	{'$1', notexact, '$3'}.
+	{notexact, '$1', '$3'}.
 simple -> field lt value :
-	{'$1', lt, '$3'}.
+	{lt, '$1', '$3'}.
 simple -> field lte value :
-	{'$1', lte, '$3'}.
+	{lte, '$1', '$3'}.
 simple -> field gt value :
-	{'$1', gt, '$3'}.
+	{gt, '$1', '$3'}.
 simple -> field gte value :
-	{'$1', gte, '$3'}.
+	{gte, '$1', '$3'}.
 simple -> field regex value :
-	{'$1', regex, '$3'}.
+	{regex, '$1', '$3'}.
 simple -> field like '[' values ']' :
-	{'$1', like, '$4'}.
+	{like, '$1', '$4'}.
 simple -> field notlike '[' values ']' :
-	{'$1', notlike, '$4'}.
+	{notlike, '$1', '$3'}.
 simple -> field in '[' values ']' :
-	{'$1', in, '$4'}.
+	{in, '$1', '$4'}.
 simple -> field notin '[' values ']' :
-	{'$1', notin, '$4'}.
+	{notin, '$1', '$4'}.
 simple -> field contains '[' filters ']' :
-	{'$1', contains, '$4'}.
+	{contains, '$1', '$4'}.
 simple -> field notcontain '[' filters ']' :
-	{'$1', notcontain, '$4'}.
+	{notcontain, '$1', '$4'}.
 simple -> field containsall '[' filters ']' :
-	{'$1', containsall, '$4'}.
+	{containsall, '$1', '$4'}.
 
 array -> '[' filters ']' :
 	{array, '$2'}.
@@ -133,5 +135,7 @@ value -> word '.' value :
 values -> value :
 	['$1'].
 values -> value ',' values :
-	['$1' | '$3'].
+	{all, ['$1' | '$3']}.
+values -> value ';' values :
+	{any, ['$1' | '$3']}.
 
