@@ -123,9 +123,9 @@ do_get(Resource, #mod{parsed_header = Headers} = ModData,
 do_get(Resource, ModData,
 		["resourceCatalogManagement", "v3", "resourceCandidate", Id], Query) ->
 	do_response(ModData, Resource:get_candidate(Id, Query));
-do_get(Resource, #mod{parsed_header = Headers} = ModData,
+do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
 		["resourceCatalogManagement", "v3", "resourceSpecification"], Query) ->
-	do_response(ModData, Resource:get_specifications(Query, Headers));
+	do_response(ModData, Resource:get_specifications(Method, Query, Headers));
 do_get(Resource, ModData,
 		["resourceCatalogManagement", "v3", "resourceSpecification", Id], Query) ->
 	do_response(ModData, Resource:get_specification(Id, Query));
