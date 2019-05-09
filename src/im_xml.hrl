@@ -69,7 +69,9 @@
 
 -record(huawei_state,
 		{gsm_function :: map() | undefined,
-		umts_function :: map() | undefined,
 		bts :: map() | undefined,
-		nodeb :: map() | undefined}).
+		gcell :: map() | undefined,
+		umts_function :: map() | undefined,
+		nodeb :: map() | undefined,
+		ucell :: map() | undefined}).
 -type huawei_state() :: #huawei_state{}.

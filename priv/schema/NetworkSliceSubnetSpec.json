@@ -1,0 +1,47 @@
+{
+	"$id": "http://sigscale.org/schema/NetworkSliceSubnetSpec",
+	"title": "5GC Network Slice Subnet Specification",
+	"description": "5G Core (5GC) Network Slice Subnet resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"dnPrefix",
+											"userLabel",
+											"userDefinedNetworkType",
+											"setOfMcc",
+											"mFIdList",
+											"constituentNSSIIdList",
+											"state",
+											"nsInfo",
+											"sliceProfileList",
+											"sst"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
