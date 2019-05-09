@@ -26,7 +26,7 @@
 		umts_cell_tdd_lcr/0, umts_cell_tdd_hcr/0]).
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
-		nr_cell_cu/0, nr_cell_du/0]).
+		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
 -export([ngc_slice/0, ngc_slice_subnet/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
@@ -1869,6 +1869,61 @@ nr_cell_du() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NRCellDU",
 					schema = "/resourceInventoryManagement/v3/schema/NRCellDU"},
+			characteristic = Chars}.
+
+-spec nr_sector_carrier() -> specification().
+%% @doc NR Sector Carrier resource function specification.
+nr_sector_carrier() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	ConfiguredMaxTxPower = #specification_char{name = "configuredMaxTxPower",
+			description = "",
+			value_type = "integer"},
+	PointAArfcnDLFDD = #specification_char{name = "pointAArfcnDLFDD",
+			description = "",
+			value_type = "integer"},
+	PointAArfcnULFDD = #specification_char{name = "pointAArfcnULFDD",
+			description = "",
+			value_type = "integer"},
+	PointAArfcnTDD = #specification_char{name = "pointAArfcnTDD",
+			description = "",
+			value_type = "integer"},
+	FDDBwpTxStartDL = #specification_char{name = "fDDBwpTxStartDL",
+			description = "",
+			value_type = "integer"},
+	FDDBwpTxStartUL = #specification_char{name = "fDDBwpTxStartUL",
+			description = "",
+			value_type = "integer"},
+	FDDBwpTxBwDL = #specification_char{name = "fDDBwpTxBwDL",
+			description = "",
+			value_type = "integer"},
+	FDDBwpTxBwUL = #specification_char{name = "fDDBwpTxBwUL",
+			description = "",
+			value_type = "integer"},
+	TDDBwpTxStart = #specification_char{name = "tDDBwpTxStart",
+			description = "",
+			value_type = "integer"},
+	TDDBwpTxBw = #specification_char{name = "tDDBwpTxBw",
+			description = "",
+			value_type = "integer"},
+	Chars = [UserLabel, VnfParametersList, ConfiguredMaxTxPower, PointAArfcnDLFDD,
+			PointAArfcnULFDD, PointAArfcnTDD, FDDBwpTxStartDL, FDDBwpTxStartUL,
+			FDDBwpTxBwDL, FDDBwpTxBwUL, TDDBwpTxStart, TDDBwpTxBw],
+	#specification{name = "NRSectorCarrier",
+			description = "NR Sector Carrier resource function specification",
+			class_type = "NRSectorCarrierSpec",
+			schema = "/resourceCatalogManagement/v3/schema/NRSectorCarrierSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "NRSectorCarrier",
+					schema = "/resourceInventoryManagement/v3/schema/NRSectorCarrier"},
 			characteristic = Chars}.
 
 -spec ngc_slice() -> specification().

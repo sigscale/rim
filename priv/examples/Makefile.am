@@ -42,6 +42,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-nr-gnb-cu-up.json \
 		$(abs_builddir)/specification-nr-cell-cu.json \
 		$(abs_builddir)/specification-nr-cell-du.json \
+		$(abs_builddir)/specification-nr-sector-carrier.json \
 		$(abs_builddir)/specification-5gc-slice.json \
 		$(abs_builddir)/specification-5gc-slice-subnet.json \
 		$(abs_builddir)/resource.json
@@ -205,6 +206,10 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-cell-du.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/NRSectorCarrierSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-sector-carrier.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \

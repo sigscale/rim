@@ -1,0 +1,94 @@
+{
+	"name": "NRSectorCarrier",
+	"description": "NR Sector Carrier resource function specification",
+	"@type": "NRSectorCarrierSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRSectorCarrierSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "NRSectorCarrier",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRSectorCarrier"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "configuredMaxTxPower",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "pointAArfcnDLFDD",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "pointAArfcnULFDD",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "pointAArfcnTDD",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpTxStartDL",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpTxStartUL",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpTxBwDL",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "fDDBwpTxBwUL",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "tDDBwpTxStart",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "tDDBwpTxBw",
+			"description": "",
+			"valueType": "integer"
+		}
+	]
+}

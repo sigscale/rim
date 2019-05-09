@@ -71,6 +71,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/GNBCUUPFunctionSpec.json \
 		$(abs_builddir)/NRCellDUSpec.json \
 		$(abs_builddir)/NRCellCUSpec.json \
+		$(abs_builddir)/NRSectorCarrierSpec.json \
 		$(abs_builddir)/NetworkSliceSpec.json \
 		$(abs_builddir)/NetworkSliceSubnetSpec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
@@ -266,6 +267,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellCUSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s NRSectorCarrierSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
