@@ -1,0 +1,46 @@
+{
+	"$id": "http://sigscale.org/schema/AMFFunctionSpec",
+	"title": "5G AMF Specification",
+	"description": "5G Access and Mobility Management Function (AMF) resource function specification",`
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"peeParametersList",
+											"pLMNIdList",
+											"aMFIdentifier",
+											"sBIFQDN",
+											"sBIServiceList",
+											"weightFactor",
+											"sNSSAIList"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
