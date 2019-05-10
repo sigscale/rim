@@ -279,6 +279,6 @@ class specificationList extends PolymerElement {
 			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
-} 
+}
 
 window.customElements.define('specification-list', specificationList);

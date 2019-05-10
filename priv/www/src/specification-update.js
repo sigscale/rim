@@ -49,10 +49,10 @@ class specUpdateList extends PolymerElement {
 						value="{{specification.specClass}}">
 				</paper-input>
 				<paper-dropdown-menu
-					class="drop" 
+					class="drop"
 					label="Status"
 					value="{{specification.specStatus}}"
-					no-animations="true">	
+					no-animations="true">
 					<paper-listbox
 							id="updateStatus"
 							slot="dropdown-content">
@@ -105,7 +105,7 @@ class specUpdateList extends PolymerElement {
 							raised
 							class="update-button"
 							on-tap="_updateSpec">
-						Update	
+						Update
 					</paper-button>
 					<paper-button
 							class="cancel-button"
@@ -118,7 +118,7 @@ class specUpdateList extends PolymerElement {
 							raised
 							class="delete-button"
 							on-tap="_deleteSpec">
-						Delete	
+						Delete
 					</paper-button>
 				</div>
 		</paper-dialog>
@@ -138,7 +138,7 @@ class specUpdateList extends PolymerElement {
 		return {
 			specification: {
 				type: Object,
-			}		
+			}
 		}
 	}
 

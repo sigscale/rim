@@ -54,7 +54,7 @@
 				{
 					"valueFrom": 1,
 					"valueTo": 999
-				} 
+				}
 			]
 		},
 		{
@@ -65,7 +65,7 @@
 				{
 					"valueFrom": 1,
 					"valueTo": 999
-				} 
+				}
 			]
 		},
 		{
@@ -76,7 +76,7 @@
 				{
 					"valueFrom": 0,
 					"valueTo": 4095
-				} 
+				}
 			]
 		},
 		{

@@ -21,7 +21,7 @@
 					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"operationalState": {
-					"$ref": "stateManagementNrm#/definitions/OperationalState" 
+					"$ref": "stateManagementNrm#/definitions/OperationalState"
 				},
 				"administrativeState": {
 					"$ref": "stateManagementNrm#/definitions/AdministrativeState"
@@ -96,7 +96,7 @@
 			]
 		},
 		"SharingLevel": {
-			"type": "string", 
+			"type": "string",
 			"enum": [
 				"SHARED",
 				"NON-SHARED"
@@ -174,7 +174,7 @@
 				},
 				"connDensity": {
 					"type": "number"
-				}, 
+				},
 				"serviceDimension": {
 					"type": "string"
 				}
@@ -252,7 +252,7 @@
 		},
 		"SliceProfileList": {
 			"type": "array",
-			"item": { 
+			"item": {
 				"$ref": "#/definitions/SliceProfile"
 			}
 		},
@@ -271,4 +271,4 @@
 			}
 		}
 	}
-} 
+}
