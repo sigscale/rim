@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "RAN",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "AMFFunction",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/AMFFunction"
@@ -44,18 +44,19 @@
 			"name": "pLMNIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PLMNIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"
 		},
 		{
-			"name": "aMFIdentifier",
-			"description": "Uniquely identify an AMF instance.",
+			"name": "amfIdentifier",
+			"description": "Uniquely identify an AMF instance",
 			"valueType": "AMFIdentifier",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/AMFIdentifier"
 		},
 		{
 			"name": "sBIFqdn",
 			"description": "FQDN of the registered NF instance in service-based interface",
-			"valueType": "string"
+			"valueType": "SBIFqdn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIFqdn"
 		},
 		{
 			"name": "sBIServiceList",
@@ -76,94 +77,10 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
 		},
 		{
-			"name": "aMFSet",
+			"name": "amfSet",
 			"description": "",
 			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N2",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N8",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N11",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N12",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N14",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N15",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N17",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N22",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N26",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_N20",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_NLS",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_NLG",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "EP_SBI_X",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
-		},
-		{
-			"name": "VsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		}
 	]
 }
