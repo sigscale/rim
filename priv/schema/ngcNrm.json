@@ -12,13 +12,13 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"amfIdentifier": {
-					"$ref": "#/definitions/AmfId"
+					"$ref": "#/definitions/AMFIdentifier"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -33,17 +33,17 @@
 					"$ref": "#/definitions/NssaiList"
 				},
 				"amfSet": {
-					"$ref": "genericNrm#/definitions/dn"
-				},
-				"required": [
-					"userLabel",
-					"pLMNIdList",
-					"amfIdentifier",
-					"sBIFqdn",
-					"sBIServiceList",
-					"weightFactor"
-				]
-			}
+					"$ref": "genericNrm#/definitions/Dn"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"amfIdentifier",
+				"sBIFqdn",
+				"sBIServiceList",
+				"weightFactor"
+			]
 		},
 		"smfFunction": {
 			"type": "object",
@@ -55,10 +55,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"tacList": {
 					"$ref": "#/definitions/TACList"
@@ -91,10 +91,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"tacList": {
 					"$ref": "#/definitions/TACList"
@@ -119,10 +119,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				}
 			},
 			"required": [
@@ -140,10 +140,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -172,10 +172,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -204,10 +204,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -236,10 +236,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -268,10 +268,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -300,10 +300,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -334,10 +334,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -368,10 +368,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -397,10 +397,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				}
 			},
 			"required": [
@@ -418,10 +418,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -450,10 +450,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				}
 			},
 			"required": [
@@ -471,10 +471,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/vnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersListType"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"sBIFqdn": {
 					"$ref": "#/definitions/SBIFqdn"
@@ -503,7 +503,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -523,7 +523,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -540,7 +540,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -560,7 +560,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -580,7 +580,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -600,7 +600,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -620,7 +620,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -640,7 +640,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -657,7 +657,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -677,7 +677,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -697,7 +697,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -717,7 +717,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -737,7 +737,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -757,7 +757,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -777,7 +777,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -797,7 +797,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -817,7 +817,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -837,7 +837,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -857,7 +857,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -877,7 +877,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -897,7 +897,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -917,7 +917,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -937,7 +937,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -957,7 +957,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -974,7 +974,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -994,7 +994,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -1014,7 +1014,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -1034,7 +1034,7 @@
 					"type": "string"
 				},
 				"farEndEntity": {
-					"$ref": "genericNrm#/definitions/dn"
+					"$ref": "genericNrm#/definitions/Dn"
 				},
 				"localAddress": {
 					"$ref": "nrNrm#/definitions/IPEndPoint"
@@ -1050,8 +1050,8 @@
 				"id": {
 					"type": "string"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"tacList": {
 					"$ref": "#/definitions/TACList"
@@ -1075,8 +1075,8 @@
 				"id": {
 					"type": "string"
 				},
-				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				"pLMNIdList": {
+					"$ref": "eutranNrm#/definitions/PLMNIdList"
 				},
 				"tacList": {
 					"$ref": "#/definitions/TACList"
@@ -1190,7 +1190,7 @@
 					"$ref": "#/definitions/UdrInfo"
 				},
 				"amfInfo": {
-					"$ref": "#/definitions/amfInfo"
+					"$ref": "#/definitions/AmfInfo"
 				},
 				"smfInfo": {
 					"$ref": "#/definitions/SmfInfo"
@@ -1353,7 +1353,7 @@
 				"dnnList": {
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/Dnn"
+						"type": "string"
 					}
 				}
 			}
@@ -1387,7 +1387,7 @@
 			"type": "object",
 			"properties": {
 				"dnn": {
-					"$ref": "#/definitions/Dnn"
+					"type": "string"
 				}
 			}
 		},
@@ -1404,7 +1404,7 @@
 					"$ref": "#/definitions/N1MessageClass"
 				},
 				"n2InformationClass": {
-					"$ref": "#/definitions/n2InformationClass"
+					"$ref": "#/definitions/N2InformationClass"
 				}
 			}
 		},
