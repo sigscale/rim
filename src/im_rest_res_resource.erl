@@ -1098,20 +1098,6 @@ parse_filter([], any, MatchHead, MatchConditions) ->
 	[{MatchHead, [NewMatchConditions], ['$_']}].
 
 %% @hidden
-in(["In Study" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, in_study} | Acc]);
-in(["In Design" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, in_design} | Acc]);
-in(["In Test" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, in_test} | Acc]);
-in(["Rejected" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, rejected} | Acc]);
-in(["Active" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, active} | Acc]);
-in(["Launched" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, launched} | Acc]);
-in(["Retired" | T], '$10' = Var, Acc) ->
-	in(T, Var, [{'==', Var, retired} | Acc]);
 in([H |T], Var, Acc) ->
 	in(T, Var, [{'==', Var, H} | Acc]);
 in([], _, Acc) when length(Acc) > 1 ->
