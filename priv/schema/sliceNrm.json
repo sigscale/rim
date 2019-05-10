@@ -79,7 +79,6 @@
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
 				"mFIdList",
 				"constituentNSSIIdList",
 				"state",
