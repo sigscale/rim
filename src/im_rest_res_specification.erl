@@ -214,11 +214,11 @@ specification([name | T], #specification{name = Name} = R, Acc)
 specification([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	specification(T, M, Acc#specification{name = Name});
-specification([description| T],
+specification([description | T],
 		#specification{description = Description} = R, Acc)
 		when is_list(Description) ->
 	specification(T, R, Acc#{"description" => Description});
-specification([description| T], #{"description" := Description} = M, Acc)
+specification([description | T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	specification(T, M, Acc#specification{description = Description});
 specification([class_type | T], #specification{class_type = Type} = R, Acc)
@@ -767,17 +767,17 @@ sorts(["name" | T], Acc) ->
 sorts(["-name" | T], Acc) ->
    sorts(T, [-#specification.name | Acc]);
 sorts(["description" | T], Acc) ->
-   sorts(T, [#specification.description| Acc]);
+   sorts(T, [#specification.description | Acc]);
 sorts(["-description" | T], Acc) ->
-   sorts(T, [-#specification.description| Acc]);
+   sorts(T, [-#specification.description | Acc]);
 sorts(["@type" | T], Acc) ->
-   sorts(T, [#specification.class_type| Acc]);
+   sorts(T, [#specification.class_type | Acc]);
 sorts(["-@type" | T], Acc) ->
-   sorts(T, [-#specification.class_type| Acc]);
+   sorts(T, [-#specification.class_type | Acc]);
 sorts(["@baseType" | T], Acc) ->
-   sorts(T, [#specification.base_type| Acc]);
+   sorts(T, [#specification.base_type | Acc]);
 sorts(["-@baseType" | T], Acc) ->
-   sorts(T, [-#specification.base_type| Acc]);
+   sorts(T, [-#specification.base_type | Acc]);
 sorts(["@schemaLocation" | T], Acc) ->
    sorts(T, [#specification.schema | Acc]);
 sorts(["-@schemaLocation" | T], Acc) ->
@@ -787,7 +787,7 @@ sorts(["lifecycleStatus" | T], Acc) ->
 sorts(["-lifecycleStatus" | T], Acc) ->
    sorts(T, [-#specification.status | Acc]);
 sorts(["version" | T], Acc) ->
-   sorts(T, [#specification.version| Acc]);
+   sorts(T, [#specification.version | Acc]);
 sorts(["-version" | T], Acc) ->
    sorts(T, [-#specification.version | Acc]);
 sorts(["startDateTime" | T], Acc) ->
