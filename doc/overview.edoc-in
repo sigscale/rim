@@ -35,7 +35,7 @@ e.g &#058;
 	'''
 
 ===Internationalization (i18n)===
-The web user interface (UI) may be internationalized by specifying `Locale' in 
+The web user interface (UI) may be internationalized by specifying `Locale' in
 {@link //im/im:add_user/3. im:add_user/3} where `Locale'
 is a two letter ISO-639-1 language code. A corresponding message file
 should be provided in `priv/www/locales'.

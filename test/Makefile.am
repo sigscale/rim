@@ -7,7 +7,7 @@ CERT_DIR = im_rest_SUITE_data
 
 testmods = im_api_SUITE \
 		im_rest_SUITE \
-		im_test_lib 
+		im_test_lib
 
 check_DATA = .dialyzer_ok .common_test_ok
 
@@ -19,7 +19,7 @@ check_DATA = .dialyzer_ok .common_test_ok
 
 .common_test_ok:	$(addsuffix .beam, $(testmods)) sys.config
 	@if [ ! -d $(CERT_DIR) ]; then mkdir $(CERT_DIR); fi
-	@if [ ! -d log ]; then mkdir log; fi 
+	@if [ ! -d log ]; then mkdir log; fi
 	@if [ ! -f ct.cfg ]; then cp $(top_srcdir)/test/ct.cfg .; fi
 	@if [ ! -f test.spec ]; then cp $(top_srcdir)/test/test.spec .; fi
 	(cd $(CERT_DIR) && \

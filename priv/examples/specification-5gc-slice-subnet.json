@@ -47,7 +47,7 @@
 		},
 		{
 			"name": "setOfMcc",
-			"description": "All Mobile Country Codes (MCC) included", 
+			"description": "All Mobile Country Codes (MCC) included",
 			"valueType": "string"
 		},
 		{

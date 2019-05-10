@@ -67,7 +67,7 @@
 		},
 		{
 			"name": "eP_RP_EPS",
-			"description": "Endpoint of reference point in EPS (3GPP 23.401)", 
+			"description": "Endpoint of reference point in EPS (3GPP 23.401)",
 			"valueType": "EP_RP_EPSList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
 		},

@@ -5,47 +5,47 @@
 		"Mcc": {
 			"type": "integer",
 			"minimum": 1,
-			"maximum": 999 
+			"maximum": 999
 		},
 		"Mnc": {
 			"type": "integer",
 			"minimum": 1,
-			"maximum": 999 
+			"maximum": 999
 		},
 		"LocalCellId": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 268435455 
+			"maximum": 268435455
 		},
 		"CId": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 65535 
+			"maximum": 65535
 		},
 		"UarfcnAnyMode": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 16383 
+			"maximum": 16383
 		},
 		"PrimaryScramblingCode": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 511 
+			"maximum": 511
 		},
 		"PrimaryCpichPower": {
 			"type": "integer",
 			"minimum": -10,
-			"maximum": 50 
+			"maximum": 50
 		},
 		"MaximumTransmissionPower": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 50 
+			"maximum": 50
 		},
 		"PrimarySchPower": {
 			"type": "integer",
 			"minimum": -35,
-			"maximum": 15 
+			"maximum": 15
 		},
 		"SecondarySchPower": {
 			"type": "integer",
@@ -55,32 +55,32 @@
 		"BchPower": {
 			"type": "integer",
 			"minimum": -35,
-			"maximum": 15 
+			"maximum": 15
 		},
 		"AichPower": {
 			"type": "integer",
 			"minimum": -22,
-			"maximum": 5 
+			"maximum": 5
 		},
 		"FpachPower": {
 			"type": "integer",
 			"minimum": -150,
-			"maximum": 400 
+			"maximum": 400
 		},
 		"PichPower": {
 			"type": "integer",
 			"minimum": -10,
-			"maximum": 5 
+			"maximum": 5
 		},
 		"PchPower": {
 			"type": "integer",
 			"minimum": -350,
-			"maximum": 150 
+			"maximum": 150
 		},
 		"FachPower": {
 			"type": "integer",
 			"minimum": -350,
-			"maximum": 150 
+			"maximum": 150
 		},
 		"Lac": {
 			"allOf": [
@@ -113,7 +113,7 @@
 				"type": "integer",
 				"minimum": 0,
 				"maximum": 65535
-			}			
+			}
 		},
 		"CellMode": {
 			"type": "string",
@@ -126,17 +126,17 @@
 		"CellParameterId": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 127 
+			"maximum": 127
 		},
 		"PrimaryCcpchPower": {
 			"type": "integer",
 			"minimum": -15,
-			"maximum": 40 
+			"maximum": 40
 		},
 		"DwPchPower": {
 			"type": "integer",
 			"minimum": -15,
-			"maximum": 40 
+			"maximum": 40
 		},
 		"SchPower": {
 			"type": "integer",
@@ -321,12 +321,12 @@
 				"snac": {
 					"type": "integer",
 					"minimum": 0,
-					"maximum": 999 
+					"maximum": 999
 				},
 				"mnc": {
 					"type": "integer",
 					"minimum": 0,
-					"maximum": 999 
+					"maximum": 999
 				},
 				"snaList": {
 					"$ref": "#/definitions/SnaList"
@@ -346,7 +346,7 @@
 		"TemporaryOffset2": {
 			"type": "integer",
 			"minimum": 2,
-			"maximum": 12 
+			"maximum": 12
 		},
 		"TxDiversityIndicator": {
 			"type": "string",
@@ -532,7 +532,6 @@
 				"type": "integer",
 				"minimum": 0,
 				"maximum": 255
-			
 			}
 		},
 		"UarfcnLCRList": {
@@ -637,7 +636,7 @@
 								"rncId": {
 									"type": "integer",
 									"minimum": 0,
-									"maximum": 4095 
+									"maximum": 4095
 								},
 								"siptoSupported": {
 									"$ref": "#/definitions/SiptoSupported"
@@ -1120,7 +1119,7 @@
 								"rncId": {
 									"type": "integer",
 									"minimum": 0,
-									"maximum": 4095 
+									"maximum": 4095
 								},
 								"cellMode": {
 									"$ref": "#/definitions/CellMode"
@@ -1387,7 +1386,7 @@
 								"rncId": {
 									"type": "integer",
 									"minimum": 0,
-									"maximum": 4095 
+									"maximum": 4095
 								},
 								"controlledCellList": {
 									"$ref": "genericNrm#/definitions/DnList"

@@ -1,4 +1,4 @@
-%% im_xml 
+%% im_xml
 
 -record(state,
 		{parse_module :: atom(),

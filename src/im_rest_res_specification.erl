@@ -27,7 +27,7 @@
 -export([get_specifications/2, get_specification/2, post_specification/1,
 		delete_specification/1]).
 -export([specification/1]).
- 
+
 -include("im.hrl").
 
 %%----------------------------------------------------------------------

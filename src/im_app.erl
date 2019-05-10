@@ -463,7 +463,7 @@ stop(_State) ->
 		Removed :: [Par],
 		Par :: atom(),
 		Val :: atom().
-%% @doc Called after a code replacement, if there are any 
+%% @doc Called after a code replacement, if there are any
 %% 	changes to the configuration parameters.
 %%
 config_change(_Changed, _New, _Removed) ->

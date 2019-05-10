@@ -27,7 +27,7 @@
 -export([get_candidates/2, get_candidate/2, post_candidate/1,
 		delete_candidate/1]).
 -export([candidate/1]).
- 
+
 -include("im.hrl").
 
 -define(PathCatalog, "/resourceCatalogManagement/v3/").

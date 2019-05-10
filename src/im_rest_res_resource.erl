@@ -26,7 +26,7 @@
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_resources/2, get_resource/2, post_resource/1, delete_resource/1]).
 -export([resource/1]).
- 
+
 -include("im.hrl").
 
 %%----------------------------------------------------------------------
