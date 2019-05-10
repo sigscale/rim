@@ -45,7 +45,7 @@ parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = NodebDn,
-			description = "UMTS Telecommunication Nodes",
+			description = "UMTS NodeB",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
@@ -641,7 +641,7 @@ parse_tdd_hcr_attr1([{endElement, {_, "nsPlmnIdList"} = QName} | T1],
 	parse_tdd_hcr_attr1(T2, undefined, Acc);
 parse_tdd_hcr_attr1([{endElement,
 		{_, "cellCapabilityContainerTDD"} = QName} | T1], undefined, Acc) ->
-	% @todo cellCapabilityContainerTDD 
+	% @todo cellCapabilityContainerTDD
 	{[_ | _CellccTdd], T2} = pop(startElement, QName, T1),
 	parse_tdd_hcr_attr1(T2, undefined, Acc);
 parse_tdd_hcr_attr1([{endElement, {_, "timeSlotHCRList"} = QName} | T1],
@@ -898,7 +898,7 @@ parse_tdd_lcr_attr1([{endElement, {_, "nsPlmnIdList"} = QName} | T1],
 	parse_tdd_lcr_attr1(T2, undefined, Acc);
 parse_tdd_lcr_attr1([{endElement, {_, "cellCapabilityContainerTDD"} = QName} | T1],
 		undefined, Acc) ->
-	% @todo cellCapabilityContainerTDD 
+	% @todo cellCapabilityContainerTDD
 	{[_ | _CellccTdd], T2} = pop(startElement, QName, T1),
 	parse_tdd_lcr_attr1(T2, undefined, Acc);
 parse_tdd_lcr_attr1([{endElement, {_, "uarfcnLCRList"} = QName} | T1],
@@ -1348,7 +1348,7 @@ get_specification_ref(Name, Cache) ->
 -spec fraction1(Fraction) -> Fraction
 	when
 		Fraction :: string() | non_neg_integer().
-%% @doc CODEC for fraction with one decimal place. 
+%% @doc CODEC for fraction with one decimal place.
 %%
 %% Internally an integer value is used to represent a fraction.
 %% Externally a string representation of a decimal number, with

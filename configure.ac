@@ -93,7 +93,7 @@ AC_ERLANG_CHECK_LIB([zj], [], [AC_MSG_ERROR([zj was not found!])])
 
 ##
 ## Output:  create output files
-## 
+##
 
 AC_OUTPUT([Makefile src/Makefile include/Makefile ebin/Makefile
 		doc/Makefile priv/Makefile priv/schema/Makefile

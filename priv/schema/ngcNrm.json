@@ -1,0 +1,1484 @@
+{
+	"title": "NGC NM",
+	"description": "5G Core (5GC) Network Resource Model (NRM)",
+	"definitions": {
+		"amfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"amfIdentifier": {
+					"$ref": "#/definitions/AmfId"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"weightFactor": {
+					"$ref": "#/definitions/WeightFactor"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				},
+				"amfSet": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"required": [
+					"userLabel",
+					"pLMNIdList",
+					"amfIdentifier",
+					"sBIFqdn",
+					"sBIServiceList",
+					"weightFactor"
+				]
+			}
+		},
+		"smfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"tacList": {
+					"$ref": "#/definitions/TACList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"tacList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"upfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"tacList": {
+					"$ref": "#/definitions/TACList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"tacList"
+			]
+		},
+		"n3iwfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList"
+			]
+		},
+		"pcfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"ausfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"udmFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"udrFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"udsfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"nrfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"nSIIdList": {
+					"$ref": "#/definitions/NSIIdList"
+				},
+				"nFProfileList": {
+					"$ref": "#/definitions/NFProfileList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn"
+			]
+		},
+		"nssfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"nSIIdList": {
+					"$ref": "#/definitions/NSIIdList"
+				},
+				"nFProfileList": {
+					"$ref": "#/definitions/NFProfileList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn"
+			]
+		},
+		"smsfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"lmfFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList"
+			]
+		},
+		"ngeirFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"seppFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList"
+			]
+		},
+		"nwdafFunction": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/vnfParametersListType"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"sBIFqdn": {
+					"$ref": "#/definitions/SBIFqdn"
+				},
+				"sBIServiceList": {
+					"$ref": "#/definitions/SBIServiceList"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"userLabel",
+				"pLMNIdList",
+				"sBIFqdn",
+				"sBIServiceList"
+			]
+		},
+		"eP_N2": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N3": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N4": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N5": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N6": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N7": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N8": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N9": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N10": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N11": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N12": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N13": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N14": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N15": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N16": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N17": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N20": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N21": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N22": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_N26": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_SBI_X": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_SBI_IPX": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_S5C": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_S5U": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_Rx": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_MAP_SMSC": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_NLS": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"eP_NLG": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"userLabel": {
+					"type": "string"
+				},
+				"farEndEntity": {
+					"$ref": "genericNrm#/definitions/dn"
+				},
+				"localAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "nrNrm#/definitions/IPEndPoint"
+				}
+			}
+		},
+		"amfSet": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"tacList": {
+					"$ref": "#/definitions/TACList"
+				},
+				"amfSetId": {
+					"$ref": "#/definitions/AmfSetId"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"pLMNIdList",
+				"tACList",
+				"aMFSetId"
+			]
+		},
+		"amfRegion": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"plmnIdList": {
+					"$ref": "eutranNrm#/definitions/PlmnIdList"
+				},
+				"tacList": {
+					"$ref": "#/definitions/TACList"
+				},
+				"amfRegionId": {
+					"$ref": "#/definitions/AmfRegionId"
+				},
+				"nssai": {
+					"$ref": "#/definitions/NssaiList"
+				}
+			},
+			"required": [
+				"pLMNIdList",
+				"tACList",
+				"aMFRegionId"
+			]
+		},
+		"AMFIdentifier": {
+			"type": "object",
+			"description": "AMFIdentifier comprise of amfRegionId, amfSetId and amfPointer",
+			"properties": {
+				"amfRegionId": {
+					"$ref": "#/definitions/AmfRegionId"
+				},
+				"amfSetId": {
+					"$ref": "#/definitions/AmfSetId"
+				},
+				"amfPointer": {
+					"$ref": "#/definitions/AmfPointer"
+				}
+			}
+		},
+		"AmfRegionId": {
+			"type": "integer",
+			"description": "AmfRegionId is defined in TS 23.003",
+			"maximum": 255
+		},
+		"AmfSetId": {
+			"type": "string",
+			"description": "AmfSetId is defined in TS 23.003",
+			"maximum": 1023
+		},
+		"AmfPointer": {
+			"type": "integer",
+			"description": "AmfPointer is defined in TS 23.003",
+			"maximum": 63
+		},
+		"AmfSetMemberList": {
+			"type": "array",
+			"description": "List of DNs of AMF",
+			"items": {
+				"type": "string",
+				"description": "Identification of managed function."
+			}
+		},
+		"NFProfileList": {
+			"type": "array",
+			"description": "List of NF profile",
+			"items": {
+				"$ref": "#/definitions/NFProfile"
+			}
+		},
+		"NFProfile": {
+			"type": "object",
+			"description": "NF profile stored in NRF, defined in TS 29.510",
+			"properties": {
+				"nFInstanceId": {
+					"type": "string",
+					"description": "uuid of NF instance"
+				},
+				"nFType": {
+					"$ref": "#/definitions/NFType"
+				},
+				"nFStatus": {
+					"$ref": "#/definitions/NFStatus"
+				},
+				"plmn": {
+					"$ref": "nrNrm#/definitions/PlmnId"
+				},
+				"sNssais": {
+					"$ref": "nrNrm#/definitions/Snssai"
+				},
+				"fqdn": {
+					"$ref": "#/definitions/Fqdn"
+				},
+				"interPlmnFqdn": {
+					"$ref": "#/definitions/Fqdn"
+				},
+				"ipv4Addresses": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/Ipv4Addr"
+					}
+				},
+				"ipv6Addresses": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/Ipv6Addr"
+					}
+				},
+				"ipv6Prefixes": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/Ipv6Prefix"
+					}
+				},
+				"capacity": {
+					"$ref": "#/definitions/Capacity"
+				},
+				"udrInfo": {
+					"$ref": "#/definitions/UdrInfo"
+				},
+				"amfInfo": {
+					"$ref": "#/definitions/amfInfo"
+				},
+				"smfInfo": {
+					"$ref": "#/definitions/SmfInfo"
+				},
+				"upfInfo": {
+					"$ref": "#/definitions/UpfInfo"
+				},
+				"nfServices": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/NFService"
+					}
+				}
+			}
+		},
+		"NFService": {
+			"type": "object",
+			"description": "NF Service is defined in TS 29.510",
+			"properties": {
+				"serviceInstanceId": {
+					"type": "string"
+				},
+				"serviceName": {
+					"type": "string"
+				},
+				"version": {
+					"type": "string"
+				},
+				"schema": {
+					"type": "string"
+				},
+				"fqdn": {
+					"$ref": "#/definitions/Fqdn"
+				},
+				"interPlmnFqdn": {
+					"$ref": "#/definitions/Fqdn"
+				},
+				"ipEndPoints": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/IpEndPoint"
+					}
+				},
+				"apiPrfix": {
+					"type": "string"
+				},
+				"defaultNotificationSubscriptions": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/DefaultNotificationSubscriptions"
+					}
+				},
+				"allowedPlmns": {
+					"$ref": "nrNrm#/definitions/PlmnId"
+				},
+				"allowedNfTypes": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/NFType"
+					}
+				},
+				"allowedNssais": {
+					"type": "array",
+					"item": {
+						"$ref": "#/definitions/Snssai"
+					}
+				},
+				"capacity": {
+					"$ref": "#/definitions/Capacity"
+				},
+				"supportedFeatures": {
+					"$ref": "#/definitions/SupportedFeatures"
+				}
+			}
+		},
+		"NFType": {
+			"type": "string",
+			"description": " NF name defined in TS 23.501",
+			"enum": [
+				"NRF",
+				"UDM",
+				"AMF",
+				"SMF",
+				"AUSF",
+				"NEF",
+				"PCF",
+				"SMSF",
+				"NSSF",
+				"UDR",
+				"LMF",
+				"GMLC",
+				"5G_EIR",
+				"SEPP",
+				"UPF",
+				"N3IWF",
+				"AF",
+				"UDSF",
+				"DN"
+			]
+		},
+		"Fqdn": {
+			"type": "string"
+		},
+		"IpEndPoint": {
+			"type": "object",
+			"properties": {
+				"ipv4Address": {
+					"$ref": "#/definitions/Ipv4Addr"
+				},
+				"ipv6Address": {
+					"$ref": "#/definitions/Ipv6Addr"
+				},
+				"ipv6Prefix": {
+					"$ref": "#/definitions/Ipv6Prefix"
+				},
+				"transport": {
+					"$ref": "#/definitions/TransportProtocol"
+				},
+				"port": {
+					"type": "integer"
+				}
+			}
+		},
+		"UdrInfo": {
+			"type": "object",
+			"properties": {
+				"supiRanges": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SupiRange"
+					}
+				}
+			}
+		},
+		"SupiRange": {
+			"type": "object",
+			"properties": {
+				"start": {
+					"type": "string"
+				},
+				"end": {
+					"type": "string"
+				},
+				"pattern": {
+					"type": "string"
+				}
+			}
+		},
+		"AmfInfo": {
+			"type": "object",
+			"properties": {
+				"amfSetId": {
+					"$ref": "#/definitions/AmfSetId"
+				}
+			}
+		},
+		"SmfInfo": {
+			"type": "object",
+			"properties": {
+				"dnnList": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Dnn"
+					}
+				}
+			}
+		},
+		"UpfInfo": {
+			"type": "object",
+			"properties": {
+				"sNssaiUpfInfoList": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SnssaiUpfInfoItem"
+					}
+				}
+			}
+		},
+		"SnssaiUpfInfoItem": {
+			"type": "object",
+			"properties": {
+				"sNssai": {
+					"$ref": "#/definitions/Snssai"
+				},
+				"dnnUpfInfoList": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/DnnUpfInfoListInfo"
+					}
+				}
+			}
+		},
+		"DnnUpfInfoItem": {
+			"type": "object",
+			"properties": {
+				"dnn": {
+					"$ref": "#/definitions/Dnn"
+				}
+			}
+		},
+		"DefaultNotificationSubscription": {
+			"type": "object",
+			"properties": {
+				"notificationType": {
+					"$ref": "#/definitions/NotificationType"
+				},
+				"callbackUri": {
+					"$ref": "#/definitions/Uri"
+				},
+				"n1MessageClass": {
+					"$ref": "#/definitions/N1MessageClass"
+				},
+				"n2InformationClass": {
+					"$ref": "#/definitions/n2InformationClass"
+				}
+			}
+		},
+		"NotificationType": {
+			"type": "string",
+			"description": "any of enumrated value",
+			"enum": [
+				"N1_MESSAGES",
+				"N2_INFORMATION",
+				"LOCATION_NOTIFICATION"
+			]
+		},
+		"TranportProtocol": {
+			"type": "string",
+			"description": "any of enumrated value",
+			"enum": [
+				"TCP"
+			]
+		},
+		"NFStatus": {
+			"type": "string",
+			"description": "any of enumrated value",
+			"enum": [
+				"REGISTERED",
+				"SUSPENDED"
+			]
+		},
+		"NFRegistrationData": {
+			"type": "object",
+			"properties": {
+				"heartBeatTimer": {
+					"type": "integer"
+				},
+				"nfProfile": {
+					"$ref": "#/definitions/NFProfile"
+				}
+			}
+		},
+		"NSIIdList": {
+			"type": "array",
+			"items": {
+				"nSIId": {
+					"$ref": "#/definitions/NSIId"
+				}
+			}
+		},
+		"NSIId": {
+			"type": "string",
+			"description": "NSI Id is defined in TS 29.531"
+		},
+		"NrCellId": {
+			"type": "string"
+		},
+		"Sst": {
+			"type": "integer",
+			"maximum": 255
+		},
+		"SBIFqdn": {
+			"$ref": "#/definitions/Fqdn"
+		},
+		"SBIServiceList": {
+			"type": "array",
+			"item": {
+				"$ref": "#/definitions/NFService"
+			}
+		},
+		"TACList": {
+			"type": "array",
+			"item": {
+				"$ref": "nrNrm#/definitions/NrTac"
+			}
+		},
+		"WeightFactor": {
+			"type": "integer"
+		}
+	}
+}

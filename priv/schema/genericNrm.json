@@ -43,7 +43,7 @@
 					"OAM_AND_P",
 					"Other"
 				]
-			}			
+			}
 		},
 		"LinkListType": {
 			"type": "array",

@@ -213,6 +213,6 @@ class catalogList extends PolymerElement {
 			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
-} 
+}
 
 window.customElements.define('catalog-list', catalogList);

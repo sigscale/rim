@@ -1,8 +1,8 @@
 {
-	"name": "NetworkSlice",
-	"description": "5G Core (5GC) Network Slice resource function specification",
-	"@type": "NetworkSliceSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSliceSpec",
+	"name": "NetworkSliceSubnet",
+	"description": "5G Core (5GC) Network Slice Subnet resource function specification",
+	"@type": "NetworkSliceSubnetSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSliceSubnetSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -13,8 +13,8 @@
 	"isBundle": false,
 	"category": "Core",
 	"targetResourceSchema": {
-		"@type": "NetworkSlice",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSlice"
+		"@type": "NetworkSliceSubnet",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSliceSubnet"
 	},
 	"relatedParty": [
 		{
@@ -51,26 +51,32 @@
 			"valueType": "string"
 		},
 		{
-			"name": "nSSIId",
-			"description": "This RDN uniquely identifies the NetworkSliceSubnet",
-			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"name": "mFIdList",
+			"description": "",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "operationalState",
-			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
-			"valueType": "OperationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
+			"name": "constituentNSSIIdList",
+			"description": "",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "administrativeState",
-			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
-			"valueType": "AdministrativeStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
+			"name": "state",
+			"description": "",
+			"valueType": "OperationalState",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalState"
 		},
 		{
-			"name": "serviceProfileList",
-			"description": "List of ServiceProfile supported by the network slice",
+			"name": "nsInfo",
+			"description": "",
+			"valueType": "NsInfo",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/NsInfo"
+		},
+		{
+			"name": "sliceProfileList",
+			"description": "",
 			"valueType": "ServiceProfileList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
 		},
@@ -78,7 +84,7 @@
 			"name": "sst",
 			"description": "Slice/service type of the network slice (3GPP 23.501 5.15.2)",
 			"valueType": "Sst",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/Sst"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/Sst"
 		}
 	]
 }

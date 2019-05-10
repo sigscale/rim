@@ -1,26 +1,26 @@
 {
-	"title": "SON Policy NRM", 
+	"title": "SON Policy NRM",
 	"description": "Self Organizing Networks (SON) Policy Network Resource Model (NRM)",
 	"definitions": {
 		"CacRange": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 10000 
+			"maximum": 10000
 		},
 		"RelativeCellLoadRange": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 10000 
+			"maximum": 10000
 		},
 		"TimeDurationRange": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 900 
+			"maximum": 900
 		},
 		"RateRange": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 100 
+			"maximum": 100
 		},
 		"ROProbability": {
 			"type": "integer",
@@ -149,7 +149,7 @@
 		"AccessDelayRange": {
 			"type": "integer",
 			"minimum": 10,
-			"maximum": 560 
+			"maximum": 560
 		},
 		"AccessDelayProbabilityROTarget": {
 			"type": "object",
@@ -174,7 +174,7 @@
 		"AccessNumberAttemptRange": {
 			"type": "integer",
 			"minimum": 1,
-			"maximum": 200 
+			"maximum": 200
 		},
 		"AccessProbabilityROTarget": {
 			"type": "object",
@@ -225,7 +225,7 @@
 		"MaximumDeviationHoTriggerType": {
 			"type": "integer",
 			"minimum": 1,
-			"maximum": 96 
+			"maximum": 96
 		},
 		"MinimumTimeBetweenHoTriggerChangeType": {
 			"type": "integer",
@@ -247,7 +247,7 @@
 		"CellCovStateType": {
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 15 
+			"maximum": 15
 		},
 		"Beamwidth": {
 			"type": "integer",

@@ -270,8 +270,8 @@ install8(Nodes, Acc) ->
 		umts_rnc, umts_nodeb, umts_cell_fdd,
 		umts_cell_tdd_lcr, umts_cell_tdd_hcr,
 		lte_enb, lte_cell_fdd, lte_cell_tdd,
-		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up,
-		nr_cell_cu, nr_cell_du, ngc_slice,
+		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up, nr_sector_carrier,
+		nr_cell_cu, nr_cell_du, ngc_slice, ngc_slice_subnet,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
 		core_msc, core_mgw, core_sgsn, core_ggsn,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf],
@@ -463,7 +463,7 @@ stop(_State) ->
 		Removed :: [Par],
 		Par :: atom(),
 		Val :: atom().
-%% @doc Called after a code replacement, if there are any 
+%% @doc Called after a code replacement, if there are any
 %% 	changes to the configuration parameters.
 %%
 config_change(_Changed, _New, _Removed) ->

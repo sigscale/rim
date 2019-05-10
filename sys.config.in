@@ -34,7 +34,7 @@
                   mod_disk_log]},
             {mime_types,
                   [{"html", "text/html"},
-                  {"css", "test/css"},
+                  {"css", "text/css"},
                   {"js", "application/javascript"},
                   {"json", "application/json"},
                   {"csv", "text/csv"}]},

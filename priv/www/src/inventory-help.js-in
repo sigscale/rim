@@ -52,7 +52,7 @@ class inventoryHelp extends PolymerElement {
 				</a>
 			</paper-icon-item>
 			<paper-icon-item class="menu-trigger menuitem">
-				<iron-icon icon="my-icons:api" item-icon></iron-icon> 
+				<iron-icon icon="my-icons:api" item-icon></iron-icon>
 				<a target="_blank" href="/doc/index.html">
 					API Docs
 				</a>

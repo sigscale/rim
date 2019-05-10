@@ -26,7 +26,7 @@
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_categories/2, get_category/2, post_category/1, delete_category/1]).
 -export([category/1]).
- 
+
 -include("im.hrl").
 
 %%----------------------------------------------------------------------
