@@ -19,7 +19,6 @@ A web front end built with Google [Polymer](https://www.polymer-project.org)
 web components for
 [material design](https://material.io/guidelines/material-design/introduction.html) 
 provides simple guided management of Resource Catalog and Inventory.
-![screenshot](https://raw.githubusercontent.com/sigscale/rim/master/doc/menu.png)
 ![screenshot](https://raw.githubusercontent.com/sigscale/rim/master/doc/specifications.png)
 
 ### Application Programming Interfaces (API)
