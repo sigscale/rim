@@ -29,11 +29,16 @@ most CSPs shall want to integrate Operations & Business Support Systems
 #### [REST](https://en.wikipedia.org/wiki/Representational_state_transfer)
 [TM Forum](https://www.tmforum.org)
 [Open APIs](https://www.tmforum.org/open-apis/) are supported including:
+
 |Title                         | Specification |
 |------------------------------|---------------|
 |Resource Catalog Management   | [TMF634](https://projects.tmforum.org/wiki/download/attachments/90514804/TMF634_Resource_Catalog_Management_API_REST_Specification_R17.0.1.pdf) |
 |Resource Inventory Management | [TMF634](https://projects.tmforum.org/wiki/download/attachments/90514806/TMF639_Resource_Inventory_Management_REST_API_Specification_R17.0.1.pdf) |
-Through TM Forum Open API polymorphic extension pattern new sub classes are defined:
+
+##### Class Model
+Through TM Forum Open API polymorphic extension pattern new sub
+classes are defined as shown in the table below.
+
 |Class Name             |
 |-----------------------|
 |AMFFunctionSpec        |
