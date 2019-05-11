@@ -1,17 +1,15 @@
-# SigScale Inventory Management (sigscale_im)
+# SigScale Resource Inventory Management (RIM)
 
 ## Prerequisites
 	Install erlang(>18)
 	$ sudo apt install erlang-dev erlang-snmp erlang-inets erlang-parsetools
-	Install nodejs, nopm and polymer-cli (Ubuntu 16.04)
-	$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-	$ sudo apt install nodejs
-	$ sudo npm install -g --unsafe-perm polymer-cli
+	$ sudo apt install nodejs yarn
+	$ sudo yarn install -g --unsafe-perm polymer-cli
 
 ## Building
-	$ mkdir ../sigscale_im.build  (create build directory)
-	$ cd ../sigscale_im.build     (change working directory for build)
-	$ ../sigscale_im/configure    (creates Makefiles)
+	$ mkdir ../rim.build  (create build directory)
+	$ cd ../rim.build     (change working directory for build)
+	$ ../rim/configure    (creates Makefiles)
 	$ make                        (builds entire package)
 	$ make check                  (run dialyzer and common_test)
 
@@ -23,6 +21,6 @@
 	$ make distclean            (removes files created with configure also)
 
 ## Options
-	$ ../sigscale_im/configure --enable-debug
-	$ ../sigscale_im/configure --with-ssl=/opt/local
+	$ ../rim/configure --enable-debug
+	$ ../rim/configure --with-ssl=/opt/local
 
