@@ -25,6 +25,7 @@ class inventoryList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="inventoryGrid"
+					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<template class="row-details">
 					<dl class="details">
@@ -141,6 +142,10 @@ class inventoryList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			etag: {
 				type: String,
 				value: null
@@ -330,6 +335,7 @@ class inventoryList extends PolymerElement {
 			callback([]);
 		}
 		if(ajax.loading) {
+console.log(ajax.loading);
 			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
 				var endRange = startRange + params.pageSize - 1;
@@ -342,6 +348,7 @@ class inventoryList extends PolymerElement {
 				return ajax.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
+console.log(ajax.loading);
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
 			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;

@@ -23,7 +23,8 @@ class catalogList extends PolymerElement {
 			<style include="style-element">
 			</style>
 			<vaadin-grid
-					id="catalogGrid">
+					id="catalogGrid"
+					loading="{{loading}}">
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
@@ -117,6 +118,10 @@ class catalogList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			etag: {
 				type: String,
 				value: null

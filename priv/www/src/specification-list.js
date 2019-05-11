@@ -24,6 +24,7 @@ class specificationList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="specificationGrid"
+					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<vaadin-grid-column width="8ex" flex-grow="2">
 					<template class="header">
@@ -164,6 +165,10 @@ class specificationList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			etag: {
 				type: String,
 				value: null
