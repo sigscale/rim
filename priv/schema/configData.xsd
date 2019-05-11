@@ -5,7 +5,7 @@
 -->
 <schema
 		xmlns="http://www.w3.org/2001/XMLSchema"
-   	xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:gr="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#genericRanNrm"
 		xmlns:rn="http://www.3gpp.org/ftp/specs/archive/28_series/28.663#repeaterNrm"
 		xmlns:gn="http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"

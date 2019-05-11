@@ -122,7 +122,6 @@ get_resources(Method, Query, Filters, Headers) ->
 			query_start(Method, Query, Filters, undefined, undefined)
 	end.
 
-
 -spec get_resource(Id, Query) -> Result
 	when
 		Id :: string(),
@@ -622,73 +621,73 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 
 %% @hidden
 sorts(Query) ->
-   sorts(string:tokens(Query, [$,]), []).
+	sorts(string:tokens(Query, [$,]), []).
 %% @hidden
 sorts(["id" | T], Acc) ->
-   sorts(T, [#resource.id | Acc]);
+	sorts(T, [#resource.id | Acc]);
 sorts(["-id" | T], Acc) ->
-   sorts(T, [-#resource.id | Acc]);
+	sorts(T, [-#resource.id | Acc]);
 sorts(["href" | T], Acc) ->
-   sorts(T, [#resource.href | Acc]);
+	sorts(T, [#resource.href | Acc]);
 sorts(["-href" | T], Acc) ->
-   sorts(T, [-#resource.href | Acc]);
+	sorts(T, [-#resource.href | Acc]);
 sorts(["publicIdentifier" | T], Acc) ->
-   sorts(T, [#resource.public_id | Acc]);
+	sorts(T, [#resource.public_id | Acc]);
 sorts(["-publicIdentifier" | T], Acc) ->
-   sorts(T, [-#resource.public_id | Acc]);
+	sorts(T, [-#resource.public_id | Acc]);
 sorts(["name" | T], Acc) ->
-   sorts(T, [#resource.name | Acc]);
+	sorts(T, [#resource.name | Acc]);
 sorts(["-name" | T], Acc) ->
-   sorts(T, [-#resource.name | Acc]);
+	sorts(T, [-#resource.name | Acc]);
 sorts(["description" | T], Acc) ->
-   sorts(T, [#resource.description | Acc]);
+	sorts(T, [#resource.description | Acc]);
 sorts(["-description" | T], Acc) ->
-   sorts(T, [-#resource.description | Acc]);
+	sorts(T, [-#resource.description | Acc]);
 sorts(["category" | T], Acc) ->
-   sorts(T, [#resource.category | Acc]);
+	sorts(T, [#resource.category | Acc]);
 sorts(["-category" | T], Acc) ->
-   sorts(T, [-#resource.category | Acc]);
+	sorts(T, [-#resource.category | Acc]);
 sorts(["@type" | T], Acc) ->
-   sorts(T, [#resource.class_type | Acc]);
+	sorts(T, [#resource.class_type | Acc]);
 sorts(["-@type" | T], Acc) ->
-   sorts(T, [-#resource.class_type | Acc]);
+	sorts(T, [-#resource.class_type | Acc]);
 sorts(["@baseType" | T], Acc) ->
-   sorts(T, [#resource.base_type | Acc]);
+	sorts(T, [#resource.base_type | Acc]);
 sorts(["-@baseType" | T], Acc) ->
-   sorts(T, [-#resource.base_type | Acc]);
+	sorts(T, [-#resource.base_type | Acc]);
 sorts(["@schemaLocation" | T], Acc) ->
-   sorts(T, [#resource.schema | Acc]);
+	sorts(T, [#resource.schema | Acc]);
 sorts(["-@schemaLocation" | T], Acc) ->
-   sorts(T, [-#resource.schema | Acc]);
+	sorts(T, [-#resource.schema | Acc]);
 sorts(["lifecycleStatus" | T], Acc) ->
-   sorts(T, [#resource.status | Acc]);
+	sorts(T, [#resource.status | Acc]);
 sorts(["-lifecycleStatus" | T], Acc) ->
-   sorts(T, [-#resource.status | Acc]);
+	sorts(T, [-#resource.status | Acc]);
 sorts(["version" | T], Acc) ->
-   sorts(T, [#resource.version | Acc]);
+	sorts(T, [#resource.version | Acc]);
 sorts(["-version" | T], Acc) ->
-   sorts(T, [-#resource.version | Acc]);
+	sorts(T, [-#resource.version | Acc]);
 sorts(["startDateTime" | T], Acc) ->
-   sorts(T, [#resource.start_date | Acc]);
+	sorts(T, [#resource.start_date | Acc]);
 sorts(["-startDateTime" | T], Acc) ->
-   sorts(T, [-#resource.start_date | Acc]);
+	sorts(T, [-#resource.start_date | Acc]);
 sorts(["endDateTime" | T], Acc) ->
-   sorts(T, [#resource.end_date | Acc]);
+	sorts(T, [#resource.end_date | Acc]);
 sorts(["-endDateTime" | T], Acc) ->
-   sorts(T, [-#resource.end_date | Acc]);
+	sorts(T, [-#resource.end_date | Acc]);
 sorts(["lastUpdate" | T], Acc) ->
-   sorts(T, [#resource.last_modified | Acc]);
+	sorts(T, [#resource.last_modified | Acc]);
 sorts(["-lastUpdate" | T], Acc) ->
-   sorts(T, [-#resource.last_modified | Acc]);
+	sorts(T, [-#resource.last_modified | Acc]);
 sorts([], Acc) ->
-   lists:reverse(Acc).
+	lists:reverse(Acc).
 
--spec parse_filter(Query) -> Result 
+-spec parse_filter(Query) -> Result
 	when
 		Query :: term(),
 		Result :: ets:match_spec().
 %% @doc Create `[MatchHead, MatchConditions]' from `Query'.
-%% 	MatchHead = ets:match_pattern() 
+%% 	MatchHead = ets:match_pattern()
 %%		MatchConditions = [tuple()]
 %% @private
 parse_filter(Query) ->
@@ -738,7 +737,7 @@ parse_filter([{notexact, "id", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "id", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$1', []), 
+	NewMatchConditions = in(In, '$1', []),
 	NewMatchHead = MatchHead#resource{id = '$1'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "href", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -773,7 +772,7 @@ parse_filter([{notexact, "href", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "href", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$2', []), 
+	NewMatchConditions = in(In, '$2', []),
 	NewMatchHead = MatchHead#resource{href = '$2'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "publicIdentifier", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -808,7 +807,7 @@ parse_filter([{notexact, "publicIdentifier", Name} | T], Cond, MatchHead, MatchC
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "publicIdentifier", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$3', []), 
+	NewMatchConditions = in(In, '$3', []),
 	NewMatchHead = MatchHead#resource{public_id = '$3'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "name", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -843,7 +842,7 @@ parse_filter([{notexact, "name", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "name", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$4', []), 
+	NewMatchConditions = in(In, '$4', []),
 	NewMatchHead = MatchHead#resource{name = '$4'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "description", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -878,7 +877,7 @@ parse_filter([{notexact, "description", Name} | T], Cond, MatchHead, MatchCondit
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "description", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$5', []), 
+	NewMatchConditions = in(In, '$5', []),
 	NewMatchHead = MatchHead#resource{description = '$5'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "category", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -913,7 +912,7 @@ parse_filter([{notexact, "category", Name} | T], Cond, MatchHead, MatchCondition
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "category", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$6', []), 
+	NewMatchConditions = in(In, '$6', []),
 	NewMatchHead = MatchHead#resource{category = '$6'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "@type", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -948,7 +947,7 @@ parse_filter([{notexact, "@type", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "@type", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$7', []), 
+	NewMatchConditions = in(In, '$7', []),
 	NewMatchHead = MatchHead#resource{class_type = '$7'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "@baseType", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -983,7 +982,7 @@ parse_filter([{notexact, "@baseType", Name} | T], Cond, MatchHead, MatchConditio
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "@baseType", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$8', []), 
+	NewMatchConditions = in(In, '$8', []),
 	NewMatchHead = MatchHead#resource{base_type = '$8'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "@schemaLocation", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -1018,7 +1017,7 @@ parse_filter([{notexact, "@schemaLocation", Name} | T], Cond, MatchHead, MatchCo
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "@schemaLocation", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$9', []), 
+	NewMatchConditions = in(In, '$9', []),
 	NewMatchHead = MatchHead#resource{schema = '$9'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "lifecycleState", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -1053,7 +1052,7 @@ parse_filter([{notexact, "lifecycleState", Name} | T], Cond, MatchHead, MatchCon
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "lifecycleState", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$10', []), 
+	NewMatchConditions = in(In, '$10', []),
 	NewMatchHead = MatchHead#resource{status = '$10'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "version", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -1088,7 +1087,7 @@ parse_filter([{notexact, "version", Name} | T], Cond, MatchHead, MatchConditions
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "version", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$11', []), 
+	NewMatchConditions = in(In, '$11', []),
 	NewMatchHead = MatchHead#resource{version = '$11'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([], all, MatchHead, MatchConditions) ->

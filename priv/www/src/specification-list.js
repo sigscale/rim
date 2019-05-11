@@ -403,6 +403,6 @@ class specificationList extends PolymerElement {
 		var grid = this.shadowRoot.getElementById('specificationGrid');
 		grid.size = 0;
 	}
-} 
+}
 
 window.customElements.define('specification-list', specificationList);

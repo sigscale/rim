@@ -752,77 +752,77 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 
 %% @hidden
 sorts(Query) ->
-   sorts(string:tokens(Query, [$,]), []).
+	sorts(string:tokens(Query, [$,]), []).
 %% @hidden
 sorts(["id" | T], Acc) ->
-   sorts(T, [#specification.id | Acc]);
+	sorts(T, [#specification.id | Acc]);
 sorts(["-id" | T], Acc) ->
-   sorts(T, [-#specification.id | Acc]);
+	sorts(T, [-#specification.id | Acc]);
 sorts(["href" | T], Acc) ->
-   sorts(T, [#specification.href | Acc]);
+	sorts(T, [#specification.href | Acc]);
 sorts(["-href" | T], Acc) ->
-   sorts(T, [-#specification.href | Acc]);
+	sorts(T, [-#specification.href | Acc]);
 sorts(["name" | T], Acc) ->
-   sorts(T, [#specification.name | Acc]);
+	sorts(T, [#specification.name | Acc]);
 sorts(["-name" | T], Acc) ->
-   sorts(T, [-#specification.name | Acc]);
+	sorts(T, [-#specification.name | Acc]);
 sorts(["description" | T], Acc) ->
-   sorts(T, [#specification.description | Acc]);
+	sorts(T, [#specification.description | Acc]);
 sorts(["-description" | T], Acc) ->
-   sorts(T, [-#specification.description | Acc]);
+	sorts(T, [-#specification.description | Acc]);
 sorts(["@type" | T], Acc) ->
-   sorts(T, [#specification.class_type | Acc]);
+	sorts(T, [#specification.class_type | Acc]);
 sorts(["-@type" | T], Acc) ->
-   sorts(T, [-#specification.class_type | Acc]);
+	sorts(T, [-#specification.class_type | Acc]);
 sorts(["@baseType" | T], Acc) ->
-   sorts(T, [#specification.base_type | Acc]);
+	sorts(T, [#specification.base_type | Acc]);
 sorts(["-@baseType" | T], Acc) ->
-   sorts(T, [-#specification.base_type | Acc]);
+	sorts(T, [-#specification.base_type | Acc]);
 sorts(["@schemaLocation" | T], Acc) ->
-   sorts(T, [#specification.schema | Acc]);
+	sorts(T, [#specification.schema | Acc]);
 sorts(["-@schemaLocation" | T], Acc) ->
-   sorts(T, [-#specification.schema | Acc]);
+	sorts(T, [-#specification.schema | Acc]);
 sorts(["lifecycleStatus" | T], Acc) ->
-   sorts(T, [#specification.status | Acc]);
+	sorts(T, [#specification.status | Acc]);
 sorts(["-lifecycleStatus" | T], Acc) ->
-   sorts(T, [-#specification.status | Acc]);
+	sorts(T, [-#specification.status | Acc]);
 sorts(["version" | T], Acc) ->
-   sorts(T, [#specification.version | Acc]);
+	sorts(T, [#specification.version | Acc]);
 sorts(["-version" | T], Acc) ->
-   sorts(T, [-#specification.version | Acc]);
+	sorts(T, [-#specification.version | Acc]);
 sorts(["startDateTime" | T], Acc) ->
-   sorts(T, [#specification.start_date | Acc]);
+	sorts(T, [#specification.start_date | Acc]);
 sorts(["-startDateTime" | T], Acc) ->
-   sorts(T, [-#specification.start_date | Acc]);
+	sorts(T, [-#specification.start_date | Acc]);
 sorts(["endDateTime" | T], Acc) ->
-   sorts(T, [#specification.end_date | Acc]);
+	sorts(T, [#specification.end_date | Acc]);
 sorts(["-endDateTime" | T], Acc) ->
-   sorts(T, [-#specification.end_date | Acc]);
+	sorts(T, [-#specification.end_date | Acc]);
 sorts(["lastUpdate" | T], Acc) ->
-   sorts(T, [#specification.last_modified | Acc]);
+	sorts(T, [#specification.last_modified | Acc]);
 sorts(["-lastUpdate" | T], Acc) ->
-   sorts(T, [-#specification.last_modified | Acc]);
+	sorts(T, [-#specification.last_modified | Acc]);
 sorts(["isBundle" | T], Acc) ->
-   sorts(T, [#specification.bundle | Acc]);
+	sorts(T, [#specification.bundle | Acc]);
 sorts(["-isBundle" | T], Acc) ->
-   sorts(T, [-#specification.bundle | Acc]);
+	sorts(T, [-#specification.bundle | Acc]);
 sorts(["category" | T], Acc) ->
-   sorts(T, [#specification.category | Acc]);
+	sorts(T, [#specification.category | Acc]);
 sorts(["-category" | T], Acc) ->
-   sorts(T, [-#specification.category | Acc]);
+	sorts(T, [-#specification.category | Acc]);
 sorts(["targetResourceSchema" | T], Acc) ->
-   sorts(T, [#specification.target_schema | Acc]);
+	sorts(T, [#specification.target_schema | Acc]);
 sorts(["-targetResourceSchema" | T], Acc) ->
-   sorts(T, [-#specification.target_schema | Acc]);
+	sorts(T, [-#specification.target_schema | Acc]);
 sorts([], Acc) ->
-   lists:reverse(Acc).
+	lists:reverse(Acc).
 
--spec parse_filter(Query) -> Result 
+-spec parse_filter(Query) -> Result
 	when
 		Query :: term(),
 		Result :: ets:match_spec().
 %% @doc Create `[MatchHead, MatchConditions]' from `Query'.
-%% 	MatchHead = ets:match_pattern() 
+%% 	MatchHead = ets:match_pattern()
 %%		MatchConditions = [tuple()]
 %% @private
 parse_filter(Query) ->
@@ -872,7 +872,7 @@ parse_filter([{notexact, "id", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "id", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$1', []), 
+	NewMatchConditions = in(In, '$1', []),
 	NewMatchHead = MatchHead#specification{id = '$1'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "href", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -907,7 +907,7 @@ parse_filter([{notexact, "href", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "href", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$2', []), 
+	NewMatchConditions = in(In, '$2', []),
 	NewMatchHead = MatchHead#specification{href = '$2'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "name", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -942,7 +942,7 @@ parse_filter([{notexact, "name", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "name", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$3', []), 
+	NewMatchConditions = in(In, '$3', []),
 	NewMatchHead = MatchHead#specification{name = '$3'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "description", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -977,7 +977,7 @@ parse_filter([{notexact, "description", Name} | T], Cond, MatchHead, MatchCondit
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "description", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$4', []), 
+	NewMatchConditions = in(In, '$4', []),
 	NewMatchHead = MatchHead#specification{description = '$4'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "@type", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -1012,7 +1012,7 @@ parse_filter([{notexact, "@type", Name} | T], Cond, MatchHead, MatchConditions)
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "@type", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$5', []), 
+	NewMatchConditions = in(In, '$5', []),
 	NewMatchHead = MatchHead#specification{class_type = '$5'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{exact, "lifecycleStatus", "In Study"} | T], all, MatchHead, MatchConditions) ->
@@ -1081,7 +1081,7 @@ parse_filter([{notexact, "lifecycleStatus", "Obsolete"} | T], Cond, MatchHead, M
 	parse_filter(T, Cond, MatchHead#specification{status = '$8'}, NewMatchConditions);
 parse_filter([{in, "lifecycleStatus", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$8', []), 
+	NewMatchConditions = in(In, '$8', []),
 	NewMatchHead = MatchHead#specification{status = '$8'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "category", [Like]} | T], Cond, MatchHead, MatchConditions)
@@ -1116,7 +1116,7 @@ parse_filter([{notexact, "category", Name} | T], Cond, MatchHead, MatchCondition
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "category", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$14', []), 
+	NewMatchConditions = in(In, '$14', []),
 	NewMatchHead = MatchHead#specification{category = '$14'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{exact, "isBundle", "true"} | T], all, MatchHead, MatchConditions) ->
