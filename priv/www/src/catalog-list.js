@@ -73,7 +73,7 @@ class catalogList extends PolymerElement {
 									path="catalogClass"
 									value="{{_filterCatalogClass}}">
 								<input
-										slot="Filter"
+										slot="filter"
 										placeholder="Class
 										value="{{_filterCatalogClass::input}}"
 										focus-target>
@@ -92,7 +92,7 @@ class catalogList extends PolymerElement {
 									path="catalogStatus"
 									value="{{_filterCatalogStatus}}">
 								<input
-										slot="Filter"
+										slot="filter"
 										placeholder="Status"
 										value="{{_filterCatalogStatus::input}}"
 										focus-target>
