@@ -18,7 +18,7 @@ and [3GPP](http://www.3gpp.org) Network Resource Models
 A web front end built with Google [Polymer](https://www.polymer-project.org)
 web components for
 [material design](https://material.io/guidelines/material-design/introduction.html) 
-provides simple guided management of Resource Catalog and Inventory.
+provides Resource Catalog and Inventory views.
 ![screenshot](https://raw.githubusercontent.com/sigscale/rim/master/doc/specifications.png)
 
 ### Application Programming Interfaces (API)
@@ -33,7 +33,7 @@ most CSPs shall want to integrate Operations & Business Support Systems
 |Title                         | Specification |
 |------------------------------|---------------|
 |Resource Catalog Management   | [TMF634](https://projects.tmforum.org/wiki/download/attachments/90514804/TMF634_Resource_Catalog_Management_API_REST_Specification_R17.0.1.pdf) |
-|Resource Inventory Management | [TMF634](https://projects.tmforum.org/wiki/download/attachments/90514806/TMF639_Resource_Inventory_Management_REST_API_Specification_R17.0.1.pdf) |
+|Resource Inventory Management | [TMF639](https://projects.tmforum.org/wiki/download/attachments/90514806/TMF639_Resource_Inventory_Management_REST_API_Specification_R17.0.1.pdf) |
 
 ##### Class Model
 Through TM Forum Open API polymorphic extension pattern new sub
