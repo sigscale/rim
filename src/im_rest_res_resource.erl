@@ -667,14 +667,6 @@ sorts(["version" | T], Acc) ->
 	sorts(T, [#resource.version | Acc]);
 sorts(["-version" | T], Acc) ->
 	sorts(T, [-#resource.version | Acc]);
-sorts(["startDateTime" | T], Acc) ->
-	sorts(T, [#resource.start_date | Acc]);
-sorts(["-startDateTime" | T], Acc) ->
-	sorts(T, [-#resource.start_date | Acc]);
-sorts(["endDateTime" | T], Acc) ->
-	sorts(T, [#resource.end_date | Acc]);
-sorts(["-endDateTime" | T], Acc) ->
-	sorts(T, [-#resource.end_date | Acc]);
 sorts(["lastUpdate" | T], Acc) ->
 	sorts(T, [#resource.last_modified | Acc]);
 sorts(["-lastUpdate" | T], Acc) ->

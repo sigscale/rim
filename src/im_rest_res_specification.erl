@@ -790,14 +790,6 @@ sorts(["version" | T], Acc) ->
 	sorts(T, [#specification.version | Acc]);
 sorts(["-version" | T], Acc) ->
 	sorts(T, [-#specification.version | Acc]);
-sorts(["startDateTime" | T], Acc) ->
-	sorts(T, [#specification.start_date | Acc]);
-sorts(["-startDateTime" | T], Acc) ->
-	sorts(T, [-#specification.start_date | Acc]);
-sorts(["endDateTime" | T], Acc) ->
-	sorts(T, [#specification.end_date | Acc]);
-sorts(["-endDateTime" | T], Acc) ->
-	sorts(T, [-#specification.end_date | Acc]);
 sorts(["lastUpdate" | T], Acc) ->
 	sorts(T, [#specification.last_modified | Acc]);
 sorts(["-lastUpdate" | T], Acc) ->
