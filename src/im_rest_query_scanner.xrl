@@ -1,6 +1,6 @@
 %%% vim: ts=3: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018-2019 SigScale Global Inc.
+%%% @copyright 2018 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 %%% (<a href="https://projects.tmforum.org/jira/browse/AP-832">AP-832</a>).
 
 Definitions.
-WORD = [^\.\[\]\{\}\,\"\*=<>]*
+WORD = ([^\.\[\]\{\}\,\;\"\*=<>]|\\.)*
 
 Rules.
 \.exact= : {token, {exact, TokenLine}}.
@@ -47,13 +47,21 @@ Rules.
 > : {token, {gt, TokenLine}}.
 <> : {token, {notexact, TokenLine}}.
 = : {token, {exact, TokenLine}}.
-{WORD} : {token, {word, TokenLine, TokenChars}}.
+{WORD} :
+	Fstrip = fun($\\) ->
+				false;
+			(_) ->
+				true
+	end,
+	Word = lists:filter(Fstrip, TokenChars),
+	{token, {word, TokenLine, Word}}.
 \. : {token, {'.', TokenLine}}.
 \[ : {token, {'[', TokenLine}}.
 \] : {token, {']', TokenLine}}.
 \{ : {token, {'{', TokenLine}}.
 \} : {token, {'}', TokenLine}}.
 \, : {token, {',', TokenLine}}.
+\; : {token, {';', TokenLine}}.
 \" : {token, {'"', TokenLine}}.
 
 Erlang code.

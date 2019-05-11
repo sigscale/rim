@@ -29,11 +29,11 @@
 									"name": {
 										"enum": [
 											"schPower",
-			                        "temporaryOffset1",
-			                        "syncCase",
-			                        "timeSlotForSch",
-			                        "schTimeSlot",
-			                        "timeSlotHCRList",
+											"temporaryOffset1",
+											"syncCase",
+											"timeSlotForSch",
+											"schTimeSlot",
+											"timeSlotHCRList",
 											"utranCellTDDHcrOptionallyContainedNrmClass"
 										]
 									}

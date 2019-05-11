@@ -21,7 +21,8 @@ class userList extends PolymerElement {
 			<style include="style-element">
 			</style>
 			<vaadin-grid
-					id="userGrid">
+					id="userGrid"
+					loading="{{loading}}">
 				<vaadin-grid-column>
 					<template class="header">
 						User name
@@ -55,6 +56,10 @@ class userList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			etag: {
 				type: String,
 				value: null

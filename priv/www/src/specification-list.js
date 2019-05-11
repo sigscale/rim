@@ -24,15 +24,16 @@ class specificationList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="specificationGrid"
+					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<vaadin-grid-column width="8ex" flex-grow="2">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="specName">
+								path="name">
 							<vaadin-grid-filter
 									id="filterSpecName"
 									aria-label="Name"
-									path="specName"
+									path="name"
 									value="{{_filterSpecName}}">
 								<input
 										slot="filter"
@@ -47,11 +48,11 @@ class specificationList extends PolymerElement {
 				<vaadin-grid-column width="20ex" flex-grow="5">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="specDesc">
+								path="decription">
 							<vaadin-grid-filter
 									id="filterSpecDesc"
 									aria-label="Description"
-									path="specDesc"
+									path="description"
 									value="{{_filterSpecDesc}}">
 								<input
 									slot="filter"
@@ -66,11 +67,11 @@ class specificationList extends PolymerElement {
 				<vaadin-grid-column width="12ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="specClass">
+								path="@type">
 							<vaadin-grid-filter
 									id="filterSpecClass"
 									aria-label="Class"
-									path="specClass"
+									path="@type"
 									value="{{_filterSpecClass}}">
 								<input
 									slot="filter"
@@ -87,11 +88,11 @@ class specificationList extends PolymerElement {
 				<vaadin-grid-column width="8ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="specStatus">
+								path="lifecycleStatus">
 							<vaadin-grid-filter
 									id="filterSpecStatus"
 									aria-label="Status"
-									path="specStatus"
+									path="lifecycleStatus"
 									value="{{_filterSpecStatus}}">
 								<input
 									slot="filter"
@@ -108,16 +109,16 @@ class specificationList extends PolymerElement {
 				<vaadin-grid-column width="8ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="specCat">
+								path="category">
 							<vaadin-grid-filter
 									id="filterSpecCat"
 									aria-label="Category"
-									path="specCat"
-									value="{{_filterSpecCat}}">
+									path="category"
+									value="{{_filterSpecCategory}}">
 								<input
 									slot="filter"
 									placeholder="Category"
-									value="{{_filterSpecCat::input}}"
+									value="{{_filterSpecCategory::input}}"
 									focus-target>
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
@@ -129,11 +130,11 @@ class specificationList extends PolymerElement {
 				<vaadin-grid-column width="6ex" flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
-								path="specBundle">
+								path="isBundle">
 							<vaadin-grid-filter
 									id="filterSpecBundle"
 									aria-label="Bundle"
-									path="specBundle"
+									path="isBundle"
 									value="{{_filterSpecBundle}}">
 								<input
 									slot="filter"
@@ -164,6 +165,10 @@ class specificationList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			etag: {
 				type: String,
 				value: null
@@ -172,8 +177,31 @@ class specificationList extends PolymerElement {
 				type: Object,
 				notify: true,
 				observer: '_activeItemChanged'
+			},
+			_filterSpecName: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterSpecDesc: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterSpecClass: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterSpecStatus: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterSpecCategory: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterSpecBundle: {
+				type: Boolean,
+				observer: '_filterChanged'
 			}
-
 		}
 	}
 
@@ -196,23 +224,118 @@ class specificationList extends PolymerElement {
 		var grid = this;
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
 		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
+		delete ajax.params['filter'];
+		delete ajax.params['sort'];
 		var query = "";
-		function checkHead(param) {
-			return param.path == "specName" || param.path == "specDesc"
-				|| param.path == "specClass" || param.path == "specStatus"
-				|| param.path == "specCat" || param.path == "specBundle";
+		function checkLike(param) {
+			return param.path == "name" || param.path == "description"
+				|| param.path == "@type" || param.path == "category";
 		}
-		params.filters.filter(checkHead).forEach(function(filter) {
+		params.filters.filter(checkLike).forEach(function(filter) {
 			if(filter.value) {
 				if (query) {
-					query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+					query = query + "," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
-					query = "[{" + filter.path + ".like=[" + filter.value + "%";
+					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+				}
+			}
+		});
+		function checkLifeCycle(param) {
+			return param.path == "lifecycleStatus";
+		}
+		params.filters.filter(checkLifeCycle).forEach(function(filter) {
+			if(filter.value) {
+				if("Obsolete".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Obsolete";
+					} else {
+						query = "[{lifecycleStatus=Obsolete";
+					}
+				} else if("Launched".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Launched";
+					} else {
+						query = "[{lifecycleStatus=Launched";
+					}
+				} else if("Active".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Active";
+					} else {
+						query = "[{lifecycleStatus=Active";
+					}
+				} else if("In ".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus.in=[In Study,In Design, In Test]";
+					} else {
+						query = "[{lifecycleStatus.in=[In Study,In Design, In Test]";
+					}
+				} else if("In Study".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=In Study";
+					} else {
+						query = "[{lifecycleStatus=In Study";
+					}
+				} else if("In Design".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=In Design";
+					} else {
+						query = "[{lifecycleStatus=In Design";
+					}
+				} else if("Re".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus.in=[Rejected,Retired]";
+					} else {
+						query = "[{lifecycleStatus.in=[Rejected,Retired]";
+					}
+				} else if("Rejected".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Rejected";
+					} else {
+						query = "[{lifecycleStatus=Rejected";
+					}
+				} else if("Retired".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Retired";
+					} else {
+						query = "[{lifecycleStatus=Retired";
+					}
+				} else {
+					if (query) {
+						query = query + ",lifecycleStatus=" + filter.value;
+					} else {
+						query = "[{lifecycleStatus=" + filter.value;
+					}
+				}
+			}
+		});
+		function checkBool(param) {
+			return param.path == "isBundle";
+		}
+		params.filters.filter(checkBool).forEach(function(filter) {
+			if(filter.value) {
+				if("true".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",isBundle=true";
+					} else {
+						query = "[{isBundle=true";
+					}
+				} else if("false".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",isBundle=false";
+					} else {
+						query = "[{isBundle=false";
+					}
+				} else {
+					if (query) {
+						query = query + ",isBundle=" + filter.value;
+					} else {
+						query = "[{isBundle=" + filter.value;
+					}
 				}
 			}
 		});
 		if(query) {
-			ajax.params['filter'] = "\"" + query + "]}]\"";
+			ajax.params['filter'] = "\"" + query + "}]\"";
 		}
 		if(specificationList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = specificationList.etag;
@@ -278,6 +401,12 @@ class specificationList extends PolymerElement {
 			}
 			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
+	}
+
+	_filterChanged(filter) {
+		this.etag = null;
+		var grid = this.shadowRoot.getElementById('specificationGrid');
+		grid.size = 0;
 	}
 }
 

@@ -23,15 +23,16 @@ class categoryList extends PolymerElement {
 			<style include="style-element">
 			</style>
 			<vaadin-grid
-					id="categoryGrid">
+					id="categoryGrid"
+					loading="{{loading}}">
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="categoryName">
+								path="name">
 							<vaadin-grid-filter
 									id="filterCategoryName""
 									aria-label="Name"
-									path="categoryName"
+									path="name"
 									value="{{_filterCategoryName}}">
 								<input
 										slot="filter""
@@ -48,11 +49,11 @@ class categoryList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="categoryDescription">
+								path="description">
 							<vaadin-grid-filter
 									id="filterCategoryDescription"
 									aria-label="Description"
-									path="categoryDescription"
+									path="description"
 									value="{{_filterCategoryDescription}}">
 								<input
 										slot="filter"
@@ -67,11 +68,11 @@ class categoryList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="categoryClass">
+								path="@type">
 							<vaadin-grid-filter
 									id="filterCategoryClass"
 									aria-label="Class"
-									path="categoryClass"
+									path="@type"
 									value="{{_filterCategoryClass}}">
 								<input
 										slot="filter"
@@ -86,11 +87,11 @@ class categoryList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="categoryStatus">
+								path="lifecycleStatus">
 							<vaadin-grid-filter
 									id="filterCategoryStatus"
 									aria-label="Status"
-									path="categoryStatus"
+									path="lifecycleStatus"
 									value="{{_filterCategoryStatus}}">
 								<input
 										slot="filter"
@@ -105,11 +106,11 @@ class categoryList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="categoryParent">
+								path="parentId">
 							<vaadin-grid-filter
 									id="filterCategoryParent"
 									aria-label="Parent"
-									path="categoryParent"
+									path="parentId"
 									value="{{_filterCategoryParent}}">
 								<input
 										slot="filter"
@@ -124,11 +125,11 @@ class categoryList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="categoryRoot">
+								path="isRoot">
 							<vaadin-grid-filter
 									id="filterCategoryRoot"
 									aria-label="Root"
-									path="categoryRoot"
+									path="isRoot"
 									value="{{_filterCategoryRoot}}">
 								<input
 										slot="filter"
@@ -157,9 +158,37 @@ class categoryList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			etag: {
 				type: String,
 				value: null
+			},
+			_filterCategoryName: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCategoryDesc: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCategoryClass: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCategoryStatus: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCategoryParent: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCategoryRoot: {
+				type: Boolean,
+				observer: '_filterChanged'
 			}
 		}
 	}
@@ -175,17 +204,112 @@ class categoryList extends PolymerElement {
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
 		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
 		var query = "";
-		function checkHead(param) {
-			return param.path == "categoryName" || param.path == "categoryDescription"
-					|| param.path == "categoryClass" || param.path == "categoryStatus"
-					|| param.path == "categoryParent" || param.path == "categoryRoot";
+		delete ajax.params['filter'];
+		delete ajax.params['sort'];
+		function checkLike(param) {
+			return param.path == "name" || param.path == "description"
+					|| param.path == "@type" || param.path == "parentId"
 		}
-		params.filters.filter(checkHead).forEach(function(filter) {
+		params.filters.filter(checkLike).forEach(function(filter) {
 			if(filter.value) {
 				if (query) {
-					query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+					query = query + "," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
-					query = "[{" + filter.path + ".like=[" + filter.value + "%";
+					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+				}
+			}
+		});
+		function checkLifeCycle(param) {
+			return param.path == "lifecycleStatus";
+		}
+		params.filters.filter(checkLifeCycle).forEach(function(filter) {
+			if(filter.value) {
+				if("Obsolete".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Obsolete";
+					} else {
+						query = "[{lifecycleStatus=Obsolete";
+					}
+				} else if("Launched".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Launched";
+					} else {
+						query = "[{lifecycleStatus=Launched";
+					}
+				} else if("Active".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Active";
+					} else {
+						query = "[{lifecycleStatus=Active";
+					}
+				} else if("In ".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus.in=[In Study,In Design, In Test]";
+					} else {
+						query = "[{lifecycleStatus.in=[In Study,In Design, In Test]";
+					}
+				} else if("In Study".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=In Study";
+					} else {
+						query = "[{lifecycleStatus=In Study";
+					}
+				} else if("In Design".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=In Design";
+					} else {
+						query = "[{lifecycleStatus=In Design";
+					}
+				} else if("Re".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus.in=[Rejected,Retired]";
+					} else {
+						query = "[{lifecycleStatus.in=[Rejected,Retired]";
+					}
+				} else if("Rejected".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Rejected";
+					} else {
+						query = "[{lifecycleStatus=Rejected";
+					}
+				} else if("Retired".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Retired";
+					} else {
+						query = "[{lifecycleStatus=Retired";
+					}
+				} else {
+					if (query) {
+						query = query + ",lifecycleStatus=" + filter.value;
+					} else {
+						query = "[{lifecycleStatus=" + filter.value;
+					}
+				}
+			}
+		});
+		function checkBool(param) {
+			return param.path == "isRoot";
+		}
+		params.filters.filter(checkBool).forEach(function(filter) {
+			if(filter.value) {
+				if("true".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",isRoot=true";
+					} else {
+						query = "[{isRoot=true";
+					}
+				} else if("false".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",isRoot=false";
+					} else {
+						query = "[{isRoot=false";
+					}
+				} else {
+					if (query) {
+						query = query + ",isRoot=" + filter.value;
+					} else {
+						query = "[{isRoot=" + filter.value;
+					}
 				}
 			}
 		});
@@ -255,6 +379,12 @@ class categoryList extends PolymerElement {
 			}
 			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
+	}
+
+	_filterChanged(filter) {
+		this.etag = null;
+		var grid = this.shadowRoot.getElementById('categoryGrid');
+		grid.size = 0;
 	}
 }
 

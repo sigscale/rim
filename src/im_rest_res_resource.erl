@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_resources/2, get_resource/2, post_resource/1, delete_resource/1]).
+-export([get_resources/3, get_resource/2, post_resource/1, delete_resource/1]).
 -export([resource/1]).
 
 -include("im.hrl").
@@ -38,7 +38,7 @@
 		ContentTypes :: list().
 %% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
-	["application/json", "application/json-patch+json"].
+	["application/json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
@@ -47,22 +47,25 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec get_resources(Query, Headers) -> Result
+-spec get_resources(Method, Query, Headers) -> Result
 	when
+		Method :: string(), % "GET" | "HEAD"
 		Query :: [{Key :: string(), Value :: string()}],
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on `Resource' collection.
-get_resources(Query, Headers) ->
+%% @doc Body producing function for
+%% 	`GET|HEAD /resourceCatalogManagement/v3/resource'
+%% 	requests.
+get_resources(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
-			get_resources(NewQuery, Filters, Headers);
+			get_resources(Method, NewQuery, Filters, Headers);
 		false ->
-			get_resources(Query, [], Headers)
+			get_resources(Method, Query, [], Headers)
 	end.
 %% @hidden
-get_resources(Query, Filters, Headers) ->
+get_resources(Method, Query, Filters, Headers) ->
 	case {lists:keyfind("if-match", 1, Headers),
 			lists:keyfind("if-range", 1, Headers),
 			lists:keyfind("range", 1, Headers)} of
@@ -92,7 +95,7 @@ get_resources(Query, Filters, Headers) ->
 						{error, _} ->
 							{error, 400};
 						{ok, {Start, End}} ->
-							query_start(Query, Filters, Start, End)
+							query_start(Method, Query, Filters, Start, End)
 					end;
 				PageServer ->
 					case im_rest:range(Range) of
@@ -106,15 +109,17 @@ get_resources(Query, Filters, Headers) ->
 			{error, 400};
 		{_, {"if-range", _}, false} ->
 			{error, 400};
-		{false, false, {"range", Range}} ->
+		{false, false, {"range", "items=1-" ++ _ = Range}} ->
 			case im_rest:range(Range) of
 				{error, _} ->
 					{error, 400};
 				{ok, {Start, End}} ->
-					query_start(Query, Filters, Start, End)
+					query_start(Method, Query, Filters, Start, End)
 			end;
+		{false, false, {"range", _Range}} ->
+			{error, 416};
 		{false, false, false} ->
-			query_start(Query, Filters, undefined, undefined)
+			query_start(Method, Query, Filters, undefined, undefined)
 	end.
 
 -spec get_resource(Id, Query) -> Result
@@ -214,11 +219,11 @@ resource([public_id | T], #resource{public_id = PublicId} = R, Acc)
 resource([public_id | T], #{"publicIdentifier" := PublicId} = M, Acc)
 		when is_list(PublicId) ->
 	resource(T, M, Acc#resource{public_id = PublicId});
-resource([description| T],
+resource([description | T],
 		#resource{description = Description} = R, Acc)
 		when is_list(Description) ->
 	resource(T, R, Acc#{"description" => Description});
-resource([description| T], #{"description" := Description} = M, Acc)
+resource([description | T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	resource(T, M, Acc#resource{description = Description});
 resource([category | T], #resource{category = Category} = R, Acc)
@@ -434,11 +439,11 @@ attachment([href | T], #attachment{href = Href} = R, Acc)
 attachment([href | T], #{"href" := Href} = M, Acc)
 		when is_list(Href) ->
 	attachment(T, M, Acc#attachment{href = Href});
-attachment([description| T],
+attachment([description | T],
 		#attachment{description = Description} = R, Acc)
 		when is_list(Description) ->
 	attachment(T, R, Acc#{"description" => Description});
-attachment([description| T], #{"description" := Description} = M, Acc)
+attachment([description | T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	attachment(T, M, Acc#attachment{description = Description});
 attachment([type | T], #attachment{type = Type} = R, Acc)
@@ -561,29 +566,35 @@ resource_char([], _, Acc) ->
 %%----------------------------------------------------------------------
 
 %% @hidden
-query_start(Query, Filters, RangeStart, RangeEnd) ->
+query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 	try
-		case lists:keyfind("filter", 1, Query) of
-			{_, String} ->
-				{ok, Tokens, _} = im_rest_query_scanner:string(String),
-				case im_rest_query_parser:parse(Tokens) of
-					{ok, [{array, [{complex, [{"id", like, [Id]}]}]}]} ->
-						{#catalog{id = Id ++ '_', _ = '_'}, []};
-					{ok, [{array, [{complex, [{"id", exact, [Id]}]}]}]} ->
-						{#catalog{id = Id, _ = '_'}, []}
-				end;
+		CountOnly = case Method of
+			"GET" ->
+				false;
+			"HEAD" ->
+				true
+		end,
+		FilterArgs = case lists:keyfind("filter", 1, Query) of
+			{_, StringF} ->
+				{ok, Tokens, _} = im_rest_query_scanner:string(StringF),
+				{ok, Filter} = im_rest_query_parser:parse(Tokens),
+				parse_filter(Filter);
 			false ->
-				{'_', []}
+				'_'
+		end,
+		Sort = case lists:keyfind("sort", 1, Query) of
+			{_, StringS} ->
+				sorts(StringS);
+			false ->
+				[]
+		end,
+		MFA = [im, query, [resource, Sort, FilterArgs, CountOnly]],
+		case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
+			{ok, PageServer, Etag} ->
+				query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
+			{error, _Reason} ->
+				{error, 500}
 		end
-	of
-		{MatchHead, MatchConditions} ->
-			MFA = [im, query_resource, [MatchHead, MatchConditions]],
-			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
-				{ok, PageServer, Etag} ->
-					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
-				{error, _Reason} ->
-					{error, 500}
-			end
 	catch
 		_ ->
 			{error, 400}
@@ -594,12 +605,516 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 	case gen_server:call(PageServer, {Start, End}, infinity) of
 		{error, Status} ->
 			{error, Status};
-		{Events, ContentRange} ->
-			Resources = lists:map(fun resource/1, Events),
-			Body = zj:encode(Resources),
+		{undefined, ContentRange} ->
 			Headers = [{content_type, "application/json"},
-					{etag, Etag}, {accept_ranges, "items"},
-					{content_range, ContentRange}],
+				{etag, Etag}, {accept_ranges, "items"},
+				{content_range, ContentRange}],
+			{ok, Headers, []};
+		{Events, ContentRange} ->
+			JsonObj = lists:map(fun resource/1, Events),
+			Body = zj:encode(JsonObj),
+			Headers = [{content_type, "application/json"},
+				{etag, Etag}, {accept_ranges, "items"},
+				{content_range, ContentRange}],
 			{ok, Headers, Body}
 	end.
+
+%% @hidden
+sorts(Query) ->
+	sorts(string:tokens(Query, [$,]), []).
+%% @hidden
+sorts(["id" | T], Acc) ->
+	sorts(T, [#resource.id | Acc]);
+sorts(["-id" | T], Acc) ->
+	sorts(T, [-#resource.id | Acc]);
+sorts(["href" | T], Acc) ->
+	sorts(T, [#resource.href | Acc]);
+sorts(["-href" | T], Acc) ->
+	sorts(T, [-#resource.href | Acc]);
+sorts(["publicIdentifier" | T], Acc) ->
+	sorts(T, [#resource.public_id | Acc]);
+sorts(["-publicIdentifier" | T], Acc) ->
+	sorts(T, [-#resource.public_id | Acc]);
+sorts(["name" | T], Acc) ->
+	sorts(T, [#resource.name | Acc]);
+sorts(["-name" | T], Acc) ->
+	sorts(T, [-#resource.name | Acc]);
+sorts(["description" | T], Acc) ->
+	sorts(T, [#resource.description | Acc]);
+sorts(["-description" | T], Acc) ->
+	sorts(T, [-#resource.description | Acc]);
+sorts(["category" | T], Acc) ->
+	sorts(T, [#resource.category | Acc]);
+sorts(["-category" | T], Acc) ->
+	sorts(T, [-#resource.category | Acc]);
+sorts(["@type" | T], Acc) ->
+	sorts(T, [#resource.class_type | Acc]);
+sorts(["-@type" | T], Acc) ->
+	sorts(T, [-#resource.class_type | Acc]);
+sorts(["@baseType" | T], Acc) ->
+	sorts(T, [#resource.base_type | Acc]);
+sorts(["-@baseType" | T], Acc) ->
+	sorts(T, [-#resource.base_type | Acc]);
+sorts(["@schemaLocation" | T], Acc) ->
+	sorts(T, [#resource.schema | Acc]);
+sorts(["-@schemaLocation" | T], Acc) ->
+	sorts(T, [-#resource.schema | Acc]);
+sorts(["lifecycleStatus" | T], Acc) ->
+	sorts(T, [#resource.status | Acc]);
+sorts(["-lifecycleStatus" | T], Acc) ->
+	sorts(T, [-#resource.status | Acc]);
+sorts(["version" | T], Acc) ->
+	sorts(T, [#resource.version | Acc]);
+sorts(["-version" | T], Acc) ->
+	sorts(T, [-#resource.version | Acc]);
+sorts(["lastUpdate" | T], Acc) ->
+	sorts(T, [#resource.last_modified | Acc]);
+sorts(["-lastUpdate" | T], Acc) ->
+	sorts(T, [-#resource.last_modified | Acc]);
+sorts([], Acc) ->
+	lists:reverse(Acc).
+
+-spec parse_filter(Query) -> Result
+	when
+		Query :: term(),
+		Result :: ets:match_spec().
+%% @doc Create `[MatchHead, MatchConditions]' from `Query'.
+%% 	MatchHead = ets:match_pattern()
+%%		MatchConditions = [tuple()]
+%% @private
+parse_filter(Query) ->
+	parse_filter(Query, #resource{_ = '_'}, []).
+%% @hidden
+parse_filter([{array, [{complex, {all, Filters}}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filters, all, MatchHead, MatchConditions);
+parse_filter([{array, [{complex, {any, Filters}}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filters, any, MatchHead, MatchConditions);
+parse_filter([{array, [{complex, [{in, Filter}]}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filter, all, MatchHead, MatchConditions);
+parse_filter([{array, [{complex, Filter}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filter, all, MatchHead, MatchConditions);
+parse_filter([], MatchHead, MatchConditions) ->
+	[{MatchHead, MatchConditions, ['$_']}].
+
+%% @hidden
+parse_filter([{like, "id", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{id = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{id = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$1', Like} | MatchConditions],
+			{MatchHead#resource{id = '$1'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "id", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$1', Cond, []),
+	NewMatchHead = MatchHead#resource{id = '$1'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "id", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{id = Name}, MatchConditions);
+parse_filter([{exact, "id", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$1', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{id = '$1'}, NewMatchConditions);
+parse_filter([{notexact, "id", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{id = '$1'},
+	NewMatchConditions = [{'/=', '$1', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "id", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$1', []),
+	NewMatchHead = MatchHead#resource{id = '$1'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "href", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{href = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{href = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$2', Like} | MatchConditions],
+			{MatchHead#resource{href = '$2'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "href", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$2', Cond, []),
+	NewMatchHead = MatchHead#resource{href = '$2'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "href", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{href = Name}, MatchConditions);
+parse_filter([{exact, "href", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$2', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{href = '$2'}, NewMatchConditions);
+parse_filter([{notexact, "href", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{href = '$2'},
+	NewMatchConditions = [{'/=', '$2', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "href", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$2', []),
+	NewMatchHead = MatchHead#resource{href = '$2'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "publicIdentifier", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{public_id = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{public_id = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$3', Like} | MatchConditions],
+			{MatchHead#resource{public_id = '$3'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "publicIdentifier", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$3', Cond, []),
+	NewMatchHead = MatchHead#resource{public_id = '$3'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "publicIdentifier", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{public_id = Name}, MatchConditions);
+parse_filter([{exact, "publicIdentifier", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$3', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{public_id = '$3'}, NewMatchConditions);
+parse_filter([{notexact, "publicIdentifier", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{public_id = '$3'},
+	NewMatchConditions = [{'/=', '$3', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "publicIdentifier", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$3', []),
+	NewMatchHead = MatchHead#resource{public_id = '$3'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "name", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{name = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{name = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$4', Like} | MatchConditions],
+			{MatchHead#resource{name = '$4'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "name", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$4', Cond, []),
+	NewMatchHead = MatchHead#resource{name = '$4'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "name", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{name = Name}, MatchConditions);
+parse_filter([{exact, "name", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$4', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{name = '$4'}, NewMatchConditions);
+parse_filter([{notexact, "name", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{name = '$4'},
+	NewMatchConditions = [{'/=', '$4', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "name", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$4', []),
+	NewMatchHead = MatchHead#resource{name = '$4'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "description", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{description = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{description = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$5', Like} | MatchConditions],
+			{MatchHead#resource{description = '$5'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "description", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$5', Cond, []),
+	NewMatchHead = MatchHead#resource{description = '$5'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "description", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{description = Name}, MatchConditions);
+parse_filter([{exact, "description", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$5', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{description = '$5'}, NewMatchConditions);
+parse_filter([{notexact, "description", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{description = '$5'},
+	NewMatchConditions = [{'/=', '$5', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "description", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$5', []),
+	NewMatchHead = MatchHead#resource{description = '$5'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "category", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{category = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{category = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$6', Like} | MatchConditions],
+			{MatchHead#resource{category = '$6'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "category", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$6', Cond, []),
+	NewMatchHead = MatchHead#resource{category = '$6'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "category", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{category = Name}, MatchConditions);
+parse_filter([{exact, "category", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$6', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{category = '$6'}, NewMatchConditions);
+parse_filter([{notexact, "category", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{category = '$6'},
+	NewMatchConditions = [{'/=', '$6', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "category", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$6', []),
+	NewMatchHead = MatchHead#resource{category = '$6'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@type", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{class_type = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{class_type = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$7', Like} | MatchConditions],
+			{MatchHead#resource{class_type = '$7'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@type", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$7', Cond, []),
+	NewMatchHead = MatchHead#resource{class_type = '$7'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "@type", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{class_type = Name}, MatchConditions);
+parse_filter([{exact, "@type", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$7', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{class_type = '$7'}, NewMatchConditions);
+parse_filter([{notexact, "@type", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{class_type = '$7'},
+	NewMatchConditions = [{'/=', '$7', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "@type", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$7', []),
+	NewMatchHead = MatchHead#resource{class_type = '$7'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@baseType", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{base_type = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{base_type = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$8', Like} | MatchConditions],
+			{MatchHead#resource{base_type = '$8'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@baseType", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$8', Cond, []),
+	NewMatchHead = MatchHead#resource{base_type = '$8'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "@baseType", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{base_type = Name}, MatchConditions);
+parse_filter([{exact, "@baseType", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$8', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{base_type = '$8'}, NewMatchConditions);
+parse_filter([{notexact, "@baseType", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{base_type = '$8'},
+	NewMatchConditions = [{'/=', '$8', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "@baseType", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$8', []),
+	NewMatchHead = MatchHead#resource{base_type = '$8'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@schemaLocation", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{schema = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{schema = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$9', Like} | MatchConditions],
+			{MatchHead#resource{schema = '$9'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@schemaLocation", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$9', Cond, []),
+	NewMatchHead = MatchHead#resource{schema = '$9'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "@schemaLocation", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{schema = Name}, MatchConditions);
+parse_filter([{exact, "@schemaLocation", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$9', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{schema = '$9'}, NewMatchConditions);
+parse_filter([{notexact, "@schemaLocation", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{schema = '$9'},
+	NewMatchConditions = [{'/=', '$9', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "@schemaLocation", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$9', []),
+	NewMatchHead = MatchHead#resource{schema = '$9'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "lifecycleState", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{status = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{status = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$10', Like} | MatchConditions],
+			{MatchHead#resource{status = '$10'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "lifecycleState", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$10', Cond, []),
+	NewMatchHead = MatchHead#resource{status = '$10'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "lifecycleState", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{status = Name}, MatchConditions);
+parse_filter([{exact, "lifecycleState", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$10', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{status = '$10'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleState", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{status = '$10'},
+	NewMatchConditions = [{'/=', '$10', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "lifecycleState", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$10', []),
+	NewMatchHead = MatchHead#resource{status = '$10'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "version", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#resource{version = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#resource{version = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$11', Like} | MatchConditions],
+			{MatchHead#resource{version = '$11'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "version", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$11', Cond, []),
+	NewMatchHead = MatchHead#resource{version = '$11'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "version", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#resource{version = Name}, MatchConditions);
+parse_filter([{exact, "version", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$11', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{version = '$11'}, NewMatchConditions);
+parse_filter([{notexact, "version", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#resource{version = '$11'},
+	NewMatchConditions = [{'/=', '$11', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "version", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$11', []),
+	NewMatchHead = MatchHead#resource{version = '$11'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([], all, MatchHead, MatchConditions) ->
+	[{MatchHead, MatchConditions, ['$_']}];
+parse_filter([], any, MatchHead, MatchConditions) ->
+	NewMatchConditions =  list_to_tuple(['or' | MatchConditions]),
+	[{MatchHead, [NewMatchConditions], ['$_']}].
+
+%% @hidden
+in([H |T], Var, Acc) ->
+	in(T, Var, [{'==', Var, H} | Acc]);
+in([], _, Acc) when length(Acc) > 1 ->
+	[list_to_tuple(['or' | Acc])];
+in([], _, Acc) ->
+	Acc.
+
+%% @hidden
+like([H |T], Var, Cond, Acc) ->
+	case lists:last(H) of
+		$% ->
+			Prefix = lists:droplast(H),
+			NewMatchConditions = match_prefix(Prefix, Var),
+			like(T, Var, Cond, [NewMatchConditions | Acc]);
+		_ ->
+			like(T, Var, Cond, [{'==', Var, H} | Acc])
+	end;
+like([], _, _, Acc) when length(Acc) > 1 ->
+	[list_to_tuple(['or' | Acc])];
+like([], _, _, Acc) ->
+	Acc.
+
+%% @hidden
+match_prefix([A] = Start, Var) ->
+	{'and', {'>=', Var, Start}, {'<', Var, [A + 1]}};
+match_prefix(Start, Var) ->
+	{A, [B]} = lists:split(length(Start) - 1, Start),
+	{'and', {'>=', Var, Start}, {'<', Var, A ++ [B + 1]}}.
 
