@@ -335,7 +335,6 @@ class inventoryList extends PolymerElement {
 			callback([]);
 		}
 		if(ajax.loading) {
-console.log(ajax.loading);
 			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
 				var endRange = startRange + params.pageSize - 1;
@@ -348,7 +347,6 @@ console.log(ajax.loading);
 				return ajax.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
-console.log(ajax.loading);
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
 			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;

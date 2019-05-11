@@ -147,7 +147,6 @@ class specUpdateList extends PolymerElement {
 	}
 
 	_collapseChars(event) {
-console.log(this.specification);
 		var collapseModal = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec').shadowRoot.getElementById('charSpecCollapse');
 		if(collapseModal.opened == false) {
 			collapseModal.show();
