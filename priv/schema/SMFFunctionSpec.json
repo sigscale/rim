@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/SMFFunctionSpec",
+	"title": "5G SMF Specification",
+	"description": "5G Session Management Function (SMF) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"vnfParametersList",
+											"pLMNIdList",
+											"tacList",
+											"sBIFqdn",
+											"sBIServiceList",
+											"nssai"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
