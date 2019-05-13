@@ -30,6 +30,11 @@
 	],
 	"resourceSpecCharacteristic": [
 		{
+			"name": "id",
+			"description": "",
+			"valueType": "string"
+		},
+		{
 			"name": "userLabel",
 			"description": "A user-friendly (and user assignable) name of this object",
 			"valueType": "string"
