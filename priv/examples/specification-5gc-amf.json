@@ -84,7 +84,7 @@
 		{
 			"name": "amfSet",
 			"description": "",
-			"valueType": "",
+			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		}
 	]
