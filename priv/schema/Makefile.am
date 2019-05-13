@@ -77,6 +77,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/NetworkSliceSubnetSpec.json \
 		$(abs_builddir)/AMFFunctionSpec.json \
 		$(abs_builddir)/SMFFunctionSpec.json \
+		$(abs_builddir)/UPFFunctionSpec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -292,6 +293,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMFFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UPFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
