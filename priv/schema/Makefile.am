@@ -31,6 +31,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/utranNrm.json \
 		$(abs_builddir)/eutranNrm.json \
 		$(abs_builddir)/nrNrm.json \
+		$(abs_builddir)/ngcNrm.json \
 		$(abs_builddir)/sonPolicyNrm.json \
 		$(abs_builddir)/stateManagementIRP.json \
 		$(abs_builddir)/sliceNrm.json \
@@ -74,6 +75,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/NRSectorCarrierSpec.json \
 		$(abs_builddir)/NetworkSliceSpec.json \
 		$(abs_builddir)/NetworkSliceSubnetSpec.json \
+		$(abs_builddir)/AMFFunctionSpec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -112,6 +114,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s eutranNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s nrNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ngcNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s sonPolicyNrm.json; \
 			then exit 1; fi; \
@@ -279,6 +283,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSubnetSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s AMFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
