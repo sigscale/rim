@@ -272,7 +272,7 @@ install8(Nodes, Acc) ->
 		lte_enb, lte_cell_fdd, lte_cell_tdd,
 		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up, nr_sector_carrier,
 		nr_cell_cu, nr_cell_du, ngc_slice, ngc_slice_subnet,
-		ngc_amf,
+		ngc_amf, ngc_smf,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
 		core_msc, core_mgw, core_sgsn, core_ggsn,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf],

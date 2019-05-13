@@ -27,7 +27,7 @@
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
 		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
--export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0]).
+-export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -2083,6 +2083,53 @@ ngc_amf() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "AMFFunction",
 					schema = "/resourceInventoryManagement/v3/schema/AMFFunction"},
+			characteristic = Chars}.
+
+-spec ngc_smf() -> specification().
+%% @doc 5G Session Management Function (AMF) resource function specification.
+ngc_smf() ->
+	ID = #specification_char{name = "id",
+			description = "",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	PLMNIdList = #specification_char{name = "pLMNIdList",
+			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			value_type = "PLMNIdList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"},
+	TacList = #specification_char{name = "tacList",
+			description = "",
+			value_type = "TACList",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/TACList"},
+	SBIFqdn = #specification_char{name = "sBIFqdn",
+			description = "FQDN of the registered NF instance in service-based interface",
+			value_type = "SBIFqdn",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIFqdn"},
+	SBIServiceList = #specification_char{name = "sBIServiceList",
+			description = "All supported NF services registered on service-based interface",
+			value_type = "SBIServiceList",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIServiceList"},
+	Nssai = #specification_char{name = "nssai",
+			description = "",
+			value_type = "",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"},
+	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TacList,
+			SBIFqdn, SBIServiceList, Nssai],
+	#specification{name = "SMFFunction",
+			description = "5G Sessiion Management Function",
+			class_type = "SMFFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/SMFFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "SMFFunction",
+					schema = "/resourceInventoryManagement/v3/schema/SMFFunction"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
