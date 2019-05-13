@@ -2086,7 +2086,7 @@ ngc_amf() ->
 			characteristic = Chars}.
 
 -spec ngc_smf() -> specification().
-%% @doc 5G Session Management Function (AMF) resource function specification.
+%% @doc 5G Session Management Function (SMF) resource function specification.
 ngc_smf() ->
 	ID = #specification_char{name = "id",
 			description = "",
