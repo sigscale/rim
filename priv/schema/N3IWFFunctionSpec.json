@@ -1,0 +1,41 @@
+{
+	"$id": "http://sigscale.org/schema/N3IWFFunctionSpec",
+	"title": "5G N3IWF Specification",
+	"description": "5G Non 3GPP Inter Working Function (N3IWF) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"vnfParametersList",
+											"pLMNIdList"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
