@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/PCFFunctionSpec",
+	"title": "5G PCF Specification",
+	"description": "5G Policy Control Function (PCF) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"vnfParametersList",
+											"pLMNIdList",
+											"sBIFqdn",
+											"sBIServiceList",
+											"nssai"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
