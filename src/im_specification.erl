@@ -27,7 +27,8 @@
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
 		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
--export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0]).
+-export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0,
+		ngc_n3iwf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -2168,6 +2169,36 @@ ngc_upf() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "UPFFunction",
 					schema = "/resourceInventoryManagement/v3/schema/UPFFunction"},
+			characteristic = Chars}.
+
+-spec ngc_n3iwf() -> specification().
+%% @doc 5G Non 3GPP Inter Working Function (N3IWF) resource function specification.
+ngc_n3iwf() ->
+	ID = #specification_char{name = "id",
+			description = "",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	PLMNIdList = #specification_char{name = "pLMNIdList",
+			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			value_type = "PLMNIdList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"},
+	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
+	#specification{name = "N3IWFFunction",
+			description = "5G Non 3GPP Inter Working Function",
+			class_type = "N3IWFFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/N3IWFFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "N3IWFFunction",
+					schema = "/resourceInventoryManagement/v3/schema/N3IWFFunction"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
