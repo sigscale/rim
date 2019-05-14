@@ -83,6 +83,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/AUSFFunctionSpec.json \
 		$(abs_builddir)/UDMFunctionSpec.json \
 		$(abs_builddir)/UDRFunctionSpec.json \
+		$(abs_builddir)/UDSFFunctionSpec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -322,6 +323,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDRFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s UDSFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
