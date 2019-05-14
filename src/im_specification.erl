@@ -28,7 +28,7 @@
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
 		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
 -export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0,
-		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0]).
+		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0, ngc_udsf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -2371,6 +2371,49 @@ ngc_udr() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "UDRFunction",
 					schema = "/resourceInventoryManagement/v3/schema/UDRFunction"},
+			characteristic = Chars}.
+
+-spec ngc_udsf() -> specification().
+%% @doc 5G Unified Data Storage Function (UDSF) resource function specification.
+ngc_udsf() ->
+	ID = #specification_char{name = "id",
+			description = "",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	PLMNIdList = #specification_char{name = "pLMNIdList",
+			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			value_type = "PLMNIdList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"},
+	SBIFqdn = #specification_char{name = "sBIFqdn",
+			description = "FQDN of the registered NF instance in service-based interface",
+			value_type = "SBIFqdn",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIFqdn"},
+	SBIServiceList = #specification_char{name = "sBIServiceList",
+			description = "All supported NF services registered on service-based interface",
+			value_type = "SBIServiceList",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIServiceList"},
+	Nssai = #specification_char{name = "nssai",
+			description = "",
+			value_type = "",
+			value_schema = "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"},
+	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
+			SBIServiceList, Nssai],
+	#specification{name = "UDSFFunction",
+			description = "5G Unified Data Storage Function",
+			class_type = "UDSFFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/UDSFFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "UDSFFunction",
+					schema = "/resourceInventoryManagement/v3/schema/UDSFFunction"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
