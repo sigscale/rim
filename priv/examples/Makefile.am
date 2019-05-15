@@ -56,6 +56,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-5gc-udsf.json \
 		$(abs_builddir)/specification-5gc-nrf.json \
 		$(abs_builddir)/specification-5gc-nssf.json \
+		$(abs_builddir)/specification-5gc-smsf.json \
 		$(abs_builddir)/resource.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -273,6 +274,10 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-5gc-nssf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SMSFFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-5gc-smsf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource.json; then exit 1; fi; \
 	else \
