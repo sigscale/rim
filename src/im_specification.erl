@@ -29,7 +29,7 @@
 		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
 -export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0,
 		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0, ngc_udsf/0,
-		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0]).
+		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -2621,6 +2621,36 @@ ngc_ngeir() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "NGEIRFunction",
 					schema = "/resourceInventoryManagement/v3/schema/NGEIRFunction"},
+			characteristic = Chars}.
+
+-spec ngc_sepp() -> specification().
+%% @doc 5G Security Edge Protection Proxy (SEPP) resource function specification.
+ngc_sepp() ->
+	ID = #specification_char{name = "id",
+			description = "",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	PLMNIdList = #specification_char{name = "pLMNIdList",
+			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			value_type = "PLMNIdList",
+			value_schema = "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"},
+	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
+	#specification{name = "SEPPFunction",
+			description = "5G Security Edge Protection Proxy",
+			class_type = "SEPPFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/SEPPFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "SEPPFunction",
+					schema = "/resourceInventoryManagement/v3/schema/SEPPFunction"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().

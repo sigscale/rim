@@ -1,0 +1,41 @@
+{
+	"$id": "http://sigscale.org/schema/SEPPFunctionSpec",
+	"title": "5G SEPP Specification",
+	"description": "5G Security Edge Protection Proxy (SEPP) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"vnfParametersList",
+											"pLMNIdList"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

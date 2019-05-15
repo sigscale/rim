@@ -1,0 +1,55 @@
+{
+	"name": "SEPPFunction",
+	"description": "5G Security Edge Protection Proxy (SEPP) resource function specification",
+	"@type": "SEPPFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SEPPFunctionSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "SEPPFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SEPPFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "pLMNIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PLMNIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"
+		}
+	]
+}
