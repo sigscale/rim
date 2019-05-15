@@ -87,6 +87,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/NRFFunctionSpec.json \
 		$(abs_builddir)/NSSFFunctionSpec.json \
 		$(abs_builddir)/SMSFFunctionSpec.json \
+		$(abs_builddir)/LMFFunctionSpec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -342,6 +343,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMSFFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s LMFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
