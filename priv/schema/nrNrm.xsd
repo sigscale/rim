@@ -7,31 +7,42 @@
 <schema
 		xmlns="http://www.w3.org/2001/XMLSchema"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
 		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
-		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
 		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
 		xmlns:sp="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
-		xmlns:sm="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
 		elementFormDefault="qualified">
-
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-			schemaLocation="genericNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
-			schemaLocation="eutranNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
-			schemaLocation="epcNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
-			schemaLocation="ngcNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
-			schemaLocation="sonPolicyNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
-			schemaLocation="stateManagementIRP.xsd" />
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+			schemaLocation="eutranNrm.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+			schemaLocation="epcNrm.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.626#stateManagementIRP"
+			schemaLocation="stateManagementIRP.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+			schemaLocation="ngcNrm.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.629#sonPolicyNrm"
+			schemaLocation="sonPolicyNrm.xsd"/>
 
 	<simpleType name="GnbId">
 		<restriction base="unsignedLong">
 			<maxInclusive value="4294967295"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="GnbIdLength">
+		<restriction base="integer">
+			<minInclusive value="22"/>
+			<maxInclusive value="32"/>
 		</restriction>
 	</simpleType>
 	<simpleType name="Nci">
@@ -39,19 +50,14 @@
 			<maxInclusive value="68719476735"/>
 		</restriction>
 	</simpleType>
-	<complexType name="Ncgi">
-		<sequence>
-			<element name="plmnId" type="en:PLMNId" minOccurs="0"/>
-			<element name="Nci" type="nn:Nci" minOccurs="0"/>
-		</sequence>
-	</complexType>
+
 	<simpleType name="Pci">
 		<restriction base="unsignedShort">
 			<maxInclusive value="503"/>
 			<!-- Minimum value is 0, maximum value is 3x167+2=503 -->
 		</restriction>
 	</simpleType>
-	<simpleType name="NgTac">
+	<simpleType name="NrTac">
 		<restriction base="unsignedLong">
 			<maxInclusive value="16777215"/>
 			<!-- 5G TAC is 3-octets length -->
@@ -77,15 +83,58 @@
 			<enumeration value="120"/>
 		</restriction>
 	</simpleType>
+	<simpleType name="QuotaType">
+		<restriction base="string">
+			<enumeration value="STRICT"/>
+			<enumeration value="FLOAT"/>
+		</restriction>
+	</simpleType>
 	<complexType name="IpEndPoint">
 		<sequence>
 			<element name="ipv4Address" type="string"/>
 			<element name="ipv6Address" type="string"/>
 			<element name="ipv6Prefix" type="string"/>
-			<element name="port" type="integer"/>
 			<element name="vlanId" type="integer"/>
 		</sequence>
 	</complexType>
+	<simpleType name="CellState">
+		<restriction base="string">
+			<enumeration value="IDLE"/>
+			<enumeration value="INACTIVE"/>
+			<enumeration value="ACTIVE"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="BwpContext">
+		<restriction base="string">
+			<enumeration value="DL"/>
+			<enumeration value="UL"/>
+			<enumeration value="SUL"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="IsInitialBwp">
+		<restriction base="string">
+			<enumeration value="INITIAL"/>
+			<enumeration value="OTHER"/>
+		</restriction>
+	</simpleType>
+	<complexType name="RRMPolicyRation2">
+		<sequence>
+			<element name="groupId" type="integer"/>
+			<element name="sNSSAIList" type="ngc:SnssaiList"/>
+			<element name="quotaType" type="nn:QuotaType"/>
+			<element name="rRMPolicyMaxRation" type="integer"/>
+			<element name="rRMPolicyMarginMaxRation" type="integer"/>
+			<element name="rRMPolicyMinRation" type="integer"/>
+			<element name="rRMPolicyMarginMinRation" type="integer"/>
+		</sequence>
+	</complexType>
+	<simpleType name="TxDirection">
+		<restriction base="string">
+			<enumeration value="DL"/>
+			<enumeration value="UL"/>
+			<enumeration value="DL and UL"/>
+		</restriction>
+	</simpleType>
 	<element name="GNBDUFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
@@ -98,6 +147,7 @@
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
 									<element name="gnbId" type="nn:GnbId"/>
+									<element name="gnbIdLength" type="nn:GnbIdLength"/>
 									<element name="gnbDUId" type="nn:GnbDuId"/>
 									<element name="gnbDuName" type="nn:GnbName" minOccurs="0"/>
 								</all>
@@ -105,6 +155,8 @@
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="nn:NRCellDU"/>
+							<element ref="nn:BWP"/>
+							<element ref="nn:NRSectorCarrier"/>
 							<element ref="nn:EP_F1C"/>
 							<element ref="nn:EP_F1U"/>
 						</choice>
@@ -113,8 +165,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="GNBCUCPFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="GNBCUCPFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -126,6 +177,7 @@
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
 									<element name="gnbId" type="nn:GnbId" />
+					<element name="gnbIdLength" type="nn:GnbIdLength"/>
 									<element name="gnbCuName" type="nn:GnbName" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList" />
 								</all>
@@ -145,8 +197,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="GNBCUUPFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="GNBCUUPFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -159,6 +210,7 @@
 									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="gNBId" type="nn:GnbId"/>
+									<element name="gnbIdLength" type="nn:GnbIdLength"/>
 								</all>
 							</complexType>
 						</element>
@@ -186,10 +238,14 @@
 								<all>
 									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="nCGI" type="nn:Ncgi"/>
+									<element name="nCGI" type="nn:Nci"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
-									<element name="nSSAIList" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="sNSSAIList" type="ngc:SnssaiList" minOccurs="0"/>
+									<element name="rRMPolicyType" type="integer" minOccurs="0"/>
+									<element name="rRMPolicyNSSIId" type="xn:dn" minOccurs="0"/>
+									<element name="rRMPolicyRatio" type="integer" minOccurs="0"/>
 									<element name="rRMPolicy" type="string" minOccurs="0"/>
+									<element name="rRMPolicyRatio2" type="nn:RRMPolicyRation2" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -215,38 +271,30 @@
 								<all>
 									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
-									<element name="nCGI" type="nn:Ncgi" minOccurs="0"/>
+									<element name="nCGI" type="nn:Nci" minOccurs="0"/>
 									<element name="operationalState" type="sm:operationalStateType" minOccurs="0"/>
-									<element name="administrativeState" type="sm:administrativeStateType" minOccurs="0"/>
-									<element name="availabilityStatus" type="sm:availabilityStatusType" minOccurs="0"/>
+									<element name="administrativeState" type="sm:administrativeStateType"
+																minOccurs="0"/>
+									<element name="availabilityStatus" type="sm:availabilityStatusType"
+																minOccurs="0"/>
+									<element name="cellState" type="nn:CellState"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
-									<element name="nSSAIList" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="sNSSAIList" type="ngc:SnssaiList" minOccurs="0"/>
 									<element name="nRpci" type="nn:Pci" />
-									<element name="nRTac" type="nn:NgTac" />
-									<element name="bSChannelBw" type="integer"/>
-									<element name="fDDCarrierDL" type="integer"/>
-									<element name="fDDCarrierUL" type="integer"/>
-									<element name="cyclicPrefixDL" type="nn:CyclicPrefix"/>
-									<element name="cyclicPrefixUL" type="nn:CyclicPrefix"/>
-									<element name="fDDBwpCommonCarrierFreqDL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpCommonCarrierFreqUL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpCommonChannelBwDL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpCommonChannelBwUL" type="integer" minOccurs="0"/>
-									<element name="tDDBwpCommonCarrierFreq" type="integer" minOccurs="0"/>
-									<element name="tDDBwpCommonChannelBw" type="integer" minOccurs="0"/>
-									<element name="fDDBwpDedicatedCarrierFreqDL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpDedicatedCarrierFreqUL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpDedicatedChannelBwDL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpDedicatedChannelBwUL" type="integer" minOccurs="0"/>
-									<element name="tDDBwpDedicatedCarrierFreq" type="integer" minOccurs="0"/>
-									<element name="tDDBwpDedicatedChannelBw" type="integer" minOccurs="0"/>
-									<element name="rRMPolicy" type="string"/>
+									<element name="nRTac" type="nn:NrTac" />
+									<element name="arfcnDL" type="integer"/>
+									<element name="arfcnUL" type="integer" minOccurs="0"/>
+									<element name="arfcnSUL" type="integer" minOccurs="0"/>
+									<element name="bSChannelBwDL" type="integer"/>
+									<element name="bSChannelBwUL" type="integer" minOccurs="0"/>
+									<element name="bSChannelBwSUL" type="integer" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
 							<element ref="xn:VsDataContainer"/>
 							<element name="nRSectorCarrier" type="xn:dn" minOccurs="0"/>
+							<element name="bWP" type="xn:dn" minOccurs="0"/>
 						</choice>
 						<choice minOccurs="0" maxOccurs="1">
 							<element ref="sp:EnergySavingProperties"/>
@@ -267,16 +315,12 @@
 								<all>
 									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="txDirection" type="nn:TxDirection"/>
 									<element name="configuredMaxTxPower" type="integer"/>
-									<element name="pointAArfcnDLFDD" type="integer" minOccurs="0"/>
-									<element name="pointAArfcnULFDD" type="integer" minOccurs="0"/>
-									<element name="pointAArfcnTDD" type="integer" minOccurs="0"/>
-									<element name="fDDBwpTxStartDL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpTxStartUL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpTxBwDL" type="integer" minOccurs="0"/>
-									<element name="fDDBwpTxBwUL" type="integer" minOccurs="0"/>
-									<element name="tDDBwpTxStart" type="integer" minOccurs="0"/>
-									<element name="tDDBwpTxBw" type="integer" minOccurs="0"/>
+									<element name="arfcnDL" type="integer" minOccurs="0"/>
+									<element name="arfcnUL" type="integer" minOccurs="0"/>
+									<element name="bSChannelBwDL" type="integer" minOccurs="0"/>
+									<element name="bSChannelBwUL" type="integer" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -287,6 +331,33 @@
 						<choice minOccurs="0" maxOccurs="1">
 							<element ref="sp:EnergySavingProperties"/>
 							<element ref="sp:ESPolicies"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+		<element name="BWP">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+									<element name="bwpContext" type="nn:BwpContext"/>
+									<element name="isInitialBwp" type="nn:IsInitialBwp"/>
+									<element name="subCarrierSpacing" type="integer"/>
+									<element name="cyclicPrefix" type="nn:CyclicPrefix"/>
+									<element name="startRB" type="integer"/>
+									<element name="numberOfRBs" type="integer"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
 						</choice>
 					</sequence>
 				</extension>
@@ -393,7 +464,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="EP_NgU">
+		<element name="EP_NgU">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -481,6 +552,7 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<!-- End of inherited attributes from EP_RP -->
 									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -530,6 +602,7 @@
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<!-- End of inherited attributes from EP_RP -->
 									<element name="localAddress" type="nn:IpEndPoint" minOccurs="0"/>
+									<element name="remoteAddress" type="nn:IpEndPoint" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>

@@ -31,7 +31,6 @@
 	"resourceSpecCharacteristic": [
 		{
 			"name": "id",
-			"description": "",
 			"valueType": "string"
 		},
 		{
@@ -46,14 +45,14 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
-			"name": "pLMNIdList",
+			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
-			"valueType": "PLMNIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/PLMNIdList"
+			"valueType": "PlmnIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
 		},
 		{
-			"name": "tacList",
-			"description": "",
+			"name": "nrTacList",
+			"description": "Tracking Area Code (TAC) where management function serving (3GPP TS 38.413)",
 			"valueType": "TACList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/TACList"
 		},
@@ -70,10 +69,10 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIServiceList"
 		},
 		{
-			"name": "nssai",
-			"description": "",
-			"valueType": "",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/"
+			"name": "snssaiList",
+			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
+			"valueType": "SnssaiList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
 		}
 	]
 }

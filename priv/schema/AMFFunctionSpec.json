@@ -27,12 +27,12 @@
 											"id",
 											"userLabel",
 											"vnfParametersList",
-											"pLMNIdList",
+											"plmnIdList",
 											"amfIdentifier",
 											"sBIFqdn",
 											"sBIServiceList",
 											"weightFactor",
-											"nssai",
+											"snssaiList",
 											"amfSet"
 										]
 									}

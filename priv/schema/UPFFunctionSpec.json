@@ -27,9 +27,9 @@
 											"id",
 											"userLabel",
 											"vnfParametersList",
-											"pLMNIdList",
-											"tacList",
-											"nssai"
+											"plmnIdList",
+											"nrTacList",
+											"snssaiList"
 										]
 									}
 								}

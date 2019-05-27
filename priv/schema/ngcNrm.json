@@ -12,16 +12,16 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"amfIdentifier": {
-					"$ref": "#/definitions/AMFIdentifier"
+					"$ref": "#/definitions/AmfIdentifier"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
@@ -29,8 +29,8 @@
 				"weightFactor": {
 					"$ref": "#/definitions/WeightFactor"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				},
 				"amfSet": {
 					"$ref": "genericNrm#/definitions/Dn"
@@ -38,7 +38,7 @@
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"amfIdentifier",
 				"sBIFqdn",
 				"sBIServiceList",
@@ -55,28 +55,28 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
-				"tacList": {
+				"nRTACList": {
 					"$ref": "#/definitions/TACList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
-				"tacList",
+				"plmnIdList",
+				"nRTACList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -91,22 +91,22 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
-				"tacList": {
+				"nRTACList": {
 					"$ref": "#/definitions/TACList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
-				"tacList"
+				"plmnIdList",
+				"nRTACList"
 			]
 		},
 		"n3iwfFunction": {
@@ -119,15 +119,15 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList"
+				"plmnIdList"
 			]
 		},
 		"pcfFunction": {
@@ -140,24 +140,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -172,24 +172,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -204,24 +204,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -236,24 +236,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -268,24 +268,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -300,13 +300,13 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"nSIIdList": {
 					"$ref": "#/definitions/NSIIdList"
@@ -314,13 +314,13 @@
 				"nFProfileList": {
 					"$ref": "#/definitions/NFProfileList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn"
 			]
 		},
@@ -334,13 +334,13 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"nSIIdList": {
 					"$ref": "#/definitions/NSIIdList"
@@ -348,13 +348,13 @@
 				"nFProfileList": {
 					"$ref": "#/definitions/NFProfileList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn"
 			]
 		},
@@ -368,13 +368,13 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
@@ -382,7 +382,7 @@
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -397,15 +397,15 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList"
+				"plmnIdList"
 			]
 		},
 		"ngeirFunction": {
@@ -418,24 +418,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -450,15 +450,15 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList"
+				"plmnIdList"
 			]
 		},
 		"nwdafFunction": {
@@ -471,24 +471,24 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"sBIFqdn": {
-					"$ref": "#/definitions/SBIFqdn"
+					"type": "string"
 				},
 				"sBIServiceList": {
 					"$ref": "#/definitions/SBIServiceList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
 				"userLabel",
-				"pLMNIdList",
+				"plmnIdList",
 				"sBIFqdn",
 				"sBIServiceList"
 			]
@@ -1050,23 +1050,26 @@
 				"id": {
 					"type": "string"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"userLabel": {
+					"type": "string"
 				},
-				"tacList": {
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
+				},
+				"nRTACList": {
 					"$ref": "#/definitions/TACList"
 				},
 				"amfSetId": {
 					"$ref": "#/definitions/AmfSetId"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
-				"pLMNIdList",
-				"tACList",
-				"aMFSetId"
+				"plmnIdList",
+				"nRTACList",
+				"amfSetId"
 			]
 		},
 		"amfRegion": {
@@ -1075,28 +1078,31 @@
 				"id": {
 					"type": "string"
 				},
-				"pLMNIdList": {
-					"$ref": "eutranNrm#/definitions/PLMNIdList"
+				"userLabel": {
+					"type": "string"
 				},
-				"tacList": {
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
+				},
+				"nRTACList": {
 					"$ref": "#/definitions/TACList"
 				},
 				"amfRegionId": {
 					"$ref": "#/definitions/AmfRegionId"
 				},
-				"nssai": {
-					"$ref": "#/definitions/NssaiList"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				}
 			},
 			"required": [
-				"pLMNIdList",
-				"tACList",
-				"aMFRegionId"
+				"plmnIdList",
+				"nRTACList",
+				"amfRegionId"
 			]
 		},
-		"AMFIdentifier": {
+		"AmfIdentifier": {
 			"type": "object",
-			"description": "AMFIdentifier comprise of amfRegionId, amfSetId and amfPointer",
+			"description": "AmfIdentifier comprise of amfRegionId, amfSetId and amfPointer",
 			"properties": {
 				"amfRegionId": {
 					"$ref": "#/definitions/AmfRegionId"
@@ -1123,14 +1129,6 @@
 			"type": "integer",
 			"description": "AmfPointer is defined in TS 23.003",
 			"maximum": 63
-		},
-		"AmfSetMemberList": {
-			"type": "array",
-			"description": "List of DNs of AMF",
-			"items": {
-				"type": "string",
-				"description": "Identification of managed function."
-			}
 		},
 		"NFProfileList": {
 			"type": "array",
@@ -1268,7 +1266,7 @@
 		},
 		"NFType": {
 			"type": "string",
-			"description": " NF name defined in TS 23.501",
+			"description": "NF name defined in TS 23.501",
 			"enum": [
 				"NRF",
 				"UDM",
@@ -1353,7 +1351,7 @@
 				"dnnList": {
 					"type": "array",
 					"items": {
-						"type": "string"
+						"$ref": "#/definitions/Dnn"
 					}
 				}
 			}
@@ -1378,7 +1376,7 @@
 				"dnnUpfInfoList": {
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/DnnUpfInfoListInfo"
+						"$ref": "#/definitions/DnnUpfInfoItem"
 					}
 				}
 			}
@@ -1398,13 +1396,13 @@
 					"$ref": "#/definitions/NotificationType"
 				},
 				"callbackUri": {
-					"$ref": "#/definitions/Uri"
+					"type": "string"
 				},
 				"n1MessageClass": {
-					"$ref": "#/definitions/N1MessageClass"
+					"type": "string"
 				},
 				"n2InformationClass": {
-					"$ref": "#/definitions/N2InformationClass"
+					"type": "string"
 				}
 			}
 		},
@@ -1458,10 +1456,6 @@
 		"NrCellId": {
 			"type": "string"
 		},
-		"Sst": {
-			"type": "integer",
-			"maximum": 255
-		},
 		"SBIFqdn": {
 			"$ref": "#/definitions/Fqdn"
 		},
@@ -1477,7 +1471,7 @@
 				"$ref": "nrNrm#/definitions/NrTac"
 			}
 		},
-		"WeightFactor": {
+		"weightFactor": {
 			"type": "integer"
 		}
 	}

@@ -24,6 +24,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"dnPrefix",
 											"userLabel",
 											"userDefinedNetworkType",
@@ -31,9 +32,10 @@
 											"mFIdList",
 											"constituentNSSIIdList",
 											"state",
+											"operationalState",
+											"administrativeState",
 											"nsInfo",
-											"sliceProfileList",
-											"sst"
+											"sliceProfileList"
 										]
 									}
 								}

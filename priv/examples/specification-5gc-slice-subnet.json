@@ -30,6 +30,10 @@
 	],
 	"resourceSpecCharacteristic": [
 		{
+			"name": "id",
+			"valueType": "string"
+		},
+		{
 			"name": "dnPrefix",
 			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			"valueType": "Dn",
@@ -52,39 +56,39 @@
 		},
 		{
 			"name": "mFIdList",
-			"description": "",
+			"description": "Associated Network Functions (NF)",
 			"valueType": "DnList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "constituentNSSIIdList",
-			"description": "",
+			"description": "Constituent Network Slice SubNetwork Instance (NSSI) list",
 			"valueType": "DnList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{
-			"name": "state",
-			"description": "",
-			"valueType": "OperationalState",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalState"
+			"name": "operationalState",
+			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
+		},
+		{
+			"name": "administrativeState",
+			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
+			"valueType": "AdministrativeStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
 		},
 		{
 			"name": "nsInfo",
-			"description": "",
+			"description": "Network Service (NS) info (ETSI GS NFV-IFA 013 clause 8.3.3.2.2)",
 			"valueType": "NsInfo",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/NsInfo"
 		},
 		{
 			"name": "sliceProfileList",
-			"description": "",
-			"valueType": "ServiceProfileList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
-		},
-		{
-			"name": "sst",
-			"description": "Slice/service type of the network slice (3GPP 23.501 5.15.2)",
-			"valueType": "Sst",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/Sst"
+			"description": "Slice Profiles (3GPP TS 28.541 clause 6.3.4)",
+			"valueType": "SliceProfileList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/SliceProfileList"
 		}
 	]
 }

@@ -9,10 +9,10 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
 				"peeParametersList": {
-					"$ref": "genericNrm#/definitions/PeeParametersListType"
+					"$ref": "genericNrm#/definitions/PeeParametersList"
 				},
 				"gnbDuId": {
 					"$ref": "#/definitions/GnbDuId"
@@ -22,12 +22,16 @@
 				},
 				"gnbId": {
 					"$ref": "#/definitions/GnbId"
+				},
+				"gnbIdLength": {
+					"$ref": "#/definitions/GnbIdLength"
 				}
 			},
-			"required":[
+			"required": [
 				"userLabel",
 				"gnbDuId",
-				"gnbId"
+				"gnbId",
+				"gnbIdLength"
 			]
 		},
 		"gnbCuCpFunction": {
@@ -37,24 +41,29 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
 				"peeParametersList": {
-					"$ref": "genericNrm#/definitions/PeeParametersListType",
-					"gnbId": {
-						"$ref": "#/definitions/GnbId"
-					},
-					"gnbCuName": {
-						"$ref": "#/definitions/GnbName"
-					},
-					"plmnIdList": {
-						"$ref": "eutranNrm#/definitions/PlmnIdList"
-					}
+					"$ref": "genericNrm#/definitions/PeeParametersList"
+                },
+				"gnbId": {
+					"$ref": "#/definitions/GnbId"
+				},
+				"gnbIdLength": {
+					"$ref": "#/definitions/GnbIdLength"
+				},
+
+				"gnbCuName": {
+					"$ref": "#/definitions/GnbName"
+				},
+				"plmnIdList": {
+					"$ref": "#/definitions/PlmnIdList"
 				}
 			},
 			"required": [
 				"userLabel",
 				"gnbId",
+				"gnbIdLength",
 				"plmnIdList"
 			]
 		},
@@ -65,21 +74,25 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
 				"peeParametersList": {
-					"$ref": "genericNrm#/definitions/PeeParametersListType",
-					"gnbId": {
-						"$ref": "#/definitions/GnbId"
-					},
-					"plmnIdList": {
-						"$ref": "eutranNrm#/definitions/PlmnIdList"
-					}
+					"$ref": "genericNrm#/definitions/PeeParametersList"
+				},
+				"gnbId": {
+					"$ref": "#/definitions/GnbId"
+				},
+				"gnbIdLength": {
+					"$ref": "#/definitions/GnbIdLength"
+				},
+				"plmnIdList": {
+					"$ref": "#/definitions/PlmnIdList"
 				}
 			},
-			"required":[
+			"required": [
 				"userLabel",
 				"gnbId",
+				"gnbIdLength",
 				"plmnIdList"
 			]
 		},
@@ -90,24 +103,36 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
-				"nCgi": {
-					"$ref": "#/definitions/NCgi"
+				"nCi": {
+					"$ref": "#/definitions/NCi"
 				},
 				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+					"$ref": "#/definitions/PlmnIdList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/Nssai"
+				"snssaiList": {
+					"$ref": "#/definitions/SnssaiList"
+				},
+				"rrmPolicyType": {
+					"type": "integer"
+				},
+				"rrmPolicyNSSIId": {
+					"$ref": "genericNrm#/definitions/Dn"
+				},
+				"rrmPolicyRatio": {
+					"type": "integer"
 				},
 				"rrmPolicy": {
 					"$ref": "#/definitions/RrmPolicy"
+				},
+				"rrmPolicyRatio2": {
+					"$ref": "#/definitions/RrmPolicyRatio2"
 				}
 			},
-			"required":[
+			"required": [
 				"userLabel",
-				"nCGI",
+				"nCI",
 				"plmnIdList"
 			]
 		},
@@ -118,7 +143,7 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
 				},
 				"administrativeState": {
 					"$ref": "stateManagementNrm#/definitions/AdministrativeState"
@@ -132,14 +157,14 @@
 				"cellState": {
 					"$ref": "#/definitions/CellState"
 				},
-				"nCgi": {
-					"$ref": "#/definitions/NCgi"
+				"nCi": {
+					"$ref": "#/definitions/NCi"
 				},
 				"plmnIdList": {
-					"$ref": "eutranNrm#/definitions/PlmnIdList"
+					"$ref": "#/definitions/PlmnIdList"
 				},
-				"nssai": {
-					"$ref": "#/definitions/Nssai"
+				"snssaiList": {
+					"$ref": "#/definitions/SnssaiList"
 				},
 				"nrPci": {
 					"$ref": "#/definitions/NrPci"
@@ -147,75 +172,33 @@
 				"nrTac": {
 					"$ref": "#/definitions/NrTac"
 				},
-				"bSChannelBw": {
+				"arfcnDL": {
 					"type": "integer"
 				},
-				"fDDCarrierDL": {
+				"arfcnUL": {
 					"type": "integer"
 				},
-				"fDDCarrierUL": {
+				"arfcnSUL": {
 					"type": "integer"
 				},
-				"cyclicPrefixDL": {
-					"$ref": "#/definitions/CyclicPrefix"
-				},
-				"cyclicPrefixUL": {
-					"$ref": "#/definitions/CyclicPrefix"
-				},
-				"fDDBwpCommonCarrierFreqDL": {
+				"bSChannelBwDL": {
 					"type": "integer"
 				},
-				"fDDBwpCommonCarrierFreqUL": {
+				"bSChannelBwUL": {
 					"type": "integer"
 				},
-				"fDDBwpCommonChannelBwDL": {
+				"bSChannelBwSUL": {
 					"type": "integer"
-				},
-				"fDDBwpCommonChannelBwUL": {
-					"type": "integer"
-				},
-				"tDDBwpCommonCarrierFreq": {
-					"type": "integer"
-				},
-				"tDDBwpCommonChannelBw": {
-					"type": "integer"
-				},
-				"fDDBwpDedicatedCarrierFreqDL": {
-					"type": "integer"
-				},
-				"fDDBwpDedicatedCarrierFreqUL": {
-					"type": "integer"
-				},
-				"fDDBwpDedicatedChannelBwDL": {
-					"type": "integer"
-				},
-				"fDDBwpDedicatedChannelBwUL": {
-					"type": "integer"
-				},
-				"tDDBwpDedicatedCarrierFreq": {
-					"type": "integer"
-				},
-				"tDDBwpDedicatedChannelBw": {
-					"type": "integer"
-				},
-				"rRMPolicy": {
-					"type": "string"
 				}
 			},
-			"required":[
+			"required": [
 				"userLabel",
-				"nCgi",
+				"ngi",
 				"plmnIdList",
 				"nrPci",
 				"nrTac",
-				"bSChannelBw",
-				"fDDCarrierDL",
-				"fDDCarrierUL",
-				"tDDCarrier",
-				"subcarrierSpacingDL",
-				"subcarrierSpacingUL",
-				"cyclicPrefixDL",
-				"cyclicPrefixUL"
+				"arfcnDL",
+				"bSChannelBwDL"
 			]
 		},
 		"nrSectorCarrier": {
@@ -225,42 +208,69 @@
 					"type": "string"
 				},
 				"vnfParametersList": {
-					"$ref": "genericNrm#/definitions/VnfParametersListType"
+					"$ref": "genericNrm#/definitions/VnfParametersList"
+				},
+				"txDirection": {
+					"$ref": "#/definitions/TxDirection"
 				},
 				"configuredMaxTxPower": {
 					"type": "integer"
 				},
-				"pointAArfcnDLFDD": {
+				"arfcnDL": {
 					"type": "integer"
 				},
-				"pointAArfcnULFDD": {
+				"arfcnUL": {
 					"type": "integer"
 				},
-				"pointAArfcnTDD": {
+				"bSChannelBwDL": {
 					"type": "integer"
 				},
-				"fDDBwpTxStartDL": {
-					"type": "integer"
-				},
-				"fDDBwpTxStartUL": {
-					"type": "integer"
-				},
-				"fDDBwpTxBwDL": {
-					"type": "integer"
-				},
-				"fDDBwpTxBwUL": {
-					"type": "integer"
-				},
-				"tDDBwpTxStart": {
-					"type": "integer"
-				},
-				"tDDBwpTxBw": {
+				"bSChannelBwUL": {
 					"type": "integer"
 				}
 			},
-			"required":[
+			"required": [
 				"userLabel",
-				"configuredMaxTxPower"
+				"configuredMaxTxPower",
+				"txDirection"
+			]
+		},
+		"bwp": {
+			"type": "object",
+			"properties": {
+				"userLabel": {
+					"type": "string"
+				},
+				"vnfParametersList": {
+					"$ref": "genericNrm#/definitions/VnfParametersList"
+				},
+				"bwpContext": {
+					"$ref": "#/definitions/BwpContext"
+				},
+				"isInitialBwp": {
+					"$ref": "#/definitions/IsInitialBwp"
+				},
+				"subCarrierSpacing": {
+					"type": "integer"
+				},
+				"cyclicPrefix": {
+					"$ref": "#/definitions/CyclicPrefix"
+				},
+				"startRB": {
+					"type": "integer"
+				},
+				"numberOfRBs": {
+					"type": "integer"
+				}
+			},
+			"required": [
+				"userLabel",
+				"bwpContext",
+				"isInitialBwp",
+				"subCarrierSpacing",
+				"cyclicPrefix",
+				"startRB",
+				"numberOfRBs"
 			]
 		},
 		"eP_E1": {
@@ -351,13 +361,13 @@
 		"eP_F1C": {
 			"type": "object",
 			"properties": {
-				"userLabel": {
+					"userLabel": {
 					"type": "string"
 				},
 				"farEndEntity": {
 					"type": "string"
 				},
-				"localAddress": {
+			    "localAddress": {
 					"$ref": "#/definitions/IpEndPoint"
 				},
 				"remoteAddress": {
@@ -393,6 +403,9 @@
 				},
 				"localAddress": {
 					"$ref": "#/definitions/IpEndPoint"
+				},
+				"remoteAddress": {
+					"$ref": "#/definitions/IpEndPoint"
 				}
 			}
 		},
@@ -416,20 +429,29 @@
 		"eP_X2U": {
 			"type": "object",
 			"properties": {
-				"userLabel": {
+					"userLabel": {
 					"type": "string"
 				},
 				"farEndEntity": {
 					"type": "string"
 				},
-				"localAddress": {
+			"localAddress": {
+					"$ref": "#/definitions/IpEndPoint"
+				},
+				"remoteAddress": {
 					"$ref": "#/definitions/IpEndPoint"
 				}
 			}
 		},
 		"GnbId": {
 			"type": "string",
-			"description": "gNBId identifies a gNB within a PLMN"
+			"description": "gNBId identifies a gNB within a PLMN."
+		},
+		"GnbIdLength": {
+			"type": "integer",
+			"description":  "This indicates the number of bits for encoding the gNB ID.",
+			"minimum": 22,
+			"maximum": 32
 		},
 		"GnbName": {
 			"type": "string",
@@ -437,31 +459,32 @@
 		},
 		"GnbDuId": {
 			"type": "number",
-			"description": "GnbDuId represents the gNB-DU ID defined in TS 38.473",
+			"description": "GnbDuId represents the NB-DU ID defined in TS 38.473.",
 			"minimum": 0,
 			"maximum": 68719476735
 		},
-		"NCgi": {
+		"NCi": {
 			"type": "object",
-			"description": "NCgi uniquely identifies a NR cell globally",
+			"description": "NCgi uniquely identifies a NR cell  within a PLMN.",
 			"properties": {
 				"plmnId": {
-					"$ref": "eutranNrm#/definitions/PlmnId"
+					"$ref": "#/definitions/PlmnId"
 				},
-				"nCI": {
+			"nCI": {
 					"$ref": "#/definitions/NrCellId"
 				}
 			}
 		},
-		"Nssai": {
+		"SnssaiList": {
 			"type": "array",
+			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"item": {
 				"$ref": "#/definitions/Snssai"
 			}
 		},
 		"RrmPolicy": {
 			"type": "string",
-			"description": "RrmPolicy represents RRM policy which includes guidance for split of radio resources between multiple slices the cell supports. The RRM policy is implementation dependent"
+			"description": "RrmPolicy represents RRM policy which includes guidance for split of radio resources between multiple slices the cell supports. The RRM policy is implementation dependent."
 		},
 		"IpEndPoint": {
 			"type": "object",
@@ -477,9 +500,6 @@
 				},
 				"transport": {
 					"type": "string"
-				},
-				"port": {
-					"type": "integer"
 				},
 				"vlanId": {
 					"type": "integer"
@@ -498,15 +518,112 @@
 			"type": "integer",
 			"maximum": 68719476735
 		},
+		"Sst": {
+			"type": "integer",
+			"maximum": 255
+		},
 		"Snssai": {
 			"type": "object",
 			"properties": {
 				"sst": {
-					"$ref": "ngcNrm#/definitions/Sst"
+					"$ref": "#/definitions/Sst"
 				},
 				"sd": {
 					"type": "string"
 				}
+			}
+		},
+		"CellState": {
+			"enum": [
+				"IDLE",
+				"INACTIVE",
+				"ACTIVE"
+			]
+		},
+		"CyclicPrefix": {
+			"enum": [
+				"15",
+				"30",
+				"60",
+				"120"
+			]
+		},
+		"TxDirection": {
+			"enum": [
+				"DL",
+				"UL",
+				"DL and UL"
+			]
+		},
+		"BwpContext": {
+			"enum": [
+				"DL",
+				"UL",
+				"SUL"
+			]
+		},
+		"IsInitialBwp": {
+			"enum": [
+				"INITIAL",
+				"OTHER",
+				"SUL"
+			]
+		},
+		"QuotaType": {
+			"enum": [
+				"STRICT",
+				"FLOAT"
+			]
+		},
+		"RrmPolicyRatio2": {
+			"type": "object",
+			"properties": {
+				"groupId": {
+					"type": "integer"
+				},
+				"sNSSAIList": {
+					"$ref": "#/definitions/SnssaiList"
+				},
+				"quotaType": {
+					"$ref ": "#/definitions/QuotaType"
+				},
+				"rRMPolicyMaxRation": {
+					"type": "integer"
+				},
+				"rRMPolicyMarginMaxRation": {
+					"type": "integer"
+				},
+				"rRMPolicyMinRation": {
+					"type": "integer"
+				},
+				"rRMPolicyMarginMinRation": {
+					"type": "integer"
+				}
+			}
+		},
+		"Mcc": {
+			"type": "string",
+			"pattern": "[02-79][0-9][0-9]"
+		},
+		"Mnc": {
+			"type": "string",
+			"pattern": "[0-9]{3}|[0-9]{2}"
+		},
+		"PlmnId": {
+			"type": "object",
+			"properties": {
+				"mcc": {
+					"$ref": "#/definitions/Mcc"
+				},
+				"mnc": {
+					"$ref": "#/definitions/Mnc"
+				}
+			}
+		},
+		"PlmnIdList": {
+			"type": "array",
+			"item": {
+				"$ref": "#/definitions/PlmnId"
 			}
 		}
 	}

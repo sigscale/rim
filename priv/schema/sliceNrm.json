@@ -5,10 +5,13 @@
 		"networkSlice": {
 			"type": "object",
 			"properties": {
+				"id": {
+					"type": "string"
+				},
 				"dnPrefix": {
 					"type": "string"
 				},
-					"userLabel": {
+				"userLabel": {
 					"type": "string"
 				},
 				"userDefinedNetworkType": {
@@ -28,9 +31,6 @@
 				},
 				"serviceProfileList": {
 					"$ref": "#/definitions/ServiceProfileList"
-				},
-				"sst": {
-					"$ref": "ngcNrm#/definitions/Sst"
 				}
 			},
 			"required": [
@@ -39,13 +39,15 @@
 				"nSSIId",
 				"operationalState",
 				"administrativeState",
-				"serviceProfileList",
-				"sst"
+				"serviceProfileList"
 			]
 		},
 		"networkSliceSubnet": {
 			"type": "object",
 			"properties": {
+				"id": {
+					"type": "string"
+				},
 				"dnPrefix": {
 					"type": "string"
 				},
@@ -64,26 +66,26 @@
 				"constituentNSSIIdList": {
 					"$ref": "genericNrm#/definitions/DnList"
 				},
-				"state": {
+				"operationalState": {
 					"$ref": "stateManagementNrm#/definitions/OperationalState"
+				},
+				"administrativeState": {
+					"$ref": "stateManagementNrm#/definitions/AdministrativeState"
 				},
 				"nsInfo": {
 					"$ref": "#/definitions/NsInfo"
 				},
 				"sliceProfileList": {
 					"$ref": "#/definitions/ServiceProfileList"
-				},
-				"sst": {
-					"$ref": "ngcNrm#/definitions/Sst"
 				}
 			},
 			"required": [
 				"userLabel",
 				"mFIdList",
 				"constituentNSSIIdList",
-				"state",
-				"sliceProfileList",
-				"sst"
+				"operationalState",
+				"administrativeState",
+				"sliceProfileList"
 			]
 		},
 		"MobilityLevel": {
@@ -186,11 +188,11 @@
 				"serviceProfileId": {
 					"type": "string"
 				},
-				"nSSAI": {
-					"$ref": "nrNrm#/definitions/Nssai"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				},
-				"pLMNId": {
-					"$ref": "eutranNrm#/definitions/PLMNId"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"perfReq": {
 					"$ref": "#/definitions/PrefReq"
@@ -207,8 +209,14 @@
 				"uEMobilityLevel": {
 					"type": "number"
 				},
+				"sst": {
+					"$ref": "ngcNrm#/definitions/Sst"
+				},
 				"resourceSharingLevel": {
 					"type": "integer"
+				},
+				"availability": {
+					"type": "number"
 				}
 			}
 		},
@@ -224,11 +232,11 @@
 				"sliceProfileId": {
 					"type": "string"
 				},
-				"nSSAI": {
-					"$ref": "nrNrm#/definitions/Nssai"
+				"snssaiList": {
+					"$ref": "nrNrm#/definitions/SnssaiList"
 				},
-				"pLMNId": {
-					"$ref": "eutranNrm#/definitions/PLMNId"
+				"plmnIdList": {
+					"$ref": "nrNrm#/definitions/PlmnIdList"
 				},
 				"perfReq": {
 					"$ref": "#/definitions/PrefReq"

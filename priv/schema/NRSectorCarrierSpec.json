@@ -26,16 +26,12 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
+											"txDirection",
 											"configuredMaxTxPower",
-											"pointAArfcnDLFDD",
-											"pointAArfcnULFDD",
-											"pointAArfcnTDD",
-											"fDDBwpTxStartDL",
-											"fDDBwpTxStartUL",
-											"fDDBwpTxBwDL",
-											"fDDBwpTxBwUL",
-											"tDDBwpTxStart",
-											"tDDBwpTxBw"
+											"arfcnDL",
+											"arfcnUL",
+											"bSChannelBwDL",
+											"bSChannelBwUL"
 										]
 									}
 								}

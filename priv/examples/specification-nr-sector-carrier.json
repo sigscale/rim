@@ -41,53 +41,34 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
+			"name": "txDirection",
+			"description": "Transmission direction",
+			"valueType": "TxDirection",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/TxDirection"
+		},
+		{
 			"name": "configuredMaxTxPower",
-			"description": "",
+			"description": "Maximum transmit power for all downlink channels in a cell totaled together",
 			"valueType": "integer"
 		},
 		{
-			"name": "pointAArfcnDLFDD",
-			"description": "",
+			"name": "arfcnDL",
+			"description": "NR Absolute Radio Frequency Channel Number (NR-ARFCN) for downlink",
 			"valueType": "integer"
 		},
 		{
-			"name": "pointAArfcnULFDD",
-			"description": "",
+			"name": "arfcnUL",
+			"description": "NR Absolute Radio Frequency Channel Number (NR-ARFCN) for uplink",
 			"valueType": "integer"
 		},
 		{
-			"name": "pointAArfcnTDD",
-			"description": "",
+			"name": "bSChannelBwDL",
+			"description": "BS Channel bandwidth in MHz for downlink (3GPP 38.104 clause 5.3)",
 			"valueType": "integer"
 		},
 		{
-			"name": "fDDBwpTxStartDL",
-			"description": "",
-			"valueType": "integer"
-		},
-		{
-			"name": "fDDBwpTxStartUL",
-			"description": "",
-			"valueType": "integer"
-		},
-		{
-			"name": "fDDBwpTxBwDL",
-			"description": "",
-			"valueType": "integer"
-		},
-		{
-			"name": "fDDBwpTxBwUL",
-			"description": "",
-			"valueType": "integer"
-		},
-		{
-			"name": "tDDBwpTxStart",
-			"description": "",
-			"valueType": "integer"
-		},
-		{
-			"name": "tDDBwpTxBw",
-			"description": "",
+			"name": "bSChannelBwUL",
+			"description": "BS Channel bandwidth in MHz for uplink (3GPP 38.104 clause 5.3)",
 			"valueType": "integer"
 		}
 	]

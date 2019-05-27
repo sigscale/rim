@@ -877,7 +877,7 @@
 									<element name="nbIoTcellFlag" type="en:yesNoType" minOccurs="0"/>
 									<element name="isChangeForEnergySavingAllowed" type="en:yesNoType" minOccurs="0"/>
 									<element name="ngranCellFlag" type="en:yesNoType" minOccurs="0"/>
-									<element name="nSSAI" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="nSSAI" type="ngc:SnssaiList" minOccurs="0"/>
 									<!-- End of inherited attributes from EUtranGenericCell -->
 									<element name="earfcnDl" type="short"/>
 									<element name="earfcnUl" type="short"/>
@@ -974,7 +974,7 @@
 									<element name="nbIoTcellFlag" type="en:yesNoType" minOccurs="0"/>
 									<element name="isChangeForEnergySavingAllowed" type="en:yesNoType" minOccurs="0"/>
 									<element name="ngranCellFlag" type="en:yesNoType" minOccurs="0"/>
-									<element name="nSSAI" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="nSSAI" type="ngc:SnssaiList" minOccurs="0"/>
 									<!-- End of inherited attributes from EUtranGenericCell -->
 									<element name="earfcn" type="short"/>
 									<element name="sfAssignment" type="short"/>

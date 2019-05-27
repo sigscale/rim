@@ -29,7 +29,7 @@
 											"peeParametersList",
 											"gnbId",
 											"gnbCuName",
-											"pLMNIdList",
+											"plmnIdList",
 											"nRCellCU",
 											"eP_F1C",
 											"eP_E1",

@@ -27,11 +27,11 @@
 											"id",
 											"userLabel",
 											"vnfParametersList",
-											"pLMNIdList",
-											"tacList",
+											"plmnIdList",
+											"nrTacList",
 											"sBIFqdn",
 											"sBIServiceList",
-											"nssai"
+											"snssaiList"
 										]
 									}
 								}

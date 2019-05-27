@@ -27,7 +27,7 @@
 											"userLabel",
 											"vnfParametersList",
 											"peeParametersList",
-											"pLMNIdList",
+											"plmnIdList",
 											"gNBId",
 											"eP_E1",
 											"eP_F1U",

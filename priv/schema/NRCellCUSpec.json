@@ -26,13 +26,14 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"nCGI",
-											"pLMNIdList",
-											"nSSAIList",
-											"rRMPolicy",
-											"vsDataContainer",
-											"energySavingProperties",
-											"eSPolicies"
+											"nCi",
+											"plmnIdList",
+											"snssaiList",
+											"rrmPolicyType",
+											"rrmPolicyNSSIId",
+											"rrmPolicyRatio",
+											"rrmPolicy",
+											"rrmPolicyRatio2"
 										]
 									}
 								}

@@ -30,6 +30,10 @@
 	],
 	"resourceSpecCharacteristic": [
 		{
+			"name": "id",
+			"valueType": "string"
+		},
+		{
 			"name": "dnPrefix",
 			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			"valueType": "Dn",
@@ -52,7 +56,7 @@
 		},
 		{
 			"name": "nSSIId",
-			"description": "This RDN uniquely identifies the NetworkSliceSubnet",
+			"description": "Network Slice SubNetwork Instance (NSSI) identity",
 			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
@@ -75,10 +79,10 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
 		},
 		{
-			"name": "sst",
-			"description": "Slice/service type of the network slice (3GPP 23.501 5.15.2)",
-			"valueType": "Sst",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/Sst"
+			"name": "serviceProfileList",
+			"description": "Service Profiles (3GPP TS 28.541 clause 6.3.3)",
+			"valueType": "ServiceProfileList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
 		}
 	]
 }

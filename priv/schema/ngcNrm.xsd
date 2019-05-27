@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	3GPP TS 28.541 5GC Network Resource Model XML schema definition
+	3GPP TS 28.541 5GC Network Resource Model
+	XML schema definition
 	ngcNrm.xsd
 -->
 <schema
-		xmlns="http://www.w3.org/2001/XMLSchema"
-		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
-		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
-		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
 		targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
 		elementFormDefault="qualified"
-		attributeFormDefault="unqualified">
-
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
-			schemaLocation="genericNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
-			schemaLocation="eutranNrm.xsd" />
-	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
-			schemaLocation="nrNrm.xsd" />
+		attributeFormDefault="unqualified"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm">
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+			schemaLocation="genericNrm.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+			schemaLocation="eutranNrm.xsd"/>
+	<import
+			namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
+			schemaLocation="nrNrm.xsd"/>
 
 	<!--NGC NRM IM class associated XML elements -->
 	<complexType name="aMFIdentifier">
@@ -28,7 +31,7 @@
 			<element name="amfPointer" type="ngc:AmfPointer"/>
 		</sequence>
 	</complexType>
-	<simpleType name="AmfRegionId">
+		<simpleType name="AmfRegionId">
 		<restriction base="integer">
 			<maxInclusive value="255"/>
 			<!-- The AMF Region ID is 8-bitslength, defined in 23.003 -->
@@ -38,16 +41,17 @@
 		<restriction base="integer">
 			<maxInclusive value="1023"/>
 			<!-- The AMF Region ID is 10-bits length, defined in 23.003 -->
-		</restriction> </simpleType>
+		</restriction>
+	</simpleType>
 	<simpleType name="AmfPointer">
 		<restriction base="integer">
 			<maxInclusive value="63"/>
 			<!-- The AMF Pointer is 6-bits length, defined in 23.003 -->
 		</restriction>
 	</simpleType>
-	<complexType name="NgTACList">
+	<complexType name="NrTACList">
 		<sequence>
-			<element name="tac" type="nn:NgTac" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="tac" type="nn:NrTac" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
 	<complexType name="NFProfileList">
@@ -58,12 +62,12 @@
 	<complexType name="NfProfile">
 		<sequence>
 			<element name="nfInstanceId" type="string"/>
-			<!-- nfInstanceId is uuid of NF instance -->
+				<!-- nfInstanceId is uuid of NF instance -->
 			<element name="nfType" type="ngc:NfType"/>
 			<element name="nfStatus" type="ngc:NfStatus"/>
 			<element name="plmn" type="en:PLMNId"/>
 			<element name="nfType" type="ngc:NfType"/>
-			<element name="sNssais" type="ngc:NssaiList"/>
+			<element name="sNssais" type="ngc:SnssaiList"/>
 			<element name="fqdn" type="string"/>
 			<element name="interPlmnFqdn" type="string"/>
 			<element name="fqdn" type="string"/>
@@ -88,11 +92,10 @@
 			<element name="interPlmnFqdn" type="string"/>
 			<element name="ipEndPoints" type="ngc:IpEndpoints"/>
 			<element name="apiPrefix" type="string"/>
-			<element name="defaultNotificationSubscription"
-					type="ngc:DefaultNotificationSubscription"/>
+			<element name="defaultNotificationSubscriptions" type="string"/>
 			<element name="allowedPlmns" type="en:PLMNIdList"/>
 			<element name="allowedNfTypes" type="ngc:NFTypeList"/>
-			<element name="allowedNssais" type="ngc:NssaiList"/>
+			<element name="allowedNssais" type="ngc:SNssai"/>
 			<element name="capacity" type="string"/>
 			<element name="supportedFeatures" type="string"/>
 		</sequence>
@@ -201,13 +204,13 @@
 			<element name="nfProfile" type="ngc:NfProfile"/>
 		</sequence>
 	</complexType>
-	<complexType name="NSIIdList">
+	<complexType name="NSILdList">
 		<sequence>
 			<element name="nSIId" type="string"/>
-			<!-- NSI Id is defined in TS 29.531 -->
+				<!-- NSI Id is defined in TS 29.531 -->
 		</sequence>
 	</complexType>
-	<complexType name="NssaiList">
+	<complexType name="SnssaiList">
 		<sequence>
 			<element name="sNssai" type="ngc:SNssai"/>
 		</sequence>
@@ -239,8 +242,8 @@
 		<restriction base="integer">
 		</restriction>
 	</simpleType>
-	<element name="AMFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+
+	<element name="AMFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -248,14 +251,14 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
+								<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="aMFIdentifier" type="ngc:aMFIdentifier"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
 									<element name="weightFactor" type="ngc:WeightFactor"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 									<element name="aMFSet" type="xn:dn" minOccurs="0"/>
 								</all>
 							</complexType>
@@ -281,8 +284,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="SMFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="SMFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -290,13 +292,13 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
+								<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
-									<element name="tACList" type="ngc:NgTACList"/>
+									<element name="nRTACList" type="ngc:NrTACList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -315,8 +317,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="UPFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="UPFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -324,12 +325,11 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
-									<element name="tACList" type="ngc:NgTACList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="nRTACList" type="ngc:NrTACList"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -347,8 +347,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="N3IWFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="N3IWFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -356,7 +355,7 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
+								<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 								</all>
@@ -372,8 +371,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="PCFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="PCFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -381,13 +379,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList" />
 									<element name="sBIFqdn" type="string" />
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -405,8 +402,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="AUSFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="AUSFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -414,13 +410,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -435,8 +430,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="UDMFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="UDMFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -444,13 +438,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -466,8 +459,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="UDRFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="UDRFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -475,13 +467,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+							<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -494,8 +485,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="UDSFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="UDSFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -503,13 +493,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -522,8 +511,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="NRFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="NRFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -531,14 +519,13 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+							<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
-									<element name="nSIIdList" type="ngc:NSIIdList" minOccurs="0"/>
+									<element name="nSIIdList" type="string" minOccurs="0"/>
 									<element name="nFProfileList" type="ngc:NFProfileList" minOccurs="0"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -552,8 +539,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="NSSFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="NSSFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -561,13 +547,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
-									<element name="nSIIdList" type="ngc:NSIIdList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="nSIIdList" type="string"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -582,8 +567,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="SMSFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="SMSFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -591,9 +575,8 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
@@ -611,8 +594,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="LMFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="LMFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -620,9 +602,8 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 								</all>
 							</complexType>
@@ -636,8 +617,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="NGEIRFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="NGEIRFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -645,13 +625,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -664,8 +643,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="SEPPFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="SEPPFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -673,9 +651,8 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 								</all>
 							</complexType>
@@ -690,8 +667,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="NWDAFFunction"
-			substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+	<element name="NWDAFFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -699,13 +675,12 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-									<element name="userLabel" type="string"/>
-									<element name="vnfParametersList"
-											type="xn:vnfParametersListType" minOccurs="0"/>
+								<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="sBIFqdn" type="string"/>
 									<element name="sBISerivceList" type="ngc:SBIServiceList"/>
-									<element name="nssai" type="ngc:NssaiList" minOccurs="0"/>
+									<element name="snssaiList" type="ngc:SnssaiList" minOccurs="0"/>
 								</all>
 							</complexType>
 						</element>
@@ -718,6 +693,7 @@
 			</complexContent>
 		</complexType>
 	</element>
+
 	<element name="EP_N2">
 		<complexType>
 			<complexContent>
@@ -1216,7 +1192,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="EP_N27">
+		<element name="EP_N27">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1241,7 +1217,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="EP_N31">
+		<element name="EP_N31">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
@@ -1266,7 +1242,7 @@
 			</complexContent>
 		</complexType>
 	</element>
-	<element name="EP_N32">
+		<element name="EP_N32">
 		<complexType>
 			<complexContent>
 				<extension base="xn:NrmClass">
