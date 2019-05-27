@@ -30,9 +30,9 @@
 											"plmnIdList",
 											"snssaiList",
 											"rrmPolicyType",
+											"rrmPolicy",
 											"rrmPolicyNSSIId",
 											"rrmPolicyRatio",
-											"rrmPolicy",
 											"rrmPolicyRatio2"
 										]
 									}

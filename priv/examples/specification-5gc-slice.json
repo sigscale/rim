@@ -74,12 +74,6 @@
 		},
 		{
 			"name": "serviceProfileList",
-			"description": "List of ServiceProfile supported by the network slice",
-			"valueType": "ServiceProfileList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
-		},
-		{
-			"name": "serviceProfileList",
 			"description": "Service Profiles (3GPP TS 28.541 clause 6.3.3)",
 			"valueType": "ServiceProfileList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"

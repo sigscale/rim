@@ -148,7 +148,7 @@
 									<element name="peeParametersList" type="xn:peeParametersListType" minOccurs="0"/>
 									<element name="gnbId" type="nn:GnbId"/>
 									<element name="gnbIdLength" type="nn:GnbIdLength"/>
-									<element name="gnbDUId" type="nn:GnbDuId"/>
+									<element name="gnbDuId" type="nn:GnbDuId"/>
 									<element name="gnbDuName" type="nn:GnbName" minOccurs="0"/>
 								</all>
 							</complexType>

@@ -66,6 +66,7 @@
 		{
 			"name": "rrmPolicyNSSIId",
 			"description": "S-NSSAIs for which a rrmPolicyRatio value is specified",
+			"valueType": "DnList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
 		},
 		{

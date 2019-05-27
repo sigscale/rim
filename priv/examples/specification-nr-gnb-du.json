@@ -53,34 +53,22 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbId"
 		},
 		{
-			"name": "gnbDUId",
+			"name": "gnbIdLength",
+			"description": "Indicates number of bits encoding Global gNB ID  (3GPP TS 38.413 clause 9.3.1.6)",
+			"valueType": "GnbIdLength",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbIdLength"
+		},
+		{
+			"name": "gnbDuId",
 			"description": "Identifies the DU at least within a gNB (3GPP 38.473)",
-			"valueType": "GnbDUId",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbDUId"
+			"valueType": "GnbDuId",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbDuId"
 		},
 		{
 			"name": "gnbDuName",
 			"description": "Identifies the Distributed Entity of an NR node (3GPP 38.473)",
 			"valueType": "GnbName",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbName"
-		},
-		{
-			"name": "nRCellDU",
-			"description": "Represents the information of a cell known by DU",
-			"valueType": "NRCellDUList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/NRCellDUList"
-		},
-		{
-			"name": "eP_F1C",
-			"description": "Local end point of control plane interface (F1-C) between DU and CU or CU-UP",
-			"valueType": "EP_F1CList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1CList"
-		},
-		{
-			"name": "eP_F1U",
-			"description": "Local end point of user plane interface (F1-U) between DU and CU or CU-UP",
-			"valueType": "EP_F1UList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1UList"
 		}
 	]
 }

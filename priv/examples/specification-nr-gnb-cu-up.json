@@ -47,58 +47,22 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
-			"name": "plmnIdList",
-			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
-			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
-		},
-		{
-			"name": "gNBId",
+			"name": "gnbId",
 			"description": "Identifies a gNB within a PLMN (3GPP 38.300)",
 			"valueType": "GnbId",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbId"
 		},
 		{
-			"name": "eP_E1",
-			"description": "Local end point of E1 interface between gNB-CU-CP and gNB-CU-UP",
-			"valueType": "EP_E1List",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_E1List"
+			"name": "gnbIdLength",
+			"description": "Indicates number of bits encoding Global gNB ID  (3GPP TS 38.413 clause 9.3.1.6)",
+			"valueType": "GnbIdLength",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbIdLength"
 		},
 		{
-			"name": "eP_F1U",
-			"description": "Local end point of user plane interface (F1-U) between DU and CU or CU-UP",
-			"valueType": "EP_F1UList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/EP_F1UList"
-		},
-		{
-			"name": "eP_XnU",
-			"description": "Local end point of Xn user plane (Xn-U) interface between two NG-RAN nodes",
-			"valueType": "EP_XnUList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_XnUList"
-		},
-		{
-			"name": "eP_NgU",
-			"description": "Local end point of NG user plane (NG-U) interface between gNB and UPGW",
-			"valueType": "EP_NgUList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_NgUList"
-		},
-		{
-			"name": "eP_X2U",
-			"description": "Local end point of X2 user plane (X2-U) interface",
-			"valueType": "EP_X2UList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_X2UList"
-		},
-		{
-			"name": "eP_S1U",
-			"description": "Local end point of S1-U interface towards S-GW node",
-			"valueType": "EP_S1UList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrsNrm#/definitions/EP_S1UList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+			"name": "plmnIdList",
+			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
+			"valueType": "PlmnIdList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
 		}
 	]
 }

@@ -28,11 +28,9 @@
 											"vnfParametersList",
 											"peeParametersList",
 											"gnbId",
-											"gnbDUId",
+											"gnbDuId",
 											"gnbDuName",
-											"nRCellDU",
-											"eP_F1C",
-											"eP_F1U"
+											"gnbIdLength"
 										]
 									}
 								}

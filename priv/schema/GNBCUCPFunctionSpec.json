@@ -28,15 +28,9 @@
 											"vnfParametersList",
 											"peeParametersList",
 											"gnbId",
+											"gnbIdLength",
 											"gnbCuName",
-											"plmnIdList",
-											"nRCellCU",
-											"eP_F1C",
-											"eP_E1",
-											"eP_XnC",
-											"eP_X2C",
-											"eP_NgC",
-											"vsDataContainer"
+											"plmnIdList"
 										]
 									}
 								}

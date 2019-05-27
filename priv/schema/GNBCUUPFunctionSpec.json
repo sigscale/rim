@@ -27,15 +27,9 @@
 											"userLabel",
 											"vnfParametersList",
 											"peeParametersList",
-											"plmnIdList",
-											"gNBId",
-											"eP_E1",
-											"eP_F1U",
-											"eP_XnU",
-											"eP_NgU",
-											"eP_X2U",
-											"eP_S1U",
-											"vsDataContainer"
+											"gnbId",
+											"gnbIdLength",
+											"plmnIdList"
 										]
 									}
 								}
