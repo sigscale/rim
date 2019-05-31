@@ -35,7 +35,7 @@ yarn.lock:
 	yarn install
 
 $(abs_builddir)/build/polymer.json: package.json $(abs_builddir)/index.html ${patsubst %,$(abs_builddir)/src/%,$(MODULES)}
-	yarn run build:static
+	polymer build
 
 check_DATA = .polymer_lint_ok
 

@@ -17,15 +17,15 @@
         "modules"
       ],
       "js": {
-        "minify": false
+        "minify": true
       },
       "css": {
-        "minify": false
+        "minify": true
       },
       "html": {
-        "minify": false
+        "minify": true
       },
-      "bundle": false,
+      "bundle": true,
       "addServiceWorker": true
     }
   ],
