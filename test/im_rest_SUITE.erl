@@ -34,6 +34,9 @@
 -define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
 -define(PathParty, "/partyManagement/v2/").
 
+%% support deprecated_time_unit()
+-define(SECOND, seconds).
+
 %%---------------------------------------------------------------------
 %%  Test server callback functions
 %%---------------------------------------------------------------------
@@ -125,7 +128,8 @@ all() ->
 			map_to_candidate, candidate_to_map, post_candidate, get_candidates, get_candidate,
 			map_to_specification, specification_to_map, post_specification, get_specifications,
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
-			get_resource, geoaxis].
+			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
+			advanced_query_candidate, query_catalog, advanced_query_catalog].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1425,6 +1429,193 @@ geoaxis(_Config) ->
 	Neg = -(rand:uniform(1800000)),
 	Neg = im_rest:geoaxis(im_rest:geoaxis(Neg)).
 
+query_category() ->
+	[{userdata, [{doc, "Query category entry in category table"}]}].
+
+query_category(Config) ->
+	F = fun F(0, Acc) ->
+					Acc;
+			F(N, Acc) ->
+				Category = #category{name = get_name(rand:uniform(3)),
+						class_type = "ResourceCategory", base_type = "Category",
+						start_date = erlang:system_time(?SECOND),
+						end_date = erlang:system_time(?SECOND)},
+				{ok, C} = im:add_category(Category),
+				F(N - 1, [C | Acc])
+	end,
+	Categories = F(rand:uniform(100), []),
+	#category{id = Id, name = Name} = lists:nth(rand:uniform(length(Categories)), Categories),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+	Query = "id=" ++ Id ++ "&name=" ++ Name,
+	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCategory?" ++ Query,
+			[Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	[#{"id" := Id, "name" := Name, "@type" := "ResourceCategory",
+			"@baseType" := "Category"}] = ResourceMap.
+
+advanced_query_category() ->
+	[{userdata, [{doc, "Query category entry in category table using advanced query"}]}].
+
+advanced_query_category(Config) ->
+	F = fun F(0, Acc) ->
+					Acc;
+			F(N, Acc) ->
+				Category = #category{name = get_name(rand:uniform(3)),
+						class_type = "ResourceCategory", base_type = "Category",
+						start_date = erlang:system_time(?SECOND),
+						end_date = erlang:system_time(?SECOND)},
+				{ok, C} = im:add_category(Category),
+				F(N - 1, [C | Acc])
+	end,
+	Categories = F(rand:uniform(100), []),
+	F2 = fun(#category{name = "RAN"}) ->
+				true;
+			(_) ->
+				false
+	end,
+	FilteredCategories = lists:filter(F2, Categories),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+   Filter = "?filter=\"[{name=RAN}]\"",
+	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCategory?" ++ Filter,
+			[Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	[#{"name" := "RAN", "@type" := "ResourceCategory",
+			"@baseType" := "Category"} | _] = ResourceMap,
+	length(FilteredCategories) == length(ResourceMap).
+
+query_candidate() ->
+	[{userdata, [{doc, "Query candidate entry in candidate table"}]}].
+
+query_candidate(Config) ->
+	F = fun F(0, Acc) ->
+					Acc;
+			F(N, Acc) ->
+				Candidate = #candidate{name = get_name(rand:uniform(3)),
+						class_type = "ResourceCandidate", base_type = "Candidate",
+						start_date = erlang:system_time(?SECOND),
+						end_date = erlang:system_time(?SECOND)},
+				{ok, C} = im:add_candidate(Candidate),
+				F(N - 1, [C | Acc])
+	end,
+	Candidates = F(rand:uniform(100), []),
+	#candidate{id = Id, name = Name} = lists:nth(rand:uniform(length(Candidates)), Candidates),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+	Query = "id=" ++ Id ++ "&name=" ++ Name,
+	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCandidate?" ++ Query,
+			[Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	[#{"id" := Id, "name" := Name, "@type" := "ResourceCandidate",
+			"@baseType" := "Candidate"}] = ResourceMap.
+
+advanced_query_candidate() ->
+	[{userdata, [{doc, "Query candidate entry in candidate table using advanced query"}]}].
+
+advanced_query_candidate(Config) ->
+	F = fun F(0, Acc) ->
+					Acc;
+			F(N, Acc) ->
+				Candidate = #candidate{name = get_name(rand:uniform(3)),
+						class_type = "ResourceCandidate", base_type = "Candidate",
+						start_date = erlang:system_time(?SECOND),
+						end_date = erlang:system_time(?SECOND)},
+				{ok, C} = im:add_candidate(Candidate),
+				F(N - 1, [C | Acc])
+	end,
+	Candidates = F(rand:uniform(100), []),
+	F2 = fun(#candidate{name = "EPC"}) ->
+				true;
+			(_) ->
+				false
+	end,
+	FilteredCandidates = lists:filter(F2, Candidates),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+   Filter = "?filter=\"[{name=EPC}]\"",
+	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCandidate?" ++ Filter,
+			[Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	[#{"name" := "EPC", "@type" := "ResourceCandidate",
+			"@baseType" := "Candidate"} | _] = ResourceMap,
+	length(FilteredCandidates) == length(ResourceMap).
+
+query_catalog() ->
+	[{userdata, [{doc, "Query catalog entry in catalog table"}]}].
+
+query_catalog(Config) ->
+	F = fun F(0, Acc) ->
+					Acc;
+			F(N, Acc) ->
+				Catalog = #catalog{name = get_name(rand:uniform(3)),
+						class_type = "ResourceCatalog", base_type = "Catalog",
+						start_date = erlang:system_time(?SECOND),
+						end_date = erlang:system_time(?SECOND)},
+				{ok, C} = im:add_catalog(Catalog),
+				F(N - 1, [C | Acc])
+	end,
+	Catalogs = F(rand:uniform(100), []),
+	#catalog{id = Id, name = Name}
+			= lists:nth(rand:uniform(length(Catalogs)), Catalogs),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+	Query = "id=" ++ Id ++ "&name=" ++ Name,
+	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCatalog?" ++ Query,
+			[Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	[#{"id" := Id, "name" := Name, "@type" := "ResourceCatalog",
+			"@baseType" := "Catalog"}] = ResourceMap.
+
+advanced_query_catalog() ->
+	[{userdata, [{doc, "Query catalog entry in catalog table using advanced query"}]}].
+
+advanced_query_catalog(Config) ->
+	F = fun F(0, Acc) ->
+					Acc;
+			F(N, Acc) ->
+				Catalog = #catalog{name = get_name(rand:uniform(3)),
+						class_type = "ResourceCatalog", base_type = "Catalog",
+						start_date = erlang:system_time(?SECOND),
+						end_date = erlang:system_time(?SECOND)},
+				{ok, C} = im:add_catalog(Catalog),
+				F(N - 1, [C | Acc])
+	end,
+	Catalogs = F(rand:uniform(100), []),
+	F2 = fun(#category{name = "Core"}) ->
+				true;
+			(_) ->
+				false
+	end,
+	FilteredCatalogs = lists:filter(F2, Catalogs),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+   Filter = "?filter=\"[{name=Core}]\"",
+	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCatalog?" ++ Filter,
+			[Accept, auth_header()]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	{ok, ResourceMap} = zj:decode(ResponseBody),
+	[#{"name" := "Core", "@type" := "ResourceCatalog",
+			"@baseType" := "Catalog"} | _] = ResourceMap,
+	length(FilteredCatalogs) == length(ResourceMap).
+
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
@@ -1747,3 +1938,10 @@ fill_resource_char(N, Acc) ->
 			class_type = random_string(5),
 			schema = CharSchema, value = random_string(15)},
 	fill_resource_char(N - 1, [Characteristic | Acc]).
+
+get_name(1) ->
+	"RAN";
+get_name(2) ->
+	"EPC";
+get_name(3) ->
+	"Core".
