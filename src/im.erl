@@ -181,7 +181,7 @@ query(Table, Cont, Size, Sort, MatchSpec) ->
 %%		The result list will be sorted by the record elements listed in `Sort', in order.
 query(Cont, undefined, Table, Sort, MatchSpec, CountOnly)
 		when is_atom(Table), is_list(Sort), is_boolean(CountOnly) ->
-	{ok, Size} = application:get_env(sigscale_fm, rest_page_size),
+	{ok, Size} = application:get_env(sigscale_im, rest_page_size),
 	query1(Cont, Size, Table, Sort, MatchSpec, CountOnly);
 query(Cont, Size, Table, Sort, MatchSpec, CountOnly)
 		when is_atom(Table), is_integer(Size),
