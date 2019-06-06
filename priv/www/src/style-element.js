@@ -119,7 +119,7 @@ styleElement.innerHTML = `<template>
 				background-color: #ffb04c;
 			}
 			.timestamp {
-				direction: rtl;
+				direction: ltr;
 			}
 			paper-fab {
 				background: var(--paper-lime-a700);
