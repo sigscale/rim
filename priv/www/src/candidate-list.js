@@ -24,15 +24,16 @@ class candidateList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="candidateGrid"
-					loading="{{loading}}">
+					loading="{{loading}}"
+					active-item="{{activeItem}}">
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="candidateName">
+								path="name">
 							<vaadin-grid-filter
 									id="filter"
 									aria-label="Name"
-									path="candidateName"
+									path="name"
 									value="{{_filterCatalogName}}">
 								<input
 										slot="filter"
@@ -47,11 +48,11 @@ class candidateList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="candidateDescription">
+								path="description">
 							<vaadin-grid-filter
 									id="filter"
 									aria-label="Description"
-									path="candidateDescription"
+									path="description"
 									value="{{_filterCatalogDescription}}">
 								<input
 										slot="filter"
@@ -68,11 +69,11 @@ class candidateList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="candidateClass">
+								path="@type">
 							<vaadin-grid-filter
 									id="filter"
 									aria-label="Class"
-									path="candidateClass"
+									path="@type"
 									value="{{_filterCatalogClass}}">
 								<input
 										slot="filter"
@@ -89,11 +90,11 @@ class candidateList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="candidateStatus">
+								path="lifecycleStatus">
 							<vaadin-grid-filter
 									id="filter"
 									aria-label="Status"
-									path="candidateStatus"
+									path="lifecycleStatus"
 									value="{{_filterCatalogStatus}}">
 								<input
 										slot="filter"
@@ -131,6 +132,22 @@ class candidateList extends PolymerElement {
 			etag: {
 				type: String,
 				value: null
+			},
+			_filterCatalogName: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCatalogDescription: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCatalogClass: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterCatalogStatus: {
+				type: Boolean,
+				observer: '_filterChanged'
 			}
 		}
 	}
@@ -146,21 +163,90 @@ class candidateList extends PolymerElement {
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
 		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
 		var query = "";
+		delete ajax.params['filter'];
 		function checkHead(param) {
-			return param.path == "candidateName" || param.path == "candidateDescription"
-				|| param.path == "candidateClass" || param.path == "candidateStatus";
+			return param.path == "name" || param.path == "description"
+				|| param.path == "@type";
 		}
 		params.filters.filter(checkHead).forEach(function(filter) {
 			if(filter.value) {
 				if (query) {
-					query = query + "]," + filter.path + ".like=[" + filter.value + "%";
+					query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
-					query = "[{" + filter.path + ".like=[" + filter.value + "%";
+					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+				}
+			}
+		});
+		function checkLifeCycle(param) {
+			return param.path == "lifecycleStatus";
+		}
+		params.filters.filter(checkLifeCycle).forEach(function(filter) {
+			if(filter.value) {
+				if("Obsolete".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Obsolete";
+					} else {
+						query = "[{lifecycleStatus=Obsolete";
+					}
+				} else if("Launched".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Launched";
+					} else {
+						query = "[{lifecycleStatus=Launched";
+					}
+				} else if("Active".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Active";
+					} else {
+						query = "[{lifecycleStatus=Active";
+					}
+				} else if("In ".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus.in=[In Study,In Design, In Test]";
+					} else {
+						query = "[{lifecycleStatus.in=[In Study,In Design, In Test]";
+					}
+				} else if("In Study".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=In Study";
+					} else {
+						query = "[{lifecycleStatus=In Study";
+					}
+				} else if("In Design".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=In Design";
+					} else {
+						query = "[{lifecycleStatus=In Design";
+					}
+				} else if("Re".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus.in=[Rejected,Retired]";
+					} else {
+						query = "[{lifecycleStatus.in=[Rejected,Retired]";
+					}
+				} else if("Rejected".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Rejected";
+					} else {
+						query = "[{lifecycleStatus=Rejected";
+					}
+				} else if("Retired".startsWith(filter.value)) {
+					if (query) {
+						query = query + ",lifecycleStatus=Retired";
+					} else {
+						query = "[{lifecycleStatus=Retired";
+					}
+				} else {
+					if (query) {
+						query = query + ",lifecycleStatus=" + filter.value;
+					} else {
+						query = "[{lifecycleStatus=" + filter.value;
+					}
 				}
 			}
 		});
 		if(query) {
-			ajax.params['filter'] = "\"" + query + "]}]\"";
+			ajax.params['filter'] = "\"" + query + "}]\"";
 		}
 		if(candidateList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = candidateList.etag;
@@ -223,6 +309,12 @@ class candidateList extends PolymerElement {
 			}
 			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
+	}
+
+	_filterChanged(filter) {
+		this.etag = null;
+		var grid = this.shadowRoot.getElementById('candidateGrid');
+		grid.size = 0;
 	}
 }
 
