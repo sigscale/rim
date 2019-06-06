@@ -1597,7 +1597,7 @@ advanced_query_catalog(Config) ->
 				F(N - 1, [C | Acc])
 	end,
 	Catalogs = F(rand:uniform(100), []),
-	F2 = fun(#category{name = "Core"}) ->
+	F2 = fun(#catalog{name = "Core"}) ->
 				true;
 			(_) ->
 				false
