@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_candidates/2, get_candidate/2, post_candidate/1,
+-export([get_candidates/3, get_candidate/2, post_candidate/1,
 		delete_candidate/1]).
 -export([candidate/1]).
 
@@ -50,22 +50,25 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec get_candidates(Query, Headers) -> Result
+-spec get_candidates(Method, Query, Headers) -> Result
 	when
+		Method :: string(), % "GET" | "HEAD"
 		Query :: [{Key :: string(), Value :: string()}],
 		Headers :: [tuple()],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on `ResourceCandidate' collection.
-get_candidates(Query, Headers) ->
+%% @doc Body producing function for
+%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceCandidate'
+%% 	requests.
+get_candidates(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, Filters}, NewQuery} ->
-			get_candidates(NewQuery, Filters, Headers);
+			get_candidates(Method, NewQuery, Filters, Headers);
 		false ->
-			get_candidates(Query, [], Headers)
+			get_candidates(Method, Query, [], Headers)
 	end.
 %% @hidden
-get_candidates(Query, Filters, Headers) ->
+get_candidates(Method, Query, Filters, Headers) ->
 	case {lists:keyfind("if-match", 1, Headers),
 			lists:keyfind("if-range", 1, Headers),
 			lists:keyfind("range", 1, Headers)} of
@@ -95,7 +98,7 @@ get_candidates(Query, Filters, Headers) ->
 						{error, _} ->
 							{error, 400};
 						{ok, {Start, End}} ->
-							query_start(Query, Filters, Start, End)
+							query_start(Method, Query, Filters, Start, End)
 					end;
 				PageServer ->
 					case im_rest:range(Range) of
@@ -109,15 +112,17 @@ get_candidates(Query, Filters, Headers) ->
 			{error, 400};
 		{_, {"if-range", _}, false} ->
 			{error, 400};
-		{false, false, {"range", Range}} ->
+		{false, false, {"range", "items=1-" ++ _ = Range}} ->
 			case im_rest:range(Range) of
 				{error, _} ->
 					{error, 400};
 				{ok, {Start, End}} ->
-					query_start(Query, Filters, Start, End)
+					query_start(Method, Query, Filters, Start, End)
 			end;
+		{false, false, {"range", _Range}} ->
+			{error, 416};
 		{false, false, false} ->
-			query_start(Query, Filters, undefined, undefined)
+			query_start(Method, Query, Filters, undefined, undefined)
 	end.
 
 -spec get_candidate(Id, Query) -> Result
@@ -297,29 +302,35 @@ candidate([], _, Acc) ->
 %%----------------------------------------------------------------------
 
 %% @hidden
-query_start(Query, Filters, RangeStart, RangeEnd) ->
+query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 	try
-		case lists:keyfind("filter", 1, Query) of
+		CountOnly = case Method of
+			"GET" ->
+				false;
+			"HEAD" ->
+				true
+		end,
+		FilterArgs = case lists:keyfind("filter", 1, Query) of
 			{_, String} ->
 				{ok, Tokens, _} = im_rest_query_scanner:string(String),
-				case im_rest_query_parser:parse(Tokens) of
-					{ok, [{array, [{complex, [{"id", like, [Id]}]}]}]} ->
-						{#catalog{id = Id ++ '_', _ = '_'}, []};
-					{ok, [{array, [{complex, [{"id", exact, [Id]}]}]}]} ->
-						{#catalog{id = Id, _ = '_'}, []}
-				end;
+				{ok, Filter} = im_rest_query_parser:parse(Tokens),
+				parse_filter(Filter);
 			false ->
-				{'_', []}
+				'_'
+		end,
+		Sort = case lists:keyfind("sort", 1, Query) of
+			{_, StringS} ->
+				sorts(StringS);
+			false ->
+				[]
+		end,
+		MFA = [im, query, [candidate, Sort, FilterArgs, CountOnly]],
+		case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
+			{ok, PageServer, Etag} ->
+				query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
+			{error, _Reason} ->
+				{error, 500}
 		end
-	of
-		{MatchHead, MatchConditions} ->
-			MFA = [im, query_candidate, [MatchHead, MatchConditions]],
-			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
-				{ok, PageServer, Etag} ->
-					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
-				{error, _Reason} ->
-					{error, 500}
-			end
 	catch
 		_ ->
 			{error, 400}
@@ -330,6 +341,11 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 	case gen_server:call(PageServer, {Start, End}, infinity) of
 		{error, Status} ->
 			{error, Status};
+		{undefined, ContentRange} ->
+			Headers = [{content_type, "application/json"},
+				{etag, Etag}, {accept_ranges, "items"},
+				{content_range, ContentRange}],
+			{ok, Headers, []};
 		{Events, ContentRange} ->
 			Candidates = lists:map(fun candidate/1, Events),
 			Body = zj:encode(Candidates),
@@ -339,3 +355,366 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 			{ok, Headers, Body}
 	end.
 
+-spec parse_filter(Query) -> Result
+	when
+		Query :: term(),
+		Result :: ets:match_spec().
+%% @doc Create `[MatchHead, MatchConditions]' from `Query'.
+%% 	MatchHead = ets:match_pattern()
+%%		MatchConditions = [tuple()]
+%% @private
+parse_filter(Query) ->
+	parse_filter(Query, #candidate{_ = '_'}, []).
+%% @hidden
+parse_filter([{array, [{complex, {all, Filters}}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filters, all, MatchHead, MatchConditions);
+parse_filter([{array, [{complex, {any, Filters}}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filters, any, MatchHead, MatchConditions);
+parse_filter([{array, [{complex, [{in, Filter}]}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filter, all, MatchHead, MatchConditions);
+parse_filter([{array, [{complex, Filter}]}], MatchHead, MatchConditions) ->
+	parse_filter(Filter, all, MatchHead, MatchConditions);
+parse_filter([], MatchHead, MatchConditions) ->
+	[{MatchHead, MatchConditions, ['$_']}].
+
+%% @hidden
+parse_filter([{like, "id", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#candidate{id = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#candidate{id = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$1', Like} | MatchConditions],
+			{MatchHead#candidate{id = '$1'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "id", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$1', Cond, []),
+	NewMatchHead = MatchHead#candidate{id = '$1'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "id", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#candidate{id = Name}, MatchConditions);
+parse_filter([{exact, "id", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$1', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{id = '$1'}, NewMatchConditions);
+parse_filter([{notexact, "id", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#candidate{id = '$1'},
+	NewMatchConditions = [{'/=', '$1', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "id", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$1', []),
+	NewMatchHead = MatchHead#candidate{id = '$1'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "href", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#candidate{href = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#candidate{href = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$2', Like} | MatchConditions],
+			{MatchHead#candidate{href = '$2'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "href", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$2', Cond, []),
+	NewMatchHead = MatchHead#candidate{href = '$2'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "href", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#candidate{href = Name}, MatchConditions);
+parse_filter([{exact, "href", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$2', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{href = '$2'}, NewMatchConditions);
+parse_filter([{notexact, "href", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#candidate{href = '$2'},
+	NewMatchConditions = [{'/=', '$2', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "href", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$2', []),
+	NewMatchHead = MatchHead#candidate{href = '$2'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "name", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#candidate{name = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#candidate{name = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$3', Like} | MatchConditions],
+			{MatchHead#candidate{name = '$3'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "name", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$3', Cond, []),
+	NewMatchHead = MatchHead#candidate{name = '$3'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "name", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#candidate{name = Name}, MatchConditions);
+parse_filter([{exact, "name", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$3', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{name = '$3'}, NewMatchConditions);
+parse_filter([{notexact, "name", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#candidate{name = '$3'},
+	NewMatchConditions = [{'/=', '$3', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "name", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$3', []),
+	NewMatchHead = MatchHead#candidate{name = '$3'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "description", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#candidate{description = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#candidate{description = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$4', Like} | MatchConditions],
+			{MatchHead#candidate{description = '$4'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "description", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$4', Cond, []),
+	NewMatchHead = MatchHead#candidate{description = '$4'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "description", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#candidate{description = Name}, MatchConditions);
+parse_filter([{exact, "description", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$4', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{description = '$4'}, NewMatchConditions);
+parse_filter([{notexact, "description", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#candidate{description = '$4'},
+	NewMatchConditions = [{'/=', '$4', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "description", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$4', []),
+	NewMatchHead = MatchHead#candidate{description = '$4'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@type", [Like]} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Like) ->
+	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
+		$% when Cond == all ->
+			Prefix = lists:droplast(Like),
+			{MatchHead#candidate{class_type = Prefix ++ '_'}, MatchConditions};
+		_Name when Cond == all ->
+			{MatchHead#candidate{class_type = Like}, MatchConditions};
+		$% when Cond == any ->
+			NewMatchCondition1 = [{'==', '$5', Like} | MatchConditions],
+			{MatchHead#candidate{class_type = '$5'}, NewMatchCondition1}
+	end,
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{like, "@type", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(Like) ->
+	NewMatchConditions = like(Like, '$5', Cond, []),
+	NewMatchHead = MatchHead#candidate{class_type = '$5'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "@type", Name} | T], all, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	parse_filter(T, all, MatchHead#candidate{class_type = Name}, MatchConditions);
+parse_filter([{exact, "@type", Name} | T], any, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchConditions = [{'==', '$5', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{class_type = '$5'}, NewMatchConditions);
+parse_filter([{notexact, "@type", Name} | T], Cond, MatchHead, MatchConditions)
+		when is_list(Name) ->
+	NewMatchHead = MatchHead#candidate{class_type = '$5'},
+	NewMatchConditions = [{'/=', '$5', Name} | MatchConditions],
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{in, "@type", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$5', []),
+	NewMatchHead = MatchHead#candidate{class_type = '$5'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "In Study"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = in_study}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "In Design"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = in_design}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "In Test"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = in_test}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Rejected"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = rejected}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Active"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = active}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Launched"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = launched}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Retired"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = retired}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Obsolete"} | T], all, MatchHead, MatchConditions) ->
+	parse_filter(T, all, MatchHead#candidate{status = obsolete}, MatchConditions);
+parse_filter([{exact, "lifecycleStatus", "In Study"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', in_study} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "In Design"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', in_design} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "In Test"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', in_test} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Rejected"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', rejected} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Active"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', active} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Launched"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', launched} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Retired"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', retired} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{exact, "lifecycleStatus", "Obsolete"} | T], any, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'==', '$12', obsolete} | MatchConditions],
+	parse_filter(T, any, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "In Study"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', in_study} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "In Design"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', in_design} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "In Test"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', in_test} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "Rejected"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', rejected} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "Active"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', active} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "Launched"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', launched} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "Retired"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', retired} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{notexact, "lifecycleStatus", "Obsolete"} | T], Cond, MatchHead, MatchConditions) ->
+	NewMatchConditions = [{'/=', '$12', obsolete} | MatchConditions],
+	parse_filter(T, Cond, MatchHead#candidate{status = '$12'}, NewMatchConditions);
+parse_filter([{in, "lifecycleStatus", {all, In}} | T], Cond, MatchHead, _MatchConditions)
+		when is_list(In) ->
+	NewMatchConditions = in(In, '$12', []),
+	NewMatchHead = MatchHead#candidate{status = '$12'},
+	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
+parse_filter([], all, MatchHead, MatchConditions) ->
+	[{MatchHead, MatchConditions, ['$_']}];
+parse_filter([], any, MatchHead, MatchConditions) ->
+	NewMatchConditions =  list_to_tuple(['or' | MatchConditions]),
+	[{MatchHead, [NewMatchConditions], ['$_']}].
+
+%% @hidden
+sorts(Query) ->
+	sorts(string:tokens(Query, [$,]), []).
+%% @hidden
+sorts(["id" | T], Acc) ->
+	sorts(T, [#candidate.id | Acc]);
+sorts(["-id" | T], Acc) ->
+	sorts(T, [-#candidate.id | Acc]);
+sorts(["href" | T], Acc) ->
+	sorts(T, [#candidate.href | Acc]);
+sorts(["-href" | T], Acc) ->
+	sorts(T, [-#candidate.href | Acc]);
+sorts(["name" | T], Acc) ->
+	sorts(T, [#candidate.name | Acc]);
+sorts(["-name" | T], Acc) ->
+	sorts(T, [-#candidate.name | Acc]);
+sorts(["description" | T], Acc) ->
+	sorts(T, [#candidate.description | Acc]);
+sorts(["-description" | T], Acc) ->
+	sorts(T, [-#candidate.description | Acc]);
+sorts(["@type" | T], Acc) ->
+	sorts(T, [#candidate.class_type | Acc]);
+sorts(["-@type" | T], Acc) ->
+	sorts(T, [-#candidate.class_type | Acc]);
+sorts(["@baseType" | T], Acc) ->
+	sorts(T, [#candidate.base_type | Acc]);
+sorts(["-@baseType" | T], Acc) ->
+	sorts(T, [-#candidate.base_type | Acc]);
+sorts(["@schemaLocation" | T], Acc) ->
+	sorts(T, [#candidate.schema | Acc]);
+sorts(["-@schemaLocation" | T], Acc) ->
+	sorts(T, [-#candidate.schema | Acc]);
+sorts(["lifecycleStatus" | T], Acc) ->
+	sorts(T, [#candidate.status | Acc]);
+sorts(["-lifecycleStatus" | T], Acc) ->
+	sorts(T, [-#candidate.status | Acc]);
+sorts(["version" | T], Acc) ->
+	sorts(T, [#candidate.version | Acc]);
+sorts(["-version" | T], Acc) ->
+	sorts(T, [-#candidate.version | Acc]);
+sorts(["lastUpdate" | T], Acc) ->
+	sorts(T, [#candidate.last_modified | Acc]);
+sorts(["-lastUpdate" | T], Acc) ->
+	sorts(T, [-#candidate.last_modified | Acc]);
+sorts([], Acc) ->
+	lists:reverse(Acc).
+
+%% @hidden
+like([H |T], Var, Cond, Acc) ->
+	case lists:last(H) of
+		$% ->
+			Prefix = lists:droplast(H),
+			NewMatchConditions = match_prefix(Prefix, Var),
+			like(T, Var, Cond, [NewMatchConditions | Acc]);
+		_ ->
+			like(T, Var, Cond, [{'==', Var, H} | Acc])
+	end;
+like([], _, _, Acc) when length(Acc) > 1 ->
+	[list_to_tuple(['or' | Acc])];
+like([], _, _, Acc) ->
+	Acc.
+
+%% @hidden
+match_prefix([A] = Start, Var) ->
+	{'and', {'>=', Var, Start}, {'<', Var, [A + 1]}};
+match_prefix(Start, Var) ->
+	{A, [B]} = lists:split(length(Start) - 1, Start),
+	{'and', {'>=', Var, Start}, {'<', Var, A ++ [B + 1]}}.
+
+%% @hidden
+in(["In Study" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, in_study} | Acc]);
+in(["In Design" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, in_design} | Acc]);
+in(["In Test" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, in_test} | Acc]);
+in(["Rejected" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, rejected} | Acc]);
+in(["Active" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, active} | Acc]);
+in(["Launched" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, launched} | Acc]);
+in(["Retired" | T], '$12' = Var, Acc) ->
+	in(T, Var, [{'==', Var, retired} | Acc]);
+in([H |T], Var, Acc) ->
+	in(T, Var, [{'==', Var, H} | Acc]);
+in([], _, Acc) when length(Acc) > 1 ->
+	[list_to_tuple(['or' | Acc])];
+in([], _, Acc) ->
+	Acc.

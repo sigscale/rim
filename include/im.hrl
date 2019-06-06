@@ -137,20 +137,20 @@
 -type category() :: #category{}.
 
 -record(candidate,
-		{id :: string() | undefined | '_',
-		href :: string() | undefined | '_',
-		name :: string() | undefined | '_',
-		description :: string() | undefined | '_',
-		class_type :: string() | undefined | '_',
-		base_type :: string() | undefined | '_',
-		schema :: string() | undefined | '_',
-		version :: string() | undefined | '_',
-		start_date :: pos_integer() | undefined | '_',
-		end_date :: pos_integer() | undefined | '_',
-		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_',
-		status :: catalog_status() | undefined | '_',
-		category = [] :: [category_ref()]  | '_',
-		specification :: specification_ref() | undefined | '_'}).
+		{id :: string() | undefined | '_' | '$1',
+		href :: string() | undefined | '_' | '$2',
+		name :: string() | undefined | '_' | '$3',
+		description :: string() | undefined | '_' | '$4',
+		class_type :: string() | undefined | '_' | '$5',
+		base_type :: string() | undefined | '_' | '$6',
+		schema :: string() | undefined | '_' | '$7',
+		version :: string() | undefined | '_' | '$8',
+		start_date :: pos_integer() | undefined | '_' | '$9',
+		end_date :: pos_integer() | undefined | '_' | '$10',
+		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
+		status :: catalog_status() | undefined | '_' | '$12',
+		category = [] :: [category_ref()]  | '_' | '$13',
+		specification :: specification_ref() | undefined | '_' | '$14'}).
 -type candidate() :: #candidate{}.
 
 -record(specification,
