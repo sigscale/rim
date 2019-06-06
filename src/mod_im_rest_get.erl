@@ -105,9 +105,9 @@ do_get(Resource, #mod{parsed_header = Headers} = ModData,
 do_get(Resource, ModData,
 		["partyManagement", "v2", "individual", Id], Query) ->
 	do_response(ModData, Resource:get_user(Id, Query));
-do_get(Resource, #mod{parsed_header = Headers} = ModData,
+do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
 		["resourceCatalogManagement", "v3", "resourceCatalog"], Query) ->
-	do_response(ModData, Resource:get_catalogs(Query, Headers));
+	do_response(ModData, Resource:get_catalogs(Method, Query, Headers));
 do_get(Resource, ModData,
 		["resourceCatalogManagement", "v3", "resourceCatalog", Id], Query) ->
 	do_response(ModData, Resource:get_catalog(Id, Query));
@@ -160,7 +160,6 @@ do_response(_ModData, {error, 416}) ->
 do_response(_ModData, {error, 500}) ->
 	Response = "<h2>HTTP Error 500 - Server Error</h2>",
 	{break, [{response, {500, Response}}]}.
-
 
 %% @hidden
 send(#mod{socket = Socket, socket_type = SocketType} = ModData,
