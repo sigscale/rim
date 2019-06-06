@@ -314,7 +314,7 @@ class categoryList extends PolymerElement {
 			}
 		});
 		if(query) {
-			ajax.params['filter'] = "\"" + query + "]}]\"";
+			ajax.params['filter'] = "\"" + query + "}]\"";
 		}
 		if(categoryList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = categoryList.etag;
