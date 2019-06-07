@@ -1,0 +1,50 @@
+{
+	"name": "PEEMonitoredEntity",
+	"description": "Power, Energy and Environmental (PEE) Monitored Entity resource function specification",
+	"@type": "PEEMonitoredEntitySpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PEEMonitoredEntitySpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "PEE",
+	"targetResourceSchema": {
+		"@type": "PEEMonitoredEntity",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/PEEMonitoredEntity"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "meId",
+			"description": "Monitored entity ID",
+			"valueType": "string"
+		},
+		{
+			"name": "peeMeDescription",
+			"description": "PEE monitored entity description",
+			"valueType": "PEEMEDescription",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription"
+		},
+		{
+			"name": "peeMeConfiguration",
+			"description": "PEE monitored entity configuration",
+			"valueType": "PEEMEConfiguration",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration"
+		}
+	]
+}

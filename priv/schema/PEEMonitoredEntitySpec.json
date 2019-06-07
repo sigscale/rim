@@ -1,0 +1,37 @@
+{
+	"$id": "http://sigscale.org/schema/PEEMonitoredEntitySpec",
+	"title": "PEE Monitored Entity Specification",
+	"description": "Power, Energy and Environmental (PEE) Monitored Entity resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"enum": [
+											"meId",
+											"peeMeDescription",
+											"peeMeConfiguration"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

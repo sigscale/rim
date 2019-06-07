@@ -277,7 +277,8 @@ install8(Nodes, Acc) ->
 		ngc_nwdaf,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
 		core_msc, core_mgw, core_sgsn, core_ggsn,
-		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf],
+		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
+		pee_me],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
 install8([F | T], Nodes, Acc) ->

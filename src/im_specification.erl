@@ -34,6 +34,7 @@
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
+-export([pee_me/0]).
 
 -include("im.hrl").
 
@@ -3172,6 +3173,33 @@ ims_icscf() ->
 			category = "IMS",
 			target_schema = #target_schema_ref{class_type = "ICSCFFunction",
 					schema = "/resourceInventoryManagement/v3/schema/ICSCFFunction"},
+			characteristic = Chars}.
+
+-spec pee_me() -> specification().
+%% @doc Power, Energy and Environmental (PEE) Monitored Entity resource function specification.
+pee_me() ->
+	MeId = #specification_char{name = "meId",
+			description = "PEE monitored entity ID",
+			value_type = "string"},
+	PeeMeDescription = #specification_char{name = "peeMeDescription",
+			description = "PEE monitored entity description",
+			value_type = "PEEMEDescription",
+			value_schema = "/resourceCatalogManagement/v3/schema/peeNrm#/definitions/PEEMEDescription"},
+	PeeMeConfiguration = #specification_char{name = "peeMeConfiguration",
+			description = "PEE monitored entity configuration",
+			value_type = "PEEMEConfiguration",
+			value_schema = "/resourceCatalogManagement/v3/schema/peeNrm#/definitions/PEEMEConfiguration"},
+	Chars = [MeId, PeeMeDescription, PeeMeConfiguration],
+	#specification{name = "PEEMonitoredEntity",
+			description = "Power, Energy and Environmental (PEE) Monitored Entity",
+			class_type = "PEEMonitoredEntitySpec",
+			schema = "/resourceCatalogManagement/v3/schema/PEEMonitoredEntitySpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "PEE",
+			target_schema = #target_schema_ref{class_type = "PEEMonitoredEntity",
+					schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

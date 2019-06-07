@@ -38,6 +38,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/epcNrm.json \
 		$(abs_builddir)/coreNrm.json \
 		$(abs_builddir)/imsNrm.json \
+		$(abs_builddir)/peeCmonNrm.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
 		$(abs_builddir)/BssFunctionSpec.json \
 		$(abs_builddir)/BtsSiteMgrSpec.json \
@@ -91,6 +92,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/NGEIRFunctionSpec.json \
 		$(abs_builddir)/SEPPFunctionSpec.json \
 		$(abs_builddir)/NWDAFFunctionSpec.json \
+		$(abs_builddir)/PEEMonitoredEntitySpec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -143,6 +145,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s coreNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s imsNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s peeCmonNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
@@ -362,6 +366,10 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NWDAFFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s PEEMonitoredEntitySpec.json \
 			-r ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
