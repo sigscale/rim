@@ -68,6 +68,7 @@ classes are defined as shown in the table below.
 |NodeBFunctionSpec      |
 |PCRFFunctionSpec       |
 |PCSCFFunctionSpec      |
+|PEEMonitoredEntitySpec |
 |PGWFunctionSpec        |
 |ResourceFunctionSpec   |
 |RncFunctionSpec        |
@@ -118,4 +119,5 @@ format XML files.
 |Inventory   |inventoryNrm        | 28.633|
 |Inventory   |inventoryNrmAlt2    | 28.633|
 |State Mgmt  |stateManagementIRP  | 28.626|
+|PEE CMON    |peeCmonNrm          | 28.306|
 
