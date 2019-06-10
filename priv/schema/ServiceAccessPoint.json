@@ -1,0 +1,36 @@
+{
+	"$id": "http://sigscale.org/schema/ServiceAccessPoint",
+	"title": "Service Access Point (SAP)",
+	"description": "Represents a set of parameters associated (directly or indirectly) with a unique (logical and/or physical) resource where the Service can be accessed.",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "resourceInventoryManagement#/definitions/ResourceSpecification"
+		},
+		{
+			"type" : "object",
+			"properties" : {
+				"type" : {
+					"type" : "string",
+					"description" : "Method to group SAPs that have strongly marked and readily defined similarities"
+				},
+				"serviceState" : {
+					"type" : "string",
+					"description" : "Indicates the ability of an entity to provide service"
+				},
+				"operationalState" : {
+					"type" : "string",
+					"description" : "Indicates whether the set of resources supporting the service are installed and working"
+				},
+				"adminState" : {
+					"type" : "string",
+					"description" : "Represents the administrative suspension (or resumption) of service"
+				},
+				"sapSpec" : {
+					"$ref": "SapSpecification"
+				}
+			},
+			"required" : []
+		}
+	]
+}
