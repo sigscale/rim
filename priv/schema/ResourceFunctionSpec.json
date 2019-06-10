@@ -10,6 +10,10 @@
 		{
 			"type": "object",
 			"properties": {
+				"type" : {
+					"type" : "string",
+					"description" : "A type of the Resource Function"
+				},
 				"connectivity": {
 					"type": "array",
 					"description": "Adjacency Graph as defined in TR255A",

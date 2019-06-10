@@ -1,13 +1,13 @@
 {
+	"$id": "http://sigscale.org/schema/resourceInventoryManagement",
 	"swagger": "2.0",
 	"info": {
 		"title": "Resource Inventory Management",
-		"description": "This is Swagger UI environment generated for the TMF Resource Inventory Management specification",
+		"description": "Swagger for TMF639 Resource Inventory Management",
 		"version": "2.0"
 	},
-	"host": "biologeek.orange-labs.fr",
-	"basePath": "/tmf-api/resourceInventoryManagement",
 	"schemes": [
+		"http",
 		"https"
 	],
 	"consumes": [
