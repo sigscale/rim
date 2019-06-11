@@ -10,6 +10,8 @@
 		{
 			"type": "object",
 			"properties": {
+				"sapSpec": {
+				},
 				"resourceSpecCharacteristic": {
 					"items": {
 						"allOf": [
