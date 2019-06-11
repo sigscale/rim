@@ -1155,7 +1155,6 @@ bulk_cm_epc(Config) ->
 			",ManagedElement=", MeId, ",PGWFunction=", PgwId]),
 	ServingGwName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",ManagedElement=", MeId, ",ServingGWFunction=", ServingGwId]),
-erlang:display({?MODULE, ?LINE, EpdgName}),
 	{ok, #resource{name = EpdgName}} = im:get_resource_name(EpdgName),
 	{ok, #resource{name = MmeName}} = im:get_resource_name(MmeName),
 	{ok, #resource{name = PcrfName}} = im:get_resource_name(PcrfName),
