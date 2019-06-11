@@ -59,6 +59,12 @@
 		iups :: map() | undefined}).
 -type core_state() :: #core_state{}.
 
+-record(pee_state,
+		{me :: map() | undefined,
+		me_description :: map() | undefined,
+		me_config :: map() | undefined}).
+-type pee_state() :: #pee_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,
