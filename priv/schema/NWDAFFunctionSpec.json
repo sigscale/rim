@@ -1,6 +1,6 @@
 {
 	"$id": "http://sigscale.org/schema/NWDAFFunctionSpec",
-	"title": "5G NGEIR Specification",
+	"title": "5G NWDAF Specification",
 	"description": "5G Network Data Analytics Function (NWDAF) resource function specification",
 	"type": "object",
 	"allOf": [
