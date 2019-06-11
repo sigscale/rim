@@ -290,7 +290,7 @@ class catalogList extends PolymerElement {
 		}
 	}
 
-	filterChanged(filter) {
+	_filterChanged(filter) {
 		this.etag = null;
 		var grid = this.shadowRoot.getElementById('catalogGrid');
 		grid.size = 0;
