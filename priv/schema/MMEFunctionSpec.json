@@ -1,6 +1,6 @@
 {
 	"$id": "http://sigscale.org/schema/MMEFunctionSpec",
-	"title": "EPC SGW Specification",
+	"title": "EPC MME Specification",
 	"description": "EPC Mobility Management Entity (MME) resource function specification",
 	"type": "object",
 	"allOf": [
