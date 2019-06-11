@@ -30,6 +30,7 @@
                   mod_im_rest_accepted_content,
                   mod_im_rest_post,
                   mod_im_rest_get,
+						mod_fm_rest_patch,
                   mod_get,
                   mod_disk_log]},
             {mime_types,

@@ -24,10 +24,12 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_catalogs/3, get_catalog/2, post_catalog/1, delete_catalog/1]).
+-export([get_catalogs/3, get_catalog/2, post_catalog/1, delete_catalog/1,
+			patch_catalog/4]).
 -export([catalog/1]).
 
 -include("im.hrl").
+-define(MILLISECOND, milli_seconds).
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -38,7 +40,8 @@
 		ContentTypes :: list().
 %% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
-	["application/json", "application/json-patch+json"].
+	["application/json", "application/json-patch+json",
+	"application/merge-patch+json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
@@ -171,6 +174,70 @@ post_catalog(RequestBody) ->
 		_:_Reason1 ->
 			{error, 400}
 	end.
+
+-spec patch_catalog(Id, Etag, ContentType, ReqBody) -> Result
+	when
+		Id :: string(),
+		Etag :: undefined | string(),
+		ContentType :: string(),
+		ReqBody :: list(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()} .
+%% @doc Update a existing `alarm'.
+%%
+%% 	Respond to `PATCH /alarmManagement/v3/alarm/{Id}' request.
+%%
+patch_catalog(Id, Etag, "application/merge-patch+json", ReqBody) ->
+	try
+		case Etag of
+			undefined ->
+				{undefined, zj:decode(ReqBody)};
+			Etag ->
+				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+		end
+	of
+		{EtagT, {ok, Patch}} ->
+			F = fun() ->
+					case mnesia:read(catalog, Id, write) of
+						[#catalog{last_modified = LM}]
+								when EtagT /= undefined, LM /= EtagT ->
+							mnesia:abort(412);
+						[#catalog{} = Catalog] ->
+							TS = erlang:system_time(?MILLISECOND),
+							N = erlang:unique_integer([positive]),
+							LM = {TS, N},
+							Catalog1 = Catalog#catalog{last_modified = LM},
+							case catch im:merge(Catalog1, catalog(Patch)) of
+								#catalog{} = Catalog2 ->
+									mnesia:write(catalog, Catalog2, write),
+									Catalog2;
+								_ ->
+									mnesia:abort(400)
+							end;
+						[] ->
+							mnesia:abort(404)
+					end
+			end,
+			case mnesia:transaction(F) of
+				{atomic, #catalog{last_modified = LM1} = NewCatalog} ->
+					Body = zj:encode(catalog(NewCatalog)),
+					Headers = [{content_type, "application/json"},
+							{location, "/resourceCatalogManagement/v3/resourceCatalog/" ++ Id},
+							{etag, im_rest:etag(LM1)}],
+					{ok, Headers, Body};
+				{aborted, Status} when is_integer(Status) ->
+					{error, Status};
+				{aborted, _Reason} ->
+					{error, 500}
+			end;
+		_ ->
+			{error, 400}
+	catch
+		_:_ ->
+			{error, 400}
+	end;
+patch_catalog(_, _, "application/json", _) ->
+	{error, 415}.
 
 -spec delete_catalog(Id) -> Result
 	when
