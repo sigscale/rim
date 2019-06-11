@@ -256,6 +256,15 @@ parse_managed_element({startElement, _, "VsDataContainer", QName,
 			dn_prefix = [NewDn],
 			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "PEEMonitoredEntity", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",PEEMonitoredEntity=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_pee, parse_function = parse_pee_me,
+			dn_prefix = [NewDn],
+			parse_state = #pee_state{me = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
