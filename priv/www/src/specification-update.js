@@ -33,6 +33,12 @@ class specUpdateList extends PolymerElement {
 				<div slot="top"><h2>Update Specification</h2></div>
 			</paper-toolbar>
 				<paper-input
+						id="addSpecId"
+						label="Name"
+						value="{{specification.specId}}"
+						disabled>
+				</paper-input>
+				<paper-input
 						id="addSpecName"
 						label="Name"
 						value="{{specification.specName}}"
@@ -49,6 +55,7 @@ class specUpdateList extends PolymerElement {
 						value="{{specification.specClass}}">
 				</paper-input>
 				<paper-dropdown-menu
+					id="specStatus"
 					class="drop"
 					label="Status"
 					value="{{specification.specStatus}}"
@@ -56,9 +63,9 @@ class specUpdateList extends PolymerElement {
 					<paper-listbox
 							id="updateStatus"
 							slot="dropdown-content">
-						<paper-item>In study</paper-item>
-						<paper-item>In design</paper-item>
-						<paper-item>Intest</paper-item>
+						<paper-item>In Study</paper-item>
+						<paper-item>In Design</paper-item>
+						<paper-item>In Test</paper-item>
 						<paper-item>Rejected</paper-item>
 						<paper-item>Active</paper-item>
 						<paper-item>Launched</paper-item>
@@ -123,10 +130,8 @@ class specUpdateList extends PolymerElement {
 				</div>
 		</paper-dialog>
 		<iron-ajax
-			id="addUpdateAjax"
-         url="/alarmManagement/v3/specification"
-         method = "post"
-         content-type="application/json"
+			id="specUpdateAjax"
+			content-type="application/merge-patch+json"
          on-loading-changed="_onLoadingChanged"
          on-response="_addSpecResponse"
          on-error="_addSpecError">
@@ -146,20 +151,33 @@ class specUpdateList extends PolymerElement {
       super.ready()
 	}
 
+	_updateSpec() {
+		var ajax = this.$.specUpdateAjax;
+		ajax.method = "PATCH";
+		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
+		var spec = new Object();
+		if(this.$.addSpecName.value) {
+         spec.name = this.$.addSpecName.value;
+      }
+		if(this.$.addSpecDesc.value) {
+         spec.description = this.$.addSpecDesc.value;
+      }
+		if(this.$.addSpecType.value) {
+         spec["@type"] = this.$.addSpecType.value;
+      }
+		if(this.$.specStatus.value) {
+         spec.lifecycleStatus = this.$.specStatus.value;
+      }
+		ajax.body = JSON.stringify(spec);
+		ajax.generateRequest();
+	}
+
 	_collapseChars(event) {
 		var collapseModal = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec').shadowRoot.getElementById('charSpecCollapse');
 		if(collapseModal.opened == false) {
 			collapseModal.show();
 		} else {
 			collapseModal.hide();
-		}
-	}
-
-	_onLoadingChanged(event) {
-		if (this.$.addSpecAjax.loading) {
-			document.getElementById("progress").disabled = false;
-		} else {
-			document.getElementById("progress").disabled = true;
 		}
 	}
 }
