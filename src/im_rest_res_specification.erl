@@ -25,10 +25,11 @@
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_specifications/3, get_specification/2, post_specification/1,
-		delete_specification/1]).
+		delete_specification/1, patch_specification/4]).
 -export([specification/1]).
 
 -include("im.hrl").
+-define(MILLISECOND, milli_seconds).
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -39,7 +40,7 @@
 		ContentTypes :: list().
 %% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
-	["application/json"].
+	["application/json", "application/merge-patch+json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
@@ -150,6 +151,70 @@ get_specification(Id, [] = _Query, _Filters) ->
 	end;
 get_specification(_, _, _) ->
 	{error, 400}.
+
+-spec patch_specification(Id, Etag, ContentType, ReqBody) -> Result
+	when
+		Id :: string(),
+		Etag :: undefined | string(),
+		ContentType :: string(),
+		ReqBody :: list(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()} .
+%% @doc Update a existing `alarm'.
+%%
+%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceSpecification/{Id}' request.
+%%
+patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
+	try
+		case Etag of
+			undefined ->
+				{undefined, zj:decode(ReqBody)};
+			Etag ->
+				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+		end
+	of
+		{EtagT, {ok, Patch}} ->
+			F = fun() ->
+					case mnesia:read(specification, Id, write) of
+						[#specification{last_modified = LM}]
+								when EtagT /= undefined, LM /= EtagT ->
+							mnesia:abort(412);
+						[#specification{} = Specification] ->
+							TS = erlang:system_time(?MILLISECOND),
+							N = erlang:unique_integer([positive]),
+							LM = {TS, N},
+							Specification1 = Specification#specification{last_modified = LM},
+							case catch im:merge(Specification1, specification(Patch)) of
+								#specification{} = Specification2 ->
+									mnesia:write(specification, Specification2, write),
+									Specification2;
+								_ ->
+									mnesia:abort(400)
+							end;
+						[] ->
+							mnesia:abort(404)
+					end
+			end,
+			case mnesia:transaction(F) of
+				{atomic, #specification{last_modified = LM1} = NewSpecification} ->
+					Body = zj:encode(specification(NewSpecification)),
+					Headers = [{content_type, "application/json"},
+							{location, "/resourceCatalogManagement/v3/resourceSpecification/" ++ Id},
+							{etag, im_rest:etag(LM1)}],
+					{ok, Headers, Body};
+				{aborted, Status} when is_integer(Status) ->
+					{error, Status};
+				{aborted, _Reason} ->
+					{error, 500}
+			end;
+		_ ->
+			{error, 400}
+	catch
+		_:_ ->
+			{error, 400}
+	end;
+patch_specification(_, _, "application/json", _) ->
+	{error, 415}.
 
 -spec post_specification(RequestBody) -> Result
 	when
