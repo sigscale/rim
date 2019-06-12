@@ -904,7 +904,9 @@ init_per_testcase(bulk_cm_pee, Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	XMLPath = PrivDir ++ "/" ++ "pee.xml",
 	file:write_file(XMLPath, PeeNrmXML),
-	Config.
+	Config;
+init_per_testcase(_TestCase, Config) ->
+   Config.
 
 -spec end_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> any().
 %% Cleanup after each test case.
@@ -923,7 +925,7 @@ sequences() ->
 %%
 all() ->
 	[bulk_cm_geran, bulk_cm_utran, bulk_cm_eutran, bulk_cm_epc, bulk_cm_core,
-			bulk_cm_ims, bulk_cm_pee].
+			bulk_cm_ims, bulk_cm_pee, add_rule, get_rule, get_rules, delete_rule].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1274,6 +1276,59 @@ bulk_cm_pee(Config) ->
 	PeeMeName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",ManagedElement=", MeId, ",PEEMonitoredEntity=", PeeMeId]),
 	{ok, #resource{name = PeeMeName}} = im:get_resource_name(PeeMeName).
+
+add_rule() ->
+	[{userdata, [{doc, "add PEE matching rules"}]}].
+
+add_rule(_Config) ->
+	Rule = fun(DN1) ->
+			[{DN1, [], ['$_']}]
+	end,
+	DN = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
+	{ok, #pee_rule{}} = im:add_rule(Rule(DN), "testing").
+
+get_rule() ->
+	[{userdata, [{doc, "get a specific rule"}]}].
+
+get_rule(_Config) ->
+	Rule = fun(DN) ->
+				[{DN, [], ['$_']}]
+	end,
+	DN = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
+	{ok, #pee_rule{id = Id} = PeeRule} = im:add_rule(Rule(DN), "testing"),
+	{ok, PeeRule} = im:get_rule(Id).
+
+get_rules() ->
+	[{userdata, [{doc, "get all the rules"}]}].
+
+get_rules(_Config) ->
+	Rule = fun(DN) ->
+				[{DN, [], ['$_']}]
+	end,
+	DN1 = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
+	{ok, #pee_rule{}} = im:add_rule(Rule(DN1), "testing"),
+	DN2 = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
+	{ok, #pee_rule{}} = im:add_rule(Rule(DN2), "testing"),
+	PeeRuleIds = im:get_rule(),
+	PeeRules = [im:get_rule(Id) || Id <- PeeRuleIds],
+	F = fun({ok, #pee_rule{} = P}) ->
+				true;
+			(_P) ->
+				false
+	end,
+	true = lists:all(F, PeeRules).
+
+delete_rule() ->
+	[{userdata, [{doc, "delete a specific rule"}]}].
+
+delete_rule(_Config) ->
+	Rule = fun(DN) ->
+				[{DN, [], ['$_']}]
+	end,
+	DN = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
+	{ok, #pee_rule{id = Id}} = im:add_rule(Rule(DN), "testing"),
+	ok = im:delete_rule(Id),
+	{error, not_found} = im:get_rule(Id).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
