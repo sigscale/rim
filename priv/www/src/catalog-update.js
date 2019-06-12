@@ -63,9 +63,9 @@ class catalogUpdateList extends PolymerElement {
 					<paper-listbox
 							id="updateStatus"
 							slot="dropdown-content">
-						<paper-item>In study</paper-item>
-						<paper-item>In design</paper-item>
-						<paper-item>Intest</paper-item>
+						<paper-item>In Study</paper-item>
+						<paper-item>In Design</paper-item>
+						<paper-item>In Test</paper-item>
 						<paper-item>Rejected</paper-item>
 						<paper-item>Active</paper-item>
 						<paper-item>Launched</paper-item>

@@ -161,13 +161,13 @@ class catalogList extends PolymerElement {
 			updateCatalog.shadowRoot.getElementById('catalogSpecName').value = item.catalogName;
 			updateCatalog.shadowRoot.getElementById('catalogSpecDesc').value = item.catalogDescription;
 			updateCatalog.shadowRoot.getElementById('catalogSpecType').value = item.catalogClass;
-			if(item.catalogStatus == "In study") {
+			if(item.catalogStatus == "In Study") {
 				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 0;
 			}
-			if(item.catalogStatus == "In design"){
+			if(item.catalogStatus == "In Design"){
 				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 1;
 			}
-			if(item.catalogStatus == "Intest") {
+			if(item.catalogStatus == "In Test") {
 				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
 			}
 			if(item.catalogStatus == "Rejected") {
