@@ -24,7 +24,8 @@ class catalogList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="catalogGrid"
-					loading="{{loading}}">
+					loading="{{loading}}"
+					active-item="{{activeItem}}">
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
@@ -126,6 +127,11 @@ class catalogList extends PolymerElement {
 				type: String,
 				value: null
 			},
+			 activeItem: {
+            type: Object,
+            notify: true,
+            observer: '_activeItemChanged'
+         },
 			_filterCatalogName: {
 				type: Boolean,
 				observer: '_filterChanged'
@@ -144,6 +150,43 @@ class catalogList extends PolymerElement {
 			}
 		}
 	}
+
+	_activeItemChanged(item) {
+		if(item) {
+			var grid = this.$.catalogGrid;
+			grid.selectedItems = item ? [item] : [];
+         var updateCatalog = document.querySelector('inventory-management').shadowRoot.getElementById('updateCatalog');
+         updateCatalog.shadowRoot.getElementById('updateCatalogModal').open();
+			updateCatalog.shadowRoot.getElementById('catalogSpecId').value = item.catalogId;
+			updateCatalog.shadowRoot.getElementById('catalogSpecName').value = item.catalogName;
+			updateCatalog.shadowRoot.getElementById('catalogSpecDesc').value = item.catalogDescription;
+			updateCatalog.shadowRoot.getElementById('catalogSpecType').value = item.catalogClass;
+			if(item.catalogStatus == "In Study") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 0;
+			}
+			if(item.catalogStatus == "In Design"){
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 1;
+			}
+			if(item.catalogStatus == "In Test") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
+			}
+			if(item.catalogStatus == "Rejected") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 3;
+			}
+			if(item.catalogStatus == "Active") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 4;
+			}
+			if(item.catalogStatus == "Launched") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 5;
+			}
+			if(item.catalogStatus == "Retired") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 6;
+			}
+			if(item.catalogStatus == "Obsolete") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 7;
+			}
+      }
+   }
 
 	ready() {
 		super.ready();
@@ -244,6 +287,7 @@ class catalogList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
+					newRecord.catalogId = request.response[index].id;
 					newRecord.catalogName = request.response[index].name;
 					newRecord.catalogDescription = request.response[index].description;
 					newRecord.catalogClass = request.response[index]["@type"];

@@ -37,7 +37,7 @@
 -export([query/5, query/6]).
 -export([import/1, import/2]).
 -export([generate_password/0, generate_identity/0]).
--export([generate_identity/1]).
+-export([merge/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -870,6 +870,27 @@ unique() ->
 	ID = integer_to_list(TS - ?IDOFFSET) ++ integer_to_list(N),
 	LM = {TS, N},
 	{ID, LM}.
+
+-spec merge(OldRecord, NewRecord) -> MergedRecord
+	when
+		OldRecord :: tuple(),
+		NewRecord :: tuple(),
+		MergedRecord :: tuple().
+%% @doc Merge two records. .
+merge(OldRecord, NewRecord)
+		when size(OldRecord) =:= size(NewRecord),
+		element(1, OldRecord) =:= element(1, NewRecord) ->
+	Size = size(NewRecord),
+	merge(Size, OldRecord, NewRecord).
+%% @hidden
+merge(1, _, New) ->
+	New;
+merge(N, Old, New)
+		when element(N, New) == undefined,
+	element(N, Old) /= undefined ->
+	merge(N - 1, Old, setelement(N, New, element(N, Old)));
+merge(N, Old, New) ->
+	merge(N - 1, Old, New).
 
 -spec generate_password(Length) -> password()
 	when

@@ -186,6 +186,7 @@ class InventoryManagement extends PolymerElement {
 			</app-drawer-layout>
 			<!-- Model Definiations -->
 			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
+			<catalog-update id="updateCatalog" catalog="[[activeItem]]"></catalog-update>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></fault-help>
 		`;
 	}
@@ -325,6 +326,7 @@ class InventoryManagement extends PolymerElement {
 		switch (page) {
 			case 'catalogView':
 				import('./catalog-list.js');
+				import('./catalog-update.js');
 				break;
 			case 'categoryView':
 				import('./category-list.js');

@@ -24,10 +24,12 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_categories/3, get_category/2, post_category/1, delete_category/1]).
+-export([get_categories/3, get_category/2, post_category/1, delete_category/1,
+			patch_category/4]).
 -export([category/1]).
 
 -include("im.hrl").
+-define(MILLISECOND, milli_seconds).
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -38,7 +40,8 @@
 		ContentTypes :: list().
 %% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
-	["application/json", "application/json-patch+json"].
+	["application/json", "application/json-patch+json",
+	"application/merge-patch+json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
@@ -149,6 +152,70 @@ get_category(Id, [] = _Query, _Filters) ->
 	end;
 get_category(_, _, _) ->
 	{error, 400}.
+
+-spec patch_category(Id, Etag, ContentType, ReqBody) -> Result
+	when
+		Id :: string(),
+		Etag :: undefined | string(),
+		ContentType :: string(),
+		ReqBody :: list(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()} .
+%% @doc Update a existing `alarm'.
+%%
+%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCategory/{Id}' request.
+%%
+patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
+	try
+		case Etag of
+			undefined ->
+				{undefined, zj:decode(ReqBody)};
+			Etag ->
+				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+		end
+	of
+		{EtagT, {ok, Patch}} ->
+			F = fun() ->
+					case mnesia:read(category, Id, write) of
+						[#category{last_modified = LM}]
+								when EtagT /= undefined, LM /= EtagT ->
+							mnesia:abort(412);
+						[#category{} = Category] ->
+							TS = erlang:system_time(?MILLISECOND),
+							N = erlang:unique_integer([positive]),
+							LM = {TS, N},
+							Category1 = Category#category{last_modified = LM},
+							case catch im:merge(Category1, category(Patch)) of
+								#category{} = Category2 ->
+									mnesia:write(category, Category2, write),
+									Category2;
+								_ ->
+									mnesia:abort(400)
+							end;
+						[] ->
+							mnesia:abort(404)
+					end
+			end,
+			case mnesia:transaction(F) of
+				{atomic, #category{last_modified = LM1} = NewCategory} ->
+					Body = zj:encode(category(NewCategory)),
+					Headers = [{content_type, "application/json"},
+							{location, "/resourceCatalogManagement/v3/resourceCategory/" ++ Id},
+							{etag, im_rest:etag(LM1)}],
+					{ok, Headers, Body};
+				{aborted, Status} when is_integer(Status) ->
+					{error, Status};
+				{aborted, _Reason} ->
+					{error, 500}
+			end;
+		_ ->
+			{error, 400}
+	catch
+		_:_ ->
+			{error, 400}
+	end;
+patch_category(_, _, "application/json", _) ->
+	{error, 415}.
 
 -spec post_category(RequestBody) -> Result
 	when
