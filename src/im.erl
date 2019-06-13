@@ -33,7 +33,7 @@
 -export([add_resource/1, del_resource/1, get_resource/0, get_resource/1,
 		get_resource_name/1]).
 -export([add_user/3, del_user/1, get_user/0, get_user/1]).
--export([add_rule/2, delete_rule/1, get_rule/0, get_rule/1]).
+-export([add_rule/2, delete_rule/1, get_rule/0, get_rule/1, get_pee/2]).
 -export([query/5, query/6]).
 -export([import/1, import/2]).
 -export([generate_password/0, generate_identity/0]).
@@ -851,6 +851,26 @@ delete_rule(Id) when is_list(Id) ->
 			{error, Reason};
 		{atomic, ok} ->
 			ok
+	end.
+
+-spec get_pee(RuleId, DN) -> Result
+	when
+		RuleId :: string(),
+		DN :: string(),
+		Result :: {ok, PEEMonitoredEntities} | {error, Reason},
+		PEEMonitoredEntities :: [resource()],
+		Reason :: term().
+%% @doc Get matching PEE CMON entity(s) for a given Distinguished Name `DN'.
+get_pee(RuleId, DN) when is_list(RuleId), is_list(DN) ->
+	case get_rule(RuleId) of
+		{ok, #pee_rule{rule = Rule}} ->
+			MatchSpec = Rule(DN),
+			F = fun() ->
+					mnesia:select(resource, MatchSpec, read)
+			end,
+			{ok, mnesia:ets(F)};
+		{error, Reason} ->
+			{error, Reason}
 	end.
 
 %%----------------------------------------------------------------------
