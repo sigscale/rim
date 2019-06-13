@@ -784,7 +784,7 @@ generate_identity() ->
 		PeeRule :: pee_rule(),
 		Reason :: term().
 %% @doc Create PEE matching rule.
-add_rule(Rule, Description) ->
+add_rule(Rule, Description) when is_function(Rule), is_list(Description) ->
 	F = fun() ->
 			PeeRule = #pee_rule{id = generate_identity(),
 					rule = Rule, description = Description},
@@ -803,7 +803,7 @@ add_rule(Rule, Description) ->
 		Result :: {ok, PeeRuleIDs} | {error, Reason},
 		PeeRuleIDs :: [string()],
 		Reason :: term().
-%% @doc Get all Resource identifiers.
+%% @doc Get all Rule identifiers.
 get_rule() ->
 	F = fun() ->
 			mnesia:all_keys(pee_rule)
@@ -851,6 +851,14 @@ delete_rule(Id) when is_list(Id) ->
 		{atomic, ok} ->
 			ok
 	end.
+
+%-spec get_pee(Rule, DN) -> Result
+%	when
+%		Rule :: string(),
+%		DN :: string().
+%		Result :: {ok, PeeParametersList} | {error, Reason},
+%		Reason :: not_found | term().
+%% doc Get PEE CMON entity(s) matching a Distinguished Name (DN).
 
 %%----------------------------------------------------------------------
 %%  internal functions

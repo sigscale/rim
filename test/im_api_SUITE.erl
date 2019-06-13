@@ -1284,8 +1284,7 @@ add_rule(_Config) ->
 	Rule = fun(DN1) ->
 			[{DN1, [], ['$_']}]
 	end,
-	DN = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
-	{ok, #pee_rule{}} = im:add_rule(Rule(DN), "testing").
+	{ok, #pee_rule{}} = im:add_rule(Rule, "testing").
 
 get_rule() ->
 	[{userdata, [{doc, "get a specific rule"}]}].
@@ -1294,8 +1293,7 @@ get_rule(_Config) ->
 	Rule = fun(DN) ->
 				[{DN, [], ['$_']}]
 	end,
-	DN = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
-	{ok, #pee_rule{id = Id} = PeeRule} = im:add_rule(Rule(DN), "testing"),
+	{ok, #pee_rule{id = Id} = PeeRule} = im:add_rule(Rule, "testing"),
 	{ok, PeeRule} = im:get_rule(Id).
 
 get_rules() ->
@@ -1305,13 +1303,10 @@ get_rules(_Config) ->
 	Rule = fun(DN) ->
 				[{DN, [], ['$_']}]
 	end,
-	DN1 = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
-	{ok, #pee_rule{}} = im:add_rule(Rule(DN1), "testing"),
-	DN2 = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
-	{ok, #pee_rule{}} = im:add_rule(Rule(DN2), "testing"),
+	{ok, #pee_rule{}} = im:add_rule(Rule, "testing"),
 	PeeRuleIds = im:get_rule(),
 	PeeRules = [im:get_rule(Id) || Id <- PeeRuleIds],
-	F = fun({ok, #pee_rule{} = P}) ->
+	F = fun({ok, #pee_rule{}}) ->
 				true;
 			(_P) ->
 				false
@@ -1325,8 +1320,7 @@ delete_rule(_Config) ->
 	Rule = fun(DN) ->
 				[{DN, [], ['$_']}]
 	end,
-	DN = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1",
-	{ok, #pee_rule{id = Id}} = im:add_rule(Rule(DN), "testing"),
+	{ok, #pee_rule{id = Id}} = im:add_rule(Rule, "testing"),
 	ok = im:delete_rule(Id),
 	{error, not_found} = im:get_rule(Id).
 
