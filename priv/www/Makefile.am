@@ -12,6 +12,7 @@ MODULES = inventory-management.js \
 		catalog-list.js \
 		catalog-update.js \
 		category-list.js \
+		category-update.js \
 		candidate-list.js \
 		specification-list.js \
 		specification-update.js \
