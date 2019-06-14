@@ -375,10 +375,30 @@ install14(Nodes, Acc) ->
 			{error, Reason}
 	end.
 %% @hidden
-install15(_Nodes, Tables) ->
+install15(Nodes, Acc) ->
+	case mnesia:create_table(pee_rule, [{disc_copies, Nodes},
+			{attributes, record_info(fields, pee_rule)}]) of
+%			{attributes, record_info(fields, pee_rule)}, {index, [id]}]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Created new pee rule table.~n"),
+			install16(Nodes, [pee_rule | Acc]);
+		{aborted, {not_active, _, Node} = Reason} ->
+			error_logger:error_report(["Mnesia not started on node",
+					{node, Node}]),
+			{error, Reason};
+		{aborted, {already_exists, pee_rule}} ->
+			error_logger:info_msg("Found existing pee rule table.~n"),
+			install16(Nodes, [pee_rule | Acc]);
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			{error, Reason}
+	end.
+%% @hidden
+install16(_Nodes, Tables) ->
 	case mnesia:wait_for_tables(Tables, ?WAITFORTABLES) of
 		ok ->
-			install16(Tables, lists:member(httpd_user, Tables));
+			install17(Tables, lists:member(httpd_user, Tables));
 		{timeout, Tables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, Tables}]),
@@ -389,21 +409,21 @@ install15(_Nodes, Tables) ->
 			{error, Reason}
 	end.
 %% @hidden
-install16(Tables, true) ->
+install17(Tables, true) ->
 	case inets:start() of
 		ok ->
 			error_logger:info_msg("Started inets.~n"),
-			install17(Tables);
+			install18(Tables);
 		{error, {already_started, inets}} ->
-			install17(Tables);
+			install18(Tables);
 		{error, Reason} ->
 			error_logger:error_msg("Failed to start inets~n"),
 			{error, Reason}
 	end;
-install16(Tables, false) ->
+install17(Tables, false) ->
 	{ok, Tables}.
 %% @hidden
-install17(Tables) ->
+install18(Tables) ->
 	case im:get_user() of
 		{ok, []} ->
 			case im:add_user("admin", "admin", "en") of

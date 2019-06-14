@@ -17,12 +17,14 @@ beam_DATA = im_app.beam \
 			im_xml_utran.beam \
 			im_xml_epc.beam \
 			im_xml_core.beam \
+			im_xml_pee.beam \
 			im_xml_zte.beam \
 			im_xml_huawei.beam \
 			im_server.beam \
 			mod_im_rest_accepted_content.beam \
 			mod_im_rest_get.beam \
 			mod_im_rest_post.beam \
+			mod_im_rest_patch.beam \
 			im_rest.beam \
 			im_rest_res_user.beam \
 			im_rest_res_catalog.beam \

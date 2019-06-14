@@ -258,6 +258,13 @@
 		countryCity :: string() | undefined | '_'}).
 -type sites() :: #sites{}.
 
+-type rule() :: fun((DN :: string()) -> ets:match_spec()).
+-record(pee_rule,
+		{id :: string(),
+		description :: string() | undefined,
+		rule :: rule()}).
+-type pee_rule() :: #pee_rule{}.
+
 -record('BssFunction',
 		{user_label:: string() | undefined | '_',
 		vs_data_container :: [term()] | undefined | '_'}).

@@ -33,9 +33,11 @@
 -export([add_resource/1, del_resource/1, get_resource/0, get_resource/1,
 		get_resource_name/1]).
 -export([add_user/3, del_user/1, get_user/0, get_user/1]).
+-export([add_rule/2, delete_rule/1, get_rule/0, get_rule/1, get_pee/2]).
 -export([query/5, query/6]).
 -export([import/1, import/2]).
 -export([generate_password/0, generate_identity/0]).
+-export([merge/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -774,6 +776,103 @@ generate_password() ->
 generate_identity() ->
 	generate_identity(7).
 
+-spec add_rule(Rule, Description) -> Result
+	when
+		Rule :: rule(),
+		Description :: string(),
+		Result :: {ok, PeeRule} | {error, Reason},
+		PeeRule :: pee_rule(),
+		Reason :: term().
+%% @doc Create PEE matching rule.
+add_rule(Rule, Description) when is_function(Rule), is_list(Description) ->
+	F = fun() ->
+			{Id, _LM} = unique(),
+			PeeRule = #pee_rule{id = Id,
+					rule = Rule, description = Description},
+			ok = mnesia:write(PeeRule),
+			PeeRule
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, PeeRule} ->
+			{ok, PeeRule}
+	end.
+
+-spec get_rule() -> Result
+	when
+		Result :: {ok, PeeRuleIDs} | {error, Reason},
+		PeeRuleIDs :: [string()],
+		Reason :: term().
+%% @doc Get all Rule identifiers.
+get_rule() ->
+	F = fun() ->
+			mnesia:all_keys(pee_rule)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, PeeRuleIDs} ->
+			PeeRuleIDs
+	end.
+
+-spec get_rule(Id) -> Result
+	when
+		Id :: string(),
+		Result :: {ok, PeeRule} | {error, Reason},
+		PeeRule :: pee_rule(),
+		Reason :: not_found | term().
+%% @doc Get a specific rule.
+get_rule(Id) when is_list(Id) ->
+	F = fun() ->
+			mnesia:read(pee_rule, Id, read)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, [PeeRule]} ->
+			{ok, PeeRule};
+		{atomic, []} ->
+			{error, not_found}
+	end.
+
+-spec delete_rule(Id) -> Result
+	when
+		Id :: string(),
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Delete a specific rule.
+delete_rule(Id) when is_list(Id) ->
+	F = fun() ->
+			mnesia:delete(pee_rule, Id, write)
+	end,
+	case mnesia:transaction(F) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+-spec get_pee(RuleId, DN) -> Result
+	when
+		RuleId :: string(),
+		DN :: string(),
+		Result :: {ok, PEEMonitoredEntities} | {error, Reason},
+		PEEMonitoredEntities :: [resource()],
+		Reason :: term().
+%% @doc Get matching PEE CMON entity(s) for a given Distinguished Name `DN'.
+get_pee(RuleId, DN) when is_list(RuleId), is_list(DN) ->
+	case get_rule(RuleId) of
+		{ok, #pee_rule{rule = Rule}} ->
+			MatchSpec = Rule(DN),
+			F = fun() ->
+					mnesia:select(resource, MatchSpec, read)
+			end,
+			{ok, mnesia:ets(F)};
+		{error, Reason} ->
+			{error, Reason}
+	end.
+
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
@@ -792,6 +891,27 @@ unique() ->
 	ID = integer_to_list(TS - ?IDOFFSET) ++ integer_to_list(N),
 	LM = {TS, N},
 	{ID, LM}.
+
+-spec merge(OldRecord, NewRecord) -> MergedRecord
+	when
+		OldRecord :: tuple(),
+		NewRecord :: tuple(),
+		MergedRecord :: tuple().
+%% @doc Merge two records. .
+merge(OldRecord, NewRecord)
+		when size(OldRecord) =:= size(NewRecord),
+		element(1, OldRecord) =:= element(1, NewRecord) ->
+	Size = size(NewRecord),
+	merge(Size, OldRecord, NewRecord).
+%% @hidden
+merge(1, _, New) ->
+	New;
+merge(N, Old, New)
+		when element(N, New) == undefined,
+	element(N, Old) /= undefined ->
+	merge(N - 1, Old, setelement(N, New, element(N, Old)));
+merge(N, Old, New) ->
+	merge(N - 1, Old, New).
 
 -spec generate_password(Length) -> password()
 	when

@@ -904,7 +904,9 @@ init_per_testcase(bulk_cm_pee, Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	XMLPath = PrivDir ++ "/" ++ "pee.xml",
 	file:write_file(XMLPath, PeeNrmXML),
-	Config.
+	Config;
+init_per_testcase(_TestCase, Config) ->
+   Config.
 
 -spec end_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> any().
 %% Cleanup after each test case.
@@ -923,7 +925,8 @@ sequences() ->
 %%
 all() ->
 	[bulk_cm_geran, bulk_cm_utran, bulk_cm_eutran, bulk_cm_epc, bulk_cm_core,
-			bulk_cm_ims, bulk_cm_pee].
+			bulk_cm_ims, bulk_cm_pee, add_rule, get_rule, get_rules, delete_rule,
+			get_pee].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1155,7 +1158,6 @@ bulk_cm_epc(Config) ->
 			",ManagedElement=", MeId, ",PGWFunction=", PgwId]),
 	ServingGwName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",ManagedElement=", MeId, ",ServingGWFunction=", ServingGwId]),
-erlang:display({?MODULE, ?LINE, EpdgName}),
 	{ok, #resource{name = EpdgName}} = im:get_resource_name(EpdgName),
 	{ok, #resource{name = MmeName}} = im:get_resource_name(MmeName),
 	{ok, #resource{name = PcrfName}} = im:get_resource_name(PcrfName),
@@ -1276,6 +1278,78 @@ bulk_cm_pee(Config) ->
 			",ManagedElement=", MeId, ",PEEMonitoredEntity=", PeeMeId]),
 	{ok, #resource{name = PeeMeName}} = im:get_resource_name(PeeMeName).
 
+add_rule() ->
+	[{userdata, [{doc, "add PEE matching rules"}]}].
+
+add_rule(_Config) ->
+	Rule = fun(DN1) ->
+			[{DN1, [], ['$_']}]
+	end,
+	{ok, #pee_rule{}} = im:add_rule(Rule, "testing").
+
+get_rule() ->
+	[{userdata, [{doc, "get a specific rule"}]}].
+
+get_rule(_Config) ->
+	Rule = fun(DN) ->
+				[{DN, [], ['$_']}]
+	end,
+	{ok, #pee_rule{id = Id} = PeeRule} = im:add_rule(Rule, "testing"),
+	{ok, PeeRule} = im:get_rule(Id).
+
+get_rules() ->
+	[{userdata, [{doc, "get all the rules"}]}].
+
+get_rules(_Config) ->
+	Rule = fun(DN) ->
+				[{DN, [], ['$_']}]
+	end,
+	{ok, #pee_rule{}} = im:add_rule(Rule, "testing"),
+	PeeRuleIds = im:get_rule(),
+	PeeRules = [im:get_rule(Id) || Id <- PeeRuleIds],
+	F = fun({ok, #pee_rule{}}) ->
+				true;
+			(_P) ->
+				false
+	end,
+	true = lists:all(F, PeeRules).
+
+delete_rule() ->
+	[{userdata, [{doc, "delete a specific rule"}]}].
+
+delete_rule(_Config) ->
+	Rule = fun(DN) ->
+				[{DN, [], ['$_']}]
+	end,
+	{ok, #pee_rule{id = Id}} = im:add_rule(Rule, "testing"),
+	ok = im:delete_rule(Id),
+	{error, not_found} = im:get_rule(Id).
+
+get_pee() ->
+	[{userdata, [{doc, "get matching PEE CMON entity(s) for a given Distinguished Name"}]}].
+
+get_pee(_Config) ->
+	Resource = #resource{name = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
+			description = "PEE Monitored Entity (ME)",category = "PEE", class_type = "PEEMonitoredEntity",
+			base_type = "ResourceFunction", schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity",
+			specification = #specification_ref{id = "1496728297538142",
+			name = "PEEMonitoredEntity",version = "1.0"}},
+	{ok, #resource{}} = im:add_resource(Resource),
+	ok = fill_resource(10),
+	Rule = fun(DN) ->
+				[{#resource{name = '$1', _ = '_'}, [{'==', '$1', DN}], ['$_']}]
+	end,
+	{ok, #pee_rule{id = Id}} = im:add_rule(Rule, "testing"),
+	{ok, #pee_rule{rule = Rule}} = im:get_rule(Id),
+	DN1 = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
+	{ok, PEEMonitoredEntities} = im:get_pee(Id, DN1),
+	F = fun(#resource{class_type = "PEEMonitoredEntity"}) ->
+				true;
+			(_) ->
+				false
+	end,
+	true = lists:all(F, PEEMonitoredEntities).
+
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
@@ -1317,3 +1391,13 @@ charset() ->
 	C7 = lists:seq($ , $ ),
 	lists:append([C1, C2, C3, C4, C5, C6, C7]).
 
+fill_resource(0) ->
+	ok;
+fill_resource(N) ->
+	Resource = #resource{name = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=" ++
+			integer_to_list(N), description = "GSM Base Transceiver Station (BTS)", category = "RAN",
+			class_type = "BtsSiteMgr", base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			specification = #specification_ref{id = "149672829752946", name = "BtsSiteMgr", version = "1.0"}},
+	{ok, #resource{}} = im:add_resource(Resource),
+	fill_resource(N - 1).

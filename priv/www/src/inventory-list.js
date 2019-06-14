@@ -9,6 +9,7 @@
  */
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import {} from '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
@@ -29,8 +30,62 @@ class inventoryList extends PolymerElement {
 					active-item="{{activeItem}}">
 				<template class="row-details">
 					<dl class="details">
-						<dt><b>Inventory Details:</b></dt>
-						<dd>{{item.inventoryDetails}}</dd>
+						<template is="dom-if" if="{{item.id}}">
+							<dt><b>Id</b></dt>
+							<dd>{{item.id}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.href}}">
+							<dt><b>Href</b></dt>
+							<dd>{{item.href}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.publicIdentifier}}">
+							<dt><b>Public Id</b></dt>
+							<dd>{{item.publicIdentifier}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.name}}">
+							<dt><b>Name</b></dt>
+							<dd>{{item.name}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.description}}">
+							<dt><b>Description</b></dt>
+							<dd>{{item.description}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.category}}">
+							<dt><b>Category</b></dt>
+							<dd>{{item.category}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.type}}">
+							<dt><b>Class</b></dt>
+							<dd>{{item.type}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.base}}">
+							<dt><b>Type</b></dt>
+							<dd>{{item.base}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.schema}}">
+							<dt><b>Schema</b></dt>
+							<dd>{{item.schema}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.lifecycleStatus}}">
+							<dt><b>Status</b></dt>
+							<dd>{{item.lifecycleStatus}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.version}}">
+							<dt><b>Version</b></dt>
+							<dd>{{item.version}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.start}}">
+							<dt><b>Start date</b></dt>
+							<dd>{{item.start}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.end}}">
+							<dt><b>End date</b></dt>
+							<dd>{{item.end}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.lastModified}}">
+							<dt><b>Last modified</b></dt>
+							<dd>{{item.lastModified}}</dd>
+						</template>
 					</dl>
 				</template>
 				<vaadin-grid-column width="13ex" flex-grow="2">
@@ -311,11 +366,48 @@ class inventoryList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.id = request.response[index].id;
-					newRecord.name = request.response[index].name;
-					newRecord.category = request.response[index].category;
-					newRecord.description = request.response[index].description;
-					newRecord.type = request.response[index]["@type"];
+					if(request.response[index].id) {
+						newRecord.id = request.response[index].id;
+					}
+					if(request.response[index].href) {
+						newRecord.href = request.response[index].href;
+					}
+					if(request.response[index].publicIdentifier) {
+						newRecord.publicIdentifier = request.response[index].publicIdentifier;
+					}
+					if(request.response[index].name) {
+						newRecord.name = request.response[index].name;
+					}
+					if(request.response[index].description) {
+						newRecord.description = request.response[index].description;
+					}
+					if(request.response[index].category) {
+						newRecord.category = request.response[index].category;
+					}
+					if(request.response[index]["@type"]) {
+						newRecord.type = request.response[index]["@type"];
+					}
+					if(request.response[index]["@baseType"]) {
+						newRecord.base = request.response[index]["@baseType"];
+					}
+					if(request.response[index]["@schemaLocation"]) {
+						newRecord.schema = request.response[index]["@schemaLocation"];
+					}
+					if(request.response[index].lifecycleStatus) {
+						newRecord.lifecycleStatus = request.response[index].lifecycleStatus;
+					}
+					if(request.response[index].version) {
+						newRecord.version = request.response[index].version;
+					}
+					if(request.response[index].startDateTime) {
+						newRecord.start = request.response[index].startDateTime;
+					}
+					if(request.response[index].endDateTime) {
+						newRecord.end = request.response[index].endDateTime;
+					}
+					if(request.response[index].lastUpdate) {
+						newRecord.lastModified = request.response[index].lastUpdate;
+					}
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);

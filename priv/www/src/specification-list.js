@@ -211,6 +211,34 @@ class specificationList extends PolymerElement {
 			grid.selectedItems = item ? [item] : [];
 			var updateSpec = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec');
 			updateSpec.shadowRoot.getElementById('updateSpecModal').open();
+			updateSpec.shadowRoot.getElementById('addSpecId').value = item.specId;
+			updateSpec.shadowRoot.getElementById('addSpecName').value = item.specName;
+			updateSpec.shadowRoot.getElementById('addSpecDesc').value = item.specDesc;
+			updateSpec.shadowRoot.getElementById('addSpecType').value = item.specClass;
+			if(item.specStatus == "In Study") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 0;
+			}
+			if(item.specStatus == "In Design") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 1;
+			}
+			if(item.specStatus == "In Test") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 2;
+			}
+			if(item.specStatus == "Rejected") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 3;
+			}
+			if(item.specStatus == "Active") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 4;
+			}
+			if(item.specStatus == "Launched") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 5;
+			}
+			if(item.specStatus == "Retired") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 6;
+			}
+			if(item.specStatus == "Obsolete") {
+				updateSpec.shadowRoot.getElementById('updateStatus').selected = 7;
+			}
 		}
 	}
 
@@ -354,6 +382,7 @@ class specificationList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
+					newRecord.specId = request.response[index].id;
 					newRecord.specName = request.response[index].name;
 					newRecord.specDesc = request.response[index].description;
 					newRecord.specClass = request.response[index]["@type"];

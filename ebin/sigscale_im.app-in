@@ -10,6 +10,7 @@
 				im_server,
 				mod_im_rest_accepted_content,
 				mod_im_rest_get,
+				mod_fm_rest_patch,
 				im_rest,
 				im_rest_res_user,
 				im_rest_res_resource,
