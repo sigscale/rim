@@ -184,7 +184,7 @@ class InventoryManagement extends PolymerElement {
 					</iron-selector>
 				</app-drawer>
 			</app-drawer-layout>
-			<!-- Model Definiations -->
+			<!-- Model Definitions -->
 			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></fault-help>
 		`;
