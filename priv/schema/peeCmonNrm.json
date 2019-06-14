@@ -31,55 +31,47 @@
 		"PEEMEDescription": {
 			"allOf": [
 				{
-					"$ref": "genericNrm#/definitions/NrmClass"
-				},
-				{
 					"type": "object",
 					"properties": {
-						"attributes": {
-							"type": "object",
-							"properties": {
-								"siteIdentification": {
-									"type": "string",
-									"description": "Identification of the site of the monitored entity."
-								},
-								"siteLatitude": {
-									"type": "string",
-									"description": "The latitude of the site location."
-								},
-								"siteLongitude": {
-									"type": "string",
-									"description": "The longitude of the site location."
-								},
-								"siteDescription": {
-									"type": "string",
-									"description": "Description of the site of the monitored entity."
-								},
-								"equipmentType": {
-									"type": "string",
-									"description": "Indicates the type of equipment of the monitored entity."
-								},
-								"environmentType": {
-									"type": "string",
-									"description": "Indicates the type of environment of the monitored entity."
-								},
-								"powerInterface": {
-									"type": "string",
-									"description": "Indicates the type of power interface of the monitored entity."
-								},
-								"xcuDguDescription": {
-									"type": "string",
-									"description": "Description of the XCU/DGU."
-								},
-								"sensorDescription": {
-									"type": "string",
-									"description": "Description of the sensor."
-								},
-								"vSRmsDescription": {
-									"type": "string",
-									"description": "Description of the VS-RMS."
-								}
-							}
+						"siteIdentification": {
+							"type": "string",
+							"description": "Identification of the site of the monitored entity."
+						},
+						"siteLatitude": {
+							"type": "string",
+							"description": "The latitude of the site location."
+						},
+						"siteLongitude": {
+							"type": "string",
+							"description": "The longitude of the site location."
+						},
+						"siteDescription": {
+							"type": "string",
+							"description": "Description of the site of the monitored entity."
+						},
+						"equipmentType": {
+							"type": "string",
+							"description": "Indicates the type of equipment of the monitored entity."
+						},
+						"environmentType": {
+							"type": "string",
+							"description": "Indicates the type of environment of the monitored entity."
+						},
+						"powerInterface": {
+							"type": "string",
+							"description": "Indicates the type of power interface of the monitored entity."
+						},
+						"xcuDguDescription": {
+							"type": "string",
+							"description": "Description of the XCU/DGU."
+						},
+						"sensorDescription": {
+							"type": "string",
+							"description": "Description of the sensor."
+						},
+						"vSRmsDescription": {
+							"type": "string",
+							"description": "Description of the VS-RMS."
 						}
 					}
 				}
@@ -88,55 +80,47 @@
 		"PEEMEConfiguration": {
 			"allOf": [
 				{
-					"$ref": "genericNrm#/definitions/NrmClass"
-				},
-				{
 					"type": "object",
 					"properties": {
-						"attributes": {
-							"type": "object",
-							"properties": {
-								"powerMinThreshold": {
-								       "type": "string",
-								       "description": "Threshold value for minimum power usage"
-								},
-								"powerMaxThreshold": {
-									"type": "string",
-									"description": "Threshold value for maximum power usage"
-								},
-								"temperatureMinThreshold": {
-									"type": "string",
-									"description": "Threshold value for minimum temperature"
-								},
-								"temperatureMaxThreshold": {
-									"type": "string",
-									"description": "Threshold value for maximum temperature"
-								},
-								"voltageMinThreshold": {
-									"type": "string",
-									"description": "Threshold value for minimum voltage"
-								},
-								"voltageMaxThreshold": {
-									"type": "string",
-									"description": "Threshold value for maximum voltage"
-								},
-								"currentMinThreshold": {
-									"type": "string",
-									"description": "Threshold value for minimum current"
-								},
-								"currentMaxThreshold": {
-									"type": "string",
-									"description": "Threshold value for maximum current"
-								},
-								"humidityMinThreshold": {
-									"type": "string",
-									"description": "Threshold value for minimum humidity"
-								}, 
-								"humidityMaxThreshold": {
-									"type": "string",
-									"description": "Threshold value for maximum humidity"
-								}
-							}
+						"powerMinThreshold": {
+						       "type": "string",
+						       "description": "Threshold value for minimum power usage"
+						},
+						"powerMaxThreshold": {
+							"type": "string",
+							"description": "Threshold value for maximum power usage"
+						},
+						"temperatureMinThreshold": {
+							"type": "string",
+							"description": "Threshold value for minimum temperature"
+						},
+						"temperatureMaxThreshold": {
+							"type": "string",
+							"description": "Threshold value for maximum temperature"
+						},
+						"voltageMinThreshold": {
+							"type": "string",
+							"description": "Threshold value for minimum voltage"
+						},
+						"voltageMaxThreshold": {
+							"type": "string",
+							"description": "Threshold value for maximum voltage"
+						},
+						"currentMinThreshold": {
+							"type": "string",
+							"description": "Threshold value for minimum current"
+						},
+						"currentMaxThreshold": {
+							"type": "string",
+							"description": "Threshold value for maximum current"
+						},
+						"humidityMinThreshold": {
+							"type": "string",
+							"description": "Threshold value for minimum humidity"
+						}, 
+						"humidityMaxThreshold": {
+							"type": "string",
+							"description": "Threshold value for maximum humidity"
 						}
 					}
 				}

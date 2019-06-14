@@ -32,58 +32,35 @@
 			</complexContent>
 		</complexType>
 	</element>
-
 	<element name="PEEMEDescription">
 		<complexType>
-			<complexContent>
-				<extension base="xn:NrmClass">
-					<sequence>
-						<element name="attributes" minOccurs="0">
-							<complexType>
-								<all>
-									<element name="siteIdentification" type="string"/>
-									<element name="siteLatitude" type="string"/>
-									<element name="siteLongitude" type="string"/>
-									<element name="siteDescription" type="string"/>
-									<element name="equipmentType" type="string"/>
-									<element name="environmentType" type="string"/>
-									<element name="powerInterface" type="string"/>
-									<element name="xcuDguDescription" type="string"/>
-									<element name="sensorDescription" type="string"/>
-									<element name="vSRmsDescription" type="string"/>
-								</all>
-							</complexType>
-						</element>
-					</sequence>
-				</extension>
-			</complexContent>
+			<all>
+				<element name="siteIdentification" type="string"/>
+				<element name="siteLatitude" type="string"/>
+				<element name="siteLongitude" type="string"/>
+				<element name="siteDescription" type="string"/>
+				<element name="equipmentType" type="string"/>
+				<element name="environmentType" type="string"/>
+				<element name="powerInterface" type="string"/>
+				<element name="xcuDguDescription" type="string"/>
+				<element name="sensorDescription" type="string"/>
+				<element name="vSRmsDescription" type="string"/>
+			</all>
 		</complexType>
 	</element>
-
 	<element name="PEEConfigInformation">
 		<complexType>
-			<complexContent>
-				<extension base="xn:NrmClass">
-					<sequence>
-						<element name="attributes" minOccurs="0">
-							<complexType>
-								<all>
-									<element name="powerMinThreshold" type="string"/>
-									<element name="powerMaxThreshold" type="string"/>
-									<element name="temperatureMinThreshold" type="string"/>
-									<element name="temperatureMaxThreshold" type="string"/>
-									<element name="voltageMinThreshold" type="string"/>
-									<element name="voltageMaxThreshold" type="string"/>
-									<element name="currentMinThreshold" type="string"/>
-									<element name="currentMaxThreshold" type="string"/>
-									<element name="humidityMinThreshold" type="string"/>
-									<element name="humidityMaxThreshold" type="string"/>
-								</all>
-							</complexType>
-						</element>
-					</sequence>
-				</extension>
-			</complexContent>
+			<all>
+				<element name="powerMinThreshold" type="string"/>
+				<element name="powerMaxThreshold" type="string"/>
+				<element name="temperatureMinThreshold" type="string"/>
+				<element name="temperatureMaxThreshold" type="string"/>
+				<element name="voltageMinThreshold" type="string"/>
+				<element name="voltageMaxThreshold" type="string"/>
+				<element name="currentMinThreshold" type="string"/>
+				<element name="currentMaxThreshold" type="string"/>
+				<element name="humidityMinThreshold" type="string"/>
+				<element name="humidityMaxThreshold" type="string"/>
+			</all>
 		</complexType>
-	</element>
 </schema>
