@@ -126,6 +126,11 @@ do_patch(Resource,
 		["resourceCatalogManagement", "v3", "resourceCategory", Identity], []) ->
 	do_response(ModData, Resource:patch_category(Identity,
 			get_etag(Headers), ContentType, Body));
+do_patch(Resource,
+		#mod{parsed_header = Headers} = ModData, ContentType, Body,
+		["resourceCatalogManagement", "v3", "resourceCandidate", Identity], []) ->
+	do_response(ModData, Resource:patch_candidate(Identity,
+			get_etag(Headers), ContentType, Body));
 do_patch(_, #mod{data = Data}, _, _, _, _) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",
 	{proceed, [{response, {404, Response}} | Data]}.
