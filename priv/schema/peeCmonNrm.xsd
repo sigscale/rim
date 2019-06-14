@@ -63,4 +63,5 @@
 				<element name="humidityMaxThreshold" type="string"/>
 			</all>
 		</complexType>
+	</element>
 </schema>
