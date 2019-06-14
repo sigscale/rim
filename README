@@ -4,7 +4,7 @@
 	Install erlang(>18)
 	$ sudo apt install erlang-dev erlang-snmp erlang-inets erlang-parsetools
 	$ sudo apt install nodejs yarn
-	$ sudo yarn install -g --unsafe-perm polymer-cli
+	$ sudo yarn global add polymer-cli
 
 ## Building
 	$ mkdir ../rim.build  (create build directory)
