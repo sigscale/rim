@@ -44,33 +44,29 @@
 					<pee:attributes>
 						<pee:mEId>1</pee:mEId>
 					</pee:attributes>
-					<pee:PEEMEDescription id="1">
-						<pee:attributes>
-							<pee:siteIdentification>YYZ_416905</pee:siteIdentification>
-							<pee:siteLatitude>23.54294</pee:siteLatitude> 
-							<pee:siteLongitude>90.60755</pee:siteLongitude>
-							<pee:siteDescription>Fullerton Falls</pee:siteDescription> 
+					<pee:PEEMEDescription>
+						<pee:siteIdentification>YYZ_416905</pee:siteIdentification>
+						<pee:siteLatitude>23.54294</pee:siteLatitude>
+						<pee:siteLongitude>90.60755</pee:siteLongitude>
+						<pee:siteDescription>Fullerton Falls</pee:siteDescription>
 							<pee:equipmentType>5G</pee:equipmentType>
-							<pee:environmentType>hut</pee:environmentType>
-							<pee:powerInterface>battery+deisel </pee:powerInterface> 
-							<pee:xcuDguDescription>DGUv1</pee:xcuDguDescription> 
-							<pee:sensorDescription>SensorPack-3</pee:sensorDescription> 
-							<pee:vSRmsDescription>Acme</pee:vSRmsDescription>
-						</pee:attributes>
+						<pee:environmentType>hut</pee:environmentType>
+						<pee:powerInterface>battery+deisel </pee:powerInterface>
+						<pee:xcuDguDescription>DGUv1</pee:xcuDguDescription>
+						<pee:sensorDescription>SensorPack-3</pee:sensorDescription>
+						<pee:vSRmsDescription>Acme</pee:vSRmsDescription>
 					</pee:PEEMEDescription>
-					<pee:PEEConfigInformation id="1">
-						<pee:attributes>
-							<pee:powerMinThreshold>500</pee:powerMinThreshold>
-							<pee:powerMaxThreshold>2500</pee:powerMaxThreshold>
-							<pee:temperatureMinThreshold>15</pee:temperatureMinThreshold>
-							<pee:temperatureMaxThreshold>15</pee:temperatureMaxThreshold>
-							<pee:voltageMinThreshold>202</pee:voltageMinThreshold>
-							<pee:voltageMaxThreshold>245</pee:voltageMaxThreshold>
-							<pee:currentMinThreshold>15</pee:currentMinThreshold>
-							<pee:currentMaxThreshold>35</pee:currentMaxThreshold>
-							<pee:humidityMinThreshold>6</pee:humidityMinThreshold>
-							<pee:humidityMaxThreshold>66</pee:humidityMaxThreshold>
-						</pee:attributes>
+					<pee:PEEConfigInformation>
+						<pee:powerMinThreshold>500</pee:powerMinThreshold>
+						<pee:powerMaxThreshold>2500</pee:powerMaxThreshold>
+						<pee:temperatureMinThreshold>15</pee:temperatureMinThreshold>
+						<pee:temperatureMaxThreshold>15</pee:temperatureMaxThreshold>
+						<pee:voltageMinThreshold>202</pee:voltageMinThreshold>
+						<pee:voltageMaxThreshold>245</pee:voltageMaxThreshold>
+						<pee:currentMinThreshold>15</pee:currentMinThreshold>
+						<pee:currentMaxThreshold>35</pee:currentMaxThreshold>
+						<pee:humidityMinThreshold>6</pee:humidityMinThreshold>
+						<pee:humidityMaxThreshold>66</pee:humidityMaxThreshold>
 					</pee:PEEConfigInformation>
 				</pee:PEEMonitoredEntity>
 			</xn:ManagedElement>
