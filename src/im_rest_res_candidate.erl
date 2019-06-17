@@ -25,10 +25,11 @@
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_candidates/3, get_candidate/2, post_candidate/1,
-		delete_candidate/1]).
+		delete_candidate/1, patch_candidate/4]).
 -export([candidate/1]).
 
 -include("im.hrl").
+-define(MILLISECOND, milli_seconds).
 
 -define(PathCatalog, "/resourceCatalogManagement/v3/").
 
@@ -41,7 +42,8 @@
 		ContentTypes :: list().
 %% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
-	["application/json", "application/json-patch+json"].
+	["application/json", "application/json-patch+json",
+	"application/merge-patch+json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
@@ -174,6 +176,70 @@ post_candidate(RequestBody) ->
 		_:_Reason1 ->
 			{error, 400}
 	end.
+
+-spec patch_candidate(Id, Etag, ContentType, ReqBody) -> Result
+	when
+		Id :: string(),
+		Etag :: undefined | string(),
+		ContentType :: string(),
+		ReqBody :: list(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()} .
+%% @doc Update a existing `resourceCandidate'.
+%%
+%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCandidate/{Id}' request.
+%%
+patch_candidate(Id, Etag, "application/merge-patch+json", ReqBody) ->
+	try
+		case Etag of
+			undefined ->
+				{undefined, zj:decode(ReqBody)};
+			Etag ->
+				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+		end
+	of
+		{EtagT, {ok, Patch}} ->
+			F = fun() ->
+					case mnesia:read(candidate, Id, write) of
+						[#candidate{last_modified = LM}]
+								when EtagT /= undefined, LM /= EtagT ->
+							mnesia:abort(412);
+						[#candidate{} = Candidate] ->
+							TS = erlang:system_time(?MILLISECOND),
+							N = erlang:unique_integer([positive]),
+							LM = {TS, N},
+							Candidate1 = Candidate#candidate{last_modified = LM},
+							case catch im:merge(Candidate1, candidate(Patch)) of
+								#candidate{} = Candidate2 ->
+									mnesia:write(candidate, Candidate2, write),
+									Candidate2;
+								_ ->
+									mnesia:abort(400)
+							end;
+						[] ->
+							mnesia:abort(404)
+					end
+			end,
+			case mnesia:transaction(F) of
+				{atomic, #candidate{last_modified = LM1} = NewCandidate} ->
+					Body = zj:encode(candidate(NewCandidate)),
+					Headers = [{content_type, "application/json"},
+							{location, "/resourceCatalogManagement/v3/resourceCatalog/" ++ Id},
+							{etag, im_rest:etag(LM1)}],
+					{ok, Headers, Body};
+				{aborted, Status} when is_integer(Status) ->
+					{error, Status};
+				{aborted, _Reason} ->
+					{error, 500}
+			end;
+		_ ->
+			{error, 400}
+	catch
+		_:_ ->
+			{error, 400}
+	end;
+patch_candidate(_, _, "application/json", _) ->
+	{error, 415}.
 
 -spec delete_candidate(Id) -> Result
 	when
