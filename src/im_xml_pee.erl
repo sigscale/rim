@@ -28,34 +28,34 @@
 
 parse_pee_me({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_pee_me({startElement,  _Uri, "PEEMEDescription", QName,
-		[{[], [], "id", Id}] = Attributes},
+parse_pee_me({startElement,  _Uri, "PEEMEDescription", QName, Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",PEEMEDescription=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [CurrentDn],
 			parse_module = im_xml_pee, parse_function = parse_me_description,
-			parse_state = #pee_state{me_description = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
-parse_pee_me({startElement,  _Uri, "PEEConfigInformation", QName,
-		[{[], [], "id", Id}] = Attributes},
+parse_pee_me({startElement, _Uri, "PEEConfigInformation", QName, Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",PEEConfigInformation=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [CurrentDn],
 			parse_module = im_xml_pee, parse_function = parse_me_config,
-			parse_state = #pee_state{me_config = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_pee_me({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_pee_me({endElement, _Uri, "PEEMonitoredEntity", QName},
-		[#state{dn_prefix = [MeDn | _], stack = Stack,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+		[#state{dn_prefix = [MeDn | _], stack = Stack, spec_cache = Cache,
+		parse_state = #pee_state{me_description = MeDescription,
+		me_config = MeConfig}},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	MeAttr = parse_pee_me_attr(T2, undefined, []),
+	[MeAttr] = parse_pee_me_attr(T2, undefined, []),
 	ClassType = "PEEMonitoredEntity",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	MeDResourceChar = #resource_char{name = "peeMeDescription",
+		class_type = "PEEMEDescription", value = MeDescription,
+		schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription"},
+	MeCResourceChar = #resource_char{name = "peeMeConfiguration",
+		class_type = "PEEMEConfiguration", value = MeConfig,
+		schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration"},
 	Resource = #resource{name = MeDn,
 			description = "PEE Monitored Entity (ME)",
 			category = "PEE",
@@ -63,7 +63,7 @@ parse_pee_me({endElement, _Uri, "PEEMonitoredEntity", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity",
 			specification = Spec,
-			characteristic = lists:reverse(MeAttr)},
+			characteristic = [MeAttr, MeDResourceChar, MeCResourceChar]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -96,58 +96,51 @@ parse_me_description({startElement, _Uri, _LocalName, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_me_description({endElement, _Uri, "PEEMEDescription", QName},
-		[#state{stack = Stack, parse_state = #pee_state{me_description = MeDescription}},
-		#state{parse_state = PeeState} = PrevState | T1]) ->
+		[#state{stack = Stack}, #state{parse_state = PeeState} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	NewMeDescription = parse_me_description_attr(T2, undefined, MeDescription),
-	#pee_state{me = MonitoredEntity} = PeeState,
-	NewMe = choice_add(NewMeDescription, MonitoredEntity),
-	[PrevState#state{parse_state = PeeState#pee_state{me = NewMe}} | T1];
+	MeDescription = parse_me_description_attr(T2, undefined, #{}),
+	[PrevState#state{parse_state
+			= PeeState#pee_state{me_description = MeDescription}} | T1];
 parse_me_description({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_me_description_attr([{startElement, {_, "attributes"} = QName, []} | T],
-		undefined, Acc) ->
-	{[_ | Attributes], _Rest} = pop(endElement, QName, T),
-	parse_me_description_attr1(Attributes, undefined, Acc).
-% @hidden
-parse_me_description_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
-	parse_me_description_attr1(T, Attr, Acc);
-parse_me_description_attr1([{characters, Chars} | T], "siteIdentification" = Attr, Acc) ->
-	NewAcc = attribute_add("siteIdentification", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "siteLatitude" = Attr, Acc) ->
-	NewAcc = attribute_add("siteLatitude", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "siteLongitude" = Attr, Acc) ->
-	NewAcc = attribute_add("siteLongitude", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "siteDescription" = Attr, Acc) ->
-	NewAcc = attribute_add("siteDescription", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "equipmentType" = Attr, Acc) ->
-	NewAcc = attribute_add("equipmentType", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "environmentType" = Attr, Acc) ->
-	NewAcc = attribute_add("environmentType", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "powerInterface" = Attr, Acc) ->
-	NewAcc = attribute_add("powerInterface", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "xcuDguDescription" = Attr, Acc) ->
-	NewAcc = attribute_add("xcuDguDescription", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "sensorDescription" = Attr, Acc) ->
-	NewAcc = attribute_add("sensorDescription", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{characters, Chars} | T], "vSRmsDescription" = Attr, Acc) ->
-	NewAcc = attribute_add("vSRmsDescription", Chars, Acc),
-	parse_me_description_attr1(T, Attr, NewAcc);
-parse_me_description_attr1([{startElement, {_, Attr}, []} | T], Attr, Acc) ->
-	parse_me_description_attr1(T, undefined, Acc);
-parse_me_description_attr1([],  _Attr, Acc) ->
+parse_me_description_attr([{startElement, {_, Attr}, []} | T], undefined, Acc) ->
+	parse_me_description_attr(T, Attr, Acc);
+parse_me_description_attr([{characters, Chars} | T],
+		"siteIdentification" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"siteLatitude" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"siteLongitude" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"siteDescription" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"equipmentType" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"environmentType" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"powerInterface" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"xcuDguDescription" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"sensorDescription" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{characters, Chars} | T],
+		"vSRmsDescription" = Attr, Acc) ->
+	parse_me_description_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_description_attr([{endElement, {_, Attr}} | T], Attr, Acc) ->
+	parse_me_description_attr(T, undefined, Acc);
+parse_me_description_attr([],  _Attr, Acc) ->
 	Acc.
 
 %% @hidden
@@ -157,58 +150,52 @@ parse_me_config({startElement, _Uri, _LocalName, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_me_config({endElement, _Uri, "PEEConfigInformation", QName},
-		[#state{stack = Stack, parse_state = #pee_state{me_config = MeConfig}},
+		[#state{stack = Stack},
 		#state{parse_state = PeeState} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	NewMeConfig = parse_me_config_attr(T2, undefined, MeConfig),
-	#pee_state{me = Me} = PeeState,
-	NewMe = choice_add(NewMeConfig, Me),
-	[PrevState#state{parse_state = PeeState#pee_state{me = NewMe}} | T1];
+	MeConfig = parse_me_config_attr(T2, undefined, #{}),
+	[PrevState#state{parse_state
+			= PeeState#pee_state{me_config = MeConfig}} | T1];
 parse_me_config({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_me_config_attr([{startElement, {_, "attributes"} = QName, []} | T],
-		undefined, Acc) ->
-	{[_ | Attributes], _Rest} = pop(endElement, QName, T),
-	parse_me_config_attr1(Attributes, undefined, Acc).
-% @hidden
-parse_me_config_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
-	parse_me_config_attr1(T, Attr, Acc);
-parse_me_config_attr1([{characters, Chars} | T], "powerMinThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("powerMinThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "powerMaxThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("powerMaxThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "temperatureMinThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("temperatureMinThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "temperatureMaxThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("temperatureMaxThreshold>", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "voltageMinThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("voltageMinThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "voltageMaxThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("voltageMaxThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "currentMinThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("currentMinThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "currentMaxThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("currentMaxThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "humidityMinThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("humidityMinThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{characters, Chars} | T], "humidityMaxThreshold" = Attr, Acc) ->
-	NewAcc = attribute_add("humidityMaxThreshold", Chars, Acc),
-	parse_me_config_attr1(T, Attr, NewAcc);
-parse_me_config_attr1([{startElement, {_, Attr}, []} | T], Attr, Acc) ->
-	parse_me_config_attr1(T, undefined, Acc);
-parse_me_config_attr1([],  _Attr, Acc) ->
+parse_me_config_attr([{startElement, {_, Attr}, []} | T], undefined, Acc) ->
+	parse_me_config_attr(T, Attr, Acc);
+parse_me_config_attr([{characters, Chars} | T],
+		"powerMinThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"powerMaxThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"temperatureMinThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"temperatureMaxThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"voltageMinThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"voltageMaxThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"currentMinThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"currentMaxThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"humidityMinThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{characters, Chars} | T],
+		"humidityMaxThreshold" = Attr, Acc) ->
+	parse_me_config_attr(T, Attr, Acc#{Attr => Chars});
+parse_me_config_attr([{endElement, {_, Attr}} | T], Attr, Acc) ->
+	parse_me_config_attr(T, undefined, Acc);
+parse_me_config_attr([],  _Attr, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
@@ -264,24 +251,3 @@ get_specification_ref(Name, Cache) ->
 					throw({get_specification_name, Reason})
 			end
 	end.
-
--spec attribute_add(Attribute, Value, NrmMap) -> NrmMap
-	when
-		Attribute :: string(),
-		Value :: term(),
-		NrmMap :: map().
-%% @doc Add `Attribute' and `Value' to possibly missing attribute.
-attribute_add(Attribute, Value, #{"attributes" := Attributes} = NrmMap) ->
-	NrmMap#{"attributes" => Attributes#{Attribute => Value}};
-attribute_add(Attribute, Value, #{} = NrmMap) ->
-	NrmMap#{"attributes" => #{Attribute => Value}}.
-
--spec choice_add(Choice, NrmMap) -> NrmMap
-	when
-		Choice :: map(),
-		NrmMap :: map().
-%% @doc Add `Choice' to possibly list of choices.
-choice_add(Choice, #{"choice" := Choices} = NrmMap) ->
-	NrmMap#{"choice" => [Choice | Choices]};
-choice_add(Choice, #{} = NrmMap) ->
-	NrmMap#{"choice" => [Choice]}.
