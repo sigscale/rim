@@ -1246,6 +1246,9 @@ bulk_cm_ims(Config) ->
 			",ASFunction=", AsfId]),
 	{ok, #resource{name = AsfName}} = im:get_resource_name(AsfName).
 
+bulk_cm_pee() ->
+	[{userdata, [{doc, "Import bulk CM for pee network resources"}]}].
+
 bulk_cm_pee(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	PeeXML = PrivDir ++ "/" ++ "pee.xml",
@@ -1276,7 +1279,7 @@ bulk_cm_pee(Config) ->
 	{ok, #resource{name = PeeMeName}} = im:get_resource_name(PeeMeName).
 
 add_rule() ->
-	[{userdata, [{doc, "add PEE matching rules"}]}].
+	[{userdata, [{doc, "Add PEE matching rules"}]}].
 
 add_rule(_Config) ->
 	Rule = fun(DN1) ->
@@ -1285,7 +1288,7 @@ add_rule(_Config) ->
 	{ok, #pee_rule{}} = im:add_rule(Rule, "testing").
 
 get_rule() ->
-	[{userdata, [{doc, "get a specific rule"}]}].
+	[{userdata, [{doc, "Get a specific rule"}]}].
 
 get_rule(_Config) ->
 	Rule = fun(DN) ->
@@ -1295,7 +1298,7 @@ get_rule(_Config) ->
 	{ok, PeeRule} = im:get_rule(Id).
 
 get_rules() ->
-	[{userdata, [{doc, "get all the rules"}]}].
+	[{userdata, [{doc, "Get all the rules"}]}].
 
 get_rules(_Config) ->
 	Rule = fun(DN) ->
@@ -1312,7 +1315,7 @@ get_rules(_Config) ->
 	true = lists:all(F, PeeRules).
 
 delete_rule() ->
-	[{userdata, [{doc, "delete a specific rule"}]}].
+	[{userdata, [{doc, "Delete a specific rule"}]}].
 
 delete_rule(_Config) ->
 	Rule = fun(DN) ->
@@ -1323,7 +1326,7 @@ delete_rule(_Config) ->
 	{error, not_found} = im:get_rule(Id).
 
 get_pee() ->
-	[{userdata, [{doc, "get matching PEE CMON entity(s) for a given Distinguished Name"}]}].
+	[{userdata, [{doc, "Get matching PEE CMON entity(s) for a given Distinguished Name"}]}].
 
 get_pee(_Config) ->
 	Resource = #resource{name = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
