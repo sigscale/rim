@@ -746,23 +746,26 @@ get_user(_, {error, Reason}) ->
 		Reason :: term().
 %% @doc @equiv import(File, [{type, '3gpp'}]).
 import(File) when is_list(File) ->
-	import(File, [{type, '3gpp'}]).
+	import(File, [{type, '3gpp'}, {rule, []}]).
 
 -spec import(File, Options) -> Result
 	when
 		File :: string(),
 		Options :: [Option],
-		Option :: {type, Type},
+		Option :: {type, Type} | {rule, Rule},
 		Type :: '3gpp' | huawei,
+		Rule :: string(),
 		Result :: ok | ignore | {error, Reason},
 		Reason :: term().
 %% @doc Import a file in the inventory table.
 import(File, Options) when is_list(File), is_list(Options) ->
 	case proplists:get_value(type, Options, '3gpp') of
 		'3gpp' ->
-			im_xml_cm_bulk:import(File);
+			RuleId = proplists:get_value(rule, Options),
+			im_xml_cm_bulk:import(File, RuleId);
 		huawei ->
-			im_xml_huawei:import(File)
+			RuleId = proplists:get_value(rule, Options),
+			im_xml_huawei:import(File, RuleId)
 	end.
 
 -type password() :: [50..57 | 97..104 | 106..107 | 109..110 | 112..116 | 119..122].

@@ -4,6 +4,7 @@
 		{parse_module :: atom(),
 		parse_function :: atom(),
 		parse_state :: term(),
+		rule :: string() | undefined,
 		dn_prefix = [] :: [string()],
 		stack = [] :: list(),
 		spec_cache = [] :: [specification_ref()]}).

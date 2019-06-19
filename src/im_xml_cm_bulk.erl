@@ -13,7 +13,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im public API
--export([import/1]).
+-export([import/2]).
 
 %% export the im private API
 -export([parse_bulk_cm/2]).
@@ -26,15 +26,16 @@
 %%  The im public API
 %%----------------------------------------------------------------------
 
--spec import(File) -> Result
+-spec import(File, RuleId) -> Result
 	when
 		File :: string(),
+		RuleId :: string(),
 		Result :: ok | ignore | {error, Reason},
 		Reason :: term().
 %% @doc Import a file into the inventory table.
-import(File) when is_list(File) ->
+import(File, RuleId) when is_list(File), is_list(RuleId) ->
 	Options = [{event_fun, fun parse_xml/3},
-		{event_state, [#state{}]}],
+		{event_state, [#state{rule = RuleId}]}],
 	case xmerl_sax_parser:file(File, Options) of
 		{ok, _EventState, _Rest} ->
 			ok;
@@ -77,8 +78,7 @@ parse_xml(startDocument = _Event, _Location, State) ->
 	State;
 parse_xml({startElement, _, "bulkCmConfigDataFile", _, _} = _Event, _Location,
 		[#state{parse_function = undefined} = State | T]) ->
-	 [State#state{parse_module = ?MODULE,
-			parse_function = parse_bulk_cm} | T];
+	 [State#state{parse_module = ?MODULE, parse_function = parse_bulk_cm} | T];
 parse_xml(endDocument = _Event, _Location, State) ->
 	State;
 parse_xml(_Event, _Location, [#state{parse_function = undefined} | _] = State) ->
