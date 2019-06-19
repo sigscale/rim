@@ -188,7 +188,7 @@ class InventoryManagement extends PolymerElement {
 			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
 			<catalog-update id="updateCatalog" catalog="[[activeItem]]"></catalog-update>
 			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
-			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></fault-help>
+			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 		`;
 	}
 
