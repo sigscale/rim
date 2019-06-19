@@ -134,6 +134,12 @@
 					},
 					"powerInterface": {
 						"type": "string"
+					},
+					"vSRmsDescription": {
+						"type": "string"
+					},
+					"xcuDguDescription": {
+						"type": "string"
 					}
 				}
 			},
