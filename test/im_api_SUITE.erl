@@ -1329,26 +1329,51 @@ get_pee() ->
 	[{userdata, [{doc, "Get matching PEE CMON entity(s) for a given Distinguished Name"}]}].
 
 get_pee(_Config) ->
-	Resource = #resource{name = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
-			description = "PEE Monitored Entity (ME)",category = "PEE", class_type = "PEEMonitoredEntity",
-			base_type = "ResourceFunction", schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity",
-			specification = #specification_ref{id = "1496728297538142",
-			name = "PEEMonitoredEntity",version = "1.0"}},
-	{ok, #resource{}} = im:add_resource(Resource),
+	SiteId = generate_identity(7),
+	DomainComponent = "DC=pee.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity.mEId=",
 	ok = fill_resource(10),
+	PeeResource = #resource{name = DomainComponent ++ SiteId,
+			category = "PEE", class_type = "PEEMonitoredEntity", base_type = "ResourceFunction",
+			characteristic = [#resource_char{name = "mEId", class_type = undefined, schema = undefined, value = SiteId},
+			#resource_char{name = "peeMeDescription", class_type = "PEEMEDescription",
+			schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription",
+			value = #{"environmentType" => "hut",
+			"equipmentType" => "9G", "powerInterface" => "petrol", "sensorDescription" => "SensorPack-3",
+			"siteDescription" => "Fullerton Falls", "siteIdentification" => SiteId, "siteLatitude" => "23.54294",
+			"siteLongitude" => "90.60755", "vSRmsDescription" => "Sunken", "xcuDguDescription" => "DGUv1"}},
+			#resource_char{name = "peeMeConfiguration", class_type = "PEEMEConfiguration",
+			schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration",
+			value = #{"currentMaxThreshold" => "35", "currentMinThreshold" => "15", "humidityMaxThreshold" => "66",
+			"humidityMinThreshold" => "6", "powerMaxThreshold" => "2500", "powerMinThreshold" => "500",
+			"temperatureMaxThreshold" => "15", "temperatureMinThreshold" => "15", "voltageMaxThreshold" => "245",
+			"voltageMinThreshold" => "202"}}]},
+	{ok, #resource{}} = im:add_resource(PeeResource),
 	Rule = fun(DN) ->
-				[{#resource{name = '$1', _ = '_'}, [{'==', '$1', DN}], ['$_']}]
+			SubList = string:tokens(DN, ","),
+			Fid = fun(F, [H | T], Acc) ->
+					case string:tokens(H, "=") of
+						["ID", SiteId] ->
+							[SiteId | Acc];
+						_ ->
+							F(F, T, Acc)
+					end;
+				(_F, [], Acc) ->
+					Acc
+			end,
+			[SiteID] = Fid(Fid, SubList, []),
+			PeeMeDN = "DC=pee.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity.mEId=" ++ SiteID,
+			[{#resource{name = '$1', _ = '_'}, [{'==', '$1', PeeMeDN}], ['$_']}]
 	end,
 	{ok, #pee_rule{id = Id}} = im:add_rule(Rule, "testing"),
-	{ok, #pee_rule{rule = Rule}} = im:get_rule(Id),
-	DN1 = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
-	{ok, PEEMonitoredEntities} = im:get_pee(Id, DN1),
-	F = fun(#resource{class_type = "PEEMonitoredEntity"}) ->
+	NodeBDN = "DC=umts.sigscale.net,SubNetwork=1,ManagedElement=1,NodeBFunction=1,ID=" ++ SiteId,
+	{ok, [#resource{class_type = "PEEMonitoredEntity", characteristic = Chars}]} = im:get_pee(Id, NodeBDN),
+	F = fun(#resource_char{name = "peeMeDescription"}) ->
 				true;
 			(_) ->
 				false
 	end,
-	true = lists:all(F, PEEMonitoredEntities).
+	[#resource_char{value = #{"siteIdentification" := SId}}] = lists:filter(F, Chars),
+	SId == SiteId.
 
 %%---------------------------------------------------------------------
 %%  Internal functions
