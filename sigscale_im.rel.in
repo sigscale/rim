@@ -1,0 +1,13 @@
+{release, {"@PACKAGE@", "@VERSION@"}, {erts, "@ERLANG_ERTS_VER@"},
+	[{kernel, "@ERLANG_LIB_VER_kernel@"},
+	{stdlib, "@ERLANG_LIB_VER_stdlib@"},
+	{mnesia, "@ERLANG_LIB_VER_mnesia@"},
+	{sasl, "@ERLANG_LIB_VER_sasl@"},
+	{inets, "@ERLANG_LIB_VER_inets@"},
+	{crypto, "@ERLANG_LIB_VER_crypto@"},
+	{public_key, "@ERLANG_LIB_VER_public_key@"},
+	{asn1, "@ERLANG_LIB_VER_asn1@"},
+	{ssl, "@ERLANG_LIB_VER_ssl@"},
+	{xmerl, "@ERLANG_LIB_VER_xmerl@"},
+	{zj, "@ERLANG_LIB_VER_zj@"},
+	{@PACKAGE@, "@VERSION@"}]}.
