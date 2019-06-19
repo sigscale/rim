@@ -49,7 +49,7 @@
 						<pee:siteLatitude>23.54294</pee:siteLatitude>
 						<pee:siteLongitude>90.60755</pee:siteLongitude>
 						<pee:siteDescription>Fullerton Falls</pee:siteDescription>
-							<pee:equipmentType>5G</pee:equipmentType>
+						<pee:equipmentType>5G</pee:equipmentType>
 						<pee:environmentType>hut</pee:environmentType>
 						<pee:powerInterface>battery+deisel </pee:powerInterface>
 						<pee:xcuDguDescription>DGUv1</pee:xcuDguDescription>
