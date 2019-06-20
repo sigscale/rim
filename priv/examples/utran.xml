@@ -11,7 +11,7 @@
 
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=1,IRPAgent=1"
+			senderName="DC=umts.sigscale.net,SubNetwork=1,IRPAgent=1"
 			vendorName="Acme" />
 
 	<configData dnPrefix="DC=sigscale.net">
