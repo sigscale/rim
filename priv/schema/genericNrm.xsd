@@ -102,8 +102,8 @@
 			<element name="equipmentType" type="string"/>
 			<element name="environmentType" type="string"/>
 			<element name="powerInterface" type="string"/>
-			<element name="vSRmsDescription" type="string"/>
-			<element name="xcuDguDescription" type="string"/>
+			<element name="vSRmsDescription" type="string" minOccurs="0"/>
+			<element name="xcuDguDescription" type="string" minOccurs="0"/>
 		</sequence>
 	</complexType>
 
