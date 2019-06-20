@@ -258,7 +258,7 @@
 		countryCity :: string() | undefined | '_'}).
 -type sites() :: #sites{}.
 
--type rule() :: fun((DN :: string()) -> ets:match_spec()).
+-type rule() :: fun((Input :: term()) -> ets:match_spec()).
 -record(pee_rule,
 		{id :: string(),
 		description :: string() | undefined,
