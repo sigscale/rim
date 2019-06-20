@@ -49,6 +49,7 @@ docdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/doc
 schemadir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/priv/schema
 examplesdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/priv/examples
 wwwdir=$ERLANG_INSTALL_LIB_DIR/$PACKAGE_NAME-$PACKAGE_VERSION/priv/www
+reldir=$ERLANG_INSTALL_LIB_DIR/../releases
 AC_SUBST(appdir)
 AC_SUBST(erldir)
 AC_SUBST(beamdir)
@@ -57,6 +58,7 @@ AC_SUBST(privdir)
 AC_SUBST(schemadir)
 AC_SUBST(examplesdir)
 AC_SUBST(wwwdir)
+AC_SUBST(reldir)
 
 
 ##
@@ -72,6 +74,7 @@ AC_ERLANG_CHECK_LIB([asn1], [], [AC_MSG_ERROR([asn1 was not found!])])
 AC_ERLANG_CHECK_LIB([public_key], [], [AC_MSG_ERROR([public_key was not found!])])
 AC_ERLANG_CHECK_LIB([ssl], [], [AC_MSG_ERROR([ssl was not found!])])
 AC_ERLANG_CHECK_LIB([inets], [], [AC_MSG_ERROR([inets was not found!])])
+AC_ERLANG_CHECK_LIB([xmerl], [], [AC_MSG_ERROR([xmerl was not found!])])
 AC_ERLANG_CHECK_LIB([zj], [], [AC_MSG_ERROR([zj was not found!])])
 
 
@@ -98,5 +101,5 @@ AC_ERLANG_CHECK_LIB([zj], [], [AC_MSG_ERROR([zj was not found!])])
 AC_OUTPUT([Makefile src/Makefile include/Makefile ebin/Makefile
 		doc/Makefile priv/Makefile priv/schema/Makefile
 		priv/examples/Makefile priv/www/Makefile priv/www/package.json
-		test/Makefile sys.config])
+		test/Makefile sys.config sigscale_im.rel])
 

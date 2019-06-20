@@ -11,7 +11,7 @@
 
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=1,IRPAgent=1"
+			senderName="DC=umts.sigscale.net,SubNetwork=1,IRPAgent=1"
 			vendorName="Acme" />
 
 	<configData dnPrefix="DC=sigscale.net">
@@ -56,6 +56,15 @@
 							<xn:vnfInstanceId>oiurqw</xn:vnfInstanceId>
 							<xn:autoScalable>false</xn:autoScalable>
 						</un:vnfParametersList>
+						<un:peeParametersList>
+							<xn:siteIdentification>oiurqw</xn:siteIdentification>
+							<xn:siteLatitude>23.5429</xn:siteLatitude>
+							<xn:siteLongitude>95.6075</xn:siteLongitude>
+							<xn:siteDescription>Fullerton Falls</xn:siteDescription>
+							<xn:equipmentType>5G</xn:equipmentType>
+							<xn:environmentType>hut</xn:environmentType>
+							<xn:powerInterface>battery+deisel</xn:powerInterface>
+						</un:peeParametersList>
 					</un:attributes>
 					<!--  Vendor specific data for NodeBFunction-->
 					<xn:VsDataContainer id="1">
@@ -73,6 +82,15 @@
 							<xn:vnfInstanceId>lkajjfa</xn:vnfInstanceId>
 							<xn:autoScalable>true</xn:autoScalable>
 						</un:vnfParametersList>
+						<un:peeParametersList>
+							<xn:siteIdentification>oiurqw</xn:siteIdentification>
+							<xn:siteLatitude>23.5429</xn:siteLatitude>
+							<xn:siteLongitude>95.6075</xn:siteLongitude>
+							<xn:siteDescription>Fullerton Falls</xn:siteDescription>
+							<xn:equipmentType>5G</xn:equipmentType>
+							<xn:environmentType>hut</xn:environmentType>
+							<xn:powerInterface>battery+deisel</xn:powerInterface>
+						</un:peeParametersList>
 						<un:mcc>999</un:mcc>
 						<un:rncId>777</un:rncId>
 					</un:attributes>

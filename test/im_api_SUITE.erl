@@ -137,9 +137,9 @@ init_per_testcase(bulk_cm_geran, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:gn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.656#geranNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=gsm.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=gsm.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -236,9 +236,9 @@ init_per_testcase(bulk_cm_utran, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:un', "http://www.3gpp.org/ftp/specs/archive/28_series/28.653#utranNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=umts.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=umts.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -270,7 +270,15 @@ init_per_testcase(bulk_cm_utran, Config) ->
 											[Indent6, {'un:userLabel', ["NodeB" ++ generate_identity(5)]},
 											Indent6, {'un:vnfParametersList', [],
 													[Indent7, {'xn:vnfInstanceId', [generate_identity(7)]},
-													Indent7, {'xn:autoScalable', ["false"]}, Indent6]}, Indent5]},
+													Indent7, {'xn:autoScalable', ["false"]}, Indent6]},
+											Indent6, {'un:peeParametersList', [],
+													[Indent7, {'xn:siteIdentification', [generate_identity(7)]},
+													Indent7, {'xn:siteLatitude', ["23.5429"]},
+													Indent7, {'xn:siteLongitude', ["95.6075"]},
+													Indent7, {'xn:siteDescription', ["Fullerton Falls"]},
+													Indent7, {'xn:equipmentType', ["3G"]},
+													Indent7, {'xn:environmentType', ["hut"]},
+													Indent7, {'xn:powerInterface', ["battery+deisel"]}, Indent6]}, Indent5]},
 									Indent5, {'xn:VsDataContainer', [{id, "1"}],
 											[Indent6, {'xn:attributes', [],
 													[Indent7, {'xn:vsDataType', ["DataType=7"]},
@@ -282,6 +290,14 @@ init_per_testcase(bulk_cm_utran, Config) ->
 											Indent6, {'un:vnfParametersList', [],
 													[Indent7, {'xn:vnfInstanceId', [generate_identity(7)]},
 													Indent7, {'xn:autoScalable', ["true"]}, Indent6]},
+											Indent6, {'un:peeParametersList', [],
+													[Indent7, {'xn:siteIdentification', [generate_identity(7)]},
+													Indent7, {'xn:siteLatitude', ["27.5429"]},
+													Indent7, {'xn:siteLongitude', ["99.6075"]},
+													Indent7, {'xn:siteDescription', ["Fullerton Falls"]},
+													Indent7, {'xn:equipmentType', ["3G"]},
+													Indent7, {'xn:environmentType', ["hut"]},
+													Indent7, {'xn:powerInterface', ["petrol"]}, Indent6]},
 											Indent6, {'un:mcc', ["999"]},
 											Indent6, {'un:rncId', ["777"]}, Indent5]},
 									Indent5, {'un:EP_IuCS', [{id, "1"}],
@@ -430,9 +446,9 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:en', "http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=lte.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=lte.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -512,9 +528,9 @@ init_per_testcase(bulk_cm_epc, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:epc', "http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=epc.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=epc.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -635,9 +651,9 @@ init_per_testcase(bulk_cm_core, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:cn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.703#coreNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=core.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=core.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -778,9 +794,9 @@ init_per_testcase(bulk_cm_ims, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:im', "http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=ims.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=ims.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -864,9 +880,9 @@ init_per_testcase(bulk_cm_pee, Config) ->
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:im', "http://www.3gpp.org/ftp/specs/archive/28_series/28.706#imsNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
-			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
+			{senderName, "DC=pee.sigscale.net,SubNetwork=1,IRPAgent=1"},
 			{vendorName, "Acme"}], []},
-	ConfigData = {configData, [{dnPrefix, "DC=sigscale.net"}],
+	ConfigData = {configData, [{dnPrefix, "DC=pee.sigscale.net"}],
 			[Indent2, {'xn:SubNetwork', [{id, "1"}],
 					[Indent3, {'xn:attributes', [],
 							[Indent4, {'xn:userLabel', [generate_identity(7)]},
@@ -1246,6 +1262,9 @@ bulk_cm_ims(Config) ->
 			",ASFunction=", AsfId]),
 	{ok, #resource{name = AsfName}} = im:get_resource_name(AsfName).
 
+bulk_cm_pee() ->
+	[{userdata, [{doc, "Import bulk CM for pee network resources"}]}].
+
 bulk_cm_pee(Config) ->
 	PrivDir = ?config(priv_dir, Config),
 	PeeXML = PrivDir ++ "/" ++ "pee.xml",
@@ -1276,7 +1295,7 @@ bulk_cm_pee(Config) ->
 	{ok, #resource{name = PeeMeName}} = im:get_resource_name(PeeMeName).
 
 add_rule() ->
-	[{userdata, [{doc, "add PEE matching rules"}]}].
+	[{userdata, [{doc, "Add PEE matching rules"}]}].
 
 add_rule(_Config) ->
 	Rule = fun(DN1) ->
@@ -1285,7 +1304,7 @@ add_rule(_Config) ->
 	{ok, #pee_rule{}} = im:add_rule(Rule, "testing").
 
 get_rule() ->
-	[{userdata, [{doc, "get a specific rule"}]}].
+	[{userdata, [{doc, "Get a specific rule"}]}].
 
 get_rule(_Config) ->
 	Rule = fun(DN) ->
@@ -1295,7 +1314,7 @@ get_rule(_Config) ->
 	{ok, PeeRule} = im:get_rule(Id).
 
 get_rules() ->
-	[{userdata, [{doc, "get all the rules"}]}].
+	[{userdata, [{doc, "Get all the rules"}]}].
 
 get_rules(_Config) ->
 	Rule = fun(DN) ->
@@ -1312,7 +1331,7 @@ get_rules(_Config) ->
 	true = lists:all(F, PeeRules).
 
 delete_rule() ->
-	[{userdata, [{doc, "delete a specific rule"}]}].
+	[{userdata, [{doc, "Delete a specific rule"}]}].
 
 delete_rule(_Config) ->
 	Rule = fun(DN) ->
@@ -1323,29 +1342,54 @@ delete_rule(_Config) ->
 	{error, not_found} = im:get_rule(Id).
 
 get_pee() ->
-	[{userdata, [{doc, "get matching PEE CMON entity(s) for a given Distinguished Name"}]}].
+	[{userdata, [{doc, "Get matching PEE CMON entity(s) for a given Distinguished Name"}]}].
 
 get_pee(_Config) ->
-	Resource = #resource{name = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
-			description = "PEE Monitored Entity (ME)",category = "PEE", class_type = "PEEMonitoredEntity",
-			base_type = "ResourceFunction", schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity",
-			specification = #specification_ref{id = "1496728297538142",
-			name = "PEEMonitoredEntity",version = "1.0"}},
-	{ok, #resource{}} = im:add_resource(Resource),
+	SiteId = generate_identity(7),
+	DomainComponent = "DC=pee.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity.mEId=",
 	ok = fill_resource(10),
+	PeeResource = #resource{name = DomainComponent ++ SiteId,
+			category = "PEE", class_type = "PEEMonitoredEntity", base_type = "ResourceFunction",
+			characteristic = [#resource_char{name = "mEId", class_type = undefined, schema = undefined, value = SiteId},
+			#resource_char{name = "peeMeDescription", class_type = "PEEMEDescription",
+			schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription",
+			value = #{"environmentType" => "hut",
+			"equipmentType" => "9G", "powerInterface" => "petrol", "sensorDescription" => "SensorPack-3",
+			"siteDescription" => "Fullerton Falls", "siteIdentification" => SiteId, "siteLatitude" => "23.54294",
+			"siteLongitude" => "90.60755", "vSRmsDescription" => "Sunken", "xcuDguDescription" => "DGUv1"}},
+			#resource_char{name = "peeMeConfiguration", class_type = "PEEMEConfiguration",
+			schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration",
+			value = #{"currentMaxThreshold" => "35", "currentMinThreshold" => "15", "humidityMaxThreshold" => "66",
+			"humidityMinThreshold" => "6", "powerMaxThreshold" => "2500", "powerMinThreshold" => "500",
+			"temperatureMaxThreshold" => "15", "temperatureMinThreshold" => "15", "voltageMaxThreshold" => "245",
+			"voltageMinThreshold" => "202"}}]},
+	{ok, #resource{}} = im:add_resource(PeeResource),
 	Rule = fun(DN) ->
-				[{#resource{name = '$1', _ = '_'}, [{'==', '$1', DN}], ['$_']}]
+			SubList = string:tokens(DN, ","),
+			Fid = fun(F, [H | T], Acc) ->
+					case string:tokens(H, "=") of
+						["ID", SiteId] ->
+							[SiteId | Acc];
+						_ ->
+							F(F, T, Acc)
+					end;
+				(_F, [], Acc) ->
+					Acc
+			end,
+			[SiteID] = Fid(Fid, SubList, []),
+			PeeMeDN = "DC=pee.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity.mEId=" ++ SiteID,
+			[{#resource{name = '$1', _ = '_'}, [{'==', '$1', PeeMeDN}], ['$_']}]
 	end,
 	{ok, #pee_rule{id = Id}} = im:add_rule(Rule, "testing"),
-	{ok, #pee_rule{rule = Rule}} = im:get_rule(Id),
-	DN1 = "DC=a1.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity=1",
-	{ok, PEEMonitoredEntities} = im:get_pee(Id, DN1),
-	F = fun(#resource{class_type = "PEEMonitoredEntity"}) ->
+	NodeBDN = "DC=umts.sigscale.net,SubNetwork=1,ManagedElement=1,NodeBFunction=1,ID=" ++ SiteId,
+	{ok, [#resource{class_type = "PEEMonitoredEntity", characteristic = Chars}]} = im:get_pee(Id, NodeBDN),
+	F = fun(#resource_char{name = "peeMeDescription"}) ->
 				true;
 			(_) ->
 				false
 	end,
-	true = lists:all(F, PEEMonitoredEntities).
+	[#resource_char{value = #{"siteIdentification" := SId}}] = lists:filter(F, Chars),
+	SId == SiteId.
 
 %%---------------------------------------------------------------------
 %%  Internal functions

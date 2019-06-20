@@ -9,7 +9,7 @@
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=1,IRPAgent=1"
+			senderName="DC=epc.sigscale.net,SubNetwork=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="1">

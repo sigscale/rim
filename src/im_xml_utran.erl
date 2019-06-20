@@ -38,10 +38,10 @@ parse_nodeb({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
-		[#state{dn_prefix = [NodebDn | _], stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		[#state{rule = RuleId, dn_prefix = [NodebDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	NodeBAttr = parse_nodeb_attr(T2, undefined, []),
+	NodeBAttr = parse_nodeb_attr(T2, undefined, NodebDn, RuleId, []),
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = NodebDn,
@@ -64,37 +64,44 @@ parse_nodeb({endElement, _Uri, _LocalName, QName},
 
 % @hidden
 parse_nodeb_attr([{startElement, {_, "attributes"} = QName, []} | T1],
-		undefined, Acc) ->
+		undefined, NodebDn, RuleId, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_nodeb_attr1(Attributes, undefined, Acc).
+	parse_nodeb_attr1(Attributes, undefined, NodebDn, RuleId, Acc).
 % @hidden
 parse_nodeb_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
-		undefined, Acc) ->
+		undefined, NodebDn, RuleId, Acc) ->
 	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
 	% @todo vnfParametersListType
-	parse_nodeb_attr1(T2, undefined, Acc);
+	parse_nodeb_attr1(T2, undefined, NodebDn, RuleId, Acc);
 parse_nodeb_attr1([{endElement, {_, "peeParametersList"} = QName} | T1],
-		undefined, Acc) ->
-	% @todo peeParametersListType
+		undefined, NodebDn, RuleId, Acc) ->
 	{[_ | _PeeplType], T2} = pop(startElement, QName, T1),
-	parse_nodeb_attr1(T2, undefined, Acc);
-parse_nodeb_attr1([{characters, Chars} | T],
-		"userLabel" = Attr, Acc) ->
-	parse_nodeb_attr1(T, Attr, [#resource_char{name = Attr,
-			value = Chars} | Acc]);
-parse_nodeb_attr1([{characters, Chars} | T],
-		"mcc" = Attr, Acc) ->
-	parse_nodeb_attr1(T, Attr, [#resource_char{name = Attr,
-			value = list_to_integer(Chars)} | Acc]);
-parse_nodeb_attr1([{characters, Chars} | T],
-		Attr, Acc) ->
-	parse_nodeb_attr1(T, Attr, [#resource_char{name = Attr,
-			value = Chars} | Acc]);
-parse_nodeb_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
-	parse_nodeb_attr1(T, undefined, Acc);
-parse_nodeb_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
-	parse_nodeb_attr1(T, Attr, Acc);
-parse_nodeb_attr1([], undefined, Acc) ->
+	case im:get_pee(RuleId, NodebDn) of
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList = parse_peeParameterslist(PEEMonitoredEntities, []),
+			parse_nodeb_attr1(T2, undefined, NodebDn, RuleId,
+					[#resource_char{name = "peeParametersList",
+					value = PeeParametersList} | Acc]);
+		{error, _Reason} ->
+			parse_nodeb_attr1(T2, undefined, NodebDn, RuleId, Acc)
+	end;
+parse_nodeb_attr1([{characters, Chars} | T], "userLabel" = Attr, NodebDn,
+		RuleId, Acc) ->
+	parse_nodeb_attr1(T, Attr, NodebDn, RuleId,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_nodeb_attr1([{characters, Chars} | T], "mcc" = Attr, NodebDn,
+		RuleId, Acc) ->
+	parse_nodeb_attr1(T, Attr, NodebDn, RuleId,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_nodeb_attr1([{characters, Chars} | T], Attr, NodebDn, RuleId, Acc) ->
+	parse_nodeb_attr1(T, Attr, NodebDn, RuleId,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_nodeb_attr1([{startElement, {_, Attr}, _} | T], Attr, NodebDn, RuleId,
+		Acc) ->
+	parse_nodeb_attr1(T, undefined, NodebDn, RuleId, Acc);
+parse_nodeb_attr1([{endElement, {_, Attr}} | T], undefined, NodebDn, RuleId, Acc) ->
+	parse_nodeb_attr1(T, Attr, NodebDn, RuleId, Acc);
+parse_nodeb_attr1([], undefined, _NodebDn, _RuleId, Acc) ->
 	Acc.
 
 %% @hidden
@@ -167,14 +174,14 @@ parse_rnc({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({endElement, _Uri, "RncFunction", QName},
-		[#state{parse_state =  #utran_state{fdds = Fdds},
+		[#state{parse_state =  #utran_state{fdds = Fdds}, rule = RuleId,
 		dn_prefix = [RncDn | _], stack = Stack, spec_cache = Cache},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
 	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	RncAttr = parse_rnc_attr(T2, undefined, []),
+	RncAttr = parse_rnc_attr(T2, undefined, RncDn, RuleId, []),
 	Resource = #resource{name = RncDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
@@ -195,55 +202,86 @@ parse_rnc({endElement, _Uri, _LocalName, QName},
 
 % @hidden
 parse_rnc_attr([{startElement, {_, "attributes"} = QName, []} | T1],
-		undefined, Acc) ->
+		undefined, RncDn, RuleId, Acc) ->
 	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_rnc_attr1(Attributes, undefined, Acc).
+	parse_rnc_attr1(Attributes, undefined, RncDn, RuleId, Acc).
 % @hidden
 parse_rnc_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
-		undefined, Acc) ->
+		undefined, RncDn, RuleId, Acc) ->
 	% @todo vnfParametersListType
 	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
-	parse_rnc_attr1(T2, undefined, Acc);
+	parse_rnc_attr1(T2, undefined, RncDn, RuleId, Acc);
 parse_rnc_attr1([{endElement, {_, "peeParametersList"} = QName} | T1],
-		undefined, Acc) ->
-	% @todo peeParametersListType
+		undefined, RncDn, RuleId, Acc) ->
 	{[_ | _PeeplType], T2} = pop(startElement, QName, T1),
-	parse_rnc_attr1(T2, undefined, Acc);
+	case im:get_pee(RuleId, RncDn) of
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList = parse_peeParameterslist(PEEMonitoredEntities, []),
+			parse_nodeb_attr1(T2, undefined, RncDn, RuleId,
+					[#resource_char{name = "peeParametersList",
+					value = PeeParametersList} | Acc]);
+		{error, _Reason} ->
+			parse_nodeb_attr1(T2, undefined, RncDn, RuleId, Acc)
+	end;
 parse_rnc_attr1([{endElement, {_, "tceIDMappingInfoList"} = QName} | T1],
-		undefined, Acc) ->
+		undefined, RncDn, RuleId, Acc) ->
 	% @todo TceIDMappingInfoList
 	{[_ | _TceimiList], T2} = pop(startElement, QName, T1),
-	parse_rnc_attr1(T2, undefined, Acc);
+	parse_rnc_attr1(T2, undefined, RncDn, RuleId, Acc);
 parse_rnc_attr1([{endElement, {_, "sharNetTceMappingInfoList"} = QName} | T1],
-		undefined, Acc) ->
+		undefined, RncDn, RuleId, Acc) ->
 	% @todo SharNetTceMappingInfoList
 	{[_ | _SntcemiList], T2} = pop(startElement, QName, T1),
-	parse_rnc_attr1(T2, undefined, Acc);
-parse_rnc_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
-	parse_rnc_attr1(T, Attr,
+	parse_rnc_attr1(T2, undefined, RncDn, RuleId, Acc);
+parse_rnc_attr1([{characters, Chars} | T], "userLabel" = Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_rnc_attr1([{characters, Chars} | T], "mcc" = Attr, Acc) ->
-	parse_rnc_attr1(T, Attr, [#resource_char{name = Attr,
-			value = list_to_integer(Chars)} | Acc]);
-parse_rnc_attr1([{characters, Chars} | T], "mnc" = Attr, Acc) ->
-	parse_rnc_attr1(T, Attr, [#resource_char{name = Attr,
-			value = list_to_integer(Chars)} | Acc]);
-parse_rnc_attr1([{characters, Chars} | T], "rncId" = Attr, Acc) ->
-	parse_rnc_attr1(T, Attr, [#resource_char{name = Attr,
-			value = list_to_integer(Chars)} | Acc]);
-parse_rnc_attr1([{characters, "0"} | T], "siptoSupported" = Attr, Acc) ->
-	parse_rnc_attr1(T, Attr, [#resource_char{name = Attr,
-			value = 0} | Acc]);
-parse_rnc_attr1([{characters, "1"} | T], "siptoSupported" = Attr, Acc) ->
-	parse_rnc_attr1(T, Attr, [#resource_char{name = Attr, value = 1} | Acc]);
-parse_rnc_attr1([{characters, Chars} | T], Attr, Acc) ->
-	parse_rnc_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
-parse_rnc_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
-	parse_rnc_attr1(T, undefined, Acc);
-parse_rnc_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
-	parse_rnc_attr1(T, Attr, Acc);
-parse_rnc_attr1([], undefined, Acc) ->
+parse_rnc_attr1([{characters, Chars} | T], "mcc" = Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_rnc_attr1([{characters, Chars} | T], "mnc" = Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_rnc_attr1([{characters, Chars} | T], "rncId" = Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_rnc_attr1([{characters, "0"} | T], "siptoSupported" = Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
+			[#resource_char{name = Attr, value = 0} | Acc]);
+parse_rnc_attr1([{characters, "1"} | T], "siptoSupported" = Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
+			[#resource_char{name = Attr, value = 1} | Acc]);
+parse_rnc_attr1([{characters, Chars} | T], Attr, RncDn, RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_rnc_attr1([{startElement, {_, Attr}, _} | T], Attr, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, undefined, RncDn, RuleId, Acc);
+parse_rnc_attr1([{endElement, {_, Attr}} | T], undefined, RncDn,
+		RuleId, Acc) ->
+	parse_rnc_attr1(T, Attr, RncDn, RuleId, Acc);
+parse_rnc_attr1([], undefined, _RncDn, _RuleId, Acc) ->
 	Acc.
+
+% @hidden
+parse_peeParameterslist([#resource{characteristic = ResourceChars} | Resources], Acc) ->
+	parse_peeParameterslist1(ResourceChars, Resources, Acc);
+parse_peeParameterslist([], Acc) ->
+	Acc.
+% @hidden
+parse_peeParameterslist1([#resource_char{name = "peeMeDescription",
+		value = ValueMap} | _], Resources, Acc) ->
+	parse_peeParameterslist(Resources, [ValueMap | Acc]);
+parse_peeParameterslist1([_H | T], Resources, Acc) ->
+	parse_peeParameterslist1(T, Resources, Acc);
+parse_peeParameterslist1([], Resources, Acc) ->
+	parse_peeParameterslist(Resources, Acc).
 
 %% @hidden
 parse_fdd({characters, Chars}, [#state{stack = Stack} = State | T]) ->

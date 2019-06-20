@@ -20,7 +20,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([import/1, parse_mo/2, parse_gsm_mo/2, parse_umts_mo/2,
+-export([import/2, parse_mo/2, parse_gsm_mo/2, parse_umts_mo/2,
 		parse_gsm_function/2, parse_gsm_bts/2, parse_gsm_gcell/2,
 		parse_umts_function/2, parse_umts_nodeb/2, parse_umts_ucell/2]).
 
@@ -35,15 +35,16 @@
 %%  The im private API
 %%----------------------------------------------------------------------
 
--spec import(File) -> Result
+-spec import(File, RuleId) -> Result
 	when
 		File :: string(),
+		RuleId :: string(),
 		Result :: ok | ignore | {error, Reason},
 		Reason :: term().
 %% @doc Import a file into the inventory table.
-import(File) when is_list(File) ->
+import(File, RuleId) when is_list(File), is_list(RuleId) ->
 	Options = [{event_fun, fun parse_xml/3},
-		{event_state, [#state{}]}],
+		{event_state, [#state{rule = RuleId}]}],
 	case xmerl_sax_parser:file(File, Options) of
 		{ok, _EventState, _Rest} ->
 			ok;

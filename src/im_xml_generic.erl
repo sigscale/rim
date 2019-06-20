@@ -27,18 +27,19 @@
 parse_generic({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_generic({startElement, _Uri, "SubNetwork", QName,
-		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = []} | _] = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [],
+		rule = RuleId} | _] = State) ->
 	DnComponent = "SubNetwork=" ++ Id,
-	[#state{dn_prefix = [DnComponent],
+	[#state{dn_prefix = [DnComponent], rule = RuleId,
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_generic({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [NewDn], rule = RuleId,
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -67,21 +68,21 @@ parse_subnetwork({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_subnetwork({startElement, _Uri, "SubNetwork", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 	DnComponent = ",SubNetwork=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [NewDn], rule = RuleId,
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "meContext", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 % only for zte xml files
 	DnComponent = ",meContext=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_generic, parse_function = parse_mecontext,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #generic_state{me_context = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "MeContext", QName,
@@ -92,10 +93,10 @@ parse_subnetwork({startElement, _Uri, "MeContext", QName,
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 	DnComponent = ",ManagedElement=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [NewDn], rule = RuleId,
 			parse_module = im_xml_generic, parse_function = parse_managed_element,
 			parse_state = #generic_state{managed_element = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -114,10 +115,10 @@ parse_mecontext({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_mecontext({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 	DnComponent = ",ManagedElement=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn], parse_module = im_xml_generic,
+	[#state{dn_prefix = [NewDn], rule = RuleId, parse_module = im_xml_generic,
 			parse_function = parse_managed_element,
 			parse_state = #generic_state{managed_element = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -141,110 +142,110 @@ parse_managed_element({characters, Chars},
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_managed_element({startElement, _, "BssFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",BssFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_geran, parse_function = parse_bss,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #geran_state{bss = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "NodeBFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",NodeBFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_utran, parse_function = parse_nodeb,
-			dn_prefix = [NewDn],
+			rule = RuleId, dn_prefix = [NewDn],
 			parse_state = #utran_state{nodeb = #{"id" => CurrentDn}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "RncFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",RncFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_utran, parse_function = parse_rnc,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #utran_state{rnc = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "EPDGFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",EPDGFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_epdg,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #epc_state{epdg = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "MMEFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",MMEFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_mme,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #epc_state{mme = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "PCRFFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",PCRFFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_pcrf,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #epc_state{pcrf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "PGWFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",PGWFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_pgw,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #epc_state{pgw = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "ServingGWFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",ServingGWFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_sgw,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #epc_state{sgw = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "MscServerFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",MscServerFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_core, parse_function = parse_msc,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #core_state{msc = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "CsMgwFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",CsMgwFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_core, parse_function = parse_mgw,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #core_state{mgw = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "GgsnFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",GgsnFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_core, parse_function = parse_ggsn,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #core_state{ggsn = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "SgsnFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
 	DnComponent = ",SgsnFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_core, parse_function = parse_sgsn,
-			dn_prefix = [NewDn],
+			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #core_state{sgsn = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "VsDataContainer", QName,

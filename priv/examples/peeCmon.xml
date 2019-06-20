@@ -5,7 +5,7 @@
 		xmlns:pee="http://www.3gpp.org/ftp/specs/archive/28_series/28.306#peeCmonNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=1,IRPAgent=1"
+			senderName="DC=pee.sigscale.net,SubNetwork=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=a1.sigscale.net">
 		<xn:SubNetwork id="1">
@@ -49,7 +49,7 @@
 						<pee:siteLatitude>23.54294</pee:siteLatitude>
 						<pee:siteLongitude>90.60755</pee:siteLongitude>
 						<pee:siteDescription>Fullerton Falls</pee:siteDescription>
-							<pee:equipmentType>5G</pee:equipmentType>
+						<pee:equipmentType>5G</pee:equipmentType>
 						<pee:environmentType>hut</pee:environmentType>
 						<pee:powerInterface>battery+deisel </pee:powerInterface>
 						<pee:xcuDguDescription>DGUv1</pee:xcuDguDescription>
