@@ -18,6 +18,7 @@ MODULES = inventory-management.js \
 		specification-list.js \
 		specification-update.js \
 		inventory-help.js \
+		rules-list.js \
 		user-list.js \
 		style-element.js
 
