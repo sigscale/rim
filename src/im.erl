@@ -864,10 +864,10 @@ delete_rule(Id) when is_list(Id) ->
 		PEEMonitoredEntities :: [resource()],
 		Reason :: not_found | term().
 %% @doc Get matching PEE CMON entity(s) for a given `Input' based on the rule.
-get_pee(RuleId, DN) when is_list(RuleId), is_list(DN) ->
+get_pee(RuleId, Input) when is_list(RuleId), is_list(Input) ->
 	case get_rule(RuleId) of
 		{ok, #pee_rule{rule = Rule}} ->
-			MatchSpec = Rule(DN),
+			MatchSpec = Rule(Input),
 			F = fun() ->
 					mnesia:select(resource, MatchSpec, read)
 			end,
