@@ -4,6 +4,7 @@
 		{parse_module :: atom(),
 		parse_function :: atom(),
 		parse_state :: term(),
+		location :: map() | undefined,
 		rule :: string() | undefined,
 		dn_prefix = [] :: [string()],
 		stack = [] :: list(),
@@ -14,6 +15,7 @@
 		{subnet = [] :: [string()],
 		me_context = [] :: [string()],
 		managed_element = [] :: [string()],
+		node = [] :: [string()],
 		vs_data :: map() | undefined,
 		vs_data_container = [] :: [map()]}).
 -type generic_state() :: #generic_state{}.
