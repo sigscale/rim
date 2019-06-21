@@ -75,24 +75,34 @@ class inventoryHelp extends PolymerElement {
 				</div>
 			</paper-toolbar>
 			<paper-icon-item
-					on-click="alarms">
-					<iron-icon icon="my-icons:alarmIcon" slot="item-icon"></iron-icon>
-						Alarm
-			</paper-icon-item>
-			<paper-icon-item
-					on-click="logs">
-					<iron-icon icon="my-icons:logIcon" slot="item-icon"></iron-icon>
-						Logs
+					on-click="catalog">
+					<iron-icon icon="my-icons:catalog" slot="item-icon"></iron-icon>
+						Catalog
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="dash">
-					<iron-icon icon="my-icons:dashboard" slot="item-icon"></iron-icon>
-						DashBoard
+					<iron-icon icon="my-icons:category" slot="item-icon"></iron-icon>
+						Category
 			</paper-icon-item>
 			<paper-icon-item
-					on-click="users">
-					<iron-icon icon="my-icons:users" slot="item-icon"></iron-icon>
-						Users
+					on-click="candidate">
+					<iron-icon icon="my-icons:candidate" slot="item-icon"></iron-icon>
+						Candidate
+			</paper-icon-item>
+			<paper-icon-item
+					on-click="specification">
+					<iron-icon icon="my-icons:specification" slot="item-icon"></iron-icon>
+						Specification
+			</paper-icon-item>
+			<paper-icon-item
+					on-click="rule">
+					<iron-icon icon="my-icons:rule" slot="item-icon"></iron-icon>
+						Rule
+			</paper-icon-item>
+			<paper-icon-item
+					on-click="user">
+					<iron-icon icon="my-icons:user" slot="item-icon"></iron-icon>
+						User
 			</paper-icon-item>
 		</paper-dialog>
 		<paper-dialog id="helpUsers">
@@ -125,7 +135,7 @@ class inventoryHelp extends PolymerElement {
 			<paper-toolbar>
 			<div slot="top"><h2>About</h2></div>
 			</paper-toolbar>
-			<p>Fault Management (FM)<br>
+			<p>Inventory Management (IM)<br>
 			%PACKAGE%-%VERSION%<br>
 			Copyright 2019 SigScale Global Inc.<br>
 			Apache License Version 2.0<br>
@@ -161,7 +171,7 @@ class inventoryHelp extends PolymerElement {
 		var helpObj = helpIm.shadowRoot.getElementById('helpMenu');
 		helpObj.open();
 	}
-	users(event) {
+	user(event) {
 		var userIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
 		var userObj = userIm.shadowRoot.getElementById('helpMenu');
 		userObj.close();

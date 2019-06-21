@@ -67,7 +67,7 @@ class InventoryManagement extends PolymerElement {
 									icon="my-icons:menu"
 									drawer-toggle>
 							</paper-icon-button>
-							<div main-title>Resource Inventory</div>
+							<div main-title>[[viewTitle]]</div>
 							<paper-icon-button
 									icon="my-icons:refresh"
 									on-click="refreshClick">
@@ -112,6 +112,11 @@ class InventoryManagement extends PolymerElement {
 								name="specificationView"
 								active-item="{{activeItem}}">
 						</specification-list>
+						<rules-list
+								id="rulesList"
+								loading="{{rulesLoading}}"
+								name="rulesView">
+						</rules-list>
 						<inventory-list
 								id="inventoryList"
 								loading="{{inventoryLoading}}"
@@ -169,6 +174,12 @@ class InventoryManagement extends PolymerElement {
 								Specification
 							</a>
 						</iron-collapse>
+						<a name="rulesView" href="[[rootPath]]rulesView">
+							<paper-icon-button
+									icon="my-icons:rule">
+							</paper-icon-button>
+							Rule
+						</a>
 						<a name="inventoryView" href="[[rootPath]]inventoryView">
 							<paper-icon-button
 									icon="my-icons:inventory">
@@ -187,6 +198,7 @@ class InventoryManagement extends PolymerElement {
 			<!-- Model Definitions -->
 			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
 			<catalog-update id="updateCatalog" catalog="[[activeItem]]"></catalog-update>
+			<candidate-update id="updateCandidate" candidate="[[activeItem]]"></candidate-update>
 			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 		`;
@@ -248,6 +260,14 @@ class InventoryManagement extends PolymerElement {
 					console.log('Have patience dude!');
 				}
 				break;
+			case "rulesView":
+				var rules = this.shadowRoot.getElementById('rulesList');
+				if (!rules.loading) {
+					rules.shadowRoot.getElementById('inventoryGrid').clearCache();
+				} else {
+					console.log('Have patience dude!');
+				}
+				break;
 			case "userView":
 				var user = this.shadowRoot.getElementById('userList');
 				if (!user.loading) {
@@ -268,6 +288,9 @@ class InventoryManagement extends PolymerElement {
 			},
 			routeData: Object,
 			ubroute: Object,
+			viewTitle: {
+				type: String
+			},
 			loading: {
 				type: String,
 				value: false
@@ -285,6 +308,9 @@ class InventoryManagement extends PolymerElement {
 				type: String
 			},
 			specificationLoading: {
+				type: String
+			},
+			rulesLoading: {
 				type: String
 			},
 			inventoryLoading: {
@@ -310,8 +336,31 @@ class InventoryManagement extends PolymerElement {
 		// Show 'inventoryView' in that case. And if the page doesn't exist, show 'view404'.
 		if (!page) {
 			this.page = 'catalogView';
-		} else if (['inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView'].indexOf(page) !== -1) {
+		} else if (['rulesView', 'inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView'].indexOf(page) !== -1) {
 			this.page = page;
+		}
+		switch (this.page) {
+			case 'catalogView':
+				this.viewTitle = 'Resource Catalogs';
+				break;
+			case 'categoryView':
+				this.viewTitle = 'Resource Categories';
+				break;
+			case 'candidateView':
+				this.viewTitle = 'Resource Candidates';
+				break;
+			case 'specificationView':
+				this.viewTitle = 'Resource Specifications';
+				break;
+			case 'inventoryView':
+				this.viewTitle = 'Resource Inventory';
+				break;
+			case 'rulesView':
+				this.viewTitle = 'Rules';
+				break;
+			case 'userView':
+				this.viewTitle = 'Users';
+				break;
 		}
 		// Close a non-persistent drawer when the page & route are changed.
 		if (!this.$.drawer.persistent) {
@@ -335,6 +384,7 @@ class InventoryManagement extends PolymerElement {
 				break;
 			case 'candidateView':
 				import('./candidate-list.js');
+				import('./candidate-update.js');
 				break;
 			case 'specificationView':
 				import('./specification-list.js');
@@ -343,6 +393,9 @@ class InventoryManagement extends PolymerElement {
 			case 'inventoryView':
 				import('./inventory-list.js');
 				break;
+			case 'rulesView':
+				import('./rules-list.js');
+				break;
 			case 'userView':
 				import('./user-list.js');
 				break;
@@ -350,7 +403,7 @@ class InventoryManagement extends PolymerElement {
 	}
 
 	_loadingChanged() {
-		if (this.userLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading || this.candidateLoading || this.specificationLoading) {
+		if (this.userLoading || this.rulesLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading || this.candidateLoading || this.specificationLoading) {
 			this.loading = true;
 		} else {
 			this.loading = false;

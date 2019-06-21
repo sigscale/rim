@@ -133,6 +133,11 @@ class candidateList extends PolymerElement {
 				type: String,
 				value: null
 			},
+			activeItem: {
+				type: Object,
+				notify: true,
+				observer: '_activeItemChanged'
+			},
 			_filterCatalogName: {
 				type: Boolean,
 				observer: '_filterChanged'
@@ -149,6 +154,43 @@ class candidateList extends PolymerElement {
 				type: Boolean,
 				observer: '_filterChanged'
 			}
+		}
+	}
+
+	_activeItemChanged(item) {
+		if(item) {
+			var grid = this.$.candidateGrid;
+			grid.selectedItems = item ? [item] : [];
+			var updateCandidate = document.querySelector('inventory-management').shadowRoot.getElementById('updateCandidate');
+			updateCandidate.shadowRoot.getElementById('updateCandModal').open();
+			updateCandidate.shadowRoot.getElementById('addCandId').value = item.candidateId
+			updateCandidate.shadowRoot.getElementById('addCandName').value = item.candidateName
+			updateCandidate.shadowRoot.getElementById('addCandDesc').value = item.candidateDescription
+			updateCandidate.shadowRoot.getElementById('addCandType').value = item.candidateClass
+         if(item.candidateStatus == "In Study") {
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 0;
+         }
+         if(item.candidateStatus == "In Design"){
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 1;
+         }
+         if(item.candidateStatus == "In Test") {
+            updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
+         }
+         if(item.candidateStatus == "Rejected") {
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 3;
+         }
+         if(item.candidateStatus == "Active") {
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 4;
+         }
+         if(item.candidateStatus == "Launched") {
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 5;
+         }
+         if(item.candidateStatus == "Retired") {
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 6;
+         }
+         if(item.candidateStatus == "Obsolete") {
+            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 7;
+         }
 		}
 	}
 
@@ -265,6 +307,7 @@ class candidateList extends PolymerElement {
 				var vaadinItems = new Array();
 					for(var index in request.response) {
 						var newRecord = new Object();
+						newRecord.candidateId = request.response[index].id;
 						newRecord.candidateName = request.response[index].name;
 						newRecord.candidateDescription = request.response[index].description;
 						newRecord.candidateClass = request.response[index]["@type"];

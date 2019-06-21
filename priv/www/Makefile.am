@@ -14,9 +14,11 @@ MODULES = inventory-management.js \
 		category-list.js \
 		category-update.js \
 		candidate-list.js \
+		candidate-update.js \
 		specification-list.js \
 		specification-update.js \
 		inventory-help.js \
+		rules-list.js \
 		user-list.js \
 		style-element.js
 
