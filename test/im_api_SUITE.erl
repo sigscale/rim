@@ -1368,16 +1368,16 @@ get_pee(_Config) ->
 			SubList = string:tokens(DN, ","),
 			Fid = fun(F, [H | T], Acc) ->
 					case string:tokens(H, "=") of
-						["ID", SiteId] ->
-							[SiteId | Acc];
+						["ID", Id] ->
+							[Id | Acc];
 						_ ->
 							F(F, T, Acc)
 					end;
 				(_F, [], Acc) ->
 					Acc
 			end,
-			[SiteID] = Fid(Fid, SubList, []),
-			PeeMeDN = "DC=pee.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity.mEId=" ++ SiteID,
+			[SID] = Fid(Fid, SubList, []),
+			PeeMeDN = "DC=pee.sigscale.net,SubNetwork=1,ManagedElement=1,PEEMonitoredEntity.mEId=" ++ SID,
 			[{#resource{name = '$1', _ = '_'}, [{'==', '$1', PeeMeDN}], ['$_']}]
 	end,
 	{ok, #pee_rule{id = Id}} = im:add_rule(Rule, "testing"),
