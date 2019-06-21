@@ -125,7 +125,7 @@ class inventoryHelp extends PolymerElement {
 			<paper-toolbar>
 			<div slot="top"><h2>About</h2></div>
 			</paper-toolbar>
-			<p>Fault Management (FM)<br>
+			<p>Inventory Management (IM)<br>
 			%PACKAGE%-%VERSION%<br>
 			Copyright 2019 SigScale Global Inc.<br>
 			Apache License Version 2.0<br>
