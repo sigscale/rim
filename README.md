@@ -1,5 +1,8 @@
 # [SigScale](http://www.sigscale.org) Resource Inventory Management (RIM)
 
+### [Open Issues](https://sigscale.atlassian.net/projects/IM/issues/?filter=allopenissues "Open Issues")
+### [Create Issue](https://sigscale.atlassian.net/secure/CreateIssue!default.jspa?pid=10304&issuetype=10000 "Create Issue")
+
 SigScale RIM is designed for communications service providers
 (CSP) to manage an enterpise wide inventory of physical and logical
 network resources. The initial focus is on managed objects (MO) in
