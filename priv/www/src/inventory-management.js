@@ -67,7 +67,7 @@ class InventoryManagement extends PolymerElement {
 									icon="my-icons:menu"
 									drawer-toggle>
 							</paper-icon-button>
-							<div main-title>Resource Inventory</div>
+							<div main-title>[[viewTitle]]</div>
 							<paper-icon-button
 									icon="my-icons:refresh"
 									on-click="refreshClick">
@@ -268,6 +268,9 @@ class InventoryManagement extends PolymerElement {
 			},
 			routeData: Object,
 			ubroute: Object,
+			viewTitle: {
+				type: String
+			},
 			loading: {
 				type: String,
 				value: false
@@ -312,6 +315,26 @@ class InventoryManagement extends PolymerElement {
 			this.page = 'catalogView';
 		} else if (['inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView'].indexOf(page) !== -1) {
 			this.page = page;
+		}
+		switch (this.page) {
+			case 'catalogView':
+				this.viewTitle = 'Resource Catalogs';
+				break;
+			case 'categoryView':
+				this.viewTitle = 'Resource Categories';
+				break;
+			case 'candidateView':
+				this.viewTitle = 'Resource Candidates';
+				break;
+			case 'specificationView':
+				this.viewTitle = 'Resource Specifications';
+				break;
+			case 'inventoryView':
+				this.viewTitle = 'Resource Inventory';
+				break;
+			case 'userView':
+				this.viewTitle = 'Users';
+				break;
 		}
 		// Close a non-persistent drawer when the page & route are changed.
 		if (!this.$.drawer.persistent) {
