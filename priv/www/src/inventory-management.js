@@ -355,6 +355,9 @@ class InventoryManagement extends PolymerElement {
 			case 'inventoryView':
 				this.viewTitle = 'Resource Inventory';
 				break;
+			case 'rulesView':
+				this.viewTitle = 'Rules';
+				break;
 			case 'userView':
 				this.viewTitle = 'Users';
 				break;
