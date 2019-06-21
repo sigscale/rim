@@ -176,9 +176,9 @@ class InventoryManagement extends PolymerElement {
 						</iron-collapse>
 						<a name="rulesView" href="[[rootPath]]rulesView">
 							<paper-icon-button
-									icon="my-icons:inventory">
+									icon="my-icons:rule">
 							</paper-icon-button>
-							peeRules
+							Rule
 						</a>
 						<a name="inventoryView" href="[[rootPath]]inventoryView">
 							<paper-icon-button
