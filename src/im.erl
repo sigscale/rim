@@ -856,14 +856,14 @@ delete_rule(Id) when is_list(Id) ->
 			ok
 	end.
 
--spec get_pee(RuleId, DN) -> Result
+-spec get_pee(RuleId, Input) -> Result
 	when
 		RuleId :: string(),
-		DN :: string(),
+		Input :: term(),
 		Result :: {ok, PEEMonitoredEntities} | {error, Reason},
 		PEEMonitoredEntities :: [resource()],
-		Reason :: term().
-%% @doc Get matching PEE CMON entity(s) for a given Distinguished Name `DN'.
+		Reason :: not_found | term().
+%% @doc Get matching PEE CMON entity(s) for a given `Input' based on the rule.
 get_pee(RuleId, DN) when is_list(RuleId), is_list(DN) ->
 	case get_rule(RuleId) of
 		{ok, #pee_rule{rule = Rule}} ->
