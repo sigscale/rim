@@ -781,13 +781,14 @@ generate_identity() ->
 
 -spec add_rule(Rule, Description) -> Result
 	when
-		Rule :: rule(),
-		Description :: string(),
+		Rule :: rule() | '_',
+		Description :: string() | '_',
 		Result :: {ok, PeeRule} | {error, Reason},
 		PeeRule :: pee_rule(),
 		Reason :: term().
 %% @doc Create PEE matching rule.
-add_rule(Rule, Description) when is_function(Rule), is_list(Description) ->
+%add_rule(Rule, Description) when is_function(Rule), is_list(Description) ->
+add_rule(Rule, Description) when is_list(Description) ->
 	F = fun() ->
 			{Id, _LM} = unique(),
 			PeeRule = #pee_rule{id = Id,
