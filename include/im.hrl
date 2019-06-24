@@ -260,9 +260,9 @@
 
 -type rule() :: fun((Input :: term()) -> ets:match_spec()).
 -record(pee_rule,
-		{id :: string(),
+		{id :: string() | undefined,
 		description :: string() | undefined,
-		rule :: rule()}).
+		rule :: rule() | undefined}).
 -type pee_rule() :: #pee_rule{}.
 
 -record('BssFunction',

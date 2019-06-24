@@ -47,6 +47,7 @@
 	Arg :: [term()].
 %% @doc Erlang web server API callback function.
 do(#mod{method = "GET"} = ModData) ->
+erlang:display({?MODULE, ?LINE}),
 	do1(ModData);
 do(#mod{method = "HEAD"} = ModData) ->
 	do1(ModData);
@@ -54,31 +55,40 @@ do(#mod{data = Data} = _ModData) ->
 	{proceed, Data}.
 %% @hidden
 do1(#mod{parsed_header = Headers, request_uri = Uri, data = Data} = ModData) ->
+erlang:display({?MODULE, ?LINE}),
 	case proplists:get_value(status, Data) of
 		{_StatusCode, _PhraseArgs, _Reason} ->
+erlang:display({?MODULE, ?LINE}),
 			{proceed, Data};
 		undefined ->
+erlang:display({?MODULE, ?LINE}),
 			case proplists:get_value(response, Data) of
 				undefined ->
+erlang:display({?MODULE, ?LINE}),
 					case lists:keyfind(resource, 1, Data) of
 						false ->
+erlang:display({?MODULE, ?LINE}),
 							{proceed, Data};
 						{_, Resource} ->
+erlang:display({?MODULE, ?LINE}),
 							Path = http_uri:decode(Uri),
 							content_type_available(Headers, Path, Resource, ModData)
 					end;
 				_Response ->
+erlang:display({?MODULE, ?LINE}),
 					{proceed,  Data}
 			end
 	end.
 
 %% @hidden
 content_type_available(Headers, Uri, Resource, ModData) ->
+erlang:display({?MODULE, ?LINE}),
 	case lists:keyfind("accept", 1, Headers) of
 		{_, RequestingType} ->
 			AvailableTypes = Resource:content_types_provided(),
 			case lists:member(RequestingType, AvailableTypes) of
 				true ->
+erlang:display({?MODULE, ?LINE}),
 					parse_query(Resource, ModData, httpd_util:split_path(Uri));
 				false ->
 					Response = "<h2>HTTP Error 415 - Unsupported Media Type</h2>",
@@ -90,8 +100,10 @@ content_type_available(Headers, Uri, Resource, ModData) ->
 
 %% @hidden
 parse_query(Resource, ModData, {Path, []}) ->
+erlang:display({?MODULE, ?LINE}),
 	do_get(Resource, ModData, string:tokens(Path, "/"), []);
 parse_query(Resource, ModData, {Path, "?" ++ Query}) ->
+erlang:display({?MODULE, ?LINE}),
 	do_get(Resource, ModData, string:tokens(Path, "/"),
 		im_rest:parse_query(Query));
 parse_query(_R, _P, _Q) ->
@@ -105,6 +117,10 @@ do_get(Resource, #mod{parsed_header = Headers} = ModData,
 do_get(Resource, ModData,
 		["partyManagement", "v2", "individual", Id], Query) ->
 	do_response(ModData, Resource:get_user(Id, Query));
+do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
+		["resourceInventoryManagement", "v1", "logicalResource"], Query) ->
+erlang:display({?MODULE, ?LINE, Resource, Query}),
+	do_response(ModData, Resource:get_rules(Method, Query, Headers));
 do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
 		["resourceCatalogManagement", "v3", "resourceCatalog"], Query) ->
 	do_response(ModData, Resource:get_catalogs(Method, Query, Headers));
