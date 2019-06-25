@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_rules/3]).
+-export([get_rules/3, add_rules/1]).
 -export([rules/1]).
 
 -include_lib("inets/include/mod_auth.hrl").
@@ -50,6 +50,34 @@ content_types_accepted() ->
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
 	["application/json"].
+
+-spec add_rules(ReqBody) -> Result
+	when
+		ReqBody :: list(),
+		Result   :: {ok, Headers, Body} | {error, Status},
+		Headers  :: [tuple()],
+		Body     :: iolist(),
+		Status   :: 400 | 500 .
+%% @doc Respond to
+%%    `POST /resourceInventoryManagement/v1/logicalResource'.
+%%    Add a new row in logical resource inventory management.
+add_rules(ReqBody) ->
+	try
+		{ok, Description} = zj:decode(ReqBody),
+		Res = rules(Description),
+		case im:add_rule(Res#pee_rule.rule, Res#pee_rule.description) of
+			{ok, Rule} ->
+				PeeRule = rules(Rule),
+				Body = zj:encode(PeeRule),
+				Headers = [{content_type, "application/json"}],
+				{ok, Headers, Body};
+			{error, _Reason} ->
+				{error, 500}
+		end
+	catch
+		_:_Reason1 ->
+			{error, 400}
+	end.
 
 -spec get_rules(Method, Query, Headers) -> Result
 	when
@@ -148,6 +176,9 @@ rules([description| T],
 rules([description| T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	rules(T, M, Acc#pee_rule{description = Description});
+rules([rule| T],
+		#pee_rule{rule = Rule} = R, Acc) when is_list(Rule)->
+	rules(T, R, Acc#{"rule" => Rule});
 rules([rule| T],
 		#pee_rule{rule = Rule} = R, Acc) ->
 	Rule1 = erlang:fun_to_list(Rule),
