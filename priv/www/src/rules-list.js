@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+ * Copyright (c) 2016 - 2019 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
  * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
@@ -28,11 +28,11 @@ class rulesList extends PolymerElement {
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="id">
+								path="ruleId">
 							<vaadin-grid-filter
 									id="filter"
 									aria-label="Id"
-									path="id"
+									path="ruleId"
 									value="{{_filterRulesId}}">
 								<input
 										slot="filter"
@@ -42,18 +42,18 @@ class rulesList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-               <template>
-						[[item.rulesId]]
+					<template>
+						[[item.ruleId]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
-								path="description">
+								path="ruleDescription">
 							<vaadin-grid-filter
 									id="filter"
 									aria-label="Description"
-									path="description"
+									path="ruleDescription"
 									value="{{_filterRulesDescription}}">
 								<input
 										slot="filter"
@@ -63,8 +63,8 @@ class rulesList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-               <template>
-						[[item.rulesDescription]]
+					<template>
+						[[item.ruleDescription]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -84,7 +84,7 @@ class rulesList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-               <template>
+					<template>
 						[[item.rules]]
 					</template>
 				</vaadin-grid-column>
@@ -97,7 +97,7 @@ class rulesList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="getRulesAjax"
-				url="resourceCatalogManagement/v3/resourceRules"
+				url="resourceInventoryManagement/v1/logicalResource"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
@@ -112,6 +112,18 @@ class rulesList extends PolymerElement {
 			etag: {
 				type: String,
 				value: null
+			},
+			_filterRulesId: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterRulesDescription: {
+				type: Boolean,
+				observer: '_filterChanged'
+			},
+			_filterRules: {
+				type: Boolean,
+				observer: '_filterChanged'
 			}
 		}
 	}
@@ -122,8 +134,67 @@ class rulesList extends PolymerElement {
 		grid.dataProvider = this._getLog;
 	}
 
-	_getLog() {
+	_getLog(params, callback) {
+		var grid = this;
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list').shadowRoot.getElementById('getRulesAjax');
+		var rulesList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list');
+		var handleAjaxResponse = function(request) {
+			if(request) {
+				rulesList.etag = request.xhr.getResponseHeader('ETag');
+				var range = request.xhr.getResponseHeader('Content-Range');
+				var range1 = range.split("/");
+				var range2 = range1[0].split("-");
+				if (range1[1] != "*") {
+					grid.size = Number(range1[1]);
+				} else {
+					grid.size = Number(range2[1]) + grid.pageSize * 2;
+				}
+				var vaadinItems = new Array();
+				for(var index in request.response) {
+					var newRecord = new Object();
+					newRecord.ruleId = request.response[index].id;
+					newRecord.ruleDescription = request.response[index].description;
+					newRecord.rules = request.response[index].rule;
+					vaadinItems[index] = newRecord;
+				}
+				callback(vaadinItems);
+			} else {
+				grid.size = 0;
+				callback([]);
+			}
+		};
+		var handleAjaxError = function(error) {
+			rulesList.etag = null;
+			callback([]);
+		}
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
+				var startRange = params.page * params.pageSize + 1;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (rulesList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = rulesList.etag;
+				} else {
+					delete ajax.headers['If-Range'];
+				}
+				return ajax.generateRequest().completes;
+			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
+		} else {
+			var startRange = params.page * params.pageSize + 1;
+			var endRange = startRange + params.pageSize - 1;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (rulesList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = rulesList.etag;
+			} else {
+				delete ajax.headers['If-Range'];
+			}
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+		}
 	}
+
+	_filterChanged(filter) {
+		this.etag = null;
+		var grid = this.shadowRoot.getElementById('candidateGrid');
+   }
 }
 
 window.customElements.define('rules-list', rulesList);
