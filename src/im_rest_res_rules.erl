@@ -150,7 +150,8 @@ rules([description| T], #{"description" := Description} = M, Acc)
 	rules(T, M, Acc#pee_rule{description = Description});
 rules([rule| T],
 		#pee_rule{rule = Rule} = R, Acc) ->
-	rules(T, R, Acc#{"rule" => Rule});
+	Rule1 = erlang:fun_to_list(Rule),
+	rules(T, R, Acc#{"rule" => Rule1});
 rules([rule| T], #{"rule" := Rule} = M, Acc) ->
 	rules(T, M, Acc#pee_rule{rule = Rule});
 rules([_ | T], R, Acc) ->
