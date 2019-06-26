@@ -596,7 +596,7 @@ query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 				{error, 500}
 		end
 	catch
-		_ ->
+		_:_ ->
 			{error, 400}
 	end.
 
