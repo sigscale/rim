@@ -188,7 +188,7 @@ class InventoryManagement extends PolymerElement {
 						</a>
 						<a name="userView" href="[[rootPath]]userView">
 							<paper-icon-button
-									icon="my-icons:users">
+									icon="my-icons:user">
 							</paper-icon-button>
 							User
 						</a>
