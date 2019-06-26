@@ -271,11 +271,21 @@ class inventoryList extends PolymerElement {
 		}
 		params.filters.filter(checkLike).forEach(function(filter) {
 			if(filter.value) {
-				if (query) {
-					query = query + "," + filter.path + ".like=[" + filter.value + "%]";
-				} else {
-					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+				if(filter.path == "name") {
+					if(filter.value.includes("=")) {
+						var sourceReplace = filter.value.replace(/=/g, "\\=")
+						if(query) {
+							query = query + "]," + filter.path + ".like=[" + sourceReplace + "%]";
+						} else {
+							query = "[{" + filter.path + ".like=[" + sourceReplace + "%]";
+						}
+					}
 				}
+			}
+			else if (query) {
+				query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
+			} else {
+				query = "[{" + filter.path + ".like=[" + filter.value + "%]";
 			}
 		});
 		function checkLifeCycle(param) {
