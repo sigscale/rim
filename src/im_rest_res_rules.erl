@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_rules/3, add_rules/1]).
+-export([get_rules/3, patch_rules/4]).
 -export([rules/1]).
 
 -include_lib("inets/include/mod_auth.hrl").
@@ -51,33 +51,62 @@ content_types_accepted() ->
 content_types_provided() ->
 	["application/json"].
 
--spec add_rules(ReqBody) -> Result
+-spec patch_rules(Id, Etag, ContentType, ReqBody) -> Result
 	when
+		Id :: string(),
+		Etag :: undefined | string(),
+		ContentType :: string(),
 		ReqBody :: list(),
-		Result   :: {ok, Headers, Body} | {error, Status},
-		Headers  :: [tuple()],
-		Body     :: iolist(),
-		Status   :: 400 | 500 .
-%% @doc Respond to
-%%    `POST /resourceInventoryManagement/v1/logicalResource'.
-%%    Add a new row in logical resource inventory management.
-add_rules(ReqBody) ->
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()} .
+%% @doc Update a existing `peeRule'.
+%%
+%% 	Respond to `PATCH /resourceInventoryManagement/v1/logicalResource/{Id}' request.
+%%
+patch_rules(Id, Etag, "application/json-patch+json", ReqBody) ->
 	try
-		{ok, Description} = zj:decode(ReqBody),
-		Res = rules(Description),
-		case im:add_rule(Res#pee_rule.rule, Res#pee_rule.description) of
-			{ok, Rule} ->
-				PeeRule = rules(Rule),
-				Body = zj:encode(PeeRule),
-				Headers = [{content_type, "application/json"}],
-				{ok, Headers, Body};
-			{error, _Reason} ->
-				{error, 500}
+		case Etag of
+			undefined ->
+				{undefined, zj:decode(ReqBody)};
+			Etag ->
+				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
 		end
-	catch
-		_:_Reason1 ->
+	of
+		{EtagT, {ok, Patch}} ->
+			F = fun() ->
+					case mnesia:read(pee_rule, Id, write) of
+						[PeeRule] ->
+							case catch rules(im_rest:patch(Patch,
+									rules(PeeRule))) of
+								#pee_rule{} = PeeRule1 ->
+									mnesia:write(pee_rule, PeeRule1, write),
+									PeeRule1;
+								_ ->
+									mnesia:abort(400)
+							end;
+						[] ->
+							mnesia:abort(404)
+					end
+			end,
+			case mnesia:transaction(F) of
+				{atomic, #pee_rule{} = PeeRule3} ->
+					Body = zj:encode(rules(PeeRule3)),
+					Headers = [{content_type, "application/json"},
+							{location, "resourceInventoryManagement/v1/logicalResource/" ++ Id}],
+					{ok, Headers, Body};
+				{aborted, Status} when is_integer(Status) ->
+					{error, Status};
+				{aborted, _Reason} ->
+					{error, 500}
+			end;
+		_ ->
 			{error, 400}
-	end.
+	catch
+		_:_ ->
+			{error, 400}
+	end;
+patch_rules(_, _, "application/json", _) ->
+	{error, 415}.
 
 -spec get_rules(Method, Query, Headers) -> Result
 	when
@@ -177,13 +206,13 @@ rules([description| T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	rules(T, M, Acc#pee_rule{description = Description});
 rules([rule| T],
-		#pee_rule{rule = Rule} = R, Acc) when is_list(Rule)->
-	rules(T, R, Acc#{"rule" => Rule});
-rules([rule| T],
 		#pee_rule{rule = Rule} = R, Acc) ->
 	Rule1 = erlang:fun_to_list(Rule),
 	rules(T, R, Acc#{"rule" => Rule1});
-rules([rule| T], #{"rule" := Rule} = M, Acc) ->
+rules([rule| T], #{"rule" := _Rule} = M, Acc) ->
+	Rule = fun(DN) ->
+		[{#resource{name = '$4', _ = '_'}, [{'==', '$4', DN}], ['$_']}]
+	end,
 	rules(T, M, Acc#pee_rule{rule = Rule});
 rules([_ | T], R, Acc) ->
 	rules(T, R, Acc);
