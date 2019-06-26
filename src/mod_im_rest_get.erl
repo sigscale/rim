@@ -106,6 +106,9 @@ do_get(Resource, ModData,
 		["partyManagement", "v2", "individual", Id], Query) ->
 	do_response(ModData, Resource:get_user(Id, Query));
 do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
+		["resourceInventoryManagement", "v1", "logicalResource"], Query) ->
+	do_response(ModData, Resource:get_rules(Method, Query, Headers));
+do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
 		["resourceCatalogManagement", "v3", "resourceCatalog"], Query) ->
 	do_response(ModData, Resource:get_catalogs(Method, Query, Headers));
 do_get(Resource, ModData,

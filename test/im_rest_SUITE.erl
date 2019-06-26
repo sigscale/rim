@@ -33,6 +33,7 @@
 -define(PathInventory, "/resourceInventoryManagement/v3/").
 -define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
 -define(PathParty, "/partyManagement/v2/").
+-define(PathInventoryRule, "/resourceInventoryManagement/v1/").
 
 %% support deprecated_time_unit()
 -define(SECOND, seconds).
@@ -129,7 +130,7 @@ all() ->
 			map_to_specification, specification_to_map, post_specification, get_specifications,
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
-			advanced_query_candidate, query_catalog, advanced_query_catalog].
+			advanced_query_candidate, query_catalog, advanced_query_catalog, post_rules].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -232,6 +233,25 @@ catalog_to_map(_Config) ->
 	#{"id" := PartyId, "href" := PartyHref} = RP,
 	#{"id" := CategoryId, "href" := CategoryHref,
 			"name" := CategoryName, "version" := Version} = C.
+
+post_rules() ->
+	[{userdata, [{doc, "POST Pee Rules"}]}].
+
+post_rules(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathInventoryRule ++ "logicalResource",
+	Description = "Testing Data",
+	RequestBody = "{\n"
+			++ "\t\"description\": \"" ++ Description ++ "\",\n"
+			++ "}\n",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers).
 
 post_catalog() ->
 	[{userdata, [{doc, "POST to Catalog collection"}]}].
