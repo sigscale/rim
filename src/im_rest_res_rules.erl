@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_rules/3, patch_rules/4]).
+-export([get_rules/3, patch_rules/4, delete_rule/1]).
 -export([rules/1]).
 
 -include_lib("inets/include/mod_auth.hrl").
@@ -51,6 +51,20 @@ content_types_accepted() ->
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
 	["application/json"].
+
+-spec delete_rule(Id) -> Result
+   when
+      Id :: string(),
+      Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+            | {error, ErrorCode :: integer()} .
+%% @doc Handle `DELETE' request on a `Pee Rule'.
+delete_rule(Id) ->
+   case im:delete_rule(Id) of
+      ok ->
+         {ok, [], []};
+      {error, _Reason} ->
+         {error, 400}
+   end.
 
 -spec patch_rules(Id, Etag, ContentType, ReqBody) -> Result
 	when
