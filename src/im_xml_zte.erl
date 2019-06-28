@@ -54,19 +54,22 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[#state{dn_prefix = [BtsDn | _], parse_state = #zte_state{
 		vs_data = #{"attributes" := #{"vsDataType" := "vsDataBtsFunction",
 		"vsDataFormatVersion" := "ZTESpecificAttributes"}}, cells = Cells},
-		spec_cache = Cache, location = #{"site" := Sites}} = State,
+		spec_cache = Cache, location = Sites} = State,
 		#state{parse_module = im_xml_generic, parse_function = parse_managed_element,
 		spec_cache = PrevCache} = PrevState | T]) ->
 	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
 	VsDataContainer = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Sites,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/PeeParametersListType"},
 	GsmCell = #resource_char{name = "gsmCell",
 			class_type = "DnList", value = Cells,
-			schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/DnList"},
+			schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/
+					DnList"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
@@ -84,49 +87,21 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			throw({add_resource, Reason})
 	end;
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
-		[#state{dn_prefix = [BtsDn | _], parse_state = #zte_state{
-		vs_data = #{"attributes" := #{"vsDataType" := "vsDataBtsFunction",
-		"vsDataFormatVersion" := "ZTESpecificAttributes"}}, cells = Cells},
-		spec_cache = Cache, location = undefined} = State,
-		#state{parse_module = im_xml_generic, parse_function = parse_managed_element,
-		spec_cache = PrevCache} = PrevState | T]) ->
-	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
-	VsDataContainer = #resource_char{name = "vsDataContainer",
-			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	GsmCell = #resource_char{name = "gsmCell",
-			class_type = "DnList", value = Cells,
-			schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/DnList"},
-	ClassType = "BtsSiteMgr",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = BtsDn,
-			description = "GSM Base Transceiver Station (BTS)",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
-			specification = Spec,
-			characteristic = [VsDataContainer, GsmCell]},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[#state{dn_prefix = [CellDn | _],
 		parse_state = #zte_state{vs_data = #{"attributes" := #{"vsDataType" :=
 		"vsDataGCellEquipmentFunction"}}}, spec_cache = Cache,
-		location = #{"site" := Sites}},
+		location = Sites},
 		#state{parse_module = ?MODULE, parse_function = parse_vsdata,
 		parse_state = ZteState, spec_cache = PrevCache} = PrevState | T]) ->
 	#zte_state{vs_data = #{"attributes" := NrmMap}, cells = Cells} = ZteState,
 	VsDataContainer = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Sites,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/PeeParametersListType"},
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = CellDn,
@@ -137,34 +112,6 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
 			specification = Spec,
 			characteristic = [VsDataContainer, PeeParam]},
-	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache],
-					parse_state = ZteState#zte_state{cells = [CellDn | Cells]}} | T];
-		{error, Reason} ->
-			throw({add_resource, Reason})
-	end;
-parse_vsdata({endElement, _, "VsDataContainer", _QName},
-		[#state{dn_prefix = [CellDn | _],
-		parse_state = #zte_state{vs_data = #{"attributes" := #{"vsDataType" :=
-		"vsDataGCellEquipmentFunction"}}}, spec_cache = Cache,
-		location = undefined},
-		#state{parse_module = ?MODULE, parse_function = parse_vsdata,
-		parse_state = ZteState, spec_cache = PrevCache} = PrevState | T]) ->
-	#zte_state{vs_data = #{"attributes" := NrmMap}, cells = Cells} = ZteState,
-	VsDataContainer = #resource_char{name = "vsDataContainer",
-			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	ClassType = "GsmCell",
-	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
-	Resource = #resource{name = CellDn,
-			description = "GSM radio",
-			category = "RAN",
-			class_type = ClassType,
-			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
-			specification = Spec,
-			characteristic = [VsDataContainer]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
