@@ -120,6 +120,12 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			throw({add_resource, Reason})
 	end;
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
+		[#state{parse_state = #zte_state{vs_data = #{"attributes" :=
+		#{"vsDataFormatVersion" := "ZTESpecificAttributes"}}}} = State,
+		#state{parse_module = im_xml_geran, parse_state = GeranState} = PrevState | T]) ->
+	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
+	[PrevState#state{parse_state = GeranState#geran_state{vs_data = NrmMap}} | T];
+parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[_State, PrevState | T]) ->
 	[PrevState | T];
 parse_vsdata({endElement, _Uri, _LocalName, QName},
@@ -138,6 +144,18 @@ parse_vsdata_attr([{startElement,
 		{_, "vsDataGCellEquipmentFunction"} = QName, _} | T], _State, Acc) ->
 	{[_ | Attributes], _} = pop(endElement, QName, T),
 	parse_gcell_equipment_attr(Attributes, Acc);
+parse_vsdata_attr([{startElement, {_, "vsDataBssFunction"} = QName, _} | T],
+		_State, Acc) ->
+	{[_ | Attributes], _} = pop(endElement, QName, T),
+	parse_attr(Attributes, Acc);
+parse_vsdata_attr([{startElement, {_, "vsDataBtsSiteManager"} = QName, _} | T],
+		_State, Acc) ->
+	{[_ | Attributes], _} = pop(endElement, QName, T),
+	parse_attr(Attributes, Acc);
+parse_vsdata_attr([{startElement, {_, "vsDataGsmCell"} = QName, _} | T],
+		_State, Acc) ->
+	{[_ | Attributes], _} = pop(endElement, QName, T),
+	parse_attr(Attributes, Acc);
 parse_vsdata_attr([{startElement, QName, _}| T],
 		State, Acc) ->
 	parse_vsdata_attr(T, [QName | State], Acc);
@@ -403,6 +421,21 @@ parse_bts_attr([], _State, Acc) ->
 	Acc;
 parse_bts_attr([{startElement, _QName, _} | T], State, Acc) ->
 	parse_bts_attr(T, State, Acc).
+
+parse_attr(Stack, Acc) ->
+	parse_attr(Stack, [], Acc).
+%% @hidden
+parse_attr([{endElement, QName} | T] = _Stack, State, Acc) ->
+	parse_attr(T, [QName | State], Acc);
+parse_attr([{characters, Chars} | T],
+		[{_, Attr} | _] = State, Acc) ->
+%default character handler
+	NewAcc = attribute_add(Attr, Chars, Acc),
+	parse_attr(T, State, NewAcc);
+parse_attr([{startElement, _QName, _} | T], State, Acc) ->
+	parse_attr(T, State, Acc);
+parse_attr([], _State, Acc) ->
+	Acc.
 
 %%----------------------------------------------------------------------
 %%  internal functions
