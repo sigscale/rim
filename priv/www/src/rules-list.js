@@ -24,7 +24,8 @@ class rulesList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="rulesGrid"
-					loading="{{loading}}">
+					loading="{{loading}}"
+					active-item="{{activeItem}}">
 				<vaadin-grid-column>
 					<template class="header">
 						<vaadin-grid-sorter
@@ -113,6 +114,11 @@ class rulesList extends PolymerElement {
 				type: String,
 				value: null
 			},
+			activeItem: {
+				type: Object,
+				notify: true,
+				observer: '_activeItemChanged'
+			},
 			_filterRulesId: {
 				type: Boolean,
 				observer: '_filterChanged'
@@ -125,6 +131,18 @@ class rulesList extends PolymerElement {
 				type: Boolean,
 				observer: '_filterChanged'
 			}
+		}
+	}
+
+	_activeItemChanged(item) {
+		if(item) {
+			var grid = this.$.rulesGrid;
+			grid.selectedItems = item ? [item] : [];
+			var updateRule = document.querySelector('inventory-management').shadowRoot.getElementById('updateRule');
+			updateRule.shadowRoot.getElementById('updateRuleModal').open();
+			updateRule.shadowRoot.getElementById('addRuleId').value = item.ruleId;
+			updateRule.shadowRoot.getElementById('addRule').value = item.rules;
+			updateRule.shadowRoot.getElementById('addRuleDesc').value = item.ruleDescription;
 		}
 	}
 

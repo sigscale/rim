@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
--export([get_rules/3, patch_rules/4]).
+-export([get_rules/3, patch_rules/4, delete_rule/1]).
 -export([rules/1]).
 
 -include_lib("inets/include/mod_auth.hrl").
@@ -42,7 +42,8 @@
 		ContentTypes :: list().
 %% @doc Returns list of resource representations accepted.
 content_types_accepted() ->
-	["application/json", "application/json-patch+json"].
+	["application/json", "application/json-patch+json",
+	"application/merge-patch+json"].
 
 -spec content_types_provided() -> ContentTypes
 	when
@@ -50,6 +51,20 @@ content_types_accepted() ->
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
 	["application/json"].
+
+-spec delete_rule(Id) -> Result
+   when
+      Id :: string(),
+      Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+            | {error, ErrorCode :: integer()} .
+%% @doc Handle `DELETE' request on a `Pee Rule'.
+delete_rule(Id) ->
+   case im:delete_rule(Id) of
+      ok ->
+         {ok, [], []};
+      {error, _Reason} ->
+         {error, 400}
+   end.
 
 -spec patch_rules(Id, Etag, ContentType, ReqBody) -> Result
 	when
@@ -74,19 +89,19 @@ patch_rules(Id, Etag, "application/json-patch+json", ReqBody) ->
 	of
 		{EtagT, {ok, Patch}} ->
 			F = fun() ->
-					case mnesia:read(pee_rule, Id, write) of
-						[PeeRule] ->
-							case catch rules(im_rest:patch(Patch,
-									rules(PeeRule))) of
-								#pee_rule{} = PeeRule1 ->
-									mnesia:write(pee_rule, PeeRule1, write),
-									PeeRule1;
-								_ ->
-									mnesia:abort(400)
-							end;
-						[] ->
-							mnesia:abort(404)
-					end
+				case mnesia:read(pee_rule, Id, write) of
+					[PeeRule] ->
+						case catch rules(im_rest:patch(Patch,
+								rules(PeeRule))) of
+							#pee_rule{} = PeeRule1 ->
+								mnesia:write(pee_rule, PeeRule1, write),
+								PeeRule1;
+							_ ->
+								mnesia:abort(400)
+						end;
+					[] ->
+						mnesia:abort(404)
+				end
 			end,
 			case mnesia:transaction(F) of
 				{atomic, #pee_rule{} = PeeRule3} ->
@@ -105,6 +120,48 @@ patch_rules(Id, Etag, "application/json-patch+json", ReqBody) ->
 		_:_ ->
 			{error, 400}
 	end;
+patch_rules(Id, Etag, "application/merge-patch+json", ReqBody) ->
+	try
+		case Etag of
+			undefined ->
+				{undefined, zj:decode(ReqBody)};
+			Etag ->
+				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+		end
+	of
+		{EtagT, {ok, Patch}} -> 
+			F = fun() ->
+				case mnesia:read(pee_rule, Id, write) of
+					[#pee_rule{rule = Rule} = PeeRuleMerge] ->
+						case catch im:merge(PeeRuleMerge#pee_rule{rule = erlang:fun_to_list(Rule)}, rules(Patch)) of
+							#pee_rule{} = PeeRuleMerge2 ->
+								mnesia:write(pee_rule, PeeRuleMerge2, write),
+								PeeRuleMerge2;
+							_ ->
+								mnesia:abort(400)
+								end;
+							[] ->
+								mnesia:abort(404)
+						end
+				end,
+			case mnesia:transaction(F) of
+				{atomic, #pee_rule{} = PeeRuleMerge3} ->
+					Json = rules(PeeRuleMerge3),
+					Body = zj:encode(Json),
+					Headers = [{content_type, "application/json"},
+						{location, "resourceInventoryManagement/v1/logicalResource/" ++ Id}],
+					{ok, Headers, Body};
+				{aborted, Status} when is_integer(Status) ->
+					{error, Status};
+				{aborted, _Reason} ->
+					{error, 500}
+			end;
+		_ ->
+			{error, 400}
+	catch
+		_:_ ->
+			{error, 400}
+		end;
 patch_rules(_, _, "application/json", _) ->
 	{error, 415}.
 
@@ -205,15 +262,16 @@ rules([description| T],
 rules([description| T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	rules(T, M, Acc#pee_rule{description = Description});
+%% @todo handle fun.
 rules([rule| T],
-		#pee_rule{rule = Rule} = R, Acc) ->
+		#pee_rule{rule = Rule} = R, Acc) when is_function(Rule) ->
 	Rule1 = erlang:fun_to_list(Rule),
 	rules(T, R, Acc#{"rule" => Rule1});
-rules([rule| T], #{"rule" := _Rule} = M, Acc) ->
-	Rule = fun(DN) ->
+rules([rule| T], #{"rule" := Rule} = M, Acc) when is_list(Rule)->
+	Rule1 = fun(DN) ->
 		[{#resource{name = '$4', _ = '_'}, [{'==', '$4', DN}], ['$_']}]
 	end,
-	rules(T, M, Acc#pee_rule{rule = Rule});
+	rules(T, M, Acc#pee_rule{rule = Rule1});
 rules([_ | T], R, Acc) ->
 	rules(T, R, Acc);
 rules([], _, Acc) ->
