@@ -38,6 +38,16 @@ parse_bss({startElement,  _Uri, "BtsSiteMgr", QName,
 			parse_module = im_xml_geran, parse_function = parse_bts,
 			parse_state = #geran_state{bts = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_bss({startElement,  _Uri, "BtsSiteManager", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+% zte specific
+	DnComponent = ",BtsSiteMgr=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_geran, parse_function = parse_bts,
+			parse_state = #geran_state{bts = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_bss({startElement,  _Uri, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
@@ -131,6 +141,41 @@ parse_bts({startElement, _Uri, "VsDataContainer", QName,
 parse_bts({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_bts({endElement, _Uri, "BtsSiteManager", QName},
+		[#state{dn_prefix = [BtsDn | _], location = Location,
+		parse_state = #geran_state{cells = Cells, vs_data = NrmMap},
+		stack = Stack, spec_cache = Cache}, #state{parse_state = GeranState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+% zte specific
+	#geran_state{btss = Btss} = GeranState,
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	BtsAttr = parse_bts_attr(T, undefined, []),
+	GsmCell = #resource_char{name = "GsmCell", value = Cells},
+	VsData = #resource_char{name = "vsDataContainer",
+			class_type = "VsDataContainerList", value = NrmMap,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/VsDataContainerList"},
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/PeeParametersListType"},
+	ClassType = "BtsSiteMgr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = BtsDn,
+			description = "GSM Base Transceiver Station (BTS)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			specification = Spec,
+			characteristic = lists:reverse([GsmCell, VsData, PeeParam | BtsAttr])},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{parse_state = GeranState#geran_state{
+			btss = [BtsDn | Btss]}, spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 		[#state{dn_prefix = [BtsDn | _], location = Location,
 		parse_state = #geran_state{cells = Cells}, stack = Stack,
