@@ -38,16 +38,33 @@ parse_bss({startElement,  _Uri, "BtsSiteMgr", QName,
 			parse_module = im_xml_geran, parse_function = parse_bts,
 			parse_state = #geran_state{bts = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_bss({startElement,  _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_bss({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_bss({endElement, _Uri, "BssFunction", QName},
-		[#state{dn_prefix = [BssDn | _], stack = Stack, parse_state = GeranState,
+		[#state{dn_prefix = [BssDn | _], stack = Stack, location = Location,
+		parse_state = #geran_state{btss = Btss, vs_data = NrmMap},
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-	#geran_state{btss = Btss} = GeranState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	BssAttr = parse_bss_attr(T2, undefined, []),
 	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
+	VsData = #resource_char{name = "vsDataContainer",
+			class_type = "VsDataContainerList", value = NrmMap,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/VsDataContainerList"},
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/PeeParametersListType"},
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BssDn,
@@ -57,7 +74,7 @@ parse_bss({endElement, _Uri, "BssFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
 			specification = Spec,
-			characteristic = lists:reverse([BtsSiteMgr | BssAttr])},
+			characteristic = lists:reverse([BtsSiteMgr, VsData, PeeParam | BssAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -115,14 +132,22 @@ parse_bts({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
-		[#state{dn_prefix = [BtsDn | _],
+		[#state{dn_prefix = [BtsDn | _], location = Location,
 		parse_state = #geran_state{cells = Cells}, stack = Stack,
 		spec_cache = Cache}, #state{parse_state = GeranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#geran_state{btss = Btss} = GeranState,
+	#geran_state{btss = Btss, vs_data = NrmMap} = GeranState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	BtsAttr = parse_bts_attr(T, undefined, []),
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
+	VsData = #resource_char{name = "vsDataContainer",
+			class_type = "VsDataContainerList", value = NrmMap,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/VsDataContainerList"},
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/PeeParametersListType"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
@@ -132,7 +157,7 @@ parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
 			specification = Spec,
-			characteristic = lists:reverse([GsmCell | BtsAttr])},
+			characteristic = lists:reverse([GsmCell, VsData, PeeParam | BtsAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{parse_state = GeranState#geran_state{
@@ -155,10 +180,22 @@ parse_bts_attr1([{characters, Chars} | T],
 	parse_bts_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
 parse_bts_attr1([{characters, Chars} | T],
 		"latitude" = Attr, Acc) ->
-	parse_bts_attr1(T, Attr, [#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
+	parse_bts_attr1(T, Attr, [#resource_char{name = Attr,
+			value = im_rest:geoaxis(Chars)} | Acc]);
+parse_bts_attr1([{characters, Chars} | T],
+		"Latitude" = Attr, Acc) ->
+% zte specific
+	parse_bts_attr1(T, Attr, [#resource_char{name = Attr,
+			value = im_rest:geoaxis(Chars)} | Acc]);
 parse_bts_attr1([{characters, Chars} | T],
 		"longitude" = Attr, Acc) ->
-	parse_bts_attr1(T, Attr, [#resource_char{name = Attr, value = im_rest:geoaxis(Chars)} | Acc]);
+	parse_bts_attr1(T, Attr, [#resource_char{name = Attr,
+			value = im_rest:geoaxis(Chars)} | Acc]);
+parse_bts_attr1([{characters, Chars} | T],
+		"Longitude" = Attr, Acc) ->
+% zte specific
+	parse_bts_attr1(T, Attr, [#resource_char{name = Attr,
+			value = im_rest:geoaxis(Chars)} | Acc]);
 parse_bts_attr1([{characters, Chars} | T], "operationalState" = Attr, Acc) ->
 	parse_bts_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
 parse_bts_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
@@ -185,15 +222,33 @@ parse_gsm_cell({startElement, _Uri, "GsmRelation", QName,
 			parse_module = im_xml_geran, parse_function = parse_gsm_rel,
 			parse_state = #geran_state{gsm_rel = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_gsm_cell({startElement, _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
-		[#state{dn_prefix = [CellDn | _], stack = Stack, spec_cache = Cache},
+		[#state{dn_prefix = [CellDn | _], stack = Stack, spec_cache = Cache,
+		parse_state = #geran_state{vs_data = NrmMap}, location = Location},
 		#state{spec_cache = PrevCache, parse_state = GeranState} = PrevState | T1]) ->
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	GsmCellAttr = parse_gsm_cell_attr(T, []),
 	#geran_state{cells = Cells} = GeranState,
+	VsData = #resource_char{name = "vsDataContainer",
+			class_type = "VsDataContainerList", value = NrmMap,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/VsDataContainerList"},
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
+					definitions/PeeParametersListType"},
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = CellDn,
@@ -203,7 +258,7 @@ parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
 			specification = Spec,
-			characteristic = GsmCellAttr},
+			characteristic = lists:reverse([VsData, PeeParam | GsmCellAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
@@ -232,11 +287,14 @@ parse_gsm_cell_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 parse_gsm_cell_attr1([{characters, Chars} | T], "cellIdentity" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
+%parse_gsm_cell_attr1([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
+%	CellAllocation = [list_to_integer(C)
+%			|| C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
+%	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
+%			value = CellAllocation} | Acc]);
 parse_gsm_cell_attr1([{characters, Chars} | T], "cellAllocation" = Attr, Acc) ->
-	CellAllocation = [list_to_integer(C)
-			|| C <- string:tokens(Chars, [$\s, $\t, $\n, $\r])],
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
-			value = CellAllocation} | Acc]);
+			value = Chars} | Acc]);
 parse_gsm_cell_attr1([{characters, Chars} | T], "ncc" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = list_to_integer(Chars)} | Acc]);
@@ -275,9 +333,16 @@ parse_gsm_cell_attr1([{characters, "true"} | T],
 		"rfHoppingEnabled" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
 			value = true} | Acc]);
+%parse_gsm_cell_attr1([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
+%	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
+%			value = list_to_integer(Chars)} | Acc]);
 parse_gsm_cell_attr1([{characters, Chars} | T], "plmnPermitted" = Attr, Acc) ->
 	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
-			value = list_to_integer(Chars)} | Acc]);
+			value = Chars} | Acc]);
+parse_gsm_cell_attr1([{characters, Chars} | T], "administrativeState" = Attr,
+		Acc) ->
+	parse_gsm_cell_attr1(T, Attr, [#resource_char{name = Attr,
+			value = Chars} | Acc]);
 parse_gsm_cell_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_gsm_cell_attr1(T, undefined, Acc);
 parse_gsm_cell_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
@@ -321,6 +386,10 @@ parse_gsm_rel_attr([{startElement, {_, "attributes"} = QName, []} | T],
 % @hidden
 parse_gsm_rel_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_gsm_rel_attr1(T, Attr, Acc);
+parse_gsm_rel_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+% zte specific
+	NewAcc = attribute_add("userLabel", Chars, Acc),
+	parse_gsm_rel_attr1(T, Attr, NewAcc);
 parse_gsm_rel_attr1([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
 	NewAcc = attribute_add("adjacentCell", Chars, Acc),
 	parse_gsm_rel_attr1(T, Attr, NewAcc);

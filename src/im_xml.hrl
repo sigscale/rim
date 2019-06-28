@@ -25,6 +25,7 @@
 		bts :: map() | undefined,
 		cell :: map() | undefined,
 		gsm_rel :: map() | undefined,
+		vs_data :: map() | undefined,
 		btss = [] :: [string()],
 		cells = [] :: [string()]}).
 -type geran_state() :: #geran_state{}.
