@@ -307,8 +307,7 @@ parse_managed_element({endElement, _Uri, "attributes", QName},
 				{ok, PEEMonitoredEntities} ->
 					PeeParametersList =
 							parse_peeParameterslist(PEEMonitoredEntities, []),
-					[State#state{location = #{"name" => Location,
-							"site" => PeeParametersList}, stack = NewStack} | T];
+					[State#state{location = PeeParametersList, stack = NewStack} | T];
 				{error, _Reason} ->
 					[State#state{stack = NewStack} | T]
 			end;
