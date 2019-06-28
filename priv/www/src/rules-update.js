@@ -39,6 +39,12 @@ class ruleUpdateList extends PolymerElement {
 						disabled>
 				</paper-input>
 				<paper-input
+						id="addRule"
+						label="Rule"
+						value="{{rule.rules}}"
+						disabled>
+				</paper-input>
+				<paper-input
 						id="addRuleDesc"
 						label="Description"
 						value="{{rule.ruleDesc}}">
@@ -68,9 +74,16 @@ class ruleUpdateList extends PolymerElement {
 		<iron-ajax
 			id="ruleUpdateAjax"
 			content-type="application/json-patch+json"
-         on-loading-changed="_onLoadingChanged"
-         on-response="_addSpecResponse"
-         on-error="_addSpecError">
+			on-loading-changed="_onLoadingChanged"
+			on-response="_addSpecResponse"
+			on-error="_addSpecError">
+		</iron-ajax>
+		<iron-ajax
+			id="ruleDeleteAjax"
+			content-type="application/json"
+			on-loading-changed="_onLoadingChanged"
+			on-response="_addDelResponse"
+			on-error="_addDelError">
 		</iron-ajax>
 		`;
 	}
@@ -83,8 +96,8 @@ class ruleUpdateList extends PolymerElement {
 		}
 	}
 
-   ready() {
-      super.ready()
+	ready() {
+		super.ready()
 	}
 
 	_updateSpec() {
@@ -95,11 +108,18 @@ class ruleUpdateList extends PolymerElement {
 		var peeRule = new Object();
 		if(this.$.addRuleDesc.value) {
 			peeRule.op = "add";
-         peeRule.path = "/description";
+			peeRule.path = "/description";
 			peeRule.value = this.$.addRuleDesc.value
-      }
+		}
 		RuleArr.push(peeRule);
 		ajax.body = JSON.stringify(RuleArr);
+		ajax.generateRequest();
+	}
+
+	_deleteSpec() {
+		var ajax = this.$.ruleDeleteAjax;
+		ajax.method = "DELETE";
+		ajax.url = "/resourceInventoryManagement/v1/logicalResource/" + this.$.addRuleId.value;
 		ajax.generateRequest();
 	}
 }

@@ -141,6 +141,7 @@ class rulesList extends PolymerElement {
 			var updateRule = document.querySelector('inventory-management').shadowRoot.getElementById('updateRule');
 			updateRule.shadowRoot.getElementById('updateRuleModal').open();
 			updateRule.shadowRoot.getElementById('addRuleId').value = item.ruleId;
+			updateRule.shadowRoot.getElementById('addRule').value = item.rules;
 			updateRule.shadowRoot.getElementById('addRuleDesc').value = item.ruleDescription;
 		}
 	}
