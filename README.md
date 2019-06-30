@@ -42,47 +42,19 @@ most CSPs shall want to integrate Operations & Business Support Systems
 Through TM Forum Open API polymorphic extension pattern new sub
 classes are defined as shown in the table below.
 
-|Class Name             |
-|-----------------------|
-|AMFFunctionSpec        |
-|ASFunctionSpec         |
-|BssFunctionSpec        |
-|BtsSiteMgrSpec         |
-|CsMgwFunctionSpec      |
-|ENBFunctionSpec        |
-|EPDGFunctionSpec       |
-|EUtranCellFDDSpec      |
-|EUtranCellTDDSpec      |
-|EUtranGenericCellSpec  |
-|GNBCUCPFunctionSpec    |
-|GNBCUUPFunctionSpec    |
-|GNBDUFunctionSpec      |
-|GgsnFunctionSpec       |
-|GsmCellSpec            |
-|HSSFunctionSpec        |
-|ICSCFFunctionSpec      |
-|MMEFunctionSpec        |
-|MscServerFunctionSpec  |
-|NRCellCUSpec           |
-|NRCellDUSpec           |
-|NRSectorCarrierSpec    |
-|NetworkSliceSpec       |
-|NetworkSliceSubnetSpec |
-|NodeBFunctionSpec      |
-|PCRFFunctionSpec       |
-|PCSCFFunctionSpec      |
-|PEEMonitoredEntitySpec |
-|PGWFunctionSpec        |
-|ResourceFunctionSpec   |
-|RncFunctionSpec        |
-|SCSCFFunctionSpec      |
-|ServingGWFunctionSpec  |
-|SgsnFunctionSpec       |
-|UtranCellFDDSpec       |
-|UtranCellTDDHcrSpec    |
-|UtranCellTDDLcrSpec    |
-|UtranCellTDDSpec       |
-|UtranGenericCellSpec   |
+|----------------------|----------------------|-----------------------|----------------------|
+|AMFFunctionSpec       |GNBCUCPFunctionSpec   |NRCellDUSpec           |RncFunctionSpec       |
+|ASFunctionSpec        |GNBCUUPFunctionSpec   |NRSectorCarrierSpec    |SCSCFFunctionSpec     |
+|BssFunctionSpec       |GNBDUFunctionSpec     |NetworkSliceSpec       |ServingGWFunctionSpec |
+|BtsSiteMgrSpec        |GgsnFunctionSpec      |NetworkSliceSubnetSpec |SgsnFunctionSpec      |
+|CsMgwFunctionSpec     |GsmCellSpec           |NodeBFunctionSpec      |UtranCellFDDSpec      |
+|ENBFunctionSpec       |HSSFunctionSpec       |PCRFFunctionSpec       |UtranCellTDDHcrSpec   |
+|EPDGFunctionSpec      |ICSCFFunctionSpec     |PCSCFFunctionSpec      |UtranCellTDDLcrSpec   |
+|EUtranCellFDDSpec     |MMEFunctionSpec       |PEEMonitoredEntitySpec |UtranCellTDDSpec      |
+|EUtranCellTDDSpec     |MscServerFunctionSpec |PGWFunctionSpec        |UtranGenericCellSpec  |
+|EUtranGenericCellSpec |NRCellCUSpec          |ResourceFunctionSpec   |                      |
+|----------------------|----------------------|-----------------------|----------------------|
+
 
 #### [Erlang](http://www.erlang.org)
 All operations may be performed using the Erlang public API, either
