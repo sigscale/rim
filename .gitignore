@@ -23,3 +23,7 @@ config.sub
 # dependencies
 priv/www/node_modules
 priv/www/package-lock.json
+
+# generated
+priv/www/src/inventory-help.js
+
