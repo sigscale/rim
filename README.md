@@ -67,7 +67,7 @@ Resource inventory may be imported from element management systems
 ([EMS](https://en.wikipedia.org/wiki/Element_management_system))
 which support exporting Bulk CM (Configuration Management) in 3GPP TS 
 [28.616](https://webapp.etsi.org/key/key.asp?GSMSpecPart1=32&GSMSpecPart2=616&Search=search) 
-format XML files.
+format XML files. Several vendor specific formats are also supported.
 
 #### 3GPP Network Resource Model (NRM) Schemas
 |Description |Schema              |3GPP TS|
