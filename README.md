@@ -42,6 +42,7 @@ most CSPs shall want to integrate Operations & Business Support Systems
 Through TM Forum Open API polymorphic extension pattern new sub
 classes are defined as shown in the table below.
 
+|                      |                      |                       |                      |
 |----------------------|----------------------|-----------------------|----------------------|
 |AMFFunctionSpec       |GNBCUCPFunctionSpec   |NRCellDUSpec           |RncFunctionSpec       |
 |ASFunctionSpec        |GNBCUUPFunctionSpec   |NRSectorCarrierSpec    |SCSCFFunctionSpec     |
@@ -53,7 +54,6 @@ classes are defined as shown in the table below.
 |EUtranCellFDDSpec     |MMEFunctionSpec       |PEEMonitoredEntitySpec |UtranCellTDDSpec      |
 |EUtranCellTDDSpec     |MscServerFunctionSpec |PGWFunctionSpec        |UtranGenericCellSpec  |
 |EUtranGenericCellSpec |NRCellCUSpec          |ResourceFunctionSpec   |                      |
-|----------------------|----------------------|-----------------------|----------------------|
 
 
 #### [Erlang](http://www.erlang.org)
