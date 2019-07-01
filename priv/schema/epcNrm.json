@@ -1117,16 +1117,13 @@
 						"attributes": {
 							"type": "object",
 							"properties": {
-								"farEndEntity": {
-									"$ref": "genericNrm#/definitions/Dn"
+								"farEndNeIpAddr": {
+									"type": "string"
 								}
 							}
 						},
 						"eP_RP_EPSOptionallyContainedNrmClass": {
 							"$ref": "#/definitions/EP_RP_EPSOptionallyContainedNrmClassList"
-						},
-						"eP_RP_EPS": {
-							"$ref": "#/definitions/EP_RP_EPSList"
 						},
 						"vsDataContainer": {
 							"$ref": "genericNrm#/definitions/VsDataContainerList"
@@ -1135,7 +1132,7 @@
 				}
 			]
 		},
-		"EP_RP_EPS": {
+		"EP_RP_EPSList": {
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/EP_RP_EPS"
