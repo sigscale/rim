@@ -31,20 +31,20 @@ parse_bss({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_bss({startElement,  _Uri, "BtsSiteMgr", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [NewDn], rule = RuleId,
 			parse_module = im_xml_geran, parse_function = parse_bts,
 			parse_state = #geran_state{bts = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_bss({startElement,  _Uri, "BtsSiteManager", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
 % zte specific
 	DnComponent = ",BtsSiteMgr=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [NewDn], rule = RuleId,
 			parse_module = im_xml_geran, parse_function = parse_bts,
 			parse_state = #geran_state{bts = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -118,14 +118,26 @@ parse_bss_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_bts({characters, SideId}, [#state{rule = RuleId,
+		stack = [{startElement, {_, "userLabel"}, _} | _]} = State | T]) ->
+	case im:get_pee(RuleId, SideId) of
+		{ok, []} ->
+			[State | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_bts({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_bts({startElement, _Uri, "GsmCell", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], location = Location} | _] = State) ->
 	DnComponent = ",GsmCell=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+	[#state{dn_prefix = [NewDn], location = Location,
 			parse_module = im_xml_geran, parse_function = parse_gsm_cell,
 			parse_state = #geran_state{cell = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
@@ -254,6 +266,20 @@ parse_bts_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_bts_attr1(T, Attr, Acc);
 parse_bts_attr1([], undefined, Acc) ->
 	Acc.
+
+% @hidden
+parse_peeParameterslist([#resource{characteristic = ResourceChars} | Resources], Acc) ->
+	parse_peeParameterslist1(ResourceChars, Resources, Acc);
+parse_peeParameterslist([], Acc) ->
+	Acc.
+% @hidden
+parse_peeParameterslist1([#resource_char{name = "peeMeDescription",
+		value = ValueMap} | _], Resources, Acc) ->
+	parse_peeParameterslist(Resources, [ValueMap | Acc]);
+parse_peeParameterslist1([_H | T], Resources, Acc) ->
+	parse_peeParameterslist1(T, Resources, Acc);
+parse_peeParameterslist1([], Resources, Acc) ->
+	parse_peeParameterslist(Resources, Acc).
 
 %% @hidden
 parse_gsm_cell({characters, Chars}, [#state{stack = Stack} = State | T]) ->
