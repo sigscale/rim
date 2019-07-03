@@ -280,17 +280,17 @@ parse_managed_element({startElement, _, "VsDataContainer", QName,
 parse_managed_element({startElement, _, "PEEMonitoredEntity", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
-	DnComponent = ",PEEMonitoredEntity=" ++ Id,
+	DnComponent = ",PEEMonitoredEntity.",
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_pee, parse_function = parse_pee_me,
 			dn_prefix = [NewDn],
-			parse_state = #pee_state{me = #{"id" => DnComponent}},
+			parse_state = #pee_state{me = #{"id" => "PEEMonitoredEntity=" ++ Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_managed_element({endElement, _Uri, "attributes", QName},
-		[#state{dn_prefix = [MeDn | _], rule = RuleId, stack = Stack} = State | T]) ->
+		[#state{rule = RuleId, stack = Stack} = State | T]) ->
 	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
 	Attributes = parse_managed_element_attr(T2, undefined, []),
 	F = fun(#resource_char{name = "locationName"}) ->
@@ -300,8 +300,7 @@ parse_managed_element({endElement, _Uri, "attributes", QName},
 	end,
 	case lists:filter(F, Attributes) of
 		[#resource_char{name = "locationName", value = Location}] ->
-			Input = MeDn ++ ",ID=" ++ Location,
-			case im:get_pee(RuleId, Input) of
+			case im:get_pee(RuleId, Location) of
 				{ok, []} ->
 					[State#state{stack = NewStack} | T];
 				{ok, PEEMonitoredEntities} ->
