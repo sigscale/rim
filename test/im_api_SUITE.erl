@@ -1285,13 +1285,18 @@ bulk_cm_pee(Config) ->
 			#xmlElement.name, SubnetContent),
 	#xmlAttribute{value = MeId} = lists:keyfind(id,
 			#xmlAttribute.name, MeAttr),
-	#xmlElement{content = _PeeMeContent,
-			attributes = PeeMeAttr} = lists:keyfind('pee:PEEMonitoredEntity',
+	#xmlElement{content = PeeMeContent,
+			attributes = _PeeMeAttr} = lists:keyfind('pee:PEEMonitoredEntity',
 			#xmlElement.name, MeContent),
-	#xmlAttribute{value = PeeMeId} = lists:keyfind(id,
-			#xmlAttribute.name, PeeMeAttr),
+	#xmlElement{content = AttrContent,
+			attributes = _Attr} = lists:keyfind('pee:attributes',
+			#xmlElement.name, PeeMeContent),
+	#xmlElement{content = [IdContent],
+			attributes = _IdAttr} = lists:keyfind('pee:mEId',
+			#xmlElement.name, AttrContent),
+	Id = element(5, IdContent),
 	PeeMeName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
-			",ManagedElement=", MeId, ",PEEMonitoredEntity=", PeeMeId]),
+			",ManagedElement=", MeId, ",PEEMonitoredEntity.mEId=", Id]),
 	{ok, #resource{name = PeeMeName}} = im:get_resource_name(PeeMeName).
 
 add_rule() ->
