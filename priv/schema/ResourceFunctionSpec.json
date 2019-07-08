@@ -5,7 +5,7 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "resourceCatalogManagement#/definitions/ResourceSpecification"
+			"$ref": "resourceCatalogManagement#/definitions/LogicalResourceSpec"
 		},
 		{
 			"type": "object",
@@ -15,11 +15,35 @@
 					"description" : "A type of the Resource Function"
 				},
 				"sapSpec": {
-					"$ref": "#/definitions/SapSpecification"
-				},
-				"connectivity": {
 					"type": "array",
-					"description": "Adjacency Graph as defined in TR255A",
+					"description": "Service Access Point (SAP) Specifications",
+					"items": [
+						{
+							"$ref": "#/definitions/SapSpecification"
+						}
+					]
+				},
+				"featureSpec": {
+					"type": "array",
+					"description": "Feature Specifications",
+					"items": [
+						{
+							"$ref": "#/definitions/FeatureSpec"
+						}
+					]
+				},
+				"featureGroupSpec": {
+					"type": "array",
+					"description": "Feature Group Specifications",
+					"items": [
+						{
+							"$ref": "#/definitions/FeatureGroupSpec"
+						}
+					]
+				},
+				"connectivitySpec": {
+					"type": "array",
+					"description": "Adjacency Graph Specifications",
 					"items": [
 						{
 							"$ref": "#/definitions/ConnectivitySpec"
@@ -30,30 +54,87 @@
 		}
 	],
 	"definitions": {
-		"SapSpecification": {
-			"title": "Service Access Point (SAP) Specification",
+		"FeatureSpec": {
+			"title": "Configuration Feature Specification",
+			"description": "Specifies how a resource function exposes its capabilities to consumers",
 			"type": "object",
 			"properties": {
-				"type" : {
-					"type" : "string",
-					"description" : "Method to group SAPs that have strongly marked and readily defined similarities"
+				"id": {
+					"type": "string"
 				},
-				"applicableStateValues" : {
-					"type" : "string",
-					"description" : "Method to group SAPs that have strongly marked and readily defined similarities"
+				"name": {
+					"type": "string"
+				},
+				"isBundle": {
+					"type": "boolean"
+				},
+				"validFor": {
+					"type": "object",
+					"properties": {
+						"startDateTime": {
+							"type": "string",
+							"format": "date-time"
+						},
+						"endDateTime": {
+							"type": "string",
+							"format": "date-time"
+						}
+					}
+				},
+				"featureRelationship": {
+					"type": "array",
+					"items": {
+						"$ref": "entityCatalogManagement/#/definitions/EntitySpecification"
+					}
+				},
+				"constraint": {
+					"type": "array",
+					"items": {
+						"$ref": "entityCatalogManagement/#/definitions/EntitySpecification"
+					}
+				},
+				"featureSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"$ref": "entityCatalogManagement/#/definitions/EntitySpecification"
+					}
+				},
+				"isEnabled": {
+					"type": "boolean"
 				}
-			},
-			"required": [
-			]
+			}
+		},
+		"FeatureGroupSpec": {
+			"title": "Configuration Feature Group Specification",
+			"description": "An aggregation of feature specifications with overall characteristics",
+			"type": "object",
+			"properties": {
+				"
+				"featureGroupSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"$ref": "entityCatalogManagement/#/definitions/EntitySpecification"
+					}
+				},
+				"featureSpec": {
+					"type": "array",
+					"description": "Feature Specifications",
+					"items": [
+						{
+							"$ref": "#/definitions/FeatureSpec"
+						}
+					]
+				}
+			}
+		},
+		"SapSpecification": {
+			"title": "Service Access Point (SAP) Specification",
+			"$ref": "resourceCatalogManagement#/definitions/ResourceSpecification"
 		},
 		"ConnectivitySpec": {
-			"type": "object",
 			"title": "Connectivity Specification",
 			"description": "Predefines adjacency relationships among components",
-			"required": [
-				"name",
-				"endPoint"
-			],
+			"type": "object",
 			"properties": {
 				"type": {
 					"type": "string"
@@ -67,59 +148,41 @@
 						"$ref": "#/definitions/EndpointSpec"
 					}
 				}
-			}
+			},
+			"required": [
+				"name",
+				"endPoint"
+			]
 		},
 		"EndpointSpec": {
-			"type": "object",
-			"title": "Endpoint Specification",
-			"description": "Endpoint in a communications link",
-			"properties": {
-				"id": {
-					"type": "string"
+			"allOf": [
+				{
+					"$ref": "resourceCatalogManagement#/definitions/ResourceSpecification"
 				},
-				"href": {
-					"type": "string"
-				},
-				"@type": {
-					"type": "string"
-				},
-				"name": {
-					"type": "string"
-				},
-				"isRoot": {
-					"type": "boolean",
-					"description": "False if endpoint is a sink (only), true if endpoint is (also) a source"
-				},
-				"connectionPoint": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/ConnectionPointSpec"
+				{
+					"title": "Endpoint Specification",
+					"description": "Endpoint in a communications link",
+					"type": "object",
+					"properties": {
+						"isRoot": {
+							"type": "boolean",
+							"description": "False if endpoint is a sink (only), true if endpoint is (also) a source"
+						},
+						"connectionPointSpec": {
+							"$ref": "#/definitions/ConnectionPointSpec"
+						}
 					}
 				}
-			}
+			]
 		},
 		"ConnectionPointSpec": {
-			"type": "object",
-			"title": "Connection Point Specification",
-			"required": [
-				"id",
-				"href"
-			],
-			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"href": {
-					"type": "string"
-				},
-				"@type": {
-					"type": "string",
-					"description": "ConnectionPointSpec class or subclass thereof"
-				},
-				"name": {
-					"type": "string"
-				}
-			}
+			"$ref": "resourceCatalogManagement#/definitions/LogicalResourceSpec"
+		},
+		"ElectronicConnectionPointSpec": {
+			"$ref": "resourceCatalogManagement#/definitions/LogicalResourceSpec"
+		},
+		"SoftConnectionPointSpec": {
+			"$ref": "resourceCatalogManagement#/definitions/LogicalResourceSpec"
 		}
 	}
 }
