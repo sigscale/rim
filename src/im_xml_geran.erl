@@ -69,12 +69,12 @@ parse_bss({endElement, _Uri, "BssFunction", QName},
 	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/VsDataContainerList"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/PeeParametersListType"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BssDn,
@@ -165,12 +165,12 @@ parse_bts({endElement, _Uri, "BtsSiteManager", QName},
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/VsDataContainerList"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/PeeParametersListType"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
@@ -199,12 +199,12 @@ parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/VsDataContainerList"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/PeeParametersListType"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BtsDn,
@@ -314,12 +314,12 @@ parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 	#geran_state{cells = Cells} = GeranState,
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/VsDataContainerList"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/
-					definitions/PeeParametersListType"},
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = CellDn,
