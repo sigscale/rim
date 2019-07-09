@@ -919,65 +919,6 @@
 					"description": "An instant of time, starting at the TimePeriod"
 				}
 			}
-		},
-		"EventSubscription": {
-			"required": [
-				"id",
-				"callback"
-			],
-			"properties": {
-				"id": {
-					"type": "string",
-					"description": "Id of the listener"
-				},
-				"callback": {
-					"type": "string",
-					"description": "The callback being registered."
-				},
-				"query": {
-					"type": "string",
-					"description": "additional data to be passed"
-				}
-			}
-		},
-		"EventSubscriptionInput": {
-			"required": [
-				"callback"
-			],
-			"properties": {
-				"callback": {
-					"type": "string",
-					"description": "The callback being registered."
-				},
-				"query": {
-					"type": "string",
-					"description": "additional data to be passed"
-				}
-			}
-		},
-		"Error": {
-			"required": [
-				"code",
-				"message"
-			],
-			"properties": {
-				"code": {
-					"type": "integer",
-					"description": "An integer coding the error type. This is given to caller so he can translate them if required."
-				},
-				"message": {
-					"type": "string",
-					"description": "A short localized string that describes the error."
-				},
-				"description": {
-					"type": "string",
-					"description": "(optional) A long localized error description if needed. It can contain precise information about which parameter is missing, or what are the identifier acceptable values."
-				},
-				"infoURL": {
-					"type": "string",
-					"description": "(optional) A URL to online documentation that provides more information about the error."
-				}
-			}
 		}
 	}
 }
