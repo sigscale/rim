@@ -111,7 +111,7 @@
 			]
 		}
 	],
-	"definitions": [
+	"definitions": {
 		"SAPRef": {
 			"type" : "object",
 			"description" : "SAP Reference",
@@ -229,5 +229,5 @@
 				"href"
 			]
 		}
-	]
+	}
 }
