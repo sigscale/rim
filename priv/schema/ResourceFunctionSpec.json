@@ -109,7 +109,6 @@
 			"description": "An aggregation of feature specifications with overall characteristics",
 			"type": "object",
 			"properties": {
-				"
 				"featureGroupSpecCharacteristic": {
 					"type": "array",
 					"items": {
