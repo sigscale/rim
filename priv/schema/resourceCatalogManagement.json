@@ -950,7 +950,18 @@
 		},
 		"SapSpecification": {
 			"title": "Service Access Point (SAP) Specification",
-			"$ref": "#/definitions/ResourceSpecification"
+			"description": "Defines a set of attributes and (optionally) associated values that may be applied to one or more service access points",
+			"type": "object",
+			"properties": {
+				"type": {
+					"description": "Method to group SAP Specifications that have strongly marked and readily defined similarities",
+					"type": "string"
+				},
+				"applicableStateValues": {
+					"description": "A list of possible states that a ServiceAccessPoint may take on",
+					"type": "string"
+				}
+			}
 		},
 		"ConnectivitySpec": {
 			"title": "Connectivity Specification",
