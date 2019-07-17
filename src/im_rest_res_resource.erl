@@ -550,11 +550,9 @@ resource_char([schema | T], #resource_char{schema = Schema} = R, Acc)
 resource_char([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 		when is_list(Schema) ->
 	resource_char(T, M, Acc#resource_char{schema = Schema});
-resource_char([value | T], #resource_char{value = Value} = R, Acc)
-		when is_list(Value) ->
+resource_char([value | T], #resource_char{value = Value} = R, Acc) ->
 	resource_char(T, R, Acc#{"value" => Value});
-resource_char([value | T], #{"value" := Value} = M, Acc)
-		when is_list(Value) ->
+resource_char([value | T], #{"value" := Value} = M, Acc) ->
 	resource_char(T, M, Acc#resource_char{value = Value});
 resource_char([_ | T], R, Acc) ->
 	resource_char(T, R, Acc);
