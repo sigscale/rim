@@ -10,6 +10,7 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import {} from '@polymer/polymer/lib/elements/dom-if.js';
+import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
@@ -85,6 +86,15 @@ class inventoryList extends PolymerElement {
 						<template is="dom-if" if="{{item.lastModified}}">
 							<dt><b>Last modified</b></dt>
 							<dd>{{item.lastModified}}</dd>
+						</template>
+					</dl>
+					<h3 class="alarmH3">Resource Characteristics:</h3>
+					<dl class="details">
+						<template is="dom-if" if="{{item.resourceChar}}">
+							<template is="dom-repeat" items="{{item.resourceChar}}" as="detail">
+								<dt>{{detail.name}}</dt>
+								<dd>{{detail.value}}</dd>
+							</template>
 						</template>
 					</dl>
 				</template>
@@ -417,6 +427,22 @@ class inventoryList extends PolymerElement {
 					}
 					if(request.response[index].lastUpdate) {
 						newRecord.lastModified = request.response[index].lastUpdate;
+					}
+					var resChar = request.response[index].resourceCharacteristic;
+					for(var index1 in resChar) {
+						if(resChar[index1].value != []) {
+							var ValueArray = new Array();
+							ValueArray.push(resChar[index1].value);
+							for(var str in ValueArray) {
+								var str1 = JSON.stringify(ValueArray[str]);
+								var str2 = str1.trim();
+								var res = str2.replace(/"|{|[|[|}|]|]/g, " ");
+								resChar[index1].value = res;
+								newRecord.resourceChar = resChar;
+							}
+						} else {
+							newRecord.resourceChar = resChar;
+						}
 					}
 					vaadinItems[index] = newRecord;
 				}

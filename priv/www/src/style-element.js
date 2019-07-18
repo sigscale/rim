@@ -9,6 +9,22 @@ styleElement.innerHTML = `<template>
 				--app-secondary-color: #aeea00;
 				display: block;
 			}
+			dt {
+				float: left;
+				clear: left;
+				width: 20ch;
+				text-align: right;
+				font-weight: bold;
+			}
+			dt::after {
+				content: ":";
+			}
+			dd {
+				margin: 0 0 0 22ch;
+			}
+			.alarmH3 {
+				margin-bottom: -10px;
+			}
 			app-header {
 				position: fixed;
 				top: 0;
