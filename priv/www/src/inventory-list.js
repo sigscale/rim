@@ -290,12 +290,17 @@ class inventoryList extends PolymerElement {
 							query = "[{" + filter.path + ".like=[" + sourceReplace + "%]";
 						}
 					}
+					else if(query) {
+						query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
+					} else {
+						query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+					}
 				}
-			}
-			else if (query) {
-				query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
-			} else {
-				query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+				else if (query) {
+					query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
+				} else {
+					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+				}
 			}
 		});
 		function checkLifeCycle(param) {
@@ -367,7 +372,12 @@ class inventoryList extends PolymerElement {
 			}
 		});
 		if(query) {
-			ajax.params['filter'] = "\"" + query + "}]\"";
+			if(query.includes("like=[%")) {
+            delete params.filters[0];
+            ajax.params['filter'] = "resourceInventoryManagement/v3/resource";
+         } else {
+				ajax.params['filter'] = "\"" + query + "}]\"";
+			}
 		}
 		if(inventoryList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = inventoryList.etag;
