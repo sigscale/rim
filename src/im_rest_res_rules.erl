@@ -87,7 +87,7 @@ patch_rules(Id, Etag, "application/json-patch+json", ReqBody) ->
 				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
 		end
 	of
-		{EtagT, {ok, Patch}} ->
+		{_EtagT, {ok, Patch}} ->
 			F = fun() ->
 				case mnesia:read(pee_rule, Id, write) of
 					[PeeRule] ->
@@ -129,7 +129,7 @@ patch_rules(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
 		end
 	of
-		{EtagT, {ok, Patch}} -> 
+		{_EtagT, {ok, Patch}} ->
 			F = fun() ->
 				case mnesia:read(pee_rule, Id, write) of
 					[#pee_rule{rule = Rule} = PeeRuleMerge] ->
@@ -293,7 +293,7 @@ query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 		FilterArgs = case lists:keyfind("filter", 1, Query) of
 			{_, String} ->
 				{ok, Tokens, _} = im_rest_query_scanner:string(String),
-				{ok, Filter} = im_rest_query_parser:parse(Tokens);
+				{ok, _Filter} = im_rest_query_parser:parse(Tokens);
 			false ->
 				'_'
 		end,
