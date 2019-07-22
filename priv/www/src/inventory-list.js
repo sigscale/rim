@@ -283,20 +283,25 @@ class inventoryList extends PolymerElement {
 			if(filter.value) {
 				if(filter.path == "name") {
 					if(filter.value.includes("=")) {
-						var sourceReplace = filter.value.replace(/=/g, "\\=")
-						if(query) {
-							query = query + "]," + filter.path + ".like=[" + sourceReplace + "%]";
+						var sourceReplace = filter.value.replace(/=/g, "\\=");
+						if(sourceReplace.includes(",")) {
+							var sourceReplace1 = sourceReplace.replace(/,/g, "\\,");
+							if(query) {
+								query = query + "]," + filter.path + ".like=[" + sourceReplace1 + "%]";
+							} else {
+								query = "[{" + filter.path + ".like=[" + sourceReplace1 + "%]";
+							}
+						} else if(query) {
+							query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
 						} else {
-							query = "[{" + filter.path + ".like=[" + sourceReplace + "%]";
+							query = "[{" + filter.path + ".like=[" + filter.value + "%]";
 						}
-					}
-					else if(query) {
+					} else if(query) {
 						query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
 					} else {
 						query = "[{" + filter.path + ".like=[" + filter.value + "%]";
 					}
-				}
-				else if (query) {
+				} else if (query) {
 					query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
 					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
