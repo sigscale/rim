@@ -13,6 +13,7 @@ import {} from '@polymer/polymer/lib/elements/dom-if.js';
 import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -197,6 +198,9 @@ class inventoryList extends PolymerElement {
 					on-tap = "showAddInventoryModal">
 				</paper-fab>
 			</div>
+         <paper-toast
+            id="inventoryError">
+         </paper-toast>
 			<iron-ajax
 				id="getInventoryAjax"
 				url="resourceInventoryManagement/v3/resource"
@@ -469,7 +473,7 @@ class inventoryList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			inventoryList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('inventoryError');
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {

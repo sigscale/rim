@@ -11,6 +11,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -96,6 +97,9 @@ class rulesList extends PolymerElement {
 					on-tap = "showAddRulesModal">
 				</paper-fab>
 			</div>
+         <paper-toast
+            id="ruleError">
+         </paper-toast>
 			<iron-ajax
 				id="getRulesAjax"
 				url="resourceInventoryManagement/v1/logicalResource"
@@ -183,6 +187,9 @@ class rulesList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			rulesList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list').shadowRoot.getElementById('ruleError');
+         toast.text = error;
+         toast.open();
 			callback([]);
 		}
 		if(ajax.loading) {

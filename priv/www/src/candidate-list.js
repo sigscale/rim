@@ -11,6 +11,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -115,6 +116,9 @@ class candidateList extends PolymerElement {
 					on-tap = "showAddCandidateModal">
 				</paper-fab>
 			</div>
+			<paper-toast
+				id="candidateError">
+			</paper-toast>
 			<iron-ajax
 				id="getCandidateAjax"
 				url="resourceCatalogManagement/v3/resourceCandidate"
@@ -322,7 +326,9 @@ class candidateList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			candidateList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+console.log(document.body.querySelector('inventory-management'))
+			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('candidateError');
+console.log(toast);
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {

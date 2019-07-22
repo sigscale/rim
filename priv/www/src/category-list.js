@@ -11,6 +11,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -149,6 +150,9 @@ class categoryList extends PolymerElement {
 					on-tap = "showAddCategoryModal">
 				</paper-fab>
 			</div>
+         <paper-toast
+            id="categoryError">
+         </paper-toast>
 			<iron-ajax
 				id="getCategoryAjax"
 				url="resourceCatalogManagement/v3/resourceCategory"
@@ -396,7 +400,7 @@ _activeItemChanged(item) {
 		};
 		var handleAjaxError = function(error) {
 			categoryList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('categoryError');
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {
