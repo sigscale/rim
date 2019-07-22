@@ -144,8 +144,10 @@ get_resource(Id, [] = _Query, _Filters) ->
 					{etag, im_rest:etag(LM)}],
 			Body = zj:encode(resource(Resource)),
 			{ok, Headers, Body};
+		{error, not_found} ->
+			{error, 404};
 		{error, _Reason} ->
-			{error, 404}
+			{error, 500}
 	end;
 get_resource(_, _, _) ->
 	{error, 400}.
