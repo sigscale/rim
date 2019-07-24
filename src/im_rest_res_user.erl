@@ -288,7 +288,7 @@ query_start(Query, Filters, RangeStart, RangeEnd) ->
 		end
 	of
 		{MatchHead, MatchConditions} ->
-			MFA = [im, query_user, [MatchHead, MatchConditions]],
+			MFA = [im, query_users, [MatchHead, MatchConditions]],
 			case supervisor:start_child(im_rest_pagination_sup, [MFA]) of
 				{ok, PageServer, Etag} ->
 					query_page(PageServer, Etag, Query, Filters, RangeStart, RangeEnd);
