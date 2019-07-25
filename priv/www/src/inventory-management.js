@@ -127,6 +127,11 @@ class InventoryManagement extends PolymerElement {
 								loading="{{userLoading}}"
 								name="userView">
 						</user-list>
+						<http-list
+								id="httpList"
+								loading="{{httpLoading}}"
+								name="httpView"
+						</http-list>
 					</iron-pages>
 					<paper-toast
 							id="restError"
@@ -191,6 +196,12 @@ class InventoryManagement extends PolymerElement {
 									icon="my-icons:user">
 							</paper-icon-button>
 							User
+						</a>
+						<a name="httpView" href="[[rootPath]]httpView">
+							<paper-icon-button
+									icon="my-icons:data">
+							</paper-icon-button>
+							HTTP
 						</a>
 					</iron-selector>
 				</app-drawer>
@@ -269,6 +280,14 @@ class InventoryManagement extends PolymerElement {
 					console.log('Have patience dude!');
 				}
 				break;
+			case "httpView":
+				var http = this.shadowRoot.getElementById('httpList');
+				if (!http.loading) {
+					http.shadowRoot.getElementById('httpGrid').clearCache();
+				} else {
+					console.log('Have patience dude!');
+				}
+				break;
 			case "userView":
 				var user = this.shadowRoot.getElementById('userList');
 				if (!user.loading) {
@@ -317,6 +336,9 @@ class InventoryManagement extends PolymerElement {
 			inventoryLoading: {
 				type: String
 			},
+			httpLoading: {
+				type: String
+			},
 			userLoading: {
 				type: String
 			}
@@ -326,7 +348,7 @@ class InventoryManagement extends PolymerElement {
 	static get observers() {
 		return [
 			'_routePageChanged(routeData.page)',
-			'_loadingChanged(userLoading, catalogLoading, categoryLoading, candidateLoading, specificationLoading, inventoryLoading)'
+			'_loadingChanged(userLoading, catalogLoading, categoryLoading, candidateLoading, specificationLoading, inventoryLoading, httpLoading)'
 		];
 	}
 
@@ -337,7 +359,7 @@ class InventoryManagement extends PolymerElement {
 		// Show 'inventoryView' in that case. And if the page doesn't exist, show 'view404'.
 		if (!page) {
 			this.page = 'catalogView';
-		} else if (['rulesView', 'inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView'].indexOf(page) !== -1) {
+		} else if (['rulesView', 'inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView', 'httpView'].indexOf(page) !== -1) {
 			this.page = page;
 		}
 		switch (this.page) {
@@ -358,6 +380,9 @@ class InventoryManagement extends PolymerElement {
 				break;
 			case 'rulesView':
 				this.viewTitle = 'Rules';
+				break;
+			case 'httpView':
+				this.viewTitle = "HTTP Log";
 				break;
 			case 'userView':
 				this.viewTitle = 'Users';
@@ -398,6 +423,9 @@ class InventoryManagement extends PolymerElement {
 				import('./rules-list.js');
 				import('./rules-update.js');
 				break;
+			case 'httpView':
+				import('./http-list.js');
+				break;
 			case 'userView':
 				import('./user-list.js');
 				break;
@@ -405,7 +433,7 @@ class InventoryManagement extends PolymerElement {
 	}
 
 	_loadingChanged() {
-		if (this.userLoading || this.rulesLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading || this.candidateLoading || this.specificationLoading) {
+		if (this.userLoading || this.rulesLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading || this.candidateLoading || this.specificationLoading || this.httpLoading) {
 			this.loading = true;
 		} else {
 			this.loading = false;

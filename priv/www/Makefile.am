@@ -20,6 +20,7 @@ MODULES = inventory-management.js \
 		inventory-help.js \
 		rules-list.js \
 		rules-update.js \
+		http-list.js \
 		user-list.js \
 		style-element.js
 
