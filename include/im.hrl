@@ -262,7 +262,7 @@
 -record(pee_rule,
 		{id :: string() | undefined,
 		description :: string() | undefined,
-		rule :: rule() | undefined}).
+		rule :: rule() | string() | undefined}).
 -type pee_rule() :: #pee_rule{}.
 
 -record('BssFunction',

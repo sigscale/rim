@@ -74,6 +74,8 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
                      check_content_type_header(Headers, Method, im_rest_res_rules, Data);
 						["resourceInventoryManagement", "v1", "logicalResource" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_rules, Data);
+						["im", "v1", "log", "http"] ->
+							check_content_type_header(Headers, Method, im_rest_res_http, Data);
 						_ ->
 							{proceed, Data}
 					end;

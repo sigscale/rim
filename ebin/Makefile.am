@@ -34,6 +34,7 @@ beam_DATA = im_app.beam \
 			im_rest_res_specification.beam \
 			im_rest_res_resource.beam \
 			im_rest_res_rules.beam \
+			im_rest_res_http.beam \
 			im_rest_query_scanner.beam \
 			im_rest_query_parser.beam \
 			im_rest_pagination_sup.beam \
