@@ -39,8 +39,13 @@ parse_nodeb({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 		[#state{rule = RuleId, dn_prefix = [NodebDn | _], stack = Stack,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+		spec_cache = Cache, location = Location},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	NodeBAttr = parse_nodeb_attr(T2, undefined, NodebDn, RuleId, []),
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -51,7 +56,7 @@ parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
 			specification = Spec,
-			characteristic = NodeBAttr},
+			characteristic = [PeeParam | NodeBAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];

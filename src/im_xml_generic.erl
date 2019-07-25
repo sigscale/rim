@@ -157,6 +157,19 @@ parse_management_node({endElement, _Uri, _LocalName, QName},
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
+parse_managed_element({characters, Location}, [#state{rule = RuleId,
+		stack = [{startElement, {_, "locationName"}, _} | _]}
+		= CurrentState | T] = State) ->
+	case im:get_pee(RuleId, Location) of
+		{ok, []} ->
+			State;
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[CurrentState#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			State
+	end;
 parse_managed_element({characters, Chars},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
@@ -171,11 +184,12 @@ parse_managed_element({startElement, _, "BssFunction", QName,
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "NodeBFunction", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId,
+		location = Location} | _T] = State) ->
 	DnComponent = ",NodeBFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_utran, parse_function = parse_nodeb,
-			rule = RuleId, dn_prefix = [NewDn],
+			rule = RuleId, dn_prefix = [NewDn], location = Location,
 			parse_state = #utran_state{nodeb = #{"id" => CurrentDn}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "RncFunction", QName,
@@ -289,76 +303,12 @@ parse_managed_element({startElement, _, "PEEMonitoredEntity", QName,
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_managed_element({endElement, _Uri, "attributes", QName},
-		[#state{rule = RuleId, stack = Stack} = State | T]) ->
-	{[_ | T2], NewStack} = pop(startElement, QName, Stack),
-	Attributes = parse_managed_element_attr(T2, undefined, []),
-	F = fun(#resource_char{name = "locationName"}) ->
-			true;
-		(_) ->
-			false
-	end,
-	case lists:filter(F, Attributes) of
-		[#resource_char{name = "locationName", value = Location}] ->
-			case im:get_pee(RuleId, Location) of
-				{ok, []} ->
-					[State#state{stack = NewStack} | T];
-				{ok, PEEMonitoredEntities} ->
-					PeeParametersList =
-							parse_peeParameterslist(PEEMonitoredEntities, []),
-					[State#state{location = PeeParametersList, stack = NewStack} | T];
-				{error, _Reason} ->
-					[State#state{stack = NewStack} | T]
-			end;
-		[] ->
-			[State#state{stack = NewStack} | T]
-	end;
 parse_managed_element({endElement, _Uri, "ManagedElement", _QName},
 		[_State, PrevState | T]) ->
 	[PrevState | T];
 parse_managed_element({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
-
-% @hidden
-parse_managed_element_attr([{startElement,
-		{_, "managedElementTypeList"} = QName, _} | T1], undefined, Acc) ->
-   % @todo managedElementTypeListType
-   {[_ | _MgdETList], T2} = pop(endElement, QName, T1),
-   parse_managed_element_attr(T2, undefined, Acc);
-parse_managed_element_attr([{startElement, {_, "managedBy"} = QName, _} | T1],
-		undefined, Acc) ->
-   % @todo dnList
-   {[_ | _MgdETList], T2} = pop(endElement, QName, T1),
-   parse_managed_element_attr(T2, undefined, Acc);
-parse_managed_element_attr([{startElement, {_, Attr}, _} | T],
-		undefined, Acc) ->
-	parse_managed_element_attr(T, Attr, Acc);
-parse_managed_element_attr([{characters, Chars} | T], "dnPrefix" = Attr, Acc) ->
-	parse_managed_element_attr(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_managed_element_attr([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
-	parse_managed_element_attr(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_managed_element_attr([{characters, Chars} | T], "vendorName" = Attr, Acc) ->
-	parse_managed_element_attr(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_managed_element_attr([{characters, Chars} | T],
-		"userDefinedState" = Attr, Acc) ->
-	parse_managed_element_attr(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_managed_element_attr([{characters, Chars} | T], "locationName" = Attr, Acc) ->
-	parse_managed_element_attr(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_managed_element_attr([{characters, Chars} | T], "swVersion" = Attr, Acc) ->
-	parse_managed_element_attr(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_managed_element_attr([{characters, _Chars} | T], Attr, Acc) ->
-	parse_managed_element_attr(T, Attr, Acc);
-parse_managed_element_attr([{endElement, {_, Attr}} | T], Attr, Acc) ->
-	parse_managed_element_attr(T, undefined, Acc);
-parse_managed_element_attr([], undefined, Acc) ->
-	Acc.
 
 % @hidden
 parse_peeParameterslist([#resource{characteristic = ResourceChars} | Resources], Acc) ->
@@ -400,28 +350,3 @@ parse_vsdata({endElement, _Uri, _LocalName, QName},
 %%  internal functions
 %%----------------------------------------------------------------------
 
--type event() :: {startElement,
-		QName :: {Prefix :: string(), LocalName :: string()},
-		Attributes :: [tuple()]} | {endElement,
-		QName :: {Prefix :: string(), LocalName :: string()}}
-		| {characters, string()}.
--spec pop(Element, QName, Stack) -> Result
-	when
-		Element :: startElement | endElement,
-		QName :: {Prefix, LocalName},
-		Prefix :: string(),
-		LocalName :: string(),
-		Stack :: [event()],
-		Result :: {Value, NewStack},
-		Value :: [event()],
-		NewStack :: [event()].
-%% @doc Pops all events up to an including `{Element, QName, ...}'.
-%% @private
-pop(Element, QName, Stack) ->
-	pop(Element, QName, Stack, []).
-%% @hidden
-pop(Element, QName, [H | T], Acc)
-		when element(1, H) == Element, element(2, H) == QName->
-	{[H | Acc], T};
-pop(Element, QName, [H | T], Acc) ->
-	pop(Element, QName, T, [H | Acc]).
