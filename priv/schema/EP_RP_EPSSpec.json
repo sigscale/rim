@@ -1,0 +1,38 @@
+{
+	"$id": "http://sigscale.org/schema/EP_RP_EPSSpec",
+	"title": " EP RP EPS Specification",
+	"description": "End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) connection point specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "resourceCatalogManagement#/definitions/ElectronicConnectionPointSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"farEndNeIpAddr"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
