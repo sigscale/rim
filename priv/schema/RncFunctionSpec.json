@@ -11,6 +11,7 @@
 			"type": "object",
 			"properties": {
 				"resourceSpecCharacteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
@@ -44,6 +45,42 @@
 								}
 							}
 						]
+					}
+				},
+				"utranCellFDD": {
+					"type": "array",
+					"items": {
+						"$ref": "resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+					}
+				},
+				"utranCellTDDlcr": {
+					"type": "array",
+					"items": {
+						"$ref": "resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+					}
+				},
+				"utranCellTDDhcr": {
+					"type": "array",
+					"items": {
+						"$ref": "resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+					}
+				},
+				"iubLink": {
+					"type": "array",
+					"items": {
+						"$ref": "resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+					}
+				},
+				"rncFunctionOptionallyContainedNrmClass": {
+					"type": "array",
+					"items": {
+						"$ref": "resourceCatalogManagement/v3/schema/utranNrm#/definitions/RncFunctionOptionallyContainedNrmClassList"
+					}
+				},
+				"vsDataContainer": {
+					"type": "array",
+					"items": {
+						"$ref": "resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 					}
 				}
 			}
