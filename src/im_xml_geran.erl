@@ -61,18 +61,33 @@ parse_bss({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_bss({endElement, _Uri, "BssFunction", QName},
-		[#state{dn_prefix = [BssDn | _], stack = Stack, location = Location,
+		[#state{dn_prefix = [BssDn | _], stack = Stack, rule = RuleId,
 		parse_state = #geran_state{btss = Btss, vs_data = NrmMap},
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	BssAttr = parse_bss_attr(T2, undefined, []),
+	F = fun (#resource_char{name = "userLabel"}) ->
+				true;
+			(_) ->
+				false
+	end,
+	[#resource_char{name = "userLabel",
+			value = UserLabel}] = lists:filter(F, BssAttr),
+	PeeParametersList = case im:get_pee(RuleId, UserLabel) of
+		{ok, []} ->
+			[];
+		{ok, PEEMonitoredEntities} ->
+			parse_peeParameterslist(PEEMonitoredEntities, []);
+		{error, _Reason} ->
+			[]
+	end,
 	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
 					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
-			class_type = "PeeParametersListType", value = Location,
+			class_type = "PeeParametersListType", value = PeeParametersList,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	ClassType = "BssFunction",
