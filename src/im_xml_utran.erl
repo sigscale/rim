@@ -100,15 +100,27 @@ parse_nodeb_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_rnc({characters, SideId}, [#state{rule = RuleId,
+		stack = [{startElement, {_, "userLabel"}, _} | _]} = State | T]) ->
+	case im:get_pee(RuleId, SideId) of
+		{ok, []} ->
+			[State | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_rnc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_rnc({startElement, _Uri, "UtranCellFDD", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], location = Location} | _] = State) ->
 	DnComponent = ",UtranCellFDD=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{dn_prefix = [NewDn], parse_module = im_xml_utran,
-			parse_function = parse_fdd,
+			parse_function = parse_fdd, location = Location,
 			parse_state = #utran_state{fdd = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_rnc({startElement, _Uri, "EP_IuCS", QName,
@@ -140,11 +152,11 @@ parse_rnc({startElement, _Uri, "EP_Iur", QName,
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_rnc({startElement, _Uri, "IubLink", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+		[#state{dn_prefix = [CurrentDn | _], location = Location} | _] = State) ->
 	DnComponent = ",IubLink=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{dn_prefix = [NewDn], parse_module = im_xml_utran,
-			parse_function = parse_iub,
+			parse_function = parse_iub, location = Location,
 			parse_state = #utran_state{iub = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_rnc({startElement, _Uri, "UtranCellTDDLcr", QName,
@@ -169,7 +181,7 @@ parse_rnc({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({endElement, _Uri, "RncFunction", QName},
-		[#state{parse_state =  #utran_state{fdds = Fdds},
+		[#state{parse_state =  #utran_state{fdds = Fdds}, location = Location,
 		dn_prefix = [RncDn | _], stack = Stack, spec_cache = Cache},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
@@ -177,6 +189,10 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	RncAttr = parse_rnc_attr(T2, undefined, []),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = RncDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
@@ -184,7 +200,7 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
 			specification = Spec,
-			characteristic = lists:reverse([UtranCellFDD | RncAttr])},
+			characteristic = lists:reverse([UtranCellFDD, PeeParam | RncAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -249,6 +265,20 @@ parse_rnc_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 parse_rnc_attr1([], undefined, Acc) ->
 	Acc.
 
+% @hidden
+parse_peeParameterslist([#resource{characteristic = ResourceChars} | Resources], Acc) ->
+	parse_peeParameterslist1(ResourceChars, Resources, Acc);
+parse_peeParameterslist([], Acc) ->
+	Acc.
+% @hidden
+parse_peeParameterslist1([#resource_char{name = "peeMeDescription",
+		value = ValueMap} | _], Resources, Acc) ->
+	parse_peeParameterslist(Resources, [ValueMap | Acc]);
+parse_peeParameterslist1([_H | T], Resources, Acc) ->
+	parse_peeParameterslist1(T, Resources, Acc);
+parse_peeParameterslist1([], Resources, Acc) ->
+	parse_peeParameterslist(Resources, Acc).
+
 %% @hidden
 parse_fdd({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
@@ -274,7 +304,8 @@ parse_fdd({startElement, _Uri, _LocalName, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
-		[#state{dn_prefix = [FddDn | _], stack = Stack, spec_cache = Cache},
+		[#state{dn_prefix = [FddDn | _], stack = Stack,
+		spec_cache = Cache, location = Location},
 		#state{parse_state = UtranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
 	#utran_state{fdds = Fdds} = UtranState,
@@ -282,6 +313,10 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	FddAttr = parse_fdd_attr(T2, []),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = FddDn,
 			description = "UMTS radio",
 			category = "RAN",
@@ -289,7 +324,7 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 			base_type = "UtranGenericCell",
 			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
 			specification = Spec,
-			characteristic = FddAttr},
+			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
 			[PrevState#state{
@@ -570,6 +605,9 @@ parse_utran_rel_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_utran_rel_attr1(T, Attr, Acc);
 parse_utran_rel_attr1([{characters, Chars} | T], "adjacentCell" = Attr, Acc) ->
 	NewAcc = attribute_add("adjacentCell", Chars, Acc),
+	parse_utran_rel_attr1(T, Attr, NewAcc);
+parse_utran_rel_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+	NewAcc = attribute_add("userLabel", Chars, Acc),
 	parse_utran_rel_attr1(T, Attr, NewAcc);
 parse_utran_rel_attr1([{startElement, {_, Attr}, []} | T], Attr, Acc) ->
 	parse_utran_rel_attr1(T, undefined, Acc);
@@ -1094,12 +1132,17 @@ parse_iub({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_iub({endElement, _Uri, "IubLink", QName},
-		[#state{dn_prefix = [IubDn | _], stack = Stack, spec_cache = Cache},
+		[#state{dn_prefix = [IubDn | _], stack = Stack,
+		spec_cache = Cache, location = Location},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	IubAttr = parse_iub_attr(T2, undefined, []),
 	ClassType = "IubLink",
 %	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = IubDn,
 			description = "UMTS IUB interface",
 			category = "RAN",
@@ -1107,7 +1150,7 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/IubLink",
 %			specification = Spec,
-			characteristic = IubAttr},
+			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [Cache | PrevCache]} | T1];
