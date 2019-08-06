@@ -62,7 +62,62 @@
 							</en:tceIDMappingInfo>
 						</en:tceIDMappingInfoList>
 					</en:attributes>
-					<!-- Multiple EUtranCellTDD -->
+					<!-- Multiple EUtranCellFDD -->
+					<en:EUtranCellFDD id="1">
+						<en:attributes>
+							<en:userLabel>FDD 1</en:userLabel>
+							<en:cellLocalId>251</en:cellLocalId>
+							<en:cellSize>medium</en:cellSize>
+							<en:pLMNIdList>
+								<en:pLMNId>
+									<en:mcc>957</en:mcc>
+									<en:mnc>356</en:mnc>
+								</en:pLMNId>
+							</en:pLMNIdList>
+							<en:cellAccessInfoList>
+								<en:cellAccessInfo>
+									<en:plmnId>
+										<en:mcc>195</en:mcc>
+										<en:mnc>653</en:mnc>
+									</en:plmnId>
+									<en:tac>791642365</en:tac>
+									<en:cellId>65382131</en:cellId>
+								</en:cellAccessInfo>
+							</en:cellAccessInfoList>
+							<en:tac>964213205</en:tac>
+							<en:pci>420</en:pci>
+							<en:maximumTransmissionPower>635</en:maximumTransmissionPower>
+							<en:referenceSignalPower>237</en:referenceSignalPower>
+							<en:pb>193</en:pb>
+							<en:allowedAccessClasses>
+								<en:allowedAccessClassesElement>EmergencyCall</en:allowedAccessClassesElement>
+							</en:allowedAccessClasses>
+							<en:earfcnDl>832</en:earfcnDl>
+							<en:earfcnUl>391</en:earfcnUl>
+						</en:attributes>
+						<!-- Multiple EUtranRelation in a EUtranCellTDD -->
+						<en:EUtranRelation id="1">
+							<en:attributes>
+								<en:adjacentCell>SubNetwork=1,ENBFunction=1,EUtranCellTDD=2</en:adjacentCell>
+							</en:attributes>
+							<!--  Vendor specific data for EUtranRelation-->
+							<xn:VsDataContainer id="1">
+								<xn:attributes>
+									<xn:vsDataType>DataType=6</xn:vsDataType>
+									<xn:vsDataFormatVersion>DFV5</xn:vsDataFormatVersion>
+									<xn:vsData/>
+								</xn:attributes>
+							</xn:VsDataContainer>
+						</en:EUtranRelation>
+						<!--  Vendor specific data for EUtranRelation-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=7</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</en:EUtranCellFDD>
 					<en:EUtranCellTDD id="1">
 						<en:attributes>
 							<en:userLabel>TDD 1</en:userLabel>
@@ -118,8 +173,6 @@
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
-					</en:EUtranCellTDD>
-					<en:EUtranCellTDD id="2">
 					</en:EUtranCellTDD>
 				</en:ENBFunction>
 				<!--  Vendor specific data for ENB -->
