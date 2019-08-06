@@ -15,6 +15,7 @@ beam_DATA = im_app.beam \
 			im_xml_generic.beam \
 			im_xml_geran.beam \
 			im_xml_utran.beam \
+			im_xml_eutran.beam \
 			im_xml_epc.beam \
 			im_xml_core.beam \
 			im_xml_pee.beam \

@@ -9,6 +9,7 @@ modhtml = im_app.html \
 			im_specification.html \
 			im_xml_cm_bulk.html \
 			im_xml_geran.html \
+			im_xml_eutran.html \
 			im_server.html \
 			mod_im_rest_accepted_content.html \
 			mod_im_rest_get.html \

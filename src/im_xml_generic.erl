@@ -300,6 +300,15 @@ parse_managed_element({startElement, _, "PEEMonitoredEntity", QName,
 			dn_prefix = [NewDn],
 			parse_state = #pee_state{me = #{"id" => "PEEMonitoredEntity=" ++ Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "ENBFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",ENBFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_eutran, parse_function = parse_enb,
+			dn_prefix = [NewDn],
+			parse_state = #eutran_state{enb = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];

@@ -27,6 +27,7 @@
 			im_xml_huawei,
 			im_xml_pee,
 			im_xml_utran,
+			im_xml_eutran,
 			im_xml_zte,
 			mod_im_rest_accepted_content,
 			mod_im_rest_delete,

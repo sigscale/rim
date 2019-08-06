@@ -44,6 +44,15 @@
 		fdds = [] :: [string()]}).
 -type utran_state() :: #utran_state{}.
 
+-record(eutran_state,
+		{enb :: map() | undefined,
+		fdd :: map() | undefined,
+		tdd :: map() | undefined,
+		eutran_rel :: map() | undefined,
+		fdds = [] :: [string()],
+		tdds = [] :: [string()]}).
+-type eutran_state() :: #eutran_state{}.
+
 -record(epc_state,
 		{epdg :: map() | undefined,
 		mme :: map() | undefined,
