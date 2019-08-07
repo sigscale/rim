@@ -32,7 +32,8 @@
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
 		ngc_nwdaf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
--export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0]).
+-export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0, core_auc/0,
+		core_hlr/0, core_eir/0, core_mnpsrf/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 
@@ -2998,6 +2999,114 @@ core_ggsn() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "GgsnFunction",
 					schema = "/resourceInventoryManagement/v3/schema/GgsnFunction"},
+			characteristic = Chars}.
+
+-spec core_auc() -> specification().
+%% @doc Core Authentication Center (AUC) resource specification.
+core_auc() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "AucFunction",
+			description = "Core Authentication Center (AUC)",
+			class_type = "AucFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/AucFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "AucFunction",
+					schema = "/resourceInventoryManagement/v3/schema/AucFunction"},
+			characteristic = Chars}.
+
+-spec core_hlr() -> specification().
+%% @doc Core Home Location Register (HLR) resource specification.
+core_hlr() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "HlrFunction",
+			description = "Core Home Location Register (HLR)",
+			class_type = "HlrFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/HlrFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "HlrFunction",
+					schema = "/resourceInventoryManagement/v3/schema/HlrFunction"},
+			characteristic = Chars}.
+
+-spec core_eir() -> specification().
+%% @doc Core Equipment Identity Register (EIR) resource specification.
+core_eir() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "EirFunction",
+			description = "Core Equipment Identity Register (EIR)",
+			class_type = "EirFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/EirFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "EirFunction",
+					schema = "/resourceInventoryManagement/v3/schema/EirFunction"},
+			characteristic = Chars}.
+
+-spec core_mnpsrf() -> specification().
+%% @doc Core Mobile Number Portability-Signaling Relay Function (MNP-SRF) resource specification.
+core_mnpsrf() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "MnpSrfFunction",
+			description = "Core Mobile Number Portability-Signaling Relay Function (MNP-SRF)",
+			class_type = "MnpSrfFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/MnpSrfFunction",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "MnpSrfFunction",
+					schema = "/resourceInventoryManagement/v3/schema/MnpSrfFunction"},
 			characteristic = Chars}.
 
 -spec ims_as() -> specification().

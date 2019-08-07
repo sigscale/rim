@@ -64,6 +64,10 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/CsMgwFunctionSpec.json \
 		$(abs_builddir)/SgsnFunctionSpec.json \
 		$(abs_builddir)/GgsnFunctionSpec.json \
+		$(abs_builddir)/AucFunctionSpec.json \
+		$(abs_builddir)/HlrFunctionSpec.json \
+		$(abs_builddir)/EirFunctionSpec.json \
+		$(abs_builddir)/MnpSrfFunctionSpec.json \
 		$(abs_builddir)/ASFunctionSpec.json \
 		$(abs_builddir)/HSSFunctionSpec.json \
 		$(abs_builddir)/PCSCFFunctionSpec.json \
@@ -280,6 +284,26 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GgsnFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s AucFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s HlrFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EirFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MnpSrfFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \

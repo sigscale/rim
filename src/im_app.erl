@@ -276,7 +276,8 @@ install8(Nodes, Acc) ->
 		ngc_udsf, ngc_nrf, ngc_nssf, ngc_smsf, ngc_lmf, ngc_ngeir, ngc_sepp,
 		ngc_nwdaf,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
-		core_msc, core_mgw, core_sgsn, core_ggsn,
+		core_msc, core_mgw, core_sgsn, core_ggsn, core_auc, core_hlr, core_eir,
+		core_mnpsrf,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
 		pee_me],
 	install8(SpecFuns, Nodes, Acc).
