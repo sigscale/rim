@@ -200,11 +200,6 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-ggsn.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-core-ggsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
