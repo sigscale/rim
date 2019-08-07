@@ -50,7 +50,6 @@ parse_enb({startElement, _Uri, "EUtranCellFDD", QName,
 		[#state{dn_prefix = [CurrentDn | _], location = Location} | _] = State) ->
 	DnComponent = ",EUtranCellFDD=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [NewDn], parse_module = im_xml_eutran,
 			parse_function = parse_fdd, location = Location,
 			parse_state = #eutran_state{fdd = #{"id" => DnComponent}},
@@ -60,7 +59,6 @@ parse_enb({startElement, _Uri, "EUtranCellTDD", QName,
 		[#state{dn_prefix = [CurrentDn | _], location = Location} | _] = State) ->
 	DnComponent = ",EUtranCellTDD=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
-erlang:display({?MODULE, ?LINE, NewDn}),
 	[#state{dn_prefix = [NewDn], parse_module = im_xml_eutran,
 			parse_function = parse_tdd, location = Location,
 			parse_state = #eutran_state{tdd = #{"id" => DnComponent}},
@@ -228,7 +226,6 @@ parse_fdd({endElement, _Uri, "EUtranCellFDD", QName},
 		spec_cache = Cache, location = Location},
 		#state{parse_state = EUtranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-erlang:display({?MODULE, ?LINE, FddDn}),
 	#eutran_state{fdds = Fdds} = EUtranState,
 	ClassType = "EUtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -456,7 +453,6 @@ parse_tdd({endElement, _Uri, "EUtranCellTDD", QName},
 		spec_cache = Cache, location = Location},
 		#state{parse_state = EUtranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-erlang:display({?MODULE, ?LINE, TddDn}),
 	#eutran_state{tdds = Tdds} = EUtranState,
 	ClassType = "EUtranCellTDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -489,7 +485,6 @@ parse_tdd({endElement, _Uri, _LocalName, QName},
 % @hidden
 parse_tdd_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 		Acc) ->
-erlang:display({?MODULE, ?LINE, QName}),
 	{[_ | Attributes], _} = pop(endElement, QName, T1),
 	parse_tdd_attr1(Attributes, undefined, Acc).
 % @hidden
