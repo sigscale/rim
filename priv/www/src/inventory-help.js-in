@@ -80,7 +80,7 @@ class inventoryHelp extends PolymerElement {
 						Catalog
 			</paper-icon-item>
 			<paper-icon-item
-					on-click="dash">
+					on-click="category">
 					<iron-icon icon="my-icons:category" slot="item-icon"></iron-icon>
 						Category
 			</paper-icon-item>
@@ -100,10 +100,192 @@ class inventoryHelp extends PolymerElement {
 						Rule
 			</paper-icon-item>
 			<paper-icon-item
+					on-click="inventory">
+					<iron-icon icon="my-icons:inventory" slot="item-icon"></iron-icon>
+						Inventory
+			</paper-icon-item>
+			<paper-icon-item
+					on-click="http">
+					<iron-icon icon="my-icons:data" slot="item-icon"></iron-icon>
+						Http
+			</paper-icon-item>
+			<paper-icon-item
 					on-click="user">
 					<iron-icon icon="my-icons:user" slot="item-icon"></iron-icon>
 						User
 			</paper-icon-item>
+		</paper-dialog>
+		<paper-dialog id="helpCatalog">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Catalog
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Catalog
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Catalog</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:resourceCatalog"></iron-icon>
+				then select the <iron-icon class="iconHelp" icon="my-icons:catalog"></iron-icon>
+				<b>Catalog</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+		<paper-dialog id="helpCategory">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Category
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Category
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Category</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:resourceCatalog"></iron-icon>
+				then select the <iron-icon class="iconHelp" icon="my-icons:category"></iron-icon>
+				<b>Category</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+		<paper-dialog id="helpCandidate">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Candidate
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Candidate
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Candidate</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:resourceCatalog"></iron-icon>
+				then select the <iron-icon class="iconHelp" icon="my-icons:candidate"></iron-icon>
+				<b>Candidate</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+		<paper-dialog id="helpSpecification">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Specification
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Specification	
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Specification</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:resourceCatalog"></iron-icon>
+				then select the <iron-icon class="iconHelp" icon="my-icons:specification">
+				</iron-icon> <b>Specification</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+		<paper-dialog id="helpRule">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Rule
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Rule	
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Rule</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:rule"></iron-icon>
+				<b>Rule</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+		<paper-dialog id="helpInventory">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Inventory
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Inventory	
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Inventory</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:inventory"></iron-icon>
+				<b>Inventory</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
+		</paper-dialog>
+		<paper-dialog id="helpHttp">
+			<paper-toolbar>
+				<paper-icon-button
+						slot="top"
+						icon="my-icons:arrow-back"
+						on-click="helpBack">
+				</paper-icon-button>
+				<div slot="top" class="title">
+					Http
+				</div>
+			</paper-toolbar>
+			<paper-icon-item>
+				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
+				Http	
+			</paper-icon-item>
+			<paper-dialog-scrollable>
+				<p>To access the <b>Http</b> view first open the navigation drawer
+				by selecting it's icon <iron-icon class="iconHelp" icon="menu"></iron-icon>
+				on the left of the toolbar at top. Select the
+				<iron-icon class="iconHelp" icon="my-icons:data"></iron-icon>
+				<b>Http</b> view from the navigation menu.</p>
+				<p></p>
+			</paper-dialog-scrollable>
 		</paper-dialog>
 		<paper-dialog id="helpUsers">
 			<paper-toolbar>
@@ -171,6 +353,55 @@ class inventoryHelp extends PolymerElement {
 		var helpObj = helpIm.shadowRoot.getElementById('helpMenu');
 		helpObj.open();
 	}
+	http(event) {
+		var httpIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var httpObj = httpIm.shadowRoot.getElementById('helpMenu');
+		httpObj.close();
+		var httpObjDialog = httpIm.shadowRoot.getElementById('helpHttp');
+		httpObjDialog.open();
+	}
+	inventory(event) {
+		var inventoryIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var inventoryObj = inventoryIm.shadowRoot.getElementById('helpMenu');
+		inventoryObj.close();
+		var inventoryObjDialog = inventoryIm.shadowRoot.getElementById('helpInventory');
+		inventoryObjDialog.open();
+	}
+	rule(event) {
+		var ruleIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var ruleObj = ruleIm.shadowRoot.getElementById('helpMenu');
+		ruleObj.close();
+		var ruleObjDialog = ruleIm.shadowRoot.getElementById('helpRule');
+		ruleObjDialog.open();
+	}
+	specification(event) {
+		var specificationIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var specificationObj = specificationIm.shadowRoot.getElementById('helpMenu');
+		specificationObj.close();
+		var specificationObjDialog = specificationIm.shadowRoot.getElementById('helpSpecification');
+		specificationObjDialog.open();
+	}
+	candidate(event) {
+		var candidateIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var candidateObj = candidateIm.shadowRoot.getElementById('helpMenu');
+		candidateObj.close();
+		var candidateObjDialog = candidateIm.shadowRoot.getElementById('helpCandidate');
+		candidateObjDialog.open();
+	}
+	category(event) {
+		var categoryIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var categoryObj = categoryIm.shadowRoot.getElementById('helpMenu');
+		categoryObj.close();
+		var categoryObjDialog = categoryIm.shadowRoot.getElementById('helpCategory');
+		categoryObjDialog.open();
+	}
+	catalog(event) {
+		var catalogIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var catalogObj = catalogIm.shadowRoot.getElementById('helpMenu');
+		catalogObj.close();
+		var catalogObjDialog = catalogIm.shadowRoot.getElementById('helpCatalog');
+		catalogObjDialog.open();
+	}
 	user(event) {
 		var userIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
 		var userObj = userIm.shadowRoot.getElementById('helpMenu');
@@ -180,6 +411,20 @@ class inventoryHelp extends PolymerElement {
 	}
 	helpBack(event) {
 		var helpBackIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
+		var helpHttpDialog = helpBackIm.shadowRoot.getElementById('helpHttp');
+		helpHttpDialog.close();
+		var helpInventoryDialog = helpBackIm.shadowRoot.getElementById('helpInventory');
+		helpInventoryDialog.close();
+		var helpRuleDialog = helpBackIm.shadowRoot.getElementById('helpRule');
+		helpRuleDialog.close();
+		var helpSpecificationDialog = helpBackIm.shadowRoot.getElementById('helpSpecification');
+		helpSpecificationDialog.close();
+		var helpCandidateDialog = helpBackIm.shadowRoot.getElementById('helpCandidate');
+		helpCandidateDialog.close();
+		var helpCatalogDialog = helpBackIm.shadowRoot.getElementById('helpCatalog');
+		helpCatalogDialog.close();
+		var helpCategoryDialog = helpBackIm.shadowRoot.getElementById('helpCategory');
+		helpCategoryDialog.close();
 		var helpObjDialog = helpBackIm.shadowRoot.getElementById('helpUsers');
 		helpObjDialog.close();
 		var helpBackObj = helpBackIm.shadowRoot.getElementById('helpMenu');
