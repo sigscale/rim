@@ -185,6 +185,74 @@
 						</xn:VsDataContainer>
 					</cn:IupsLink>
 				</cn:SgsnFunction>
+				<cn:AucFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>AUC 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>towuekd</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<!--  Vendor specific data for GGSN-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=3</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV4</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</cn:AucFunction>
+				<cn:HlrFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>HLR 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>pwuoibl</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<!--  Vendor specific data for GGSN-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=4</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV5</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</cn:HlrFunction>
+				<cn:EirFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>EIR 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>hbjzklhg</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<!--  Vendor specific data for GGSN-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=5</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</cn:EirFunction>
+				<cn:MnpSrfFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>MNP_SRF 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>nijodqs</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<!--  Vendor specific data for GGSN-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=6</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV7</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</cn:MnpSrfFunction>
 				<!--  Vendor specific data for ManagedElement -->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
