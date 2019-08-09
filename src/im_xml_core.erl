@@ -14,7 +14,7 @@
 
 %% export the im private API
 -export([parse_msc/2, parse_iucs/2, parse_mgw/2, parse_ggsn/2, parse_sgsn/2,
-		parse_iups/2]).
+		parse_iups/2, parse_auc/2, parse_hlr/2, parse_eir/2, parse_mnp_srf/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -452,6 +452,278 @@ parse_iups({endElement, _Uri, "IupsLink", _QName},
 parse_iups({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_auc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_auc({startElement,  _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_auc({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_auc({endElement, _Uri, "AucFunction", QName},
+		[#state{dn_prefix = [AucDn | _], stack = Stack, location = Location,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	AucAttr = parse_auc_attr(T2, undefined, []),
+	ClassType = "AucFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = AucDn,
+			description = "Authentication Center (AUC)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/AucFunction",
+			specification = Spec,
+			characteristic = [PeeParam | AucAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_auc({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_auc_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_auc_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_auc_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_auc_attr1(T2, undefined, Acc);
+parse_auc_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_auc_attr1(T, Attr, Acc);
+parse_auc_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+	parse_auc_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_auc_attr1([{characters, _Chars} | T], Attr, Acc) ->
+	parse_auc_attr1(T, Attr, Acc);
+parse_auc_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_auc_attr1(T, undefined, Acc);
+parse_auc_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_hlr({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_hlr({startElement,  _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_hlr({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_hlr({endElement, _Uri, "HlrFunction", QName},
+		[#state{dn_prefix = [HlrDn | _], stack = Stack, location = Location,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	HlrAttr = parse_hlr_attr(T2, undefined, []),
+	ClassType = "HlrFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = HlrDn,
+			description = "Home Location Register (HLR)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/HlrFunction",
+			specification = Spec,
+			characteristic = [PeeParam | HlrAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_hlr({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_hlr_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_hlr_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_hlr_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_hlr_attr1(T2, undefined, Acc);
+parse_hlr_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_hlr_attr1(T, Attr, Acc);
+parse_hlr_attr1([{endElement, {_, _Attribute}} | T], Attr, Acc) ->
+	parse_hlr_attr1(T, Attr, Acc);
+parse_hlr_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+	parse_hlr_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_hlr_attr1([{characters, _Chars} | T], Attr, Acc) ->
+	parse_hlr_attr1(T, Attr, Acc);
+parse_hlr_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_hlr_attr1(T, undefined, Acc);
+parse_hlr_attr1([{startElement, {_, _Attribute}, _} | T], Attr, Acc) ->
+	parse_hlr_attr1(T, Attr, Acc);
+parse_hlr_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_eir({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_eir({startElement,  _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_eir({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_eir({endElement, _Uri, "EirFunction", QName},
+		[#state{dn_prefix = [EirDn | _], stack = Stack, location = Location,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EirAttr = parse_eir_attr(T2, undefined, []),
+	ClassType = "EirFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = EirDn,
+			description = "Equipment Identity Register (EIR)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EirFunction",
+			specification = Spec,
+			characteristic = [PeeParam | EirAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_eir({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_eir_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_eir_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_eir_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_eir_attr1(T2, undefined, Acc);
+parse_eir_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_eir_attr1(T, Attr, Acc);
+parse_eir_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+	parse_eir_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_eir_attr1([{characters, _Chars} | T], Attr, Acc) ->
+	parse_eir_attr1(T, Attr, Acc);
+parse_eir_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_eir_attr1(T, undefined, Acc);
+parse_eir_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_mnp_srf({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_mnp_srf({startElement,  _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_mnp_srf({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_mnp_srf({endElement, _Uri, "MnpSrfFunction", QName},
+		[#state{dn_prefix = [MnpSrfDn | _], stack = Stack, location = Location,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	MnpSrfAttr = parse_mnp_srf_attr(T2, undefined, []),
+	ClassType = "MnpSrfFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MnpSrfDn,
+			description = "Mobile Number Portability-Signaling Relay Function (MNP-SRF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/MnpSrfFunction",
+			specification = Spec,
+			characteristic = [PeeParam | MnpSrfAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_mnp_srf({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_mnp_srf_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_mnp_srf_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_mnp_srf_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_mnp_srf_attr1(T2, undefined, Acc);
+parse_mnp_srf_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_mnp_srf_attr1(T, Attr, Acc);
+parse_mnp_srf_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
+	parse_mnp_srf_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_mnp_srf_attr1([{characters, _Chars} | T], Attr, Acc) ->
+	parse_mnp_srf_attr1(T, Attr, Acc);
+parse_mnp_srf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_mnp_srf_attr1(T, undefined, Acc);
+parse_mnp_srf_attr1([], undefined, Acc) ->
+	Acc.
 
 %%----------------------------------------------------------------------
 %%  internal functions
