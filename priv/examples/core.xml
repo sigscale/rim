@@ -253,6 +253,23 @@
 						</xn:attributes>
 					</xn:VsDataContainer>
 				</cn:MnpSrfFunction>
+				<cn:CgfFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>CGF 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>vbghcd</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<!--  Vendor specific data for GGSN-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=7</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV8</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</cn:CgfFunction>
 				<!--  Vendor specific data for ManagedElement -->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>

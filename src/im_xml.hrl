@@ -73,7 +73,8 @@
 		auc :: map() | undefined,
 		hlr :: map() | undefined,
 		eir :: map() | undefined,
-		mnp_srf :: map() | undefined}).
+		mnp_srf :: map() | undefined,
+		cgf :: map() | undefined}).
 -type core_state() :: #core_state{}.
 
 -record(pee_state,
