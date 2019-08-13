@@ -25,7 +25,7 @@ class inventoryHelp extends PolymerElement {
 		return html`
 			<style include="style-element">
 			</style>
-		<paper-dialog id="overFlowMenu">
+		<paper-dialog class="dialogOne" id="overFlowMenu">
 			<paper-icon-item class="menu-trigger menuitem"
 				on-click="_collapseLogsContact">
 				<iron-icon icon="my-icons:contactUs" item-icon></iron-icon>
