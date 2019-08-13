@@ -33,7 +33,7 @@
 		ngc_nwdaf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0, core_auc/0,
-		core_hlr/0, core_eir/0, core_mnpsrf/0]).
+		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 
@@ -3107,6 +3107,33 @@ core_mnpsrf() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MnpSrfFunction",
 					schema = "/resourceInventoryManagement/v3/schema/MnpSrfFunction"},
+			characteristic = Chars}.
+
+-spec core_cgf() -> specification().
+%% @doc Core Charging Gateway Function (CGF) resource specification.
+core_cgf() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "CgfFunction",
+			description = "Core Charging Gateway Function (CGF)",
+			class_type = "CgfFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/CgfFunction",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "CgfFunction",
+					schema = "/resourceInventoryManagement/v3/schema/CgfFunction"},
 			characteristic = Chars}.
 
 -spec ims_as() -> specification().

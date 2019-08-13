@@ -37,6 +37,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-core-hlr.json \
 		$(abs_builddir)/specification-core-eir.json \
 		$(abs_builddir)/specification-core-mnpsrf.json \
+		$(abs_builddir)/specification-core-cgf.json \
 		$(abs_builddir)/specification-ims-as.json \
 		$(abs_builddir)/specification-ims-hss.json \
 		$(abs_builddir)/specification-ims-pcscf.json \
@@ -224,6 +225,11 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-mnpsrf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/CgfFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-cgf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
