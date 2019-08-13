@@ -345,7 +345,6 @@ class catalogList extends PolymerElement {
 	}
 
 	showAddCatalogModal(event) {
-console.log(event);
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').open();
 	}
 }
