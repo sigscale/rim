@@ -69,7 +69,11 @@
 		mgw :: map() | undefined,
 		ggsn :: map() | undefined,
 		sgsn :: map() | undefined,
-		iups :: map() | undefined}).
+		iups :: map() | undefined,
+		auc :: map() | undefined,
+		hlr :: map() | undefined,
+		eir :: map() | undefined,
+		mnp_srf :: map() | undefined}).
 -type core_state() :: #core_state{}.
 
 -record(pee_state,

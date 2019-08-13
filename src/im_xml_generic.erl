@@ -170,6 +170,19 @@ parse_managed_element({characters, Location}, [#state{rule = RuleId,
 		{error, _Reason} ->
 			State
 	end;
+parse_managed_element({characters, Location}, [#state{rule = RuleId,
+		stack = [{startElement, {_, "userLabel"}, _} | _]}
+		= CurrentState | T] = State) ->
+	case im:get_pee(RuleId, Location) of
+		{ok, []} ->
+			State;
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[CurrentState#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			State
+	end;
 parse_managed_element({characters, Chars},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
@@ -281,6 +294,42 @@ parse_managed_element({startElement, _, "SgsnFunction", QName,
 	[#state{parse_module = im_xml_core, parse_function = parse_sgsn,
 			dn_prefix = [NewDn], rule = RuleId,
 			parse_state = #core_state{sgsn = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "AucFunction", QName,
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		rule = RuleId, location = Location} | _T] = State) ->
+	DnComponent = ",AucFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_core, parse_function = parse_auc,
+			dn_prefix = [NewDn], rule = RuleId, location = Location,
+			parse_state = #core_state{auc = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "HlrFunction", QName,
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		rule = RuleId, location = Location} | _T] = State) ->
+	DnComponent = ",HlrFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_core, parse_function = parse_hlr,
+			dn_prefix = [NewDn], rule = RuleId, location = Location,
+			parse_state = #core_state{hlr = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "EirFunction", QName,
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		rule = RuleId, location = Location} | _T] = State) ->
+	DnComponent = ",EirFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_core, parse_function = parse_eir,
+			dn_prefix = [NewDn], rule = RuleId, location = Location,
+			parse_state = #core_state{eir = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "MnpSrfFunction", QName,
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		rule = RuleId, location = Location} | _T] = State) ->
+	DnComponent = ",MnpSrfFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_core, parse_function = parse_mnp_srf,
+			dn_prefix = [NewDn], rule = RuleId, location = Location,
+			parse_state = #core_state{mnp_srf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
