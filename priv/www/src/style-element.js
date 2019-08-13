@@ -48,7 +48,10 @@ styleElement.innerHTML = `<template>
 				height: 100%;
 				top: 64px;
 			}
-			paper-dialog {
+			.dialog {
+				overflow: auto;
+			}	
+			.dialogOne {
 				position: fixed;
 				min-width: 20em;
 				right: -36px;
@@ -146,6 +149,12 @@ styleElement.innerHTML = `<template>
 				position: fixed;
 				bottom: 5%;
 				z-index: 100;
+			}
+			.submit-button {
+				background-color: var(--paper-lime-a700);
+				color: black;
+				float: right;
+				width: 8em;
 			}
 			.update-button {
 				background-color: var(--paper-lime-a700);

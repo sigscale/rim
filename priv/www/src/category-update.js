@@ -28,7 +28,7 @@ class categoryUpdateList extends PolymerElement {
 		return html`
 			<style include="style-element">
 			</style>
-		<paper-dialog id="updateCategoryModal" modal>
+		<paper-dialog class="dialog" id="updateCategoryModal" modal>
 			<paper-toolbar>
 				<div slot="top"><h2>Update Catalog</h2></div>
 			</paper-toolbar>

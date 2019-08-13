@@ -28,7 +28,7 @@ class candUpdateList extends PolymerElement {
 		return html`
 			<style include="style-element">
 			</style>
-		<paper-dialog id="updateCandModal" modal>
+		<paper-dialog class="dialog" id="updateCandModal" modal>
 			<paper-toolbar>
 				<div slot="top"><h2>Update Specification</h2></div>
 			</paper-toolbar>
