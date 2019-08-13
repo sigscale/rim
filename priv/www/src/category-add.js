@@ -23,72 +23,56 @@ import '@polymer/paper-checkbox/paper-checkbox.js'
 import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
-class categoryUpdateList extends PolymerElement {
+class categoryAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
 			</style>
-		<paper-dialog class="dialog" id="updateCategoryModal" modal>
+		<paper-dialog class="dialog" id="addCategoryModal" modal>
 			<paper-toolbar>
-				<div slot="top"><h2>Update Catalog</h2></div>
+				<div slot="top"><h2>Add Category</h2></div>
 			</paper-toolbar>
 				<paper-input
-						id="categorySpecId"
-						label="Id"
-						value="{{category.categoryId}}"
-						disabled>
-				</paper-input>
-				<paper-input
-						id="categorySpecName"
+						id="categoryName"
 						label="Name"
-						value="{{category.categoryName}}"
-						required>
+						value="{{category.categoryName}}">
 				</paper-input>
 				<paper-input
-						id="categorySpecDesc"
+						id="categoryDesc"
 						label="Description"
-						value="{{category.categoryDescription}}">
+						value="{{category.categoryDesc}}">
 				</paper-input>
 				<paper-input
-						id="categorySpecType"
+						id="categoryVersion"
+						label="Version"
+						value="{{category.categoryVersion}}">
+				</paper-input>
+				<paper-input
+						id="categoryClass"
 						label="Class"
 						value="{{category.categoryClass}}">
 				</paper-input>
-				<paper-dropdown-menu
-					id="categoryStatus" 
-					class="drop"
-					label="Status"
-					value="{{category.categoryStatus}}"
-					no-animations="true">
-					<paper-listbox
-							id="updateStatus"
-							slot="dropdown-content">
-						<paper-item>In Study</paper-item>
-						<paper-item>In Design</paper-item>
-						<paper-item>In Test</paper-item>
-						<paper-item>Rejected</paper-item>
-						<paper-item>Active</paper-item>
-						<paper-item>Launched</paper-item>
-						<paper-item>Retired</paper-item>
-						<paper-item>Obsolete</paper-item>
-					</paper-listbox>
-				</paper-dropdown-menu>
 				<paper-input
-						id="categorySpecParent"
+						id="categoryStatus"
+						label="Status"
+						value="{{category.categoryStatus}}">
+				</paper-input>
+				<paper-input
+						id="categoryParent"
 						label="Parent"
 						value="{{category.categoryParent}}">
 				</paper-input>
 				<paper-input
-						id="categorySpecRoot"
+						id="categoryRoot"
 						label="Root"
 						value="{{category.categoryRoot}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
-							class="update-button"
-							on-tap="_updateSpec">
-						Update
+							class="submit-button"
+							on-tap="_addCategory">
+						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
@@ -106,11 +90,11 @@ class categoryUpdateList extends PolymerElement {
 				</div>
 		</paper-dialog>
 		<iron-ajax
-			id="categoryUpdateAjax"
-         content-type="application/merge-patch+json"
-         on-loading-changed="_onLoadingChanged"
-         on-response="_categorySpecResponse"
-         on-error="_categorySpecError">
+			id="categoryAddAjax"
+			content-type="application/json"
+			on-loading-changed="_onLoadingChanged"
+			on-response="_categoryAddResponse"
+			on-error="_categoryAddError">
 		</iron-ajax>
 		`;
 	}
@@ -127,36 +111,39 @@ class categoryUpdateList extends PolymerElement {
       super.ready()
 	}
 
-	_updateSpec() {
-		var ajax = this.$.categoryUpdateAjax;
-		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categorySpecId.value;
+	_addCategory() {
+		var ajax = this.$.categoryAddAjax;
+		ajax.method = "POST";
+		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/";
 		var cat = new Object();
-		if(this.$.categorySpecName.value) {
-			cat.name = this.$.categorySpecName.value;
+		if(this.$.categoryName.value) {
+			cat.name = this.$.categoryName.value;
 		}
-		if(this.$.categorySpecDesc.value) {
-			cat.description = this.$.categorySpecDesc.value;
+		if(this.$.categoryDesc.value) {
+			cat.description = this.$.categoryDesc.value;
 		}
-		if(this.$.categorySpecType) {
-			cat["@type"] = this.$.categorySpecType.value;
+		if(this.$.categoryVersion.value) {
+			cat.version = this.$.categoryVersion.value;
+		}
+		if(this.$.categoryClass.value) {
+			cat.class = this.$.categoryClass.value;
 		}
 		if(this.$.categoryStatus.value) {
-			cat.lifecycleStatus = this.$.categoryStatus.value;
+			cat.status = this.$.categoryStatus.value;
 		}
-		if(this.$.categorySpecParent.value) {
-			cat.parentId = this.$.categorySpecParent.value;
+		if(this.$.categoryParent.value) {
+			cat.parent = this.$.categoryParent.value;
 		}
-		if(this.$.categorySpecRoot.value) {
-			cat.isRoot = this.$.categorySpecRoot.value;
+		if(this.$.categoryRoot.value) {
+			cat.root = this.$.categoryRoot.value;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
-	_categorySpecResponse() {
-		document.getElementById("categoryGrid").clearCache();
+	_categoryAddResponse() {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
 	}
 }
 
-window.customElements.define('category-update', categoryUpdateList);
+window.customElements.define('category-add', categoryAdd);

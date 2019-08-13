@@ -23,62 +23,36 @@ import '@polymer/paper-checkbox/paper-checkbox.js'
 import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
-class candUpdateList extends PolymerElement {
+class catalogAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
 			</style>
-		<paper-dialog class="dialog" id="updateCandModal" modal>
+		<paper-dialog class="dialog" id="addCatalogModal" modal>
 			<paper-toolbar>
-				<div slot="top"><h2>Update Specification</h2></div>
+				<div slot="top"><h2>Add Catalog</h2></div>
 			</paper-toolbar>
 				<paper-input
-						id="addCandId"
+						id="catalogName"
 						label="Name"
-						value="{{candidate.candId}}"
-						disabled>
+						value="{{catalog.catalogName}}">
 				</paper-input>
 				<paper-input
-						id="addCandName"
-						label="Name"
-						value="{{candidate.candName}}"
-						required>
-				</paper-input>
-				<paper-input
-						id="addCandDesc"
+						id="catalogDesc"
 						label="Description"
-						value="{{candidate.candDesc}}">
+						value="{{catalog.catalogDesc}}">
 				</paper-input>
 				<paper-input
-						id="addCandType"
-						label="Class"
-						value="{{candidate.candClass}}">
+						id="catalogVersion"
+						label="Version"
+						value="{{catalog.catalogVersion}}">
 				</paper-input>
-				<paper-dropdown-menu
-					id="candStatus"
-					class="drop"
-					label="Status"
-					value="{{candidate.candStatus}}"
-					no-animations="true">
-					<paper-listbox
-							id="updateStatus"
-							slot="dropdown-content">
-						<paper-item>In Study</paper-item>
-						<paper-item>In Design</paper-item>
-						<paper-item>In Test</paper-item>
-						<paper-item>Rejected</paper-item>
-						<paper-item>Active</paper-item>
-						<paper-item>Launched</paper-item>
-						<paper-item>Retired</paper-item>
-						<paper-item>Obsolete</paper-item>
-					</paper-listbox>
-				</paper-dropdown-menu>
 				<div class="buttons">
 					<paper-button
 							raised
-							class="update-button"
-							on-tap="_updateSpec">
-						Update
+							class="submit-button"
+							on-tap="_addCatalog">
+						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
@@ -96,18 +70,18 @@ class candUpdateList extends PolymerElement {
 				</div>
 		</paper-dialog>
 		<iron-ajax
-			id="candUpdateAjax"
-			content-type="application/merge-patch+json"
-         on-loading-changed="_onLoadingChanged"
-         on-response="_addSpecResponse"
-         on-error="_addSpecError">
+			id="catalogAddAjax"
+			content-type="application/json"
+			on-loading-changed="_onLoadingChanged"
+			on-response="_catalogAddResponse"
+			on-error="_catalogAddError">
 		</iron-ajax>
 		`;
 	}
 
 	static get properties() {
 		return {
-			candidate: {
+			catalog: {
 				type: Object,
 			}
 		}
@@ -117,26 +91,27 @@ class candUpdateList extends PolymerElement {
       super.ready()
 	}
 
-	_updateSpec() {
-		var ajax = this.$.candUpdateAjax;
-		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
-		var cand = new Object();
-		if(this.$.addCandName.value) {
-         cand.name = this.$.addCandName.value;
-      }
-		if(this.$.addCandDesc.value) {
-         cand.description = this.$.addCandDesc.value;
-      }
-		if(this.$.addCandType.value) {
-         cand["@type"] = this.$.addCandType.value;
-      }
-		if(this.$.candStatus.value) {
-         cand.lifecycleStatus = this.$.candStatus.value;
-      }
-		ajax.body = JSON.stringify(cand);
+	_addCatalog() {
+		var ajax = this.$.catalogAddAjax;
+		ajax.method = "POST";
+		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/";
+		var cat = new Object();
+		if(this.$.catalogName.value) {
+			cat.name = this.$.catalogName.value;
+		}
+		if(this.$.catalogDesc.value) {
+			cat.description = this.$.catalogDesc.value;
+		}
+		if(this.$.catalogVersion.value) {
+			cat.version = this.$.catalogVersion.value;
+		}
+		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
+	}
+
+	_catalogAddResponse() {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').close();
 	}
 }
 
-window.customElements.define('candidate-update', candUpdateList);
+window.customElements.define('catalog-add', catalogAdd);

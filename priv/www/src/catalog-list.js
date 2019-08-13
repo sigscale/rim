@@ -343,6 +343,10 @@ class catalogList extends PolymerElement {
 		var grid = this.shadowRoot.getElementById('catalogGrid');
 		grid.size = 0;
 	}
+
+	showAddCatalogModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').open();
+	}
 }
 
 window.customElements.define('catalog-list', catalogList);
