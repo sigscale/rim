@@ -212,6 +212,7 @@ class InventoryManagement extends PolymerElement {
 			<catalog-add id="addCatalog"></catalog-add>
 			<candidate-update id="updateCandidate" candidate="[[activeItem]]"></candidate-update>
 			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
+			<category-add id="addCategory"></category-add>
 			<rules-update id="updateRule" category="[[activeItem]]"></rules-update>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 		`;
@@ -409,6 +410,7 @@ class InventoryManagement extends PolymerElement {
 			case 'categoryView':
 				import('./category-list.js');
 				import('./category-update.js');
+				import('./category-add.js');
 				break;
 			case 'candidateView':
 				import('./candidate-list.js');

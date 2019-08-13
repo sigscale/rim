@@ -150,9 +150,9 @@ class categoryList extends PolymerElement {
 					on-tap = "showAddCategoryModal">
 				</paper-fab>
 			</div>
-         <paper-toast
-            id="categoryError">
-         </paper-toast>
+			<paper-toast
+				id="categoryError">
+			</paper-toast>
 			<iron-ajax
 				id="getCategoryAjax"
 				url="resourceCatalogManagement/v3/resourceCategory"
@@ -171,11 +171,11 @@ class categoryList extends PolymerElement {
 				type: String,
 				value: null
 			},
-          activeItem: {
-            type: Object,
-            notify: true,
-            observer: '_activeItemChanged'
-         },
+			activeItem: {
+				type: Object,
+				notify: true,
+				observer: '_activeItemChanged'
+			},
 			_filterCategoryName: {
 				type: Boolean,
 				observer: '_filterChanged'
@@ -204,43 +204,43 @@ class categoryList extends PolymerElement {
 	}
 
 _activeItemChanged(item) {
-      if(item) {
-         var grid = this.$.categoryGrid;
-         grid.selectedItems = item ? [item] : [];
-         var updateCategory = document.querySelector('inventory-management').shadowRoot.getElementById('updateCategory');
-         updateCategory.shadowRoot.getElementById('updateCategoryModal').open();
-         updateCategory.shadowRoot.getElementById('categorySpecId').value = item.categoryId;
-         updateCategory.shadowRoot.getElementById('categorySpecName').value = item.categoryName;
-         updateCategory.shadowRoot.getElementById('categorySpecDesc').value = item.categoryDescription;
-         updateCategory.shadowRoot.getElementById('categorySpecType').value = item.categoryClass;
-         updateCategory.shadowRoot.getElementById('categorySpecParent').value = item.categoryParent;
-         updateCategory.shadowRoot.getElementById('categorySpecRoot').value = item.categoryRoot;
-         if(item.categoryStatus == "In Study") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 0;
-         }
-         if(item.categoryStatus == "In Design"){
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 1;
-         }
-         if(item.categoryStatus == "In Test") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 2;
-         }
-         if(item.categoryStatus == "Rejected") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 3;
-         }
-         if(item.categoryStatus == "Active") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 4;
-         }
-         if(item.categoryStatus == "Launched") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 5;
-         }
-         if(item.categoryStatus == "Retired") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 6;
-         }
-         if(item.categoryStatus == "Obsolete") {
-            updateCategory.shadowRoot.getElementById('updateStatus').selected = 7;
-         }
-      }
-   }	
+		if(item) {
+			var grid = this.$.categoryGrid;
+			grid.selectedItems = item ? [item] : [];
+			var updateCategory = document.querySelector('inventory-management').shadowRoot.getElementById('updateCategory');
+			updateCategory.shadowRoot.getElementById('updateCategoryModal').open();
+			updateCategory.shadowRoot.getElementById('categorySpecId').value = item.categoryId;
+			updateCategory.shadowRoot.getElementById('categorySpecName').value = item.categoryName;
+			updateCategory.shadowRoot.getElementById('categorySpecDesc').value = item.categoryDescription;
+			updateCategory.shadowRoot.getElementById('categorySpecType').value = item.categoryClass;
+			updateCategory.shadowRoot.getElementById('categorySpecParent').value = item.categoryParent;
+			updateCategory.shadowRoot.getElementById('categorySpecRoot').value = item.categoryRoot;
+			if(item.categoryStatus == "In Study") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 0;
+			}
+			if(item.categoryStatus == "In Design"){
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 1;
+			}
+			if(item.categoryStatus == "In Test") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 2;
+			}
+			if(item.categoryStatus == "Rejected") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 3;
+			}
+			if(item.categoryStatus == "Active") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 4;
+			}
+			if(item.categoryStatus == "Launched") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 5;
+			}
+			if(item.categoryStatus == "Retired") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 6;
+			}
+			if(item.categoryStatus == "Obsolete") {
+				updateCategory.shadowRoot.getElementById('updateStatus').selected = 7;
+			}
+		}
+	}
 
 	ready() {
 		super.ready();
@@ -436,6 +436,10 @@ _activeItemChanged(item) {
 		this.etag = null;
 		var grid = this.shadowRoot.getElementById('categoryGrid');
 		grid.size = 0;
+	}
+
+	showAddCategoryModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').open();
 	}
 }
 

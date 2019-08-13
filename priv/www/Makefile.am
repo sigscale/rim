@@ -13,6 +13,7 @@ MODULES = inventory-management.js \
 		catalog-add.js \
 		catalog-update.js \
 		category-list.js \
+		category-add.js \
 		category-update.js \
 		candidate-list.js \
 		candidate-update.js \
