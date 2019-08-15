@@ -365,6 +365,10 @@ console.log(toast);
 		var grid = this.shadowRoot.getElementById('candidateGrid');
 		grid.size = 0;
 	}
+
+	showAddCandidateModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-add').shadowRoot.getElementById('addCandidateModal').open();
+	}
 }
 
 window.customElements.define('candidate-list', candidateList);

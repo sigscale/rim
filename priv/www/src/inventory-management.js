@@ -211,6 +211,7 @@ class InventoryManagement extends PolymerElement {
 			<catalog-update id="updateCatalog" catalog="[[activeItem]]"></catalog-update>
 			<catalog-add id="addCatalog"></catalog-add>
 			<candidate-update id="updateCandidate" candidate="[[activeItem]]"></candidate-update>
+			<candidate-add id="addCandidate"></candidate-add>
 			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
 			<category-add id="addCategory"></category-add>
 			<rules-update id="updateRule" category="[[activeItem]]"></rules-update>
@@ -415,6 +416,7 @@ class InventoryManagement extends PolymerElement {
 			case 'candidateView':
 				import('./candidate-list.js');
 				import('./candidate-update.js');
+				import('./candidate-add.js');
 				break;
 			case 'specificationView':
 				import('./specification-list.js');
