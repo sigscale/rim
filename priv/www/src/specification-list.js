@@ -441,6 +441,10 @@ class specificationList extends PolymerElement {
 		var grid = this.shadowRoot.getElementById('specificationGrid');
 		grid.size = 0;
 	}
+
+	showAddSpecificationModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').open();
+	}
 }
 
 window.customElements.define('specification-list', specificationList);
