@@ -171,30 +171,30 @@ class candidateList extends PolymerElement {
 			updateCandidate.shadowRoot.getElementById('addCandName').value = item.candidateName
 			updateCandidate.shadowRoot.getElementById('addCandDesc').value = item.candidateDescription
 			updateCandidate.shadowRoot.getElementById('addCandType').value = item.candidateClass
-         if(item.candidateStatus == "In Study") {
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 0;
-         }
-         if(item.candidateStatus == "In Design"){
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 1;
-         }
-         if(item.candidateStatus == "In Test") {
-            updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
-         }
-         if(item.candidateStatus == "Rejected") {
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 3;
-         }
-         if(item.candidateStatus == "Active") {
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 4;
-         }
-         if(item.candidateStatus == "Launched") {
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 5;
-         }
-         if(item.candidateStatus == "Retired") {
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 6;
-         }
-         if(item.candidateStatus == "Obsolete") {
-            updateCandidate.shadowRoot.getElementById('updateStatus').selected = 7;
-         }
+			if(item.candidateStatus == "In Study") {
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 0;
+			}
+			if(item.candidateStatus == "In Design"){
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 1;
+			}
+			if(item.candidateStatus == "In Test") {
+				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
+			}
+			if(item.candidateStatus == "Rejected") {
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 3;
+			}
+			if(item.candidateStatus == "Active") {
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 4;
+			}
+			if(item.candidateStatus == "Launched") {
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 5;
+			}
+			if(item.candidateStatus == "Retired") {
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 6;
+			}
+			if(item.candidateStatus == "Obsolete") {
+				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 7;
+			}
 		}
 	}
 
