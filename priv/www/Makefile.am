@@ -22,6 +22,7 @@ MODULES = inventory-management.js \
 		specification-add.js \
 		specification-update.js \
 		inventory-help.js \
+		inventory-add.js \
 		rules-list.js \
 		rules-update.js \
 		http-list.js \

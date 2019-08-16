@@ -217,6 +217,7 @@ class InventoryManagement extends PolymerElement {
 			<category-add id="addCategory"></category-add>
 			<rules-update id="updateRule" category="[[activeItem]]"></rules-update>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
+			<inventory-add id="inventoryAdd"></inventory-add>
 		`;
 	}
 
@@ -426,6 +427,7 @@ class InventoryManagement extends PolymerElement {
 				break;
 			case 'inventoryView':
 				import('./inventory-list.js');
+				import('./inventory-add.js');
 				break;
 			case 'rulesView':
 				import('./rules-list.js');

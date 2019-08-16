@@ -382,9 +382,9 @@ class inventoryList extends PolymerElement {
 		});
 		if(query) {
 			if(query.includes("like=[%")) {
-            delete params.filters[0];
-            ajax.params['filter'] = "resourceInventoryManagement/v3/resource";
-         } else {
+				delete params.filters[0];
+				ajax.params['filter'] = "resourceInventoryManagement/v3/resource";
+			} else {
 				ajax.params['filter'] = "\"" + query + "}]\"";
 			}
 		}
@@ -510,6 +510,10 @@ class inventoryList extends PolymerElement {
 		this.etag = null;
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
 		grid.size = 0;
+	}
+
+	showAddInventoryModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('addInventoryModal').open();
 	}
 }
 
