@@ -96,11 +96,16 @@ class candUpdateList extends PolymerElement {
 				</div>
 		</paper-dialog>
 		<iron-ajax
+			id="deleteCandidateAjax"
+			on_response="_deleteCandidateResponse"
+			on-error="_deleteCandidateError">
+		</iron-ajax>
+		<iron-ajax
 			id="candUpdateAjax"
 			content-type="application/merge-patch+json"
-         on-loading-changed="_onLoadingChanged"
-         on-response="_addSpecResponse"
-         on-error="_addSpecError">
+			on-loading-changed="_onLoadingChanged"
+			on-response="_addSpecResponse"
+			on-error="_addSpecError">
 		</iron-ajax>
 		`;
 	}
@@ -113,8 +118,17 @@ class candUpdateList extends PolymerElement {
 		}
 	}
 
-   ready() {
-      super.ready()
+	ready() {
+		super.ready()
+	}
+
+	_deleteSpec() {
+		var ajax1 = this.$.deleteCandidateAjax;
+		ajax1.method = "DELETE";
+		ajax1.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
+		ajax1.generateRequest();
+		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal');
+		deleteObj.close();
 	}
 
 	_updateSpec() {
@@ -123,17 +137,17 @@ class candUpdateList extends PolymerElement {
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
 		var cand = new Object();
 		if(this.$.addCandName.value) {
-         cand.name = this.$.addCandName.value;
-      }
+			cand.name = this.$.addCandName.value;
+		}
 		if(this.$.addCandDesc.value) {
-         cand.description = this.$.addCandDesc.value;
-      }
+			cand.description = this.$.addCandDesc.value;
+		}
 		if(this.$.addCandType.value) {
-         cand["@type"] = this.$.addCandType.value;
-      }
+			cand["@type"] = this.$.addCandType.value;
+		}
 		if(this.$.candStatus.value) {
-         cand.lifecycleStatus = this.$.candStatus.value;
-      }
+			cand.lifecycleStatus = this.$.candStatus.value;
+		}
 		ajax.body = JSON.stringify(cand);
 		ajax.generateRequest();
 	}
