@@ -130,11 +130,16 @@ class specUpdateList extends PolymerElement {
 				</div>
 		</paper-dialog>
 		<iron-ajax
+			id="deleteSpecificationAjax"
+			on_response="_deleteSpecificationResponse"
+			on-error="_deleteSpecificationError">
+		</iron-ajax>
+		<iron-ajax
 			id="specUpdateAjax"
 			content-type="application/merge-patch+json"
-         on-loading-changed="_onLoadingChanged"
-         on-response="_addSpecResponse"
-         on-error="_addSpecError">
+			on-loading-changed="_onLoadingChanged"
+			on-response="_addSpecResponse"
+			on-error="_addSpecError">
 		</iron-ajax>
 		`;
 	}
@@ -147,8 +152,17 @@ class specUpdateList extends PolymerElement {
 		}
 	}
 
-   ready() {
-      super.ready()
+	ready() {
+		super.ready()
+	}
+
+	_deleteSpec() {
+		var ajax1 = this.$.deleteSpecificationAjax;
+		ajax1.method = "DELETE";
+		ajax1.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
+		ajax1.generateRequest();
+		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal');
+		deleteObj.close();
 	}
 
 	_updateSpec() {
@@ -157,17 +171,17 @@ class specUpdateList extends PolymerElement {
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
 		var spec = new Object();
 		if(this.$.addSpecName.value) {
-         spec.name = this.$.addSpecName.value;
-      }
+			spec.name = this.$.addSpecName.value;
+		}
 		if(this.$.addSpecDesc.value) {
-         spec.description = this.$.addSpecDesc.value;
-      }
+			spec.description = this.$.addSpecDesc.value;
+		}
 		if(this.$.addSpecType.value) {
-         spec["@type"] = this.$.addSpecType.value;
-      }
+			spec["@type"] = this.$.addSpecType.value;
+		}
 		if(this.$.specStatus.value) {
-         spec.lifecycleStatus = this.$.specStatus.value;
-      }
+			spec.lifecycleStatus = this.$.specStatus.value;
+		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
 	}
