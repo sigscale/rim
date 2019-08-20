@@ -1,0 +1,190 @@
+{
+	"title": "EPC NRM",
+	"description": "Evolved Packet Core (EPC) Network Resource Model (NRM)",
+	"definitions": {
+		"Link_3GPPAAAServer_PGW": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/Dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/LinkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"link_3GPPAAAServer_PGWOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_3GPPAAAServer_PGWOptionallyContainedNrmClass"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_3GPPAAAServer_HSS": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/Dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/LinkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"link_3GPPAAAServer_HSSOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_3GPPAAAServer_HSSOptionallyContainedNrmClass"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_3GPPAAAProxy_3GPPAAAServer": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/SubNetworkOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"aEnd": {
+									"$ref": "genericNrm#/definitions/Dn"
+								},
+								"linkType": {
+									"$ref": "genericNrm#/definitions/LinkType"
+								},
+								"protocolName": {
+									"type": "string"
+								},
+								"protocolVersion": {
+									"type": "string"
+								},
+								"userLabel": {
+									"type": "string"
+								},
+								"zEnd": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"link_3GPPAAAProxy_3GPPAAAServerOptionallyContainedNrmClass": {
+							"$ref": "#/definitions/Link_3GPPAAAProxy_3GPPAAAServerOptionallyContainedNrmClass"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"3GPPAAAProxyFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
+								}
+							}
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"3GPPAAAServerFunction": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"userLabel": {
+									"type": "string"
+								},
+								"vnfParametersList": {
+									"$ref": "genericNrm#/definitions/VnfParametersListType"
+								}
+							}
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"Link_3GPPAAAServer_PGWOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_3GPPAAAServer_HSSOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		},
+		"Link_3GPPAAAProxy_3GPPAAAServerOptionallyContainedNrmClass": {
+			"$ref": "genericNrm#/definitions/NrmClass"
+		}
+	}
+}

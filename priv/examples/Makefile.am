@@ -10,6 +10,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/epc.xml \
 		$(abs_builddir)/ims.xml \
 		$(abs_builddir)/peeCmon.xml \
+		$(abs_builddir)/epcn3ai.xml \
 		$(abs_builddir)/catalog.json \
 		$(abs_builddir)/category.json \
 		$(abs_builddir)/candidate.json \

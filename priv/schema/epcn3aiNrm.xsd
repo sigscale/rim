@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 28.616 Evolved Packet Core (EPC) and non-3GPP access interworking system NRM IRP
+	XML schema definition
+	epcn3aiNrm.xsd
+-->
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+	xmlns:epcn3ai="http://www.3gpp.org/ftp/specs/archive/28_series/28.616#epcn3aiNrm"
+	targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.616#epcn3aiNrm"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+
+	<import namespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"/>
+	<!-- EPC and non-3GPP access Interworking NRM IRP IS class associated XML elements -->
+
+	<element name="Link_3GPPAAAServer_PGW" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epcn3ai:Link_3GPPAAAServer_PGWOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_3GPPAAAServer_HSS" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epcn3ai:Link_3GPPAAAServer_HSSOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_3GPPAAAProxy_3GPPAAAServer" substitutionGroup="xn:SubNetworkOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="aEnd" type="xn:dn" minOccurs="0"/>
+									<element name="linkType" type="xn:linkType" minOccurs="0"/>
+									<element name="protocolName" type="string" minOccurs="0"/>
+									<element name="protocolVersion" type="string" minOccurs="0"/>
+									<element name="userLabel" type="string" minOccurs="0"/>
+									<element name="zEnd" type="xn:dn" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="epcn3ai:Link_3GPPAAAProxy_3GPPAAAServerOptionallyContainedNrmClass"/>
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="_3GPPAAAProxyFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="_3GPPAAAServerFunction" substitutionGroup="xn:ManagedElementOptionallyContainedNrmClass">
+		<complexType>
+			<complexContent>
+				<extension base="xn:NrmClass">
+					<sequence>
+						<element name="attributes" minOccurs="0">
+							<complexType>
+								<all>
+									<element name="userLabel" type="string"/>
+									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
+								</all>
+							</complexType>
+						</element>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<element ref="xn:VsDataContainer"/>
+						</choice>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="Link_3GPPAAAServer_PGWOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_3GPPAAAServer_HSSOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+	<element name="Link_3GPPAAAProxy_3GPPAAAServerOptionallyContainedNrmClass" type="xn:NrmClass" abstract="true"/>
+
+</schema>
