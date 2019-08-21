@@ -19,6 +19,7 @@ beam_DATA = im_app.beam \
 			im_xml_epc.beam \
 			im_xml_core.beam \
 			im_xml_pee.beam \
+			im_xml_epcn3ai.beam \
 			im_xml_zte.beam \
 			im_xml_huawei.beam \
 			im_server.beam \
