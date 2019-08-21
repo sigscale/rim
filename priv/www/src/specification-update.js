@@ -73,10 +73,6 @@ class specUpdateList extends PolymerElement {
 						<paper-item>Obsolete</paper-item>
 					</paper-listbox>
 				</paper-dropdown-menu>
-				<paper-checkbox
-						value="{{specification.specBundle}}">
-					Is Bundle
-				</paper-checkbox>
 				<div>
 					<span>Characteristics</span>
 						<paper-icon-button

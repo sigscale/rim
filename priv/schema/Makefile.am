@@ -27,6 +27,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/inventoryNrmAlt2.xsd \
 		$(abs_builddir)/NNRncHandOver.xsd \
 		$(abs_builddir)/peeCmonNrm.xsd \
+		$(abs_builddir)/epcn3aiNrm.xsd \
 		$(abs_builddir)/genericNrm.json \
 		$(abs_builddir)/geranNrm.json \
 		$(abs_builddir)/utranNrm.json \
@@ -40,6 +41,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/coreNrm.json \
 		$(abs_builddir)/imsNrm.json \
 		$(abs_builddir)/peeCmonNrm.json \
+		$(abs_builddir)/epcn3aiNrm.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
 		$(abs_builddir)/BssFunctionSpec.json \
 		$(abs_builddir)/BtsSiteMgrSpec.json \
@@ -154,6 +156,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s imsNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s peeCmonNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s epcn3aiNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s entityCatalogManagement.json; \
 			then exit 1; fi; \
