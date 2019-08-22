@@ -898,7 +898,8 @@
 					"type": "string"
 				},
 				"isBundle": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "A Feature Group is represented as a Feature with isBundle set to true."
 				},
 				"validFor": {
 					"$ref": "#/definitions/TimePeriod"
@@ -923,28 +924,6 @@
 				},
 				"isEnabled": {
 					"type": "boolean"
-				}
-			}
-		},
-		"FeatureGroupSpec": {
-			"title": "Configuration Feature Group Specification",
-			"description": "An aggregation of feature specifications with overall characteristics",
-			"type": "object",
-			"properties": {
-				"featureGroupSpecCharacteristic": {
-					"type": "array",
-					"items": {
-						"$ref": "entityCatalogManagement#/definitions/EntitySpecification"
-					}
-				},
-				"featureSpec": {
-					"type": "array",
-					"description": "Feature Specifications",
-					"items": [
-						{
-							"$ref": "#/definitions/FeatureSpec"
-						}
-					]
 				}
 			}
 		},

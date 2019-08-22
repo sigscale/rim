@@ -23,24 +23,6 @@
 						}
 					]
 				},
-				"featureSpec": {
-					"type": "array",
-					"description": "Feature Specifications",
-					"items": [
-						{
-							"$ref": "resourceCatalogManagement#/definitions/FeatureSpec"
-						}
-					]
-				},
-				"featureGroupSpec": {
-					"type": "array",
-					"description": "Feature Group Specifications",
-					"items": [
-						{
-							"$ref": "resourceCatalogManagement#/definitions/FeatureGroupSpec"
-						}
-					]
-				},
 				"connectivitySpec": {
 					"type": "array",
 					"description": "Adjacency Graph Specifications",
