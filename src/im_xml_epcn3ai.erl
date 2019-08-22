@@ -42,13 +42,11 @@ parse_proxy({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_proxy({endElement, Uri, "_3GPPAAAProxyFunction",
 		{Prefix, "_3GPPAAAProxyFunction"}}, State) ->
-erlang:display({?MODULE, ?LINE, "_3GPPAAAProxyFunction"}),
 	parse_proxy({endElement, Uri, "3GPPAAAProxyFunction",
 			{Prefix, "3GPPAAAProxyFunction"}}, State);
 parse_proxy({endElement, _Uri, "3GPPAAAProxyFunction", QName},
 		[#state{dn_prefix = [ProxyDn | _], stack = Stack, spec_cache = Cache,
 		location = Location}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-erlang:display({?MODULE, ?LINE, QName}),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	ProxyAttr = parse_proxy_attr(T2, undefined, []),
 	ClassType = "3GPPAAAProxyFunction",
@@ -119,7 +117,6 @@ parse_server({endElement, _Uri, "AaaFunction", {Prefix, "AaaFunction"}}, State) 
 parse_server({endElement, _Uri, "3GPPAAAServerFunction", QName},
 		[#state{dn_prefix = [ServerDn | _], stack = Stack, spec_cache = Cache,
 		location = Location}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-erlang:display({?MODULE, ?LINE, QName}),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	ServerAttr = parse_server_attr(T2, undefined, []),
 	ClassType = "3GPPAAAServerFunction",
