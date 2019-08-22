@@ -394,6 +394,7 @@ class specificationList extends PolymerElement {
 					newRecord.specCat = request.response[index].category;
 					newRecord.specBundle = request.response[index].isBundle;
 					newRecord.specChars = request.response[index].resourceSpecCharacteristic;
+					newRecord.specFeat = request.response[index].resourceSpecFeature;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
