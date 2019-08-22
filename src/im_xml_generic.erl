@@ -367,6 +367,32 @@ parse_managed_element({startElement, _, "ENBFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #eutran_state{enb = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, Uri, "_3GPPAAAProxyFunction",
+		{Prefix, "_3GPPAAAProxyFunction"}, Attributes}, State) ->
+	parse_managed_element({startElement, Uri, "3GPPAAAProxyFunction",
+			{Prefix, "3GPPAAAProxyFunction"}, Attributes}, State);
+parse_managed_element({startElement, _, "3GPPAAAProxyFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",3GPPAAAProxyFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_epcn3ai, parse_function = parse_proxy,
+			dn_prefix = [NewDn],
+			parse_state = #epcn3ai_state{proxy = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, Uri, "_3GPPAAAServerFunction",
+		{Prefix, "_3GPPAAAServerFunction"}, Attributes}, State) ->
+	parse_managed_element({startElement, Uri, "3GPPAAAServerFunction",
+			{Prefix, "3GPPAAAServerFunction"}, Attributes}, State);
+parse_managed_element({startElement, _, "3GPPAAAServerFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",3GPPAAAServerFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_epcn3ai, parse_function = parse_server,
+			dn_prefix = [NewDn],
+			parse_state = #epcn3ai_state{server = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];

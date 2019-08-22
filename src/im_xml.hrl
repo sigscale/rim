@@ -83,6 +83,11 @@
 		me_config :: map() | undefined}).
 -type pee_state() :: #pee_state{}.
 
+-record(epcn3ai_state,
+		{proxy :: map() | undefined,
+		server :: map() | undefined}).
+-type epcn3ai_state() :: #epcn3ai_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,

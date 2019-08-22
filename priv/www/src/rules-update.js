@@ -62,13 +62,6 @@ class ruleUpdateList extends PolymerElement {
 							on-tap="cancelSpec">
 						Cancel
 					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteSpec">
-						Delete
-					</paper-button>
 				</div>
 		</paper-dialog>
 		<iron-ajax
@@ -113,13 +106,6 @@ class ruleUpdateList extends PolymerElement {
 		}
 		RuleArr.push(peeRule);
 		ajax.body = JSON.stringify(RuleArr);
-		ajax.generateRequest();
-	}
-
-	_deleteSpec() {
-		var ajax = this.$.ruleDeleteAjax;
-		ajax.method = "DELETE";
-		ajax.url = "/resourceInventoryManagement/v1/logicalResource/" + this.$.addRuleId.value;
 		ajax.generateRequest();
 	}
 }

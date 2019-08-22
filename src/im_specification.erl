@@ -36,6 +36,7 @@
 		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
+-export([epcn3ai_proxy/0, epcn3ai_server/0]).
 
 -include("im.hrl").
 
@@ -3336,6 +3337,60 @@ pee_me() ->
 			category = "PEE",
 			target_schema = #target_schema_ref{class_type = "PEEMonitoredEntity",
 					schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity"},
+			characteristic = Chars}.
+
+-spec epcn3ai_proxy() -> specification().
+%% @doc EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy resource function specification.
+epcn3ai_proxy() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "3GPPAAAProxyFunction",
+			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy",
+			class_type = "3GPPAAAProxyFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/3GPPAAAProxyFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPCN3AI",
+			target_schema = #target_schema_ref{class_type = "3GPPAAAProxyFunction",
+					schema = "/resourceInventoryManagement/v3/schema/3GPPAAAProxyFunction"},
+			characteristic = Chars}.
+
+-spec epcn3ai_server() -> specification().
+%% @doc EPCN3AI 3GPP Authentication, Authorization and Accounting Server resource function specification.
+epcn3ai_server() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	VsDataContainer = #specification_char{name = "VsDataContainer",
+			description = "Container for vendor specific data",
+			value_type = "VsDataContainerList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	#specification{name = "3GPPAAAServerFunction",
+			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Server",
+			class_type = "3GPPAAAServerFunctionSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/3GPPAAAServerFunctionSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPCN3AI",
+			target_schema = #target_schema_ref{class_type = "3GPPAAAServerFunction",
+					schema = "/resourceInventoryManagement/v3/schema/3GPPAAAServerFunction"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

@@ -74,6 +74,49 @@ class specUpdateList extends PolymerElement {
 					</paper-listbox>
 				</paper-dropdown-menu>
 				<div>
+					<span>Feature</span>
+						<paper-icon-button
+							id="collapseFeat"
+							icon="arrow-drop-down"
+							on-click="_collapseFeat">
+						</paper-icon-button>
+				</div>
+				<iron-collapse id="featSpecCollapse">
+					<template is="dom-repeat" items="[[specification.specFeat]]">
+						<div>
+						<hr>
+						<paper-input
+							id="featId"
+							label="Id"
+							value="{{item.id}}">
+						</paper-input>
+						<paper-input
+							id="featName"
+							label="Name"
+							value="{{item.name}}">
+						</paper-input>
+						<paper-input
+							id="featDesc"
+							label="Description"
+							value="{{item.description}}">
+						</paper-input>
+						<paper-input
+							id="featVersion"
+							label="Version"
+							value="{{item.version}}">
+						</paper-input>
+						<paper-checkbox
+							value="{{specification.specBundle}}">
+							Is Bundle
+						</paper-checkbox>
+						<paper-checkbox
+							value="{{specification.specEnabled}}">
+							Enabled
+						</paper-checkbox>
+						</div>
+					</template>
+				</iron-collapse>
+				<div>
 					<span>Characteristics</span>
 						<paper-icon-button
 							id="collapseChar"
@@ -188,6 +231,15 @@ class specUpdateList extends PolymerElement {
 			collapseModal.show();
 		} else {
 			collapseModal.hide();
+		}
+	}
+
+	_collapseFeat(event) {
+		var collapseModalFeat = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec').shadowRoot.getElementById('featSpecCollapse');
+		if(collapseModalFeat.opened == false) {
+			collapseModalFeat.show();
+		} else {
+			collapseModalFeat.hide();
 		}
 	}
 }
