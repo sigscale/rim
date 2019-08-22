@@ -46,13 +46,17 @@ erlang:display({?MODULE, ?LINE, "_3GPPAAAProxyFunction"}),
 	parse_proxy({endElement, Uri, "3GPPAAAProxyFunction",
 			{Prefix, "3GPPAAAProxyFunction"}}, State);
 parse_proxy({endElement, _Uri, "3GPPAAAProxyFunction", QName},
-		[#state{dn_prefix = [ProxyDn | _], stack = Stack,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+		[#state{dn_prefix = [ProxyDn | _], stack = Stack, spec_cache = Cache,
+		location = Location}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 erlang:display({?MODULE, ?LINE, QName}),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	ProxyAttr = parse_proxy_attr(T2, undefined, []),
 	ClassType = "3GPPAAAProxyFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = ProxyDn,
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy",
 			category = "EPCN3AI",
@@ -60,7 +64,7 @@ erlang:display({?MODULE, ?LINE, QName}),
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/3GPPAAAProxyFunction",
 			specification = Spec,
-			characteristic = ProxyAttr},
+			characteristic = lists:reverse([PeeParam | ProxyAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -109,14 +113,21 @@ parse_server({endElement, _Uri, "_3GPPAAAServerFunction",
 		{Prefix, "_3GPPAAAServerFunction"}}, State) ->
 	parse_server({endElement, _Uri, "3GPPAAAServerFunction",
 			{Prefix, "3GPPAAAServerFunction"}}, State);
+parse_server({endElement, _Uri, "AaaFunction", {Prefix, "AaaFunction"}}, State) ->
+	parse_server({endElement, _Uri, "3GPPAAAServerFunction",
+			{Prefix, "3GPPAAAServerFunction"}}, State);
 parse_server({endElement, _Uri, "3GPPAAAServerFunction", QName},
-		[#state{dn_prefix = [ServerDn | _], stack = Stack,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+		[#state{dn_prefix = [ServerDn | _], stack = Stack, spec_cache = Cache,
+		location = Location}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 erlang:display({?MODULE, ?LINE, QName}),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	ServerAttr = parse_server_attr(T2, undefined, []),
 	ClassType = "3GPPAAAServerFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = ServerDn,
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Server",
 			category = "EPCN3AI",
@@ -124,7 +135,7 @@ erlang:display({?MODULE, ?LINE, QName}),
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/3GPPAAAServerFunction",
 			specification = Spec,
-			characteristic = ServerAttr},
+			characteristic = lists:reverse([PeeParam | ServerAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -150,6 +161,8 @@ parse_server_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 parse_server_attr1([{characters, Chars} | T], "userLabel" = Attr, Acc) ->
 	parse_server_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_server_attr1([{characters, _Chars} | T], Attr, Acc) ->
+	parse_server_attr1(T, Attr, Acc);
 parse_server_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_server_attr1(T, undefined, Acc);
 parse_server_attr1([], undefined, Acc) ->
