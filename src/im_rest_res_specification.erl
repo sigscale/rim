@@ -373,6 +373,14 @@ specification([characteristic | T], #specification{characteristic = SpecChars} =
 specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars} = M, Acc)
 		when is_list(SpecChars) ->
 	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
+specification([feature | T], #specification{feature = SpecFeature} = R, Acc)
+		when is_list(SpecFeature) ->
+	FeatureList = [feature(P) || P <- SpecFeature],
+	specification(T, R, Acc#{"resourceSpecFeature" => FeatureList});
+specification([feature | T], #{"resourceSpecFeature" := SpecFeature} = M, Acc)
+		when is_list(SpecFeature) ->
+	FeatureList = [feature(P) || P <- SpecFeature],
+	specification(T, M, Acc#specification{feature = FeatureList});
 specification([related | T], #specification{related = SpecRels} = R, Acc)
 		when is_list(SpecRels), length(SpecRels) > 0->
 	specification(T, R, Acc#{"resourceSpecRelationship" => specification_rel(SpecRels)});
@@ -558,6 +566,75 @@ spec_char_value([value | T], #{"value" := Value} = M, Acc) ->
 spec_char_value([_ | T], R, Acc) ->
 	spec_char_value(T, R, Acc);
 spec_char_value([], _, Acc) ->
+	Acc.
+
+-spec feature(ResourceSpecFeature) -> ResourceSpecFeature
+	when
+		ResourceSpecFeature :: [feature()] | [map()].
+%% @doc CODEC for `ResourceSpecFeature'.
+%% @private
+feature(#feature{} = Feature) ->
+   feature(record_info(fields, feature), Feature, #{});
+feature(#{} = Feature) ->
+   feature(record_info(fields, feature), Feature, #feature{}).
+%% @hidden
+feature([name | T], #feature{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature(T, R, Acc#{"name" => Name});
+feature([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	feature(T, R, Acc#feature{name = Name});
+feature([id | T], #feature{id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature(T, R, Acc#{"id" => Id});
+feature([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	feature(T, R, Acc#feature{id = Id});
+feature([href | T], #feature{href = Href} = R, Acc)
+		when is_list(Href) ->
+	feature(T, R, Acc#{"href" => Href});
+feature([href | T], #{"href" := Href} = R, Acc)
+		when is_list(Href) ->
+	feature(T, R, Acc#feature{href = Href});
+feature([version | T], #feature{version = Version} = R, Acc)
+		when is_list(Version) ->
+	feature(T, R, Acc#{"version" => Version});
+feature([version | T], #{"version" := Version} = R, Acc)
+		when is_list(Version) ->
+	feature(T, R, Acc#feature{version = Version});
+feature([class_type | T], #feature{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature(T, R, Acc#{"class_type" => Type});
+feature([class_type | T], #{"class_type" := Type} = R, Acc)
+		when is_list(Type) ->
+	feature(T, R, Acc#feature{class_type = Type});
+feature([bundle | T], #feature{bundle = Bundle} = R, Acc)
+		when is_boolean(Bundle) ->
+	feature(T, R, Acc#{"bundle" => Bundle});
+feature([bundle | T], #{"bundle" := Bundle} = R, Acc)
+		when is_boolean(Bundle) ->
+	feature(T, R, Acc#feature{bundle = Bundle});
+feature([start_date | T], #feature{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	feature(T, R, Acc#{"start_date" => StartDate});
+feature([start_date | T], #{"start_date" := StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	feature(T, R, Acc#feature{start_date = StartDate});
+feature([end_date | T], #feature{end_date = EndDate} = R, Acc)
+		when is_integer(EndDate) ->
+	feature(T, R, Acc#{"end_date" => EndDate});
+feature([end_date | T], #{"end_date" := EndDate} = R, Acc)
+		when is_integer(EndDate) ->
+	feature(T, R, Acc#feature{end_date = EndDate});
+feature([enabled | T], #feature{enabled = Enabled} = R, Acc)
+		when is_boolean(Enabled) ->
+	feature(T, R, Acc#{"enabled" => Enabled});
+feature([enabled | T], #{"enabled" := Enabled} = R, Acc)
+		when is_boolean(Enabled) ->
+	feature(T, R, Acc#feature{enabled = Enabled});
+feature([_ | T], R, Acc) ->
+	feature(T, R, Acc);
+feature([], _, Acc) ->
 	Acc.
 
 -spec specification_char(ResourceSpecCharacteristic) -> ResourceSpecCharacteristic
