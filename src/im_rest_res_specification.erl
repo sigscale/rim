@@ -375,12 +375,10 @@ specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars}
 	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
 specification([feature | T], #specification{feature = SpecFeature} = R, Acc)
 		when is_list(SpecFeature) ->
-	FeatureList = [feature(P) || P <- SpecFeature],
-	specification(T, R, Acc#{"resourceSpecFeature" => FeatureList});
+	specification(T, R, Acc#{"resourceSpecFeature" => feature(SpecFeature)});
 specification([feature | T], #{"resourceSpecFeature" := SpecFeature} = M, Acc)
 		when is_list(SpecFeature) ->
-	FeatureList = [feature(P) || P <- SpecFeature],
-	specification(T, M, Acc#specification{feature = FeatureList});
+	specification(T, M, Acc#specification{feature = feature(SpecFeature)});
 specification([related | T], #specification{related = SpecRels} = R, Acc)
 		when is_list(SpecRels), length(SpecRels) > 0->
 	specification(T, R, Acc#{"resourceSpecRelationship" => specification_rel(SpecRels)});
@@ -573,10 +571,14 @@ spec_char_value([], _, Acc) ->
 		ResourceSpecFeature :: [feature()] | [map()].
 %% @doc CODEC for `ResourceSpecFeature'.
 %% @private
-feature(#feature{} = Feature) ->
-   feature(record_info(fields, feature), Feature, #{});
-feature(#{} = Feature) ->
-   feature(record_info(fields, feature), Feature, #feature{}).
+feature([#feature{} | _] = List) ->
+   Fields = record_info(fields, feature),
+   [feature(Fields, R, #{}) || R <- List];
+feature([#{} | _] = List) ->
+   Fields = record_info(fields, feature),
+   [feature(Fields, M, #feature{}) || M <- List];
+feature([]) ->
+   [].
 %% @hidden
 feature([name | T], #feature{name = Name} = R, Acc)
 		when is_list(Name) ->
