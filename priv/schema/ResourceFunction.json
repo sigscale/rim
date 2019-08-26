@@ -55,7 +55,6 @@
 				},
 				"priority" : {
 					"type" : "integer",
-					"format" : "int64",
 					"description" : "Priority of the Resource Function"
 				},
 				"sap" : {
@@ -66,9 +65,8 @@
 					}
 				},
 				"resourceFunctionSpecification" : {
-					"type" : "object",
 					"description" : "Resource specification used to create RF",
-					"$ref" : "ResourceFunctionSpecification"
+					"$ref" : "ResourceFunctionSpec"
 				},
 				"characteristic" : {
 					"type" : "array",
