@@ -12,7 +12,7 @@
 			"description": "Association type",
 			"type": "string"
 		},
-		"endPoints": {
+		"endPoint": {
 			"type": "array",
 			"items": {
 				"description": "Endpoints in an adjacency association",
@@ -52,6 +52,6 @@
 	},
 	"required": [
 		"type",
-		"endPoints"
+		"endPoint"
 	]
 }
