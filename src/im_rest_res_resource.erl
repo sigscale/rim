@@ -333,6 +333,12 @@ resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 resource([characteristic | T], #{"resourceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->
 	resource(T, M, Acc#resource{characteristic = resource_char(ResChar)});
+resource([connectivity | T], #resource{connectivity = Connectivity} = R, Acc)
+		when is_list(Connectivity) ->
+	resource(T, R, Acc#{"connectivity" => connectivity(Connectivity)});
+resource([connectivity | T], #{"connectivity" := Connectivity} = M, Acc)
+		when is_list(Connectivity) ->
+	resource(T, M, Acc#resource{connectivity = connectivity(Connectivity)});
 resource([_ | T], R, Acc) ->
 	resource(T, R, Acc);
 resource([], _, Acc) ->
@@ -519,6 +525,138 @@ resource_rel([end_date | T],
 resource_rel([_ | T], R, Acc) ->
 	resource_rel(T, R, Acc);
 resource_rel([], _, Acc) ->
+	Acc.
+
+-spec connectivity(Connectivity) -> Connectivity
+	when
+		Connectivity :: [connectivity()] | [map()].
+%% @doc CODEC for `Connectivity'.
+connectivity([#connectivity{} | _] = List) ->
+	Fields = record_info(fields, connectivity),
+	[connectivity(Fields, R, #{}) || R <- List];
+connectivity([#{} | _] = List) ->
+	Fields = record_info(fields, connectivity),
+	[connectivity(Fields, M, #connectivity{}) || M <- List];
+connectivity([]) ->
+	[].
+%% @hidden
+connectivity([name | T], #connectivity{name = Name} = R, Acc)
+		when is_list(Name) ->
+	connectivity(T, R, Acc#{"name" => Name});
+connectivity([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	connectivity(T, M, Acc#connectivity{name = Name});
+connectivity([type | T], #connectivity{type = Type} = R, Acc)
+		when is_list(Type) ->
+	connectivity(T, R, Acc#{"type" => Type});
+connectivity([type | T], #{"type" := Type} = M, Acc)
+		when is_list(Type) ->
+	connectivity(T, M, Acc#connectivity{type = Type});
+connectivity([endPoints | T], #connectivity{endPoints = EndPoints} = R, Acc)
+		when is_list(EndPoints) ->
+	connectivity(T, R, Acc#{"endPoints" => point(EndPoints)});
+connectivity([endPoints | T], #{"endPoints" := EndPoints} = M, Acc)
+		when is_list(EndPoints) ->
+	connectivity(T, M, Acc#connectivity{endPoints = point(EndPoints)});
+connectivity([minItems | T], #connectivity{minItems = MinItems} = R, Acc)
+		when is_integer(MinItems) ->
+	connectivity(T, R, Acc#{"minItems" => MinItems});
+connectivity([minItems | T], #{"minItems" := MinItems} = M, Acc)
+		when is_integer(MinItems) ->
+	connectivity(T, M, Acc#connectivity{minItems = MinItems});
+connectivity([_ | T], R, Acc) ->
+	connectivity(T, R, Acc);
+connectivity([], _, Acc) ->
+	Acc.
+
+-spec point(Point) -> Point 
+	when
+		Point :: [point()] | [map()].
+%% @doc CODEC for `Point'.
+point([#point{} | _] = List) ->
+	Fields = record_info(fields, point),
+	[point(Fields, R, #{}) || R <- List];
+point([#{} | _] = List) ->
+	Fields = record_info(fields, point),
+	[point(Fields, M, #point{}) || M <- List];
+point([]) ->
+	[].
+%% @hidden
+point([href| T], #point{href = Href} = R, Acc)
+		when is_list(Href) ->
+	point(T, R, Acc#{"href" => Href});
+point([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	point(T, M, Acc#point{href = Href});
+point([id | T], #point{id = Id} = R, Acc)
+		when is_list(Id) ->
+	point(T, R, Acc#{"id" => Id});
+point([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	point(T, M, Acc#point{id = Id});
+point([name | T], #point{name = Name} = R, Acc)
+		when is_list(Name) ->
+	point(T, R, Acc#{"name" => Name});
+point([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	point(T, M, Acc#point{name = Name});
+point([isRoot | T], #point{isRoot = IsRoot} = R, Acc)
+		when is_boolean(IsRoot) ->
+	point(T, R, Acc#{"isRoot" => IsRoot});
+point([isRoot | T], #{"isRoot" := IsRoot} = M, Acc)
+		when is_boolean(IsRoot) ->
+	point(T, M, Acc#point{isRoot = IsRoot});
+point([connectionPoint | T], #point{connectionPoint = ConnectionPoint} = R, Acc)
+		when is_list(ConnectionPoint) ->
+	point(T, R, Acc#{"connectionPoint" => connection_point(ConnectionPoint)});
+point([connectionPoint | T], #{"connectionPoint" := ConnectionPoint} = M, Acc)
+		when is_list(ConnectionPoint) ->
+	point(T, M, Acc#point{connectionPoint = connection_point(ConnectionPoint)});
+point([_ | T], R, Acc) ->
+	point(T, R, Acc);
+point([], _, Acc) ->
+	Acc.
+
+-spec connection_point(ConPoint) -> ConPoint 
+	when
+		ConPoint :: [connection_point()] | [map()].
+%% @doc CODEC for `ConnectionPoint'.
+connection_point([#connection_point{} | _] = List) ->
+	Fields = record_info(fields, connection_point),
+	[connection_point(Fields, R, #{}) || R <- List];
+connection_point([#{} | _] = List) ->
+	Fields = record_info(fields, connection_point),
+	[connection_point(Fields, M, #connection_point{}) || M <- List];
+connection_point([]) ->
+	[].
+%% @hidden
+connection_point([href| T], #connection_point{href = Href} = R, Acc)
+		when is_list(Href) ->
+	connection_point(T, R, Acc#{"href" => Href});
+connection_point([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	connection_point(T, M, Acc#connection_point{href = Href});
+connection_point([id | T], #connection_point{id = Id} = R, Acc)
+		when is_list(Id) ->
+	connection_point(T, R, Acc#{"id" => Id});
+connection_point([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	connection_point(T, M, Acc#connection_point{id = Id});
+connection_point([name | T], #connection_point{name = Name} = R, Acc)
+		when is_list(Name) ->
+	connection_point(T, R, Acc#{"name" => Name});
+connection_point([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	connection_point(T, M, Acc#connection_point{name = Name});
+connection_point([type | T], #connection_point{type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection_point(T, R, Acc#{"type" => Type});
+connection_point([type | T], #{"type" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection_point(T, M, Acc#connection_point{type = Type});
+connection_point([_ | T], R, Acc) ->
+	connection_point(T, R, Acc);
+connection_point([], _, Acc) ->
 	Acc.
 
 -spec resource_char(ResourceCharacteristic) -> ResourceCharacteristic
