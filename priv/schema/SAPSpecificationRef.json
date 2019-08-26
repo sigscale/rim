@@ -1,25 +1,23 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "SAPSpecificationRef",
+	"$id": "http://sigscale.org/schema/SAPSpecificationRef",
 	"description": "Service Access Point (SAP) specification reference.",
 	"type": "object",
-		"properties": {
-			"href": {
-				"type": "string",
-				"description": "Reference of the SAP resource function specification"
-			},
-			"id": {
-				"type": "string",
-				"description": "Unique identifier of the SAP resource function specification"
-			},
-			"name": {
-				"type": "string",
-				"description": "Name of the SAP resource function specification"
-			},
-			"@referredType": {
-				"type": "string",
-				"description": "The actual type of the target instance when needed for disambiguation."
-			}
+	"properties": {
+		"href": {
+			"type": "string",
+			"description": "Reference of the SAP resource function specification"
+		},
+		"id": {
+			"type": "string",
+			"description": "Unique identifier of the SAP resource function specification"
+		},
+		"name": {
+			"type": "string",
+			"description": "Name of the SAP resource function specification"
+		},
+		"@referredType": {
+			"type": "string",
+			"description": "The actual type of the target instance when needed for disambiguation."
 		}
 	}
 }

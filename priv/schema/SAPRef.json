@@ -1,6 +1,5 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "SAPRef.json",
+	"$id": "http://sigscale.org/schema/SAPRef",
 	"title": "SAPRef",
 	"description": "Service Access Point (SAP) reference.",
 	"type": "object",
