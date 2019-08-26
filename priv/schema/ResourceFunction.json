@@ -62,7 +62,7 @@
 					"type" : "array",
 					"description" : "Available Service Access Points (SAP)",
 					"items" : {
-						"$ref" : "#/definitions/SAPRef"
+						"$ref" : "SAPRef"
 					}
 				},
 				"resourceFunctionSpecification" : {
@@ -102,7 +102,7 @@
 					"type" : "array",
 					"description" : "How the RFs listed above are connected together",
 					"items" : {
-						"$ref" : "#/definitions/Connectivity"
+						"$ref" : "Connectivity"
 					}
 				}
 			},
@@ -112,23 +112,6 @@
 		}
 	],
 	"definitions": {
-		"SAPRef": {
-			"type" : "object",
-			"description" : "SAP Reference",
-			"properties" : {
-				"id" : {
-					"type" : "string",
-					"description" : "A unique id for SAP"
-				},
-				"href" : {
-					"type" : "string",
-				"description" : "URI for the SAP"
-				}
-			},
-			"required" : [
-				"href"
-			]
-		},
 		"Characteristic" : {
 			"type" : "object",
 			"properties" : {
@@ -190,27 +173,6 @@
 				"name",
 				"listOfCharacteristics",
 				"listOfFeatures"
-			]
-		},
-		"Connectivity" : {
-			"type" : "object",
-			"properties" : {
-				"source" : {
-					"description" : "Source RF Reference",
-					"$ref" : "#/definitions/ResourceFunctionRef"
-				},
-				"target" : {
-					"description" : "Target RF Reference",
-					"$ref" : "#/definitions/ResourceFunctionRef"
-				},
-				"relationship" : {
-					"type" : "string"
-				}
-			},
-			"required" : [
-				"source",
-				"target",
-				"relationship"
 			]
 		},
 		"ResourceFunctionRef" : {

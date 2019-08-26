@@ -1,0 +1,25 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "ConnectionPointSpecificationRef",
+	"title": "ConnectionPointSpecificationRef",
+	"description": "Connection Point (CP) specification reference.",
+	"type": "object",
+	"properties": {
+		"href": {
+			"type": "string",
+			"description": "Reference of the CP resource function specification"
+		},
+		"id": {
+			"type": "string",
+			"description": "Unique identifier of the CP resource function specification"
+		},
+		"name": {
+			"type": "string",
+			"description": "Name of the CP resource function specification"
+		},
+		"@referredType": {
+			"type": "string",
+			"description": "The actual type of the target instance when needed for disambiguation."
+		}
+	}
+}

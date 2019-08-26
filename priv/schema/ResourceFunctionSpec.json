@@ -10,25 +10,30 @@
 		{
 			"type": "object",
 			"properties": {
-				"type" : {
-					"type" : "string",
-					"description" : "A type of the Resource Function"
-				},
-				"sapSpec": {
+				"sapSpecification": {
 					"type": "array",
 					"description": "Service Access Point (SAP) Specifications",
 					"items": [
 						{
-							"$ref": "resourceCatalogManagement#/definitions/SapSpecification"
+							"$ref": "SAPSpecificationRef"
 						}
 					]
 				},
-				"connectivitySpec": {
+				"connectionPointSpecification": {
+					"type": "array",
+					"description": "Connection Point (CP) Specifications",
+					"items": [
+						{
+							"$ref": "ConnectionPointSpecificationRef"
+						}
+					]
+				},
+				"connectivitySpecification": {
 					"type": "array",
 					"description": "Adjacency Graph Specifications",
 					"items": [
 						{
-							"$ref": "resourceCatalogManagement#/definitions/ConnectivitySpec"
+							"$ref": "ConnectivitySpecification"
 						}
 					]
 				}
