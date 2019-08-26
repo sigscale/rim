@@ -43,6 +43,13 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/peeCmonNrm.json \
 		$(abs_builddir)/epcn3aiNrm.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
+		$(abs_builddir)/ResourceFunction.json \
+		$(abs_builddir)/SAPSpecificationRef.json \
+		$(abs_builddir)/SAPRef.json \
+		$(abs_builddir)/ConnectivitySpecification.json \
+		$(abs_builddir)/Connectivity.json \
+		$(abs_builddir)/ConnectionPointSpecificationRef.json \
+		$(abs_builddir)/ConnectionPointRef.json \
 		$(abs_builddir)/BssFunctionSpec.json \
 		$(abs_builddir)/BtsSiteMgrSpec.json \
 		$(abs_builddir)/GsmCellSpec.json \
@@ -166,49 +173,102 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s resourceInventoryManagement.json; \
 			then exit 1; fi; \
+		if ! ajv compile -s ConnectionPointSpecificationRef.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ConnectionPointRef.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s Connectivity.json \
+			-r ConnectionPointRef.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SAPSpecificationRef.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SAPRef.json; \
+			then exit 1; fi; \
 		if ! ajv compile -s ResourceFunctionSpec.json \
+			-r resourceCatalogManagement.json \
 			-r entityCatalogManagement.json \
-			-r resourceCatalogManagement.json; \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ResourceFunction.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r Connectivity.json \
+			-r ConnectionPointRef.json \
+			-r ResourceFunctionSpec.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json \
+			-r resourceInventoryManagement.json \
+			-r SAPSpecificationRef.json \
+			-r SAPRef.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BssFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BtsSiteMgrSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GsmCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s RncFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NodeBFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellFDDSpec.json \
 			-r UtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDSpec.json \
 			-r UtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
@@ -216,6 +276,9 @@ check_DATA = .validation_ok
 			-r UtranCellTDDSpec.json \
 			-r UtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
@@ -223,248 +286,395 @@ check_DATA = .validation_ok
 			-r UtranCellTDDSpec.json \
 			-r UtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ENBFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellFDDSpec.json \
 			-r EUtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDDSpec.json \
 			-r EUtranGenericCellSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ServingGWFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PGWFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EPDGFunctionSpec.json\
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MMEFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCRFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MscServerFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CsMgwFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SgsnFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GgsnFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AucFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HlrFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EirFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MnpSrfFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CgfFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ASFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HSSFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SCSCFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBDUFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUCPFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUUPFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellDUSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellCUSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRSectorCarrierSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSubnetSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AMFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UPFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s N3IWFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCFFunctionSpec.json\
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AUSFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDMFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDRFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDSFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NSSFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMSFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s LMFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NGEIRFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SEPPFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NWDAFFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PEEMonitoredEntitySpec.json \
 			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
 			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
