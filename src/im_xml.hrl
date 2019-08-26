@@ -88,6 +88,14 @@
 		server :: map() | undefined}).
 -type epcn3ai_state() :: #epcn3ai_state{}.
 
+-record(ims_state,
+		{as :: map() | undefined,
+		hss :: map() | undefined,
+		icscf :: map() | undefined,
+		pcscf :: map() | undefined,
+		scscf :: map() | undefined}).
+-type ims_state() :: #ims_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,
