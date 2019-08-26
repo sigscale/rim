@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/ngcNrm",
 	"title": "5GC NRM",
 	"description": "5G Core (5GC) Network Resource Model (NRM)",
 	"definitions": {

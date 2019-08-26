@@ -1,6 +1,7 @@
 {
+	"$id": "http://sigscale.org/schema/epcn3aiNrm",
 	"title": "EPC NRM",
-	"description": "Evolved Packet Core (EPC) Network Resource Model (NRM)",
+	"description": "Evolved Packet Core (EPC) WLAN Network Resource Model (NRM)",
 	"definitions": {
 		"Link_3GPPAAAServer_PGW": {
 			"allOf": [

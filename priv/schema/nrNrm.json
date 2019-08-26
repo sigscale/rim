@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/nrNrm",
 	"title": "NR NRM",
 	"description": "5G New Radio (NR) Network Resource Model (NRM)",
 	"definitions": {

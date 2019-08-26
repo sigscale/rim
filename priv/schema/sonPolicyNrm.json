@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/sonPolicyNrm",
 	"title": "SON Policy NRM",
 	"description": "Self Organizing Networks (SON) Policy Network Resource Model (NRM)",
 	"definitions": {

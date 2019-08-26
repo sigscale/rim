@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/coreNrm",
 	"title": "Core Network NRM",
 	"description": "Core Network Network Resource Model (NRM)",
 	"definitions": {

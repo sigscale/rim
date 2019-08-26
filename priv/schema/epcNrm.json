@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/epcNrm",
 	"title": "EPC NRM",
 	"description": "Evolved Packet Core (EPC) Network Resource Model (NRM)",
 	"definitions": {

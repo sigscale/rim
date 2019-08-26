@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/geranNrm",
 	"title": "GERAN NRM",
 	"description": "GSM-EDGE Radio Access Network (GERAN) Network Resource Model (NRM)",
 	"definitions": {

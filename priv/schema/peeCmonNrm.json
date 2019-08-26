@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/peeCmonNrm",
 	"title": "PEE NRM",
 	"description": "",
 	"definitions": {

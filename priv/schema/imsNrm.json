@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/imsNrm",
 	"title": "IMS NRM",
 	"description": "IP Multimedia Subsystem (IMS) Network Resource Model (NRM)",
 	"definitions": {

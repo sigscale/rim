@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/eutranNrm",
 	"title": "EUTRAN NRM",
 	"description": "Evolved UTRAN (EUTRAN) Network Resource Model (NRM)",
 	"definitions": {

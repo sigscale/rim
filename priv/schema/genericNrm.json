@@ -1,4 +1,5 @@
 {
+	"$id": "http://sigscale.org/schema/genericNrm",
 	"title": "Generic NRM",
 	"description": "Generic Network Resource Model (NRM)",
 	"definitions": {
