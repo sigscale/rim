@@ -68,20 +68,6 @@
 					"description" : "Resource specification used to create RF",
 					"$ref" : "ResourceFunctionSpec"
 				},
-				"feature" : {
-					"type" : "array",
-					"description" : "Features",
-					"items" : {
-						"$ref" : "#/definitions/Feature"
-					}
-				},
-				"featureGroup" : {
-					"type" : "array",
-					"description" : "Feature groups",
-					"items" : {
-						"$ref" : "#/definitions/FeatureGroup"
-					}
-				},
 				"supportingResourceFunction" : {
 					"type" : "array",
 					"description" : "RFs from which this RF is composed",
@@ -103,69 +89,6 @@
 		}
 	],
 	"definitions": {
-		"Characteristic" : {
-			"type" : "object",
-			"properties" : {
-				"name" : {
-					"type" : "string"
-				},
-				"value" : {
-					"type" : "string"
-				}
-			},
-			"required" : [
-				"name",
-				"value"
-			]
-		},
-		"Feature": {
-			"type" : "object",
-			"properties" : {
-				"name" : {
-					"type" : "string",
-					"description" : "This is the name for the feature"
-				},
-				"listOfCharacteristics" : {
-					"type" : "array",
-					"description" : "This is a list of Resource Characteristics for a particular feature",
-					"items" : {
-						"$ref" : "#/definitions/Characteristic"
-					}
-				}
-			},
-			"required" : [
-				"name",
-				"listOfCharacteristics"
-			]
-		},
-		"FeatureGroup": {
-			"type" : "object",
-			"properties" : {
-				"name" : {
-					"type" : "string",
-					"description" : "This is the name for the feature group"
-				},
-				"listOfCharacteristics" : {
-					"type" : "array",
-					"description" : "This is a list of  Resource Characteristics for a particular feature",
-					"items" : {
-						"$ref" : "#/definitions/Characteristic"
-					}
-				},
-				"listOfFeatures" : {
-					"type" : "array",
-					"description" : "This is a list of features for a particular feature group",
-					"items" : {
-						"$ref" : "#/definitions/Feature"
-					}
-				}
-			},
-			"required" : [
-				"name",
-				"listOfCharacteristics",
-				"listOfFeatures"
-			]
-		},
 		"ResourceFunctionRef" : {
 			"type" : "object",
 			"properties" : {
