@@ -397,6 +397,51 @@ parse_managed_element({startElement, _, "3GPPAAAServerFunction", QName,
 			dn_prefix = [NewDn], location = Location,
 			parse_state = #epcn3ai_state{server = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "ASFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",ASFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_ims, parse_function = parse_as,
+			dn_prefix = [NewDn],
+			parse_state = #ims_state{as = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "HSSFunction", QName,
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		location = Location} | _T] = State) ->
+	DnComponent = ",HSSFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_ims, parse_function = parse_hss,
+			dn_prefix = [NewDn], location = Location,
+			parse_state = #ims_state{hss = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "ICSCFFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",ICSCFFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_ims, parse_function = parse_icscf,
+			dn_prefix = [NewDn],
+			parse_state = #ims_state{icscf = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "PCSCFFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",PCSCFFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_ims, parse_function = parse_pcscf,
+			dn_prefix = [NewDn],
+			parse_state = #ims_state{pcscf = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "SCSCFFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",SCSCFFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_ims, parse_function = parse_scscf,
+			dn_prefix = [NewDn],
+			parse_state = #ims_state{scscf = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
