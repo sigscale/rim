@@ -11,13 +11,12 @@
 	},
 	"lifecycleState": "In Test",
 	"@type": "BssFunction",
-	"@baseType": "ResourceFunction",
+	"@baseType": "ManagedFunction",
 	"@schemaLocation": "/resourceInventoryManagement/v3/schema/BssFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115636",
 		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115636",
-		"name": "resourceSpecification",
 		"@type": "BssFunctionSpec",
 		"version": "1.0"
 	},
@@ -25,18 +24,6 @@
 		{
 			"name": "userLabel",
 			"value" : "Embarcadero"
-		},
-		{
-			"name": "BtsSiteMgr",
-			"value": [],
-			"@type": "BtsSiteMgrList",
-			"@schemaLocation": "/resourceInventoryManagement/v3/schema/geranNrm#/definitions/BtsSiteMgrList"
-		},
-		{
-			"name": "VsDataContainer",
-			"value": [],
-			"@type": "VsDataContainerList",
-			"@schemaLocation": "/resourceInventoryManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

@@ -1,0 +1,53 @@
+{
+	"id": "8994462918",
+	"href": "/resourceInventoryManagement/v3/resource/8994462918",
+	"name": "DC=sigscale.net,Subnet=1,RncFunction=1",
+	"publicIdentifier": "07467336538",
+	"description": "UMTS Radio Network Controller (RNC)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "In Test",
+	"@type": "RncFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/RncFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "798115649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115649",
+		"@type": "RncFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "mcc",
+			"value" : "248"
+		},
+		{
+			"name": "mnc",
+			"value" : "323"
+		}
+	],
+	"utranCellFDD": [
+		"DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=1",
+		"DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=2",
+		"DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=3"
+	],
+	"iubLink": [
+		"DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=1",
+		"DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=2",
+		"DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=3"
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam1",
+			"vsDataFormatVersion": "acmeParams-v2",
+			"vsData": 42
+		}
+	]
+}

@@ -42,6 +42,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/imsNrm.json \
 		$(abs_builddir)/peeCmonNrm.json \
 		$(abs_builddir)/epcn3aiNrm.json \
+		$(abs_builddir)/ManagedFunction.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
 		$(abs_builddir)/ResourceFunction.json \
 		$(abs_builddir)/SAPSpecificationRef.json \

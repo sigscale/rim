@@ -69,7 +69,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-5gc-sepp.json \
 		$(abs_builddir)/specification-5gc-nwdaf.json \
 		$(abs_builddir)/specification-pee-me.json \
-		$(abs_builddir)/resource-gsm-bss.json
+		$(abs_builddir)/resource-gsm-bss.json \
+		$(abs_builddir)/resource-umts-rnc.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -124,8 +125,6 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-gsm-cell.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/RncFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/genericNrm.json \
-				-r $(top_builddir)/priv/schema/utranNrm.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
@@ -550,6 +549,8 @@ check_DATA = .validation_ok
 				-d specification-pee-me.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-umts-rnc.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi

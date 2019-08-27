@@ -40,42 +40,6 @@
 							}
 						]
 					}
-				},
-				"utranCellFDD": {
-					"type": "array",
-					"items": {
-						"$ref": "genericNrm#/definitions/DnList"
-					}
-				},
-				"utranCellTDDlcr": {
-					"type": "array",
-					"items": {
-						"$ref": "genericNrm#/definitions/DnList"
-					}
-				},
-				"utranCellTDDhcr": {
-					"type": "array",
-					"items": {
-						"$ref": "genericNrm#/definitions/DnList"
-					}
-				},
-				"iubLink": {
-					"type": "array",
-					"items": {
-						"$ref": "genericNrm#/definitions/DnList"
-					}
-				},
-				"rncFunctionOptionallyContainedNrmClass": {
-					"type": "array",
-					"items": {
-						"$ref": "utranNrm#/definitions/RncFunctionOptionallyContainedNrmClassList"
-					}
-				},
-				"vsDataContainer": {
-					"type": "array",
-					"items": {
-						"$ref": "genericNrm#/definitions/VsDataContainerList"
-					}
 				}
 			}
 		}

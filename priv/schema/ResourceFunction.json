@@ -72,7 +72,7 @@
 					"type" : "array",
 					"description" : "RFs from which this RF is composed",
 					"items" : {
-						"$ref" : "#ResourceFunctionRef"
+						"$ref" : "#/definitions/ResourceFunctionRef"
 					}
 				},
 				"connectivity" : {

@@ -1,0 +1,56 @@
+{
+	"$id": "http://sigscale.org/schema/RncFunction",
+	"title": "UTRAN RNC",
+	"description": "UTRAN Radio Network Controller (RNC) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"mcc",
+											"mnc",
+											"rncId",
+											"siptoSupported",
+											"tceIDMappingInfoList",
+											"sharNetTceMappingInfoList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"utranCellFDD": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"utranCellTDDlcr": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"utranCellTDDhcr": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"iubLink": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

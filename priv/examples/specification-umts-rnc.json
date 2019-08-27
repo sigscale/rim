@@ -95,42 +95,6 @@
 			"description": "List of shared PLMN ID, Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
 			"valueType": "SharNetTceMappingInfoList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
-		},
-		{
-			"name": "utranCellFDD",
-			"description": "Frequency Division Duplex (FDD) radio cells controlled by an RNC",
-			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
-		},
-		{
-			"name": "utranCellTDDLcr",
-			"description": "Time Division Duplex (TDD) low chip rate (LCR) radio cell controlled by an RNC",
-			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
-		},
-		{
-			"name": "utranCellTDDHcr",
-			"description": "Time Division Duplex (TDD) high chip rate (HCR) radio cell controlled by an RNC",
-			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
-		},
-		{
-			"name": "iubLink",
-			"description": "Logical link to a NodeB as seen from the RNC",
-			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
-		},
-		{
-			"name": "rncFunctionOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "RncFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/RncFunctionOptionallyContainedNrmClassList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }
