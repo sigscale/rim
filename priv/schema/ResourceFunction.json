@@ -8,100 +8,100 @@
 			"$ref": "resourceInventoryManagement#/definitions/LogicalResource"
 		},
 		{
-			"type" : "object",
-			"properties" : {
-				"type" : {
-					"type" : "string",
-					"description" : "The type/category of the resource function"
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "The type/category of the resource function"
 				},
-				"role" : {
-					"type" : "string",
-					"description" : "Used when RF is a component of a composite RF"
+				"role": {
+					"type": "string",
+					"description": "Used when RF is a component of a composite RF"
 				},
-				"location" : {
-					"type" : "object",
-					"description" : "Location at which Resource Function is required",
-					"properties" : {
-						"id" : {
-						  "type" : "string",
-						  "description" : "A unique id for location"
+				"location": {
+					"type": "object",
+					"description": "Location at which Resource Function is required",
+					"properties": {
+						"id": {
+						  "type": "string",
+						  "description": "A unique id for location"
 						},
-						"href" : {
-						  "type" : "string",
-						  "description" : "URI for the location"
+						"href": {
+						  "type": "string",
+						  "description": "URI for the location"
 						}
 					},
-					"required" : [
+					"required": [
 						"href"
 					]
 				},
-				"state" : {
-					"type" : "string",
-					"description" : "Provides the stage at which the RF has been instantiated. This is a compound state defined in TR255",
-					"enum" : [
+				"state": {
+					"type": "string",
+					"description": "Provides the stage at which the RF has been instantiated. This is a compound state defined in TR255",
+					"enum": [
 						"planning",
 						"installing",
 						"operating",
 						"retiring"
 					]
 				},
-				"subState" : {
-					"type" : "string",
-					"description" : "Provides the usage sub-state information for the resource function. The value is dependent on the value of State. Please refer to section 3.2.7 of TR255 for details."
+				"subState": {
+					"type": "string",
+					"description": "Provides the usage sub-state information for the resource function. The value is dependent on the value of State. Please refer to section 3.2.7 of TR255 for details."
 				},
-				"autoModification" : {
-					"type" : "string",
-					"description" : "Kinds of auto-modifications that are applied"
+				"autoModification": {
+					"type": "string",
+					"description": "Kinds of auto-modifications that are applied"
 				},
-				"priority" : {
-					"type" : "integer",
-					"description" : "Priority of the Resource Function"
+				"priority": {
+					"type": "integer",
+					"description": "Priority of the Resource Function"
 				},
-				"sap" : {
-					"type" : "array",
-					"description" : "Available Service Access Points (SAP)",
-					"items" : {
-						"$ref" : "SAPRef"
+				"sap": {
+					"type": "array",
+					"description": "Available Service Access Points (SAP)",
+					"items": {
+						"$ref": "SAPRef"
 					}
 				},
-				"resourceFunctionSpecification" : {
-					"description" : "Resource specification used to create RF",
-					"$ref" : "ResourceFunctionSpec"
+				"resourceFunctionSpecification": {
+					"description": "Resource specification used to create RF",
+					"$ref": "ResourceFunctionSpec"
 				},
-				"supportingResourceFunction" : {
-					"type" : "array",
-					"description" : "RFs from which this RF is composed",
-					"items" : {
-						"$ref" : "#/definitions/ResourceFunctionRef"
+				"supportingResourceFunction": {
+					"type": "array",
+					"description": "RFs from which this RF is composed",
+					"items": {
+						"$ref": "#/definitions/ResourceFunctionRef"
 					}
 				},
-				"connectivity" : {
-					"type" : "array",
-					"description" : "How the RFs listed above are connected together",
-					"items" : {
-						"$ref" : "Connectivity"
+				"connectivity": {
+					"type": "array",
+					"description": "How the RFs listed above are connected together",
+					"items": {
+						"$ref": "Connectivity"
 					}
 				}
 			},
-			"required" : [
+			"required": [
 				"resourceFunctionSpecification"
 			]
 		}
 	],
 	"definitions": {
-		"ResourceFunctionRef" : {
-			"type" : "object",
-			"properties" : {
-				"id" : {
-					"type" : "string",
-					"description" : "A unique id for RF"
+		"ResourceFunctionRef": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "A unique id for RF"
 				},
-				"href" : {
-					"type" : "string",
-					"description" : "URI for the RF"
+				"href": {
+					"type": "string",
+					"description": "URI for the RF"
 				}
 			},
-			"required" : [
+			"required": [
 				"href"
 			]
 		}
