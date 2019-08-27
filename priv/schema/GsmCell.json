@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/GsmCellSpec",
-	"title": "GERAN Cell Specification",
-	"description": "GERAN radio resource function specification",
+	"$id": "http://sigscale.org/schema/GsmCell",
+	"title": "GERAN Cell",
+	"description": "GERAN radio resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpec"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceCatalogManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",
@@ -24,8 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"userLabel",
-											"vnfParametersList",
 											"cellIdentity",
 											"cellAllocation",
 											"ncc",

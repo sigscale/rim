@@ -1,35 +1,43 @@
 {
 	"id": "8994832012",
 	"href": "/resourceInventoryManagement/v3/resource/8994832012",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,BtsSiteMgr=1",
 	"publicIdentifier": "07467336644",
-	"description": "GSM Base Station Subsystem (BSS)",
+	"description": "GSM Base Transceiver Station (BTS)",
 	"category": "RAN",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
 	},
 	"lifecycleState": "In Test",
-	"@type": "BssFunction",
+	"@type": "BtsSiteMgr",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/BssFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115636",
 		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115636",
-		"@type": "BssFunctionSpec",
+		"@type": "BtsSiteMgrSpec",
 		"version": "1.0"
 	},
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
 			"value" : "Embarcadero"
+		},
+		{
+			"name": "latitude",
+			"value" : "43.6698"
+		},
+		{
+			"name": "longitude",
+			"value" : "-79.3898"
 		}
 	],
-	"btsSiteMgr": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=3"
+	"gsmCell": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=3"
 	],
 	"vsDataContainer": [
 		{

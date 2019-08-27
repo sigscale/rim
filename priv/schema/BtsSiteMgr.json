@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/BtsSiteMgrSpec",
-	"title": "GERAN BTS Specification",
-	"description": "GERAN Base Transceiver Station (BTS) resource function specification",
+	"$id": "http://sigscale.org/schema/BtsSiteMgr",
+	"title": "GERAN BTS",
+	"description": "GERAN Base Transceiver Station (BTS) resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpec"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceCatalogManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",
@@ -24,8 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"userLabel",
-											"vnfParametersList",
 											"latitude",
 											"longitude",
 											"operationalState"
@@ -35,6 +34,9 @@
 							}
 						]
 					}
+				},
+				"GsmCell": {
+					"$ref": "genericNrm#/definitions/DnList"
 				}
 			}
 		}

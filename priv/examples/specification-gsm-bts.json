@@ -57,24 +57,6 @@
 			"description": "Indicates the operational state of the object instance (ITU-T X.731)",
 			"valueType": "OperationalStateType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
-		},
-		{
-			"name": "gsmCell",
-			"description": "GSM Radio Cell",
-			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/DnList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
-		},
-		{
-			"name": "interRatEsPolicies",
-			"description": "Inter-RAT energy saving policies information.",
-			"valueType": "InterRatEsPoliciesList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"
 		}
 	]
 }

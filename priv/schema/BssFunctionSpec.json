@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/BssFunctionSpec",
-	"title": "GSM BSS Specification",
-	"description": "GSM Base Station Subsystem (BSS) resource function specification",
+	"title": "GERAN BSS Specification",
+	"description": "GERAN Base Station Subsystem (BSS) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -25,9 +25,7 @@
 									"name": {
 										"enum": [
 											"userLabel",
-											"vnfParametersList",
-											"btsSiteMgr",
-											"vsDataContainer"
+											"vnfParametersList"
 										]
 									}
 								}

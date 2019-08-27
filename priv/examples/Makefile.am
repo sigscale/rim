@@ -70,6 +70,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-5gc-nwdaf.json \
 		$(abs_builddir)/specification-pee-me.json \
 		$(abs_builddir)/resource-gsm-bss.json \
+		$(abs_builddir)/resource-gsm-bts.json \
+		$(abs_builddir)/resource-gsm-cell.json \
 		$(abs_builddir)/resource-umts-rnc.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
@@ -549,6 +551,10 @@ check_DATA = .validation_ok
 				-d specification-pee-me.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-gsm-bts.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-gsm-cell.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-umts-rnc.json; then exit 1; fi; \
 	else \
