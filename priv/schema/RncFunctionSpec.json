@@ -33,13 +33,7 @@
 											"rncId",
 											"siptoSupported",
 											"tceIDMappingInfoList",
-											"sharNetTceMappingInfoList",
-											"utranCellFDD",
-											"utranCellTDDLcr",
-											"utranCellTDDHcr",
-											"iubLink",
-											"rncFunctionOptionallyContainedNrmClass",
-											"vsDataContainer"
+											"sharNetTceMappingInfoList"
 										]
 									}
 								}
