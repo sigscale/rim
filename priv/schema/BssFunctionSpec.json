@@ -25,7 +25,9 @@
 									"name": {
 										"enum": [
 											"userLabel",
-											"vnfParametersList"
+											"vnfParametersList",
+											"peeParametersList",
+											"priorityLabel"
 										]
 									}
 								}
