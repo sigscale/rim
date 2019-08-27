@@ -239,8 +239,16 @@
 		specification :: specification_ref() | undefined | '_' | '$19',
 		related_party = [] :: [related_party_ref()] | '_' | '$20',
 		characteristic = [] :: [resource_char()] | '_' | '$21',
-		connectivity = [] :: [connectivity()] | '_' | '$22'}). 
+		connectivity = [] :: [connectivity()] | '_' | '$22', 
+		connectivitySpecification = [] :: [connectivity_spec()] | '_' | '$23'}). 
 -type resource() :: #resource{}.
+
+-record(connectivity_spec,
+		{name :: string() | undefined | '_',
+		type :: string() | undefined | '_',
+		endPoint = [] :: [point_spec()] | '_',
+		minItems :: pos_integer() | undefined | '_'}).
+-type connectivity_spec() :: #connectivity_spec{}.
 
 -record(connectivity,
 		{name :: string() | undefined | '_',
@@ -249,6 +257,15 @@
 		minItems :: pos_integer() | undefined | '_'}).
 -type connectivity() :: #connectivity{}.
 
+-record(point_spec,
+		{href :: string() | undefined | '_',
+		id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		role :: string() | undefined | '_',
+		isRoot :: boolean() | undefined | '_',
+		connectionPointSpecification = [] :: [connection_point_spec()] | '_'}).
+-type point_spec() :: #point_spec{}.
+
 -record(point,
 		{href :: string() | undefined | '_',
 		id :: string() | undefined | '_',
@@ -256,6 +273,13 @@
 		isRoot :: boolean() | undefined | '_',
 		connectionPoint = [] :: [connection_point()] | '_'}).
 -type point() :: #point{}.
+
+-record(connection_point_spec,
+		{href :: string() | undefined | '_',
+		id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		type :: string() | undefined | '_'}).
+-type connection_point_spec() :: #connection_point_spec{}.
 
 -record(connection_point,
 		{href :: string() | undefined | '_',
