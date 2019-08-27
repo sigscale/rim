@@ -5,7 +5,7 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "resourceInventoryManagement#/definitions/Resource"
+			"$ref": "resourceInventoryManagement#/definitions/LogicalResource"
 		},
 		{
 			"type" : "object",
@@ -67,13 +67,6 @@
 				"resourceFunctionSpecification" : {
 					"description" : "Resource specification used to create RF",
 					"$ref" : "ResourceFunctionSpec"
-				},
-				"characteristic" : {
-					"type" : "array",
-					"description" : "Resource characteristics",
-					"items" : {
-						"$ref" : "#/definitions/Characteristic"
-					}
 				},
 				"feature" : {
 					"type" : "array",
