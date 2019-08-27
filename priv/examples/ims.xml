@@ -37,6 +37,10 @@
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>AS</xn:managedElementType>
+						<xn:managedElementType>HSS</xn:managedElementType>
+						<xn:managedElementType>ICSCF</xn:managedElementType>
+						<xn:managedElementType>PCSCF</xn:managedElementType>
+						<xn:managedElementType>SCSCF</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
@@ -55,8 +59,84 @@
 							<xn:autoScalable>false</xn:autoScalable>
 						</im:vnfParametersList>
 					</im:attributes>
+					<!--  Vendor specific data for ASFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=1</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV2</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
 				</im:ASFunction>
-				<!--  Vendor specific data for ASFunction-->
+				<im:HSSFunction id="1">
+					<im:attributes>
+						<im:userLabel>HSS</im:userLabel>
+						<im:vnfParametersList>
+							<xn:vnfInstanceId>mnopq</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</im:vnfParametersList>
+					</im:attributes>
+					<!--  Vendor specific data for ASFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=2</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV3</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</im:HSSFunction>
+				<im:ICSCFFunction id="1">
+					<im:attributes>
+						<im:userLabel>ICSCF 1</im:userLabel>
+						<im:vnfParametersList>
+							<xn:vnfInstanceId>rstuvw</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</im:vnfParametersList>
+					</im:attributes>
+					<!--  Vendor specific data for ASFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=3</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV4</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</im:ICSCFFunction>
+				<im:PCSCFFunction id="1">
+					<im:attributes>
+						<im:userLabel>PCSCF 1</im:userLabel>
+						<im:vnfParametersList>
+							<xn:vnfInstanceId>wxyza</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</im:vnfParametersList>
+					</im:attributes>
+					<!--  Vendor specific data for ASFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=4</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV5</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</im:PCSCFFunction>
+				<im:SCSCFFunction id="1">
+					<im:attributes>
+						<im:userLabel>AS 1</im:userLabel>
+						<im:vnfParametersList>
+							<xn:vnfInstanceId>bcdef</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</im:vnfParametersList>
+					</im:attributes>
+					<!--  Vendor specific data for ASFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=5</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</im:SCSCFFunction>
+				<!--  Vendor specific data for ManagedElement-->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
 						<xn:vsDataType>abc</xn:vsDataType>
