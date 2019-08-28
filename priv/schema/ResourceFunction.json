@@ -35,7 +35,7 @@
 						"href"
 					]
 				},
-				"state": {
+				"lifeCycleState": {
 					"type": "string",
 					"description": "Provides the stage at which the RF has been instantiated. This is a compound state defined in TR255",
 					"enum": [
@@ -45,7 +45,7 @@
 						"retiring"
 					]
 				},
-				"subState": {
+				"lifeCycleSubState": {
 					"type": "string",
 					"description": "Provides the usage sub-state information for the resource function. The value is dependent on the value of State. Please refer to section 3.2.7 of TR255 for details."
 				},
@@ -64,17 +64,6 @@
 						"$ref": "SAPRef"
 					}
 				},
-				"resourceFunctionSpecification": {
-					"description": "Resource specification used to create RF",
-					"$ref": "ResourceFunctionSpec"
-				},
-				"supportingResourceFunction": {
-					"type": "array",
-					"description": "RFs from which this RF is composed",
-					"items": {
-						"$ref": "#/definitions/ResourceFunctionRef"
-					}
-				},
 				"connectivity": {
 					"type": "array",
 					"description": "How the RFs listed above are connected together",
@@ -84,7 +73,7 @@
 				}
 			},
 			"required": [
-				"resourceFunctionSpecification"
+				"resourceSpecification"
 			]
 		}
 	],
