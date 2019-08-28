@@ -99,6 +99,10 @@
 				"href": {
 					"type": "string",
 					"description": "URI for the RF"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name for the RF"
 				}
 			},
 			"required": [
