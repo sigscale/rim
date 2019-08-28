@@ -20,5 +20,8 @@
 			"type": "string",
 			"description": "The actual type of the target instance when needed for disambiguation."
 		}
-	}
+	},
+	"required": [
+		"href"
+	]
 }
