@@ -282,7 +282,7 @@ class inventoryList extends PolymerElement {
 		function checkLike(param) {
 			return param.path == "name" || param.path == "description"
 				|| param.path == "@type" || param.path == "category"
-				|| param.path == "lifecycleState" param.path == "lifecycleSubState";
+				|| param.path == "lifecycleState" || param.path == "lifecycleSubState";
 		}
 		params.filters.filter(checkLike).forEach(function(filter) {
 			if(filter.value) {
