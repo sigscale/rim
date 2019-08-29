@@ -30,7 +30,9 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		version :: string() | undefined | '_'}).
+		version :: string() | undefined | '_',
+		connectivitySpecification = [] :: [connectivity_spec()] | '_',
+		connectionPointSpecification = [] :: [connection_point_spec()] | '_'}).
 -type specification_ref() :: #specification_ref{}.
 
 -record(specification_rel,
@@ -240,8 +242,7 @@
 		specification :: specification_ref() | undefined | '_' | '$20',
 		related_party = [] :: [related_party_ref()] | '_' | '$21',
 		characteristic = [] :: [resource_char()] | '_' | '$22',
-		connectivity = [] :: [connectivity()] | '_' | '$23', 
-		connectivitySpecification = [] :: [connectivity_spec()] | '_' | '$24'}). 
+		connectivity = [] :: [connectivity()] | '_' | '$23'}). 
 -type resource() :: #resource{}.
 
 -record(connectivity_spec,

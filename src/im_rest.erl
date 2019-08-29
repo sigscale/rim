@@ -458,6 +458,26 @@ specification_ref([version | T], #specification_ref{version = Version} = R, Acc)
 specification_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	specification_ref(T, M, Acc#specification_ref{version = Version});
+specification_ref([connectivitySpecification | T],
+		#specification_ref{connectivitySpecification = ConnectivitySpec} = R, Acc)
+      when is_list(ConnectivitySpec) ->
+   specification_ref(T, R, Acc#{"connectivitySpecification" =>
+		im_rest_res_resource:connectivity_spec(ConnectivitySpec)});
+specification_ref([connectivitySpecification | T],
+		#{"connectivitySpecification" := ConnectivitySpec} = M, Acc)
+      when is_list(ConnectivitySpec) ->
+   specification_ref(T, M, Acc#specification_ref{connectivitySpecification =
+		im_rest_res_resource:connectivity_spec(ConnectivitySpec)});
+specification_ref([connectionPointSpecification| T],
+		#specification_ref{connectionPointSpecification = ConnectionPointSpecification} = R, Acc)
+      when is_list(ConnectionPointSpecification) ->
+   specification_ref(T, R, Acc#{"connectionPointSpecification" =>
+		im_rest_res_resource:connection_point_spec(ConnectionPointSpecification)});
+specification_ref([connectionPointSpecifition | T],
+		#{"connectionPointSpecification" := ConnectionPointSpecification} = M, Acc)
+      when is_list(ConnectionPointSpecification) ->
+   specification_ref(T, M, Acc#specification_ref{connectionPointSpecification =
+		im_rest_res_resource:connection_point_spec(ConnectionPointSpecification)});
 specification_ref([_ | T], R, Acc) ->
 	specification_ref(T, R, Acc);
 specification_ref([], _, Acc) ->

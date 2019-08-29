@@ -25,7 +25,7 @@
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_resources/3, get_resource/2, post_resource/1, delete_resource/1]).
--export([resource/1]).
+-export([resource/1, connectivity_spec/1, connection_point_spec/1]).
 
 -include("im.hrl").
 
@@ -345,12 +345,6 @@ resource([connectivity | T], #resource{connectivity = Connectivity} = R, Acc)
 resource([connectivity | T], #{"connectivity" := Connectivity} = M, Acc)
 		when is_list(Connectivity) ->
 	resource(T, M, Acc#resource{connectivity = connectivity(Connectivity)});
-resource([connectivitySpecification | T], #resource{connectivitySpecification = ConnectivitySpec} = R, Acc)
-		when is_list(ConnectivitySpec) ->
-	resource(T, R, Acc#{"connectivitySpecification" => connectivity_spec(ConnectivitySpec)});
-resource([connectivitySpecification | T], #{"connectivitySpecification" := ConnectivitySpec} = M, Acc)
-		when is_list(ConnectivitySpec) ->
-	resource(T, M, Acc#resource{connectivitySpecification = connectivity_spec(ConnectivitySpec)});
 resource([_ | T], R, Acc) ->
 	resource(T, R, Acc);
 resource([], _, Acc) ->
