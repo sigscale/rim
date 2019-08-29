@@ -473,7 +473,7 @@ specification_ref([connectionPointSpecification| T],
       when is_list(ConnectionPointSpecification) ->
    specification_ref(T, R, Acc#{"connectionPointSpecification" =>
 		im_rest_res_resource:connection_point_spec(ConnectionPointSpecification)});
-specification_ref([connectionPointSpecifition | T],
+specification_ref([connectionPointSpecification | T],
 		#{"connectionPointSpecification" := ConnectionPointSpecification} = M, Acc)
       when is_list(ConnectionPointSpecification) ->
    specification_ref(T, M, Acc#specification_ref{connectionPointSpecification =
