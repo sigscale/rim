@@ -68,9 +68,9 @@ class inventoryList extends PolymerElement {
 							<dt><b>Schema</b></dt>
 							<dd>{{item.schema}}</dd>
 						</template>
-						<template is="dom-if" if="{{item.lifecycleStatus}}">
+						<template is="dom-if" if="{{item.lifecycleState}}">
 							<dt><b>Status</b></dt>
-							<dd>{{item.lifecycleStatus}}</dd>
+							<dd>{{item.lifecycleState}}</dd>
 						</template>
 						<template is="dom-if" if="{{item.version}}">
 							<dt><b>Version</b></dt>
@@ -281,7 +281,8 @@ class inventoryList extends PolymerElement {
 		var query = "";
 		function checkLike(param) {
 			return param.path == "name" || param.path == "description"
-				|| param.path == "@type" || param.path == "category";
+				|| param.path == "@type" || param.path == "category"
+				|| param.path == "lifecycleState" param.path == "lifecycleSubState";
 		}
 		params.filters.filter(checkLike).forEach(function(filter) {
 			if(filter.value) {
@@ -309,74 +310,6 @@ class inventoryList extends PolymerElement {
 					query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
 					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
-				}
-			}
-		});
-		function checkLifeCycle(param) {
-			return param.path == "lifecycleStatus";
-		}
-		params.filters.filter(checkLifeCycle).forEach(function(filter) {
-			if(filter.value) {
-				if("Obsolete".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Obsolete";
-					} else {
-						query = "[{lifecycleStatus=Obsolete";
-					}
-				} else if("Launched".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Launched";
-					} else {
-						query = "[{lifecycleStatus=Launched";
-					}
-				} else if("Active".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Active";
-					} else {
-						query = "[{lifecycleStatus=Active";
-					}
-				} else if("In ".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus.in=[In Study,In Design, In Test]";
-					} else {
-						query = "[{lifecycleStatus.in=[In Study,In Design, In Test]";
-					}
-				} else if("In Study".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=In Study";
-					} else {
-						query = "[{lifecycleStatus=In Study";
-					}
-				} else if("In Design".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=In Design";
-					} else {
-						query = "[{lifecycleStatus=In Design";
-					}
-				} else if("Re".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus.in=[Rejected,Retired]";
-					} else {
-						query = "[{lifecycleStatus.in=[Rejected,Retired]";
-					}
-				} else if("Rejected".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Rejected";
-					} else {
-						query = "[{lifecycleStatus=Rejected";
-					}
-				} else if("Retired".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Retired";
-					} else {
-						query = "[{lifecycleStatus=Retired";
-					}
-				} else {
-					if (query) {
-						query = query + ",lifecycleStatus=" + filter.value;
-					} else {
-						query = "[{lifecycleStatus=" + filter.value;
-					}
 				}
 			}
 		});
@@ -432,8 +365,11 @@ class inventoryList extends PolymerElement {
 					if(request.response[index]["@schemaLocation"]) {
 						newRecord.schema = request.response[index]["@schemaLocation"];
 					}
-					if(request.response[index].lifecycleStatus) {
-						newRecord.lifecycleStatus = request.response[index].lifecycleStatus;
+					if(request.response[index].lifecycleState) {
+						newRecord.lifecycleState = request.response[index].lifecycleState;
+					}
+					if(request.response[index].lifecycleSubState) {
+						newRecord.lifecycleSubState = request.response[index].lifecycleSubState;
 					}
 					if(request.response[index].version) {
 						newRecord.version = request.response[index].version;

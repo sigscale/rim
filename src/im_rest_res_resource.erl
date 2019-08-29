@@ -285,12 +285,18 @@ resource([last_modified | T], #{"lastUpdate" := DateTime} = M, Acc)
 		when is_list(DateTime) ->
 	LM = {im_rest:iso8601(DateTime), erlang:unique_integer([positive])},
 	resource(T, M, Acc#resource{last_modified = LM});
-resource([status | T], #resource{status = Status} = R, Acc)
-		when Status /= undefined ->
-	resource(T, R, Acc#{"lifecycleState" => im_rest:lifecycle_status(Status)});
-resource([status | T], #{"lifecycleState" := Status} = M, Acc)
-		when is_list(Status) ->
-	resource(T, M, Acc#resource{status = im_rest:lifecycle_status(Status)});
+resource([state | T], #resource{state = State} = R, Acc)
+		when State /= undefined ->
+	resource(T, R, Acc#{"lifecycleState" => State});
+resource([state | T], #{"lifecycleState" := State} = M, Acc)
+		when is_list(State) ->
+	resource(T, M, Acc#resource{state = State});
+resource([substate | T], #resource{substate = SubState} = R, Acc)
+		when SubState /= undefined ->
+	resource(T, R, Acc#{"lifecycleSubState" => SubState});
+resource([substate | T], #{"lifecycleSubState" := SubState} = M, Acc)
+		when is_list(SubState) ->
+	resource(T, M, Acc#resource{substate = SubState});
 resource([place | T], #resource{place = PlaceRef} = R, Acc)
 		when is_list(PlaceRef), length(PlaceRef) > 0 ->
 	resource(T, R, Acc#{"place" => place_ref(PlaceRef)});
@@ -945,10 +951,14 @@ sorts(["@schemaLocation" | T], Acc) ->
 	sorts(T, [#resource.schema | Acc]);
 sorts(["-@schemaLocation" | T], Acc) ->
 	sorts(T, [-#resource.schema | Acc]);
-sorts(["lifecycleStatus" | T], Acc) ->
-	sorts(T, [#resource.status | Acc]);
-sorts(["-lifecycleStatus" | T], Acc) ->
-	sorts(T, [-#resource.status | Acc]);
+sorts(["lifecycleState" | T], Acc) ->
+	sorts(T, [#resource.state | Acc]);
+sorts(["-lifecycleState" | T], Acc) ->
+	sorts(T, [-#resource.state | Acc]);
+sorts(["lifecycleSubState" | T], Acc) ->
+	sorts(T, [#resource.substate | Acc]);
+sorts(["-lifecycleSubState" | T], Acc) ->
+	sorts(T, [-#resource.substate | Acc]);
 sorts(["version" | T], Acc) ->
 	sorts(T, [#resource.version | Acc]);
 sorts(["-version" | T], Acc) ->
@@ -1303,35 +1313,35 @@ parse_filter([{like, "lifecycleState", [Like]} | T], Cond, MatchHead, MatchCondi
 	{NewMatchHead, NewMatchConditions} = case lists:last(Like) of
 		$% when Cond == all ->
 			Prefix = lists:droplast(Like),
-			{MatchHead#resource{status = Prefix ++ '_'}, MatchConditions};
+			{MatchHead#resource{state = Prefix ++ '_'}, MatchConditions};
 		_Name when Cond == all ->
-			{MatchHead#resource{status = Like}, MatchConditions};
+			{MatchHead#resource{state = Like}, MatchConditions};
 		$% when Cond == any ->
 			NewMatchCondition1 = [{'==', '$10', Like} | MatchConditions],
-			{MatchHead#resource{status = '$10'}, NewMatchCondition1}
+			{MatchHead#resource{state = '$10'}, NewMatchCondition1}
 	end,
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "lifecycleState", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(Like) ->
 	NewMatchConditions = like(Like, '$10', Cond, []),
-	NewMatchHead = MatchHead#resource{status = '$10'},
+	NewMatchHead = MatchHead#resource{state = '$10'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{exact, "lifecycleState", Name} | T], all, MatchHead, MatchConditions)
 		when is_list(Name) ->
-	parse_filter(T, all, MatchHead#resource{status = Name}, MatchConditions);
+	parse_filter(T, all, MatchHead#resource{state = Name}, MatchConditions);
 parse_filter([{exact, "lifecycleState", Name} | T], any, MatchHead, MatchConditions)
 		when is_list(Name) ->
 	NewMatchConditions = [{'==', '$10', Name} | MatchConditions],
-	parse_filter(T, any, MatchHead#resource{status = '$10'}, NewMatchConditions);
+	parse_filter(T, any, MatchHead#resource{state = '$10'}, NewMatchConditions);
 parse_filter([{notexact, "lifecycleState", Name} | T], Cond, MatchHead, MatchConditions)
 		when is_list(Name) ->
-	NewMatchHead = MatchHead#resource{status = '$10'},
+	NewMatchHead = MatchHead#resource{state = '$10'},
 	NewMatchConditions = [{'/=', '$10', Name} | MatchConditions],
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "lifecycleState", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
 	NewMatchConditions = in(In, '$10', []),
-	NewMatchHead = MatchHead#resource{status = '$10'},
+	NewMatchHead = MatchHead#resource{state = '$10'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "version", [Like]} | T], Cond, MatchHead, MatchConditions)
 		when is_list(Like) ->
@@ -1342,31 +1352,31 @@ parse_filter([{like, "version", [Like]} | T], Cond, MatchHead, MatchConditions)
 		_Name when Cond == all ->
 			{MatchHead#resource{version = Like}, MatchConditions};
 		$% when Cond == any ->
-			NewMatchCondition1 = [{'==', '$11', Like} | MatchConditions],
-			{MatchHead#resource{version = '$11'}, NewMatchCondition1}
+			NewMatchCondition1 = [{'==', '$12', Like} | MatchConditions],
+			{MatchHead#resource{version = '$12'}, NewMatchCondition1}
 	end,
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{like, "version", {all, Like}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(Like) ->
-	NewMatchConditions = like(Like, '$11', Cond, []),
-	NewMatchHead = MatchHead#resource{version = '$11'},
+	NewMatchConditions = like(Like, '$12', Cond, []),
+	NewMatchHead = MatchHead#resource{version = '$12'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{exact, "version", Name} | T], all, MatchHead, MatchConditions)
 		when is_list(Name) ->
 	parse_filter(T, all, MatchHead#resource{version = Name}, MatchConditions);
 parse_filter([{exact, "version", Name} | T], any, MatchHead, MatchConditions)
 		when is_list(Name) ->
-	NewMatchConditions = [{'==', '$11', Name} | MatchConditions],
-	parse_filter(T, any, MatchHead#resource{version = '$11'}, NewMatchConditions);
+	NewMatchConditions = [{'==', '$12', Name} | MatchConditions],
+	parse_filter(T, any, MatchHead#resource{version = '$12'}, NewMatchConditions);
 parse_filter([{notexact, "version", Name} | T], Cond, MatchHead, MatchConditions)
 		when is_list(Name) ->
-	NewMatchHead = MatchHead#resource{version = '$11'},
-	NewMatchConditions = [{'/=', '$11', Name} | MatchConditions],
+	NewMatchHead = MatchHead#resource{version = '$12'},
+	NewMatchConditions = [{'/=', '$12', Name} | MatchConditions],
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([{in, "version", {all, In}} | T], Cond, MatchHead, _MatchConditions)
 		when is_list(In) ->
-	NewMatchConditions = in(In, '$11', []),
-	NewMatchHead = MatchHead#resource{version = '$11'},
+	NewMatchConditions = in(In, '$12', []),
+	NewMatchHead = MatchHead#resource{version = '$12'},
 	parse_filter(T, Cond, NewMatchHead, NewMatchConditions);
 parse_filter([], all, MatchHead, MatchConditions) ->
 	[{MatchHead, MatchConditions, ['$_']}];
