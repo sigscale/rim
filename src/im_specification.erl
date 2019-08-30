@@ -23,7 +23,7 @@
 
 -export([gsm_bss/0, gsm_bts/0, gsm_cell/0]).
 -export([umts_rnc/0, umts_nodeb/0, umts_cell_fdd/0,
-		umts_cell_tdd_lcr/0, umts_cell_tdd_hcr/0]).
+		umts_cell_tdd_lcr/0, umts_cell_tdd_hcr/0, umts_iub_link/0]).
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
 		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
@@ -1036,6 +1036,60 @@ umts_cell_tdd_hcr() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellTDDHcr",
 					schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr"},
+			characteristic = Chars}.
+
+-spec umts_iub_link() -> specification().
+%% @doc UMTS Iub Link resource function specification.
+umts_iub_link() ->
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	IubLinkUtranCell = #specification_char{name = "iubLinkUtranCell",
+			description = "Associated UTRAN radio cells",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	IubLinkNodeBFunction = #specification_char{name = "iubLinkNodeBFunction",
+			description = "Connected UTRAN NodeB",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	IubLinkATMChannelTerminationPoint = #specification_char{name = "iubLinkATMChannelTerminationPoint",
+			description = "Associated ATM termination point",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	LayerProtocolNameList = #specification_char{name = "layerProtocolNameList",
+			description = "",
+			value_type = "string"},
+	AEnd = #specification_char{name = "aEnd",
+			description = "",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	ZEnd = #specification_char{name = "zEnd",
+			description = "",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	LinkType = #specification_char{name = "linkType",
+			description = "",
+			value_type = "string"},
+	ProtocolVersion = #specification_char{name = "protocolVersion",
+			description = "",
+			value_type = "string"},
+	Chars = [UserLabel, VnfParametersList, IubLinkUtranCell, IubLinkNodeBFunction,
+			IubLinkATMChannelTerminationPoint, LayerProtocolNameList, AEnd, ZEnd, LinkType,
+			ProtocolVersion],
+	#specification{name = "IubLink",
+			description = "UMTS Iub Link resource function specification",
+			class_type = "IubLinkSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/IubLinkSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "IubLink",
+					schema = "/resourceInventoryManagement/v3/schema/IubLink"},
 			characteristic = Chars}.
 
 -spec lte_enb() -> specification().

@@ -1138,7 +1138,7 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	IubAttr = parse_iub_attr(T2, undefined, []),
 	ClassType = "IubLink",
-%	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
@@ -1149,11 +1149,11 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 			class_type = ClassType,
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/IubLink",
-%			specification = Spec,
+			specification = Spec,
 			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [Cache | PrevCache]} | T1];
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
