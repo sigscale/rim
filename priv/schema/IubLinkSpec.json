@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/NodeBFunctionSpec",
-	"title": "UMTS NodeB Specification",
-	"description": "UMTS NodeB resource function specification",
+	"$id": "http://sigscale.org/schema/IubLinkSpec",
+	"title": "UTRAN IUBLINK Specification",
+	"description": "UTRAN Iub Link resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -11,6 +11,7 @@
 			"type": "object",
 			"properties": {
 				"resourceSpecCharacteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
@@ -26,8 +27,14 @@
 										"enum": [
 											"userLabel",
 											"vnfParametersList",
-											"peeParametersList",
-											"nodeBFunctionIubLink"
+											"iubLinkUtranCell",
+											"iubLinkATMChannelTerminationPoint",
+											"iubLinkNodeBFunction",
+											"layerProtocolNameList",
+											"aEnd",
+											"zEnd",
+											"linkType",
+											"protocolVersion"
 										]
 									}
 								}

@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/UtranCellTDD",
+	"title": "UTRAN TDD Cell",
+	"description": "UMTS Time Division Duplex (TDD)",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "UtranGenericCell"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"uarfcn",
+											"cellParameterId",
+											"primaryCcpchPower",
+											"cellCapabilityContainerTDD",
+											"sctdIndicator",
+											"dpchConstantValue"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

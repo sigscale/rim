@@ -1,0 +1,77 @@
+{
+	"$id": "http://sigscale.org/schema/UtranGenericCell",
+	"title": "UTRAN Generic Cell",
+	"description": "UMTS radio cell common properties",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"userLabel",
+											"vnfParametersList",
+											"cId",
+											"localCellId",
+											"maximumTransmissionPower",
+											"cellMode",
+											"pichPower",
+											"pchPower",
+											"fachPower",
+											"lac",
+											"rac",
+											"sac",
+											"uraList",
+											"utranCellIubLink",
+											"relatedAntennaList",
+											"relatedTmaList",
+											"operationalState",
+											"hsFlag",
+											"hsEnable",
+											"numOfHspdschs",
+											"numOfHsscchs",
+											"frameOffset",
+											"cellIndividualOffset",
+											"hcsPrio",
+											"maximumAllowedUlTxPower",
+											"snaInformation",
+											"qrxlevMin",
+											"deltaQrxlevmin",
+											"qhcs",
+											"penaltyTime",
+											"referenceTimeDifferenceToCell",
+											"readSFNIndicator",
+											"nsPlmnIdList",
+											"restrictionStateIndicator",
+											"dpcModechangeSupportIndicator",
+											"relatedSectorEquipment"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"vsDataContainer": {
+					"$ref": "genericNrm#/definitions/VsDataContainerList"
+				}
+			}
+		}
+	]
+}

@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/NodeBFunctionSpec",
-	"title": "UMTS NodeB Specification",
-	"description": "UMTS NodeB resource function specification",
+	"$id": "http://sigscale.org/schema/NodeBFunction",
+	"title": "UTRAN NodeB",
+	"description": "UTRAN NodeB resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpec"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",

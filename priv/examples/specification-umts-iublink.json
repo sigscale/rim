@@ -1,8 +1,8 @@
 {
 	"name": "IubLink",
 	"description": "UMTS Iub Link resource function specification",
-	"@type": "IubLinkFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/IubLinkFunctionSpec",
+	"@type": "IubLinkSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/IubLinkSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -13,8 +13,8 @@
 	"isBundle": false,
 	"category": "RAN",
 	"targetResourceSchema": {
-		"@type": "IubLinkFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/IubLinkFunction"
+		"@type": "IubLink",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/IubLink"
 	},
 	"relatedParty": [
 		{
@@ -41,7 +41,7 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
 		},
 		{
-			"name": "iubLinkUTRANGenericCell",
+			"name": "iubLinkUtranCell",
 			"description": "Associated UTRAN radio cells",
 			"valueType": "DnList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
@@ -59,16 +59,31 @@
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		},
 		{
-			"name": "iubLinkOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "IubLinkOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/IubLinkOptionallyContainedNrmClassList"
+			"name": "layerProtocolNameList",
+			"description": "",
+			"valueType": "string"
 		},
 		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+			"name": "aEnd",
+			"description": "",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		},
+		{
+			"name": "zEnd",
+			"description": "",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		},
+		{
+			"name": "linkType",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "protocolVersion",
+			"description": "",
+			"valueType": "string"
 		}
 	]
 }

@@ -57,10 +57,13 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/RncFunctionSpec.json \
 		$(abs_builddir)/NodeBFunctionSpec.json \
 		$(abs_builddir)/UtranGenericCellSpec.json \
+		$(abs_builddir)/UtranGenericCell.json \
 		$(abs_builddir)/UtranCellFDDSpec.json \
 		$(abs_builddir)/UtranCellTDDSpec.json \
+		$(abs_builddir)/UtranCellTDD.json \
 		$(abs_builddir)/UtranCellTDDLcrSpec.json \
 		$(abs_builddir)/UtranCellTDDHcrSpec.json \
+		$(abs_builddir)/IubLinkSpec.json \
 		$(abs_builddir)/ENBFunctionSpec.json \
 		$(abs_builddir)/EUtranGenericCellSpec.json \
 		$(abs_builddir)/EUtranCellFDDSpec.json \
@@ -288,6 +291,16 @@ check_DATA = .validation_ok
 		if ! ajv compile -s UtranCellTDDHcrSpec.json \
 			-r UtranCellTDDSpec.json \
 			-r UtranGenericCellSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s IubLinkSpec.json \
+			-r genericNrm.json \
+			-r utranNrm.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \

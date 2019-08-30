@@ -1,0 +1,44 @@
+{
+	"id": "8493562318",
+	"href": "/resourceInventoryManagement/v3/resource/8493562318",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,UtranCellTDDHcr=1",
+	"publicIdentifier": "07267931538",
+	"description": "UTRAN UMTS Time Division Duplex (TDD) high chip rate (HCR)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "UtranCellTDDHcr",
+	"@baseType": "UtranCellTDD",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "728123649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/728123649",
+		"@type": "UtranCellTDDHcrSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "schTimeSlot",
+			"value" : "5"
+		},
+		{
+			"name": "syncCase",
+			"value" : "SCH and PCCPCH allocated in a single TS"
+		}
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam2",
+			"vsDataFormatVersion": "acmeParams-v4",
+			"vsData": 32
+		}
+	]
+}

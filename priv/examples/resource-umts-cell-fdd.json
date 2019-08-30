@@ -1,0 +1,44 @@
+{
+	"id": "8593462918",
+	"href": "/resourceInventoryManagement/v3/resource/8593462918",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,UtranCellFDD=1",
+	"publicIdentifier": "07567339538",
+	"description": "UMTS Frequency Division Duplex (FDD)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "UtranCellFDD",
+	"@baseType": "UtranGenericCell",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "798125649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/798125649",
+		"@type": "UtranCellFDDSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "cId",
+			"value" : "645"
+		},
+		{
+			"name": "aichPower",
+			"value" : "-20.9"
+		}
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam1",
+			"vsDataFormatVersion": "acmeParams-v3",
+			"vsData": 62
+		}
+	]
+}

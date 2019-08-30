@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/UtranCellFDDSpec",
-	"title": "UTRAN FDD Cell Specification",
-	"description": "UMTS Frequency Division Duplex (FDD) radio resource function specification",
+	"$id": "http://sigscale.org/schema/UtranCellFDD",
+	"title": "UTRAN FDD Cell",
+	"description": "UTRAN Frequency Division Duplex (FDD)",
+	"type": "object",
 	"allOf": [
 		{
-			"$ref": "UtranGenericCellSpec"
+			"$ref": "UtranGenericCell"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
 					"type": "array",
 					"items": {
-						"oneOf": [
+						"allOf": [
 							{
-								"$ref": "UtranGenericCellSpec#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",

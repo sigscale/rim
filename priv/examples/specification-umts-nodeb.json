@@ -51,18 +51,6 @@
 			"description": "DN of a logical link to an RNC as seen by a NodeB",
 			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
-		},
-		{
-			"name": "nodeBFunctionOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "NodeBFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/NodeBFunctionOptionallyContainedNrmClassList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

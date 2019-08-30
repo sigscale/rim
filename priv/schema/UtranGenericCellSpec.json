@@ -63,11 +63,7 @@
 						"nsPlmnIdList",
 						"restrictionStateIndicator",
 						"dpcModechangeSupportIndicator",
-						"relatedSectorEquipment",
-						"utranRelation",
-						"gsmRelation",
-						"utranGenericCellOptionallyContainedNrmClass",
-						"vsDataContainer"
+						"relatedSectorEquipment"
 					]
 				}
 			}

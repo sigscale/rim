@@ -22,6 +22,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-umts-cell-fdd.json \
 		$(abs_builddir)/specification-umts-cell-tdd-lcr.json \
 		$(abs_builddir)/specification-umts-cell-tdd-hcr.json \
+		$(abs_builddir)/specification-umts-iublink.json \
 		$(abs_builddir)/specification-lte-enb.json \
 		$(abs_builddir)/specification-lte-cell-fdd.json \
 		$(abs_builddir)/specification-lte-cell-tdd.json \
@@ -72,7 +73,12 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
-		$(abs_builddir)/resource-umts-rnc.json
+		$(abs_builddir)/resource-umts-nodeb.json \
+		$(abs_builddir)/resource-umts-rnc.json \
+		$(abs_builddir)/resource-umts-cell-fdd.json \
+		$(abs_builddir)/resource-umts-cell-tdd-hcr.json \
+		$(abs_builddir)/resource-umts-cell-tdd-lcr.json \
+		$(abs_builddir)/resource-umts-iub.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -171,6 +177,14 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-cell-tdd-hcr.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/IubLinkSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-umts-iublink.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
@@ -556,7 +570,17 @@ check_DATA = .validation_ok
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-cell.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-umts-nodeb.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-umts-rnc.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-umts-cell-fdd.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-umts-cell-tdd-hcr.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-umts-cell-tdd-lcr.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-umts-iub.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi

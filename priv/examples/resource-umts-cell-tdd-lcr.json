@@ -1,0 +1,44 @@
+{
+	"id": "5493862311",
+	"href": "/resourceInventoryManagement/v3/resource/5493862311",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,UtranCellTDDLcr=1",
+	"publicIdentifier": "07167930538",
+	"description": "UTRAN UMTS Time Division Duplex (TDD) low chip rate (LCR)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "UtranCellTDDLcr",
+	"@baseType": "UtranCellTDD",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "718023649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/718023649",
+		"@type": "UtranCellTDDLcrSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "relatedSectorEquipment",
+			"value" : "rse"
+		},
+		{
+			"name": "dwPchPower",
+			"value" : "-10.5"
+		}
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam3",
+			"vsDataFormatVersion": "acmeParams-v5",
+			"vsData": 91
+		}
+	]
+}

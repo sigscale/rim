@@ -1,0 +1,46 @@
+{
+	"$id": "http://sigscale.org/schema/RncFunction",
+	"title": "UTRAN IUBLINK",
+	"description": "UTRAN Iub Link resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"iubLinkUtranCell",
+											"iubLinkATMChannelTerminationPoint",
+											"iubLinkNodeBFunction",
+											"layerProtocolNameList",
+											"aEnd",
+											"zEnd",
+											"linkType",
+											"protocolVersion"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

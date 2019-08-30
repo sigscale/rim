@@ -333,30 +333,6 @@
 			"description": "Closed Loop Mode1 Support Indicator in power control (3GPP 25.423)",
 			"valueType": "ClosedLoopMode1",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/ClosedLoopMode1"
-		},
-		{
-			"name": "utranRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
-			"valueType": "UtranRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
-		},
-		{
-			"name": "gsmRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
-			"valueType": "GsmRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
-		},
-		{
-			"name": "utranCellFDDOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "UtranCellFDDOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellFDDOptionallyContainedNrmClassList"
 		}
 	]
 }

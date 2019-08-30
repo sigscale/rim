@@ -309,30 +309,6 @@
 			"description": "Defines the time slot configuration information (3GPP 25.433)",
 			"valueType": "TimeSlotLCRList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/TimeSlotLCRList"
-		},
-		{
-			"name": "utranRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
-			"valueType": "UtranRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
-		},
-		{
-			"name": "gsmRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
-			"valueType": "GsmRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
-		},
-		{
-			"name": "utranCellTDDLcrOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "UtranCellTDDLcrOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranCellTDDLcrOptionallyContainedNrmClassList"
 		}
 	]
 }
