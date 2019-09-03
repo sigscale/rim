@@ -30,6 +30,11 @@
 	],
 	"resourceSpecCharacteristic": [
 		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
 			"name": "userLabel",
 			"description": "A user-friendly (and user assignable) name of this object",
 			"valueType": "string"
