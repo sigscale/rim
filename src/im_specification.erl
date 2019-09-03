@@ -47,6 +47,9 @@
 -spec gsm_bss() -> specification().
 %% @doc GSM Base Station Subsystem (BSS) resource specification.
 gsm_bss() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -62,7 +65,7 @@ gsm_bss() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, BtsSiteMgr, VsDataContainer],
+	Chars = [Id, UserLabel, VnfParametersList, BtsSiteMgr, VsDataContainer],
 	#specification{name = "BssFunction",
 			description = "GSM Base Station Subsystem (BSS)",
 			class_type = "BssFunctionSpecification",
@@ -78,6 +81,9 @@ gsm_bss() ->
 -spec gsm_bts() -> specification().
 %% @doc GSM Base Transceive Station (BTS) resource specification.
 gsm_bts() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -109,7 +115,7 @@ gsm_bts() ->
 			description = "Inter-RAT energy saving policies information.",
 			value_type = "InterRatEsPoliciesList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"},
-	Chars = [UserLabel, VnfParametersList, Latitude, Longitude,
+	Chars = [Id, UserLabel, VnfParametersList, Latitude, Longitude,
 			OperationalState, GsmCell, VsDataContainer, InterRatEsPolicies],
 	#specification{name = "BtsSiteMgr",
 			description = "GSM Base Transceiver Station (BTS)",
@@ -126,6 +132,9 @@ gsm_bts() ->
 -spec gsm_cell() -> specification().
 %% @doc GSM radio cell resource specification.
 gsm_cell() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -211,7 +220,7 @@ gsm_cell() ->
 			description = "Inter-RAT energy saving policies information",
 			value_type = "InterRatEsPoliciesList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/InterRatEsPoliciesList"},
-	Chars = [UserLabel, VnfParametersList, CellIdentity, CellAllocation, Ncc,
+	Chars = [Id, UserLabel, VnfParametersList, CellIdentity, CellAllocation, Ncc,
 			Bcc, Lac, Mcc, Mnc, Rac, Racc, Tsc, RxrLevAccessMinM, MsTxPwrMaxCCH,
 			RfHoppingEnabled, HoppingSequenceList, PlmnPermitted, GsmRelation,
 			UtranRelation, EUtranRelation, VsDataContainer, InterRatEsPolicies],
@@ -230,6 +239,9 @@ gsm_cell() ->
 -spec umts_rnc() -> specification().
 %% @doc UMTS Radio Network Controller (RNC) resource specification.
 umts_rnc() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -284,7 +296,7 @@ umts_rnc() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList, Mcc, Mnc, RncId,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList, Mcc, Mnc, RncId,
 			SiptoSupported, TceIDMappingInfoList, SharNetTceMappingInfoList,
 			UtranCellFDD, UtranCellTDDLcr, UtranCellTDDHcr, IubLink,
 			VsDataContainer],
@@ -303,6 +315,9 @@ umts_rnc() ->
 -spec umts_nodeb() -> specification().
 %% @doc UMTS NodeB resource specification.
 umts_nodeb() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -322,7 +337,7 @@ umts_nodeb() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 			NodeBFunctionIubLink, VsDataContainer],
 	#specification{name = "NodeBFunction",
 			description = "UMTS NodeB",
@@ -339,6 +354,9 @@ umts_nodeb() ->
 -spec umts_cell_fdd() -> specification().
 %% @doc UMTS Frequency Division Duplex (FDD) radio cell resource specification.
 umts_cell_fdd() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -554,7 +572,7 @@ umts_cell_fdd() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, CId, LocalCellId,
+	Chars = [Id, UserLabel, VnfParametersList, CId, LocalCellId,
 			MaximumTransmissionPower, CellMode, PichPower, PchPower,
 			FachPower, Lac, Rac, Sac, UraList, UtranCellIubLink,
 			RelatedAntennaList, RelatedTmaList, OperationalState,
@@ -585,6 +603,9 @@ umts_cell_fdd() ->
 -spec umts_cell_tdd_lcr() -> specification().
 %% @doc UMTS Time Division Duplex(TDD) low cell rate (LCR) radio cell resource specification.
 umts_cell_tdd_lcr() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -784,7 +805,7 @@ umts_cell_tdd_lcr() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, CId, LocalCellId,
+	Chars = [Id, UserLabel, VnfParametersList, CId, LocalCellId,
 			MaximumTransmissionPower, CellMode, PichPower, PchPower,
 			FachPower, Lac, Rac, Sac, UraList, UtranCellIubLink,
 			RelatedAntennaList, RelatedTmaList, OperationalState,
@@ -813,6 +834,9 @@ umts_cell_tdd_lcr() ->
 -spec umts_cell_tdd_hcr() -> specification().
 %% @doc UMTS Time Division Duplex(TDD) high cell rate (HCR) radio cell resource specification.
 umts_cell_tdd_hcr() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1012,7 +1036,7 @@ umts_cell_tdd_hcr() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, CId, LocalCellId,
+	Chars = [Id, UserLabel, VnfParametersList, CId, LocalCellId,
 			MaximumTransmissionPower, CellMode, PichPower, PchPower,
 			FachPower, Lac, Rac, Sac, UraList, UtranCellIubLink,
 			RelatedAntennaList, RelatedTmaList, OperationalState,
@@ -1041,6 +1065,9 @@ umts_cell_tdd_hcr() ->
 -spec umts_iub_link() -> specification().
 %% @doc UMTS Iub Link resource function specification.
 umts_iub_link() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1077,7 +1104,7 @@ umts_iub_link() ->
 	ProtocolVersion = #specification_char{name = "protocolVersion",
 			description = "",
 			value_type = "string"},
-	Chars = [UserLabel, VnfParametersList, IubLinkUtranCell, IubLinkNodeBFunction,
+	Chars = [Id, UserLabel, VnfParametersList, IubLinkUtranCell, IubLinkNodeBFunction,
 			IubLinkATMChannelTerminationPoint, LayerProtocolNameList, AEnd, ZEnd, LinkType,
 			ProtocolVersion],
 	#specification{name = "IubLink",
@@ -1095,6 +1122,9 @@ umts_iub_link() ->
 -spec lte_enb() -> specification().
 %% @doc LTE eNodeB resource specification.
 lte_enb() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1195,7 +1225,7 @@ lte_enb() ->
 			description = "Energy saving policies information",
 			value_type = "ESPoliciesList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList, IntraANRSwitch,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList, IntraANRSwitch,
 			IRATANRSwitch, ENBId, X2BlackList, X2WhiteList, X2HOBlackList,
 			X2IpAddressList, TceIDMappingInfoList, SharNetTceMappingInfoList,
 			NetListeningRSForRIBS, EUtranCellFDD, EUtranCellTDD, EP_RP_EPS,
@@ -1216,6 +1246,9 @@ lte_enb() ->
 -spec lte_cell_fdd() -> specification().
 %% @doc LTE Frequency Division Duplex (FDD) radio cell resource specification.
 lte_cell_fdd() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1359,7 +1392,7 @@ lte_cell_fdd() ->
 			description = "Energy saving policies information",
 			value_type = "ESPoliciesList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList, CellLocalId,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList, CellLocalId,
 			CellLocalIdList, CellSize, PLMNIdList, CellAccessInfoList, Tac,
 			Pci, PciList, MaximumTransmissionPower, PartOfSectorPower,
 			ReferenceSignalPower , Pb, RelatedTmaList, RelatedAntennaList,
@@ -1384,6 +1417,9 @@ lte_cell_fdd() ->
 -spec lte_cell_tdd() -> specification().
 %% @doc LTE Time Division Duplex (TDD) radio cell resource specification.
 lte_cell_tdd() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1531,7 +1567,7 @@ lte_cell_tdd() ->
 			description = "Energy saving policies information",
 			value_type = "ESPoliciesList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList, CellLocalId,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList, CellLocalId,
 			CellLocalIdList, CellSize, PLMNIdList, CellAccessInfoList, Tac,
 			Pci, PciList, MaximumTransmissionPower, PartOfSectorPower,
 			ReferenceSignalPower , Pb, RelatedTmaList, RelatedAntennaList,
@@ -1556,6 +1592,9 @@ lte_cell_tdd() ->
 -spec nr_gnb_du() -> specification().
 %% @doc NR gNB Distributed Unit (DU) resource function specification.
 nr_gnb_du() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1583,7 +1622,7 @@ nr_gnb_du() ->
 			description = "Identifies the Distributed Entity of an NR node (3GPP 38.473)",
 			value_type = "GnbName",
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbName"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 				GnbId, GnbIdLength, GnbDUId, GnbDuName],
 	#specification{name = "GNBDUFunction",
 			description = "5G NR gNB Distributed Unit (DU)",
@@ -1600,6 +1639,9 @@ nr_gnb_du() ->
 -spec nr_gnb_cu_cp() -> specification().
 %% @doc NR gNB Central Unit (CU) Control Plane (CP) resource specification.
 nr_gnb_cu_cp() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1627,7 +1669,7 @@ nr_gnb_cu_cp() ->
 			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			value_type = "PlmnIdList",
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 			GnbId, GnbIdLength, GnbCuName, PLMNIdList],
 	#specification{name = "GNBCUCPFunction",
 			description = "5G NR gNB Central Unit (CU) Control Plane (CP)",
@@ -1644,6 +1686,9 @@ nr_gnb_cu_cp() ->
 -spec nr_gnb_cu_up() -> specification().
 %% @doc NR gNB Central Unit (CU) User Plane (UP) resource specification.
 nr_gnb_cu_up() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1667,7 +1712,7 @@ nr_gnb_cu_up() ->
 			description = "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			value_type = "PlmnIdList",
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 			GnbId, GnbIdLength, PLMNIdList],
 	#specification{name = "GNBCUUPFunction",
 			description = "5G NR gNB Central Unit (CU) User Plane (UP)",
@@ -1684,6 +1729,9 @@ nr_gnb_cu_up() ->
 -spec nr_cell_cu() -> specification().
 %% @doc NR Cell Central Unit (CU) resource function specification.
 nr_cell_cu() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1725,7 +1773,7 @@ nr_cell_cu() ->
 			description = "Ratio for the split between the supported S-NSSAI lists",
 			value_type = "RrmPolicyRatio2",
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/RrmPolicyRatio2"},
-	Chars = [UserLabel, VnfParametersList, PeeParametersList,
+	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 			NCI, PLMNIdList, SNSSAIList, RRMPolicyType,
 			RRMPolicy, RRMPolicyNSSIId, RRMPolicyRatio, RRMPolicyRatio2],
 	#specification{name = "NRCellCU",
@@ -1743,6 +1791,9 @@ nr_cell_cu() ->
 -spec nr_cell_du() -> specification().
 %% @doc NR Cell Distributed Unit (DU) resource function specification.
 nr_cell_du() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1800,7 +1851,7 @@ nr_cell_du() ->
 	BSChannelBwSUL = #specification_char{name = "bSChannelBwSUL",
 			description = "BS Channel bandwidth in MHz for supplementary uplink (3GPP 38.104 clause 5.3)",
 			value_type = "integer"},
-	Chars = [UserLabel, VnfParametersList, OperationalState,
+	Chars = [Id, UserLabel, VnfParametersList, OperationalState,
 			AdministrativeState, AvailabilityStatus, NCI, PLMNIdList,
 			SNSSAIList, NRpci, NRTac, ARFCNUL, ARFCNDL, ARFCNSUL,
 			BSChannelBwUL, BSChannelBwDL, BSChannelBwSUL],
@@ -1819,6 +1870,9 @@ nr_cell_du() ->
 -spec nr_sector_carrier() -> specification().
 %% @doc NR Sector Carrier resource function specification.
 nr_sector_carrier() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1845,7 +1899,7 @@ nr_sector_carrier() ->
 	BSChannelBwDL = #specification_char{name = "bSChannelBwDL",
 			description = "BS Channel bandwidth in MHz for downlink (3GPP 38.104 clause 5.3)",
 			value_type = "integer"},
-	Chars = [UserLabel, VnfParametersList, TxDirection,
+	Chars = [Id, UserLabel, VnfParametersList, TxDirection,
 			ConfiguredMaxTxPower, ARFCNUL, ARFCNDL, BSChannelBwUL, BSChannelBwDL],
 	#specification{name = "NRSectorCarrier",
 			description = "5G NR Sector Carrier resource function specification",
@@ -1862,12 +1916,13 @@ nr_sector_carrier() ->
 -spec ngc_slice() -> specification().
 %% @doc 5G Core (5GC) Network Slice resource function specification.
 ngc_slice() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	DnPrefix = #specification_char{name = "dnPrefix",
 			description = "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			value_type = "Dn",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
-	Id = #specification_char{name = "id",
-			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1893,7 +1948,7 @@ ngc_slice() ->
 			description = "Service Profiles (3GPP TS 28.541 clause 6.3.3)",
 			value_type = "ServiceProfileList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"},
-	Chars = [DnPrefix, Id, UserLabel, UserDefinedNetworkType, SetOfMcc, NSSIId,
+	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType, SetOfMcc, NSSIId,
 			OperationalState, AdministrativeState, ServiceProfileList, ServiceProfileList],
 	#specification{name = "NetworkSlice",
 			description = "5G Network Slice",
@@ -1910,12 +1965,13 @@ ngc_slice() ->
 -spec ngc_slice_subnet() -> specification().
 %% @doc 5G Core (5GC) Network Slice Subnet resource function specification.
 ngc_slice_subnet() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	DnPrefix = #specification_char{name = "dnPrefix",
 			description = "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			value_type = "Dn",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
-	Id = #specification_char{name = "id",
-			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -1949,7 +2005,7 @@ ngc_slice_subnet() ->
 			description = "Slice Profiles (3GPP TS 28.541 clause 6.3.4)",
 			value_type = "SliceProfileList",
 			value_schema = "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/SliceProfileList"},
-	Chars = [DnPrefix, Id, UserLabel, UserDefinedNetworkType,
+	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType,
 			SetOfMcc, MFIdList, ConstituentNSSIIdList,
 			OperationalState, AdministrativeState, NsInfo, SliceProfileList],
 	#specification{name = "NetworkSliceSubnet",
@@ -1968,6 +2024,7 @@ ngc_slice_subnet() ->
 %% @doc 5G Access and Mobility Management Function (AMF) resource function specification.
 ngc_amf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2022,6 +2079,7 @@ ngc_amf() ->
 %% @doc 5G Session Management Function (SMF) resource function specification.
 ngc_smf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2068,6 +2126,7 @@ ngc_smf() ->
 %% @doc 5G User Plane Function (UPF) resource function specification.
 ngc_upf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2105,6 +2164,7 @@ ngc_upf() ->
 %% @doc 5G Non 3GPP Inter Working Function (N3IWF) resource function specification.
 ngc_n3iwf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2134,6 +2194,7 @@ ngc_n3iwf() ->
 %% @doc 5G Policy Control Function (PCF) resource function specification.
 ngc_pcf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2176,6 +2237,7 @@ ngc_pcf() ->
 %% @doc 5G Authentication Server Function (AUSF) resource function specification.
 ngc_ausf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2218,6 +2280,7 @@ ngc_ausf() ->
 %% @doc 5G Unified Data Management (UDM) resource function specification.
 ngc_udm() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2260,6 +2323,7 @@ ngc_udm() ->
 %% @doc 5G Unified Data Repository (UDR) resource function specification.
 ngc_udr() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2302,6 +2366,7 @@ ngc_udr() ->
 %% @doc 5G Unified Data Storage Function (UDSF) resource function specification.
 ngc_udsf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2344,7 +2409,7 @@ ngc_udsf() ->
 %% @doc 5G Network Repository Function (NRF) resource function specification.
 ngc_nrf() ->
 	ID = #specification_char{name = "id",
-			description = "",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2391,6 +2456,7 @@ ngc_nrf() ->
 %% @doc 5G Network Slice Selection Function (NSSF) resource function specification.
 ngc_nssf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2437,7 +2503,7 @@ ngc_nssf() ->
 %% @doc 5G Short Message Service Function (SMSF) resource function specification.
 ngc_smsf() ->
 	ID = #specification_char{name = "id",
-			description = "",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2476,6 +2542,7 @@ ngc_smsf() ->
 %% @doc 5G Location Management Function (LMF) resource function specification.
 ngc_lmf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2505,6 +2572,7 @@ ngc_lmf() ->
 %% @doc 5G NG Equipment Identity Register (ngEIR) resource function specification.
 ngc_ngeir() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2547,6 +2615,7 @@ ngc_ngeir() ->
 %% @doc 5G Security Edge Protection Proxy (SEPP) resource function specification.
 ngc_sepp() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2576,6 +2645,7 @@ ngc_sepp() ->
 %% @doc 5G Network Data Analytics Function (NWDAF) resource function specification.
 ngc_nwdaf() ->
 	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
@@ -2617,6 +2687,9 @@ ngc_nwdaf() ->
 -spec epc_sgw() -> specification().
 %% @doc EPC Serving Gateway (SGW) resource specification.
 epc_sgw() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2644,7 +2717,7 @@ epc_sgw() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, PLMNIdList, TACList,
+	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TACList,
 			ContainedNrmClass, EP_RP_EPS, VsDataContainer],
 	#specification{name = "ServingGWFunction",
 			description = "EPC Serving Gateway (SGW)",
@@ -2661,6 +2734,9 @@ epc_sgw() ->
 -spec epc_pgw() -> specification().
 %% @doc EPC PDN Gateway (PGW) resource specification.
 epc_pgw() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2680,7 +2756,7 @@ epc_pgw() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, ContainedNrmClass,
+	Chars = [ID, UserLabel, VnfParametersList, ContainedNrmClass,
 			EP_RP_EPS, VsDataContainer],
 	#specification{name = "PGWFunction",
 			description = "EPC PDN Gateway (PGW)",
@@ -2697,6 +2773,9 @@ epc_pgw() ->
 -spec epc_epdg() -> specification().
 %% @doc EPC evolved Packet Data Gateway (ePDG) resource specification.
 epc_epdg() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2720,7 +2799,7 @@ epc_epdg() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
 			EP_RP_EPS, VsDataContainer],
 	#specification{name = "EPDGFunction",
 			description = "EPC evolved Packet Data Gateway (ePDG)",
@@ -2737,6 +2816,9 @@ epc_epdg() ->
 -spec epc_mme() -> specification().
 %% @doc EPC Mobility Management Entity (MME) resource specification.
 epc_mme() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2768,7 +2850,7 @@ epc_mme() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, MMEC, MMEPool, ContainedNrmClass,
+	Chars = [ID, UserLabel, VnfParametersList, MMEC, MMEPool, ContainedNrmClass,
 			EP_RP_EPS, EP_N26, VsDataContainer],
 	#specification{name = "MMEFunction",
 			description = "EPC Mobility Management Entity (MME)",
@@ -2785,6 +2867,9 @@ epc_mme() ->
 -spec epc_pcrf() -> specification().
 %% @doc EPC Policy Control Rules Function (PCRF) resource specification.
 epc_pcrf() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2808,7 +2893,7 @@ epc_pcrf() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass,
 			EP_RP_EPS, VsDataContainer],
 	#specification{name = "PCRFFunction",
 			description = "EPC Policy Control Rules Function (PCRF)",
@@ -2825,6 +2910,9 @@ epc_pcrf() ->
 -spec core_msc() -> specification().
 %% @doc Core Mobile Switching Center (MSC) Server resource specification.
 core_msc() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2891,7 +2979,7 @@ core_msc() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, MccList, MncList, LacList,
+	Chars = [ID, UserLabel, VnfParametersList, MccList, MncList, LacList,
 			SacList, GcaList, MscId, MscServerFunctionGsmCell,
 			MscServerFunctionExternalGsmCell, MscServerFunctionCsMgwFunction,
 			NriList, MscServerFunctionMscPool, DefaultMsc, IucsLink,
@@ -2911,6 +2999,9 @@ core_msc() ->
 -spec core_mgw() -> specification().
 %% @doc Core Circuit Switched (CS) Media Gateway (MGW) resource specification.
 core_mgw() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -2934,7 +3025,7 @@ core_mgw() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, CsMgwFunctionMscServerFunction,
+	Chars = [ID, UserLabel, VnfParametersList, CsMgwFunctionMscServerFunction,
 			CsMgwFunctionIucsLink, CsMgwFunctionALink, VsDataContainer],
 	#specification{name = "CsMgwFunction",
 			description = "Core Circuit Switched (CS) Media Gateway (MGW)",
@@ -2951,6 +3042,9 @@ core_mgw() ->
 -spec core_sgsn() -> specification().
 %% @doc Core Serving GPRS Support Node (SGSN) resource specification.
 core_sgsn() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3009,7 +3103,7 @@ core_sgsn() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, MccList, MncList, LacList,
+	Chars = [ID, UserLabel, VnfParametersList, MccList, MncList, LacList,
 			SacList, SgsnId, SgsnFunctionGsmCell, SgsnFunctionExternalGsmCell,
 			SgsnFunctionMscPool, NriList, ProceduralStatus, IupsLink, GbLink,
 			VsDataContainer],
@@ -3028,6 +3122,9 @@ core_sgsn() ->
 -spec core_ggsn() -> specification().
 %% @doc Core Gateway GPRS Support Node (GGSN) resource specification.
 core_ggsn() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3043,7 +3140,7 @@ core_ggsn() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, ProceduralStatus, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, ProceduralStatus, VsDataContainer],
 	#specification{name = "GgsnFunction",
 			description = "Core Gateway GPRS Support Node (GGSN)",
 			class_type = "GgsnFunctionSpecification",
@@ -3059,6 +3156,9 @@ core_ggsn() ->
 -spec core_auc() -> specification().
 %% @doc Core Authentication Center (AUC) resource specification.
 core_auc() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3070,7 +3170,7 @@ core_auc() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "AucFunction",
 			description = "Core Authentication Center (AUC)",
 			class_type = "AucFunctionSpecification",
@@ -3086,6 +3186,9 @@ core_auc() ->
 -spec core_hlr() -> specification().
 %% @doc Core Home Location Register (HLR) resource specification.
 core_hlr() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3097,7 +3200,7 @@ core_hlr() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "HlrFunction",
 			description = "Core Home Location Register (HLR)",
 			class_type = "HlrFunctionSpecification",
@@ -3113,6 +3216,9 @@ core_hlr() ->
 -spec core_eir() -> specification().
 %% @doc Core Equipment Identity Register (EIR) resource specification.
 core_eir() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3124,7 +3230,7 @@ core_eir() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "EirFunction",
 			description = "Core Equipment Identity Register (EIR)",
 			class_type = "EirFunctionSpecification",
@@ -3140,6 +3246,9 @@ core_eir() ->
 -spec core_mnpsrf() -> specification().
 %% @doc Core Mobile Number Portability-Signaling Relay Function (MNP-SRF) resource specification.
 core_mnpsrf() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3151,7 +3260,7 @@ core_mnpsrf() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "MnpSrfFunction",
 			description = "Core Mobile Number Portability-Signaling Relay Function (MNP-SRF)",
 			class_type = "MnpSrfFunctionSpecification",
@@ -3167,6 +3276,9 @@ core_mnpsrf() ->
 -spec core_cgf() -> specification().
 %% @doc Core Charging Gateway Function (CGF) resource specification.
 core_cgf() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3178,7 +3290,7 @@ core_cgf() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "CgfFunction",
 			description = "Core Charging Gateway Function (CGF)",
 			class_type = "CgfFunctionSpecification",
@@ -3194,6 +3306,9 @@ core_cgf() ->
 -spec ims_as() -> specification().
 %% @doc IMS Application Server (AS) resource specification.
 ims_as() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3213,7 +3328,7 @@ ims_as() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "ASFunction",
 			description = "IMS Application Server (AS)",
 			class_type = "ASFunctionSpecification",
@@ -3229,6 +3344,9 @@ ims_as() ->
 -spec ims_hss() -> specification().
 %% @doc IMS Home Subscriber Server (HSS) resource specification.
 ims_hss() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3248,7 +3366,7 @@ ims_hss() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "HSSFunction",
 			description = "IMS Home Subscriber Server (HSS)",
 			class_type = "HSSFunctionSpecification",
@@ -3264,6 +3382,9 @@ ims_hss() ->
 -spec ims_pcscf() -> specification().
 %% @doc IMS Proxy Call Session Control Function (P-CSCF) resource specification.
 ims_pcscf() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3283,7 +3404,7 @@ ims_pcscf() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "PCSCFFunction",
 			description = "IMS Proxy Call Session Control Function (P-CSCF)",
 			class_type = "PCSCFFunctionSpecification",
@@ -3299,6 +3420,9 @@ ims_pcscf() ->
 -spec ims_scscf() -> specification().
 %% @doc  IMS Serving Call Session Control Function (S-CSCF) resource specification.
 ims_scscf() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3318,7 +3442,7 @@ ims_scscf() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "SCSCFFunction",
 			description = "IMS Serving Call Session Control Function (S-CSCF)",
 			class_type = "SCSCFFunctionSpecification",
@@ -3334,6 +3458,9 @@ ims_scscf() ->
 -spec ims_icscf() -> specification().
 %% @doc IMS Interrogating Call Session Control Function (I-CSCF) resource specification.
 ims_icscf() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3353,7 +3480,7 @@ ims_icscf() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "ICSCFFunction",
 			description = "IMS Interrogating Call Session Control Function (I-CSCF)",
 			class_type = "ICSCFFunctionSpecification",
@@ -3396,6 +3523,9 @@ pee_me() ->
 -spec epcn3ai_proxy() -> specification().
 %% @doc EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy resource function specification.
 epcn3ai_proxy() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3407,7 +3537,7 @@ epcn3ai_proxy() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "3GPPAAAProxyFunction",
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy",
 			class_type = "3GPPAAAProxyFunctionSpecification",
@@ -3423,6 +3553,9 @@ epcn3ai_proxy() ->
 -spec epcn3ai_server() -> specification().
 %% @doc EPCN3AI 3GPP Authentication, Authorization and Accounting Server resource function specification.
 epcn3ai_server() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	UserLabel = #specification_char{name = "userLabel",
 			description = "A user-friendly (and user assignable) name of this object",
 			value_type = "string"},
@@ -3434,7 +3567,7 @@ epcn3ai_server() ->
 			description = "Container for vendor specific data",
 			value_type = "VsDataContainerList",
 			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
-	Chars = [UserLabel, VnfParametersList, VsDataContainer],
+	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "3GPPAAAServerFunction",
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Server",
 			class_type = "3GPPAAAServerFunctionSpecification",
