@@ -41,7 +41,10 @@
 		iucs :: map() | undefined,
 		iups :: map() | undefined,
 		iur :: map() | undefined,
-		fdds = [] :: [string()]}).
+		fdds = [] :: [resource_rel()],
+		tdd_lcrs = [] :: [resource_rel()],
+		tdd_hcrs = [] :: [resource_rel()],
+		iubs = [] :: [resource_rel()]}).
 -type utran_state() :: #utran_state{}.
 
 -record(eutran_state,

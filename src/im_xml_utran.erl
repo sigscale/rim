@@ -181,10 +181,10 @@ parse_rnc({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_rnc({endElement, _Uri, "RncFunction", QName},
-		[#state{parse_state =  #utran_state{fdds = Fdds}, location = Location,
+		[#state{parse_state =  #utran_state{fdds = Fdds, tdd_lcrs = Lcrs,
+		tdd_hcrs = Hcrs, iubs = IubLinks}, location = Location,
 		dn_prefix = [RncDn | _], stack = Stack, spec_cache = Cache},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
-	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
 	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -200,7 +200,8 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
 			specification = Spec,
-			characteristic = lists:reverse([UtranCellFDD, PeeParam | RncAttr])},
+			characteristic = lists:reverse([PeeParam | RncAttr]),
+			related = [Fdds, Lcrs, Hcrs, IubLinks]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -308,7 +309,7 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 		spec_cache = Cache, location = Location},
 		#state{parse_state = UtranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#utran_state{fdds = Fdds} = UtranState,
+	#utran_state{fdds = FddRels} = UtranState,
 	ClassType = "UtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -326,9 +327,11 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 			specification = Spec,
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
-		{ok, #resource{}} ->
+		{ok, #resource{id = Id}} ->
+			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
+					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
 			[PrevState#state{
-					parse_state = UtranState#utran_state{fdds = [FddDn | Fdds]},
+					parse_state = UtranState#utran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -622,7 +625,9 @@ parse_tdd_hcr({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 		[#state{dn_prefix = [TddHcrDn | _], stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		#state{parse_state = UtranState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#utran_state{tdd_hcrs = HcrRels} = UtranState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	TddHcrAttr = parse_tdd_hcr_attr(T2, undefined, []),
 	ClassType = "UtranCellTDDHcr",
@@ -636,8 +641,11 @@ parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 			specification = Spec,
 			characteristic = TddHcrAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id} = _R} ->
+			HcrRel = #resource_rel{id = Id, name = TddHcrDn, type = "contains",
+					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = UtranState#utran_state{tdd_hcrs = [HcrRel | HcrRels]}} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -879,7 +887,9 @@ parse_tdd_lcr({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
 		[#state{dn_prefix = [TddLcrDn | _], stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		#state{parse_state = UtranState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#utran_state{tdd_lcrs = LcrRels} = UtranState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	TddLcrAttr = parse_tdd_lcr_attr(T2, undefined, []),
 	ClassType = "UtranCellTDDLcr",
@@ -893,8 +903,11 @@ parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
 			specification = Spec,
 			characteristic = TddLcrAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id} = _R} ->
+			LcrRel = #resource_rel{id = Id, name = TddLcrDn, type = "contains",
+					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = UtranState#utran_state{tdd_lcrs = [LcrRel | LcrRels]}} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -1134,7 +1147,9 @@ parse_iub({startElement, _, _, QName, Attributes},
 parse_iub({endElement, _Uri, "IubLink", QName},
 		[#state{dn_prefix = [IubDn | _], stack = Stack,
 		spec_cache = Cache, location = Location},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		#state{spec_cache = PrevCache,
+		parse_state = UtranState} = PrevState | T1]) ->
+	#utran_state{iubs = IubRels} = UtranState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	IubAttr = parse_iub_attr(T2, undefined, []),
 	ClassType = "IubLink",
@@ -1152,8 +1167,11 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 			specification = Spec,
 			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id} = _R} ->
+			IubRel = #resource_rel{id = Id, name = IubDn, type = "contains",
+					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = UtranState#utran_state{iubs = [IubRel | IubRels]}} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
