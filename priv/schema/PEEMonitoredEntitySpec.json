@@ -21,6 +21,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"meId",
 											"peeMeDescription",
 											"peeMeConfiguration"

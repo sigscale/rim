@@ -25,6 +25,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"userLabel",
 											"vnfParametersList",
 											"peeParametersList",

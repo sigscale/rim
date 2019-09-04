@@ -28,6 +28,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"schPower",
 											"temporaryOffset1",
 											"syncCase",

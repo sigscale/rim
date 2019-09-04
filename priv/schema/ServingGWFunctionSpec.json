@@ -26,6 +26,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"userLabel",
 											"vnfParametersList",
 											"pLMNIdList",

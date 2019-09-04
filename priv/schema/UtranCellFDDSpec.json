@@ -24,6 +24,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"uarfcnUl",
 											"uarfcnDl",
 											"primaryScramblingCode",

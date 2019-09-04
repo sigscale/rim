@@ -3390,6 +3390,9 @@ ims_icscf() ->
 -spec pee_me() -> specification().
 %% @doc Power, Energy and Environmental (PEE) Monitored Entity resource function specification.
 pee_me() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
 	MeId = #specification_char{name = "meId",
 			description = "PEE monitored entity ID",
 			value_type = "string"},
@@ -3401,7 +3404,7 @@ pee_me() ->
 			description = "PEE monitored entity configuration",
 			value_type = "PEEMEConfiguration",
 			value_schema = "/resourceCatalogManagement/v3/schema/peeNrm#/definitions/PEEMEConfiguration"},
-	Chars = [MeId, PeeMeDescription, PeeMeConfiguration],
+	Chars = [ID, MeId, PeeMeDescription, PeeMeConfiguration],
 	#specification{name = "PEEMonitoredEntity",
 			description = "Power, Energy and Environmental (PEE) Monitored Entity",
 			class_type = "PEEMonitoredEntitySpec",

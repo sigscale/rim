@@ -28,6 +28,7 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"uarfcnLCRList",
 											"fpachPower",
 											"dwPchPower",
