@@ -224,12 +224,12 @@ parse_managed_element({startElement, _, "EPDGFunction", QName,
 			parse_state = #epc_state{epdg = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "MMEFunction", QName,
-		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		location = Location} | _T] = State) ->
 	DnComponent = ",MMEFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_mme,
-			dn_prefix = [NewDn], rule = RuleId,
+			dn_prefix = [NewDn], location = Location,
 			parse_state = #epc_state{mme = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "PCRFFunction", QName,
@@ -242,21 +242,21 @@ parse_managed_element({startElement, _, "PCRFFunction", QName,
 			parse_state = #epc_state{pcrf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "PGWFunction", QName,
-		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		location = Location} | _T] = State) ->
 	DnComponent = ",PGWFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_pgw,
-			dn_prefix = [NewDn], rule = RuleId,
+			dn_prefix = [NewDn], location = Location,
 			parse_state = #epc_state{pgw = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "ServingGWFunction", QName,
-		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		location = Location} | _T] = State) ->
 	DnComponent = ",ServingGWFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_epc, parse_function = parse_sgw,
-			dn_prefix = [NewDn], rule = RuleId,
+			dn_prefix = [NewDn], location = Location,
 			parse_state = #epc_state{sgw = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "MscServerFunction", QName,
@@ -287,12 +287,12 @@ parse_managed_element({startElement, _, "GgsnFunction", QName,
 			parse_state = #core_state{ggsn = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "SgsnFunction", QName,
-		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _T] = State) ->
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		location = Location} | _T] = State) ->
 	DnComponent = ",SgsnFunction=" ++ Id,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_core, parse_function = parse_sgsn,
-			dn_prefix = [NewDn], rule = RuleId,
+			dn_prefix = [NewDn], location = Location,
 			parse_state = #core_state{sgsn = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "AucFunction", QName,

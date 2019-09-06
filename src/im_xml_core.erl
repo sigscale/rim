@@ -334,12 +334,16 @@ parse_sgsn({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
-		[#state{dn_prefix = [SgsnDn | _], stack = Stack,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+		[#state{dn_prefix = [SgsnDn | _], stack = Stack, spec_cache = Cache,
+		location = Location}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	SgsnAttr = parse_sgsn_attr(T2, undefined, []),
 	ClassType = "SgsnFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = SgsnDn,
 			description = "Serving GPRS Support Node (SGSN)",
 			category = "Core",
@@ -347,7 +351,7 @@ parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/SgsnFunction",
 			specification = Spec,
-			characteristic = SgsnAttr},
+			characteristic = [PeeParam | SgsnAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];

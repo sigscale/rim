@@ -109,14 +109,17 @@ parse_mme({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mme({endElement, _Uri, "MMEFunction", QName},
-		[#state{dn_prefix = [MmeDn | _], stack = Stack, parse_state = EpcState,
-		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
+		[#state{dn_prefix = [MmeDn | _], stack = Stack,
+		spec_cache = Cache, location = Location},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	MmeAttr = parse_mme_attr(T2, undefined, []),
-	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
 	ClassType = "MMEFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MmeDn,
 			description = "Mobility Management Entity(MME)",
 			category = "EPC",
@@ -124,7 +127,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/MMEFunction",
 			specification = Spec,
-			characteristic = lists:reverse([EpRpEps | MmeAttr])},
+			characteristic = [PeeParam | MmeAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
