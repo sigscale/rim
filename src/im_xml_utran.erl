@@ -201,7 +201,7 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | RncAttr]),
-			related = [Fdds, Lcrs, Hcrs, IubLinks]},
+			related = Fdds ++ Lcrs ++ Hcrs ++ IubLinks},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
