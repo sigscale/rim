@@ -1,0 +1,208 @@
+{
+	"$id": "http://sigscale.org/schema/inventoryNrm",
+	"title": "INVENTORY NRM",
+	"description": "",
+	"definitions": {
+		"EightOctetsType": {
+			"type": "array",
+			"maxItems": 8,
+			"items": {
+				"type": "integer",
+				"minimum": 0,
+				"maximum": 255
+			}
+		},
+		"FourOctetsType": {
+			"type": "array",
+			"maxItems": 4,
+			"items": {
+				"type": "integer",
+				"minimum": 0,
+				"maximum": 255
+			}
+		},
+		"AngleValueType": {
+			"type": "integer",
+			"minimum": -32768,
+			"maximum": 32767
+		},
+		"InventoryUnit": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"inventoryUnitType",
+								"vendorName"
+							],
+							"properties": {
+								"inventoryUnitType": {
+									"type": "string"
+								},
+								"vendorUnitFamilyType": {
+									"type": "string"
+								},
+								"vendorUnitTypeNumber": {
+									"type": "string"
+								},
+								"vendorName": {
+									"type": "string"
+								},
+								"serialNumber": {
+									"type": "string"
+								},
+								"dateOfManufacture": {
+									"type": "string"
+								},
+								"dateOfLastService": {
+									"type": "string"
+								},
+								"unitPosition": {
+									"type": "string"
+								},
+								"manufacturerData": {
+									"type": "string"
+								},
+								"versionNumber": {
+									"type": "string"
+								},
+								"relatedFunction": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"inventoryUnit": {
+							"$ref": "genericNrm#/definitions/DnList"
+						},
+						"tmaInventoryUnit": {
+							"$ref": "genericNrm#/definitions/DnList"
+						},
+						"antennaInventoryUnit": {
+							"$ref": "genericNrm#/definitions/DnList"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"TmaInventoryUnit": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/InventoryUnit"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"tmaNumberOfNonLinearGainValues": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"tmaNonLinearGainValue": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"tmaAdditionalDataFieldNumber": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"tmaAntennaModelNumber": {
+									"type": "string"
+								},
+								"tmaAntennaOperatingBands": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"tmaBeamwidthForEachOpBandInBandOrder": {
+									"$ref": "#/definitions/EightOctetsType"
+								},
+								"tmaGainForEachOpBandInBandOrder": {
+									"$ref": "#/definitions/FourOctetsType"
+								},
+								"tmaInstallationDate": {
+									"type": "string"
+								},
+								"tmaInstallersId": {
+									"type": "string"
+								},
+								"tmaMaxSupportedGain": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								},
+								"tmaMinSupportedGain": {
+									"type": "integer",
+									"minimum": -32768,
+									"maximum": 32767
+								}
+							}
+						},
+						"inventoryUnit": {
+							"$ref": "#/definitions/InventoryUnit"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		},
+		"AntennaInventoryUnit": {
+			"allOf": [
+				{
+					"$ref": "#/definitions/InventoryUnit"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"maxTiltValue": {
+									"$ref": "#/definitions/AngleValueType"
+								},
+								"minTiltValue": {
+									"$ref": "#/definitions/AngleValueType"
+								},
+								"mechanicalOffset": {
+									"$ref": "#/definitions/AngleValueType"
+								},
+								"baseElevation": {
+									"type": "integer"
+								},
+								"latitude": {
+									"type": "number"
+								},
+								"longitude": {
+									"type": "number"
+								},
+								"patternLabel": {
+									"type": "string"
+								}
+							}
+						},
+						"inventoryUnit": {
+							"$ref": "#/definitions/InventoryUnit"
+						},
+						"vsDataContainer": {
+							"$ref": "genericNrm#/definitions/VsDataContainerList"
+						}
+					}
+				}
+			]
+		}
+	}
+}
