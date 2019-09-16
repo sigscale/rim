@@ -211,7 +211,7 @@ class catalogList extends PolymerElement {
 		params.filters.filter(checkHead).forEach(function(filter) {
 			if(filter.value) {
 				if (query) {
-					query = query + "]," + filter.path + ".like=[" + filter.value + "%]";
+					query = query + "," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
 					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
 				}
