@@ -28,8 +28,8 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,NodeBFunction=1</xn:dn>
 						<xn:dn>SubNetwork=1,RncFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,NodeBFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -38,9 +38,9 @@
 				<xn:attributes>
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>RNS</xn:managedElementType>
+						<xn:managedElementType>RNC</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>RNS 1</xn:userLabel>
+					<xn:userLabel>RNC 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
@@ -49,32 +49,6 @@
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
-				<un:NodeBFunction id="1">
-					<un:attributes>
-						<un:userLabel>NodeB 1</un:userLabel>
-						<un:vnfParametersList>
-							<xn:vnfInstanceId>oiurqw</xn:vnfInstanceId>
-							<xn:autoScalable>false</xn:autoScalable>
-						</un:vnfParametersList>
-						<un:peeParametersList>
-							<xn:siteIdentification>oiurqw</xn:siteIdentification>
-							<xn:siteLatitude>23.5429</xn:siteLatitude>
-							<xn:siteLongitude>95.6075</xn:siteLongitude>
-							<xn:siteDescription>Fullerton Falls</xn:siteDescription>
-							<xn:equipmentType>5G</xn:equipmentType>
-							<xn:environmentType>hut</xn:environmentType>
-							<xn:powerInterface>battery+deisel</xn:powerInterface>
-						</un:peeParametersList>
-					</un:attributes>
-					<!--  Vendor specific data for NodeBFunction-->
-					<xn:VsDataContainer id="1">
-						<xn:attributes>
-							<xn:vsDataType>DataType=7</xn:vsDataType>
-							<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
-							<xn:vsData />
-						</xn:attributes>
-					</xn:VsDataContainer>
-				</un:NodeBFunction>
 				<un:RncFunction id="1">
 					<un:attributes>
 						<un:userLabel>RNC 1</un:userLabel>
@@ -222,6 +196,32 @@
 						</xn:attributes>
 					</xn:VsDataContainer>
 				</un:RncFunction>
+				<un:NodeBFunction id="1">
+					<un:attributes>
+						<un:userLabel>NodeB 1</un:userLabel>
+						<un:vnfParametersList>
+							<xn:vnfInstanceId>oiurqw</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</un:vnfParametersList>
+						<un:peeParametersList>
+							<xn:siteIdentification>oiurqw</xn:siteIdentification>
+							<xn:siteLatitude>23.5429</xn:siteLatitude>
+							<xn:siteLongitude>95.6075</xn:siteLongitude>
+							<xn:siteDescription>Fullerton Falls</xn:siteDescription>
+							<xn:equipmentType>5G</xn:equipmentType>
+							<xn:environmentType>hut</xn:environmentType>
+							<xn:powerInterface>battery+deisel</xn:powerInterface>
+						</un:peeParametersList>
+					</un:attributes>
+					<!--  Vendor specific data for NodeBFunction-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=7</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV6</xn:vsDataFormatVersion>
+							<xn:vsData />
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</un:NodeBFunction>
 				<!--  Vendor specific data for ManagedElement-->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
