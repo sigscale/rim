@@ -25,19 +25,19 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,RncFunction=1</xn:dn>
-						<xn:dn>SubNetwork=1,NodeBFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,ManagedElement=1,RncFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,ManagedElement=2,NodeBFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
 			</xn:ManagementNode>
-			<xn:ManagedElement id="1">
+			<xn:ManagedElement id="2">
 				<xn:attributes>
-					<xn:dnPrefix>SubNetwork=1</xn:dnPrefix>
+					<xn:dnPrefix>SubNetwork=1,ManagedElement=2</xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>RNC</xn:managedElementType>
+						<xn:managedElementType>NodeB</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>RNC 1</xn:userLabel>
+					<xn:userLabel>NodeB 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
@@ -48,17 +48,16 @@
 				</xn:attributes>
 				<in:InventoryUnit id="1">
 					<in:attributes>
-						<in:inventoryUnitType>Rack</in:inventoryUnitType>
+						<in:inventoryUnitType>Cabinet</in:inventoryUnitType>
 						<in:vendorUnitFamilyType>Enclosure</in:vendorUnitFamilyType>
-						<in:vendorUnitTypeNumber>007</in:vendorUnitTypeNumber>
-						<in:versionNumber>145</in:versionNumber>
+						<in:vendorUnitTypeNumber>345</in:vendorUnitTypeNumber>
+						<in:versionNumber>193</in:versionNumber>
 						<in:vendorName>Acme</in:vendorName>
-						<in:serialNumber>1902387651</in:serialNumber>
-						<in:dateOfManufacture>2018-11-29</in:dateOfManufacture>
+						<in:serialNumber>00340l5725</in:serialNumber>
+						<in:dateOfManufacture>2014-03-01</in:dateOfManufacture>
 						<in:dateOfLastService>2019-09-16</in:dateOfLastService>
 						<in:unitPosition>Rack=1</in:unitPosition>
 						<in:manufacturerData>[AB:1,CD:323,TK:5]</in:manufacturerData>
-						<in:relatedFunction>RncFunction=1</in:relatedFunction>
 					</in:attributes>
 				</in:InventoryUnit>
 				<in:InventoryUnit id="2">
@@ -72,12 +71,11 @@
 						<in:dateOfManufacture>2018-10-04</in:dateOfManufacture>
 						<in:dateOfLastService/>
 						<in:unitPosition>Rack=1,Shelf=1</in:unitPosition>
-						<in:relatedFunction>RncFunction=1</in:relatedFunction>
 					</in:attributes>
 				</in:InventoryUnit>
 				<in:InventoryUnit id="3">
 					<in:attributes>
-						<in:inventoryUnitType>Ethernet</in:inventoryUnitType>
+						<in:inventoryUnitType>Radio</in:inventoryUnitType>
 						<in:vendorUnitFamilyType>Card</in:vendorUnitFamilyType>
 						<in:vendorUnitTypeNumber>081</in:vendorUnitTypeNumber>
 						<in:versionNumber>150</in:versionNumber>
@@ -86,6 +84,7 @@
 						<in:dateOfManufacture>2018-09-23</in:dateOfManufacture>
 						<in:dateOfLastService/>
 						<in:unitPosition>Rack=1,Shelf=2,Slot=5</in:unitPosition>
+						<in:relatedFunction>NodeBFunction=1</in:relatedFunction>
 					</in:attributes>
 				</in:InventoryUnit>
 				<in:TmaInventoryUnit id="1">
