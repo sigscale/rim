@@ -69,7 +69,7 @@
 						<in:vendorName>Acme</in:vendorName>
 						<in:serialNumber>1902645044</in:serialNumber>
 						<in:dateOfManufacture>2018-10-04</in:dateOfManufacture>
-						<in:dateOfLastService/>
+						<in:dateOfLastService>2019-08-14</in:dateOfLastService>
 						<in:unitPosition>Rack=1,Shelf=1</in:unitPosition>
 					</in:attributes>
 				</in:InventoryUnit>
@@ -82,7 +82,7 @@
 						<in:vendorName>Acme</in:vendorName>
 						<in:serialNumber>1902498901</in:serialNumber>
 						<in:dateOfManufacture>2018-09-23</in:dateOfManufacture>
-						<in:dateOfLastService/>
+						<in:dateOfLastService>2019-08-14</in:dateOfLastService>
 						<in:unitPosition>Rack=1,Shelf=2,Slot=5</in:unitPosition>
 						<in:relatedFunction>NodeBFunction=1</in:relatedFunction>
 					</in:attributes>
@@ -96,7 +96,7 @@
 						<in:vendorName>Acme</in:vendorName>
 						<in:serialNumber>1900054793</in:serialNumber>
 						<in:dateOfManufacture>2017-02-21</in:dateOfManufacture>
-						<in:dateOfLastService/>
+						<in:dateOfLastService>2019-08-14</in:dateOfLastService>
 						<in:unitPosition>Rack=2,Shelf=1</in:unitPosition>
 						<in:tmaNumberOfNonLinearGainValues>10</in:tmaNumberOfNonLinearGainValues>
 						<in:tmaNonLinearGainValue>16</in:tmaNonLinearGainValue>
@@ -113,12 +113,12 @@
 						<in:serialNumber>4683660231</in:serialNumber>
 						<in:dateOfManufacture>2015-01-04</in:dateOfManufacture>
 						<in:dateOfLastService>2019-02-28</in:dateOfLastService>
-						<in:mechanicalOffset>-10</in:mechanicalOffset>
+						<in:mechanicalOffset>10</in:mechanicalOffset>
 						<in:baseElevation>126</in:baseElevation>
 						<in:minTiltValue>0</in:minTiltValue>
 						<in:maxTiltValue>150</in:maxTiltValue>
 						<in:latitude>43.6697157</in:latitude>
-						<in:longitute>-79.391666</in:longitude>
+						<in:longitude>-79.391666</in:longitude>
 						<in:patternLabel>A</in:patternLabel>
 					</in:attributes>
 				</in:AntennaInventoryUnit>

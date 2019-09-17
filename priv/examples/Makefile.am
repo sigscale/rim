@@ -14,6 +14,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/inventoryAlt1.xml \
 		$(abs_builddir)/inventoryAlt2.xml \
 		$(abs_builddir)/inventory1.xml \
+		$(abs_builddir)/inventory2.xml \
 		$(abs_builddir)/catalog.json \
 		$(abs_builddir)/category.json \
 		$(abs_builddir)/candidate.json \
