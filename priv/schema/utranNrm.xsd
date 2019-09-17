@@ -1626,7 +1626,14 @@
 									<element name="farEndEntity" type="xn:dn" minOccurs="0"/>
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<!-- End of inherited attributes from EP_RP-->
-									<element name="connectedRncId" type="string" minOccurs="0"/>
+									<element name="connectedRncId" minOccurs="0">
+										<simpleType>
+											<restriction base="integer">
+												<minInclusive value="0"/>
+												<maxInclusive value="4095"/>
+											</restriction>
+										</simpleType>
+									</element>
 								</all>
 							</complexType>
 						</element>

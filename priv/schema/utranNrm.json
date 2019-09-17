@@ -1465,7 +1465,9 @@
 							"type": "object",
 							"properties": {
 								"connectedRncId": {
-									"type": "string"
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 4095
 								}
 							}
 						}
