@@ -1,0 +1,279 @@
+{
+	"$id": "http://sigscale.org/schema/inventoryNrmAlt2",
+	"title": "INVENTORY NRM ALTERNATIVE 2",
+	"description": "",
+	"definitions": {
+		"InventoryUnitNE": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"neId",
+								"productName",
+								"vendorName",
+								"siteId"
+							],
+							"properties": {
+								"neId": {
+									"type": "string"
+								},
+								"customerIdentifier": {
+									"type": "string"
+								},
+								"productName": {
+									"type": "string"
+								},
+								"vendorName": {
+									"type": "string"
+								},
+								"productType": {
+									"type": "string"
+								},
+								"salesUniqueId": {
+									"type": "string"
+								},
+								"operatorUniqueName": {
+									"type": "string"
+								},
+								"siteId": {
+									"type": "integer"
+								},
+								"additionalInformation": {
+									"type": "string"
+								},
+								"hWList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"sWList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"lICList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"mFunction": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"inventoryUnitNE": {
+							"$ref": "genericNrm#/definitions/DnList"
+						}
+					}
+				}
+			]
+		},
+		"InventoryUnitHw": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"hwId",
+								"hwType",
+								"hwVersion",
+								"hwUnitLocation"
+							],
+							"properties": {
+								"hwId": {
+									"type": "string"
+								},
+								"hwType": {
+									"type": "string"
+								},
+								"hwName": {
+									"type": "string"
+								},
+								"vendorName": {
+									"type": "string"
+								},
+								"hwVersion": {
+									"type": "string"
+								},
+								"salesUniqueId": {
+									"type": "string"
+								},
+								"hwUnitLocation": {
+									"type": "string"
+								},
+								"model": {
+									"type": "string"
+								},
+								"hwCapability": {
+									"type": "string"
+								},
+								"modificationDate": {
+									"type": "string"
+								},
+								"manualDataEntry": {
+									"type": "string"
+								},
+								"additionalInformation": {
+									"type": "string"
+								},
+								"nEList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"sWList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"lICList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"mFunction": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"inventoryUnitHw": {
+							"$ref": "genericNrm#/definitions/DnList"
+						}
+					}
+				}
+			]
+		},
+		"InventoryUnitSw": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"hwId",
+								"hwType",
+								"hwVersion",
+								"hwUnitLocation"
+							],
+							"properties": {
+								"swId": {
+									"type": "string"
+								},
+								"swName": {
+									"type": "string"
+								},
+								"vendorName": {
+									"type": "string"
+								},
+								"swVersion": {
+									"type": "string"
+								},
+								"salesUniqueId": {
+									"type": "string"
+								},
+								"classification": {
+									"type": "string"
+								},
+								"swInstallationTime": {
+									"type": "string",
+									"format": "date-time"
+								},
+								"swActivationTime": {
+									"type": "string",
+									"format": "date-time"
+								},
+								"swStatus": {
+									"type": "string"
+								},
+								"additionalInformation": {
+									"type": "string"
+								},
+								"nEList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"hWList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"lICList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"mFunction": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"inventoryUnitSw": {
+							"$ref": "genericNrm#/definitions/DnList"
+						}
+					}
+				}
+			]
+		},
+		"InventoryUnitLic": {
+			"allOf": [
+				{
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"required": [
+								"licId"
+							],
+							"properties": {
+								"licId": {
+									"type": "string"
+								},
+								"licType": {
+									"type": "string"
+								},
+								"vendorName": {
+									"type": "string"
+								},
+								"validity": {
+									"type": "string"
+								},
+								"key": {
+									"type": "string"
+								},
+								"licActivationTime": {
+									"type": "string",
+									"format": "date-time"
+								},
+								"licStatus": {
+									"type": "string"
+								},
+								"salesUniqueId": {
+									"type": "string"
+								},
+								"additionalInformation": {
+									"type": "string"
+								},
+								"nEList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"hWList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"sWList": {
+									"$ref": "genericNrm#/definitions/DnList"
+								},
+								"mFunction": {
+									"$ref": "genericNrm#/definitions/Dn"
+								}
+							}
+						},
+						"inventoryUnitLic": {
+							"$ref": "genericNrm#/definitions/DnList"
+						}
+					}
+				}
+			]
+		}
+	}
+}

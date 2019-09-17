@@ -57,10 +57,12 @@
 									"type": "string"
 								},
 								"dateOfManufacture": {
-									"type": "string"
+									"type": "string",
+									"format": "date-time"
 								},
 								"dateOfLastService": {
-									"type": "string"
+									"type": "string",
+									"format": "date-time"
 								},
 								"unitPosition": {
 									"type": "string"
