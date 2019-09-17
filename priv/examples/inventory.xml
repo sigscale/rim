@@ -16,28 +16,29 @@
 		<xn:SubNetwork id="1">
 			<xn:attributes>
 				<xn:userLabel>SN 1</xn:userLabel>
-				<xn:userDefinedNetworkType>Inventory</xn:userDefinedNetworkType>
+				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
 				<xn:setOfMcc>999</xn:setOfMcc>
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>EMS Inventory 1</xn:userLabel>
+					<xn:userLabel>EMS UMTS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,InventoryUnit=1</xn:dn>
+						<xn:dn>SubNetwork=1,NodeBFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,RncFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix/>
+					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>InventoryUnit</xn:managedElementType>
+						<xn:managedElementType>RNS</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>InventoryUnit 1</xn:userLabel>
+					<xn:userLabel>RNS 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
