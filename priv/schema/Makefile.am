@@ -43,6 +43,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/peeCmonNrm.json \
 		$(abs_builddir)/epcn3aiNrm.json \
 		$(abs_builddir)/inventoryNrm.json \
+		$(abs_builddir)/inventoryNrmAlt2.json \
 		$(abs_builddir)/ManagedFunction.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
 		$(abs_builddir)/ResourceFunction.json \
@@ -172,6 +173,8 @@ check_DATA = .validation_ok
 		if ! ajv compile -s epcn3aiNrm.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s inventoryNrm.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s inventoryNrmAlt2.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s entityCatalogManagement.json; \
 			then exit 1; fi; \
