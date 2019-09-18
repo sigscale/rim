@@ -20,28 +20,28 @@
 			</xn:attributes>
 			<xn:ManagementNode id="1">
 				<xn:attributes>
-					<xn:userLabel>EMS UMTS 1</xn:userLabel>
+					<xn:userLabel>ems-umts-1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Gotham</xn:locationName>
+					<xn:locationName>Asquith</xn:locationName>
 					<xn:managedElements>
 						<xn:dn>SubNetwork=1,ManagedElement=1,RncFunction=1</xn:dn>
 						<xn:dn>SubNetwork=1,ManagedElement=2,NodeBFunction=1</xn:dn>
 					</xn:managedElements>
-					<xn:swVersion>1.0</xn:swVersion>
+					<xn:swVersion>1.1</xn:swVersion>
 				</xn:attributes>
 			</xn:ManagementNode>
 			<xn:ManagedElement id="2">
 				<xn:attributes>
-					<xn:dnPrefix>SubNetwork=1,ManagedElement=2</xn:dnPrefix>
+					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>NodeB</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>NodeB 1</xn:userLabel>
+					<xn:userLabel>nodeb-bay-bloor</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Gotham</xn:locationName>
-					<xn:swVersion>1.0</xn:swVersion>
+					<xn:locationName>Bay and Bloor</xn:locationName>
+					<xn:swVersion>13.0.4</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
 					</xn:managedBy>
