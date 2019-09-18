@@ -57,9 +57,7 @@
 						<in:operatorUniqueName>rnc-asquith-a</in:operatorUniqueName>
 						<in:siteId>1</in:siteId>
 						<in:additionalInformation>[BA:3,CF:77]</in:additionalInformation>
-						<in:mFunction>
-							<xn:dn>Subtwork=1,ManagedElement=1,RncFunction=1</xn:dn>
-						</in:mFunction>
+						<in:mFunction>Subtwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
 						<in:hWList>
 							<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitHw=1</xn:dn>
 							<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
@@ -86,12 +84,10 @@
 						<in:modificationDate>2019-02-14</in:modificationDate>
 						<in:manualDataEntry>passive</in:manualDataEntry>
 						<in:additionalInformation>[CD:0,BF:3,EH:16]</in:additionalInformation>
-						<in:mFunction>
-							<xn:dn>Subtwork=1,ManagedElement=1,RncFunction=1</xn:dn>
-						</in:mFunction>
-						<in:neList>
+						<in:mFunction>Subtwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
+						<in:nEList>
 							<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitNE=1</xn:dn>
-						</in:neList>
+						</in:nEList>
 						<in:sWList></in:sWList>
 					</in:attributes>
 					<in:InventoryUnitHw id="1">
@@ -107,12 +103,10 @@
 							<in:modificationDate>2019-04-11</in:modificationDate>
 							<in:manualDataEntry>passive</in:manualDataEntry>
 							<in:additionalInformation>[AA:00]</in:additionalInformation>
-							<in:mFunction>
-								<xn:dn>Subtwork=1,ManagedElement=1,RncFunction=1</xn:dn>
-							</in:mFunction>
-							<in:neList>
+							<in:mFunction>Subtwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
+							<in:nEList>
 								<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitNE=1</xn:dn>
-							</in:neList>
+							</in:nEList>
 							<in:sWList></in:sWList>
 						</in:attributes>
 						<in:InventoryUnitHw id="1">
@@ -127,12 +121,10 @@
 								<in:model>ETH110</in:model>
 								<in:modificationDate>2019-03-07</in:modificationDate>
 								<in:manualDataEntry>active</in:manualDataEntry>
-								<in:mFunction>
-									<xn:dn>Subtwork=1,ManagedElement=1,RncFunction=1</xn:dn>
-								</in:mFunction>
-								<in:neList>
+								<in:mFunction>Subtwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
+								<in:nEList>
 									<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitNE=1</xn:dn>
-								</in:neList>
+								</in:nEList>
 								<in:sWList>
 									<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitSw=1</xn:dn>
 								</in:sWList>
@@ -150,12 +142,10 @@
 								<in:model>ETH110</in:model>
 								<in:modificationDate>2019-04-13</in:modificationDate>
 								<in:manualDataEntry>active</in:manualDataEntry>
-								<in:mFunction>
-									<xn:dn>Subtwork=1,ManagedElement=1,RncFunction=1</xn:dn>
-								</in:mFunction>
-								<in:neList>
+								<in:mFunction>Subtwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
+								<in:nEList>
 									<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitNE=1</xn:dn>
-								</in:neList>
+								</in:nEList>
 								<in:sWList></in:sWList>
 							</in:attributes>
 						</in:InventoryUnitHw>
@@ -172,15 +162,13 @@
 						<in:swStatus>primary</in:swStatus>
 						<in:swInstallationTime>2019-04-13T02:13:45.345Z</in:swInstallationTime>
 						<in:additionalInformation></in:additionalInformation>
-						<in:mFunction>
-							<xn:dn>Subtwork=1,ManagedElement=1,RncFunction=1</xn:dn>
-						</in:mFunction>
-						<in:neList>
+						<in:mFunction>Subtwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
+						<in:nEList>
 							<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitNE=1</xn:dn>
-						</in:neList>
-						<in:hwList>
+						</in:nEList>
+						<in:hWList>
 							<xn:dn>Subtwork=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
-						</in:hwList>
+						</in:hWList>
 						<in:lICList></in:lICList>
 					</in:attributes>
 				</in:InventoryUnitSw>
