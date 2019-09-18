@@ -25,6 +25,7 @@ class httpList extends PolymerElement {
 			</style>
 			<vaadin-grid
 					id="httpGrid"
+					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<vaadin-grid-column
 								width="28ex"
@@ -154,6 +155,10 @@ class httpList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				notify: true
+			},
 			activeItem: {
 					type: Boolean,
 					observer: '_activeItemChanged'
