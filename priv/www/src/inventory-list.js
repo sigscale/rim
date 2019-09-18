@@ -89,7 +89,7 @@ class inventoryList extends PolymerElement {
 							<dd>{{item.lastModified}}</dd>
 						</template>
 					</dl>
-					<h3 class="alarmH3">Resource Characteristics:</h3>
+					<h3 class="inventoryH3">Resource Characteristics:</h3>
 					<dl class="details">
 						<template is="dom-if" if="{{item.resourceChar}}">
 							<template is="dom-repeat" items="{{item.resourceChar}}" as="detail">

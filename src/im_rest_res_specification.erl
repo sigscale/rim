@@ -160,7 +160,7 @@ get_specification(_, _, _) ->
 		ReqBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()} .
-%% @doc Update a existing `alarm'.
+%% @doc Update a existing `specification'.
 %%
 %% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceSpecification/{Id}' request.
 %%

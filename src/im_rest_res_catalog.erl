@@ -183,9 +183,9 @@ post_catalog(RequestBody) ->
 		ReqBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()} .
-%% @doc Update a existing `alarm'.
+%% @doc Update a existing `catalogm'.
 %%
-%% 	Respond to `PATCH /alarmManagement/v3/alarm/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCatalog/{Id}' request.
 %%
 patch_catalog(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try

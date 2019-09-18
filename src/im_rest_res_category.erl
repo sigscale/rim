@@ -161,7 +161,7 @@ get_category(_, _, _) ->
 		ReqBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()} .
-%% @doc Update a existing `alarm'.
+%% @doc Update a existing `category'.
 %%
 %% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCategory/{Id}' request.
 %%
