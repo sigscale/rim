@@ -30,12 +30,7 @@
 											"vnfParametersList",
 											"iubLinkUtranCell",
 											"iubLinkATMChannelTerminationPoint",
-											"iubLinkNodeBFunction",
-											"layerProtocolNameList",
-											"aEnd",
-											"zEnd",
-											"linkType",
-											"protocolVersion"
+											"iubLinkNodeBFunction"
 										]
 									}
 								}

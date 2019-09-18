@@ -62,33 +62,6 @@
 			"description": "Associated ATM termination point",
 			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
-		},
-		{
-			"name": "layerProtocolNameList",
-			"description": "",
-			"valueType": "string"
-		},
-		{
-			"name": "aEnd",
-			"description": "",
-			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
-		},
-		{
-			"name": "zEnd",
-			"description": "",
-			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
-		},
-		{
-			"name": "linkType",
-			"description": "",
-			"valueType": "string"
-		},
-		{
-			"name": "protocolVersion",
-			"description": "",
-			"valueType": "string"
 		}
 	]
 }

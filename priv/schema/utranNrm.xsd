@@ -1091,15 +1091,6 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<!-- Inherited attributes from TopologicalLink_-->
-									<element name="layerProtocolNameList" type="string" minOccurs="0"/>
-									<element name="aEnd" type="xn:dn"/>
-									<element name="zEnd" type="xn:dn"/>
-									<!-- End of inherited attributes from TopologicalLink_-->
-									<!-- Inherited attributes from Link-->
-									<element name="linkType" type="string" minOccurs="0"/>
-									<element name="protocolVersion" type="string" minOccurs="0"/>
-									<!-- End of inherited attributes from Link-->
 									<element name="userLabel" type="string" minOccurs="0"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="iubLinkUtranCell" type="xn:dnList" minOccurs="0"/>
