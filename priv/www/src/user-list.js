@@ -74,7 +74,7 @@ class userList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('userGrid');
-		grid.dataProvider = this._getLog;
+		grid.dataProvider = this._getUsers;
 	}
 
 //	showAddUserModal(event) {
@@ -82,7 +82,7 @@ class userList extends PolymerElement {
 //		document.body.querySelector('inventory-management').shadowRoot.getElementById('addUserModal').open();
 //	}
 
-	_getLog(params, callback) {
+	_getUsers(params, callback) {
 		var grid = this;
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
 		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');

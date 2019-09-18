@@ -153,10 +153,10 @@ class rulesList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('rulesGrid');
-		grid.dataProvider = this._getLog;
+		grid.dataProvider = this._getRules;
 	}
 
-	_getLog(params, callback) {
+	_getRules(params, callback) {
 		var grid = this;
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list').shadowRoot.getElementById('getRulesAjax');
 		var rulesList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list');

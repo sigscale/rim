@@ -184,10 +184,10 @@ class httpList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('httpGrid');
-		grid.dataProvider = this._getHttpResponse;
+		grid.dataProvider = this._getHttpLog;
 	}
 
-	_getHttpResponse(params, callback) {
+	_getHttpLog(params, callback) {
 		var grid = this;
 		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('getHttpList');
 		var httpList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');

@@ -269,10 +269,10 @@ class inventoryList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
-		grid.dataProvider = this._getInventoryList;
+		grid.dataProvider = this._getInventory;
 	}
 
-	_getInventoryList(params, callback) {
+	_getInventory(params, callback) {
 		var grid = this;
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
 		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
