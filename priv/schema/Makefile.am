@@ -114,6 +114,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/SEPPFunctionSpec.json \
 		$(abs_builddir)/NWDAFFunctionSpec.json \
 		$(abs_builddir)/PEEMonitoredEntitySpec.json \
+		$(abs_builddir)/InventoryUnitSpec.json \
 		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -693,6 +694,16 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PEEMonitoredEntitySpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s InventoryUnitSpec.json \
+			-r genericNrm.json \
+			-r inventoryNrm.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \

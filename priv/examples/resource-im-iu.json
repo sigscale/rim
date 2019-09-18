@@ -1,0 +1,54 @@
+{
+	"id": "8597462918",
+	"href": "/resourceInventoryManagement/v3/resource/8597462918",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1",
+	"publicIdentifier": "07479336538",
+	"description": "IM Inventory Unit",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "InventoryUnit",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnit",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "722155649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/722155649",
+		"@type": "InventoryUnitSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "inventoryUnitType",
+			"value" : "Cabinet"
+		},
+		{
+			"name": "vendorName",
+			"value" : "Acme"
+		},
+		{
+			"name": "unitPosition",
+			"value" : "Rack=1"
+		}
+	],
+	"tmaInventoryUnit": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=3"
+	],
+	"antennaInventoryUnit": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=3"
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam3",
+			"vsDataFormatVersion": "acmeParams-v3",
+			"vsData": 45
+		}
+	]
+}

@@ -74,6 +74,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-5gc-sepp.json \
 		$(abs_builddir)/specification-5gc-nwdaf.json \
 		$(abs_builddir)/specification-pee-me.json \
+		$(abs_builddir)/specification-im-iu.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -82,7 +83,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-umts-cell-fdd.json \
 		$(abs_builddir)/resource-umts-cell-tdd-hcr.json \
 		$(abs_builddir)/resource-umts-cell-tdd-lcr.json \
-		$(abs_builddir)/resource-umts-iub.json
+		$(abs_builddir)/resource-umts-iub.json \
+		$(abs_builddir)/resource-im-iu.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -567,6 +569,14 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-pee-me.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-im-iu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
@@ -585,6 +595,8 @@ check_DATA = .validation_ok
 				-d resource-umts-cell-tdd-lcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-umts-iub.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-im-iu.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi

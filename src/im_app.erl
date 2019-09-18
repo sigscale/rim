@@ -280,7 +280,8 @@ install8(Nodes, Acc) ->
 		core_mnpsrf, core_cgf,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
 		pee_me,
-		epcn3ai_proxy, epcn3ai_server],
+		epcn3ai_proxy, epcn3ai_server,
+		im_iu],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
 install8([F | T], Nodes, Acc) ->

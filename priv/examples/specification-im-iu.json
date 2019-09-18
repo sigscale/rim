@@ -1,0 +1,97 @@
+{
+	"name": "InventoryUnit",
+	"description": "IM Inventory Unit resource function specification",
+	"@type": "InventoryUnitSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "IM",
+	"targetResourceSchema": {
+		"@type": "InventoryUnit",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnit"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "inventoryUnitType",
+			"description": "Type of inventory unit (3GPP 32.690)",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorUnitFamilyType",
+			"description": "Mnemonic of inventory unit family type (e.g. Fan, PSU) assigned by vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorUnitTypeNumber",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorName",
+			"description": "Name of inventory unit vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "serialNumber",
+			"description": "Serial number of inventory unit",
+			"valueType": "string"
+		},
+		{
+			"name": "dateOfManufacture",
+			"description": "Date of Manufacture of inventory unit",
+			"type": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "dateOfLastService",
+			"description": "Date of last service or repair of inventory unit",
+			"type": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "unitPosition",
+			"description": "Position of inventory unit (e.g. Rack, shelf, slot, etc.)",
+			"type": "string"
+		},
+		{
+			"name": "manufacturerData",
+			"description": "Manufacturer specific data of inventory unit",
+			"type": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "versionNumber",
+			"description": "The version information related to (vendorUnitTypeNumber)",
+			"type": "string"
+		},
+		{
+			"name": "relatedFunction",
+			"description": "This attribute carries the DN of related (ManagedFunction)",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		}
+	]
+}

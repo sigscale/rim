@@ -37,6 +37,7 @@
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
+-export([im_iu/0]).
 
 -include("im.hrl").
 
@@ -3475,6 +3476,60 @@ epcn3ai_server() ->
 			category = "EPCN3AI",
 			target_schema = #target_schema_ref{class_type = "3GPPAAAServerFunction",
 					schema = "/resourceInventoryManagement/v3/schema/3GPPAAAServerFunction"},
+			characteristic = Chars}.
+
+-spec im_iu() -> specification().
+%% @doc IM Inventory Unit resource specification.
+im_iu() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	InventoryUnitType = #specification_char{name = "inventoryUnitType",
+			description = "Type of inventory unit (3GPP 32.690)",
+			value_type = "string"},
+	VendorUnitFamilyType = #specification_char{name = "vendorUnitFamilyType",
+			description = "Mnemonic of inventory unit family type (e.g. Fan, PSU) assigned by vendor",
+			value_type = "string"},
+	VendorUnitTypeNumber = #specification_char{name = "vendorUnitTypeNumber",
+			description = "",
+			value_type = "string"},
+	VendorName = #specification_char{name = "vendorName",
+			description = "Type of inventory unit (3GPP 32.690)",
+			value_type = "string"},
+	SerialNumber = #specification_char{name = "serialNumber",
+			description = "Serial number of inventory unit",
+			value_type = "string"},
+	DateOfManufacture = #specification_char{name = "dateOfManufacture",
+			description = "Date of Manufacture of inventory unit",
+			value_type = "string"},
+	DateOfLastService = #specification_char{name = "dateOfLastService",
+			description = "Date of last service or repair of inventory unit",
+			value_type = "string"},
+	UnitPosition = #specification_char{name = "unitPosition",
+			description = "Position of inventory unit (e.g. Rack, shelf, slot, etc.)",
+			value_type = "string"},
+	ManufacturerData = #specification_char{name = "manufacturerData",
+			description = "Manufacturer specific data of inventory unit",
+			value_type = "string"},
+	VersionNumber = #specification_char{name = "versionNumber",
+			description = "The version information related to (vendorUnitTypeNumber)",
+			value_type = "string"},
+	RelatedFunction = #specification_char{name = "relatedFunction",
+			description = "This attribute carries the DN of related (ManagedFunction)",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	Chars = [ID, InventoryUnitType, VendorUnitFamilyType, VendorUnitTypeNumber, VendorName, SerialNumber,
+			DateOfManufacture, DateOfLastService, UnitPosition, ManufacturerData, VersionNumber, RelatedFunction],
+	#specification{name = "InventoryUnit",
+			description = "IM Inventory Unit resource function specification",
+			class_type = "InventoryUnitSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/InventoryUnitSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "IM",
+			target_schema = #target_schema_ref{class_type = "InventoryUnit",
+					schema = "/resourceInventoryManagement/v3/schema/InventoryUnit"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
