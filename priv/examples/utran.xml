@@ -34,6 +34,7 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
+					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>RNC</xn:managedElementType>
 					</xn:managedElementTypeList>
@@ -55,8 +56,8 @@
 						</un:vnfParametersList>
 						<un:peeParametersList>
 							<xn:siteIdentification>YYZ-3768</xn:siteIdentification>
-							<xn:siteLatitude>43.671494</xn:siteLatitude>
-							<xn:siteLongitude>-79.3862479</xn:siteLongitude>
+							<xn:siteLatitude>43.6714</xn:siteLatitude>
+							<xn:siteLongitude>-79.3862</xn:siteLongitude>
 							<xn:siteDescription>Asquith</xn:siteDescription>
 							<xn:equipmentType>3G</xn:equipmentType>
 							<xn:environmentType>Indoor</xn:environmentType>
@@ -67,33 +68,21 @@
 					</un:attributes>
 					<un:EP_IuCS id="1">
 						<un:attributes>
-							<un:farEndEntity>
-								<xn:dn>
-									DC=core.sigscale.net,SubNetwork=1,ManagedElement=1,MscServerFunction=1
-								</xn:dn>
-							</un:farEndEntity>
+							<un:farEndEntity>DC=core.sigscale.net,SubNetwork=1,ManagedElement=1,MscServerFunction=1</un:farEndEntity>
 							<un:userLabel>rnc-asquith-iucs-a</un:userLabel>
 							<un:connMscNumber>16473840010</un:connMscNumber>
 						</un:attributes>
 					</un:EP_IuCS>
 					<un:EP_IuPS id="1">
 						<un:attributes>
-							<un:farEndEntity>
-								<xn:dn>
-									DC=core.sigscale.net,SubNetwork=1,ManagedElement=1,SgsnFunction=1
-								</xn:dn>
-							</un:farEndEntity>
+							<un:farEndEntity>DC=core.sigscale.net,SubNetwork=1,ManagedElement=1,SgsnFunction=1</un:farEndEntity>
 							<un:userLabel>rnc-asquith-iucs-a</un:userLabel>
 							<un:connSgsnNumber>16473840012</un:connSgsnNumber>
 						</un:attributes>
 					</un:EP_IuPS>
 					<un:EP_Iur id="1">
 						<un:attributes>
-							<un:farEndEntity>
-								<xn:dn>
-									SubNetwork=2,ManagedElement=1,RncFunction=1
-								</xn:dn>
-							</un:farEndEntity>
+							<un:farEndEntity>SubNetwork=2,ManagedElement=1,RncFunction=1</un:farEndEntity>
 							<un:userLabel>rnc-asquith-iur-a</un:userLabel>
 							<un:connectedRncId>41</un:connectedRncId>
 						</un:attributes>
@@ -101,16 +90,10 @@
 					<un:IubLink id="1">
 						<un:attributes>
 							<un:userLabel>rnc-asquith-iub-a</un:userLabel>
-							<un:nodeBFunction>
-								<xn:dn>
-									SubNetwork=1,ManagedElement=1,NodeBFunction=1
-								</xn:dn>
-							</un:nodeBFunction>
-							<un:utranGenericCell>
-								<xn:dn>
-									SubNetwork=1,ManagedElement=1,RncFunction=1,UtranCellFDD=1
-								</xn:dn>
-							</un:utranGenericCell>
+							<un:iubLinkNodeBFunction>SubNetwork=1,ManagedElement=1,NodeBFunction=1</un:iubLinkNodeBFunction>
+							<un:iubLinkUtranCell>
+								<xn:dn>SubNetwork=1,ManagedElement=1,RncFunction=1,UtranCellFDD=1</xn:dn>
+							</un:iubLinkUtranCell>
 						</un:attributes>
 						<!--  Vendor specific data for IubLink-->
 						<xn:VsDataContainer id="1">
@@ -129,7 +112,7 @@
 							<un:userLabel>cell-bay-bloor-a</un:userLabel>
 							<un:cId>1347</un:cId>
 							<un:localCellId>67309</un:localCellId>
-							<un:maximumTransmissionPower>128</un:maximumTransmissionPower>
+							<un:maximumTransmissionPower>50</un:maximumTransmissionPower>
 							<un:pichPower>2</un:pichPower>
 							<un:pchPower>2</un:pchPower>
 							<un:fachPower>2</un:fachPower>
@@ -137,23 +120,21 @@
 							<un:lac>4</un:lac>
 							<un:rac>3</un:rac>
 							<un:sac>1012</un:sac>
-							<un:uraList></un:uraList>
+							<un:uraList>42</un:uraList>
 							<un:hsFlag>1</un:hsFlag>
 							<un:numOfHspdschs>8</un:numOfHspdschs>
 							<un:numOfHsscchs>8</un:numOfHsscchs>
 							<un:relatedAntennaList>
 								<xn:dn>SubNetwork=1,ManagedElement=2,AntennaFunction=1</xn:dn>
 							</un:relatedAntennaList>
-							<un:relatedTMAList>
+							<un:relatedTmaList>
 								<xn:dn>SubNetwork=1,ManagedElement=2,TMAFunction=1</xn:dn>
-							</un:relatedTMAList>
+							</un:relatedTmaList>
 						</un:attributes>
 						<!-- Multiple UtranRelation in a UtranCellFDD  -->
 						<un:UtranRelation id="1">
 							<un:attributes>
-								<un:adjacentCell>
-									<xn:dn>SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCellFDD=1</xn:dn>
-								</un:adjacentCell>
+								<un:adjacentCell>SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCellFDD=1</un:adjacentCell>
 							</un:attributes>
 						</un:UtranRelation>
 						<!--  Vendor specific data for UtranCellFDD -->
@@ -181,6 +162,7 @@
 			</xn:ManagedElement>
 			<xn:ManagedElement id="2">
 				<xn:attributes>
+					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>NodeB</xn:managedElementType>
 					</xn:managedElementTypeList>
@@ -202,16 +184,14 @@
 						</un:vnfParametersList>
 						<un:peeParametersList>
 							<xn:siteIdentification>YYZ-7403</xn:siteIdentification>
-							<xn:siteLatitude>43.6697157</xn:siteLatitude>
-							<xn:siteLongitude>-79.391666</xn:siteLongitude>
+							<xn:siteLatitude>43.6697</xn:siteLatitude>
+							<xn:siteLongitude>-79.3916</xn:siteLongitude>
 							<xn:siteDescription>Bay Bloor</xn:siteDescription>
 							<xn:equipmentType>3G</xn:equipmentType>
 							<xn:environmentType>Outdoor</xn:environmentType>
 							<xn:powerInterface>A3</xn:powerInterface>
 						</un:peeParametersList>
-						<un:iubLink>
-							<xn:dn>SubNetwork=1,ManagementElement=1,RncFunction=1,IubLink=1</xn:dn>
-						</un:iubLink>
+						<un:nodeBFunctionIubLink>SubNetwork=1,ManagementElement=1,RncFunction=1,IubLink=1</un:nodeBFunctionIubLink>
 					</un:attributes>
 					<!--  Vendor specific data for NodeBFunction-->
 					<xn:VsDataContainer id="1">
