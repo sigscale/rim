@@ -22,7 +22,7 @@ styleElement.innerHTML = `<template>
 			dd {
 				margin: 0 0 0 22ch;
 			}
-			.alarmH3 {
+			.inventoryH3 {
 				margin-bottom: -10px;
 			}
 			app-header {

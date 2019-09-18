@@ -89,7 +89,7 @@ class inventoryList extends PolymerElement {
 							<dd>{{item.lastModified}}</dd>
 						</template>
 					</dl>
-					<h3 class="alarmH3">Resource Characteristics:</h3>
+					<h3 class="inventoryH3">Resource Characteristics:</h3>
 					<dl class="details">
 						<template is="dom-if" if="{{item.resourceChar}}">
 							<template is="dom-repeat" items="{{item.resourceChar}}" as="detail">
@@ -269,10 +269,10 @@ class inventoryList extends PolymerElement {
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
-		grid.dataProvider = this._getInventoryList;
+		grid.dataProvider = this._getInventory;
 	}
 
-	_getInventoryList(params, callback) {
+	_getInventory(params, callback) {
 		var grid = this;
 		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
 		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
