@@ -97,7 +97,7 @@
 		"TmaInventoryUnit": {
 			"allOf": [
 				{
-					"$ref": "#/definitions/InventoryUnit"
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
 				},
 				{
 					"type": "object",
@@ -165,7 +165,7 @@
 		"AntennaInventoryUnit": {
 			"allOf": [
 				{
-					"$ref": "#/definitions/InventoryUnit"
+					"$ref": "genericNrm#/definitions/ManagedElementOptionallyContainedNrmClass"
 				},
 				{
 					"type": "object",
