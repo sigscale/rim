@@ -90,7 +90,7 @@ install() ->
 		Nodes :: [node()],
 		Result :: {ok, Tables},
 		Tables :: [atom()].
-%% @doc Initialize SigScale Fault Management (FM) tables.
+%% @doc Initialize SigScale Inventory Management (IM) tables.
 %% 	`Nodes' is a list of the nodes where
 %% 	{@link //sigscale_im. sigscale_im} tables will be replicated.
 %%
