@@ -3533,7 +3533,7 @@ im_iu() ->
 			characteristic = Chars}.
 
 -spec im_tmaiu() -> specification().
-%% @doc IM Inventory Unit resource specification.
+%% @doc IM Tower Mounted Amplifier (TMA) Inventory Unit resource specification.
 im_tmaiu() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
