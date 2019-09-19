@@ -1,0 +1,49 @@
+{
+	"id": "7597462917",
+	"href": "/resourceInventoryManagement/v3/resource/7597462917",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=1",
+	"publicIdentifier": "07179336528",
+	"description": "IM Antenna Inventory Unit",
+	"category": "IM",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "AntennaInventoryUnit",
+	"@baseType": "InventoryUnit",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/AntennaInventoryUnit",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "731255649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/731255649",
+		"@type": "TmaInventoryUnitSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "minTiltValue",
+			"value" : "10"
+		},
+		{
+			"name": "maxTiltValue",
+			"value" : "150"
+		},
+		{
+			"name": "patternLabel",
+			"value" : "A"
+		}
+	],
+	"inventoryUnit": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=1,InventoryUnit=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=1,InventoryUnit=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=1,InventoryUnit=3"
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam5",
+			"vsDataFormatVersion": "acmeParams-v5",
+			"vsData": 66
+		}
+	]
+}
