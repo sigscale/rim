@@ -236,11 +236,14 @@ class InventoryManagement extends PolymerElement {
 	}
 
 	refreshClick() {
+		var grid;
 		switch(this.$.load.selected) {
 			case "catalogView":
 				var catalog = this.shadowRoot.getElementById('catalogList');
 				if (!catalog.loading) {
-					catalog.shadowRoot.getElementById('catalogGrid').clearCache();
+					grid = catalog.shadowRoot.getElementById('catalogGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -248,7 +251,9 @@ class InventoryManagement extends PolymerElement {
 			case "categoryView":
 				var category = this.shadowRoot.getElementById('categoryList');
 				if (!category.loading) {
-					category.shadowRoot.getElementById('categoryGrid').clearCache();
+					grid = category.shadowRoot.getElementById('categoryGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -256,7 +261,9 @@ class InventoryManagement extends PolymerElement {
 			case "candidateView":
 				var candidate = this.shadowRoot.getElementById('candidateList');
 				if (!candidate.loading) {
-					candidate.shadowRoot.getElementById('candidateGrid').clearCache();
+					grid = candidate.shadowRoot.getElementById('candidateGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -264,7 +271,9 @@ class InventoryManagement extends PolymerElement {
 			case "specificationView":
 				var specification = this.shadowRoot.getElementById('specificationList');
 				if (!specification.loading) {
-					specification.shadowRoot.getElementById('specificationGrid').clearCache();
+					grid = specification.shadowRoot.getElementById('specificationGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -272,7 +281,9 @@ class InventoryManagement extends PolymerElement {
 			case "inventoryView":
 				var inventory = this.shadowRoot.getElementById('inventoryList');
 				if (!inventory.loading) {
-					inventory.shadowRoot.getElementById('inventoryGrid').clearCache();
+					grid = inventory.shadowRoot.getElementById('inventoryGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -280,7 +291,9 @@ class InventoryManagement extends PolymerElement {
 			case "rulesView":
 				var rules = this.shadowRoot.getElementById('rulesList');
 				if (!rules.loading) {
-					rules.shadowRoot.getElementById('inventoryGrid').clearCache();
+					grid = rules.shadowRoot.getElementById('inventoryGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -288,7 +301,9 @@ class InventoryManagement extends PolymerElement {
 			case "httpView":
 				var http = this.shadowRoot.getElementById('httpList');
 				if (!http.loading) {
-					http.shadowRoot.getElementById('httpGrid').clearCache();
+					grid = http.shadowRoot.getElementById('httpGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
@@ -296,7 +311,9 @@ class InventoryManagement extends PolymerElement {
 			case "userView":
 				var user = this.shadowRoot.getElementById('userList');
 				if (!user.loading) {
-					user.shadowRoot.getElementById('userGrid').clearCache();
+					grid = user.shadowRoot.getElementById('userGrid');
+					grid.size = undefined;
+					grid.clearCache();
 				} else {
 					console.log('Have patience dude!');
 				}
