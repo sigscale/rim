@@ -3,7 +3,7 @@
 	"description": "IM Tower Mounted Amplifier (TMA) Inventory Unit resource function specification",
 	"@type": "TmaInventoryUnitSpec",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/TmaInventoryUnitSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@baseType": "InventoryUnitSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
