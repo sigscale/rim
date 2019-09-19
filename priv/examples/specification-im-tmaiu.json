@@ -1,0 +1,190 @@
+{
+	"name": "TmaInventoryUnit",
+	"description": "IM Tower Mounted Amplifier (TMA) Inventory Unit resource function specification",
+	"@type": "TmaInventoryUnitSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/TmaInventoryUnitSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "IM",
+	"targetResourceSchema": {
+		"@type": "TmaInventoryUnit",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/TmaInventoryUnit"
+	},
+	"relatedParty": [
+		{
+			"id": "154925519356769",
+			"href": "/partyManagement/v2/organization/154925519356769",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "inventoryUnitType",
+			"description": "Type of inventory unit (3GPP 32.690)",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorUnitFamilyType",
+			"description": "Mnemonic of inventory unit family type (e.g. Fan, PSU) assigned by vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorUnitTypeNumber",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorName",
+			"description": "Name of inventory unit vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "serialNumber",
+			"description": "Serial number of inventory unit",
+			"valueType": "string"
+		},
+		{
+			"name": "dateOfManufacture",
+			"description": "Date of Manufacture of inventory unit",
+			"valueType": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "dateOfLastService",
+			"description": "Date of last service or repair of inventory unit",
+			"valueType": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "unitPosition",
+			"description": "Position of inventory unit (e.g. Rack, shelf, slot, etc.)",
+			"valueType": "string"
+		},
+		{
+			"name": "manufacturerData",
+			"description": "Manufacturer specific data of inventory unit",
+			"valueType": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "versionNumber",
+			"description": "The version information related to (vendorUnitTypeNumber)",
+			"valueType": "string"
+		},
+		{
+			"name": "relatedFunction",
+			"description": "This attribute carries the DN of related (ManagedFunction)",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		},
+		{
+			"name": "tmaNumberOfNonLinearGainValues",
+			"description": "",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": -32768,
+					"valueTo": 32767
+				}
+			]
+		},
+		{
+			"name": "tmaNonLinearGainValue",
+			"description": "",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": -32768,
+					"valueTo": 32767
+				}
+			]
+		},
+		{
+			"name": "tmaAdditionalDataFieldNumber",
+			"description": "Identifies a standard data field which has no operational impact",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": -32768,
+					"valueTo": 32767
+				}
+			]
+		},
+		{
+			"name": "tmaAntennaModelNumber",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "tmaAntennaOperatingBands",
+			"description": "",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": -32768,
+					"valueTo": 32767
+				}
+			]
+		},
+		{
+			"name": "tmaBeamwidthForEachOpBandInBandOrder",
+			"description": "",
+			"valueType": "EightOctetsType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/EightOctetsType"
+		},
+		{
+			"name": "tmaGainForEachOpBandInBandOrder",
+			"description": "",
+			"valueType": "FourOctetsType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/FourOctetsType"
+		},
+		{
+			"name": "tmaInstallationDate",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "tmaInstallersId",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "tmaMaxSupportedGain",
+			"description": "",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": -32768,
+					"valueTo": 32767
+				}
+			]
+		},
+		{
+			"name": "tmaMinSupportedGain",
+			"description": "",
+			"valueType": "integer",
+			"resourceSpecCharacteristicValue": [
+				{
+					"valueFrom": -32768,
+					"valueTo": 32767
+				}
+			]
+		}
+	]
+}

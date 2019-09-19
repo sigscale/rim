@@ -1,0 +1,49 @@
+{
+	"$id": "http://sigscale.org/schema/TmaInventoryUnit",
+	"title": "IM Tower Mounted Amplifier (TMA) Inventory Unit",
+	"description": "IM Tower Mounted Amplifier (TMA) Inventory Unit resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "InventoryUnit"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"tmaNumberOfNonLinearGainValues",
+											"tmaNonLinearGainValue",
+											"tmaAdditionalDataFieldNumber",
+											"tmaAntennaModelNumber",
+											"tmaAntennaOperatingBands",
+											"tmaBeamwidthForEachOpBandInBandOrder",
+											"tmaGainForEachOpBandInBandOrder",
+											"tmaInstallationDate",
+											"tmaInstallersId",
+											"tmaMaxSupportedGain",
+											"tmaMinSupportedGain"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

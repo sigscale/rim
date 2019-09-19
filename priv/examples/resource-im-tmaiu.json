@@ -1,0 +1,49 @@
+{
+	"id": "8597462917",
+	"href": "/resourceInventoryManagement/v3/resource/8597462917",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1",
+	"publicIdentifier": "07179336528",
+	"description": "IM Tower Mounted Amplifier (TMA) Inventory Unit",
+	"category": "IM",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "TmaInventoryUnit",
+	"@baseType": "InventoryUnit",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/TmaInventoryUnit",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "721155649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/721155649",
+		"@type": "TmaInventoryUnitSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "tmaNumberOfNonLinearGainValues",
+			"value" : "10"
+		},
+		{
+			"name": "tmaAntennaModelNumber",
+			"value" : "777"
+		},
+		{
+			"name": "tmaInstallersId",
+			"value" : "00534"
+		}
+	],
+	"inventoryUnit": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1,InventoryUnit=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1,InventoryUnit=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1,InventoryUnit=3"
+	],
+	"VsDataContainer": [
+		{
+			"vsDataType": "acmeParam4",
+			"vsDataFormatVersion": "acmeParams-v4",
+			"vsData": 55
+		}
+	]
+}
