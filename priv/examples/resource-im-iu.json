@@ -4,7 +4,7 @@
 	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1",
 	"publicIdentifier": "07479336538",
 	"description": "IM Inventory Unit",
-	"category": "RAN",
+	"category": "IM",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
@@ -35,14 +35,14 @@
 		}
 	],
 	"tmaInventoryUnit": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=3"
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,TmaInventoryUnit=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,TmaInventoryUnit=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,TmaInventoryUnit=3"
 	],
 	"antennaInventoryUnit": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,AntennaInventoryUnit=3"
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,AntennaInventoryUnit=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,AntennaInventoryUnit=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,AntennaInventoryUnit=3"
 	],
 	"VsDataContainer": [
 		{

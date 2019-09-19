@@ -62,30 +62,30 @@
 		{
 			"name": "dateOfManufacture",
 			"description": "Date of Manufacture of inventory unit",
-			"type": "string",
+			"valueType": "string",
 			"format": "date-time"
 		},
 		{
 			"name": "dateOfLastService",
 			"description": "Date of last service or repair of inventory unit",
-			"type": "string",
+			"valueType": "string",
 			"format": "date-time"
 		},
 		{
 			"name": "unitPosition",
 			"description": "Position of inventory unit (e.g. Rack, shelf, slot, etc.)",
-			"type": "string"
+			"valueType": "string"
 		},
 		{
 			"name": "manufacturerData",
 			"description": "Manufacturer specific data of inventory unit",
-			"type": "string",
+			"valueType": "string",
 			"format": "date-time"
 		},
 		{
 			"name": "versionNumber",
 			"description": "The version information related to (vendorUnitTypeNumber)",
-			"type": "string"
+			"valueType": "string"
 		},
 		{
 			"name": "relatedFunction",
