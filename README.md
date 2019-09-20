@@ -42,19 +42,30 @@ most CSPs shall want to integrate Operations & Business Support Systems
 Through TM Forum Open API polymorphic extension pattern new sub
 classes are defined as shown in the table below.
 
-|                      |                      |                       |                      |
-|----------------------|----------------------|-----------------------|----------------------|
-|AMFFunctionSpec       |GNBCUCPFunctionSpec   |NRCellDUSpec           |RncFunctionSpec       |
-|ASFunctionSpec        |GNBCUUPFunctionSpec   |NRSectorCarrierSpec    |SCSCFFunctionSpec     |
-|BssFunctionSpec       |GNBDUFunctionSpec     |NetworkSliceSpec       |ServingGWFunctionSpec |
-|BtsSiteMgrSpec        |GgsnFunctionSpec      |NetworkSliceSubnetSpec |SgsnFunctionSpec      |
-|CsMgwFunctionSpec     |GsmCellSpec           |NodeBFunctionSpec      |UtranCellFDDSpec      |
-|ENBFunctionSpec       |HSSFunctionSpec       |PCRFFunctionSpec       |UtranCellTDDHcrSpec   |
-|EPDGFunctionSpec      |ICSCFFunctionSpec     |PCSCFFunctionSpec      |UtranCellTDDLcrSpec   |
-|EUtranCellFDDSpec     |MMEFunctionSpec       |PEEMonitoredEntitySpec |UtranCellTDDSpec      |
-|EUtranCellTDDSpec     |MscServerFunctionSpec |PGWFunctionSpec        |UtranGenericCellSpec  |
-|EUtranGenericCellSpec |NRCellCUSpec          |ResourceFunctionSpec   |                      |
-
+|                           |                        |                        |
+|---------------------------|------------------------|------------------------|
+| 3GPPAAAProxyFunctionSpec  | GsmCellSpec            | PCRFFunctionSpec       |
+| 3GPPAAAServerFunctionSpec | HSSFunctionSpec        | PCSCFFunctionSpec      |
+| AMFFunctionSpec           | HlrFunctionSpec        | PEEMonitoredEntitySpec |
+| ASFunctionSpec            | ICSCFFunctionSpec      | PGWFunctionSpec        |
+| AUSFFunctionSpec          | InventoryUnitSpec      | ResourceFunctionSpec   |
+| AntennaInventoryUnitSpec  | IubLinkSpec            | RncFunctionSpec        |
+| AucFunctionSpec           | LMFFunctionSpec        | SCSCFFunctionSpec      |
+| BssFunctionSpec           | MMEFunctionSpec        | SEPPFunctionSpec       |
+| BtsSiteMgrSpec            | MnpSrfFunctionSpec     | SMFFunctionSpec        |
+| CgfFunctionSpec           | MscServerFunctionSpec  | SMSFFunctionSpec       |
+| CsMgwFunctionSpec         | N3IWFFunctionSpec      | ServingGWFunctionSpec  |
+| ENBFunctionSpec           | NGEIRFunctionSpec      | SgsnFunctionSpec       |
+| EPDGFunctionSpec          | NRCellCUSpec           | TmaInventoryUnitSpec   |
+| EP_RP_EPSSpec             | NRCellDUSpec           | UDMFunctionSpec        |
+| EUtranCellFDDSpec         | NRFFunctionSpec        | UDRFunctionSpec        |
+| EUtranCellTDDSpec         | NRSectorCarrierSpec    | UDSFFunctionSpec       |
+| EUtranGenericCellSpec     | NSSFFunctionSpec       | UPFFunctionSpec        |
+| EirFunctionSpec           | NWDAFFunctionSpec      | UtranCellFDDSpec       |
+| GNBCUCPFunctionSpec       | NetworkSliceSpec       | UtranCellTDDHcrSpec    |
+| GNBCUUPFunctionSpec       | NetworkSliceSubnetSpec | UtranCellTDDLcrSpec    |
+| GNBDUFunctionSpec         | NodeBFunctionSpec      | UtranCellTDDSpec       |
+| GgsnFunctionSpec          | PCFFunctionSpec        | UtranGenericCellSpec   |
 
 #### [Erlang](http://www.erlang.org)
 All operations may be performed using the Erlang public API, either
