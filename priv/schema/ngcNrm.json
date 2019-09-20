@@ -1472,7 +1472,7 @@
 				"$ref": "nrNrm#/definitions/NrTac"
 			}
 		},
-		"weightFactor": {
+		"WeightFactor": {
 			"type": "integer"
 		}
 	}
