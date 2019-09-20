@@ -7,9 +7,9 @@ SigScale RIM is designed for communications service providers
 (CSP) to manage an enterpise wide inventory of physical and logical
 network resources. The initial focus is on managed objects (MO) in
 support of fault and performance management (FM & PM). Fault events
-and performance measurements reference MOs by distinguished name (DN).
-The DN of an alarm or measurement may be looked up to get detailed
-inventory and configuration information for an MO.
+and performance measurements reference MO instances by distinguished
+name (DN). The DN of an alarm or measurement may be looked up to get
+detailed inventory and configuration information for an MO.
 
 The information model is based on
 [TM Forum](https://www.tmforum.org) 
