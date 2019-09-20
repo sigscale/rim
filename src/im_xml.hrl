@@ -99,6 +99,15 @@
 		scscf :: map() | undefined}).
 -type ims_state() :: #ims_state{}.
 
+-record(im1_state,
+		{iu :: map() | undefined,
+		tmaiu :: map() | undefined,
+		aiu :: map() | undefined,
+		ius = [] :: [string()],
+		tmaius = [] :: [string()],
+		aius = [] :: [string()]}).
+-type im1_state() :: #im1_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,

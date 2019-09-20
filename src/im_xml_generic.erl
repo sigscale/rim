@@ -442,6 +442,33 @@ parse_managed_element({startElement, _, "SCSCFFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #ims_state{scscf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "InventoryUnit", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",InventoryUnit=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory, parse_function = parse_iu,
+			dn_prefix = [NewDn],
+			parse_state = #im1_state{iu = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "TmaInventoryUnit", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",TmaInventoryUnit=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory, parse_function = parse_tmaiu,
+			dn_prefix = [NewDn],
+			parse_state = #im1_state{tmaiu = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "AntennaInventoryUnit", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",AntennaInventoryUnit=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory, parse_function = parse_aiu,
+			dn_prefix = [NewDn],
+			parse_state = #im1_state{aiu = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];

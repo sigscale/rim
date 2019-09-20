@@ -30,6 +30,7 @@
 			im_xml_eutran,
 			im_xml_epcn3ai,
 			im_xml_ims,
+			im_xml_inventory,
 			im_xml_zte,
 			mod_im_rest_accepted_content,
 			mod_im_rest_delete,
