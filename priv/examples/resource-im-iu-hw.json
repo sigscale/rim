@@ -3,7 +3,7 @@
 	"href": "/resourceInventoryManagement/v3/resource/5797462918",
 	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1",
 	"publicIdentifier": "07079336568",
-	"description": "IM Inventory Unit Network Element",
+	"description": "IM Inventory Unit Hardware",
 	"category": "IM",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
@@ -34,7 +34,7 @@
 			"value" : "SubNetwork=1,ManagedElement=1,NodeBFunction=1"
 		}
 	],
-	"inventoryUnitNE": [
+	"inventoryUnitHw": [
 		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1",
 		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=2",
 		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=3"
