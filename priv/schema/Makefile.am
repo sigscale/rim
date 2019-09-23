@@ -119,6 +119,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/AntennaInventoryUnitSpec.json \
 		$(abs_builddir)/InventoryUnitNESpec.json \
 		$(abs_builddir)/InventoryUnitHwSpec.json \
+		$(abs_builddir)/InventoryUnitSwSpec.json \
 		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -746,6 +747,16 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitHwSpec.json \
+			-r genericNrm.json \
+			-r inventoryNrmAlt2.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s InventoryUnitSwSpec.json \
 			-r genericNrm.json \
 			-r inventoryNrmAlt2.json \
 			-r ResourceFunctionSpec.json \

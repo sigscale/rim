@@ -1,0 +1,114 @@
+{
+	"name": "InventoryUnitSw",
+	"description": "IM Inventory Unit Software resource function specification",
+	"@type": "InventoryUnitSwSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitSwSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "IM",
+	"targetResourceSchema": {
+		"@type": "InventoryUnitSw",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitSw"
+	},
+	"relatedParty": [
+		{
+			"id": "164985511326749",
+			"href": "/partyManagement/v2/organization/164985511326749",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "swId",
+			"description": "Unique identifier of a Software unit",
+			"valueType": "string"
+		},
+		{
+			"name": "swName",
+			"description": "Software release name used",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorName",
+			"description": "Name of inventory unit vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "swVersion",
+			"description": "Version identifier of the software unit",
+			"valueType": "string"
+		},
+		{
+			"name": "salesUniqueId",
+			"description": "Date of Manufacture of inventory unit",
+			"valueType": "string"
+		},
+		{
+			"name": "classification",
+			"description": "Name of installed Software",
+			"valueType": "string"
+		},
+		{
+			"name": "swInstallationTime",
+			"description": "Date and time when the software installation process ended and the sotware was installed",
+			"valueType": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "swActivationTime",
+			"description": "Date and time when the software was activated",
+			"valueType": "string",
+			"format": "date-time"
+		},
+		{
+			"name": "swStatus",
+			"description": "Status of the SW unit (e.g. installed, archived)",
+			"valueType": "string"
+		},
+		{
+			"name": "additionalInformation",
+			"description": "Supplementary information about inventory data",
+			"valueType": "string"
+		},
+		{
+			"name": "nEList",
+			"description": "Carries the set of DN(s) of related InventoryUnitNE(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "hWList",
+			"description": "Carries the set of DN(s) of related InventoryUnitHw(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "lICList",
+			"description": "Carries the set of DN(s) of related InventoryUnitLic(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "mFunction",
+			"description": "Carries the DN of related ManagedFunction",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		}
+	]
+}

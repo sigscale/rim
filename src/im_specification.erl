@@ -37,7 +37,7 @@
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
--export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0]).
+-export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0]).
 
 -include("im.hrl").
 
@@ -3843,6 +3843,72 @@ im_iu_hw() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitHw",
 					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitHw"},
+			characteristic = Chars}.
+
+-spec im_iu_sw() -> specification().
+%% @doc IM Inventory Unit Software resource specification.
+im_iu_sw() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	SwId = #specification_char{name = "swId",
+			description = "Unique identifier of a Software unit",
+			value_type = "string"},
+	SwName = #specification_char{name = "swName",
+			description = "Software release name used",
+			value_type = "string"},
+	VendorName = #specification_char{name = "vendorName",
+			description = "Name of inventory unit vendor",
+			value_type = "string"},
+	SwVersion = #specification_char{name = "swVersion",
+			description = "Version identifier of the software unit",
+			value_type = "string"},
+	SalesUniqueId = #specification_char{name = "salesUniqueId",
+			description = "Date of Manufacture of inventory unit",
+			value_type = "string"},
+	Classification = #specification_char{name = "classification",
+			description = "Name of installed Software",
+			value_type = "string"},
+	SwInstallationTime = #specification_char{name = "swInstallationTime",
+			description = "Date and time when the software installation process ended and the sotware was installed",
+			value_type = "string"},
+	SwActivationTime = #specification_char{name = "swActivationTime",
+			description = "Date and time when the software was activated",
+			value_type = "string"},
+	SwStatus = #specification_char{name = "swStatus",
+			description = "Status of the SW unit (e.g. installed, archived)",
+			value_type = "string"},
+	AdditionalInformation = #specification_char{name = "additionalInformation",
+			description = "Supplementary information about inventory data",
+			value_type = "string"},
+	NEList = #specification_char{name = "nEList",
+			description = "Carries the set of DN(s) of related InventoryUnitNE(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	HWList = #specification_char{name = "hWList",
+			description = "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	LICList = #specification_char{name = "lICList",
+			description = "Carries the set of DN(s) of related InventoryUnitLic(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	MFunction = #specification_char{name = "mFunction",
+			description = "Carries the DN of related ManagedFunction",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	Chars = [ID, SwId, SwName, VendorName, SwVersion, SalesUniqueId, Classification, SwInstallationTime,
+			SwActivationTime, SwStatus, AdditionalInformation, NEList, HWList, LICList, MFunction],
+	#specification{name = "InventoryUnitSw",
+			description = "IM Inventory Unit Software resource function specification",
+			class_type = "InventoryUnitSwSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/InventoryUnitSwSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "IM",
+			target_schema = #target_schema_ref{class_type = "InventoryUnitSw",
+					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitSw"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

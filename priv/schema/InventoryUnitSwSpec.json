@@ -1,0 +1,53 @@
+{
+	"$id": "http://sigscale.org/schema/InventoryUnitSwSpec",
+	"title": "IM Inventory Unit Software Specification",
+	"description": "IM Inventory Unit Software resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"swId",
+											"swName",
+											"vendorName",
+											"swVersion",
+											"salesUniqueId",
+											"classification",
+											"swInstallationTime",
+											"swActivationTime",
+											"swStatus",
+											"additionalInformation",
+											"nEList",
+											"hWList",
+											"lICList",
+											"mFunction"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
