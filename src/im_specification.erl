@@ -37,7 +37,7 @@
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
--export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0]).
+-export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0]).
 
 -include("im.hrl").
 
@@ -3770,6 +3770,79 @@ im_iu_ne() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitNE",
 					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitNE"},
+			characteristic = Chars}.
+
+-spec im_iu_hw() -> specification().
+%% @doc IM Inventory Unit Hardware resource specification.
+im_iu_hw() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	HwId = #specification_char{name = "hwId",
+			description = "Hardware identifier allocated by the vendor",
+			value_type = "string"},
+	HwType = #specification_char{name = "hwType",
+			description = "Type of the HW unit (e.g. equipment holder, carriage)",
+			value_type = "string"},
+	HwName = #specification_char{name = "hwName",
+			description = "Mnemonic of hardware inventory unit family type (e.g. Fan, PSU) assigned by vendor",
+			value_type = "string"},
+	VendorName = #specification_char{name = "vendorName",
+			description = "Name of inventory unit vendor",
+			value_type = "string"},
+	HwVersion = #specification_char{name = "hwVersion",
+			description = "Version of current unit (e.g. firmware version)",
+			value_type = "string"},
+	SalesUniqueId = #specification_char{name = "salesUniqueId",
+			description = "Date of Manufacture of inventory unit",
+			value_type = "string"},
+	HwUnitLocation = #specification_char{name = "hwUnitLocation",
+			description = "Unique physical or logical location identifier within NE",
+			value_type = "string"},
+	Model = #specification_char{name = "model",
+			description = "Equipment configuration",
+			value_type = "string"},
+	HwCapability = #specification_char{name = "hwCapability",
+			description = "Capability of Hardware (e.g. capacity, size)",
+			value_type = "string"},
+	ModificationDate = #specification_char{name = "modificationDate",
+			description = "Date/time stamp of last change",
+			value_type = "string"},
+	ManualDataEntry = #specification_char{name = "manualDataEntry",
+			description = "Indicates whether unit is passive or active",
+			value_type = "string"},
+	AdditionalInformation = #specification_char{name = "additionalInformation",
+			description = "Supplementary information about inventory data",
+			value_type = "string"},
+	NEList = #specification_char{name = "nEList",
+			description = "Carries the set of DN(s) of related InventoryUnitNE(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	SWList = #specification_char{name = "sWList",
+			description = "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	LICList = #specification_char{name = "lICList",
+			description = "Carries the set of DN(s) of related InventoryUnitLic(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	MFunction = #specification_char{name = "mFunction",
+			description = "Carries the DN of related ManagedFunction",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	Chars = [ID, HwId, HwType, HwName, VendorName, HwVersion, SalesUniqueId, HwUnitLocation, Model,
+			HwCapability, ModificationDate, ManualDataEntry, AdditionalInformation, NEList, SWList,
+			LICList, MFunction],
+	#specification{name = "InventoryUnitHw",
+			description = "IM Inventory Unit Hardware resource function specification",
+			class_type = "InventoryUnitHwSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/InventoryUnitHwSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "IM",
+			target_schema = #target_schema_ref{class_type = "InventoryUnitHw",
+					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitHw"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

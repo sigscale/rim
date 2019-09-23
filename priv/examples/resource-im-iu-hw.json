@@ -1,0 +1,42 @@
+{
+	"id": "5797462918",
+	"href": "/resourceInventoryManagement/v3/resource/5797462918",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1",
+	"publicIdentifier": "07079336568",
+	"description": "IM Inventory Unit Network Element",
+	"category": "IM",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "InventoryUnitHw",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitHw",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "702153649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/702153649",
+		"@type": "InventoryUnitHwSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "hwId",
+			"value" : "Hw 1"
+		},
+		{
+			"name": "vendorName",
+			"value" : "Acme"
+		},
+		{
+			"name": "mFunction",
+			"value" : "SubNetwork=1,ManagedElement=1,NodeBFunction=1"
+		}
+	],
+	"inventoryUnitNE": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=3"
+	]
+}

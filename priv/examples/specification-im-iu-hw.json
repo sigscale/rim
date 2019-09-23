@@ -1,0 +1,122 @@
+{
+	"name": "InventoryUnitHw",
+	"description": "IM Inventory Unit Hardware resource function specification",
+	"@type": "InventoryUnitHwSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitHwSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "IM",
+	"targetResourceSchema": {
+		"@type": "InventoryUnitHw",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitHw"
+	},
+	"relatedParty": [
+		{
+			"id": "154985511326749",
+			"href": "/partyManagement/v2/organization/154985511326749",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "hwId",
+			"description": "Hardware identifier allocated by the vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "hwType",
+			"description": "Type of the HW unit (e.g. equipment holder, carriage)",
+			"valueType": "string"
+		},
+		{
+			"name": "hwName",
+			"description": "Mnemonic of hardware inventory unit family type (e.g. Fan, PSU) assigned by vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorName",
+			"description": "Name of inventory unit vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "hwVersion",
+			"description": "Version of current unit (e.g. firmware version)",
+			"valueType": "string"
+		},
+		{
+			"name": "salesUniqueId",
+			"description": "Date of Manufacture of inventory unit",
+			"valueType": "string"
+		},
+		{
+			"name": "hwUnitLocation",
+			"description": "Unique physical or logical location identifier within NE",
+			"valueType": "string"
+		},
+		{
+			"name": "model",
+			"description": "Equipment configuration",
+			"valueType": "string"
+		},
+		{
+			"name": "hwCapability",
+			"description": "Capability of Hardware (e.g. capacity, size)",
+			"valueType": "string"
+		},
+		{
+			"name": "modificationDate",
+			"description": "Date/time stamp of last change",
+			"valueType": "string"
+		},
+		{
+			"name": "manualDataEntry",
+			"description": "Indicates whether unit is passive or active",
+			"valueType": "string"
+		},
+		{
+			"name": "additionalInformation",
+			"description": "Supplementary information about inventory data",
+			"valueType": "string"
+		},
+		{
+			"name": "nEList",
+			"description": "Carries the set of DN(s) of related InventoryUnitNE(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "sWList",
+			"description": "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "lICList",
+			"description": "Carries the set of DN(s) of related InventoryUnitLic(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "mFunction",
+			"description": "Carries the DN of related ManagedFunction",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		}
+	]
+}
