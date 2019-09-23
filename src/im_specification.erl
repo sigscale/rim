@@ -3494,7 +3494,7 @@ im_iu() ->
 			description = "",
 			value_type = "string"},
 	VendorName = #specification_char{name = "vendorName",
-			description = "Type of inventory unit (3GPP 32.690)",
+			description = "Name of inventory unit vendor",
 			value_type = "string"},
 	SerialNumber = #specification_char{name = "serialNumber",
 			description = "Serial number of inventory unit",
