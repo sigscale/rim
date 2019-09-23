@@ -1,0 +1,107 @@
+{
+	"name": "InventoryUnitNE",
+	"description": "IM Inventory Unit Network Element resource function specification",
+	"@type": "InventoryUnitNESpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitNESpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "IM",
+	"targetResourceSchema": {
+		"@type": "InventoryUnitNE",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitNE"
+	},
+	"relatedParty": [
+		{
+			"id": "154985511356749",
+			"href": "/partyManagement/v2/organization/154985511356749",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "neId",
+			"description": "Vendor defined unique identifier of a logical or physical network element unit",
+			"valueType": "string"
+		},
+		{
+			"name": "customerIdentifier",
+			"description": "Unique identification of a vendors’ customer",
+			"valueType": "string"
+		},
+		{
+			"name": "productName",
+			"description": "NE name classifying a vendor’s product family or function",
+			"valueType": "string"
+		},
+		{
+			"name": "vendorName",
+			"description": "Name of inventory unit vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "productType",
+			"description": "Identifier of the product (e.g. platform), based on different HW/SW platforms",
+			"valueType": "string"
+		},
+		{
+			"name": "salesUniqueId",
+			"description": "Date of Manufacture of inventory unit",
+			"valueType": "string"
+		},
+		{
+			"name": "operatorUniqueName",
+			"description": "Unique NE identifier used by operator",
+			"valueType": "string"
+		},
+		{
+			"name": "siteId",
+			"description": "NE site in customer network",
+			"valueType": "integer"
+		},
+		{
+			"name": "additionalInformation",
+			"description": "Supplementary information about inventory data",
+			"valueType": "string"
+		},
+		{
+			"name": "hWList",
+			"description": "Carries the set of DN(s) of related InventoryUnitHw(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "sWList",
+			"description": "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "lICList",
+			"description": "Carries the set of DN(s) of related InventoryUnitLic(s)",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "mFunction",
+			"description": "Carries the DN of related ManagedFunction",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		}
+	]
+}

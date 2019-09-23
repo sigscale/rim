@@ -1,0 +1,54 @@
+{
+	"$id": "http://sigscale.org/schema/InventoryUnitNE",
+	"title": "IM Inventory Unit Network Element",
+	"description": "IM Inventory Unit Network Element resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"neId",
+											"customerIdentifier",
+											"productName",
+											"vendorName",
+											"productType",
+											"salesUniqueId",
+											"operatorUniqueName",
+											"siteId",
+											"additionalInformation",
+											"hWList",
+											"sWList",
+											"lICList",
+											"mFunction"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"inventoryUnitNE": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

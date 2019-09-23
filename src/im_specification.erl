@@ -37,7 +37,7 @@
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
--export([im_iu/0, im_tmaiu/0, im_aiu/0]).
+-export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0]).
 
 -include("im.hrl").
 
@@ -3707,6 +3707,69 @@ im_aiu() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "AntennaInventoryUnit",
 					schema = "/resourceInventoryManagement/v3/schema/AntennaInventoryUnit"},
+			characteristic = Chars}.
+
+-spec im_iu_ne() -> specification().
+%% @doc IM Inventory Unit Network Element resource specification.
+im_iu_ne() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	NeId = #specification_char{name = "neId",
+			description = "Vendor defined unique identifier of a logical or physical network element unit",
+			value_type = "string"},
+	CustomerIdentifier = #specification_char{name = "customerIdentifier",
+			description = "Unique identification of a vendors’ customer",
+			value_type = "string"},
+	ProductName = #specification_char{name = "productName",
+			description = "NE name classifying a vendor’s product family or function",
+			value_type = "string"},
+	VendorName = #specification_char{name = "vendorName",
+			description = "Name of inventory unit vendor",
+			value_type = "string"},
+	ProductType = #specification_char{name = "productType",
+			description = "Identifier of the product (e.g. platform), based on different HW/SW platforms",
+			value_type = "string"},
+	SalesUniqueId = #specification_char{name = "salesUniqueId",
+			description = "Date of Manufacture of inventory unit",
+			value_type = "string"},
+	OperatorUniqueName = #specification_char{name = "operatorUniqueName",
+			description = "Unique NE identifier used by operator",
+			value_type = "string"},
+	SiteId = #specification_char{name = "siteId",
+			description = "NE site in customer network",
+			value_type = "integer"},
+	AdditionalInformation = #specification_char{name = "additionalInformation",
+			description = "Supplementary information about inventory data",
+			value_type = "string"},
+	HWList = #specification_char{name = "hWList",
+			description = "Carries the set of DN(s) of related InventoryUnitHw(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	SWList = #specification_char{name = "sWList",
+			description = "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	LICList = #specification_char{name = "lICList",
+			description = "Carries the set of DN(s) of related InventoryUnitLic(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	MFunction = #specification_char{name = "mFunction",
+			description = "Carries the DN of related ManagedFunction",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	Chars = [ID, NeId, CustomerIdentifier, ProductName, VendorName, ProductType, SalesUniqueId, OperatorUniqueName,
+			SiteId, AdditionalInformation, HWList, SWList, LICList, MFunction],
+	#specification{name = "InventoryUnitNE",
+			description = "IM Inventory Unit Network Element resource function specification",
+			class_type = "InventoryUnitNESpecification",
+			schema = "/resourceCatalogManagement/v3/schema/InventoryUnitNESpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "IM",
+			target_schema = #target_schema_ref{class_type = "InventoryUnitNE",
+					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitNE"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

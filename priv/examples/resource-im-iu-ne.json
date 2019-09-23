@@ -1,0 +1,42 @@
+{
+	"id": "6597462918",
+	"href": "/resourceInventoryManagement/v3/resource/6597462918",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1",
+	"publicIdentifier": "07579336538",
+	"description": "IM Inventory Unit Network Element",
+	"category": "IM",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "InventoryUnitNE",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitNE",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "752155649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/752155649",
+		"@type": "InventoryUnitNESpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "neId",
+			"value" : "NE 1"
+		},
+		{
+			"name": "vendorName",
+			"value" : "Silva"
+		},
+		{
+			"name": "mFunction",
+			"value" : "SubNetwork=1,ManagedElement=1,NodeBFunction=1"
+		}
+	],
+	"inventoryUnitNE": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1,InventoryUnitNE=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1,InventoryUnitNE=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1,InventoryUnitNE=3"
+	]
+}
