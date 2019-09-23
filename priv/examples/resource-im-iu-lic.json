@@ -1,0 +1,42 @@
+{
+	"id": "3785462918",
+	"href": "/resourceInventoryManagement/v3/resource/3785462918",
+	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1",
+	"publicIdentifier": "01159336568",
+	"description": "IM Inventory Unit License",
+	"category": "IM",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "InventoryUnitLic",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitLic",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "0115153649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/0115153649",
+		"@type": "InventoryUnitLicSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "licId",
+			"value" : "Lic 1"
+		},
+		{
+			"name": "vendorName",
+			"value" : "Gamini"
+		},
+		{
+			"name": "mFunction",
+			"value" : "SubNetwork=1,ManagedElement=1,RncFunction=1"
+		}
+	],
+	"inventoryUnitSw": [
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1,InventoryUnitLic=1",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1,InventoryUnitLic=2",
+		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1,InventoryUnitLic=3"
+	]
+}

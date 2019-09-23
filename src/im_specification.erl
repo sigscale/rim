@@ -37,7 +37,8 @@
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
--export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0]).
+-export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0,
+		im_iu_lic/0]).
 
 -include("im.hrl").
 
@@ -3909,6 +3910,69 @@ im_iu_sw() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitSw",
 					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitSw"},
+			characteristic = Chars}.
+
+-spec im_iu_lic() -> specification().
+%% @doc IM Inventory Unit License resource specification.
+im_iu_lic() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	LicId = #specification_char{name = "licId",
+			description = "Unique identifier of a license (e.g. name, code)",
+			value_type = "string"},
+	LicType = #specification_char{name = "licType",
+			description = "Describing type of current license (e.g. capacity, particular feature, no. of subscribers)",
+			value_type = "string"},
+	VendorName = #specification_char{name = "vendorName",
+			description = "Name of inventory unit vendor",
+			value_type = "string"},
+	Validity = #specification_char{name = "validity",
+			description = "May include one of the elements duration, end (expiration date) or forever",
+			value_type = "string"},
+	Key = #specification_char{name = "key",
+			description = "License activation key according to the used licensing system",
+			value_type = "string"},
+	LicActivationTime = #specification_char{name = "licActivationTime",
+			description = "Date and time when the license was activated",
+			value_type = "string"},
+	LicStatus = #specification_char{name = "licStatus",
+			description = "Applicable only for managed licenses",
+			value_type = "string"},
+	SalesUniqueId = #specification_char{name = "salesUniqueId",
+			description = "Date of Manufacture of inventory unit",
+			value_type = "string"},
+	AdditionalInformation = #specification_char{name = "additionalInformation",
+			description = "Supplementary information about inventory data",
+			value_type = "string"},
+	NEList = #specification_char{name = "nEList",
+			description = "Carries the set of DN(s) of related InventoryUnitNE(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	HWList = #specification_char{name = "hWList",
+			description = "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	SWList = #specification_char{name = "sWList",
+			description = "Carries the set of DN(s) of related InventoryUnitSw(s)",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	MFunction = #specification_char{name = "mFunction",
+			description = "Carries the DN of related ManagedFunction",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	Chars = [ID, LicId, LicType, VendorName, Validity, Key, LicActivationTime, LicStatus,
+			SalesUniqueId, AdditionalInformation, NEList, HWList, SWList, MFunction],
+	#specification{name = "InventoryUnitLic",
+			description = "IM Inventory Unit License resource function specification",
+			class_type = "InventoryUnitLicSpecification",
+			schema = "/resourceCatalogManagement/v3/schema/InventoryUnitLicSpecification",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "IM",
+			target_schema = #target_schema_ref{class_type = "InventoryUnitLic",
+					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitLic"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
