@@ -53,18 +53,18 @@ content_types_provided() ->
 	["application/json"].
 
 -spec delete_rule(Id) -> Result
-   when
-      Id :: string(),
-      Result :: {ok, Headers :: [tuple()], Body :: iolist()}
-            | {error, ErrorCode :: integer()} .
+	when
+		Id :: string(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `Pee Rule'.
 delete_rule(Id) ->
-   case im:delete_rule(Id) of
-      ok ->
-         {ok, [], []};
-      {error, _Reason} ->
-         {error, 400}
-   end.
+	case im:delete_rule(Id) of
+		ok ->
+			{ok, [], []};
+		{error, _Reason} ->
+			{error, 400}
+	end.
 
 -spec patch_rules(Id, Etag, ContentType, ReqBody) -> Result
 	when
