@@ -83,6 +83,46 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			throw({add_resource, Reason})
 	end;
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId,
+		parse_state = #zte_state{ vs_data = #{"id" := Id,
+		"attributes" := #{"vsDataType" := "vsDataBtsEquipment",
+		"vsDataFormatVersion" := "ZTESpecificAttributes",
+		"vsData" := #{"userLabel" := SideId}}}}, spec_cache = Cache} = State,
+		#state{parse_module = im_xml_geran, parse_function = parse_bss,
+		spec_cache = PrevCache, parse_state = GeranState} = PrevState | T]) ->
+	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
+	#geran_state{btss = Btss} = GeranState,
+	Sites = case im:get_pee(RuleId, SideId) of
+		{ok, PEEMonitoredEntities} ->
+			parse_peeParameterslist(PEEMonitoredEntities, []);
+		_ ->
+			[]
+	end,
+	VsDataContainer = #resource_char{name = "vsDataContainer",
+			class_type = "VsDataContainerList", value = NrmMap,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"},
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Sites,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"},
+	ClassType = "BtsSiteMgr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	BtsDn = CurrentDn ++ ",vsDataBtsEquipment=" ++ Id,
+	Resource = #resource{name = BtsDn,
+			description = "GSM Base Transceiver Station (BTS)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			specification = Spec,
+			characteristic = [VsDataContainer, PeeParam]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = GeranState#geran_state{btss = [BtsDn | Btss]}} | T];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[#state{dn_prefix = [CurrentDn | _],
 		parse_state = #zte_state{vs_data = #{"id" := Id, "attributes" := #{"vsDataType" :=
 		"vsDataGCellEquipmentFunction"}}}, spec_cache = Cache,
@@ -116,16 +156,30 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 	end;
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[#state{parse_state = #zte_state{vs_data = #{"attributes" :=
-		#{"vsDataFormatVersion" := "ZTESpecificAttributes"}}}} = State,
-		#state{parse_module = im_xml_geran, parse_state = GeranState} = PrevState | T]) ->
-	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
-	[PrevState#state{parse_state = GeranState#geran_state{vs_data = NrmMap}} | T];
+		#{"vsDataFormatVersion" := "ZTESpecificAttributes"}}}},
+		#state{parse_module = im_xml_geran} = PrevState | T]) ->
+%	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
+	[PrevState | T];
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		[_State, PrevState | T]) ->
 	[PrevState | T];
 parse_vsdata({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_peeParameterslist([#resource{characteristic = ResourceChars} | Resources], Acc) ->
+	parse_peeParameterslist1(ResourceChars, Resources, Acc);
+parse_peeParameterslist([], Acc) ->
+	Acc.
+% @hidden
+parse_peeParameterslist1([#resource_char{name = "peeMeDescription",
+		value = ValueMap} | _], Resources, Acc) ->
+	parse_peeParameterslist(Resources, [ValueMap | Acc]);
+parse_peeParameterslist1([_H | T], Resources, Acc) ->
+	parse_peeParameterslist1(T, Resources, Acc);
+parse_peeParameterslist1([], Resources, Acc) ->
+	parse_peeParameterslist(Resources, Acc).
 
 %% @hidden
 parse_vsdata_attr(VsDataContainer, Stack) ->

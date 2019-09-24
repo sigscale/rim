@@ -487,11 +487,12 @@ parse_vsdata({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_vsdata({characters, "ZTESpecificAttributes" = Chars},
 		[#state{dn_prefix = [CurrentDn | _], location = Location,
-		parse_state = #generic_state{vs_data = VsData},
+		rule = RuleId, parse_state = #generic_state{vs_data = VsData},
 		stack = [{startElement, {_, "vsDataFormatVersion"}, _} | _]}
 		= CurrentState | T]) ->
 	#state{stack = Stack} = CurrentState,
 	[#state{parse_module = im_xml_zte, parse_function = parse_vsdata,
+			rule = RuleId,
 			dn_prefix = [CurrentDn], parse_state = #zte_state{vs_data = VsData},
 			stack = [{characters, Chars} | Stack], location = Location} | T];
 parse_vsdata({characters, Chars}, [#state{stack = Stack} = State | T]) ->

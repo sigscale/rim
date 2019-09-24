@@ -50,12 +50,10 @@ parse_bss({startElement,  _Uri, "BtsSiteManager", QName,
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_bss({startElement,  _Uri, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",VsDataContainer=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
+	[#state{dn_prefix = [CurrentDn], rule = RuleId,
 			parse_module = im_xml_generic, parse_function = parse_vsdata,
-			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			parse_state = #generic_state{vs_data = #{"id" => Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_bss({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
