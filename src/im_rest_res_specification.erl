@@ -572,13 +572,13 @@ spec_char_value([], _, Acc) ->
 %% @doc CODEC for `ResourceSpecFeature'.
 %% @private
 feature([#feature{} | _] = List) ->
-   Fields = record_info(fields, feature),
-   [feature(Fields, R, #{}) || R <- List];
+	Fields = record_info(fields, feature),
+	[feature(Fields, R, #{}) || R <- List];
 feature([#{} | _] = List) ->
-   Fields = record_info(fields, feature),
-   [feature(Fields, M, #feature{}) || M <- List];
+	Fields = record_info(fields, feature),
+	[feature(Fields, M, #feature{}) || M <- List];
 feature([]) ->
-   [].
+	[].
 %% @hidden
 feature([name | T], #feature{name = Name} = R, Acc)
 		when is_list(Name) ->
@@ -841,6 +841,12 @@ spec_char_rel([], _, Acc) ->
 	Acc.
 
 %% @hidden
+match([{Key, Value} | T], Acc) ->
+	match(T, [{exact, Key, Value} | Acc]);
+match([], Acc) ->
+	Acc.
+
+%% @hidden
 query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 	try
 		CountOnly = case Method of
@@ -854,6 +860,10 @@ query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 				{ok, Tokens, _} = im_rest_query_scanner:string(StringF),
 				{ok, Filter} = im_rest_query_parser:parse(Tokens),
 				parse_filter(Filter);
+			false when length(Query) > 0 ->
+				Rest = match(Query, []),
+				Rest1 = [{array,[{complex, Rest}]}],
+				parse_filter(Rest1);
 			false ->
 				'_'
 		end,
