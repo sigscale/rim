@@ -34,15 +34,6 @@ e.g &#058;
 
 	'''
 
-===Internationalization (i18n)===
-The web user interface (UI) may be internationalized by specifying `Locale' in
-{@link //im/im:add_user/3. im:add_user/3} where `Locale'
-is a two letter ISO-639-1 language code. A corresponding message file
-should be provided in `priv/www/locales'.
-	```
-	3> im:add_user("alejandro", "sjjymz5prtcd", "es").
-	{ok,{1500544430723584044,90}}
-	'''
 ==Operation==
 
 ==REST API==
@@ -168,9 +159,6 @@ headers may be included in requests and responses.
       </tr>
    </tbody>
 </table></p>
-
-
-==Configuration==
 
 <table id="Get-User" class="op">
    <caption class="op"><b>Get user</b></caption>
@@ -313,4 +301,75 @@ Content-Length: 552
  }
 ]
 </pre></p>
+
+==Configuration==
+The {@link //sigscale_im. sigscale_im} application is configured using the following environment variables:
+<dl>
+	<dt>rest_page_size</dt>
+		<dd>Maximum number of items to return for a REST collection.</dd>
+	<dt>rest_page_timeout</dt>
+		<dd>Validity time for an `ETag' in a paginated query.</dd>
+</dl>
+The {@link //inets. inets} application's {@link //inets/httpd. httpd} server configuration includes these environment variables:
+<dl>
+	<dt>{port, integer()}</dt>
+		<dd>The port that the HTTP server listen to.</dd>
+	<dt>{server_root, path()}</dt>
+		<dd>Defines the home directory of the server.</dd>
+	<dt>{document_root, path()}</dt>
+		<dd>Defines the top directory of the frontend HTML files.</dd>
+	<dt>{directory, {path(), [{property(), term()}]}}</dt>
+		<dd>The properties for directories include:
+			<dl>
+				<dt>{auth_type, plain | dets | mnesia}</dt>
+					<dd>Authentication table storage. (use {@link //mnesia. mnesia})</dd>
+				<dt>{auth_name, string()}</dt>
+					<dd>Sets the authorization realm for path().</dd>
+				<dt>{require_user, [string()]}</dt>
+					<dd>Defines list of users to grant access to path().</dd>
+				<dt>{require_group, [string()]}</dt>
+					<dd>Defines list of groups to grant access to path().</dd>
+			</dl>
+		</dd>
+</dl>
+
+===Example sys.config===
+```
+[{sigscale_im,
+      [{rest_page_size, 1000},
+		{rest_page_timeout, 60000}]},
+{inets,
+      [{services,
+         [{httpd,
+            [{server_name, "im.sigscale.net"},
+            {directory_index, ["index.html"]},
+            {directory, {"/",
+                  [{auth_type, mnesia},
+                  {auth_name, "im.sigscale.net"},
+                  {require_group, ["staff"]}]}},
+            {transfer_disk_log, "log/http/transfer"},
+            {security_disk_log, "log/http/security"},
+            {error_disk_log, "log/http/error"},
+            {transfer_disk_log_size, {10485760, 10}},
+            {error_disk_log_size, {10485760, 10}},
+            {error_disk_log_size, {10485760, 10}},
+            {security_disk_log_size, {10485760, 10}},
+            {disk_log_format, internal},
+            {modules,
+						[mod_alias,
+						mod_auth,
+                  mod_responsecontrol,
+                  mod_im_rest_accepted_content,
+                  mod_im_rest_post,
+                  mod_im_rest_get,
+                  mod_im_rest_patch,
+                  mod_im_rest_delete,
+                  mod_get,
+                  mod_disk_log]},
+            {port, 8080},
+            {socket_type, ip_comm},
+            {server_root, "./"},
+            {alias, {"/doc", "lib/sigscale_im-%VERSION%/doc"}},
+            {document_root, "lib/sigscale_im-%VERSION%/priv/www"}]}]}]}].
+'''
 

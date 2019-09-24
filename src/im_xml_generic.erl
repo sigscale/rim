@@ -75,20 +75,14 @@ parse_subnetwork({startElement, _Uri, "SubNetwork", QName,
 			parse_module = im_xml_generic, parse_function = parse_subnetwork,
 			parse_state = #generic_state{subnet = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
-parse_subnetwork({startElement, _Uri, "meContext", QName,
+parse_subnetwork({startElement, _Uri, [M | "eContext"], QName,
 		[{[], [], "id", Id}] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
-% only for zte xml files
-	DnComponent = ",meContext=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{parse_module = im_xml_generic, parse_function = parse_mecontext,
-			dn_prefix = [NewDn], rule = RuleId,
-			parse_state = #generic_state{me_context = [DnComponent]},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_subnetwork({startElement, _Uri, "MeContext", QName,
-		[{[], [], "id", Id}] = Attributes}, State) ->
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State)
+		when M =:= $M; M =:= $m -> % work around zte bug
 	DnComponent = ",MeContext=" ++ Id,
-	[#state{parse_module = im_xml_generic, parse_function = parse_mecontext,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn], rule = RuleId,
+			parse_module = im_xml_generic, parse_function = parse_mecontext,
 			parse_state = #generic_state{me_context = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "ManagementNode", QName,
@@ -132,12 +126,8 @@ parse_mecontext({startElement, _Uri, "ManagedElement", QName,
 parse_mecontext({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_mecontext({endElement, _Uri, "meContext", _QName},
-		[_State, PrevState | T]) ->
-% only for zte xml files
-	[PrevState | T];
-parse_mecontext({endElement, _Uri, "MeContext", _QName},
-		[_State, PrevState | T]) ->
+parse_mecontext({endElement, _Uri, [M | "eContext"], _QName},
+		[_State, PrevState | T]) when M =:= $M; M =:= $m -> % workaround ZTE bug
 	[PrevState | T];
 parse_mecontext({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->

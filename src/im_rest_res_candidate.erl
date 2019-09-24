@@ -368,6 +368,12 @@ candidate([], _, Acc) ->
 %%----------------------------------------------------------------------
 
 %% @hidden
+match([{Key, Value} | T], Acc) ->
+	match(T, [{exact, Key, Value} | Acc]);
+match([], Acc) ->
+	Acc.
+
+%% @hidden
 query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 	try
 		CountOnly = case Method of
@@ -381,6 +387,10 @@ query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 				{ok, Tokens, _} = im_rest_query_scanner:string(String),
 				{ok, Filter} = im_rest_query_parser:parse(Tokens),
 				parse_filter(Filter);
+			false when length(Query) > 0 ->
+				Rest = match(Query, []),
+				Rest1 = [{array,[{complex, Rest}]}],
+				parse_filter(Rest1);
 			false ->
 				'_'
 		end,
