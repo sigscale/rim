@@ -30,10 +30,8 @@
 parse_vsdata({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _], location = Location} | _T] = State) ->
-	DnComponent = ",VsDataContainer=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_zte, parse_function = parse_vsdata,
-			dn_prefix = [NewDn], location = Location,
+			dn_prefix = [CurrentDn], location = Location,
 			parse_state = #zte_state{vs_data = #{"id" => Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_vsdata({startElement, _, _, QName, Attributes},
@@ -51,8 +49,8 @@ parse_vsdata({endElement, _Uri, "attributes", QName},
 	[State#state{parse_state = ZteState#zte_state{vs_data = NewVsData},
 			stack = NewStack} | T];
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
-		[#state{dn_prefix = [BtsDn | _], parse_state = #zte_state{
-		vs_data = #{"attributes" := #{"vsDataType" := "vsDataBtsFunction",
+		[#state{dn_prefix = [CurrentDn | _], parse_state = #zte_state{
+		vs_data = #{"id" := Id, "attributes" := #{"vsDataType" := "vsDataBtsFunction",
 		"vsDataFormatVersion" := "ZTESpecificAttributes"}}, cells = Cells},
 		spec_cache = Cache, location = Sites} = State,
 		#state{parse_module = im_xml_generic, parse_function = parse_managed_element,
@@ -69,6 +67,7 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			schema = "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/DnList"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	BtsDn = CurrentDn ++ ",vsDataBtsFunction=" ++ Id,
 	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
@@ -84,8 +83,8 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			throw({add_resource, Reason})
 	end;
 parse_vsdata({endElement, _, "VsDataContainer", _QName},
-		[#state{dn_prefix = [CellDn | _],
-		parse_state = #zte_state{vs_data = #{"attributes" := #{"vsDataType" :=
+		[#state{dn_prefix = [CurrentDn | _],
+		parse_state = #zte_state{vs_data = #{"id" := Id, "attributes" := #{"vsDataType" :=
 		"vsDataGCellEquipmentFunction"}}}, spec_cache = Cache,
 		location = Sites},
 		#state{parse_module = ?MODULE, parse_function = parse_vsdata,
@@ -99,6 +98,7 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"},
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	CellDn = CurrentDn ++ ",vsDataGCellEquipmentFunction=" ++ Id,
 	Resource = #resource{name = CellDn,
 			description = "GSM radio",
 			category = "RAN",

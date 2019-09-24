@@ -343,11 +343,9 @@ parse_managed_element({startElement, _, "CgfFunction", QName,
 parse_managed_element({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _], location = Location} | _T] = State) ->
-	DnComponent = ",VsDataContainer=" ++ Id,
-	NewDn = CurrentDn ++ DnComponent,
 	[#state{parse_module = im_xml_generic, parse_function = parse_vsdata,
-			dn_prefix = [NewDn], location = Location,
-			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			dn_prefix = [CurrentDn], location = Location,
+			parse_state = #generic_state{vs_data = #{"id" => Id}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "PEEMonitoredEntity", QName,
 		[{[], [], "id", Id}] = Attributes},
