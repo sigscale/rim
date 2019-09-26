@@ -108,6 +108,17 @@
 		aius = [] :: [string()]}).
 -type im1_state() :: #im1_state{}.
 
+-record(im2_state,
+		{iu_ne :: map() | undefined,
+		iu_hw :: map() | undefined,
+		iu_sw :: map() | undefined,
+		iu_lic :: map() | undefined,
+		iu_nes = [] :: [string()],
+		iu_hws= [] :: [string()],
+		iu_sws= [] :: [string()],
+		iu_lics = [] :: [string()]}).
+-type im2_state() :: #im2_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,
