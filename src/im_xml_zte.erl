@@ -87,12 +87,12 @@ parse_vsdata({endElement, _, "VsDataContainer", _QName},
 		parse_state = #zte_state{ vs_data = #{"id" := Id,
 		"attributes" := #{"vsDataType" := "vsDataBtsEquipment",
 		"vsDataFormatVersion" := "ZTESpecificAttributes",
-		"vsData" := #{"userLabel" := SideId}}}}, spec_cache = Cache} = State,
+		"vsData" := #{"userLabel" := SiteId}}}}, spec_cache = Cache} = State,
 		#state{parse_module = im_xml_geran, parse_function = parse_bss,
 		spec_cache = PrevCache, parse_state = GeranState} = PrevState | T]) ->
 	#state{parse_state = #zte_state{vs_data = #{"attributes" := NrmMap}}} = State,
 	#geran_state{btss = Btss} = GeranState,
-	Sites = case im:get_pee(RuleId, SideId) of
+	Sites = case im:get_pee(RuleId, SiteId) of
 		{ok, PEEMonitoredEntities} ->
 			parse_peeParameterslist(PEEMonitoredEntities, []);
 		_ ->
