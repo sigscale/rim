@@ -53,46 +53,46 @@
 	],
 	"resourceRelationship": [
 		{
-         "resourceRef": {
+			"resourceRef": {
 				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=1",
 				"href": "/resourceInventoryManagement/v3/resource/8994643081"
 			},
-         "type": "contains"
+			"type": "contains"
 		},
 		{
-         "resourceRef": {
+			"resourceRef": {
 				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=2",
 				"href": "/resourceInventoryManagement/v3/resource/8994630174"
 			},
-         "type": "contains"
+			"type": "contains"
 		},
 		{
-         "resourceRef": {
+			"resourceRef": {
 				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=3",
 				"href": "/resourceInventoryManagement/v3/resource/8994631530"
 			},
-         "type": "contains"
+			"type": "contains"
 		},
 		{
-         "resourceRef": {
+			"resourceRef": {
 				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=1",
 				"href": "/resourceInventoryManagement/v3/resource/8994635074"
 			},
-         "type": "contains"
+			"type": "contains"
 		},
 		{
-         "resourceRef": {
+			"resourceRef": {
 				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=2",
 				"href": "/resourceInventoryManagement/v3/resource/8994648933"
 			},
-         "type": "contains"
+			"type": "contains"
 		},
 		{
-         "resourceRef": {
+			"resourceRef": {
 				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=3",
 				"href": "/resourceInventoryManagement/v3/resource/8994645445"
 			},
-         "type": "contains"
+			"type": "contains"
 		}
 	],
 	"connectivity": [
