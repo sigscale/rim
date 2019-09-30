@@ -1,0 +1,317 @@
+%%%     http://www.apache.org/licenses/LICENSE-2.0
+%%%
+%%% Unless required by applicable law or agreed to in writing, software
+%%% distributed under the License is distributed on an "AS IS" BASIS,
+%%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%%% See the License for the specific language governing permissions and
+%%% limitations under the License.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @doc This library module implements the public API for the
+%%%   {@link //sigscale_im. sigscale_im} application.
+%%%
+%%%     http://www.apache.org/licenses/LICENSE-2.0
+%%%
+%%% Unless required by applicable law or agreed to in writing, software
+%%% distributed under the License is distributed on an "AS IS" BASIS,
+%%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%%% See the License for the specific language governing permissions and
+%%% limitations under the License.
+-module(im_xml_nokia).
+-copyright('Copyright (c) 2019 SigScale Global Inc.').
+
+%% export the im private API
+-export([import/2, parse_mo/2, parse_bsc/2, parse_bts/2, parse_rnc/2]).
+
+-include("im.hrl").
+-include_lib("inets/include/mod_auth.hrl").
+-include("im_xml.hrl").
+
+-define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
+-define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+
+%%----------------------------------------------------------------------
+%%  The im private API
+%%----------------------------------------------------------------------
+
+-spec import(File, RuleId) -> Result
+	when
+		File :: string(),
+		RuleId :: string(),
+		Result :: ok | ignore | {error, Reason},
+		Reason :: term().
+%% @doc Import a file into the inventory table.
+import(File, RuleId) when is_list(File), is_list(RuleId) ->
+	Options = [{event_fun, fun parse_xml/3},
+		{event_state, [#state{rule = RuleId}]}],
+	case xmerl_sax_parser:file(File, Options) of
+		{ok, _EventState, _Rest} ->
+			ok;
+		{Tag, {CurrentLocation, EntityName, LineNo},
+				Reason, EndTags, _EventState} ->
+			Message = case Tag of
+				get_specification_name ->
+					"Error getting specification for resource";
+				add_resource ->
+					"Error adding resource";
+				fatal_error ->
+					"Error parsing import file"
+			end,
+			error_logger:error_report([Message,
+					{file, File}, {location, CurrentLocation},
+					{line, LineNo}, {entity, EntityName},
+					{tags, EndTags}, {error, Reason}]),
+			{error, Reason};
+		{error, Reason} ->
+			error_logger:error_report(["Error parsing import file",
+					{file, File}, {error, Reason}]),
+			{error, Reason}
+	end.
+
+%%----------------------------------------------------------------------
+%%  The im private API
+%%----------------------------------------------------------------------
+
+-spec parse_xml(Event, Location, State) -> NewState
+	when
+		Event :: xmerl_sax_parser:event(),
+		Location :: {CurrentLocation, Entityname, LineNo},
+		CurrentLocation :: string(),
+		Entityname :: string(),
+		LineNo :: integer(),
+		State :: [state()],
+		NewState :: state().
+%% @doc Parse xml.
+parse_xml(startDocument = _Event, _Location, State) ->
+	State;
+parse_xml({startElement, _, "cmData", _, _}, _Location,
+		[#state{parse_function = undefined} = State | T]) ->
+	[State#state{parse_module = ?MODULE, parse_function = parse_mo} | T];
+parse_xml(endDocument = _Event, _Location, State) ->
+	State;
+parse_xml(_Event, _Location, [#state{parse_function = undefined} | _] = State) ->
+	State;
+parse_xml({startPrefixMapping, _Prefix, _Uri}, _, State) ->
+	State;
+parse_xml({endPrefixMapping, _Prefix}, _, State) ->
+	State;
+parse_xml({ignorableWhitespace, _}, _, State) ->
+	State;
+parse_xml({comment, _Comment}, _, State) ->
+	State;
+parse_xml(_Event, _Location, [#state{parse_module = Mod, parse_function = F} | _] = State) ->
+	Mod:F(_Event, State).
+
+%% @hidden
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "BSC"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_bsc,
+		dn_prefix = [DN], stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "BTS"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_bts,
+		dn_prefix = [DN], stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "RNC"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_rnc,
+		dn_prefix = [DN], stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo(_Event, [#state{parse_module = ?MODULE,
+		parse_function = parse_mo} | _] = State) ->
+	State.
+
+%% @hidden
+parse_bsc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_bsc({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_bsc({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [BscDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	BscAttr = parse_bsc_attr(T2, undefined, []),
+	ClassType = "BssFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = BscDn,
+			description = "GSM Base Station Subsystem (BSS)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+			specification = Spec,
+			characteristic = BscAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_bsc({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_bsc_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_bsc_attr(T, Attr, Acc);
+parse_bsc_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo bscOptions
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_bsc_attr(T2, undefined, Acc);
+parse_bsc_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_bsc_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_bsc_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_bsc_attr(T, undefined, Acc);
+parse_bsc_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_bts({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_bts({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_bts({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [BtsDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	GsmBtsAttr = parse_bts_attr(T2, undefined, []),
+	ClassType = "BtsSiteMgr",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = BtsDn,
+			description = "GSM Base Transceiver Station (BTS)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			specification = Spec,
+			characteristic = GsmBtsAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_bts({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_bts_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_bts_attr(T, Attr, Acc);
+parse_bts_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo bscOptions
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_bts_attr(T2, undefined, Acc);
+parse_bts_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_bts_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_bts_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_bts_attr(T, undefined, Acc);
+parse_bts_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_rnc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_rnc({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_rnc({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [RncDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	RncAttr = parse_rnc_attr(T2, undefined, []),
+	ClassType = "RncFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = RncDn,
+			description = "UMTS Radio Network Controller (RNC)",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			specification = Spec,
+			characteristic = RncAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_rnc({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_rnc_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_rnc_attr(T, Attr, Acc);
+parse_rnc_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo bscOptions
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_rnc_attr(T2, undefined, Acc);
+parse_rnc_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_rnc_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_rnc_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_rnc_attr(T, undefined, Acc);
+parse_rnc_attr([], undefined, Acc) ->
+	Acc.
+
+%%----------------------------------------------------------------------
+%%  internal functions
+%%----------------------------------------------------------------------
+
+-type event() :: {startElement,
+		QName :: {Prefix :: string(), LocalName :: string()},
+		Attributes :: [tuple()]} | {endElement,
+		QName :: {Prefix :: string(), LocalName :: string()}}
+		| {characters, string()}.
+-spec pop(Element, QName, Stack) -> Result
+	when
+		Element :: startElement | endElement,
+		QName :: {Prefix, LocalName},
+		Prefix :: string(),
+		LocalName :: string(),
+		Stack :: [event()],
+		Result :: {Value, NewStack},
+		Value :: [event()],
+		NewStack :: [event()].
+%% @doc Pops all events up to an including `{Element, QName, ...}'.
+%% @private
+pop(Element, QName, Stack) ->
+	pop(Element, QName, Stack, []).
+%% @hidden
+pop(Element, QName, [H | T], Acc)
+		when element(1, H) == Element, element(2, H) == QName->
+	{[H | Acc], T};
+pop(Element, QName, [H | T], Acc) ->
+	pop(Element, QName, T, [H | Acc]).
+
+-spec get_specification_ref(Name, Cache) -> Result
+	when
+		Name :: string(),
+		Cache :: [SpecRef],
+		Result :: {SpecRef, Cache} | {error, Reason},
+		SpecRef :: specification_ref(),
+		Reason :: term().
+%% @hidden
+get_specification_ref(Name, Cache) ->
+	case lists:keyfind(Name, #specification_ref.name, Cache) of
+		#specification_ref{name = Name} = SpecRef ->
+			{SpecRef, Cache};
+		false ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Id, href = Href, name = Name,
+						version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
+							version = Version},
+					{SpecRef, [SpecRef | Cache]};
+				{error, Reason} ->
+					throw({get_specification_name, Reason})
+			end
+	end.

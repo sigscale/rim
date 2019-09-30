@@ -25,6 +25,7 @@ beam_DATA = im_app.beam \
 			im_xml_ims.beam \
 			im_xml_zte.beam \
 			im_xml_huawei.beam \
+			im_xml_nokia.beam \
 			im_server.beam \
 			mod_im_rest_accepted_content.beam \
 			mod_im_rest_get.beam \
