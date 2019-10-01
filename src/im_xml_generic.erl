@@ -457,6 +457,42 @@ parse_managed_element({startElement, _, "AntennaInventoryUnit", QName,
 			dn_prefix = [NewDn],
 			parse_state = #im1_state{aiu = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "InventoryUnitNE", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",InventoryUnitNE=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory2, parse_function = parse_ne,
+			dn_prefix = [NewDn],
+			parse_state = #im2_state{iu_ne = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "InventoryUnitHw", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",InventoryUnitHw=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory2, parse_function = parse_hw,
+			dn_prefix = [NewDn],
+			parse_state = #im2_state{iu_hw = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "InventoryUnitSw", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",InventoryUnitSw=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory2, parse_function = parse_sw,
+			dn_prefix = [NewDn],
+			parse_state = #im2_state{iu_sw = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "InventoryUnitLic", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",InventoryUnitLic=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_inventory2, parse_function = parse_lic,
+			dn_prefix = [NewDn],
+			parse_state = #im2_state{iu_lic = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];

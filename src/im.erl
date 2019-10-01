@@ -877,6 +877,9 @@ import(File, Options) when is_list(File), is_list(Options) ->
 		'3gpp' ->
 			RuleId = proplists:get_value(rule, Options),
 			im_xml_cm_bulk:import(File, RuleId);
+		nokia ->
+			RuleId = proplists:get_value(rule, Options),
+			im_xml_nokia:import(File, RuleId);
 		huawei ->
 			RuleId = proplists:get_value(rule, Options),
 			im_xml_huawei:import(File, RuleId)
