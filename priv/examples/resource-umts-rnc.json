@@ -53,43 +53,55 @@
 	"resourceRelationship": [
 		{
 			"resourceRef": {
+				"id": "8994643081",
+				"href": "/resourceInventoryManagement/v3/resource/8994643081",
 				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1",
-				"href": "/resourceInventoryManagement/v3/resource/8994643081"
+				"@referredType": "UtranCellFDD"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
+				"id": "8994630174",
+				"href": "/resourceInventoryManagement/v3/resource/8994630174",
 				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2",
-				"href": "/resourceInventoryManagement/v3/resource/8994630174"
+				"@referredType": "UtranCellFDD"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
+				"id": "8994631530",
+				"href": "/resourceInventoryManagement/v3/resource/8994631530",
 				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3",
-				"href": "/resourceInventoryManagement/v3/resource/8994631530"
+				"@referredType": "UtranCellFDD"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
+				"id": "8994635074",
+				"href": "/resourceInventoryManagement/v3/resource/8994635074",
 				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
-				"href": "/resourceInventoryManagement/v3/resource/8994635074"
+				"@referredType": "IubLink"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
+				"id": "8994648933",
+				"href": "/resourceInventoryManagement/v3/resource/8994648933",
 				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
-				"href": "/resourceInventoryManagement/v3/resource/8994648933"
+				"@referredType": "IubLink"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
+				"id": "8994645445",
+				"href": "/resourceInventoryManagement/v3/resource/8994645445",
 				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3",
-				"href": "/resourceInventoryManagement/v3/resource/8994645445"
+				"@referredType": "IubLink"
 			},
 			"type": "contains"
 		}
@@ -99,12 +111,14 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994462918"
+					"id": "8994462918",
+					"href": "/resourceInventoryManagement/v3/resource/8994462918",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1"
 				},
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994635074"
+					"id": "8994635074",
+					"href": "/resourceInventoryManagement/v3/resource/8994635074",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1"
 				}
 			]
 		},
@@ -112,12 +126,14 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994635074"
+					"id": "8994635074",
+					"href": "/resourceInventoryManagement/v3/resource/8994635074",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1"
 				},
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994643081"
+					"id": "8994643081",
+					"href": "/resourceInventoryManagement/v3/resource/8994643081",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1"
 				}
 			]
 		},
@@ -125,12 +141,14 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994462918"
+					"id": "8994462918",
+					"href": "/resourceInventoryManagement/v3/resource/8994462918",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1"
 				},
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
-					"href": "/resourceInventoryManagement/v3/resource/8994648933"
+					"id": "8994648933",
+					"href": "/resourceInventoryManagement/v3/resource/8994648933",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2"
 				}
 			]
 		},
@@ -138,12 +156,14 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
-					"href": "/resourceInventoryManagement/v3/resource/8994648933"
+					"id": "8994648933",
+					"href": "/resourceInventoryManagement/v3/resource/8994648933",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2"
 				},
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2",
-					"href": "/resourceInventoryManagement/v3/resource/8994630174"
+					"id": "8994630174",
+					"href": "/resourceInventoryManagement/v3/resource/8994630174",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2"
 				}
 			]
 		},
@@ -151,12 +171,14 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994462918"
+					"id": "8994462918",
+					"href": "/resourceInventoryManagement/v3/resource/8994462918",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1"
 				},
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3",
-					"href": "/resourceInventoryManagement/v3/resource/8994645445"
+					"id": "8994645445",
+					"href": "/resourceInventoryManagement/v3/resource/8994645445",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3"
 				}
 			]
 		},
@@ -164,12 +186,14 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3",
-					"href": "/resourceInventoryManagement/v3/resource/8994645445"
+					"id": "8994645445",
+					"href": "/resourceInventoryManagement/v3/resource/8994645445",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3"
 				},
 				{
-					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3",
-					"href": "/resourceInventoryManagement/v3/resource/8994631530"
+					"id": "8994631530",
+					"href": "/resourceInventoryManagement/v3/resource/8994631530",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3"
 				}
 			]
 		}
