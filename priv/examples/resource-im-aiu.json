@@ -33,7 +33,7 @@
 			"value" : "A"
 		}
 	],
-	"VsDataContainer": [
+	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam5",
 			"vsDataFormatVersion": "acmeParams-v5",

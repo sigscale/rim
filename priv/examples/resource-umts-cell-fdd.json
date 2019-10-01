@@ -46,7 +46,7 @@
 			"adjacentCell": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1"
 		}
 	],
-	"VsDataContainer": [
+	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam1",
 			"vsDataFormatVersion": "acmeParams-v3",

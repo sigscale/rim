@@ -41,7 +41,7 @@
 		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
 		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=4"
 	],
-	"VsDataContainer": [
+	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam3",
 			"vsDataFormatVersion": "acmeParams-v3",

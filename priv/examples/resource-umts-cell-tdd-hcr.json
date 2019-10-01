@@ -33,7 +33,7 @@
 			"value" : "SCH and PCCPCH allocated in a single TS"
 		}
 	],
-	"VsDataContainer": [
+	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam2",
 			"vsDataFormatVersion": "acmeParams-v4",

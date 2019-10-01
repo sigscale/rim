@@ -43,7 +43,7 @@
 		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
 		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3"
 	],
-	"VsDataContainer": [
+	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam1",
 			"vsDataFormatVersion": "acmeParams-v2",

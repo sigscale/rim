@@ -29,7 +29,7 @@
 			"value" : "SubNetwork=2,ManagedElement=2,NodeBFunction=1"
 		}
 	],
-	"VsDataContainer": [
+	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam1",
 			"vsDataFormatVersion": "acmeParams-v2",
