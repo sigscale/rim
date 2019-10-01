@@ -1,8 +1,7 @@
 {
 	"id": "8594362918",
 	"href": "/resourceInventoryManagement/v3/resource/8594362918",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,NodeBFunction=1",
-	"publicIdentifier": "07697336538",
+	"name": "SubNetwork=2,ManagedElement=2,NodeBFunction=1",
 	"description": "UMTS NodeB",
 	"category": "RAN",
 	"validFor": {
@@ -27,7 +26,7 @@
 		},
 		{
 			"name": "nodeBFunctionIubLink",
-			"value" : "nbfiubl"
+			"value": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1"
 		}
 	],
 	"VsDataContainer": [
@@ -35,130 +34,6 @@
 			"vsDataType": "acmeParam5",
 			"vsDataFormatVersion": "acmeParams-v6",
 			"vsData": 91
-		}
-	],
-	"resourceRelationship": [
-		{
-         "resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1",
-				"href": "/resourceInventoryManagement/v3/resource/8994643081"
-			},
-         "type": "contains"
-		},
-		{
-         "resourceRef": {
-				"name": "DC=sigscale.net,Subnet=2,ManagedElement=2,RncFunction=2",
-				"href": "/resourceInventoryManagement/v3/resource/8994630172"
-			},
-         "type": "contains"
-		},
-		{
-         "resourceRef": {
-				"name": "DC=sigscale.net,Subnet=3,ManagedElement=3,RncFunction=3",
-				"href": "/resourceInventoryManagement/v3/resource/8994631533"
-			},
-         "type": "contains"
-		},
-		{
-         "resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,IubLink=1",
-				"href": "/resourceInventoryManagement/v3/resource/8994635071"
-			},
-         "type": "contains"
-		},
-		{
-         "resourceRef": {
-				"name": "DC=sigscale.net,Subnet=2,ManagedElement=2,RncFunction=2,IubLink=2",
-				"href": "/resourceInventoryManagement/v3/resource/8994648932"
-			},
-         "type": "contains"
-		},
-		{
-         "resourceRef": {
-				"name": "DC=sigscale.net,Subnet=3,ManagedElement=3,RncFunction=3,IubLink=3",
-				"href": "/resourceInventoryManagement/v3/resource/8994645443"
-			},
-         "type": "contains"
-		}
-	],
-	"connectivity": [
-		{
-			"type": "Point-to-Point",
-			"endPoint": [
-				{
-					"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,NodeBFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8594362918"
-				},
-				{
-					"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,IubLink=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994635074"
-				}
-			]
-		},
-		{
-			"type": "Point-to-Point",
-			"endPoint": [
-				{
-					"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,IubLink=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994635074"
-				},
-				{
-					"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8994643081"
-				}
-			]
-		},
-		{
-			"type": "Point-to-Point",
-			"endPoint": [
-				{
-					"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,NodeBFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8594362918"
-				},
-				{
-					"name": "DC=sigscale.net,Subnet=2,ManagedElement=2,RncFunction=2,IubLink=2",
-					"href": "/resourceInventoryManagement/v3/resource/8994648933"
-				}
-			]
-		},
-		{
-			"type": "Point-to-Point",
-			"endPoint": [
-				{
-					"name": "DC=sigscale.net,Subnet=2,ManagedElement=2,RncFunction=2,IubLink=2",
-					"href": "/resourceInventoryManagement/v3/resource/8994648933"
-				},
-				{
-					"name": "DC=sigscale.net,Subnet=2,ManagedElement=2,RncFunction=2",
-					"href": "/resourceInventoryManagement/v3/resource/8994630174"
-				}
-			]
-		},
-		{
-			"type": "Point-to-Point",
-			"endPoint": [
-				{
-					"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,NodeBFunction=1",
-					"href": "/resourceInventoryManagement/v3/resource/8594362918"
-				},
-				{
-					"name": "DC=sigscale.net,Subnet=3,ManagedElement=3,RncFunction=3,IubLink=3",
-					"href": "/resourceInventoryManagement/v3/resource/8994645445"
-				}
-			]
-		},
-		{
-			"type": "Point-to-Point",
-			"endPoint": [
-				{
-					"name": "DC=sigscale.net,Subnet=3,ManagedElement=3,RncFunction=3,IubLink=3",
-					"href": "/resourceInventoryManagement/v3/resource/8994645445"
-				},
-				{
-					"name": "DC=sigscale.net,Subnet=3,ManagedElement=3,RncFunction=3",
-					"href": "/resourceInventoryManagement/v3/resource/8994631530"
-				}
-			]
 		}
 	]
 }

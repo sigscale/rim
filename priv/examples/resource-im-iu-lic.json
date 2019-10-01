@@ -1,10 +1,9 @@
 {
 	"id": "3785462918",
 	"href": "/resourceInventoryManagement/v3/resource/3785462918",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1",
-	"publicIdentifier": "01159336568",
-	"description": "IM Inventory Unit License",
-	"category": "IM",
+	"name": "SubNetwork=2,ManagedElement=1,InventoryUnit=4",
+	"description": "License Inventory Unit",
+	"category": "RAN",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
@@ -23,20 +22,27 @@
 	"resourceCharacteristic": [
 		{
 			"name": "licId",
-			"value" : "Lic 1"
+			"value" : "8a2e3931-a4cb-45c5-bae7-cd37e69bb543"
 		},
 		{
 			"name": "vendorName",
-			"value" : "Gamini"
+			"value" : "Acme"
 		},
 		{
 			"name": "mFunction",
-			"value" : "SubNetwork=1,ManagedElement=1,RncFunction=1"
+			"value" : "SubNetwork=2,ManagedElement=1,RncFunction=1"
+		},
+		{
+			"name": "nEList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=1"
+		},
+		{
+			"name": "hWList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=2"
+		},
+		{
+			"name": "sWList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=3"
 		}
-	],
-	"inventoryUnitSw": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1,InventoryUnitLic=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1,InventoryUnitLic=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitLic=1,InventoryUnitLic=3"
 	]
 }

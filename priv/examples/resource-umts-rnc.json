@@ -1,8 +1,7 @@
 {
 	"id": "8994462918",
 	"href": "/resourceInventoryManagement/v3/resource/8994462918",
-	"name": "DC=sigscale.net,Subnet=1,RncFunction=1",
-	"publicIdentifier": "07467336538",
+	"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
 	"description": "UMTS Radio Network Controller (RNC)",
 	"category": "RAN",
 	"validFor": {
@@ -35,14 +34,14 @@
 		}
 	],
 	"utranCellFDD": [
-		"DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=1",
-		"DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=2",
-		"DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=3"
+		"SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1",
+		"SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2",
+		"SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3"
 	],
 	"iubLink": [
-		"DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=1",
-		"DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=2",
-		"DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=3"
+		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
+		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
+		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3"
 	],
 	"VsDataContainer": [
 		{
@@ -54,42 +53,42 @@
 	"resourceRelationship": [
 		{
 			"resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=1",
+				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1",
 				"href": "/resourceInventoryManagement/v3/resource/8994643081"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=2",
+				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2",
 				"href": "/resourceInventoryManagement/v3/resource/8994630174"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=3",
+				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3",
 				"href": "/resourceInventoryManagement/v3/resource/8994631530"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=1",
+				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
 				"href": "/resourceInventoryManagement/v3/resource/8994635074"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=2",
+				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
 				"href": "/resourceInventoryManagement/v3/resource/8994648933"
 			},
 			"type": "contains"
 		},
 		{
 			"resourceRef": {
-				"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=3",
+				"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3",
 				"href": "/resourceInventoryManagement/v3/resource/8994645445"
 			},
 			"type": "contains"
@@ -100,11 +99,11 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
 					"href": "/resourceInventoryManagement/v3/resource/8994462918"
 				},
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=1",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
 					"href": "/resourceInventoryManagement/v3/resource/8994635074"
 				}
 			]
@@ -113,11 +112,11 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=1",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
 					"href": "/resourceInventoryManagement/v3/resource/8994635074"
 				},
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=1",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1",
 					"href": "/resourceInventoryManagement/v3/resource/8994643081"
 				}
 			]
@@ -126,11 +125,11 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
 					"href": "/resourceInventoryManagement/v3/resource/8994462918"
 				},
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=2",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
 					"href": "/resourceInventoryManagement/v3/resource/8994648933"
 				}
 			]
@@ -139,11 +138,11 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=2",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
 					"href": "/resourceInventoryManagement/v3/resource/8994648933"
 				},
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=2",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2",
 					"href": "/resourceInventoryManagement/v3/resource/8994630174"
 				}
 			]
@@ -152,11 +151,11 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1",
 					"href": "/resourceInventoryManagement/v3/resource/8994462918"
 				},
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=3",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3",
 					"href": "/resourceInventoryManagement/v3/resource/8994645445"
 				}
 			]
@@ -165,11 +164,11 @@
 			"type": "Point-to-Point",
 			"endPoint": [
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,IubLink=3",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3",
 					"href": "/resourceInventoryManagement/v3/resource/8994645445"
 				},
 				{
-					"name": "DC=sigscale.net,Subnet=1,RncFunction=1,UtranCell=3",
+					"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3",
 					"href": "/resourceInventoryManagement/v3/resource/8994631530"
 				}
 			]

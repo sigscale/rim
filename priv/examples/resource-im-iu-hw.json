@@ -1,10 +1,9 @@
 {
 	"id": "5797462918",
 	"href": "/resourceInventoryManagement/v3/resource/5797462918",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1",
-	"publicIdentifier": "07079336568",
-	"description": "IM Inventory Unit Hardware",
-	"category": "IM",
+	"name": "SubNetwork=2,ManagedElement=1,InventoryUnit=2",
+	"description": "Hardware Inventory Unit",
+	"category": "RAN",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
@@ -23,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "hwId",
-			"value" : "Hw 1"
+			"value" : "AECD080915"
 		},
 		{
 			"name": "vendorName",
@@ -31,12 +30,19 @@
 		},
 		{
 			"name": "mFunction",
-			"value" : "SubNetwork=1,ManagedElement=1,NodeBFunction=1"
+			"value" : "SubNetwork=2,ManagedElement=1,RncFunction=1"
+		},
+		{
+			"name": "nEList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=1"
+		},
+		{
+			"name": "sWList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=3"
+		},
+		{
+			"name": "lICList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=4"
 		}
-	],
-	"inventoryUnitHw": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=3"
 	]
 }

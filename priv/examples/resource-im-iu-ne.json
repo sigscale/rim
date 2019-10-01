@@ -1,10 +1,9 @@
 {
 	"id": "6597462918",
 	"href": "/resourceInventoryManagement/v3/resource/6597462918",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1",
-	"publicIdentifier": "07579336538",
-	"description": "IM Inventory Unit Network Element",
-	"category": "IM",
+	"name": "SubNetwork=2,ManagedElement=1,InventoryUnit=1",
+	"description": "Network Element Inventory Unit",
+	"category": "RAN",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
@@ -23,20 +22,27 @@
 	"resourceCharacteristic": [
 		{
 			"name": "neId",
-			"value" : "NE 1"
+			"value" : "CAFB024057"
 		},
 		{
 			"name": "vendorName",
-			"value" : "Silva"
+			"value" : "Acme"
 		},
 		{
 			"name": "mFunction",
-			"value" : "SubNetwork=1,ManagedElement=1,NodeBFunction=1"
+			"value" : "SubNetwork=2,ManagedElement=1,RncFunction=1"
+		},
+		{
+			"name": "hWList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=2"
+		},
+		{
+			"name": "sWList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=3"
+		},
+		{
+			"name": "lICList",
+			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=4"
 		}
-	],
-	"inventoryUnitNE": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1,InventoryUnitNE=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1,InventoryUnitNE=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnitNE=1,InventoryUnitNE=3"
 	]
 }

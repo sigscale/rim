@@ -1,8 +1,7 @@
 {
 	"id": "5493862311",
 	"href": "/resourceInventoryManagement/v3/resource/5493862311",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,UtranCellTDDLcr=1",
-	"publicIdentifier": "07167930538",
+	"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCellTDDLcr=1",
 	"description": "UTRAN UMTS Time Division Duplex (TDD) low chip rate (LCR)",
 	"category": "RAN",
 	"validFor": {

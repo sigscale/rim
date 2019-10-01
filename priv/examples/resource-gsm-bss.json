@@ -1,8 +1,7 @@
 {
 	"id": "8994832012",
 	"href": "/resourceInventoryManagement/v3/resource/8994832012",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1",
-	"publicIdentifier": "07467336644",
+	"name": "SubNetwork=1,ManagedElement=1,BssFunction=1",
 	"description": "GSM Base Station Subsystem (BSS)",
 	"category": "RAN",
 	"validFor": {
@@ -28,9 +27,9 @@
 		}
 	],
 	"btsSiteMgr": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=3"
+		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1",
+		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=2",
+		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=3"
 	],
 	"vsDataContainer": [
 		{

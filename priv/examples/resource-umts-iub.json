@@ -1,8 +1,7 @@
 {
 	"id": "8994422915",
 	"href": "/resourceInventoryManagement/v3/resource/8994422915",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,RncFunction=1,IubLink=1",
-	"publicIdentifier": "07463396538",
+	"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
 	"description": "UMTS Iub Link",
 	"category": "RAN",
 	"validFor": {
@@ -26,11 +25,7 @@
 		},
 		{
 			"name": "iubLinkNodeBFunction",
-			"value" : "iublnbf"
-		},
-		{
-			"name": "iubLinkATMChannelTerminationPoint",
-			"value" : "iublatmctp"
+			"value" : "SubNetwork=2,ManagedElement=2,NodeBFunction=1"
 		}
 	],
 	"VsDataContainer": [

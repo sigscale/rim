@@ -1,10 +1,9 @@
 {
 	"id": "8597462918",
 	"href": "/resourceInventoryManagement/v3/resource/8597462918",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1",
-	"publicIdentifier": "07479336538",
-	"description": "IM Inventory Unit",
-	"category": "IM",
+	"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1",
+	"description": "Inventory Unit",
+	"category": "RAN",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
@@ -23,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "inventoryUnitType",
-			"value" : "Cabinet"
+			"value" : "NodeB"
 		},
 		{
 			"name": "vendorName",
@@ -31,24 +30,60 @@
 		},
 		{
 			"name": "unitPosition",
-			"value" : "Rack=1"
+			"value" : "Rack=2"
 		}
 	],
 	"tmaInventoryUnit": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,TmaInventoryUnit=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,TmaInventoryUnit=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,TmaInventoryUnit=3"
+		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=1"
 	],
 	"antennaInventoryUnit": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,AntennaInventoryUnit=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,AntennaInventoryUnit=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,InventoryUnit=1,AntennaInventoryUnit=3"
+		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
+		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
+		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=4"
 	],
 	"VsDataContainer": [
 		{
 			"vsDataType": "acmeParam3",
 			"vsDataFormatVersion": "acmeParams-v3",
 			"vsData": 45
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "8597462917",
+				"href": "/resourceInventoryManagement/v3/resource/8597462917",
+				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
+				"@referredType": "TmaInventoryUnit"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "7597462917",
+				"href": "/resourceInventoryManagement/v3/resource/7597462917",
+				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
+				"@referredType": "AntennaInventoryUnit"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "7600371350",
+				"href": "/resourceInventoryManagement/v3/resource/7600371350",
+				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
+				"@referredType": "AntennaInventoryUnit"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "1409318377",
+				"href": "/resourceInventoryManagement/v3/resource/1409318377",
+				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",
+				"@referredType": "AntennaInventoryUnit"
+			},
+			"type": "contains"
 		}
 	]
 }

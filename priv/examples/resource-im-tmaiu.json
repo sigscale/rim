@@ -1,10 +1,9 @@
 {
 	"id": "8597462917",
 	"href": "/resourceInventoryManagement/v3/resource/8597462917",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1",
-	"publicIdentifier": "07179336528",
-	"description": "IM Tower Mounted Amplifier (TMA) Inventory Unit",
-	"category": "IM",
+	"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
+	"description": "Tower Mounted Amplifier (TMA) Inventory Unit",
+	"category": "RAN",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
 		"endDateTime": "2019-12-31T23:59:59Z"
@@ -33,11 +32,6 @@
 			"name": "tmaInstallersId",
 			"value" : "00534"
 		}
-	],
-	"inventoryUnit": [
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1,InventoryUnit=1",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1,InventoryUnit=2",
-		"DC=sigscale.net,Subnet=1,ManagedElement=1,TmaInventoryUnit=1,InventoryUnit=3"
 	],
 	"VsDataContainer": [
 		{

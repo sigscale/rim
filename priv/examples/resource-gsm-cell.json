@@ -1,8 +1,7 @@
 {
 	"id": "8994832012",
 	"href": "/resourceInventoryManagement/v3/resource/8994832012",
-	"name": "DC=sigscale.net,Subnet=1,ManagedElement=1,BtsSiteMgr=1,GsmCell=1",
-	"publicIdentifier": "07467336644",
+	"name": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
 	"description": "GSM Radio",
 	"category": "RAN",
 	"validFor": {
@@ -42,6 +41,18 @@
 			"name": "racc",
 			"value" : "5"
 		}
+	],
+	"gsmRelation": [
+		{
+			"adjacentCell": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=2"
+		}
+	],
+	"utranRelation": [
+		{
+			"adjacentCell": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1"
+		}
+	],
+	"eUtranRelation": [
 	],
 	"vsDataContainer": [
 		{
