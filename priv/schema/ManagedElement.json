@@ -1,0 +1,51 @@
+{
+	"$id": "http://sigscale.org/schema/ManagedFunction",
+	"title": "Managed Element",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"dnPrefix",
+											"managedElementTypeList",
+											"userLabel",
+											"locationName",
+											"managedBy",
+											"id",
+											"vendorName",
+											"userDefinedState",
+											"swVersion",
+											"priorityLabel"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"vsDataContainer": {
+					"$ref": "genericNrm#/definitions/VsDataContainerList"
+				}
+			}
+		}
+	]
+}
