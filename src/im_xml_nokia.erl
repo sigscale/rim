@@ -20,7 +20,8 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([import/2, parse_mo/2, parse_bsc/2, parse_bts/2, parse_rnc/2]).
+-export([import/2, parse_mo/2, parse_bss/2, parse_bts/2, parse_gsm_cell/2,
+		parse_rnc/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -103,14 +104,19 @@ parse_xml(_Event, _Location, [#state{parse_module = Mod, parse_function = F} | _
 
 %% @hidden
 parse_mo({startElement, _, "managedObject", QName,
-		[{[], [], "class", "BSC"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[{[], [], "class", "BCF"}, _, {[], [], "distName", DN}, _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
-		[#state{parse_module = ?MODULE, parse_function = parse_bsc,
+		[#state{parse_module = ?MODULE, parse_function = parse_bss,
 		dn_prefix = [DN], stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo({startElement, _, "managedObject", QName,
 		[{[], [], "class", "BTS"}, _, {[], [], "distName", DN}, _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
 		[#state{parse_module = ?MODULE, parse_function = parse_bts,
+		dn_prefix = [DN], stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "TRX"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_gsm_cell,
 		dn_prefix = [DN], stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo({startElement, _, "managedObject", QName,
 		[{[], [], "class", "RNC"}, _, {[], [], "distName", DN}, _] = Attributes},
@@ -122,16 +128,16 @@ parse_mo(_Event, [#state{parse_module = ?MODULE,
 	State.
 
 %% @hidden
-parse_bsc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+parse_bss({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_bsc({startElement, _, _, QName, Attributes},
+parse_bss({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_bsc({endElement, _Uri, "managedObject", QName},
+parse_bss({endElement, _Uri, "managedObject", QName},
 		[#state{dn_prefix = [BscDn | _], stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	BscAttr = parse_bsc_attr(T2, undefined, []),
+	BscAttr = parse_bss_attr(T2, undefined, []),
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = BscDn,
@@ -148,24 +154,24 @@ parse_bsc({endElement, _Uri, "managedObject", QName},
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
-parse_bsc({endElement, _Uri, _LocalName, QName} = _Event,
+parse_bss({endElement, _Uri, _LocalName, QName} = _Event,
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
-parse_bsc_attr([{startElement, {[], "p"},
+parse_bss_attr([{startElement, {[], "p"},
 		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
-	parse_bsc_attr(T, Attr, Acc);
-parse_bsc_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	parse_bss_attr(T, Attr, Acc);
+parse_bss_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
 	% @todo bscOptions
 	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
-	parse_bsc_attr(T2, undefined, Acc);
-parse_bsc_attr([{characters, Chars} | T], Attr, Acc) ->
-	parse_bsc_attr(T, Attr,
+	parse_bss_attr(T2, undefined, Acc);
+parse_bss_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_bss_attr(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_bsc_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
-	parse_bsc_attr(T, undefined, Acc);
-parse_bsc_attr([], undefined, Acc) ->
+parse_bss_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_bss_attr(T, undefined, Acc);
+parse_bss_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
@@ -213,6 +219,53 @@ parse_bts_attr([{characters, Chars} | T], Attr, Acc) ->
 parse_bts_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
 	parse_bts_attr(T, undefined, Acc);
 parse_bts_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_gsm_cell({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_gsm_cell({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_gsm_cell({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [CellDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	GsmCellAttr = parse_gsm_cell_attr(T2, undefined, []),
+	ClassType = "GsmCell",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = CellDn,
+			description = "GSM Radio",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
+			specification = Spec,
+			characteristic = GsmCellAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_gsm_cell({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_gsm_cell_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_gsm_cell_attr(T, Attr, Acc);
+parse_gsm_cell_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo bscOptions
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_gsm_cell_attr(T2, undefined, Acc);
+parse_gsm_cell_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_gsm_cell_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gsm_cell_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_gsm_cell_attr(T, undefined, Acc);
+parse_gsm_cell_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
