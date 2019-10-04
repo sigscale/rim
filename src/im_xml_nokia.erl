@@ -21,7 +21,7 @@
 
 %% export the im private API
 -export([import/2, parse_mo/2, parse_bss/2, parse_bts/2, parse_gsm_cell/2,
-		parse_rnc/2]).
+		parse_hw/2, parse_rnc/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -119,6 +119,12 @@ parse_mo({startElement, _, "managedObject", QName,
 		[{[], [], "class", "TRX"}, _, {[], [], "distName", DN}, _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
 		[#state{parse_module = ?MODULE, parse_function = parse_gsm_cell,
+		dn_prefix = [DN], rule = RuleId,
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "HW"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_hw,
 		dn_prefix = [DN], rule = RuleId,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo({startElement, _, "managedObject", QName,
@@ -318,6 +324,69 @@ parse_gsm_cell_attr([{characters, Chars} | T], Attr, Acc) ->
 parse_gsm_cell_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
 	parse_gsm_cell_attr(T, undefined, Acc);
 parse_gsm_cell_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_hw({characters, SideId}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "p"}, [{[], [], "name", "locationName"}]} | _]} = State | T]) ->
+	case im:get_pee(RuleId, SideId) of
+		{ok, []} ->
+			[State | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
+parse_hw({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_hw({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_hw({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [HwDn | _], stack = Stack, location = Location,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	HwAttr = parse_hw_attr(T2, undefined, []),
+	ClassType = "InventoryUnit",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = HwDn,
+			description = "Hardware Inventory",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/InventoryUnit",
+			specification = Spec,
+			characteristic = [PeeParam | HwAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_hw({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_hw_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_hw_attr(T, Attr, Acc);
+parse_hw_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo bscOptions
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_hw_attr(T2, undefined, Acc);
+parse_hw_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_hw_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_hw_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_hw_attr(T, undefined, Acc);
+parse_hw_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
