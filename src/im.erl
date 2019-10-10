@@ -46,7 +46,6 @@
 %% support deprecated_time_unit()
 -define(MILLISECOND, milli_seconds).
 %-define(MILLISECOND, millisecond).
--define(IDOFFSET, 63681984000).
 
 -define(PathCatalog, "/resourceCatalogManagement/v3/").
 -define(PathInventory, "/resourceInventoryManagement/v3/").
@@ -1009,7 +1008,7 @@ get_pee(RuleId, Input) when is_list(RuleId), is_list(Input) ->
 unique() ->
 	TS = erlang:system_time(?MILLISECOND),
 	N = erlang:unique_integer([positive]),
-	ID = integer_to_list(TS - ?IDOFFSET) ++ integer_to_list(N),
+	ID = integer_to_list(TS) ++ integer_to_list(N),
 	LM = {TS, N},
 	{ID, LM}.
 
