@@ -39,6 +39,7 @@
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
 -export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0,
 		im_iu_lic/0]).
+-export([generic_me/0]).
 
 -include("im.hrl").
 
@@ -3973,6 +3974,56 @@ im_iu_lic() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitLic",
 					schema = "/resourceInventoryManagement/v3/schema/InventoryUnitLic"},
+			characteristic = Chars}.
+
+-spec generic_me() -> specification().
+%% @doc Generic Managed Element resource specification.
+generic_me() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	DnPrefix = #specification_char{name = "dnPrefix",
+			description = "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	ManagedElementTypeList = #specification_char{name = "managedElementTypeList",
+			description = "",
+			value_type = "ManagedElementTypeListType",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/ManagedElementTypeListType"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	LocationName = #specification_char{name = "locationName",
+			description = "",
+			value_type = "string"},
+	ManagedBy = #specification_char{name = "managedBy",
+			description = "",
+			value_type = "DnList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"},
+	VendorName = #specification_char{name = "vendorName",
+			description = "Name of inventory unit vendor",
+			value_type = "string"},
+	UserDefinedState = #specification_char{name = "userDefinedState",
+			description = "",
+			value_type = "string"},
+	SwVersion = #specification_char{name = "swVersion",
+			description = "Version identifier of the software unit",
+			value_type = "string"},
+	PriorityLabel = #specification_char{name = "priorityLabel",
+			description = "",
+			value_type = "string"},
+	Chars = [ID, DnPrefix, ManagedElementTypeList, UserLabel, LocationName, ManagedBy, VendorName,
+			UserDefinedState, SwVersion, PriorityLabel],
+	#specification{name = "ManagedElement",
+			description = "",
+			class_type = "ManagedElementSpec",
+			schema = "/resourceCatalogManagement/v3/schema/ManagedElementSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "",
+			target_schema = #target_schema_ref{class_type = "ManagedElement",
+					schema = "/resourceInventoryManagement/v3/schema/ManagedElement"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

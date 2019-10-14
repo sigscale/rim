@@ -1,0 +1,43 @@
+{
+	"id": "8934462918",
+	"href": "/resourceInventoryManagement/v3/resource/8934462918",
+	"name": "SubNetwork=2,ManagedElement=1",
+	"description": "",
+	"category": "",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "ManagedElement",
+	"@baseType": "ResourceFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/ManagedElement",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "798216549",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/798216549",
+		"@type": "ManagedElementSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "vendorName",
+			"value" : "Albert"
+		},
+		{
+			"name": "priorityLabel",
+			"value" : "highest"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam1",
+			"vsDataFormatVersion": "acmeParams-v2",
+			"vsData": 42
+		}
+	]
+}

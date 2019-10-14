@@ -1,0 +1,48 @@
+{
+	"$id": "http://sigscale.org/schema/ManagedElementSpec",
+	"title": "Managed Element",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"dnPrefix",
+											"managedElementTypeList",
+											"userLabel",
+											"locationName",
+											"managedBy",
+											"vendorName",
+											"userDefinedState",
+											"swVersion",
+											"priorityLabel"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
