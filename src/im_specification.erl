@@ -22,6 +22,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 -export([gsm_bss/0, gsm_bts/0, gsm_cell/0]).
+-export([gsm_abis_link/0]).
 -export([umts_rnc/0, umts_nodeb/0, umts_cell_fdd/0,
 		umts_cell_tdd_lcr/0, umts_cell_tdd_hcr/0, umts_iub_link/0]).
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
@@ -4024,6 +4025,40 @@ generic_me() ->
 			category = "",
 			target_schema = #target_schema_ref{class_type = "ManagedElement",
 					schema = "/resourceInventoryManagement/v3/schema/ManagedElement"},
+			characteristic = Chars}.
+
+-spec gsm_abis_link() -> specification().
+%% @doc Generic Managed Element resource specification.
+gsm_abis_link() ->
+	AssociationName = #specification_char{name = "associationName",
+			description = "",
+			value_type = "string"},
+	LogicalBCSUAddress = #specification_char{name = "logicalBCSUAddress",
+			description = "",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	Sapi = #specification_char{name = "sapi",
+			description = "",
+			value_type = "string"},
+	StreamId = #specification_char{name = "streamId",
+			description = "",
+			value_type = "string"},
+	Tei = #specification_char{name = "tei",
+			description = "",
+			value_type = "string"},
+	Chars = [AssociationName, LogicalBCSUAddress, Name, Sapi, StreamId, Tei],
+	#specification{name = "AbisLink",
+			description = "",
+			class_type = "",
+			schema = "",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "AbisLink",
+					schema = "/resourceInventoryManagement/v3/schema/AbisLink"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
