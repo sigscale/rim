@@ -24,7 +24,7 @@
 		parse_gsm_abis/2,
 		parse_hw/2,
 		parse_rnc/2, parse_nodeb/2, parse_iub_link/2,
-		parse_enb/2,
+		parse_enb/2, parse_generic_cell/2, parse_ecell_fdd/2,
 		parse_me/2]).
 
 -include("im.hrl").
@@ -173,6 +173,18 @@ parse_mo({startElement, _, "managedObject", QName,
 		[#state{parse_module = ?MODULE, parse_function = parse_enb,
 		dn_prefix = [DN], rule = RuleId,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "LNCEL"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_generic_cell,
+		dn_prefix = [DN], rule = RuleId,
+		stack = [{startElement, QName,Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "LNCEL_FDD"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_ecell_fdd,
+		dn_prefix = [DN], location = Location,
+		stack = [{startElement, QName,Attributes} | Stack]} | State];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
 	State.
@@ -799,6 +811,89 @@ parse_enb_attr([{characters, Chars} | T], Attr, Acc) ->
 parse_enb_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
 	parse_enb_attr(T, undefined, Acc);
 parse_enb_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_generic_cell({characters, SideId}, [#state{rule = RuleId,
+		stack = [{startElement, {_, "p"}, [{[], [], "name", "name"}]} | _]}
+		= State | T]) ->
+	case im:get_pee(RuleId, SideId) of
+		{ok, []} ->
+			[State | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
+parse_generic_cell({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_generic_cell({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_generic_cell({endElement, _Uri, "managedObject", _QName},
+		[#state{location = Location}, PrevState | T]) ->
+	[PrevState#state{location = Location} | T];
+parse_generic_cell({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ecell_fdd({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ecell_fdd({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ecell_fdd({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [ECellFddDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	ECellFddAttr = parse_ecell_fdd_attr(T2, undefined, []),
+	ClassType = "EUtranCellFDD",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = ECellFddDn,
+			description = "UMTS radio",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EUtranCellFDD",
+			specification = Spec,
+			characteristic = [PeeParam | ECellFddAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ecell_fdd({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_ecell_fdd_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_ecell_fdd_attr(T, Attr, Acc);
+parse_ecell_fdd_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_ecell_fdd_attr(T2, undefined, Acc);
+parse_ecell_fdd_attr([{characters, Chars} | T], "earfcnDL", Acc) ->
+	parse_iub_link_attr(T, "earfcnDL", [#resource_char{name ="earfcnDl",
+			value = list_to_integer(Chars)} | Acc]);
+parse_ecell_fdd_attr([{characters, Chars} | T], "earfcnUL", Acc) ->
+	parse_iub_link_attr(T, "earfcnUL", [#resource_char{name ="earfcnUl",
+			value = list_to_integer(Chars)} | Acc]);
+parse_ecell_fdd_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_ecell_fdd_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ecell_fdd_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_ecell_fdd_attr(T, undefined, Acc);
+parse_ecell_fdd_attr([], undefined, Acc) ->
 	Acc.
 
 % @hidden
