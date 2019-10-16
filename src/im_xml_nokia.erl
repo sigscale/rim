@@ -21,6 +21,7 @@
 
 %% export the im private API
 -export([import/2, parse_mo/2, parse_bss/2, parse_bts/2, parse_gsm_cell/2,
+		parse_gsm_abis/2,
 		parse_hw/2,
 		parse_rnc/2, parse_nodeb/2, parse_iub_link/2,
 		parse_enb/2,
@@ -128,6 +129,12 @@ parse_mo({startElement, _, "managedObject", QName,
 		[{[], [], "class", "TRX"}, _, {[], [], "distName", DN}, _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
 		[#state{parse_module = ?MODULE, parse_function = parse_gsm_cell,
+		dn_prefix = [DN], rule = RuleId,
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "LAPD"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_gsm_abis,
 		dn_prefix = [DN], rule = RuleId,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo({startElement, _, "managedObject", QName,
@@ -423,6 +430,69 @@ parse_gsm_cell_attr([{characters, Chars} | T], Attr, Acc) ->
 parse_gsm_cell_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
 	parse_gsm_cell_attr(T, undefined, Acc);
 parse_gsm_cell_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_gsm_abis({characters, SideId}, [#state{rule = RuleId,
+		stack = [{startElement, {_, "p"}, [{[], [], "name", "name"}]} | _]} = State | T]) ->
+	case im:get_pee(RuleId, SideId) of
+		{ok, []} ->
+			[State | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
+parse_gsm_abis({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_gsm_abis({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_gsm_abis({endElement, _Uri, "managedObject", QName},
+		[#state{dn_prefix = [AbisDn | _], stack = Stack, location = Location,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	AbisAttr = parse_gsm_abis_attr(T2, undefined, []),
+	ClassType = "AbisLink",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = AbisDn,
+			description = "",
+			category = "RAN",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/AbisLink",
+			specification = Spec,
+			characteristic = [PeeParam | AbisAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_gsm_abis({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_gsm_abis_attr([{startElement, {[], "p"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_gsm_abis_attr(T, Attr, Acc);
+parse_gsm_abis_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+	% @todo bscOptions
+	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
+	parse_gsm_abis_attr(T2, undefined, Acc);
+parse_gsm_abis_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_gsm_abis_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gsm_abis_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_gsm_abis_attr(T, undefined, Acc);
+parse_gsm_abis_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
