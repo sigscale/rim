@@ -138,12 +138,6 @@ parse_mo({startElement, _, "managedObject", QName,
 		dn_prefix = [DN], rule = RuleId,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo({startElement, _, "managedObject", QName,
-		[{[], [], "class", "HW"}, _, {[], [], "distName", DN}, _] = Attributes},
-		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
-		[#state{parse_module = ?MODULE, parse_function = parse_hw,
-		dn_prefix = [DN], rule = RuleId,
-		stack = [{startElement, QName, Attributes} | Stack]} | State];
-parse_mo({startElement, _, "managedObject", QName,
 		[{[], [], "class", "RNC"}, _, {[], [], "distName", DN}, _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack, rule = RuleId} | _] = State) ->
 		[#state{parse_module = ?MODULE, parse_function = parse_rnc,
