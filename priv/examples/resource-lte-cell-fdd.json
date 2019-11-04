@@ -1,0 +1,56 @@
+{
+	"id": "8593562918",
+	"href": "/resourceInventoryManagement/v3/resource/8593562918",
+	"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
+	"description": "LTE Frequency Division Duplex (FDD)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EUtranCellFDD",
+	"@baseType": "EUtranGenericCell",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EUtranCellFDD",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "798225649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/798225649",
+		"@type": "EUtranCellFDDSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "tac",
+			"value" : "645546"
+		},
+		{
+			"name": "maximumTransmissionPower",
+			"value" : "-209"
+		}
+	],
+	"eutranRelation": [
+		{
+			"adjacentCell": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=1"
+		},
+		{
+			"adjacentCell": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=2"
+		}
+	],
+	"gsmRelation": [
+		{
+			"adjacentCell": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam3",
+			"vsDataFormatVersion": "acmeParams-v4",
+			"vsData": 42
+		}
+	]
+}

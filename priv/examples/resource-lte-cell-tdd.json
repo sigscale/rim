@@ -1,0 +1,56 @@
+{
+	"id": "8593562978",
+	"href": "/resourceInventoryManagement/v3/resource/8593562978",
+	"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
+	"description": "LTE Time Division Duplex (TDD)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EUtranCellTDD",
+	"@baseType": "EUtranGenericCell",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EUtranCellTDD",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "798295649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/798295649",
+		"@type": "EUtranCellTDDSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "tac",
+			"value" : "645546"
+		},
+		{
+			"name": "specialSfPatterns",
+			"value" : "-3094"
+		}
+	],
+	"eutranRelation": [
+		{
+			"adjacentCell": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=1"
+		},
+		{
+			"adjacentCell": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=2"
+		}
+	],
+	"gsmRelation": [
+		{
+			"adjacentCell": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam5",
+			"vsDataFormatVersion": "acmeParams-v6",
+			"vsData": 72
+		}
+	]
+}
