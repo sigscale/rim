@@ -60,6 +60,11 @@ styleElement.innerHTML = `<template>
 				padding: 0px;
 				display: inline-grid;
 			}
+			paper-dialog app-toolbar {
+				margin-top: 0px;
+				color: white;
+				background-color: #bc5100;
+			}
 			paper-dialog > *:first-child {
 				margin-top: 0px;
 			}
@@ -83,17 +88,13 @@ styleElement.innerHTML = `<template>
 			paper-item {
 				padding-right: 10px;
 			}
-			paper-toolbar{
-				margin-top: 0px;
-				color: white;
-				background-color: #bc5100;
-			}
 			.cancel-button {
 				color: black;
 			}
 			paper-progress {
 				display: block;
 				width: 100%;
+				margin: 0px;
 				--paper-progress-active-color: var(--paper-lime-a700);
 				--paper-progress-container-color: transparent;
 			}

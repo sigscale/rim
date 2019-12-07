@@ -13,7 +13,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -30,49 +30,49 @@ class catalogAdd extends PolymerElement {
 			<style include="style-element">
 			</style>
 		<paper-dialog class="dialog" id="addCatalogModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Catalog</h2></div>
-			</paper-toolbar>
+			<app-toolbar>
+				<div main-title>Add Catalog</div>
+			</app-toolbar>
 			<paper-progress
 					indeterminate
 					class="slow red"
 					disabled="{{!loading}}">
 			</paper-progress>
-				<paper-input
-						id="catalogName"
-						label="Name"
-						value="{{catalog.catalogName}}">
-				</paper-input>
-				<paper-input
-						id="catalogDesc"
-						label="Description"
-						value="{{catalog.catalogDesc}}">
-				</paper-input>
-				<paper-input
-						id="catalogVersion"
-						label="Version"
-						value="{{catalog.catalogVersion}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="submit-button"
-							on-tap="_addCatalog">
-						Add
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-				</div>
+			<paper-input
+					id="catalogName"
+					label="Name"
+					value="{{catalog.catalogName}}">
+			</paper-input>
+			<paper-input
+					id="catalogDesc"
+					label="Description"
+					value="{{catalog.catalogDesc}}">
+			</paper-input>
+			<paper-input
+					id="catalogVersion"
+					label="Version"
+					value="{{catalog.catalogVersion}}">
+			</paper-input>
+			<div class="buttons">
+				<paper-button
+						raised
+						class="submit-button"
+						on-tap="_addCatalog">
+					Add
+				</paper-button>
+				<paper-button
+						class="cancel-button"
+						dialog-dismiss>
+					Cancel
+				</paper-button>
+			</div>
 		</paper-dialog>
 		<iron-ajax
-			id="catalogAddAjax"
-			content-type="application/json"
-			loading="{{loading}}"
-			on-response="_catalogAddResponse"
-			on-error="_catalogAddError">
+				id="catalogAddAjax"
+				content-type="application/json"
+				loading="{{loading}}"
+				on-response="_catalogAddResponse"
+				on-error="_catalogAddError">
 		</iron-ajax>
 		`;
 	}

@@ -13,7 +13,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -30,69 +30,69 @@ class inventoryAdd extends PolymerElement {
 			<style include="style-element">
 			</style>
 		<paper-dialog class="dialog" id="addInventoryModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Inventory</h2></div>
-			</paper-toolbar>
+			<app-toolbar>
+				<div main-title>Add Inventory</div>
+			</app-toolbar>
 			<paper-progress
 					indeterminate
 					class="slow red"
 					disabled="{{!loading}}">
 			</paper-progress>
-				<paper-input
-						id="inventoryName"
-						label="Name"
-						value="{{inventory.inventoryName}}">
-				</paper-input>
-				<paper-input
-						id="inventoryDesc"
-						label="Description"
-						value="{{inventory.inventoryDesc}}">
-				</paper-input>
-				<paper-input
-						id="inventoryVersion"
-						label="Version"
-						value="{{inventory.inventoryVersion}}">
-				</paper-input>
-				<paper-input
-						id="inventoryType"
-						label="Type"
-						value="{{inventory.inventoryType}}">
-				</paper-input>
-				<paper-input
-						id="inventoryStatus"
-						label="Status"
-						value="{{inventory.inventoryStatus}}">
-				</paper-input>
-				<paper-input
-						id="inventoryCategory"
-						label="Category"
-						value="{{inventory.inventoryCategory}}">
-				</paper-input>
-				<paper-input
-						id="inventorySpecification"
-						label="Specification"
-						value="{{inventory.inventorySpecification}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="submit-button"
-							on-tap="_addInventory">
-						Add
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-				</div>
+			<paper-input
+					id="inventoryName"
+					label="Name"
+					value="{{inventory.inventoryName}}">
+			</paper-input>
+			<paper-input
+					id="inventoryDesc"
+					label="Description"
+					value="{{inventory.inventoryDesc}}">
+			</paper-input>
+			<paper-input
+					id="inventoryVersion"
+					label="Version"
+					value="{{inventory.inventoryVersion}}">
+			</paper-input>
+			<paper-input
+					id="inventoryType"
+					label="Type"
+					value="{{inventory.inventoryType}}">
+			</paper-input>
+			<paper-input
+					id="inventoryStatus"
+					label="Status"
+					value="{{inventory.inventoryStatus}}">
+			</paper-input>
+			<paper-input
+					id="inventoryCategory"
+					label="Category"
+					value="{{inventory.inventoryCategory}}">
+			</paper-input>
+			<paper-input
+					id="inventorySpecification"
+					label="Specification"
+					value="{{inventory.inventorySpecification}}">
+			</paper-input>
+			<div class="buttons">
+				<paper-button
+						raised
+						class="submit-button"
+						on-tap="_addInventory">
+					Add
+				</paper-button>
+				<paper-button
+						class="cancel-button"
+						dialog-dismiss>
+					Cancel
+				</paper-button>
+			</div>
 		</paper-dialog>
 		<iron-ajax
-			id="inventoryAddAjax"
-			content-type="application/json"
-			loading="{{loading}}"
-			on-response="_inventoryAddResponse"
-			on-error="_inventoryAddError">
+				id="inventoryAddAjax"
+				content-type="application/json"
+				loading="{{loading}}"
+				on-response="_inventoryAddResponse"
+				on-error="_inventoryAddError">
 		</iron-ajax>
 		`;
 	}

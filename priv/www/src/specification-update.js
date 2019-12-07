@@ -13,7 +13,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -30,9 +30,9 @@ class specUpdateList extends PolymerElement {
 			<style include="style-element">
 			</style>
 		<paper-dialog class="dialog" id="updateSpecModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Update Specification</h2></div>
-			</paper-toolbar>
+			<app-toolbar>
+				<div main-title>Update Specification</div>
+			</app-toolbar>
 			<paper-progress
 					indeterminate
 					class="slow red"

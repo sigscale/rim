@@ -13,7 +13,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -30,59 +30,59 @@ class candidateAdd extends PolymerElement {
 			<style include="style-element">
 			</style>
 		<paper-dialog class="dialog" id="addCandidateModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Category</h2></div>
-			</paper-toolbar>
+			<app-toolbar>
+				<div main-title>Add Candidate</div>
+			</app-toolbar>
 			<paper-progress
 					indeterminate
 					class="slow red"
 					disabled="{{!loading}}">
 			</paper-progress>
-				<paper-input
-						id="candidateName"
-						label="Name"
-						value="{{candidate.candidateName}}">
-				</paper-input>
-				<paper-input
-						id="candidateDesc"
-						label="Description"
-						value="{{candidate.candidateDesc}}">
-				</paper-input>
-				<paper-input
-						id="candidateVersion"
-						label="Version"
-						value="{{candidate.candidateVersion}}">
-				</paper-input>
-				<paper-input
-						id="candidateClass"
-						label="Class"
-						value="{{candidate.candidateClass}}">
-				</paper-input>
-				<paper-input
-						id="candidateStatus"
-						label="Status"
-						value="{{candidate.candidateStatus}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="submit-button"
-							on-tap="_addCandidate">
-						Add
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-				</div>
+			<paper-input
+					id="candidateName"
+					label="Name"
+					value="{{candidate.candidateName}}">
+			</paper-input>
+			<paper-input
+					id="candidateDesc"
+					label="Description"
+					value="{{candidate.candidateDesc}}">
+			</paper-input>
+			<paper-input
+					id="candidateVersion"
+					label="Version"
+					value="{{candidate.candidateVersion}}">
+			</paper-input>
+			<paper-input
+					id="candidateClass"
+					label="Class"
+					value="{{candidate.candidateClass}}">
+			</paper-input>
+			<paper-input
+					id="candidateStatus"
+					label="Status"
+					value="{{candidate.candidateStatus}}">
+			</paper-input>
+			<div class="buttons">
+				<paper-button
+						raised
+						class="submit-button"
+						on-tap="_addCandidate">
+					Add
+				</paper-button>
+				<paper-button
+						class="cancel-button"
+						dialog-dismiss>
+					Cancel
+				</paper-button>
+			</div>
 		</paper-dialog>
 		<iron-ajax
-			id="candidateAddAjax"
-			content-type="application/json"
-			loading="{{loading}}"
-			on-response="_candidateAddResponse"
-			on-error="_candidateAddError">
+				id="candidateAddAjax"
+				content-type="application/json"
+				loading="{{loading}}"
+				on-response="_candidateAddResponse"
+				on-error="_candidateAddError">
 		</iron-ajax>
 		`;
 	}

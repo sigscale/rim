@@ -13,7 +13,7 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -30,69 +30,69 @@ class specificationAdd extends PolymerElement {
 			<style include="style-element">
 			</style>
 		<paper-dialog class="dialog" id="addSpecificationModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Category</h2></div>
-			</paper-toolbar>
+			<app-toolbar>
+				<div main-title>Add Specification</div>
+			</app-toolbar>
 			<paper-progress
 					indeterminate
 					class="slow red"
 					disabled="{{!loading}}">
 			</paper-progress>
-				<paper-input
-						id="specificationName"
-						label="Name"
-						value="{{specification.specificationName}}">
-				</paper-input>
-				<paper-input
-						id="specificationDesc"
-						label="Description"
-						value="{{specification.specificationDesc}}">
-				</paper-input>
-				<paper-input
-						id="specificationVersion"
-						label="Version"
-						value="{{specification.specificationVersion}}">
-				</paper-input>
-				<paper-input
-						id="specificationClass"
-						label="Class"
-						value="{{specification.specificationClass}}">
-				</paper-input>
-				<paper-input
-						id="specificationStatus"
-						label="Status"
-						value="{{specification.specificationStatus}}">
-				</paper-input>
-				<paper-input
-						id="specificationCategory"
-						label="Category"
-						value="{{specification.specificationCategory}}">
-				</paper-input>
-				<paper-input
-						id="specificationBundle"
-						label="Bundle"
-						value="{{specification.specificationBundle}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="submit-button"
-							on-tap="_addSpecification">
-						Add
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-				</div>
+			<paper-input
+					id="specificationName"
+					label="Name"
+					value="{{specification.specificationName}}">
+			</paper-input>
+			<paper-input
+					id="specificationDesc"
+					label="Description"
+					value="{{specification.specificationDesc}}">
+			</paper-input>
+			<paper-input
+					id="specificationVersion"
+					label="Version"
+					value="{{specification.specificationVersion}}">
+			</paper-input>
+			<paper-input
+					id="specificationClass"
+					label="Class"
+					value="{{specification.specificationClass}}">
+			</paper-input>
+			<paper-input
+					id="specificationStatus"
+					label="Status"
+					value="{{specification.specificationStatus}}">
+			</paper-input>
+			<paper-input
+					id="specificationCategory"
+					label="Category"
+					value="{{specification.specificationCategory}}">
+			</paper-input>
+			<paper-input
+					id="specificationBundle"
+					label="Bundle"
+					value="{{specification.specificationBundle}}">
+			</paper-input>
+			<div class="buttons">
+				<paper-button
+						raised
+						class="submit-button"
+						on-tap="_addSpecification">
+					Add
+				</paper-button>
+				<paper-button
+						class="cancel-button"
+						dialog-dismiss>
+					Cancel
+				</paper-button>
+			</div>
 		</paper-dialog>
 		<iron-ajax
-			id="specificationAddAjax"
-			content-type="application/json"
-			loading="{{loading}}"
-			on-response="_specificationAddResponse"
-			on-error="_specificationAddError">
+				id="specificationAddAjax"
+				content-type="application/json"
+				loading="{{loading}}"
+				on-response="_specificationAddResponse"
+				on-error="_specificationAddError">
 		</iron-ajax>
 		`;
 	}
