@@ -33,24 +33,24 @@ class categoryUpdateList extends PolymerElement {
 				<div slot="top"><h2>Update Catalog</h2></div>
 			</paper-toolbar>
 				<paper-input
-						id="categorySpecId"
+						id="categoryId"
 						label="Id"
 						value="{{category.categoryId}}"
 						disabled>
 				</paper-input>
 				<paper-input
-						id="categorySpecName"
+						id="categoryName"
 						label="Name"
 						value="{{category.categoryName}}"
 						required>
 				</paper-input>
 				<paper-input
-						id="categorySpecDesc"
+						id="categoryDesc"
 						label="Description"
 						value="{{category.categoryDescription}}">
 				</paper-input>
 				<paper-input
-						id="categorySpecType"
+						id="categoryType"
 						label="Class"
 						value="{{category.categoryClass}}">
 				</paper-input>
@@ -74,12 +74,12 @@ class categoryUpdateList extends PolymerElement {
 					</paper-listbox>
 				</paper-dropdown-menu>
 				<paper-input
-						id="categorySpecParent"
+						id="categoryParent"
 						label="Parent"
 						value="{{category.categoryParent}}">
 				</paper-input>
 				<paper-input
-						id="categorySpecRoot"
+						id="categoryRoot"
 						label="Root"
 						value="{{category.categoryRoot}}">
 				</paper-input>
@@ -87,20 +87,19 @@ class categoryUpdateList extends PolymerElement {
 					<paper-button
 							raised
 							class="update-button"
-							on-tap="_updateSpec">
+							on-tap="_update">
 						Update
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							dialog-dismiss>
 						Cancel
 					</paper-button>
 					<paper-button
 							toggles
 							raised
 							class="delete-button"
-							on-tap="_deleteSpec">
+							on-tap="_delete">
 						Delete
 					</paper-button>
 				</div>
@@ -132,37 +131,37 @@ class categoryUpdateList extends PolymerElement {
 		super.ready()
 	}
 
-	_deleteSpec() {
-		var ajax1 = this.$.deleteCategoryAjax;
-		ajax1.method = "DELETE";
-		ajax1.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categorySpecId.value;
-		ajax1.generateRequest();
+	_delete() {
+		var ajax = this.$.deleteCategoryAjax;
+		ajax.method = "DELETE";
+		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categoryId.value;
+		ajax.generateRequest();
 		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('category-update').shadowRoot.getElementById('updateCategoryModal');
 		deleteObj.close();
 	}
 
-	_updateSpec() {
+	_update() {
 		var ajax = this.$.categoryUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categorySpecId.value;
+		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categoryId.value;
 		var cat = new Object();
-		if(this.$.categorySpecName.value) {
-			cat.name = this.$.categorySpecName.value;
+		if(this.$.categoryName.value) {
+			cat.name = this.$.categoryName.value;
 		}
-		if(this.$.categorySpecDesc.value) {
-			cat.description = this.$.categorySpecDesc.value;
+		if(this.$.categoryDesc.value) {
+			cat.description = this.$.categoryDesc.value;
 		}
-		if(this.$.categorySpecType) {
-			cat["@type"] = this.$.categorySpecType.value;
+		if(this.$.categoryType) {
+			cat["@type"] = this.$.categoryType.value;
 		}
 		if(this.$.categoryStatus.value) {
 			cat.lifecycleStatus = this.$.categoryStatus.value;
 		}
-		if(this.$.categorySpecParent.value) {
-			cat.parentId = this.$.categorySpecParent.value;
+		if(this.$.categoryParent.value) {
+			cat.parentId = this.$.categoryParent.value;
 		}
-		if(this.$.categorySpecRoot.value) {
-			cat.isRoot = this.$.categorySpecRoot.value;
+		if(this.$.categoryRoot.value) {
+			cat.isRoot = this.$.categoryRoot.value;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();

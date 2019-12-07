@@ -53,13 +53,12 @@ class ruleUpdate extends PolymerElement {
 					<paper-button
 							raised
 							class="update-button"
-							on-tap="_updateSpec">
+							on-tap="_update">
 						Update
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							dialog-dismiss>
 						Cancel
 					</paper-button>
 				</div>
@@ -93,7 +92,7 @@ class ruleUpdate extends PolymerElement {
 		super.ready()
 	}
 
-	_updateSpec() {
+	_update() {
 		var ajax = this.$.ruleUpdateAjax;
 		ajax.method = "PATCH";
 		ajax.url = "/resourceInventoryManagement/v1/logicalResource/" + this.$.addRuleId.value;

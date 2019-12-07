@@ -30,7 +30,7 @@ class candUpdateList extends PolymerElement {
 			</style>
 		<paper-dialog class="dialog" id="updateCandModal" modal>
 			<paper-toolbar>
-				<div slot="top"><h2>Update Specification</h2></div>
+				<div slot="top"><h2>Update Candidate</h2></div>
 			</paper-toolbar>
 				<paper-input
 						id="addCandId"
@@ -77,20 +77,19 @@ class candUpdateList extends PolymerElement {
 					<paper-button
 							raised
 							class="update-button"
-							on-tap="_updateSpec">
+							on-tap="_update">
 						Update
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							dialog-dismiss>
 						Cancel
 					</paper-button>
 					<paper-button
 							toggles
 							raised
 							class="delete-button"
-							on-tap="_deleteSpec">
+							on-tap="_delete">
 						Delete
 					</paper-button>
 				</div>
@@ -122,14 +121,14 @@ class candUpdateList extends PolymerElement {
 		super.ready()
 	}
 
-	_deleteSpec() {
+	_delete() {
 		var ajax1 = this.$.deleteCandidateAjax;
 		ajax1.method = "DELETE";
 		ajax1.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
 		ajax1.generateRequest();
 	}
 
-	_updateSpec() {
+	_update() {
 		var ajax = this.$.candUpdateAjax;
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;

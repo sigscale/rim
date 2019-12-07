@@ -33,24 +33,24 @@ class catalogUpdateList extends PolymerElement {
 				<div slot="top"><h2>Update Catalog</h2></div>
 			</paper-toolbar>
 				<paper-input
-						id="catalogSpecId"
+						id="catalogId"
 						label="Id"
 						value="{{catalog.catalogId}}"
 						disabled>
 				</paper-input>
 				<paper-input
-						id="catalogSpecName"
+						id="catalogName"
 						label="Name"
 						value="{{catalog.catalogName}}"
 						required>
 				</paper-input>
 				<paper-input
-						id="catalogSpecDesc"
+						id="catalogDesc"
 						label="Description"
 						value="{{catalog.catalogDescription}}">
 				</paper-input>
 				<paper-input
-						id="catalogSpecType"
+						id="catalogType"
 						label="Class"
 						value="{{catalog.catalogClass}}">
 				</paper-input>
@@ -77,20 +77,19 @@ class catalogUpdateList extends PolymerElement {
 					<paper-button
 							raised
 							class="update-button"
-							on-tap="_updateSpec">
+							on-tap="_updateCatalog">
 						Update
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							dialog-dismiss>
 						Cancel
 					</paper-button>
 					<paper-button
 							toggles
 							raised
 							class="delete-button"
-							on-tap="_deleteSpec">
+							on-tap="_deleteCatalog">
 						Delete
 					</paper-button>
 				</div>
@@ -122,26 +121,26 @@ class catalogUpdateList extends PolymerElement {
 		super.ready()
 	}
 
-	_deleteSpec() {
-		var ajax1 = this.$.deleteCatalogAjax;
-		ajax1.method = "DELETE";
-		ajax1.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogSpecId.value;
-		ajax1.generateRequest();
+	_delete() {
+		var ajax = this.$.deleteCatalogAjax;
+		ajax.method = "DELETE";
+		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogId.value;
+		ajax.generateRequest();
 	}
 
-	_updateSpec() {
+	_update() {
 		var ajax = this.$.catalogUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogSpecId.value;
+		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogId.value;
 		var cat = new Object();
-		if(this.$.catalogSpecName.value) {
-			cat.name = this.$.catalogSpecName.value;
+		if(this.$.catalogName.value) {
+			cat.name = this.$.catalogName.value;
 		}
-		if(this.$.catalogSpecDesc.value) {
-			cat.description = this.$.catalogSpecDesc.value;
+		if(this.$.catalogDesc.value) {
+			cat.description = this.$.catalogDesc.value;
 		}
-		if(this.$.catalogSpecType) {
-			cat["@type"] = this.$.catalogSpecType.value;
+		if(this.$.catalogType) {
+			cat["@type"] = this.$.catalogType.value;
 		}
 		if(this.$.catalogStatus.value) {
 			cat.lifecycleStatus = this.$.catalogStatus.value;

@@ -76,16 +76,8 @@ class inventoryAdd extends PolymerElement {
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							dialog-dismiss>
 						Cancel
-					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteSpec">
-						Delete
 					</paper-button>
 				</div>
 		</paper-dialog>

@@ -150,20 +150,19 @@ class specUpdateList extends PolymerElement {
 					<paper-button
 							raised
 							class="update-button"
-							on-tap="_updateSpec">
+							on-tap="_update">
 						Update
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							dialog-dismiss>
 						Cancel
 					</paper-button>
 					<paper-button
 							toggles
 							raised
 							class="delete-button"
-							on-tap="_deleteSpec">
+							on-tap="_delete">
 						Delete
 					</paper-button>
 				</div>
@@ -195,16 +194,16 @@ class specUpdateList extends PolymerElement {
 		super.ready()
 	}
 
-	_deleteSpec() {
-		var ajax1 = this.$.deleteSpecificationAjax;
-		ajax1.method = "DELETE";
-		ajax1.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
-		ajax1.generateRequest();
+	_delete() {
+		var ajax = this.$.deleteSpecificationAjax;
+		ajax.method = "DELETE";
+		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
+		ajax.generateRequest();
 		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal');
 		deleteObj.close();
 	}
 
-	_updateSpec() {
+	_update() {
 		var ajax = this.$.specUpdateAjax;
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
