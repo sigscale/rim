@@ -10,7 +10,6 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-column-group.js';
@@ -142,9 +141,6 @@ class httpList extends PolymerElement {
 				</template>
 			</vaadin-grid-column>
 		</vaadin-grid>
-		<paper-toast
-				id="httpError">
-		</paper-toast>
 		<iron-ajax
 			id="getHttpList"
 			url="im/v1/log/http"
@@ -226,7 +222,7 @@ class httpList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			httpList1.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('httpError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {

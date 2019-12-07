@@ -11,7 +11,6 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import './style-element.js';
@@ -47,9 +46,6 @@ class userList extends PolymerElement {
 					on-tap = "showAddUserModal">
 				</paper-fab>
 			</div>
-			<paper-toast
-				id="userError">
-			</paper-toast>
 			<iron-ajax
 				id="getUserAjax"
 				url="partyManagement/v2/individual"
@@ -121,7 +117,7 @@ class userList extends PolymerElement {
 		};
 		var handleAjaxError = function(error) {
 			userList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('userError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {
