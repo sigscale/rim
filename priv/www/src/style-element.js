@@ -51,13 +51,12 @@ styleElement.innerHTML = `<template>
 			.dialog {
 				overflow: auto;
 			}	
-			.dialogOne {
+			.help {
 				position: fixed;
 				min-width: 20em;
 				right: -36px;
 				top: 41px;
 				overflow: auto;
-				padding: 0px;
 				display: inline-grid;
 			}
 			paper-dialog app-toolbar {
@@ -84,9 +83,6 @@ styleElement.innerHTML = `<template>
 			}
 			paper-dialog iron-collapse > div:first-child {
 				padding-top: 0px
-			}
-			paper-item {
-				padding-right: 10px;
 			}
 			.cancel-button {
 				color: black;
