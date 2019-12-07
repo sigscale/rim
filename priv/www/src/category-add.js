@@ -143,6 +143,7 @@ class categoryAdd extends PolymerElement {
 
 	_categoryAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
+		document.getElementById("categoryGrid").clearCache();
 	}
 
 	_categoryAddError(event) {

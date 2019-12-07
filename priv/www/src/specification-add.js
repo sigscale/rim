@@ -137,6 +137,7 @@ class specificationAdd extends PolymerElement {
 
 	_specificationAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').close();
+		document.getElementById("specificationGrid").clearCache();
 	}
 
 	_specificationAddError(event) {

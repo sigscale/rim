@@ -143,6 +143,7 @@ class inventoryAdd extends PolymerElement {
 
 	_inventoryAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('addInventoryModal').close();
+		document.getElementById("inventoryGrid").clearCache();
 	}
 
 	_inventoryAddError(event) {

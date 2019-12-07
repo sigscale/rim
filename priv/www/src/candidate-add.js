@@ -127,6 +127,7 @@ class candidateAdd extends PolymerElement {
 
 	_candidateAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-add').shadowRoot.getElementById('addCandidateModal').close();
+		document.getElementById("candidateGrid").clearCache();
 	}
 
 	_candidateAddError(event) {
