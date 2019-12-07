@@ -170,14 +170,14 @@ class specUpdateList extends PolymerElement {
 		</paper-dialog>
 		<iron-ajax
 			id="deleteSpecificationAjax"
-			on_response="_deleteSpecificationResponse"
+			on-response="_specificationUpdateResponse"
 			on-error="_specificationUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="specUpdateAjax"
 			content-type="application/merge-patch+json"
 			on-loading-changed="_onLoadingChanged"
-			on-response="_addSpecResponse"
+			on-response="_specificationUpdateResponse"
 			on-error="_specificationUpdateError">
 		</iron-ajax>
 		`;
@@ -223,6 +223,11 @@ class specUpdateList extends PolymerElement {
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
+	}
+
+	_specificationUpdateResponse() {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal').close();
+		document.getElementById("specificationGrid").clearCache();
 	}
 
 	_specificationUpdateError(event) {

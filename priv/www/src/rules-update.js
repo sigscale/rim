@@ -68,14 +68,14 @@ class ruleUpdateList extends PolymerElement {
 			id="ruleUpdateAjax"
 			content-type="application/json-patch+json"
 			on-loading-changed="_onLoadingChanged"
-			on-response="_addSpecResponse"
+			on-response="_ruleUpdateResponse"
 			on-error="_ruleUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="ruleDeleteAjax"
 			content-type="application/json"
 			on-loading-changed="_onLoadingChanged"
-			on-response="_addDelResponse"
+			on-response="_ruleUpdateResponse"
 			on-error="_ruleUpdateError">
 		</iron-ajax>
 		`;
@@ -107,6 +107,11 @@ class ruleUpdateList extends PolymerElement {
 		RuleArr.push(peeRule);
 		ajax.body = JSON.stringify(RuleArr);
 		ajax.generateRequest();
+	}
+
+	_ruleUpdateResponse() {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-update').shadowRoot.getElementById('updateRuleModal').close();
+		document.getElementById("rulesGrid").clearCache();
 	}
 
 	_ruleUpdateError(event) {

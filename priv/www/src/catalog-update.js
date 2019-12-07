@@ -97,14 +97,14 @@ class catalogUpdateList extends PolymerElement {
 		</paper-dialog>
 		<iron-ajax
 			id="deleteCatalogAjax"
-			on_response="_deleteCatalogResponse"
+			on-response="_catalogUpdateResponse"
 			on-error="_catalogUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="catalogUpdateAjax"
 			content-type="application/merge-patch+json"
 			on-loading-changed="_onLoadingChanged"
-			on-response="_catalogSpecResponse"
+			on-response="_catalogUpdateResponse"
 			on-error="_catalogUpdateError">
 		</iron-ajax>
 		`;
@@ -127,12 +127,6 @@ class catalogUpdateList extends PolymerElement {
 		ajax1.method = "DELETE";
 		ajax1.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogSpecId.value;
 		ajax1.generateRequest();
-		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-update').shadowRoot.getElementById('updateCatalogModal');
-		deleteObj.close();
-	}
-
-	_deleteCatalogResponse() {
-		document.getElementById("catalogGrid").clearCache();
 	}
 
 	_updateSpec() {
@@ -156,7 +150,8 @@ class catalogUpdateList extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_catalogSpecResponse() {
+	_catalogUpdateResponse() {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-update').shadowRoot.getElementById('updateCatalogModal').close();
 		document.getElementById("catalogGrid").clearCache();
 	}
 

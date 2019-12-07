@@ -97,15 +97,14 @@ class candUpdateList extends PolymerElement {
 		</paper-dialog>
 		<iron-ajax
 			id="deleteCandidateAjax"
-			on_response="_deleteCandidateResponse"
-			on-error="_deleteCandidateError">
+			on-response="_candidateUpdateResponse"
 			on-error="_candidateUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="candUpdateAjax"
 			content-type="application/merge-patch+json"
 			on-loading-changed="_onLoadingChanged"
-			on-response="_addSpecResponse"
+			on-response="_candidateUpdateResponse"
 			on-error="_candidateUpdateError">
 		</iron-ajax>
 		`;
@@ -128,8 +127,6 @@ class candUpdateList extends PolymerElement {
 		ajax1.method = "DELETE";
 		ajax1.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
 		ajax1.generateRequest();
-		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal');
-		deleteObj.close();
 	}
 
 	_updateSpec() {
@@ -153,8 +150,9 @@ class candUpdateList extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_specificationUpdateResponse() {
+	_candidateUpdateResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal').close();
+		document.getElementById("candidateGrid").clearCache();
 	}
 
 	_candidateUpdateError(event) {
