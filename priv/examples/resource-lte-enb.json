@@ -1,0 +1,77 @@
+{
+	"id": "7994462918",
+	"href": "/resourceInventoryManagement/v3/resource/7994462918",
+	"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1",
+	"description": "LTE Evolved Node B (ENB)",
+	"category": "RAN",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "ENBFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/ENBFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "898115649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/898115649",
+		"@type": "ENBFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "intraANRSwitch",
+			"value" : true
+		},
+		{
+			"name": "x2IpAddressList",
+			"value" : "323"
+		}
+	],
+	"eutranCellFDD": [
+		"SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=1",
+		"SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=2",
+		"SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=3"
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam2",
+			"vsDataFormatVersion": "acmeParams-v3",
+			"vsData": 52
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "8994643080",
+				"href": "/resourceInventoryManagement/v3/resource/8994643080",
+				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=1",
+				"@referredType": "EUtranCellFDD"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "8994630174",
+				"href": "/resourceInventoryManagement/v3/resource/8994630172",
+				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=2",
+				"@referredType": "EUtranCellFDD"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "8994631530",
+				"href": "/resourceInventoryManagement/v3/resource/8994631533",
+				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=3",
+				"@referredType": "EUtranCellFDD"
+			},
+			"type": "contains"
+		}
+	]
+}

@@ -1,0 +1,63 @@
+{
+	"name": "AbisLink",
+	"description": "",
+	"@type": "",
+	"@schemaLocation": "",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "RAN",
+	"targetResourceSchema": {
+		"@type": "AbisLink",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/AbisLink"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "associationName",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "logicalBCSUAddress",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "name",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "sapi",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "streamId",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "tei",
+			"description": "",
+			"valueType": "string"
+		}
+	]
+}

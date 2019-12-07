@@ -1,0 +1,86 @@
+{
+	"name": "ManagedElement",
+	"description": "",
+	"@type": "ManagedElementSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/ManagedElementSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2019-01-29T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "",
+	"targetResourceSchema": {
+		"@type": "ManagedElement",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ManagedElement"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2019-01-29T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "dnPrefix",
+			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		},
+		{
+			"name": "managedElementTypeList",
+			"description": "",
+			"valueType": "ManagedElementTypeListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/ManagedElementTypeListType"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "locationName",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "managedBy",
+			"description": "",
+			"valueType": "DnList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+		},
+		{
+			"name": "vendorName",
+			"description": "Name of inventory unit vendor",
+			"valueType": "string"
+		},
+		{
+			"name": "userDefinedState",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "swVersion",
+			"description": "Version identifier of the software unit",
+			"valueType": "string"
+		},
+		{
+			"name": "priorityLabel",
+			"description": "",
+			"valueType": "string"
+		}
+	]
+}

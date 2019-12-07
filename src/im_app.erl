@@ -267,6 +267,7 @@ install7(Nodes, Acc) ->
 %% @hidden
 install8(Nodes, Acc) ->
 	SpecFuns = [gsm_bss, gsm_bts, gsm_cell,
+		gsm_abis_link,
 		umts_rnc, umts_nodeb, umts_cell_fdd,
 		umts_cell_tdd_lcr, umts_cell_tdd_hcr, umts_iub_link,
 		lte_enb, lte_cell_fdd, lte_cell_tdd,
@@ -281,7 +282,8 @@ install8(Nodes, Acc) ->
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
 		pee_me,
 		epcn3ai_proxy, epcn3ai_server,
-		im_iu, im_tmaiu, im_aiu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic],
+		im_iu, im_tmaiu, im_aiu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic,
+		generic_me],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
 install8([F | T], Nodes, Acc) ->
