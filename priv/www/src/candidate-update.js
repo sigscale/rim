@@ -150,8 +150,9 @@ class candUpdateList extends PolymerElement {
 	}
 
 	_candidateUpdateResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal').close();
-		document.getElementById("candidateGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal').close();
+		shell.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 
 	_candidateUpdateError(event) {

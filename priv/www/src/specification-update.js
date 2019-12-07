@@ -225,8 +225,9 @@ class specUpdateList extends PolymerElement {
 	}
 
 	_specificationUpdateResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal').close();
-		document.getElementById("specificationGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal').close();
+		shell.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 
 	_specificationUpdateError(event) {

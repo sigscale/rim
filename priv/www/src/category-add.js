@@ -134,8 +134,9 @@ class categoryAdd extends PolymerElement {
 	}
 
 	_categoryAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
-		document.getElementById("categoryGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
+		shell.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 
 	_categoryAddError(event) {

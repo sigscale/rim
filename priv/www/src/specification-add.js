@@ -128,8 +128,9 @@ class specificationAdd extends PolymerElement {
 	}
 
 	_specificationAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').close();
-		document.getElementById("specificationGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').close();
+		shell.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 
 	_specificationAddError(event) {

@@ -102,8 +102,9 @@ class catalogAdd extends PolymerElement {
 	}
 
 	_catalogAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').close();
-		document.getElementById("catalogrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').close();
+		shell.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
 	_catalogAddError(event) {

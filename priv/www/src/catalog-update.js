@@ -150,8 +150,9 @@ class catalogUpdateList extends PolymerElement {
 	}
 
 	_catalogUpdateResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-update').shadowRoot.getElementById('updateCatalogModal').close();
-		document.getElementById("catalogGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('catalog-update').shadowRoot.getElementById('updateCatalogModal').close();
+		shell.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
 	_catalogUpdateError(event) {

@@ -168,8 +168,9 @@ class categoryUpdateList extends PolymerElement {
 	}
 
 	_categoryUpdateResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-update').shadowRoot.getElementById('updateCategoryModal').close();
-		document.getElementById("categoryGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('category-update').shadowRoot.getElementById('updateCategoryModal').close();
+		shell.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 
 	_categoryUpdateError(event) {

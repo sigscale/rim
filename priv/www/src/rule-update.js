@@ -109,8 +109,9 @@ class ruleUpdate extends PolymerElement {
 	}
 
 	_ruleUpdateResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-update').shadowRoot.getElementById('updateRuleModal').close();
-		document.getElementById("ruleGrid").clearCache();
+		var shell = document.body.querySelector('inventory-management').shadowRoot;
+		shell.querySelector('rule-update').shadowRoot.getElementById('updateRuleModal').close();
+		shell.getElementById('ruleList').shadowRoot.getElementById('ruleGrid').clearCache();
 	}
 
 	_ruleUpdateError(event) {
