@@ -23,7 +23,7 @@ import '@polymer/paper-checkbox/paper-checkbox.js'
 import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
-class ruleUpdateList extends PolymerElement {
+class ruleUpdate extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element">
@@ -110,8 +110,8 @@ class ruleUpdateList extends PolymerElement {
 	}
 
 	_ruleUpdateResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-update').shadowRoot.getElementById('updateRuleModal').close();
-		document.getElementById("rulesGrid").clearCache();
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-update').shadowRoot.getElementById('updateRuleModal').close();
+		document.getElementById("ruleGrid").clearCache();
 	}
 
 	_ruleUpdateError(event) {
@@ -121,4 +121,4 @@ class ruleUpdateList extends PolymerElement {
 	}
 }
 
-window.customElements.define('rules-update', ruleUpdateList);
+window.customElements.define('rule-update', ruleUpdate);

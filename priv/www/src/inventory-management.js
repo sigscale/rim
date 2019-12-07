@@ -112,11 +112,11 @@ class InventoryManagement extends PolymerElement {
 								name="specificationView"
 								active-item="{{activeItem}}">
 						</specification-list>
-						<rules-list
-								id="rulesList"
-								loading="{{rulesLoading}}"
-								name="rulesView">
-						</rules-list>
+						<rule-list
+								id="ruleList"
+								loading="{{ruleLoading}}"
+								name="ruleView">
+						</rule-list>
 						<inventory-list
 								id="inventoryList"
 								loading="{{inventoryLoading}}"
@@ -179,7 +179,7 @@ class InventoryManagement extends PolymerElement {
 								Specification
 							</a>
 						</iron-collapse>
-						<a name="rulesView" href="[[rootPath]]rulesView">
+						<a name="ruleView" href="[[rootPath]]ruleView">
 							<paper-icon-button
 									icon="my-icons:rule">
 							</paper-icon-button>
@@ -215,7 +215,7 @@ class InventoryManagement extends PolymerElement {
 			<candidate-add id="addCandidate"></candidate-add>
 			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
 			<category-add id="addCategory"></category-add>
-			<rules-update id="updateRule" category="[[activeItem]]"></rules-update>
+			<rule-update id="updateRule" category="[[activeItem]]"></rule-update>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 			<inventory-add id="inventoryAdd"></inventory-add>
 		`;
@@ -288,10 +288,10 @@ class InventoryManagement extends PolymerElement {
 					console.log('Have patience dude!');
 				}
 				break;
-			case "rulesView":
-				var rules = this.shadowRoot.getElementById('rulesList');
-				if (!rules.loading) {
-					grid = rules.shadowRoot.getElementById('inventoryGrid');
+			case "ruleView":
+				var rule = this.shadowRoot.getElementById('ruleList');
+				if (!rule.loading) {
+					grid = rule.shadowRoot.getElementById('inventoryGrid');
 					grid.size = undefined;
 					grid.clearCache();
 				} else {
@@ -352,7 +352,7 @@ class InventoryManagement extends PolymerElement {
 			specificationLoading: {
 				type: String
 			},
-			rulesLoading: {
+			ruleLoading: {
 				type: String
 			},
 			inventoryLoading: {
@@ -381,7 +381,7 @@ class InventoryManagement extends PolymerElement {
 		// Show 'inventoryView' in that case. And if the page doesn't exist, show 'view404'.
 		if (!page) {
 			this.page = 'catalogView';
-		} else if (['rulesView', 'inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView', 'httpView'].indexOf(page) !== -1) {
+		} else if (['ruleView', 'inventoryView', 'catalogView', 'categoryView', 'candidateView', 'userView', 'specificationView', 'httpView'].indexOf(page) !== -1) {
 			this.page = page;
 		}
 		switch (this.page) {
@@ -400,7 +400,7 @@ class InventoryManagement extends PolymerElement {
 			case 'inventoryView':
 				this.viewTitle = 'Resource Inventory';
 				break;
-			case 'rulesView':
+			case 'ruleView':
 				this.viewTitle = 'Rules';
 				break;
 			case 'httpView':
@@ -446,9 +446,9 @@ class InventoryManagement extends PolymerElement {
 				import('./inventory-list.js');
 				import('./inventory-add.js');
 				break;
-			case 'rulesView':
-				import('./rules-list.js');
-				import('./rules-update.js');
+			case 'ruleView':
+				import('./rule-list.js');
+				import('./rule-update.js');
 				break;
 			case 'httpView':
 				import('./http-list.js');
@@ -460,7 +460,7 @@ class InventoryManagement extends PolymerElement {
 	}
 
 	_loadingChanged() {
-		if (this.userLoading || this.rulesLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading || this.candidateLoading || this.specificationLoading || this.httpLoading) {
+		if (this.userLoading || this.ruleLoading || this.inventoryLoading || this.catalogLoading || this.categoryLoading || this.candidateLoading || this.specificationLoading || this.httpLoading) {
 			this.loading = true;
 		} else {
 			this.loading = false;
