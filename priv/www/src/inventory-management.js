@@ -206,7 +206,7 @@ class InventoryManagement extends PolymerElement {
 					</iron-selector>
 				</app-drawer>
 			</app-drawer-layout>
-			<!-- Model Definitions -->
+			<!-- Modal Definitions -->
 			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
 			<specification-add id="addSpecification"></specification-add>
 			<catalog-update id="updateCatalog" catalog="[[activeItem]]"></catalog-update>
@@ -216,8 +216,8 @@ class InventoryManagement extends PolymerElement {
 			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
 			<category-add id="addCategory"></category-add>
 			<rule-update id="updateRule" category="[[activeItem]]"></rule-update>
-			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 			<inventory-add id="inventoryAdd"></inventory-add>
+			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 		`;
 	}
 
@@ -291,7 +291,7 @@ class InventoryManagement extends PolymerElement {
 			case "ruleView":
 				var rule = this.shadowRoot.getElementById('ruleList');
 				if (!rule.loading) {
-					grid = rule.shadowRoot.getElementById('inventoryGrid');
+					grid = rule.shadowRoot.getElementById('ruleGrid');
 					grid.size = undefined;
 					grid.clearCache();
 				} else {
