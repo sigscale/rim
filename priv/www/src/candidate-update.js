@@ -99,13 +99,14 @@ class candUpdateList extends PolymerElement {
 			id="deleteCandidateAjax"
 			on_response="_deleteCandidateResponse"
 			on-error="_deleteCandidateError">
+			on-error="_candidateUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="candUpdateAjax"
 			content-type="application/merge-patch+json"
 			on-loading-changed="_onLoadingChanged"
 			on-response="_addSpecResponse"
-			on-error="_addSpecError">
+			on-error="_candidateUpdateError">
 		</iron-ajax>
 		`;
 	}
@@ -150,6 +151,16 @@ class candUpdateList extends PolymerElement {
 		}
 		ajax.body = JSON.stringify(cand);
 		ajax.generateRequest();
+	}
+
+	_specificationUpdateResponse() {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal').close();
+	}
+
+	_candidateUpdateError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

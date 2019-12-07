@@ -108,14 +108,14 @@ class categoryUpdateList extends PolymerElement {
 		<iron-ajax
 			id="deleteCategoryAjax"
 			on_response="_deleteCategoryResponse"
-			on-error="_deleteCategoryError">
+			on-error="_categoryUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="categoryUpdateAjax"
 			content-type="application/merge-patch+json"
 			on-loading-changed="_onLoadingChanged"
 			on-response="_categorySpecResponse"
-			on-error="_categorySpecError">
+			on-error="_categoryUpdateError">
 		</iron-ajax>
 		`;
 	}
@@ -170,6 +170,12 @@ class categoryUpdateList extends PolymerElement {
 
 	_categorySpecResponse() {
 		document.getElementById("categoryGrid").clearCache();
+	}
+
+	_categoryUpdateError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

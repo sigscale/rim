@@ -171,14 +171,14 @@ class specUpdateList extends PolymerElement {
 		<iron-ajax
 			id="deleteSpecificationAjax"
 			on_response="_deleteSpecificationResponse"
-			on-error="_deleteSpecificationError">
+			on-error="_specificationUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="specUpdateAjax"
 			content-type="application/merge-patch+json"
 			on-loading-changed="_onLoadingChanged"
 			on-response="_addSpecResponse"
-			on-error="_addSpecError">
+			on-error="_specificationUpdateError">
 		</iron-ajax>
 		`;
 	}
@@ -223,6 +223,12 @@ class specUpdateList extends PolymerElement {
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
+	}
+
+	_specificationUpdateError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 
 	_collapseChars(event) {

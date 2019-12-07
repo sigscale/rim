@@ -138,6 +138,12 @@ class specificationAdd extends PolymerElement {
 	_specificationAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').close();
 	}
+
+	_specificationAddError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
+	}
 }
 
 window.customElements.define('specification-add', specificationAdd);

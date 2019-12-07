@@ -144,6 +144,12 @@ class inventoryAdd extends PolymerElement {
 	_inventoryAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('addInventoryModal').close();
 	}
+
+	_inventoryAddError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
+	}
 }
 
 window.customElements.define('inventory-add', inventoryAdd);

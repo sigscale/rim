@@ -69,14 +69,14 @@ class ruleUpdateList extends PolymerElement {
 			content-type="application/json-patch+json"
 			on-loading-changed="_onLoadingChanged"
 			on-response="_addSpecResponse"
-			on-error="_addSpecError">
+			on-error="_ruleUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="ruleDeleteAjax"
 			content-type="application/json"
 			on-loading-changed="_onLoadingChanged"
 			on-response="_addDelResponse"
-			on-error="_addDelError">
+			on-error="_ruleUpdateError">
 		</iron-ajax>
 		`;
 	}
@@ -107,6 +107,12 @@ class ruleUpdateList extends PolymerElement {
 		RuleArr.push(peeRule);
 		ajax.body = JSON.stringify(RuleArr);
 		ajax.generateRequest();
+	}
+
+	_ruleUpdateError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

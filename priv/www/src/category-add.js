@@ -144,6 +144,12 @@ class categoryAdd extends PolymerElement {
 	_categoryAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
 	}
+
+	_categoryAddError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
+	}
 }
 
 window.customElements.define('category-add', categoryAdd);

@@ -128,6 +128,12 @@ class candidateAdd extends PolymerElement {
 	_candidateAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-add').shadowRoot.getElementById('addCandidateModal').close();
 	}
+
+	_candidateAddError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
+	}
 }
 
 window.customElements.define('candidate-add', candidateAdd);

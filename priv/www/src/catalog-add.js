@@ -112,6 +112,12 @@ class catalogAdd extends PolymerElement {
 	_catalogAddResponse() {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').close();
 	}
+
+	_catalogAddError(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
+	}
 }
 
 window.customElements.define('catalog-add', catalogAdd);
