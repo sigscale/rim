@@ -16,13 +16,13 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-styles/typography.js';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 import './inventory-management-icons.js';
@@ -334,35 +334,35 @@ class InventoryManagement extends PolymerElement {
 				type: String
 			},
 			loading: {
-				type: String,
+				type: Boolean,
 				value: false
 			},
 			dashLoading: {
-				type: String
+				type: Boolean
 			},
 			catalogLoading: {
-				type: String
+				type: Boolean
 			},
 			categoryLoading: {
-				type: String
+				type: Boolean
 			},
 			candidateLoading: {
-				type: String
+				type: Boolean
 			},
 			specificationLoading: {
-				type: String
+				type: Boolean
 			},
 			ruleLoading: {
-				type: String
+				type: Boolean
 			},
 			inventoryLoading: {
-				type: String
+				type: Boolean
 			},
 			httpLoading: {
-				type: String
+				type: Boolean
 			},
 			userLoading: {
-				type: String
+				type: Boolean
 			}
 		};
 	}
