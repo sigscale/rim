@@ -14,6 +14,7 @@ import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
@@ -32,6 +33,11 @@ class ruleUpdate extends PolymerElement {
 			<paper-toolbar>
 				<div slot="top"><h2>Update Rule</h2></div>
 			</paper-toolbar>
+			<paper-progress
+					indeterminate
+					class="slow red"
+					disabled="{{!loading}}">
+			</paper-progress>
 				<paper-input
 						id="addRuleId"
 						label="Id"
@@ -66,6 +72,7 @@ class ruleUpdate extends PolymerElement {
 		<iron-ajax
 			id="ruleUpdateAjax"
 			content-type="application/json-patch+json"
+			loading="{{loading}}"
 			on-loading-changed="_onLoadingChanged"
 			on-response="_ruleUpdateResponse"
 			on-error="_ruleUpdateError">
@@ -73,7 +80,7 @@ class ruleUpdate extends PolymerElement {
 		<iron-ajax
 			id="ruleDeleteAjax"
 			content-type="application/json"
-			on-loading-changed="_onLoadingChanged"
+			loading="{{loading}}"
 			on-response="_ruleUpdateResponse"
 			on-error="_ruleUpdateError">
 		</iron-ajax>
@@ -82,6 +89,10 @@ class ruleUpdate extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				value: false
+			},
 			rule: {
 				type: Object,
 			}

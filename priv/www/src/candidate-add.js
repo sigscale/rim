@@ -14,6 +14,7 @@ import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
@@ -32,6 +33,11 @@ class candidateAdd extends PolymerElement {
 			<paper-toolbar>
 				<div slot="top"><h2>Add Category</h2></div>
 			</paper-toolbar>
+			<paper-progress
+					indeterminate
+					class="slow red"
+					disabled="{{!loading}}">
+			</paper-progress>
 				<paper-input
 						id="candidateName"
 						label="Name"
@@ -74,7 +80,7 @@ class candidateAdd extends PolymerElement {
 		<iron-ajax
 			id="candidateAddAjax"
 			content-type="application/json"
-			on-loading-changed="_onLoadingChanged"
+			loading="{{loading}}"
 			on-response="_candidateAddResponse"
 			on-error="_candidateAddError">
 		</iron-ajax>
@@ -83,6 +89,10 @@ class candidateAdd extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				value: false
+			},
 			candidate: {
 				type: Object,
 			}

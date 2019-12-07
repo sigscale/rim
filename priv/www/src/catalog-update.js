@@ -14,6 +14,7 @@ import '@polymer/paper-fab/paper-fab.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
@@ -32,6 +33,11 @@ class catalogUpdateList extends PolymerElement {
 			<paper-toolbar>
 				<div slot="top"><h2>Update Catalog</h2></div>
 			</paper-toolbar>
+			<paper-progress
+					indeterminate
+					class="slow red"
+					disabled="{{!loading}}">
+			</paper-progress>
 				<paper-input
 						id="catalogId"
 						label="Id"
@@ -96,13 +102,14 @@ class catalogUpdateList extends PolymerElement {
 		</paper-dialog>
 		<iron-ajax
 			id="deleteCatalogAjax"
+			loading="{{loading}}"
 			on-response="_catalogUpdateResponse"
 			on-error="_catalogUpdateError">
 		</iron-ajax>
 		<iron-ajax
 			id="catalogUpdateAjax"
 			content-type="application/merge-patch+json"
-			on-loading-changed="_onLoadingChanged"
+			loading="{{loading}}"
 			on-response="_catalogUpdateResponse"
 			on-error="_catalogUpdateError">
 		</iron-ajax>
@@ -111,6 +118,10 @@ class catalogUpdateList extends PolymerElement {
 
 	static get properties() {
 		return {
+			loading: {
+				type: Boolean,
+				value: false
+			},
 			catalog: {
 				type: Object,
 			}
