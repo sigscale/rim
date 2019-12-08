@@ -33,37 +33,37 @@ class specificationAdd extends PolymerElement {
 				<paper-input
 						id="specificationName"
 						label="Name"
-						value="{{specification.specificationName}}">
+						value="{{specification.name}}">
 				</paper-input>
 				<paper-input
-						id="specificationDesc"
+						id="specificationDescription"
 						label="Description"
-						value="{{specification.specificationDesc}}">
+						value="{{specification.desription}}">
 				</paper-input>
 				<paper-input
 						id="specificationVersion"
 						label="Version"
-						value="{{specification.specificationVersion}}">
+						value="{{specification.version}}">
 				</paper-input>
 				<paper-input
 						id="specificationClass"
 						label="Class"
-						value="{{specification.specificationClass}}">
+						value="{{specification.class}}">
 				</paper-input>
 				<paper-input
 						id="specificationStatus"
 						label="Status"
-						value="{{specification.specificationStatus}}">
+						value="{{specification.status}}">
 				</paper-input>
 				<paper-input
 						id="specificationCategory"
 						label="Category"
-						value="{{specification.specificationCategory}}">
+						value="{{specification.category}}">
 				</paper-input>
 				<paper-input
 						id="specificationBundle"
 						label="Bundle"
-						value="{{specification.specificationBundle}}">
+						value="{{specification.bundle}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
@@ -97,6 +97,9 @@ class specificationAdd extends PolymerElement {
 			},
 			specification: {
 				type: Object,
+				value: function() {
+					return {};
+				}
 			}
 		}
 	}
@@ -110,29 +113,28 @@ class specificationAdd extends PolymerElement {
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/";
 		var spec = new Object();
-		if(this.$.specificationName.value) {
-			spec.name = this.$.specificationName.value;
+		if(this.specification.name) {
+			spec.name = this.specification.name;
 		}
-		if(this.$.specificationDesc.value) {
-			spec.description = this.$.specificationDesc.value;
+		if(this.specification.description) {
+			spec.description = this.specification.description;
 		}
-		if(this.$.specificationVersion.value) {
-			spec.version = this.$.specificationVersion.value;
+		if(this.specification.version) {
+			spec.version = this.specification.version;
 		}
-		if(this.$.specificationClass.value) {
-			spec.class = this.$.specificationClass.value;
+		if(this.specification.class) {
+			spec.class = this.specification.class;
 		}
-		if(this.$.specificationStatus.value) {
-			spec.status = this.$.specificationStatus.value;
+		if(this.specification.status) {
+			spec.status = this.specification.status;
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
 	}
 
 	_specificationAddResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').close();
-		shell.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
+		this.$.addSpecificationModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 
 	_specificationAddError(event) {
