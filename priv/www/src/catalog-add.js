@@ -33,17 +33,17 @@ class catalogAdd extends PolymerElement {
 				<paper-input
 						id="catalogName"
 						label="Name"
-						value="{{catalog.catalogName}}">
+						value="{{catalog.name}}">
 				</paper-input>
 				<paper-input
 						id="catalogDesc"
 						label="Description"
-						value="{{catalog.catalogDesc}}">
+						value="{{catalog.description}}">
 				</paper-input>
 				<paper-input
 						id="catalogVersion"
 						label="Version"
-						value="{{catalog.catalogVersion}}">
+						value="{{catalog.version}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
@@ -77,6 +77,9 @@ class catalogAdd extends PolymerElement {
 			},
 			catalog: {
 				type: Object,
+				value: function() {
+					return {};
+				}
 			}
 		}
 	}
@@ -90,23 +93,22 @@ class catalogAdd extends PolymerElement {
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/";
 		var cat = new Object();
-		if(this.$.catalogName.value) {
-			cat.name = this.$.catalogName.value;
+		if(this.catalog.name) {
+			cat.name = this.catalog.name;
 		}
-		if(this.$.catalogDesc.value) {
-			cat.description = this.$.catalogDesc.value;
+		if(this.catalog.description) {
+			cat.description = this.catalog.descriptions;
 		}
-		if(this.$.catalogVersion.value) {
-			cat.version = this.$.catalogVersion.value;
+		if(this.catalog.version) {
+			cat.version = this.catalog.version;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
 	_catalogAddResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').close();
-		shell.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
+		this.$.addCatalogModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
 	_catalogAddError(event) {

@@ -33,27 +33,27 @@ class candidateAdd extends PolymerElement {
 				<paper-input
 						id="candidateName"
 						label="Name"
-						value="{{candidate.candidateName}}">
+						value="{{candidate.name}}">
 				</paper-input>
 				<paper-input
 						id="candidateDesc"
 						label="Description"
-						value="{{candidate.candidateDesc}}">
+						value="{{candidate.description}}">
 				</paper-input>
 				<paper-input
 						id="candidateVersion"
 						label="Version"
-						value="{{candidate.candidateVersion}}">
+						value="{{candidate.version}}">
 				</paper-input>
 				<paper-input
 						id="candidateClass"
 						label="Class"
-						value="{{candidate.candidateClass}}">
+						value="{{candidate.class}}">
 				</paper-input>
 				<paper-input
 						id="candidateStatus"
 						label="Status"
-						value="{{candidate.candidateStatus}}">
+						value="{{candidate.status}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
@@ -87,6 +87,9 @@ class candidateAdd extends PolymerElement {
 			},
 			candidate: {
 				type: Object,
+				value: function() {
+					return {};
+				}
 			}
 		}
 	}
@@ -99,30 +102,29 @@ class candidateAdd extends PolymerElement {
 		var ajax = this.$.candidateAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/";
-		var can = new Object();
-		if(this.$.candidateName.value) {
-			can.name = this.$.candidateName.value;
+		var cand = new Object();
+		if(this.candidate.name) {
+			cand.name = this.candidate.name;
 		}
-		if(this.$.candidateDesc.value) {
-			can.description = this.$.candidateDesc.value;
+		if(this.candidate.description) {
+			cand.description= this.candidate.description;
 		}
-		if(this.$.candidateVersion.value) {
-			can.version = this.$.candidateVersion.value;
+		if(this.candidate.version) {
+			cand.version = this.candidate.version;
 		}
-		if(this.$.candidateClass.value) {
-			can.class = this.$.candidateClass.value;
+		if(this.candidate.class) {
+			cand.baseType = this.candidate.class;
 		}
-		if(this.$.candidateStatus.value) {
-			can.status = this.$.candidateStatus.value;
+		if(this.candidate.status) {
+			cand.lifecycleStatus = this.candidate.status;
 		}
-		ajax.body = JSON.stringify(can);
+		ajax.body = JSON.stringify(cand);
 		ajax.generateRequest();
 	}
 
 	_candidateAddResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('candidate-add').shadowRoot.getElementById('addCandidateModal').close();
-		shell.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
+		this.$.addCandidateModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 
 	_candidateAddError(event) {

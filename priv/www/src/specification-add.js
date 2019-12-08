@@ -123,10 +123,10 @@ class specificationAdd extends PolymerElement {
 			spec.version = this.specification.version;
 		}
 		if(this.specification.class) {
-			spec.class = this.specification.class;
+			spec.baseType = this.specification.class;
 		}
 		if(this.specification.status) {
-			spec.status = this.specification.status;
+			spec.lifecycleStatus = this.specification.status;
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();

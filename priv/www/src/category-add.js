@@ -33,37 +33,37 @@ class categoryAdd extends PolymerElement {
 				<paper-input
 						id="categoryName"
 						label="Name"
-						value="{{category.categoryName}}">
+						value="{{category.name}}">
 				</paper-input>
 				<paper-input
 						id="categoryDesc"
 						label="Description"
-						value="{{category.categoryDesc}}">
+						value="{{category.description}}">
 				</paper-input>
 				<paper-input
 						id="categoryVersion"
 						label="Version"
-						value="{{category.categoryVersion}}">
+						value="{{category.version}}">
 				</paper-input>
 				<paper-input
 						id="categoryClass"
 						label="Class"
-						value="{{category.categoryClass}}">
+						value="{{category.class}}">
 				</paper-input>
 				<paper-input
 						id="categoryStatus"
 						label="Status"
-						value="{{category.categoryStatus}}">
+						value="{{category.status}}">
 				</paper-input>
 				<paper-input
 						id="categoryParent"
 						label="Parent"
-						value="{{category.categoryParent}}">
+						value="{{category.parent}}">
 				</paper-input>
 				<paper-input
 						id="categoryRoot"
 						label="Root"
-						value="{{category.categoryRoot}}">
+						value="{{category.root}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
@@ -97,6 +97,9 @@ class categoryAdd extends PolymerElement {
 			},
 			category: {
 				type: Object,
+				value: function() {
+					return {};
+				}
 			}
 		}
 	}
@@ -110,35 +113,34 @@ class categoryAdd extends PolymerElement {
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/";
 		var cat = new Object();
-		if(this.$.categoryName.value) {
-			cat.name = this.$.categoryName.value;
+		if(this.category.name) {
+			cat.name = this.category.name;
 		}
-		if(this.$.categoryDesc.value) {
-			cat.description = this.$.categoryDesc.value;
+		if(this.category.description) {
+			cat.desription = this.category.description;
 		}
-		if(this.$.categoryVersion.value) {
-			cat.version = this.$.categoryVersion.value;
+		if(this.category.version) {
+			cat.version = this.category.version;
 		}
-		if(this.$.categoryClass.value) {
-			cat.class = this.$.categoryClass.value;
+		if(this.category.class) {
+			cat.baseType =  this.category.class;
 		}
-		if(this.$.categoryStatus.value) {
-			cat.status = this.$.categoryStatus.value;
+		if(this.category.status) {
+			cat.lifecycleStatus =  this.category.status;
 		}
-		if(this.$.categoryParent.value) {
-			cat.parent = this.$.categoryParent.value;
+		if(this.category.parent) {
+			cat.parent =  this.category.parent;
 		}
-		if(this.$.categoryRoot.value) {
-			cat.root = this.$.categoryRoot.value;
+		if(this.category.root) {
+			cat.root =  this.category.root;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
 	_categoryAddResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
-		shell.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
+		this.$.addCategoryModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 
 	_categoryAddError(event) {

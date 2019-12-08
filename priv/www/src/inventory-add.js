@@ -97,6 +97,9 @@ class inventoryAdd extends PolymerElement {
 			},
 			inventory: {
 				type: Object,
+				value: function() {
+					return {};
+				}
 			}
 		}
 	}
@@ -110,35 +113,34 @@ class inventoryAdd extends PolymerElement {
 		ajax.method = "POST";
 		ajax.url = "/resourceInventoryManagement/v3/resource/";
 		var inv = new Object();
-		if(this.$.inventoryName.value) {
-			inv.name = this.$.inventoryName.value;
+		if(this.inventory.name) {
+			inv.name = this.inventory.name;
 		}
-		if(this.$.inventoryDesc.value) {
-			inv.description = this.$.inventoryDesc.value;
+		if(this.inventory.description) {
+			inv.description = this.inventory.description;
 		}
-		if(this.$.inventoryVersion.value) {
-			inv.version = this.$.inventoryVersion.value;
+		if(this.inventory.version) {
+			inv.version = this.inventory.version;
 		}
-		if(this.$.inventoryType.value) {
-			inv.type = this.$.inventoryType.value;
+		if(this.inventory.version) {
+			inv.version = this.inventory.version;
 		}
-		if(this.$.inventoryStatus.value) {
-			inv.status = this.$.inventoryStatus.value;
+		if(this.inventory.type) {
+			inv.type = this.inventory.type;
 		}
-		if(this.$.inventoryCategory.value) {
-			inv.category = this.$.inventoryCategory.value;
+		if(this.inventory.status) {
+			inv.lifecycleStatus = this.inventory.status;
 		}
-		if(this.$.inventorySpecification.value) {
-			inv.specification = this.$.inventorySpecification.value;
+		if(this.inventory.category) {
+			inv.category = this.inventory.category;
 		}
 		ajax.body = JSON.stringify(inv);
 		ajax.generateRequest();
 	}
 
 	_inventoryAddResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('inventory-add').shadowRoot.getElementById('addInventoryModal').close();
-		shell.getElementById('inventoryList').shadowRoot.getElementById('inventoryGrid').clearCache();
+		this.$.addInventoryModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('inventoryList').shadowRoot.getElementById('inventoryGrid').clearCache();
 	}
 
 	_inventoryAddError(event) {
