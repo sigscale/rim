@@ -54,7 +54,7 @@ class catalogAdd extends PolymerElement {
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss>
+							on-tap="_cancelCatalog">
 						Cancel
 					</paper-button>
 				</div>
@@ -88,6 +88,11 @@ class catalogAdd extends PolymerElement {
       super.ready()
 	}
 
+	_cancelCatalog() {
+		this.$.addCatalogModal.close();
+		this.catalog = {};
+	}
+
 	_addCatalog() {
 		var ajax = this.$.catalogAddAjax;
 		ajax.method = "POST";
@@ -108,6 +113,7 @@ class catalogAdd extends PolymerElement {
 
 	_catalogAddResponse() {
 		this.$.addCatalogModal.close();
+		this.catalog = {};
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 

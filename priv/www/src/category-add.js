@@ -74,7 +74,7 @@ class categoryAdd extends PolymerElement {
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss>
+							on-tap="_cancelCategory">
 						Cancel
 					</paper-button>
 				</div>
@@ -106,6 +106,11 @@ class categoryAdd extends PolymerElement {
 
    ready() {
       super.ready()
+	}
+
+	_cancelCategory () {
+		this.$.addCategoryModal.close();
+		this.category = {};
 	}
 
 	_addCategory() {
@@ -140,6 +145,7 @@ class categoryAdd extends PolymerElement {
 
 	_categoryAddResponse() {
 		this.$.addCategoryModal.close();
+		this.category = {};
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 

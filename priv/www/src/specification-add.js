@@ -74,7 +74,7 @@ class specificationAdd extends PolymerElement {
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss>
+							on-tap="_cancelSpecification>
 						Cancel
 					</paper-button>
 				</div>
@@ -108,6 +108,11 @@ class specificationAdd extends PolymerElement {
 		super.ready()
 	}
 
+	_cancelSpecification() {
+		this.$.addSpecificationModal.close();
+		this.specification = {};
+	}
+
 	_addSpecification() {
 		var ajax = this.$.specificationAddAjax;
 		ajax.method = "POST";
@@ -134,6 +139,7 @@ class specificationAdd extends PolymerElement {
 
 	_specificationAddResponse() {
 		this.$.addSpecificationModal.close();
+		this.specification = {};
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 

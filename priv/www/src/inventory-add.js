@@ -74,7 +74,7 @@ class inventoryAdd extends PolymerElement {
 				</paper-button>
 				<paper-button
 						class="cancel-button"
-						dialog-dismiss>
+						on-tap="_cancelInventory">
 					Cancel
 				</paper-button>
 			</div>
@@ -106,6 +106,11 @@ class inventoryAdd extends PolymerElement {
 
 	ready() {
 		super.ready()
+	}
+
+	_cancelInventory() {
+		this.$.addInventoryModal.close();
+		this.inventory = {};
 	}
 
 	_addInventory() {
@@ -140,6 +145,7 @@ class inventoryAdd extends PolymerElement {
 
 	_inventoryAddResponse() {
 		this.$.addInventoryModal.close();
+		this.inventory = {};
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('inventoryList').shadowRoot.getElementById('inventoryGrid').clearCache();
 	}
 

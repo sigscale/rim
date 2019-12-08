@@ -64,7 +64,7 @@ class candidateAdd extends PolymerElement {
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss>
+							on-tap="_cancelCandidate">
 						Cancel
 					</paper-button>
 				</div>
@@ -98,6 +98,11 @@ class candidateAdd extends PolymerElement {
 		super.ready()
 	}
 
+	_cancelCandidate() {
+		this.$.addCandidateModal.close();
+		this.candidate = {};
+	}
+
 	_addCandidate() {
 		var ajax = this.$.candidateAddAjax;
 		ajax.method = "POST";
@@ -124,6 +129,7 @@ class candidateAdd extends PolymerElement {
 
 	_candidateAddResponse() {
 		this.$.addCandidateModal.close();
+		this.candidate = {};
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 
