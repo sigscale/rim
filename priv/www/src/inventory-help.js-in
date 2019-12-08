@@ -14,8 +14,6 @@ import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-item/paper-item.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import './inventory-management-icons.js';
 import './style-element.js';
