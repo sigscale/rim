@@ -20,8 +20,7 @@ import './style-element.js';
 class httpList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="httpGrid"
 					loading="{{loading}}"

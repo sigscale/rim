@@ -20,8 +20,7 @@ import './style-element.js';
 class catalogList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="catalogGrid"
 					loading="{{loading}}"

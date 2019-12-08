@@ -27,63 +27,62 @@ import './style-element.js';
 class ruleUpdate extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="updateRuleModal" modal>
-			<app-toolbar>
-				<div main-title>Update Rule</div>
-			</app-toolbar>
-			<paper-progress
-					indeterminate
-					class="slow red"
-					disabled="{{!loading}}">
-			</paper-progress>
-				<paper-input
-						id="addRuleId"
-						label="Id"
-						value="{{rule.ruleId}}"
-						disabled>
-				</paper-input>
-				<paper-input
-						id="addRule"
-						label="Rule"
-						value="{{rule.rules}}"
-						disabled>
-				</paper-input>
-				<paper-input
-						id="addRuleDesc"
-						label="Description"
-						value="{{rule.ruleDesc}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="update-button"
-							on-tap="_update">
-						Update
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="ruleUpdateAjax"
-			content-type="application/json-patch+json"
-			loading="{{loading}}"
-			on-loading-changed="_onLoadingChanged"
-			on-response="_ruleUpdateResponse"
-			on-error="_ruleUpdateError">
-		</iron-ajax>
-		<iron-ajax
-			id="ruleDeleteAjax"
-			content-type="application/json"
-			loading="{{loading}}"
-			on-response="_ruleUpdateResponse"
-			on-error="_ruleUpdateError">
-		</iron-ajax>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="updateRuleModal" modal>
+				<app-toolbar>
+					<div main-title>Update Rule</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
+					<paper-input
+							id="addRuleId"
+							label="Id"
+							value="{{rule.ruleId}}"
+							disabled>
+					</paper-input>
+					<paper-input
+							id="addRule"
+							label="Rule"
+							value="{{rule.rules}}"
+							disabled>
+					</paper-input>
+					<paper-input
+							id="addRuleDesc"
+							label="Description"
+							value="{{rule.ruleDesc}}">
+					</paper-input>
+					<div class="buttons">
+						<paper-button
+								raised
+								class="update-button"
+								on-tap="_update">
+							Update
+						</paper-button>
+						<paper-button
+								class="cancel-button"
+								dialog-dismiss>
+							Cancel
+						</paper-button>
+					</div>
+			</paper-dialog>
+			<iron-ajax
+				id="ruleUpdateAjax"
+				content-type="application/json-patch+json"
+				loading="{{loading}}"
+				on-loading-changed="_onLoadingChanged"
+				on-response="_ruleUpdateResponse"
+				on-error="_ruleUpdateError">
+			</iron-ajax>
+			<iron-ajax
+				id="ruleDeleteAjax"
+				content-type="application/json"
+				loading="{{loading}}"
+				on-response="_ruleUpdateResponse"
+				on-error="_ruleUpdateError">
+			</iron-ajax>
 		`;
 	}
 

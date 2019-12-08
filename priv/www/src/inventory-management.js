@@ -39,8 +39,7 @@ setRootPath(MyAppGlobals.rootPath);
 class InventoryManagement extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<app-location
 					route="{{route}}"
 					url-space-regex="^[[rootPath]]">

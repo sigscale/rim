@@ -27,102 +27,101 @@ import './style-element.js';
 class categoryUpdateList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="updateCategoryModal" modal>
-			<app-toolbar>
-				<div main-title>Update Category</div>
-			</app-toolbar>
-			<paper-progress
-					indeterminate
-					class="slow red"
-					disabled="{{!loading}}">
-			</paper-progress>
-				<paper-input
-						id="categoryId"
-						label="Id"
-						value="{{category.categoryId}}"
-						disabled>
-				</paper-input>
-				<paper-input
-						id="categoryName"
-						label="Name"
-						value="{{category.categoryName}}"
-						required>
-				</paper-input>
-				<paper-input
-						id="categoryDesc"
-						label="Description"
-						value="{{category.categoryDescription}}">
-				</paper-input>
-				<paper-input
-						id="categoryType"
-						label="Class"
-						value="{{category.categoryClass}}">
-				</paper-input>
-				<paper-dropdown-menu
-					id="categoryStatus" 
-					class="drop"
-					label="Status"
-					value="{{category.categoryStatus}}"
-					no-animations="true">
-					<paper-listbox
-							id="updateStatus"
-							slot="dropdown-content">
-						<paper-item>In Study</paper-item>
-						<paper-item>In Design</paper-item>
-						<paper-item>In Test</paper-item>
-						<paper-item>Rejected</paper-item>
-						<paper-item>Active</paper-item>
-						<paper-item>Launched</paper-item>
-						<paper-item>Retired</paper-item>
-						<paper-item>Obsolete</paper-item>
-					</paper-listbox>
-				</paper-dropdown-menu>
-				<paper-input
-						id="categoryParent"
-						label="Parent"
-						value="{{category.categoryParent}}">
-				</paper-input>
-				<paper-input
-						id="categoryRoot"
-						label="Root"
-						value="{{category.categoryRoot}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="update-button"
-							on-tap="_update">
-						Update
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_delete">
-						Delete
-					</paper-button>
-				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="deleteCategoryAjax"
-			loading="{{loading}}"
-			on-response="_categoryUpdateResponse"
-			on-error="_categoryUpdateError">
-		</iron-ajax>
-		<iron-ajax
-			id="categoryUpdateAjax"
-			content-type="application/merge-patch+json"
-			loading="{{loading}}"
-			on-response="_categoryUpdateResponse"
-			on-error="_categoryUpdateError">
-		</iron-ajax>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="updateCategoryModal" modal>
+				<app-toolbar>
+					<div main-title>Update Category</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
+					<paper-input
+							id="categoryId"
+							label="Id"
+							value="{{category.categoryId}}"
+							disabled>
+					</paper-input>
+					<paper-input
+							id="categoryName"
+							label="Name"
+							value="{{category.categoryName}}"
+							required>
+					</paper-input>
+					<paper-input
+							id="categoryDesc"
+							label="Description"
+							value="{{category.categoryDescription}}">
+					</paper-input>
+					<paper-input
+							id="categoryType"
+							label="Class"
+							value="{{category.categoryClass}}">
+					</paper-input>
+					<paper-dropdown-menu
+						id="categoryStatus" 
+						class="drop"
+						label="Status"
+						value="{{category.categoryStatus}}"
+						no-animations="true">
+						<paper-listbox
+								id="updateStatus"
+								slot="dropdown-content">
+							<paper-item>In Study</paper-item>
+							<paper-item>In Design</paper-item>
+							<paper-item>In Test</paper-item>
+							<paper-item>Rejected</paper-item>
+							<paper-item>Active</paper-item>
+							<paper-item>Launched</paper-item>
+							<paper-item>Retired</paper-item>
+							<paper-item>Obsolete</paper-item>
+						</paper-listbox>
+					</paper-dropdown-menu>
+					<paper-input
+							id="categoryParent"
+							label="Parent"
+							value="{{category.categoryParent}}">
+					</paper-input>
+					<paper-input
+							id="categoryRoot"
+							label="Root"
+							value="{{category.categoryRoot}}">
+					</paper-input>
+					<div class="buttons">
+						<paper-button
+								raised
+								class="update-button"
+								on-tap="_update">
+							Update
+						</paper-button>
+						<paper-button
+								class="cancel-button"
+								dialog-dismiss>
+							Cancel
+						</paper-button>
+						<paper-button
+								toggles
+								raised
+								class="delete-button"
+								on-tap="_delete">
+							Delete
+						</paper-button>
+					</div>
+			</paper-dialog>
+			<iron-ajax
+				id="deleteCategoryAjax"
+				loading="{{loading}}"
+				on-response="_categoryUpdateResponse"
+				on-error="_categoryUpdateError">
+			</iron-ajax>
+			<iron-ajax
+				id="categoryUpdateAjax"
+				content-type="application/merge-patch+json"
+				loading="{{loading}}"
+				on-response="_categoryUpdateResponse"
+				on-error="_categoryUpdateError">
+			</iron-ajax>
 		`;
 	}
 

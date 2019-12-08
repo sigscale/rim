@@ -27,8 +27,7 @@ import './style-element.js';
 class specUpdateList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 		<paper-dialog class="dialog" id="updateSpecModal" modal>
 			<app-toolbar>
 				<div main-title>Update Specification</div>

@@ -27,92 +27,91 @@ import './style-element.js';
 class catalogUpdateList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="updateCatalogModal" modal>
-			<app-toolbar>
-				<div main-title>Update Catalog</div>
-			</app-toolbar>
-			<paper-progress
-					indeterminate
-					class="slow red"
-					disabled="{{!loading}}">
-			</paper-progress>
-				<paper-input
-						id="catalogId"
-						label="Id"
-						value="{{catalog.catalogId}}"
-						disabled>
-				</paper-input>
-				<paper-input
-						id="catalogName"
-						label="Name"
-						value="{{catalog.catalogName}}"
-						required>
-				</paper-input>
-				<paper-input
-						id="catalogDesc"
-						label="Description"
-						value="{{catalog.catalogDescription}}">
-				</paper-input>
-				<paper-input
-						id="catalogType"
-						label="Class"
-						value="{{catalog.catalogClass}}">
-				</paper-input>
-				<paper-dropdown-menu
-					id="catalogStatus" 
-					class="drop"
-					label="Status"
-					value="{{catalog.catalogStatus}}"
-					no-animations="true">
-					<paper-listbox
-							id="updateStatus"
-							slot="dropdown-content">
-						<paper-item>In Study</paper-item>
-						<paper-item>In Design</paper-item>
-						<paper-item>In Test</paper-item>
-						<paper-item>Rejected</paper-item>
-						<paper-item>Active</paper-item>
-						<paper-item>Launched</paper-item>
-						<paper-item>Retired</paper-item>
-						<paper-item>Obsolete</paper-item>
-					</paper-listbox>
-				</paper-dropdown-menu>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="update-button"
-							on-tap="_updateCatalog">
-						Update
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteCatalog">
-						Delete
-					</paper-button>
-				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="deleteCatalogAjax"
-			loading="{{loading}}"
-			on-response="_catalogUpdateResponse"
-			on-error="_catalogUpdateError">
-		</iron-ajax>
-		<iron-ajax
-			id="catalogUpdateAjax"
-			content-type="application/merge-patch+json"
-			loading="{{loading}}"
-			on-response="_catalogUpdateResponse"
-			on-error="_catalogUpdateError">
-		</iron-ajax>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="updateCatalogModal" modal>
+				<app-toolbar>
+					<div main-title>Update Catalog</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
+					<paper-input
+							id="catalogId"
+							label="Id"
+							value="{{catalog.catalogId}}"
+							disabled>
+					</paper-input>
+					<paper-input
+							id="catalogName"
+							label="Name"
+							value="{{catalog.catalogName}}"
+							required>
+					</paper-input>
+					<paper-input
+							id="catalogDesc"
+							label="Description"
+							value="{{catalog.catalogDescription}}">
+					</paper-input>
+					<paper-input
+							id="catalogType"
+							label="Class"
+							value="{{catalog.catalogClass}}">
+					</paper-input>
+					<paper-dropdown-menu
+						id="catalogStatus" 
+						class="drop"
+						label="Status"
+						value="{{catalog.catalogStatus}}"
+						no-animations="true">
+						<paper-listbox
+								id="updateStatus"
+								slot="dropdown-content">
+							<paper-item>In Study</paper-item>
+							<paper-item>In Design</paper-item>
+							<paper-item>In Test</paper-item>
+							<paper-item>Rejected</paper-item>
+							<paper-item>Active</paper-item>
+							<paper-item>Launched</paper-item>
+							<paper-item>Retired</paper-item>
+							<paper-item>Obsolete</paper-item>
+						</paper-listbox>
+					</paper-dropdown-menu>
+					<div class="buttons">
+						<paper-button
+								raised
+								class="update-button"
+								on-tap="_updateCatalog">
+							Update
+						</paper-button>
+						<paper-button
+								class="cancel-button"
+								dialog-dismiss>
+							Cancel
+						</paper-button>
+						<paper-button
+								toggles
+								raised
+								class="delete-button"
+								on-tap="_deleteCatalog">
+							Delete
+						</paper-button>
+					</div>
+			</paper-dialog>
+			<iron-ajax
+				id="deleteCatalogAjax"
+				loading="{{loading}}"
+				on-response="_catalogUpdateResponse"
+				on-error="_catalogUpdateError">
+			</iron-ajax>
+			<iron-ajax
+				id="catalogUpdateAjax"
+				content-type="application/merge-patch+json"
+				loading="{{loading}}"
+				on-response="_catalogUpdateResponse"
+				on-error="_catalogUpdateError">
+			</iron-ajax>
 		`;
 	}
 

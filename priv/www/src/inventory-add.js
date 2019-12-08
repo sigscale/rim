@@ -27,8 +27,7 @@ import './style-element.js';
 class inventoryAdd extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 		<paper-dialog class="dialog" id="addInventoryModal" modal>
 			<app-toolbar>
 				<div main-title>Add Inventory</div>

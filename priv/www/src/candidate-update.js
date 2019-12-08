@@ -27,92 +27,91 @@ import './style-element.js';
 class candUpdateList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="updateCandModal" modal>
-			<app-toolbar>
-				<div main-title>Update Candidate</div>
-			</app-toolbar>
-			<paper-progress
-					indeterminate
-					class="slow red"
-					disabled="{{!loading}}">
-			</paper-progress>
-				<paper-input
-						id="addCandId"
-						label="Name"
-						value="{{candidate.candId}}"
-						disabled>
-				</paper-input>
-				<paper-input
-						id="addCandName"
-						label="Name"
-						value="{{candidate.candName}}"
-						required>
-				</paper-input>
-				<paper-input
-						id="addCandDesc"
-						label="Description"
-						value="{{candidate.candDesc}}">
-				</paper-input>
-				<paper-input
-						id="addCandType"
-						label="Class"
-						value="{{candidate.candClass}}">
-				</paper-input>
-				<paper-dropdown-menu
-					id="candStatus"
-					class="drop"
-					label="Status"
-					value="{{candidate.candStatus}}"
-					no-animations="true">
-					<paper-listbox
-							id="updateStatus"
-							slot="dropdown-content">
-						<paper-item>In Study</paper-item>
-						<paper-item>In Design</paper-item>
-						<paper-item>In Test</paper-item>
-						<paper-item>Rejected</paper-item>
-						<paper-item>Active</paper-item>
-						<paper-item>Launched</paper-item>
-						<paper-item>Retired</paper-item>
-						<paper-item>Obsolete</paper-item>
-					</paper-listbox>
-				</paper-dropdown-menu>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="update-button"
-							on-tap="_update">
-						Update
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss>
-						Cancel
-					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_delete">
-						Delete
-					</paper-button>
-				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="deleteCandidateAjax"
-			loading="{{loading}}"
-			on-response="_candidateUpdateResponse"
-			on-error="_candidateUpdateError">
-		</iron-ajax>
-		<iron-ajax
-			id="candUpdateAjax"
-			content-type="application/merge-patch+json"
-			loading="{{loading}}"
-			on-response="_candidateUpdateResponse"
-			on-error="_candidateUpdateError">
-		</iron-ajax>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="updateCandModal" modal>
+				<app-toolbar>
+					<div main-title>Update Candidate</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
+					<paper-input
+							id="addCandId"
+							label="Name"
+							value="{{candidate.candId}}"
+							disabled>
+					</paper-input>
+					<paper-input
+							id="addCandName"
+							label="Name"
+							value="{{candidate.candName}}"
+							required>
+					</paper-input>
+					<paper-input
+							id="addCandDesc"
+							label="Description"
+							value="{{candidate.candDesc}}">
+					</paper-input>
+					<paper-input
+							id="addCandType"
+							label="Class"
+							value="{{candidate.candClass}}">
+					</paper-input>
+					<paper-dropdown-menu
+						id="candStatus"
+						class="drop"
+						label="Status"
+						value="{{candidate.candStatus}}"
+						no-animations="true">
+						<paper-listbox
+								id="updateStatus"
+								slot="dropdown-content">
+							<paper-item>In Study</paper-item>
+							<paper-item>In Design</paper-item>
+							<paper-item>In Test</paper-item>
+							<paper-item>Rejected</paper-item>
+							<paper-item>Active</paper-item>
+							<paper-item>Launched</paper-item>
+							<paper-item>Retired</paper-item>
+							<paper-item>Obsolete</paper-item>
+						</paper-listbox>
+					</paper-dropdown-menu>
+					<div class="buttons">
+						<paper-button
+								raised
+								class="update-button"
+								on-tap="_update">
+							Update
+						</paper-button>
+						<paper-button
+								class="cancel-button"
+								dialog-dismiss>
+							Cancel
+						</paper-button>
+						<paper-button
+								toggles
+								raised
+								class="delete-button"
+								on-tap="_delete">
+							Delete
+						</paper-button>
+					</div>
+			</paper-dialog>
+			<iron-ajax
+				id="deleteCandidateAjax"
+				loading="{{loading}}"
+				on-response="_candidateUpdateResponse"
+				on-error="_candidateUpdateError">
+			</iron-ajax>
+			<iron-ajax
+				id="candUpdateAjax"
+				content-type="application/merge-patch+json"
+				loading="{{loading}}"
+				on-response="_candidateUpdateResponse"
+				on-error="_candidateUpdateError">
+			</iron-ajax>
 		`;
 	}
 

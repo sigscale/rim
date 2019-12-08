@@ -27,73 +27,72 @@ import './style-element.js';
 class categoryAdd extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="addCategoryModal" modal>
-			<app-toolbar>
-				<div main-title>Add Category</div>
-			</app-toolbar>
-			<paper-progress
-					indeterminate
-					class="slow red"
-					disabled="{{!loading}}">
-			</paper-progress>
-			<paper-input
-					id="categoryName"
-					label="Name"
-					value="{{category.categoryName}}">
-			</paper-input>
-			<paper-input
-					id="categoryDesc"
-					label="Description"
-					value="{{category.categoryDesc}}">
-			</paper-input>
-			<paper-input
-					id="categoryVersion"
-					label="Version"
-					value="{{category.categoryVersion}}">
-			</paper-input>
-			<paper-input
-					id="categoryClass"
-					label="Class"
-					value="{{category.categoryClass}}">
-			</paper-input>
-			<paper-input
-					id="categoryStatus"
-					label="Status"
-					value="{{category.categoryStatus}}">
-			</paper-input>
-			<paper-input
-					id="categoryParent"
-					label="Parent"
-					value="{{category.categoryParent}}">
-			</paper-input>
-			<paper-input
-					id="categoryRoot"
-					label="Root"
-					value="{{category.categoryRoot}}">
-			</paper-input>
-			<div class="buttons">
-				<paper-button
-						raised
-						class="submit-button"
-						on-tap="_addCategory">
-					Add
-				</paper-button>
-				<paper-button
-						class="cancel-button"
-						dialog-dismiss>
-					Cancel
-				</paper-button>
-			</div>
-		</paper-dialog>
-		<iron-ajax
-				id="categoryAddAjax"
-				content-type="application/json"
-				loading="{{loading}}"
-				on-response="_categoryAddResponse"
-				on-error="_categoryAddError">
-		</iron-ajax>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="addCategoryModal" modal>
+				<app-toolbar>
+					<div main-title>Add Category</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
+				<paper-input
+						id="categoryName"
+						label="Name"
+						value="{{category.categoryName}}">
+				</paper-input>
+				<paper-input
+						id="categoryDesc"
+						label="Description"
+						value="{{category.categoryDesc}}">
+				</paper-input>
+				<paper-input
+						id="categoryVersion"
+						label="Version"
+						value="{{category.categoryVersion}}">
+				</paper-input>
+				<paper-input
+						id="categoryClass"
+						label="Class"
+						value="{{category.categoryClass}}">
+				</paper-input>
+				<paper-input
+						id="categoryStatus"
+						label="Status"
+						value="{{category.categoryStatus}}">
+				</paper-input>
+				<paper-input
+						id="categoryParent"
+						label="Parent"
+						value="{{category.categoryParent}}">
+				</paper-input>
+				<paper-input
+						id="categoryRoot"
+						label="Root"
+						value="{{category.categoryRoot}}">
+				</paper-input>
+				<div class="buttons">
+					<paper-button
+							raised
+							class="submit-button"
+							on-tap="_addCategory">
+						Add
+					</paper-button>
+					<paper-button
+							class="cancel-button"
+							dialog-dismiss>
+						Cancel
+					</paper-button>
+				</div>
+			</paper-dialog>
+			<iron-ajax
+					id="categoryAddAjax"
+					content-type="application/json"
+					loading="{{loading}}"
+					on-response="_categoryAddResponse"
+					on-error="_categoryAddError">
+			</iron-ajax>
 		`;
 	}
 
