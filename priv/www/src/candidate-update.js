@@ -21,11 +21,11 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-item/paper-item.js'
 import './style-element.js';
 
-class candUpdateList extends PolymerElement {
+class candidateUpdate extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="updateCandModal" modal>
+			<paper-dialog class="dialog" id="candidateUpdateModal" modal>
 				<app-toolbar>
 					<div main-title>Update Candidate</div>
 				</app-toolbar>
@@ -36,31 +36,31 @@ class candUpdateList extends PolymerElement {
 				</paper-progress>
 					<paper-input
 							id="addCandId"
-							label="Name"
-							value="{{candidate.candId}}"
+							label="Id"
+							value="{{candidateId}}"
 							disabled>
 					</paper-input>
 					<paper-input
 							id="addCandName"
 							label="Name"
-							value="{{candidate.candName}}"
+							value="{{candidateName}}"
 							required>
 					</paper-input>
 					<paper-input
 							id="addCandDesc"
 							label="Description"
-							value="{{candidate.candDesc}}">
+							value="{{candidateDescription}}">
 					</paper-input>
 					<paper-input
 							id="addCandType"
 							label="Class"
-							value="{{candidate.candClass}}">
+							value="{{candidateType}}">
 					</paper-input>
 					<paper-dropdown-menu
 						id="candStatus"
 						class="drop"
 						label="Status"
-						value="{{candidate.candStatus}}"
+						value="{{candidateStatus}}"
 						no-animations="true">
 						<paper-listbox
 								id="updateStatus"
@@ -84,7 +84,7 @@ class candUpdateList extends PolymerElement {
 						</paper-button>
 						<paper-button
 								class="cancel-button"
-								dialog-dismiss>
+								on-tap="_cancel">
 							Cancel
 						</paper-button>
 						<paper-button
@@ -118,8 +118,21 @@ class candUpdateList extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			candidate: {
+			activeItem: {
 				type: Object,
+				observer: '_activeItemChanged'
+			},
+			candidateId: {
+				type: String
+			},
+			candidateName: {
+				type: String
+			},
+			candidateDescription: {
+				type: String
+			},
+			candidateType: {
+				type: String
 			}
 		}
 	}
@@ -128,11 +141,34 @@ class candUpdateList extends PolymerElement {
 		super.ready()
 	}
 
+	_activeItemChanged(item) {
+		if(item) {
+			this.candidateId = item.id;
+			this.candidateName = item.name;
+			this.candidateDescription = item.description;
+			this.candidateType = item.type;
+			this.$.candidateUpdateModal.open();
+		} else {
+			this.candidateId = null;
+			this.candidateName = null;
+			this.candidateDescription = null;;
+			this.candidateType = null;
+		}
+	}
+
+	_cancel() {
+		this.$.candidateUpdateModal.close();
+		this.candidateId = null;
+		this.candidateName = null;
+		this.candidateDescription = null;;
+		this.candidateType = null;
+	}
+
 	_delete() {
-		var ajax1 = this.$.deleteCandidateAjax;
-		ajax1.method = "DELETE";
-		ajax1.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
-		ajax1.generateRequest();
+		var ajax = this.$.deleteCandidateAjax;
+		ajax.method = "DELETE";
+		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
+		ajax.generateRequest();
 	}
 
 	_update() {
@@ -140,26 +176,28 @@ class candUpdateList extends PolymerElement {
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
 		var cand = new Object();
-		if(this.$.addCandName.value) {
-			cand.name = this.$.addCandName.value;
+		if(this.candidateId) {
+			cand.id = this.candidateId;
 		}
-		if(this.$.addCandDesc.value) {
-			cand.description = this.$.addCandDesc.value;
+		if(this.candidateName) {
+			cand.name = this.candidateName;
 		}
-		if(this.$.addCandType.value) {
-			cand["@type"] = this.$.addCandType.value;
+		if(this.candidateDescription) {
+			cand.description = this.candidateDescription;
 		}
-		if(this.$.candStatus.value) {
-			cand.lifecycleStatus = this.$.candStatus.value;
+		if(this.candidateType) {
+			cand['@type'] = this.candidateType;
+		}
+		if(this.candidateStatus) {
+			cand.lifecycleStatus = this.candidateStatus;
 		}
 		ajax.body = JSON.stringify(cand);
 		ajax.generateRequest();
 	}
 
 	_candidateUpdateResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('candidate-update').shadowRoot.getElementById('updateCandModal').close();
-		shell.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
+		this.$.candidateUpdateModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 
 	_candidateUpdateError(event) {
@@ -169,4 +207,4 @@ class candUpdateList extends PolymerElement {
 	}
 }
 
-window.customElements.define('candidate-update', candUpdateList);
+window.customElements.define('candidate-update', candidateUpdate);

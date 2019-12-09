@@ -42,7 +42,7 @@ class specificationList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.specName]]</template>
+					<template>[[item.name]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="20ex" flex-grow="5">
 					<template class="header">
@@ -61,7 +61,7 @@ class specificationList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.specDesc]]</template>
+					<template>[[item.description]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="12ex" flex-grow="1">
 					<template class="header">
@@ -81,7 +81,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specClass]]
+						[[item.type]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="8ex" flex-grow="1">
@@ -102,7 +102,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specStatus]]
+						[[item.status]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="8ex" flex-grow="1">
@@ -123,7 +123,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specCat]]
+						[[item.category]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="6ex" flex-grow="1">
@@ -144,7 +144,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specBundle]]
+						[[item.bundle]]
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
@@ -206,38 +206,9 @@ class specificationList extends PolymerElement {
 
 	_activeItemChanged(item) {
 		if(item) {
-			var grid = this.$.specificationGrid;
-			grid.selectedItems = item ? [item] : [];
-			var updateSpec = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec');
-			updateSpec.shadowRoot.getElementById('updateSpecModal').open();
-			updateSpec.shadowRoot.getElementById('addSpecId').value = item.specId;
-			updateSpec.shadowRoot.getElementById('addSpecName').value = item.specName;
-			updateSpec.shadowRoot.getElementById('addSpecDesc').value = item.specDesc;
-			updateSpec.shadowRoot.getElementById('addSpecType').value = item.specClass;
-			if(item.specStatus == "In Study") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 0;
-			}
-			if(item.specStatus == "In Design") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 1;
-			}
-			if(item.specStatus == "In Test") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 2;
-			}
-			if(item.specStatus == "Rejected") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 3;
-			}
-			if(item.specStatus == "Active") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 4;
-			}
-			if(item.specStatus == "Launched") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 5;
-			}
-			if(item.specStatus == "Retired") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 6;
-			}
-			if(item.specStatus == "Obsolete") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 7;
-			}
+			this.$.specificationGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.specificationGrid.selectedItems = [];
 		}
 	}
 
@@ -381,15 +352,16 @@ class specificationList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.specId = request.response[index].id;
-					newRecord.specName = request.response[index].name;
-					newRecord.specDesc = request.response[index].description;
-					newRecord.specClass = request.response[index]["@type"];
-					newRecord.specStatus = request.response[index].lifecycleStatus;
-					newRecord.specCat = request.response[index].category;
-					newRecord.specBundle = request.response[index].isBundle;
-					newRecord.specChars = request.response[index].resourceSpecCharacteristic;
-					newRecord.specFeat = request.response[index].resourceSpecFeature;
+					newRecord.id = request.response[index].id;
+					newRecord.name = request.response[index].name;
+					newRecord.description = request.response[index].description;
+					newRecord.type = request.response[index]["@type"];
+					newRecord.base = request.response[index]["@baseType"];
+					newRecord.status = request.response[index].lifecycleStatus;
+					newRecord.category = request.response[index].category;
+					newRecord.bundle = request.response[index].isBundle;
+					newRecord.chars = request.response[index].resourceSpecCharacteristic;
+					newRecord.feature = request.response[index].resourceSpecFeature;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
@@ -439,7 +411,7 @@ class specificationList extends PolymerElement {
 	}
 
 	showAddSpecificationModal(event) {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').open();
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 }
 

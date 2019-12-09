@@ -21,7 +21,7 @@ class ruleUpdate extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="updateRuleModal" modal>
+			<paper-dialog class="dialog" id="ruleUpdateModal" modal>
 				<app-toolbar>
 					<div main-title>Update Rule</div>
 				</app-toolbar>
@@ -33,19 +33,19 @@ class ruleUpdate extends PolymerElement {
 					<paper-input
 							id="addRuleId"
 							label="Id"
-							value="{{rule.ruleId}}"
+							value="{{ruleId}}"
 							disabled>
 					</paper-input>
 					<paper-input
 							id="addRule"
 							label="Rule"
-							value="{{rule.rules}}"
+							value="{{ruleRules}}"
 							disabled>
 					</paper-input>
 					<paper-input
 							id="addRuleDesc"
 							label="Description"
-							value="{{rule.ruleDesc}}">
+							value="{{ruleDescription}}">
 					</paper-input>
 					<div class="buttons">
 						<paper-button
@@ -56,7 +56,7 @@ class ruleUpdate extends PolymerElement {
 						</paper-button>
 						<paper-button
 								class="cancel-button"
-								dialog-dismiss>
+								on-tap="_cancel">
 							Cancel
 						</paper-button>
 					</div>
@@ -85,8 +85,18 @@ class ruleUpdate extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			rule: {
+			activeItem: {
 				type: Object,
+				observer: '_activeItemChanged'
+			},
+			ruleId: {
+				type: String
+			},
+			ruleDescription: {
+				type: String
+			},
+			ruleRules: {
+				type: Array
 			}
 		}
 	}
@@ -95,26 +105,45 @@ class ruleUpdate extends PolymerElement {
 		super.ready()
 	}
 
+	_activeItemChanged(item) {
+		if(item) {
+			this.ruleId = item.id;
+			this.ruleDescription = item.description;
+			this.ruleRules = item.rules;
+			this.$.ruleUpdateModal.open();
+		} else {
+			this.ruleId = null;
+			this.ruleDescription = null;;
+			this.rulerules = [];
+		}
+	}
+
+	_cancel() {
+		this.$.ruleUpdateModal.close();
+		this.ruleId = null;
+		this.ruleDescription = null;;
+		this.rulerules = [];
+	}
+
 	_update() {
 		var ajax = this.$.ruleUpdateAjax;
 		ajax.method = "PATCH";
 		ajax.url = "/resourceInventoryManagement/v1/logicalResource/" + this.$.addRuleId.value;
-		var RuleArr = new Array()
+		var ruleArr = new Array()
 		var peeRule = new Object();
-		if(this.$.addRuleDesc.value) {
+		if(this.rule.description) {
 			peeRule.op = "add";
 			peeRule.path = "/description";
-			peeRule.value = this.$.addRuleDesc.value
+			peeRule.value = this.rule.description;
 		}
-		RuleArr.push(peeRule);
+		ruleArr.push(peeRule);
 		ajax.body = JSON.stringify(RuleArr);
 		ajax.generateRequest();
 	}
 
 	_ruleUpdateResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('rule-update').shadowRoot.getElementById('updateRuleModal').close();
-		shell.getElementById('ruleList').shadowRoot.getElementById('ruleGrid').clearCache();
+		this.$.ruleUpdateModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('ruleList').shadowRoot.getElementById('ruleGrid').clearCache();
 	}
 
 	_ruleUpdateError(event) {

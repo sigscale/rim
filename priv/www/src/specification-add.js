@@ -21,7 +21,7 @@ class specificationAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="addSpecificationModal" modal>
+			<paper-dialog class="dialog" id="specificationAddModal" modal>
 				<app-toolbar>
 					<div main-title>Add Specification</div>
 				</app-toolbar>
@@ -33,48 +33,48 @@ class specificationAdd extends PolymerElement {
 				<paper-input
 						id="specificationName"
 						label="Name"
-						value="{{specification.name}}">
+						value="{{specificationMame}}">
 				</paper-input>
 				<paper-input
 						id="specificationDescription"
 						label="Description"
-						value="{{specification.desription}}">
+						value="{{specificationDescription}}">
 				</paper-input>
 				<paper-input
 						id="specificationVersion"
 						label="Version"
-						value="{{specification.version}}">
+						value="{{specificationVersion}}">
 				</paper-input>
 				<paper-input
 						id="specificationClass"
 						label="Class"
-						value="{{specification.class}}">
+						value="{{specificationType}}">
 				</paper-input>
 				<paper-input
 						id="specificationStatus"
 						label="Status"
-						value="{{specification.status}}">
+						value="{{specificationStatus}}">
 				</paper-input>
 				<paper-input
 						id="specificationCategory"
 						label="Category"
-						value="{{specification.category}}">
+						value="{{specificationCategory}}">
 				</paper-input>
 				<paper-input
 						id="specificationBundle"
 						label="Bundle"
-						value="{{specification.bundle}}">
+						value="{{specificationBundle}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addSpecification">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							on-tap="_cancelSpecification>
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
 				</div>
@@ -95,11 +95,26 @@ class specificationAdd extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			specification: {
-				type: Object,
-				value: function() {
-					return {};
-				}
+			specificationName: {
+				type: String
+			},
+			specificationDescription: {
+				type: String
+			},
+			specificationType: {
+				type: String
+			},
+			specificationStatus: {
+				type: String
+			},
+			specificationVersion: {
+				type: String
+			},
+			specificationCategory: {
+				type: String
+			},
+			specificationBundle: {
+				type: Boolean
 			}
 		}
 	}
@@ -108,38 +123,56 @@ class specificationAdd extends PolymerElement {
 		super.ready()
 	}
 
-	_cancelSpecification() {
-		this.$.addSpecificationModal.close();
-		this.specification = {};
+	_cancel() {
+		this.$.specificationAddModal.close();
+		this.specificationName = null;
+		this.specificationDescription = null;
+		this.specificationType = null;
+		this.specificationStatus = null;
+		this.specificationVersion = null;
+		this.specificationCategory = null;
+		this.specificationBundle = false;
 	}
 
-	_addSpecification() {
+	_add() {
 		var ajax = this.$.specificationAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/";
 		var spec = new Object();
-		if(this.specification.name) {
-			spec.name = this.specification.name;
+		if(this.specificationName) {
+			spec.name = this.specificationName;
 		}
-		if(this.specification.description) {
-			spec.description = this.specification.description;
+		if(this.specificationDescription) {
+			spec.description = this.specificationDescription;
 		}
-		if(this.specification.version) {
-			spec.version = this.specification.version;
+		if(this.specificationType) {
+			spec['@type'] = this.specificationType;
 		}
-		if(this.specification.class) {
-			spec.baseType = this.specification.class;
+		if(this.specificationStatus) {
+			spec.lifecycleStatus = this.specificationStatus;
 		}
-		if(this.specification.status) {
-			spec.lifecycleStatus = this.specification.status;
+		if(this.specificationVersion) {
+			spec.version = this.specificationVersion;
+		}
+		if(this.specificationCategory) {
+			spec.category = this.specificationCategory;
+		}
+		if(this.specificationBundle) {
+			spec.isBundle = this.specificationBundle;
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
 	}
 
 	_specificationAddResponse() {
-		this.$.addSpecificationModal.close();
-		this.specification = {};
+		this.$.specificationAddModal.close();
+		this.specificationName = null;
+		this.specificationDescription = null;
+		this.specificationType = null;
+		this.specificationStatus = null;
+		this.specificationVersion = null;
+		this.specificationCategory = null;
+		this.specificationBundle = false;
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 

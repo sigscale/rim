@@ -21,7 +21,7 @@ class inventoryAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-		<paper-dialog class="dialog" id="addInventoryModal" modal>
+		<paper-dialog class="dialog" id="inventoryAddModal" modal>
 			<app-toolbar>
 				<div main-title>Add Inventory</div>
 			</app-toolbar>
@@ -33,48 +33,48 @@ class inventoryAdd extends PolymerElement {
 			<paper-input
 					id="inventoryName"
 					label="Name"
-					value="{{inventory.inventoryName}}">
+					value="{{inventoryName}}">
 			</paper-input>
 			<paper-input
 					id="inventoryDesc"
 					label="Description"
-					value="{{inventory.inventoryDesc}}">
+					value="{{inventoryDescription}}">
 			</paper-input>
 			<paper-input
 					id="inventoryVersion"
 					label="Version"
-					value="{{inventory.inventoryVersion}}">
+					value="{{inventoryVersion}}">
 			</paper-input>
 			<paper-input
 					id="inventoryType"
 					label="Type"
-					value="{{inventory.inventoryType}}">
+					value="{{inventoryType}}">
 			</paper-input>
 			<paper-input
 					id="inventoryStatus"
 					label="Status"
-					value="{{inventory.inventoryStatus}}">
+					value="{{inventoryStatus}}">
 			</paper-input>
 			<paper-input
 					id="inventoryCategory"
 					label="Category"
-					value="{{inventory.inventoryCategory}}">
+					value="{{inventoryCategory}}">
 			</paper-input>
 			<paper-input
 					id="inventorySpecification"
 					label="Specification"
-					value="{{inventory.inventorySpecification}}">
+					value="{{inventorySpecification}}">
 			</paper-input>
 			<div class="buttons">
 				<paper-button
 						raised
 						class="submit-button"
-						on-tap="_addInventory">
+						on-tap="_add">
 					Add
 				</paper-button>
 				<paper-button
 						class="cancel-button"
-						on-tap="_cancelInventory">
+						on-tap="_cancel">
 					Cancel
 				</paper-button>
 			</div>
@@ -95,11 +95,26 @@ class inventoryAdd extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			inventory: {
-				type: Object,
-				value: function() {
-					return {};
-				}
+			inventoryName: {
+				type: String
+			},
+			inventoryDescription: {
+				type: String
+			},
+			inventoryType: {
+				type: String
+			},
+			inventoryStatus: {
+				type: String
+			},
+			inventoryVersion: {
+				type: String
+			},
+			inventoryCategory: {
+				type: String
+			},
+			inventorySpecification: {
+				type: String
 			}
 		}
 	}
@@ -108,44 +123,56 @@ class inventoryAdd extends PolymerElement {
 		super.ready()
 	}
 
-	_cancelInventory() {
-		this.$.addInventoryModal.close();
-		this.inventory = {};
+	_cancel() {
+		this.$.inventoryAddModal.close();
+		this.inventoryName = null;
+		this.inventoryDescription = null;
+		this.inventoryType = null;
+		this.inventoryStatus = null;
+		this.inventoryVersion = null;
+		this.inventoryCategory = null;
+		this.inventorySpecification = null;
 	}
 
-	_addInventory() {
+	_add() {
 		var ajax = this.$.inventoryAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceInventoryManagement/v3/resource/";
 		var inv = new Object();
-		if(this.inventory.name) {
-			inv.name = this.inventory.name;
+		if(this.inventoryName) {
+			inv.name = this.inventoryName;
 		}
-		if(this.inventory.description) {
-			inv.description = this.inventory.description;
+		if(this.inventoryDescription) {
+			inv.description = this.inventoryDescription;
 		}
-		if(this.inventory.version) {
-			inv.version = this.inventory.version;
+		if(this.inventoryVersion) {
+			inv.version = this.inventoryVersion;
 		}
-		if(this.inventory.version) {
-			inv.version = this.inventory.version;
+		if(this.inventoryType) {
+			inv['@type'] = this.inventoryType;
 		}
-		if(this.inventory.type) {
-			inv.type = this.inventory.type;
+		if(this.inventoryStatus) {
+			inv.lifecycleStatus = this.inventoryStatus;
 		}
-		if(this.inventory.status) {
-			inv.lifecycleStatus = this.inventory.status;
+		if(this.inventoryCategory) {
+			inv.category = this.inventoryCategory;
 		}
-		if(this.inventory.category) {
-			inv.category = this.inventory.category;
+		if(this.inventorySpecification) {
+			inv.category = this.inventorySpecification;
 		}
 		ajax.body = JSON.stringify(inv);
 		ajax.generateRequest();
 	}
 
 	_inventoryAddResponse() {
-		this.$.addInventoryModal.close();
-		this.inventory = {};
+		this.$.inventoryAddModal.close();
+		this.inventoryName = null;
+		this.inventoryDescription = null;
+		this.inventoryType = null;
+		this.inventoryStatus = null;
+		this.inventoryVersion = null;
+		this.inventoryCategory = null;
+		this.inventorySpecification = null;
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('inventoryList').shadowRoot.getElementById('inventoryGrid').clearCache();
 	}
 

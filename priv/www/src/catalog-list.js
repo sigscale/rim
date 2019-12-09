@@ -42,7 +42,7 @@ class catalogList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.catalogName]]</template>
+					<template>[[item.name]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -61,7 +61,7 @@ class catalogList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.catalogDescription]]</template>
+					<template>[[item.description]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -80,7 +80,7 @@ class catalogList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.catalogClass]]</template>
+					<template>[[item.type]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -99,7 +99,7 @@ class catalogList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.catalogStatus]]</template>
+					<template>[[item.status]]</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
 			<div class="add-button">
@@ -152,39 +152,10 @@ class catalogList extends PolymerElement {
 
 	_activeItemChanged(item) {
 		if(item) {
-			var grid = this.$.catalogGrid;
-			grid.selectedItems = item ? [item] : [];
-         var updateCatalog = document.querySelector('inventory-management').shadowRoot.getElementById('updateCatalog');
-         updateCatalog.shadowRoot.getElementById('updateCatalogModal').open();
-			updateCatalog.shadowRoot.getElementById('catalogSpecId').value = item.catalogId;
-			updateCatalog.shadowRoot.getElementById('catalogSpecName').value = item.catalogName;
-			updateCatalog.shadowRoot.getElementById('catalogSpecDesc').value = item.catalogDescription;
-			updateCatalog.shadowRoot.getElementById('catalogSpecType').value = item.catalogClass;
-			if(item.catalogStatus == "In Study") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 0;
-			}
-			if(item.catalogStatus == "In Design"){
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 1;
-			}
-			if(item.catalogStatus == "In Test") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
-			}
-			if(item.catalogStatus == "Rejected") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 3;
-			}
-			if(item.catalogStatus == "Active") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 4;
-			}
-			if(item.catalogStatus == "Launched") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 5;
-			}
-			if(item.catalogStatus == "Retired") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 6;
-			}
-			if(item.catalogStatus == "Obsolete") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 7;
-			}
-      }
+			this.$.catalogGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.catalogGrid.selectedItems = [];
+		}
    }
 
 	ready() {
@@ -286,11 +257,11 @@ class catalogList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.catalogId = request.response[index].id;
-					newRecord.catalogName = request.response[index].name;
-					newRecord.catalogDescription = request.response[index].description;
-					newRecord.catalogClass = request.response[index]["@type"];
-					newRecord.catalogStatus = request.response[index].lifecycleStatus;
+					newRecord.id = request.response[index].id;
+					newRecord.name = request.response[index].name;
+					newRecord.description = request.response[index].description;
+					newRecord.type = request.response[index]["@type"];
+					newRecord.status = request.response[index].lifecycleStatus;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
@@ -340,7 +311,7 @@ class catalogList extends PolymerElement {
 	}
 
 	showAddCatalogModal(event) {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('addCatalogModal').open();
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-add').shadowRoot.getElementById('catalogAddModal').open();
 	}
 }
 

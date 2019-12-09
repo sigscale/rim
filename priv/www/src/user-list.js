@@ -72,10 +72,13 @@ class userList extends PolymerElement {
 		grid.dataProvider = this._getUsers;
 	}
 
-//	showAddUserModal(event) {
-//		document.getElementById("addUserModal").open();
-//		document.body.querySelector('inventory-management').shadowRoot.getElementById('addUserModal').open();
-//	}
+	_activeItemChanged(item) {
+		if(item) {
+			this.$.userGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.userGrid.selectedItems = [];
+		}
+	}
 
 	_getUsers(params, callback) {
 		var grid = this;

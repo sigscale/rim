@@ -23,8 +23,7 @@ class httpList extends PolymerElement {
 			<style include="style-element"></style>
 			<vaadin-grid
 					id="httpGrid"
-					loading="{{loading}}"
-					active-item="{{activeItem}}">
+					loading="{{loading}}">
 				<vaadin-grid-column
 								width="28ex"
 								flex-grow="2">
@@ -153,30 +152,6 @@ class httpList extends PolymerElement {
 			loading: {
 				type: Boolean,
 				notify: true
-			},
-			activeItem: {
-					type: Boolean,
-					observer: '_activeItemChanged'
-				}
-			}
-		}
-
-	_activeItemChanged(item, last) {
-		if (item ||last) {
-			var grid = this.shadowRoot.getElementById('httpGrid');
-			var current;
-			if(item == null) {
-				current = last;
-			} else {
-				current = item
-			}
-			function checkExist(log) {
-				return log.id == current.id;
-			}
-			if(grid.detailsOpenedItems && grid.detailsOpenedItems.some(checkExist)) {
-				grid.closeItemDetails(current);
-			} else {
-				grid.openItemDetails(current);
 			}
 		}
 	}
@@ -254,4 +229,4 @@ class httpList extends PolymerElement {
 	}
 }
 
-	window.customElements.define('http-list', httpList);
+window.customElements.define('http-list', httpList);

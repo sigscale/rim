@@ -93,38 +93,44 @@ class InventoryManagement extends PolymerElement {
 						<catalog-list
 								id="catalogList"
 								loading="{{catalogLoading}}"
-								name="catalogView">
+								name="catalogView"
+								active-item="{{activeCatalogItem}}">
 						</catalog-list>
 						<category-list
 								id="categoryList"
 								loading="{{categoryLoading}}"
-								name="categoryView">
+								name="categoryView"
+								active-item="{{activeCategoryItem}}">
 						</category-list>
 						<candidate-list
 								id="candidateList"
 								loading="{{candidateLoading}}"
-								name="candidateView">
+								name="candidateView"
+								active-item="{{activeCandidateItem}}">
 						</candidate-list>
 						<specification-list
 								id="specificationList"
 								loading="{{specificationLoading}}"
 								name="specificationView"
-								active-item="{{activeItem}}">
+								active-item="{{activeSpecificationItem}}">
 						</specification-list>
 						<rule-list
 								id="ruleList"
 								loading="{{ruleLoading}}"
-								name="ruleView">
+								name="ruleView"
+								active-item="{{activeRuleItem}}">
 						</rule-list>
 						<inventory-list
 								id="inventoryList"
 								loading="{{inventoryLoading}}"
-								name="inventoryView">
+								name="inventoryView"
+								active-item="{{activeInventoryItem}}">
 						</inventory-list>
 						<user-list
 								id="userList"
 								loading="{{userLoading}}"
-								name="userView">
+								name="userView"
+								active-item="{{activeUserItem}}">
 						</user-list>
 						<http-list
 								id="httpList"
@@ -206,15 +212,15 @@ class InventoryManagement extends PolymerElement {
 				</app-drawer>
 			</app-drawer-layout>
 			<!-- Modal Definitions -->
-			<specification-update id="updateSpec" specification="[[activeItem]]"></specification-update>
-			<specification-add id="addSpecification"></specification-add>
-			<catalog-update id="updateCatalog" catalog="[[activeItem]]"></catalog-update>
-			<catalog-add id="addCatalog"></catalog-add>
-			<candidate-update id="updateCandidate" candidate="[[activeItem]]"></candidate-update>
-			<candidate-add id="addCandidate"></candidate-add>
-			<category-update id="updateCategory" category="[[activeItem]]"></category-update>
-			<category-add id="addCategory"></category-add>
-			<rule-update id="updateRule" category="[[activeItem]]"></rule-update>
+			<catalog-update id="catalogUpdate" active-item="[[activeCatalogItem]]"></catalog-update>
+			<catalog-add id="catalogAdd"></catalog-add>
+			<candidate-update id="candidateUpdate" active-item="[[activeCandidateItem]]"></candidate-update>
+			<candidate-add id="candidateAdd"></candidate-add>
+			<category-update id="categoryUpdate" active-item="[[activeCategoryItem]]"></category-update>
+			<category-add id="categoryAdd"></category-add>
+			<specification-update id="specificationUpdate" active-item="[[activespecificationItem]]"></specification-update>
+			<specification-add id="specificationAdd"></specification-add>
+			<rule-update id="ruleUpdate" active-item="[[activeRuleItem]]"></rule-update>
 			<inventory-add id="inventoryAdd"></inventory-add>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 		`;
@@ -422,38 +428,38 @@ class InventoryManagement extends PolymerElement {
 		// statement, so break it up.
 		switch (page) {
 			case 'catalogView':
-				import('./catalog-list.js');
 				import('./catalog-update.js');
 				import('./catalog-add.js');
+				import('./catalog-list.js');
 				break;
 			case 'categoryView':
-				import('./category-list.js');
 				import('./category-update.js');
 				import('./category-add.js');
+				import('./category-list.js');
 				break;
 			case 'candidateView':
-				import('./candidate-list.js');
 				import('./candidate-update.js');
 				import('./candidate-add.js');
+				import('./candidate-list.js');
 				break;
 			case 'specificationView':
-				import('./specification-list.js');
 				import('./specification-update.js');
 				import('./specification-add.js');
+				import('./specification-list.js');
 				break;
 			case 'inventoryView':
-				import('./inventory-list.js');
 				import('./inventory-add.js');
+				import('./inventory-list.js');
 				break;
 			case 'ruleView':
-				import('./rule-list.js');
 				import('./rule-update.js');
-				break;
-			case 'httpView':
-				import('./http-list.js');
+				import('./rule-list.js');
 				break;
 			case 'userView':
 				import('./user-list.js');
+				break;
+			case 'httpView':
+				import('./http-list.js');
 				break;
 		}
 	}

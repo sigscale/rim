@@ -21,7 +21,7 @@ class candidateAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="addCandidateModal" modal>
+			<paper-dialog class="dialog" id="candidateAddModal" modal>
 				<app-toolbar>
 					<div main-title>Add Candidate</div>
 				</app-toolbar>
@@ -33,38 +33,38 @@ class candidateAdd extends PolymerElement {
 				<paper-input
 						id="candidateName"
 						label="Name"
-						value="{{candidate.name}}">
+						value="{{candidateName}}">
 				</paper-input>
 				<paper-input
 						id="candidateDesc"
 						label="Description"
-						value="{{candidate.description}}">
+						value="{{candidateDescription}}">
 				</paper-input>
 				<paper-input
 						id="candidateVersion"
 						label="Version"
-						value="{{candidate.version}}">
+						value="{{candidateVersion}}">
 				</paper-input>
 				<paper-input
 						id="candidateClass"
 						label="Class"
-						value="{{candidate.class}}">
+						value="{{candidateType}}">
 				</paper-input>
 				<paper-input
 						id="candidateStatus"
 						label="Status"
-						value="{{candidate.status}}">
+						value="{{candidateStatus}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addCandidate">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							on-tap="_cancelCandidate">
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
 				</div>
@@ -85,11 +85,20 @@ class candidateAdd extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			candidate: {
-				type: Object,
-				value: function() {
-					return {};
-				}
+			candidateName: {
+				type: String
+			},
+			candidateDescription: {
+				type: String
+			},
+			candidateType: {
+				type: String
+			},
+			candidateVersion: {
+				type: String
+			},
+			candidateStatus: {
+				type: String
 			}
 		}
 	}
@@ -98,38 +107,46 @@ class candidateAdd extends PolymerElement {
 		super.ready()
 	}
 
-	_cancelCandidate() {
-		this.$.addCandidateModal.close();
-		this.candidate = {};
+	_cancel() {
+		this.$.candidateAddModal.close();
+		this.candidateName = null;
+		this.candidateDescription = null;
+		this.candidateType = null;
+		this.candidateVersion = null;
+		this.candidateStatus = null;
 	}
 
-	_addCandidate() {
+	_add() {
 		var ajax = this.$.candidateAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/";
 		var cand = new Object();
-		if(this.candidate.name) {
-			cand.name = this.candidate.name;
+		if(this.candidateName) {
+			cand.name = this.candidateName;
 		}
-		if(this.candidate.description) {
-			cand.description= this.candidate.description;
+		if(this.candidateDescription) {
+			cand.description= this.candidateDescription;
 		}
-		if(this.candidate.version) {
-			cand.version = this.candidate.version;
+		if(this.candidateVersion) {
+			cand.version = this.candidateVersion;
 		}
-		if(this.candidate.class) {
-			cand.baseType = this.candidate.class;
+		if(this.candidateType) {
+			cand['@type'] = this.candidateType;
 		}
-		if(this.candidate.status) {
-			cand.lifecycleStatus = this.candidate.status;
+		if(this.candidateStatus) {
+			cand.lifecycleStatus = this.candidateStatus;
 		}
 		ajax.body = JSON.stringify(cand);
 		ajax.generateRequest();
 	}
 
 	_candidateAddResponse() {
-		this.$.addCandidateModal.close();
-		this.candidate = {};
+		this.$.candidateAddModal.close();
+		this.candidateName = null;
+		this.candidateDescription = null;
+		this.candidateType = null;
+		this.candidateVersion = null;
+		this.candidateStatus = null;
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 

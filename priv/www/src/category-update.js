@@ -20,11 +20,11 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-item/paper-item.js'
 import './style-element.js';
 
-class categoryUpdateList extends PolymerElement {
+class categoryUpdate extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="updateCategoryModal" modal>
+			<paper-dialog class="dialog" id="categoryUpdateModal" modal>
 				<app-toolbar>
 					<div main-title>Update Category</div>
 				</app-toolbar>
@@ -36,30 +36,30 @@ class categoryUpdateList extends PolymerElement {
 					<paper-input
 							id="categoryId"
 							label="Id"
-							value="{{category.categoryId}}"
+							value="{{categoryId}}"
 							disabled>
 					</paper-input>
 					<paper-input
 							id="categoryName"
 							label="Name"
-							value="{{category.categoryName}}"
+							value="{{categoryName}}"
 							required>
 					</paper-input>
 					<paper-input
 							id="categoryDesc"
 							label="Description"
-							value="{{category.categoryDescription}}">
+							value="{{categoryDescription}}">
 					</paper-input>
 					<paper-input
 							id="categoryType"
 							label="Class"
-							value="{{category.categoryClass}}">
+							value="{{categoryType}}">
 					</paper-input>
 					<paper-dropdown-menu
 						id="categoryStatus" 
 						class="drop"
 						label="Status"
-						value="{{category.categoryStatus}}"
+						value="{{categoryStatus}}"
 						no-animations="true">
 						<paper-listbox
 								id="updateStatus"
@@ -77,12 +77,12 @@ class categoryUpdateList extends PolymerElement {
 					<paper-input
 							id="categoryParent"
 							label="Parent"
-							value="{{category.categoryParent}}">
+							value="{{categoryParent}}">
 					</paper-input>
 					<paper-input
 							id="categoryRoot"
 							label="Root"
-							value="{{category.categoryRoot}}">
+							value="{{categoryRoot}}">
 					</paper-input>
 					<div class="buttons">
 						<paper-button
@@ -93,7 +93,7 @@ class categoryUpdateList extends PolymerElement {
 						</paper-button>
 						<paper-button
 								class="cancel-button"
-								dialog-dismiss>
+								on-tap="_cancel">
 							Cancel
 						</paper-button>
 						<paper-button
@@ -127,8 +127,30 @@ class categoryUpdateList extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			category: {
+			activeItem: {
 				type: Object,
+				observer: '_activeItemChanged'
+			},
+			categoryId: {
+				type: String
+			},
+			categoryName: {
+				type: String
+			},
+			categoryDescription: {
+				type: String
+			},
+			categoryType: {
+				type: String
+			},
+			categoryStatus: {
+				type: String
+			},
+			categoryParent: {
+				type: String
+			},
+			categoryRoot: {
+				type: String
 			}
 		}
 	}
@@ -137,12 +159,44 @@ class categoryUpdateList extends PolymerElement {
 		super.ready()
 	}
 
+	_activeItemChanged(item) {
+		if(item) {
+			this.categoryId = item.id;
+			this.categoryName = item.name;
+			this.categoryDescription = item.description;
+			this.categoryType = item.type;
+			this.categoryStatus = item.status;
+			this.categoryParent = item.parent;
+			this.categoryRoot = item.root;
+			this.$.categoryUpdateModal.open();
+		} else {
+			this.categoryId = null;
+			this.categoryName = null;
+			this.categoryDescription = null;;
+			this.categoryType = null;
+			this.categoryStatus = null;
+			this.categoryParent = null;
+			this.categoryRoot = null;
+		}
+	}
+
+	_cancel() {
+		this.$.categoryUpdateModal.close();
+		this.categoryId = null;
+		this.categoryName = null;
+		this.categoryDescription = null;;
+		this.categoryType = null;
+		this.categoryStatus = null;
+		this.categoryParent = null;
+		this.categoryRoot = null;
+	}
+
 	_delete() {
 		var ajax = this.$.deleteCategoryAjax;
 		ajax.method = "DELETE";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categoryId.value;
 		ajax.generateRequest();
-		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('category-update').shadowRoot.getElementById('updateCategoryModal');
+		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('category-update').shadowRoot.getElementById('categoryUpdateModal');
 		deleteObj.close();
 	}
 
@@ -151,32 +205,34 @@ class categoryUpdateList extends PolymerElement {
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categoryId.value;
 		var cat = new Object();
-		if(this.$.categoryName.value) {
-			cat.name = this.$.categoryName.value;
+		if(this.categoryId) {
+			cat.id = this.categoryId;
 		}
-		if(this.$.categoryDesc.value) {
-			cat.description = this.$.categoryDesc.value;
+		if(this.categoryName) {
+			cat.name = this.categoryName;
 		}
-		if(this.$.categoryType) {
-			cat["@type"] = this.$.categoryType.value;
+		if(this.categoryDescription) {
+			cat.description = this.categoryDescription;
 		}
-		if(this.$.categoryStatus.value) {
-			cat.lifecycleStatus = this.$.categoryStatus.value;
+		if(this.categoryType) {
+			cat["@type"] = this.categoryType;
 		}
-		if(this.$.categoryParent.value) {
-			cat.parentId = this.$.categoryParent.value;
+		if(this.categoryStatus) {
+			cat.lifecycleStatus = this.categoryStatus;
 		}
-		if(this.$.categoryRoot.value) {
-			cat.isRoot = this.$.categoryRoot.value;
+		if(this.categoryParent) {
+			cat.parentId = this.categoryParent;
+		}
+		if(this.categoryRoot) {
+			cat.isRoot = this.categoryRoot;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
 	_categoryUpdateResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('category-update').shadowRoot.getElementById('updateCategoryModal').close();
-		shell.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
+		this.$.categoryUpdateModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 
 	_categoryUpdateError(event) {
@@ -186,4 +242,4 @@ class categoryUpdateList extends PolymerElement {
 	}
 }
 
-window.customElements.define('category-update', categoryUpdateList);
+window.customElements.define('category-update', categoryUpdate);

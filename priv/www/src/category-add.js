@@ -21,7 +21,7 @@ class categoryAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="addCategoryModal" modal>
+			<paper-dialog class="dialog" id="categoryAddModal" modal>
 				<app-toolbar>
 					<div main-title>Add Category</div>
 				</app-toolbar>
@@ -33,48 +33,48 @@ class categoryAdd extends PolymerElement {
 				<paper-input
 						id="categoryName"
 						label="Name"
-						value="{{category.name}}">
+						value="{{categoryName}}">
 				</paper-input>
 				<paper-input
 						id="categoryDesc"
 						label="Description"
-						value="{{category.description}}">
+						value="{{categoryDescription}}">
 				</paper-input>
 				<paper-input
 						id="categoryVersion"
 						label="Version"
-						value="{{category.version}}">
+						value="{{categoryVersion}}">
 				</paper-input>
 				<paper-input
 						id="categoryClass"
 						label="Class"
-						value="{{category.class}}">
+						value="{{categoryType}}">
 				</paper-input>
 				<paper-input
 						id="categoryStatus"
 						label="Status"
-						value="{{category.status}}">
+						value="{{categoryStatus}}">
 				</paper-input>
 				<paper-input
 						id="categoryParent"
 						label="Parent"
-						value="{{category.parent}}">
+						value="{{categoryParent}}">
 				</paper-input>
 				<paper-input
 						id="categoryRoot"
 						label="Root"
-						value="{{category.root}}">
+						value="{{categoryRoot}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addCategory">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							on-tap="_cancelCategory">
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
 				</div>
@@ -95,11 +95,26 @@ class categoryAdd extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			category: {
-				type: Object,
-				value: function() {
-					return {};
-				}
+			categoryName: {
+				type: String
+			},
+			categoryDescription: {
+				type: String
+			},
+			categoryType: {
+				type: String
+			},
+			categoryStatus: {
+				type: String
+			},
+			categoryVersion: {
+				type: String
+			},
+			categoryParent: {
+				type: String
+			},
+			categoryRoot: {
+				type: Boolean
 			}
 		}
 	}
@@ -108,44 +123,56 @@ class categoryAdd extends PolymerElement {
       super.ready()
 	}
 
-	_cancelCategory () {
-		this.$.addCategoryModal.close();
-		this.category = {};
+	_cancel() {
+		this.$.categoryAddModal.close();
+		this.categoryName = null;
+		this.categoryDescription = null;
+		this.categoryType = null;
+		this.categoryStatus = null;
+		this.categoryVersion = null;
+		this.categoryParent = null;
+		this.categoryRoot = false;
 	}
 
-	_addCategory() {
+	_add() {
 		var ajax = this.$.categoryAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/";
 		var cat = new Object();
-		if(this.category.name) {
-			cat.name = this.category.name;
+		if(this.categoryName) {
+			cat.name = this.categoryName;
 		}
-		if(this.category.description) {
-			cat.desription = this.category.description;
+		if(this.categoryDescription) {
+			cat.desription = this.categoryDescription;
 		}
-		if(this.category.version) {
-			cat.version = this.category.version;
+		if(this.categoryType) {
+			cat['@type'] =  this.categoryType;
 		}
-		if(this.category.class) {
-			cat.baseType =  this.category.class;
+		if(this.categoryStatus) {
+			cat.lifecycleStatus =  this.categoryStatus;
 		}
-		if(this.category.status) {
-			cat.lifecycleStatus =  this.category.status;
+		if(this.categoryVersion) {
+			cat.version = this.categoryVersion;
 		}
-		if(this.category.parent) {
-			cat.parent =  this.category.parent;
+		if(this.categoryParent) {
+			cat.parentId =  this.categoryParent;
 		}
-		if(this.category.root) {
-			cat.root =  this.category.root;
+		if(this.categoryRoot) {
+			cat.isRoot =  this.categoryRoot;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
 	_categoryAddResponse() {
-		this.$.addCategoryModal.close();
-		this.category = {};
+		this.$.categoryAddModal.close();
+		this.categoryName = null;
+		this.categoryDescription = null;
+		this.categoryType = null;
+		this.categoryStatus = null;
+		this.categoryVersion = null;
+		this.categoryParent = null;
+		this.categoryRoot = false;
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 

@@ -20,11 +20,11 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-item/paper-item.js'
 import './style-element.js';
 
-class catalogUpdateList extends PolymerElement {
+class catalogUpdate extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="updateCatalogModal" modal>
+			<paper-dialog class="dialog" id="catalogUpdateModal" modal>
 				<app-toolbar>
 					<div main-title>Update Catalog</div>
 				</app-toolbar>
@@ -36,30 +36,30 @@ class catalogUpdateList extends PolymerElement {
 					<paper-input
 							id="catalogId"
 							label="Id"
-							value="{{catalog.catalogId}}"
+							value="{{catalogId}}"
 							disabled>
 					</paper-input>
 					<paper-input
 							id="catalogName"
 							label="Name"
-							value="{{catalog.catalogName}}"
+							value="{{catalogName}}"
 							required>
 					</paper-input>
 					<paper-input
 							id="catalogDesc"
 							label="Description"
-							value="{{catalog.catalogDescription}}">
+							value="{{catalogDescription}}">
 					</paper-input>
 					<paper-input
 							id="catalogType"
 							label="Class"
-							value="{{catalog.catalogClass}}">
+							value="{{catalogType}}">
 					</paper-input>
 					<paper-dropdown-menu
 						id="catalogStatus" 
 						class="drop"
 						label="Status"
-						value="{{catalog.catalogStatus}}"
+						value="{{catalogStatus}}"
 						no-animations="true">
 						<paper-listbox
 								id="updateStatus"
@@ -78,19 +78,19 @@ class catalogUpdateList extends PolymerElement {
 						<paper-button
 								raised
 								class="update-button"
-								on-tap="_updateCatalog">
+								on-tap="_update">
 							Update
 						</paper-button>
 						<paper-button
 								class="cancel-button"
-								dialog-dismiss>
+								on-tap="_cancel">
 							Cancel
 						</paper-button>
 						<paper-button
 								toggles
 								raised
 								class="delete-button"
-								on-tap="_deleteCatalog">
+								on-tap="_delete">
 							Delete
 						</paper-button>
 					</div>
@@ -117,14 +117,56 @@ class catalogUpdateList extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			catalog: {
+			activeItem: {
 				type: Object,
+				observer: '_activeItemChanged'
+			},
+			catalogId: {
+				type: String
+			},
+			catalogName: {
+				type: String
+			},
+			catalogDescription: {
+				type: String
+			},
+			catalogType: {
+				type: String
+			},
+			catalogStatus: {
+				type: String
 			}
 		}
 	}
 
 	ready() {
 		super.ready()
+	}
+
+	_activeItemChanged(item) {
+		if(item) {
+			this.catalogId = item.id;
+			this.catalogName = item.name;
+			this.catalogDescription = item.description;
+			this.catalogType = item.type;
+			this.catalogStatus = item.status;
+			this.$.catalogUpdateModal.open();
+		} else {
+			this.catalogId = null;
+			this.catalogName = null;
+			this.catalogDescription = null;;
+			this.catalogType = null;
+			this.catalogStatus = null;
+		}
+	}
+
+	_cancel() {
+		this.$.catalogUpdateModal.close();
+		this.catalogId = null;
+		this.catalogName = null;
+		this.catalogDescription = null;;
+		this.catalogType = null;
+		this.catalogStatus = null;
 	}
 
 	_delete() {
@@ -139,26 +181,28 @@ class catalogUpdateList extends PolymerElement {
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogId.value;
 		var cat = new Object();
-		if(this.$.catalogName.value) {
-			cat.name = this.$.catalogName.value;
+		if(this.catalogId) {
+			cat.id= this.catalogId;
 		}
-		if(this.$.catalogDesc.value) {
-			cat.description = this.$.catalogDesc.value;
+		if(this.catalogName) {
+			cat.name = this.catalogName;
 		}
-		if(this.$.catalogType) {
-			cat["@type"] = this.$.catalogType.value;
+		if(this.catalogDescription) {
+			cat.description = this.catalogDescription;
 		}
-		if(this.$.catalogStatus.value) {
-			cat.lifecycleStatus = this.$.catalogStatus.value;
+		if(this.catalogType) {
+			cat["@type"] = this.catalogType;
+		}
+		if(this.catalogStatus) {
+			cat.lifecycleStatus = this.catalogStatus;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
 	_catalogUpdateResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('catalog-update').shadowRoot.getElementById('updateCatalogModal').close();
-		shell.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
+		this.$.catalogUpdateModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
 	_catalogUpdateError(event) {
@@ -168,4 +212,4 @@ class catalogUpdateList extends PolymerElement {
 	}
 }
 
-window.customElements.define('catalog-update', catalogUpdateList);
+window.customElements.define('catalog-update', catalogUpdate);

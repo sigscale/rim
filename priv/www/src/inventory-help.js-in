@@ -230,7 +230,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpInventory">
+		<paper-dialog id="inventoryHelp">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -352,7 +352,7 @@ class inventoryHelp extends PolymerElement {
 		var inventoryIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
 		var inventoryObj = inventoryIm.shadowRoot.getElementById('helpMenu');
 		inventoryObj.close();
-		var inventoryObjDialog = inventoryIm.shadowRoot.getElementById('helpInventory');
+		var inventoryObjDialog = inventoryIm.shadowRoot.getElementById('inventoryHelp');
 		inventoryObjDialog.open();
 	}
 	rule(event) {
@@ -401,8 +401,8 @@ class inventoryHelp extends PolymerElement {
 		var helpBackIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
 		var helpHttpDialog = helpBackIm.shadowRoot.getElementById('helpHttp');
 		helpHttpDialog.close();
-		var helpInventoryDialog = helpBackIm.shadowRoot.getElementById('helpInventory');
-		helpInventoryDialog.close();
+		var inventoryHelpDialog = helpBackIm.shadowRoot.getElementById('inventoryHelp');
+		inventoryHelpDialog.close();
 		var helpRuleDialog = helpBackIm.shadowRoot.getElementById('helpRule');
 		helpRuleDialog.close();
 		var helpSpecificationDialog = helpBackIm.shadowRoot.getElementById('helpSpecification');

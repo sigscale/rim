@@ -21,7 +21,7 @@ class catalogAdd extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-			<paper-dialog class="dialog" id="addCatalogModal" modal>
+			<paper-dialog class="dialog" id="catalogAddModal" modal>
 				<app-toolbar>
 					<div main-title>Add Catalog</div>
 				</app-toolbar>
@@ -33,28 +33,28 @@ class catalogAdd extends PolymerElement {
 				<paper-input
 						id="catalogName"
 						label="Name"
-						value="{{catalog.name}}">
+						value="{{catalogName}}">
 				</paper-input>
 				<paper-input
 						id="catalogDesc"
 						label="Description"
-						value="{{catalog.description}}">
+						value="{{catalogDescription}}">
 				</paper-input>
 				<paper-input
 						id="catalogVersion"
 						label="Version"
-						value="{{catalog.version}}">
+						value="{{catalogVersion}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addCatalog">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							on-tap="_cancelCatalog">
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
 				</div>
@@ -75,11 +75,14 @@ class catalogAdd extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			catalog: {
-				type: Object,
-				value: function() {
-					return {};
-				}
+			catalogName: {
+				type: String
+			},
+			catalogDescription: {
+				type: String
+			},
+			catalogVersion: {
+				type: String
 			}
 		}
 	}
@@ -88,32 +91,42 @@ class catalogAdd extends PolymerElement {
       super.ready()
 	}
 
-	_cancelCatalog() {
-		this.$.addCatalogModal.close();
-		this.catalog = {};
+	_cancel() {
+		this.$.catalogAddModal.close();
+		this.catalogName = null;
+		this.catalogDescription = null;
+		this.catalogVersion = null;
 	}
 
-	_addCatalog() {
+	_add() {
 		var ajax = this.$.catalogAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/";
 		var cat = new Object();
-		if(this.catalog.name) {
-			cat.name = this.catalog.name;
+		if(this.catalogName) {
+			cat.name = this.catalogName;
 		}
-		if(this.catalog.description) {
-			cat.description = this.catalog.descriptions;
+		if(this.catalogDescription) {
+			cat.description = this.catalogDescription;
 		}
-		if(this.catalog.version) {
-			cat.version = this.catalog.version;
+		if(this.catalogType) {
+			cat['@type'] = this.catalogType;
+		}
+		if(this.catalogStatus) {
+			cat.lifecycleStatus = this.catalogStatus;
+		}
+		if(this.catalogVersion) {
+			cat.version = this.catalogVersion;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
 	_catalogAddResponse() {
-		this.$.addCatalogModal.close();
-		this.catalog = {};
+		this.$.catalogAddModal.close();
+		this.catalogName = null;
+		this.catalogDescription = null;
+		this.catalogVersion = null;
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 

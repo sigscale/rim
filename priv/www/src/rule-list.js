@@ -43,7 +43,7 @@ class ruleList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.ruleId]]
+						[[item.id]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -64,7 +64,7 @@ class ruleList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.ruleDescription]]
+						[[item.description]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -135,13 +135,9 @@ class ruleList extends PolymerElement {
 
 	_activeItemChanged(item) {
 		if(item) {
-			var grid = this.$.ruleGrid;
-			grid.selectedItems = item ? [item] : [];
-			var updateRule = document.querySelector('inventory-management').shadowRoot.getElementById('updateRule');
-			updateRule.shadowRoot.getElementById('updateRuleModal').open();
-			updateRule.shadowRoot.getElementById('addRuleId').value = item.ruleId;
-			updateRule.shadowRoot.getElementById('addRule').value = item.rules;
-			updateRule.shadowRoot.getElementById('addRuleDesc').value = item.ruleDescription;
+			this.$.ruleGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.ruleGrid.selectedItems = [];
 		}
 	}
 
@@ -169,8 +165,8 @@ class ruleList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.ruleId = request.response[index].id;
-					newRecord.ruleDescription = request.response[index].description;
+					newRecord.id = request.response[index].id;
+					newRecord.description = request.response[index].description;
 					newRecord.rules = request.response[index].rule;
 					vaadinItems[index] = newRecord;
 				}

@@ -23,11 +23,11 @@ import '@polymer/paper-checkbox/paper-checkbox.js'
 import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
-class specUpdateList extends PolymerElement {
+class specificationUpdate extends PolymerElement {
 	static get template() {
 		return html`
 			<style include="style-element"></style>
-		<paper-dialog class="dialog" id="updateSpecModal" modal>
+		<paper-dialog class="dialog" id="specificationUpdateModal" modal>
 			<app-toolbar>
 				<div main-title>Update Specification</div>
 			</app-toolbar>
@@ -38,31 +38,31 @@ class specUpdateList extends PolymerElement {
 			</paper-progress>
 				<paper-input
 						id="addSpecId"
-						label="Name"
-						value="{{specification.specId}}"
+						label="Id"
+						value="{{specificationId}}"
 						disabled>
 				</paper-input>
 				<paper-input
 						id="addSpecName"
 						label="Name"
-						value="{{specification.specName}}"
+						value="{{specificationName}}"
 						required>
 				</paper-input>
 				<paper-input
 						id="addSpecDesc"
 						label="Description"
-						value="{{specification.specDesc}}">
+						value="{{specificationDescription}}">
 				</paper-input>
 				<paper-input
 						id="addSpecType"
 						label="Class"
-						value="{{specification.specClass}}">
+						value="{{specificationType}}">
 				</paper-input>
 				<paper-dropdown-menu
 					id="specStatus"
 					class="drop"
 					label="Status"
-					value="{{specification.specStatus}}"
+					value="{{specificationStatus}}"
 					no-animations="true">
 					<paper-listbox
 							id="updateStatus"
@@ -86,7 +86,7 @@ class specUpdateList extends PolymerElement {
 						</paper-icon-button>
 				</div>
 				<iron-collapse id="featSpecCollapse">
-					<template is="dom-repeat" items="[[specification.specFeat]]">
+					<template is="dom-repeat" items="[[specificationFeature]]">
 						<div>
 						<hr>
 						<paper-input
@@ -107,14 +107,14 @@ class specUpdateList extends PolymerElement {
 						<paper-input
 							id="featVersion"
 							label="Version"
-							value="{{item.version}}">
+							value="{{itemVersion}}">
 						</paper-input>
 						<paper-checkbox
-							value="{{specification.specBundle}}">
+							value="{{specificationBundle}}">
 							Is Bundle
 						</paper-checkbox>
 						<paper-checkbox
-							value="{{specification.specEnabled}}">
+							value="{{specificationEnabled}}">
 							Enabled
 						</paper-checkbox>
 						</div>
@@ -129,7 +129,7 @@ class specUpdateList extends PolymerElement {
 						</paper-icon-button>
 				</div>
 				<iron-collapse id="charSpecCollapse">
-					<template is="dom-repeat" items="[[specification.specChars]]">
+					<template is="dom-repeat" items="[[specificationChars]]">
 						<div>
 						<hr>
 						<paper-input
@@ -159,7 +159,7 @@ class specUpdateList extends PolymerElement {
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss>
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
 					<paper-button
@@ -193,8 +193,36 @@ class specUpdateList extends PolymerElement {
 				type: Boolean,
 				value: false
 			},
-			specification: {
+			activeItem: {
 				type: Object,
+				observer: '_activeItemChanged'
+			},
+			specificationId: {
+				type: String
+			},
+			specificationName: {
+				type: String
+			},
+			specificationDescription: {
+				type: String
+			},
+			specificationStatus: {
+				type: String
+			},
+			specificationVersion: {
+				type: String
+			},
+			specificationBundle: {
+				type: Boolean
+			},
+			specificationEnabled: {
+				type: Boolean
+			},
+			specificationFeatures: {
+				type: Array
+			},
+			specificationChars: {
+				type: Array
 			}
 		}
 	}
@@ -203,12 +231,47 @@ class specUpdateList extends PolymerElement {
 		super.ready()
 	}
 
+	_activeItemChanged(item) {
+		if(item) {
+			this.specificationId = item.id;
+			this.specificationName = item.name;
+			this.specificationDescription = item.description;
+			this.specificationVersion = item.version;
+			this.specificationBundle = item.bundle;
+			this.specificationEnabled = item.enabled;
+			this.specificationFeatures = item.features;
+			this.specificationChars = item.chars;
+			this.$.specificationUpdateModal.open();
+		} else {
+			this.specificationId = null;
+			this.specificationName = null;
+			this.specificationDescription = null;;
+			this.specificationVersion = null;
+			this.specificationBundle = false;
+			this.specificationEnabled = false;
+			this.specificationFeatures = [];
+			this.specificationChars = [];
+		}
+	}
+
+	_cancel() {
+		this.$.specificationUpdateModal.close();
+		this.specificationId = null;
+		this.specificationName = null;
+		this.specificationDescription = null;;
+		this.specificationVersion = null;
+		this.specificationBundle = false;
+		this.specificationEnabled = false;
+		this.specificationFeatures = [];
+		this.specificationChars = [];
+	}
+
 	_delete() {
 		var ajax = this.$.deleteSpecificationAjax;
 		ajax.method = "DELETE";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
 		ajax.generateRequest();
-		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal');
+		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('specificationUpdateModal');
 		deleteObj.close();
 	}
 
@@ -217,26 +280,28 @@ class specUpdateList extends PolymerElement {
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
 		var spec = new Object();
-		if(this.$.addSpecName.value) {
-			spec.name = this.$.addSpecName.value;
+		if(this.specificationId) {
+			specId = this.specificationId;
 		}
-		if(this.$.addSpecDesc.value) {
-			spec.description = this.$.addSpecDesc.value;
+		if(this.specificationName) {
+			spec.name = this.specificationName;
 		}
-		if(this.$.addSpecType.value) {
-			spec["@type"] = this.$.addSpecType.value;
+		if(this.specificationDescription) {
+			spec.description = this.specificationDescription;
 		}
-		if(this.$.specStatus.value) {
-			spec.lifecycleStatus = this.$.specStatus.value;
+		if(this.specificationType) {
+			spec["@type"] = this.specificationType;
+		}
+		if(this.specificationStatus) {
+			spec.lifecycleStatus = this.specificationStatus;
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
 	}
 
 	_specificationUpdateResponse() {
-		var shell = document.body.querySelector('inventory-management').shadowRoot;
-		shell.querySelector('specification-update').shadowRoot.getElementById('updateSpecModal').close();
-		shell.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
+		this.$.specificationUpdateModal.close();
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 
 	_specificationUpdateError(event) {
@@ -246,7 +311,7 @@ class specUpdateList extends PolymerElement {
 	}
 
 	_collapseChars(event) {
-		var collapseModal = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec').shadowRoot.getElementById('charSpecCollapse');
+		var collapseModal = document.querySelector('inventory-management').shadowRoot.getElementById('Specificationupdate').shadowRoot.getElementById('charSpecCollapse');
 		if(collapseModal.opened == false) {
 			collapseModal.show();
 		} else {
@@ -255,7 +320,7 @@ class specUpdateList extends PolymerElement {
 	}
 
 	_collapseFeat(event) {
-		var collapseModalFeat = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec').shadowRoot.getElementById('featSpecCollapse');
+		var collapseModalFeat = document.querySelector('inventory-management').shadowRoot.getElementById('specificationUpdate').shadowRoot.getElementById('featSpecCollapse');
 		if(collapseModalFeat.opened == false) {
 			collapseModalFeat.show();
 		} else {
@@ -264,4 +329,4 @@ class specUpdateList extends PolymerElement {
 	}
 }
 
-window.customElements.define('specification-update', specUpdateList);
+window.customElements.define('specification-update', specificationUpdate);
