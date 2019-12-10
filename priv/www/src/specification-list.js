@@ -155,7 +155,7 @@ class specificationList extends PolymerElement {
 				</paper-fab>
 			</div>
 			<iron-ajax
-				id="getSpecificationAjax"
+				id="specificationGetAjax"
 				url="resourceCatalogManagement/v3/resourceSpecification"
 				rejectWithRequest>
 			</iron-ajax>
@@ -220,7 +220,7 @@ class specificationList extends PolymerElement {
 
 	_getSpecification(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('specificationGetAjax');
 		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];

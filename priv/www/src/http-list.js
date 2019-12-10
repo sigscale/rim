@@ -140,7 +140,7 @@ class httpList extends PolymerElement {
 			</vaadin-grid-column>
 		</vaadin-grid>
 		<iron-ajax
-			id="getHttpList"
+			id="httpGetAjax"
 			url="im/v1/log/http"
 			rejectWithRequest>
 		</iron-ajax>
@@ -164,7 +164,7 @@ class httpList extends PolymerElement {
 
 	_getHttpLog(params, callback) {
 		var grid = this;
-		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('getHttpList');
+		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('httpGetAjax');
 		var httpList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {

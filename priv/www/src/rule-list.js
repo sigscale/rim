@@ -96,7 +96,7 @@ class ruleList extends PolymerElement {
 				</paper-fab>
 			</div>
 			<iron-ajax
-				id="getRulesAjax"
+				id="rulesGetAjax"
 				url="resourceInventoryManagement/v1/logicalResource"
 				rejectWithRequest>
 			</iron-ajax>
@@ -149,7 +149,7 @@ class ruleList extends PolymerElement {
 
 	_getRules(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list').shadowRoot.getElementById('getRulesAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list').shadowRoot.getElementById('rulesGetAjax');
 		var ruleList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list');
 		var handleAjaxResponse = function(request) {
 			if(request) {

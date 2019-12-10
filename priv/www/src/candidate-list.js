@@ -115,7 +115,7 @@ class candidateList extends PolymerElement {
 				</paper-fab>
 			</div>
 			<iron-ajax
-				id="getCandidateAjax"
+				id="candidateGetAjax"
 				url="resourceCatalogManagement/v3/resourceCandidate"
 				rejectWithRequest>
 			</iron-ajax>
@@ -172,7 +172,7 @@ class candidateList extends PolymerElement {
 
 	_getCandidate(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('candidateGetAjax');
 		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
 		var query = "";
 		delete ajax.params['filter'];

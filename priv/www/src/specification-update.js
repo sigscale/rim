@@ -172,13 +172,13 @@ class specificationUpdate extends PolymerElement {
 				</div>
 		</paper-dialog>
 		<iron-ajax
-			id="deleteSpecificationAjax"
+			id="specificationDeleteAjax"
 			loading="{{loading}}"
 			on-response="_specificationUpdateResponse"
 			on-error="_specificationUpdateError">
 		</iron-ajax>
 		<iron-ajax
-			id="specUpdateAjax"
+			id="specificationUpdateAjax"
 			content-type="application/merge-patch+json"
 			loading="{{loading}}"
 			on-response="_specificationUpdateResponse"
@@ -267,7 +267,7 @@ class specificationUpdate extends PolymerElement {
 	}
 
 	_delete() {
-		var ajax = this.$.deleteSpecificationAjax;
+		var ajax = this.$.specificationDeleteAjax;
 		ajax.method = "DELETE";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
 		ajax.generateRequest();
@@ -276,7 +276,7 @@ class specificationUpdate extends PolymerElement {
 	}
 
 	_update() {
-		var ajax = this.$.specUpdateAjax;
+		var ajax = this.$.specificationUpdateAjax;
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
 		var spec = new Object();

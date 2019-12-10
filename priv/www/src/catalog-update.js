@@ -96,7 +96,7 @@ class catalogUpdate extends PolymerElement {
 					</div>
 			</paper-dialog>
 			<iron-ajax
-				id="deleteCatalogAjax"
+				id="catalogDeleteAjax"
 				loading="{{loading}}"
 				on-response="_catalogUpdateResponse"
 				on-error="_catalogUpdateError">
@@ -170,7 +170,7 @@ class catalogUpdate extends PolymerElement {
 	}
 
 	_delete() {
-		var ajax = this.$.deleteCatalogAjax;
+		var ajax = this.$.catalogDeleteAjax;
 		ajax.method = "DELETE";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogId.value;
 		ajax.generateRequest();

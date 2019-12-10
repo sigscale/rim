@@ -109,7 +109,7 @@ class catalogList extends PolymerElement {
 				</paper-fab>
 			</div>
 			<iron-ajax
-				id="getCatalogAjax"
+				id="catalogGetAjax"
 				url="resourceCatalogManagement/v3/resourceCatalog"
 				rejectWithRequest>
 			</iron-ajax>
@@ -166,7 +166,7 @@ class catalogList extends PolymerElement {
 
 	_getCatalog(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('getCatalogAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('catalogGetAjax');
 		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
 		var query = "";
 		delete ajax.params['filter'];

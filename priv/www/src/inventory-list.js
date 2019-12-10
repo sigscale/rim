@@ -197,7 +197,7 @@ class inventoryList extends PolymerElement {
 				</paper-fab>
 			</div>
 			<iron-ajax
-				id="getInventoryAjax"
+				id="inventoryGetAjax"
 				url="resourceInventoryManagement/v3/resource"
 				rejectWithRequest>
 			</iron-ajax>
@@ -270,7 +270,7 @@ class inventoryList extends PolymerElement {
 
 	_getInventory(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
+		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('inventoryGetAjax');
 		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];

@@ -97,13 +97,13 @@ class candidateUpdate extends PolymerElement {
 					</div>
 			</paper-dialog>
 			<iron-ajax
-				id="deleteCandidateAjax"
+				id="candidateDeleteAjax"
 				loading="{{loading}}"
 				on-response="_candidateUpdateResponse"
 				on-error="_candidateUpdateError">
 			</iron-ajax>
 			<iron-ajax
-				id="candUpdateAjax"
+				id="candidateUpdateAjax"
 				content-type="application/merge-patch+json"
 				loading="{{loading}}"
 				on-response="_candidateUpdateResponse"
@@ -151,7 +151,7 @@ class candidateUpdate extends PolymerElement {
 		} else {
 			this.candidateId = null;
 			this.candidateName = null;
-			this.candidateDescription = null;;
+			this.candidateDescription = null;
 			this.candidateType = null;
 		}
 	}
@@ -160,19 +160,19 @@ class candidateUpdate extends PolymerElement {
 		this.$.candidateUpdateModal.close();
 		this.candidateId = null;
 		this.candidateName = null;
-		this.candidateDescription = null;;
+		this.candidateDescription = null;
 		this.candidateType = null;
 	}
 
 	_delete() {
-		var ajax = this.$.deleteCandidateAjax;
+		var ajax = this.$.candidateDeleteAjax;
 		ajax.method = "DELETE";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
 		ajax.generateRequest();
 	}
 
 	_update() {
-		var ajax = this.$.candUpdateAjax;
+		var ajax = this.$.candidateUpdateAjax;
 		ajax.method = "PATCH";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
 		var cand = new Object();
