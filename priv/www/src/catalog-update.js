@@ -154,7 +154,7 @@ class catalogUpdate extends PolymerElement {
 		} else {
 			this.catalogId = null;
 			this.catalogName = null;
-			this.catalogDescription = null;;
+			this.catalogDescription = null;
 			this.catalogType = null;
 			this.catalogStatus = null;
 		}
@@ -164,7 +164,7 @@ class catalogUpdate extends PolymerElement {
 		this.$.catalogUpdateModal.close();
 		this.catalogId = null;
 		this.catalogName = null;
-		this.catalogDescription = null;;
+		this.catalogDescription = null;
 		this.catalogType = null;
 		this.catalogStatus = null;
 	}

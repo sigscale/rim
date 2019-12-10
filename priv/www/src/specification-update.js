@@ -245,7 +245,7 @@ class specificationUpdate extends PolymerElement {
 		} else {
 			this.specificationId = null;
 			this.specificationName = null;
-			this.specificationDescription = null;;
+			this.specificationDescription = null;
 			this.specificationVersion = null;
 			this.specificationBundle = false;
 			this.specificationEnabled = false;
@@ -258,7 +258,7 @@ class specificationUpdate extends PolymerElement {
 		this.$.specificationUpdateModal.close();
 		this.specificationId = null;
 		this.specificationName = null;
-		this.specificationDescription = null;;
+		this.specificationDescription = null;
 		this.specificationVersion = null;
 		this.specificationBundle = false;
 		this.specificationEnabled = false;

@@ -172,7 +172,7 @@ class categoryUpdate extends PolymerElement {
 		} else {
 			this.categoryId = null;
 			this.categoryName = null;
-			this.categoryDescription = null;;
+			this.categoryDescription = null;
 			this.categoryType = null;
 			this.categoryStatus = null;
 			this.categoryParent = null;
@@ -184,7 +184,7 @@ class categoryUpdate extends PolymerElement {
 		this.$.categoryUpdateModal.close();
 		this.categoryId = null;
 		this.categoryName = null;
-		this.categoryDescription = null;;
+		this.categoryDescription = null;
 		this.categoryType = null;
 		this.categoryStatus = null;
 		this.categoryParent = null;

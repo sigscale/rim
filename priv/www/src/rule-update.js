@@ -113,7 +113,7 @@ class ruleUpdate extends PolymerElement {
 			this.$.ruleUpdateModal.open();
 		} else {
 			this.ruleId = null;
-			this.ruleDescription = null;;
+			this.ruleDescription = null;
 			this.rulerules = [];
 		}
 	}
@@ -121,7 +121,7 @@ class ruleUpdate extends PolymerElement {
 	_cancel() {
 		this.$.ruleUpdateModal.close();
 		this.ruleId = null;
-		this.ruleDescription = null;;
+		this.ruleDescription = null;
 		this.rulerules = [];
 	}
 
