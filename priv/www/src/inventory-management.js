@@ -218,7 +218,7 @@ class InventoryManagement extends PolymerElement {
 			<candidate-add id="candidateAdd"></candidate-add>
 			<category-update id="categoryUpdate" active-item="[[activeCategoryItem]]"></category-update>
 			<category-add id="categoryAdd"></category-add>
-			<specification-update id="specificationUpdate" active-item="[[activespecificationItem]]"></specification-update>
+			<specification-update id="specificationUpdate" active-item="[[activeSpecificationItem]]"></specification-update>
 			<specification-add id="specificationAdd"></specification-add>
 			<rule-update id="ruleUpdate" active-item="[[activeRuleItem]]"></rule-update>
 			<inventory-add id="inventoryAdd"></inventory-add>
