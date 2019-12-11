@@ -172,6 +172,9 @@ class candidateList extends PolymerElement {
 
 	_getCandidate(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
 		var ajax = candidateList.shadowRoot.getElementById('candidateGetAjax');
 		var query = "";
@@ -286,7 +289,6 @@ class candidateList extends PolymerElement {
 					}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
@@ -295,9 +297,6 @@ class candidateList extends PolymerElement {
 			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {

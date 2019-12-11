@@ -164,6 +164,9 @@ class httpList extends PolymerElement {
 
 	_getHttpLog(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');
 		var ajax = httpList.shadowRoot.getElementById('httpGetAjax');
 		var handleAjaxResponse = function(request) {
@@ -190,7 +193,6 @@ class httpList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};

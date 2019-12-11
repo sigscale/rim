@@ -89,12 +89,6 @@ class ruleList extends PolymerElement {
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
-			<div class="add-button">
-				<paper-fab
-					icon="add"
-					on-tap = "showAddRulesModal">
-				</paper-fab>
-			</div>
 			<iron-ajax
 				id="rulesGetAjax"
 				url="resourceInventoryManagement/v1/logicalResource"
@@ -149,6 +143,9 @@ class ruleList extends PolymerElement {
 
 	_getRules(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var ruleList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list');
 		var ajax = ruleList.shadowRoot.getElementById('rulesGetAjax');
 		var handleAjaxResponse = function(request) {
@@ -172,7 +169,6 @@ class ruleList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};

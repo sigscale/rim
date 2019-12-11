@@ -220,6 +220,9 @@ class specificationList extends PolymerElement {
 
 	_getSpecification(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
 		var ajax = specificationList.shadowRoot.getElementById('specificationGetAjax');
 		delete ajax.params['filter'];
@@ -366,7 +369,6 @@ class specificationList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
@@ -375,9 +377,6 @@ class specificationList extends PolymerElement {
 			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {

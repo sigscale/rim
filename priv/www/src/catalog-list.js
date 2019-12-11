@@ -166,6 +166,9 @@ class catalogList extends PolymerElement {
 
 	_getCatalog(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
 		var ajax = catalogList.shadowRoot.getElementById('catalogGetAjax');
 		var query = "";
@@ -266,7 +269,6 @@ class catalogList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
@@ -275,9 +277,6 @@ class catalogList extends PolymerElement {
 			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {

@@ -82,6 +82,9 @@ class userList extends PolymerElement {
 
 	_getUsers(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
 		var ajax = userList.shadowRoot.getElementById('getUserAjax');
 		if(userList.etag && params.page > 0) {
@@ -113,7 +116,6 @@ class userList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
@@ -122,9 +124,6 @@ class userList extends PolymerElement {
 			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {

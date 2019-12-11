@@ -215,6 +215,9 @@ class categoryList extends PolymerElement {
 
 	_getCategory(params, callback) {
 		var grid = this;
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
 		var ajax = categoryList.shadowRoot.getElementById('categoryGetAjax');
 		var query = "";
@@ -358,7 +361,6 @@ class categoryList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
@@ -367,9 +369,6 @@ class categoryList extends PolymerElement {
 			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {
