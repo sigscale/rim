@@ -260,8 +260,7 @@ class specificationUpdate extends PolymerElement {
 		ajax.method = "DELETE";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
 		ajax.generateRequest();
-		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('specificationUpdateModal');
-		deleteObj.close();
+		this.$.specificationUpdateModal.close();
 	}
 
 	_update() {
@@ -300,20 +299,18 @@ class specificationUpdate extends PolymerElement {
 	}
 
 	_collapseChars(event) {
-		var collapseModal = document.querySelector('inventory-management').shadowRoot.getElementById('Specificationupdate').shadowRoot.getElementById('charSpecCollapse');
-		if(collapseModal.opened == false) {
-			collapseModal.show();
+		if(this.$.charSpecCollapse.opened == false) {
+			this.$.charSpecCollapse.show();
 		} else {
-			collapseModal.hide();
+			this.$.charSpecCollapse.hide();
 		}
 	}
 
 	_collapseFeat(event) {
-		var collapseModalFeat = document.querySelector('inventory-management').shadowRoot.getElementById('specificationUpdate').shadowRoot.getElementById('featSpecCollapse');
-		if(collapseModalFeat.opened == false) {
-			collapseModalFeat.show();
+		if(this.$.featSpecCollapse.opened == false) {
+			this.$.featSpecCollapse.show();
 		} else {
-			collapseModalFeat.hide();
+			this.$.featSpecCollapse.hide();
 		}
 	}
 }
