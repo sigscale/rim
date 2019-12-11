@@ -37,35 +37,29 @@ class specificationUpdate extends PolymerElement {
 					disabled="{{!loading}}">
 			</paper-progress>
 				<paper-input
-						id="addSpecId"
 						label="Id"
 						value="{{specificationId}}"
 						disabled>
 				</paper-input>
 				<paper-input
-						id="addSpecName"
 						label="Name"
 						value="{{specificationName}}"
 						required>
 				</paper-input>
 				<paper-input
-						id="addSpecDesc"
 						label="Description"
 						value="{{specificationDescription}}">
 				</paper-input>
 				<paper-input
-						id="addSpecType"
 						label="Class"
 						value="{{specificationType}}">
 				</paper-input>
 				<paper-dropdown-menu
-					id="specStatus"
 					class="drop"
 					label="Status"
 					value="{{specificationStatus}}"
 					no-animations="true">
 					<paper-listbox
-							id="updateStatus"
 							slot="dropdown-content">
 						<paper-item>In Study</paper-item>
 						<paper-item>In Design</paper-item>
@@ -90,22 +84,18 @@ class specificationUpdate extends PolymerElement {
 						<div>
 						<hr>
 						<paper-input
-							id="featId"
 							label="Id"
 							value="{{item.id}}">
 						</paper-input>
 						<paper-input
-							id="featName"
 							label="Name"
 							value="{{item.name}}">
 						</paper-input>
 						<paper-input
-							id="featDesc"
 							label="Description"
 							value="{{item.description}}">
 						</paper-input>
 						<paper-input
-							id="featVersion"
 							label="Version"
 							value="{{itemVersion}}">
 						</paper-input>
@@ -123,7 +113,6 @@ class specificationUpdate extends PolymerElement {
 				<div>
 					<span>Characteristics</span>
 						<paper-icon-button
-							id="collapseChar"
 							icon="arrow-drop-down"
 							on-click="_collapseChars">
 						</paper-icon-button>
@@ -133,17 +122,14 @@ class specificationUpdate extends PolymerElement {
 						<div>
 						<hr>
 						<paper-input
-							id="charName"
 							label="Name"
 							value="{{item.name}}">
 						</paper-input>
 						<paper-input
-							id="charDesc"
 							label="Description"
 							value="{{item.description}}">
 						</paper-input>
 						<paper-input
-							id="charValueType"
 							label="ValueType"
 							value="{{item.valueType}}">
 						</paper-input>
@@ -174,15 +160,15 @@ class specificationUpdate extends PolymerElement {
 		<iron-ajax
 			id="specificationDeleteAjax"
 			loading="{{loading}}"
-			on-response="_specificationUpdateResponse"
-			on-error="_specificationUpdateError">
+			on-response="_response"
+			on-error="_error">
 		</iron-ajax>
 		<iron-ajax
 			id="specificationUpdateAjax"
 			content-type="application/merge-patch+json"
 			loading="{{loading}}"
-			on-response="_specificationUpdateResponse"
-			on-error="_specificationUpdateError">
+			on-response="_response"
+			on-error="_error">
 		</iron-ajax>
 		`;
 	}
@@ -204,6 +190,9 @@ class specificationUpdate extends PolymerElement {
 				type: String
 			},
 			specificationDescription: {
+				type: String
+			},
+			specificationType: {
 				type: String
 			},
 			specificationStatus: {
@@ -299,12 +288,12 @@ class specificationUpdate extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_specificationUpdateResponse() {
+	_response() {
 		this.$.specificationUpdateModal.close();
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 
-	_specificationUpdateError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

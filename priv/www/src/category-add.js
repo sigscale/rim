@@ -31,37 +31,30 @@ class categoryAdd extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 				<paper-input
-						id="categoryName"
 						label="Name"
 						value="{{categoryName}}">
 				</paper-input>
 				<paper-input
-						id="categoryDesc"
 						label="Description"
 						value="{{categoryDescription}}">
 				</paper-input>
 				<paper-input
-						id="categoryVersion"
 						label="Version"
 						value="{{categoryVersion}}">
 				</paper-input>
 				<paper-input
-						id="categoryClass"
 						label="Class"
 						value="{{categoryType}}">
 				</paper-input>
 				<paper-input
-						id="categoryStatus"
 						label="Status"
 						value="{{categoryStatus}}">
 				</paper-input>
 				<paper-input
-						id="categoryParent"
 						label="Parent"
 						value="{{categoryParent}}">
 				</paper-input>
 				<paper-input
-						id="categoryRoot"
 						label="Root"
 						value="{{categoryRoot}}">
 				</paper-input>
@@ -83,8 +76,8 @@ class categoryAdd extends PolymerElement {
 					id="categoryAddAjax"
 					content-type="application/json"
 					loading="{{loading}}"
-					on-response="_categoryAddResponse"
-					on-error="_categoryAddError">
+					on-response="_response"
+					on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -164,7 +157,7 @@ class categoryAdd extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_categoryAddResponse() {
+	_response() {
 		this.$.categoryAddModal.close();
 		this.categoryName = null;
 		this.categoryDescription = null;
@@ -176,7 +169,7 @@ class categoryAdd extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 
-	_categoryAddError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

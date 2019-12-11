@@ -31,19 +31,16 @@ class ruleUpdate extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 					<paper-input
-							id="addRuleId"
 							label="Id"
 							value="{{ruleId}}"
 							disabled>
 					</paper-input>
 					<paper-input
-							id="addRule"
 							label="Rule"
 							value="{{ruleRules}}"
 							disabled>
 					</paper-input>
 					<paper-input
-							id="addRuleDesc"
 							label="Description"
 							value="{{ruleDescription}}">
 					</paper-input>
@@ -66,15 +63,15 @@ class ruleUpdate extends PolymerElement {
 				content-type="application/json-patch+json"
 				loading="{{loading}}"
 				on-loading-changed="_onLoadingChanged"
-				on-response="_ruleUpdateResponse"
-				on-error="_ruleUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 			<iron-ajax
 				id="ruleDeleteAjax"
 				content-type="application/json"
 				loading="{{loading}}"
-				on-response="_ruleUpdateResponse"
-				on-error="_ruleUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -141,12 +138,12 @@ class ruleUpdate extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_ruleUpdateResponse() {
+	_response() {
 		this.$.ruleUpdateModal.close();
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('ruleList').shadowRoot.getElementById('ruleGrid').clearCache();
 	}
 
-	_ruleUpdateError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

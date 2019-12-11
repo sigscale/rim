@@ -31,27 +31,22 @@ class candidateAdd extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 				<paper-input
-						id="candidateName"
 						label="Name"
 						value="{{candidateName}}">
 				</paper-input>
 				<paper-input
-						id="candidateDesc"
 						label="Description"
 						value="{{candidateDescription}}">
 				</paper-input>
 				<paper-input
-						id="candidateVersion"
 						label="Version"
 						value="{{candidateVersion}}">
 				</paper-input>
 				<paper-input
-						id="candidateClass"
 						label="Class"
 						value="{{candidateType}}">
 				</paper-input>
 				<paper-input
-						id="candidateStatus"
 						label="Status"
 						value="{{candidateStatus}}">
 				</paper-input>
@@ -73,8 +68,8 @@ class candidateAdd extends PolymerElement {
 					id="candidateAddAjax"
 					content-type="application/json"
 					loading="{{loading}}"
-					on-response="_candidateAddResponse"
-					on-error="_candidateAddError">
+					on-response="_response"
+					on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -140,7 +135,7 @@ class candidateAdd extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_candidateAddResponse() {
+	_response() {
 		this.$.candidateAddModal.close();
 		this.candidateName = null;
 		this.candidateDescription = null;
@@ -150,7 +145,7 @@ class candidateAdd extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 
-	_candidateAddError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

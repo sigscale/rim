@@ -150,8 +150,8 @@ class specificationList extends PolymerElement {
 			</vaadin-grid>
 			<div class="add-button">
 				<paper-fab
-					icon="add"
-					on-tap = "showAddSpecificationModal">
+						icon="add"
+						on-tap="_showAddSpecificationModal">
 				</paper-fab>
 			</div>
 			<iron-ajax
@@ -410,7 +410,7 @@ class specificationList extends PolymerElement {
 		grid.size = 0;
 	}
 
-	showAddSpecificationModal(event) {
+	_showAddSpecificationModal(event) {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 }

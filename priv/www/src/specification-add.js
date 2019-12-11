@@ -31,37 +31,30 @@ class specificationAdd extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 				<paper-input
-						id="specificationName"
 						label="Name"
 						value="{{specificationMame}}">
 				</paper-input>
 				<paper-input
-						id="specificationDescription"
 						label="Description"
 						value="{{specificationDescription}}">
 				</paper-input>
 				<paper-input
-						id="specificationVersion"
 						label="Version"
 						value="{{specificationVersion}}">
 				</paper-input>
 				<paper-input
-						id="specificationClass"
 						label="Class"
 						value="{{specificationType}}">
 				</paper-input>
 				<paper-input
-						id="specificationStatus"
 						label="Status"
 						value="{{specificationStatus}}">
 				</paper-input>
 				<paper-input
-						id="specificationCategory"
 						label="Category"
 						value="{{specificationCategory}}">
 				</paper-input>
 				<paper-input
-						id="specificationBundle"
 						label="Bundle"
 						value="{{specificationBundle}}">
 				</paper-input>
@@ -83,8 +76,8 @@ class specificationAdd extends PolymerElement {
 					id="specificationAddAjax"
 					content-type="application/json"
 					loading="{{loading}}"
-					on-response="_specificationAddResponse"
-					on-error="_specificationAddError">
+					on-response="_response"
+					on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -164,7 +157,7 @@ class specificationAdd extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_specificationAddResponse() {
+	_response() {
 		this.$.specificationAddModal.close();
 		this.specificationName = null;
 		this.specificationDescription = null;
@@ -176,7 +169,7 @@ class specificationAdd extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
 	}
 
-	_specificationAddError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

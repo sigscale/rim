@@ -31,37 +31,30 @@ class inventoryAdd extends PolymerElement {
 					disabled="{{!loading}}">
 			</paper-progress>
 			<paper-input
-					id="inventoryName"
 					label="Name"
 					value="{{inventoryName}}">
 			</paper-input>
 			<paper-input
-					id="inventoryDesc"
 					label="Description"
 					value="{{inventoryDescription}}">
 			</paper-input>
 			<paper-input
-					id="inventoryVersion"
 					label="Version"
 					value="{{inventoryVersion}}">
 			</paper-input>
 			<paper-input
-					id="inventoryType"
 					label="Type"
 					value="{{inventoryType}}">
 			</paper-input>
 			<paper-input
-					id="inventoryStatus"
 					label="Status"
 					value="{{inventoryStatus}}">
 			</paper-input>
 			<paper-input
-					id="inventoryCategory"
 					label="Category"
 					value="{{inventoryCategory}}">
 			</paper-input>
 			<paper-input
-					id="inventorySpecification"
 					label="Specification"
 					value="{{inventorySpecification}}">
 			</paper-input>
@@ -83,8 +76,8 @@ class inventoryAdd extends PolymerElement {
 				id="inventoryAddAjax"
 				content-type="application/json"
 				loading="{{loading}}"
-				on-response="_inventoryAddResponse"
-				on-error="_inventoryAddError">
+				on-response="_response"
+				on-error="_error">
 		</iron-ajax>
 		`;
 	}
@@ -164,7 +157,7 @@ class inventoryAdd extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_inventoryAddResponse() {
+	_response() {
 		this.$.inventoryAddModal.close();
 		this.inventoryName = null;
 		this.inventoryDescription = null;
@@ -176,7 +169,7 @@ class inventoryAdd extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('inventoryList').shadowRoot.getElementById('inventoryGrid').clearCache();
 	}
 
-	_inventoryAddError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

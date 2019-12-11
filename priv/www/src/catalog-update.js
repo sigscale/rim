@@ -34,35 +34,29 @@ class catalogUpdate extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 					<paper-input
-							id="catalogId"
 							label="Id"
 							value="{{catalogId}}"
 							disabled>
 					</paper-input>
 					<paper-input
-							id="catalogName"
 							label="Name"
 							value="{{catalogName}}"
 							required>
 					</paper-input>
 					<paper-input
-							id="catalogDesc"
 							label="Description"
 							value="{{catalogDescription}}">
 					</paper-input>
 					<paper-input
-							id="catalogType"
 							label="Class"
 							value="{{catalogType}}">
 					</paper-input>
 					<paper-dropdown-menu
-						id="catalogStatus" 
 						class="drop"
 						label="Status"
 						value="{{catalogStatus}}"
 						no-animations="true">
 						<paper-listbox
-								id="updateStatus"
 								slot="dropdown-content">
 							<paper-item>In Study</paper-item>
 							<paper-item>In Design</paper-item>
@@ -98,15 +92,15 @@ class catalogUpdate extends PolymerElement {
 			<iron-ajax
 				id="catalogDeleteAjax"
 				loading="{{loading}}"
-				on-response="_catalogUpdateResponse"
-				on-error="_catalogUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 			<iron-ajax
 				id="catalogUpdateAjax"
 				content-type="application/merge-patch+json"
 				loading="{{loading}}"
-				on-response="_catalogUpdateResponse"
-				on-error="_catalogUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -200,12 +194,12 @@ class catalogUpdate extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_catalogUpdateResponse() {
+	_response() {
 		this.$.catalogUpdateModal.close();
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
-	_catalogUpdateError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

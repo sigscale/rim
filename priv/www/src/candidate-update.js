@@ -35,35 +35,29 @@ class candidateUpdate extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 					<paper-input
-							id="addCandId"
 							label="Id"
 							value="{{candidateId}}"
 							disabled>
 					</paper-input>
 					<paper-input
-							id="addCandName"
 							label="Name"
 							value="{{candidateName}}"
 							required>
 					</paper-input>
 					<paper-input
-							id="addCandDesc"
 							label="Description"
 							value="{{candidateDescription}}">
 					</paper-input>
 					<paper-input
-							id="addCandType"
 							label="Class"
 							value="{{candidateType}}">
 					</paper-input>
 					<paper-dropdown-menu
-						id="candStatus"
 						class="drop"
 						label="Status"
 						value="{{candidateStatus}}"
 						no-animations="true">
 						<paper-listbox
-								id="updateStatus"
 								slot="dropdown-content">
 							<paper-item>In Study</paper-item>
 							<paper-item>In Design</paper-item>
@@ -99,15 +93,15 @@ class candidateUpdate extends PolymerElement {
 			<iron-ajax
 				id="candidateDeleteAjax"
 				loading="{{loading}}"
-				on-response="_candidateUpdateResponse"
-				on-error="_candidateUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 			<iron-ajax
 				id="candidateUpdateAjax"
 				content-type="application/merge-patch+json"
 				loading="{{loading}}"
-				on-response="_candidateUpdateResponse"
-				on-error="_candidateUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -195,12 +189,12 @@ class candidateUpdate extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_candidateUpdateResponse() {
+	_response() {
 		this.$.candidateUpdateModal.close();
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
 	}
 
-	_candidateUpdateError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

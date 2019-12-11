@@ -34,35 +34,29 @@ class categoryUpdate extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 					<paper-input
-							id="categoryId"
 							label="Id"
 							value="{{categoryId}}"
 							disabled>
 					</paper-input>
 					<paper-input
-							id="categoryName"
 							label="Name"
 							value="{{categoryName}}"
 							required>
 					</paper-input>
 					<paper-input
-							id="categoryDesc"
 							label="Description"
 							value="{{categoryDescription}}">
 					</paper-input>
 					<paper-input
-							id="categoryType"
 							label="Class"
 							value="{{categoryType}}">
 					</paper-input>
 					<paper-dropdown-menu
-						id="categoryStatus" 
 						class="drop"
 						label="Status"
 						value="{{categoryStatus}}"
 						no-animations="true">
 						<paper-listbox
-								id="updateStatus"
 								slot="dropdown-content">
 							<paper-item>In Study</paper-item>
 							<paper-item>In Design</paper-item>
@@ -75,12 +69,10 @@ class categoryUpdate extends PolymerElement {
 						</paper-listbox>
 					</paper-dropdown-menu>
 					<paper-input
-							id="categoryParent"
 							label="Parent"
 							value="{{categoryParent}}">
 					</paper-input>
 					<paper-input
-							id="categoryRoot"
 							label="Root"
 							value="{{categoryRoot}}">
 					</paper-input>
@@ -108,15 +100,15 @@ class categoryUpdate extends PolymerElement {
 			<iron-ajax
 				id="categoryDeleteAjax"
 				loading="{{loading}}"
-				on-response="_categoryUpdateResponse"
-				on-error="_categoryUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 			<iron-ajax
 				id="categoryUpdateAjax"
 				content-type="application/merge-patch+json"
 				loading="{{loading}}"
-				on-response="_categoryUpdateResponse"
-				on-error="_categoryUpdateError">
+				on-response="_response"
+				on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -230,12 +222,12 @@ class categoryUpdate extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_categoryUpdateResponse() {
+	_response() {
 		this.$.categoryUpdateModal.close();
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
 	}
 
-	_categoryUpdateError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();

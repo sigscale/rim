@@ -31,17 +31,14 @@ class catalogAdd extends PolymerElement {
 						disabled="{{!loading}}">
 				</paper-progress>
 				<paper-input
-						id="catalogName"
 						label="Name"
 						value="{{catalogName}}">
 				</paper-input>
 				<paper-input
-						id="catalogDesc"
 						label="Description"
 						value="{{catalogDescription}}">
 				</paper-input>
 				<paper-input
-						id="catalogVersion"
 						label="Version"
 						value="{{catalogVersion}}">
 				</paper-input>
@@ -63,8 +60,8 @@ class catalogAdd extends PolymerElement {
 					id="catalogAddAjax"
 					content-type="application/json"
 					loading="{{loading}}"
-					on-response="_catalogAddResponse"
-					on-error="_catalogAddError">
+					on-response="_response"
+					on-error="_error">
 			</iron-ajax>
 		`;
 	}
@@ -122,7 +119,7 @@ class catalogAdd extends PolymerElement {
 		ajax.generateRequest();
 	}
 
-	_catalogAddResponse() {
+	_response() {
 		this.$.catalogAddModal.close();
 		this.catalogName = null;
 		this.catalogDescription = null;
@@ -130,7 +127,7 @@ class catalogAdd extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
-	_catalogAddError(event) {
+	_error(event) {
 		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 		toast.text = event.detail.request.xhr.statusText;
 		toast.open();
