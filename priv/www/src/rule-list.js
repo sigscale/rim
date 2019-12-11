@@ -149,8 +149,8 @@ class ruleList extends PolymerElement {
 
 	_getRules(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list').shadowRoot.getElementById('rulesGetAjax');
 		var ruleList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list');
+		var ajax = ruleList.shadowRoot.getElementById('rulesGetAjax');
 		var handleAjaxResponse = function(request) {
 			if(request) {
 				ruleList.etag = request.xhr.getResponseHeader('ETag');

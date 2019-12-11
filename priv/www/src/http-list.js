@@ -164,11 +164,11 @@ class httpList extends PolymerElement {
 
 	_getHttpLog(params, callback) {
 		var grid = this;
-		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('httpGetAjax');
-		var httpList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');
+		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');
+		var ajax = httpList.shadowRoot.getElementById('httpGetAjax');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				httpList1.etag = request.xhr.getResponseHeader('ETag');
+				httpList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -195,7 +195,7 @@ class httpList extends PolymerElement {
 			}
 		};
 		var handleAjaxError = function(error) {
-			httpList1.etag = null;
+			httpList.etag = null;
 			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
@@ -204,27 +204,27 @@ class httpList extends PolymerElement {
 			}
 				callback([]);
 		}
-		if(httpList.loading) {
-			httpList.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				httpList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (httpList1.etag && params.page > 0) {
-					httpList.headers['If-Range'] = httpList1.etag;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (httpList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = httpList.etag;
 				} else {
-					delete httpList.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return httpList.generateRequest().completes;
+				return ajax.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
-			httpList.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (httpList1.etag && params.page > 0) {
-				httpList.headers['If-Range'] = httpList1.etag;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (httpList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = httpList.etag;
 			} else {
-				delete httpList.headers['If-Range'];
+				delete ajax.headers['If-Range'];
 			}
-			httpList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }

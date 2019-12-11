@@ -166,8 +166,8 @@ class catalogList extends PolymerElement {
 
 	_getCatalog(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list').shadowRoot.getElementById('catalogGetAjax');
 		var catalogList = document.body.querySelector('inventory-management').shadowRoot.querySelector('catalog-list');
+		var ajax = catalogList.shadowRoot.getElementById('catalogGetAjax');
 		var query = "";
 		delete ajax.params['filter'];
 		function checkHead(param) {

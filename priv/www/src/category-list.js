@@ -215,8 +215,8 @@ class categoryList extends PolymerElement {
 
 	_getCategory(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('categoryGetAjax');
 		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
+		var ajax = categoryList.shadowRoot.getElementById('categoryGetAjax');
 		var query = "";
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];

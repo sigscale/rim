@@ -220,8 +220,8 @@ class specificationList extends PolymerElement {
 
 	_getSpecification(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('specificationGetAjax');
 		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
+		var ajax = specificationList.shadowRoot.getElementById('specificationGetAjax');
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];
 		var query = "";

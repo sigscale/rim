@@ -172,8 +172,8 @@ class candidateList extends PolymerElement {
 
 	_getCandidate(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('candidateGetAjax');
 		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
+		var ajax = candidateList.shadowRoot.getElementById('candidateGetAjax');
 		var query = "";
 		delete ajax.params['filter'];
 		function checkHead(param) {
