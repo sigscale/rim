@@ -71,6 +71,18 @@ class specificationUpdate extends PolymerElement {
 						<paper-item>Obsolete</paper-item>
 					</paper-listbox>
 				</paper-dropdown-menu>
+				<paper-input
+					label="Version"
+					value="{{specificationVersion}}">
+				</paper-input>
+				<paper-checkbox
+					value="{{specificationBundle}}">
+					Is Bundle
+				</paper-checkbox>
+				<paper-checkbox
+					value="{{specificationEnabled}}">
+					Enabled
+				</paper-checkbox>
 				<div>
 					<span>Feature</span>
 						<paper-icon-button
@@ -95,18 +107,6 @@ class specificationUpdate extends PolymerElement {
 							label="Description"
 							value="{{item.description}}">
 						</paper-input>
-						<paper-input
-							label="Version"
-							value="{{itemVersion}}">
-						</paper-input>
-						<paper-checkbox
-							value="{{specificationBundle}}">
-							Is Bundle
-						</paper-checkbox>
-						<paper-checkbox
-							value="{{specificationEnabled}}">
-							Enabled
-						</paper-checkbox>
 						</div>
 					</template>
 				</iron-collapse>
