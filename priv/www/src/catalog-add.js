@@ -14,6 +14,7 @@ import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
 import './style-element.js';
 
@@ -34,10 +35,10 @@ class catalogAdd extends PolymerElement {
 						label="Name"
 						value="{{catalogName}}">
 				</paper-input>
-				<paper-input
+				<paper-textarea
 						label="Description"
 						value="{{catalogDescription}}">
-				</paper-input>
+				</paper-textarea>
 				<paper-input
 						label="Version"
 						value="{{catalogVersion}}">

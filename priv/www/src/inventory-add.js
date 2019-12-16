@@ -14,6 +14,7 @@ import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
 import './style-element.js';
 
@@ -30,10 +31,10 @@ class inventoryAdd extends PolymerElement {
 					class="slow red"
 					disabled="{{!loading}}">
 			</paper-progress>
-			<paper-input
-					label="Name"
+			<paper-textarea
+					label="Description"
 					value="{{inventoryName}}">
-			</paper-input>
+			</paper-textarea>
 			<paper-input
 					label="Description"
 					value="{{inventoryDescription}}">

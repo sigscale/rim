@@ -15,6 +15,7 @@ import '@polymer/paper-dialog/paper-dialog.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
 import '@polymer/paper-listbox/paper-listbox.js';
@@ -46,10 +47,10 @@ class specificationUpdate extends PolymerElement {
 						value="{{specificationName}}"
 						required>
 				</paper-input>
-				<paper-input
+				<paper-textarea
 						label="Description"
 						value="{{specificationDescription}}">
-				</paper-input>
+				</paper-textarea>
 				<paper-input
 						label="Class"
 						value="{{specificationType}}">
@@ -91,7 +92,9 @@ class specificationUpdate extends PolymerElement {
 							on-click="_collapseFeat">
 						</paper-icon-button>
 				</div>
-				<iron-collapse id="featSpecCollapse">
+				<iron-collapse
+						id="featSpecCollapse"
+						opened="{{featSpecOpened}}">
 					<template is="dom-repeat" items="[[specificationFeature]]">
 						<div>
 						<hr>
@@ -103,10 +106,10 @@ class specificationUpdate extends PolymerElement {
 							label="Name"
 							value="{{item.name}}">
 						</paper-input>
-						<paper-input
-							label="Description"
-							value="{{item.description}}">
-						</paper-input>
+						<paper-textarea
+								label="Description"
+								value="{{item.description}}">
+						</paper-textarea>
 						</div>
 					</template>
 				</iron-collapse>
@@ -117,7 +120,9 @@ class specificationUpdate extends PolymerElement {
 							on-click="_collapseChars">
 						</paper-icon-button>
 				</div>
-				<iron-collapse id="charSpecCollapse">
+				<iron-collapse
+						id="charSpecCollapse"
+						opened="{{charSpecOpened}}">
 					<template is="dom-repeat" items="[[specificationChars]]">
 						<div>
 						<hr>
@@ -125,10 +130,10 @@ class specificationUpdate extends PolymerElement {
 							label="Name"
 							value="{{item.name}}">
 						</paper-input>
-						<paper-input
+						<paper-textarea
 							label="Description"
 							value="{{item.description}}">
-						</paper-input>
+						</paper-textarea>
 						<paper-input
 							label="ValueType"
 							value="{{item.valueType}}">
@@ -182,6 +187,14 @@ class specificationUpdate extends PolymerElement {
 			activeItem: {
 				type: Object,
 				observer: '_activeItemChanged'
+			},
+			featSpecOpened: {
+				type: Boolean,
+				observer: '_resize'
+			},
+			charSpecOpened: {
+				type: Boolean,
+				observer: '_resize'
 			},
 			specificationId: {
 				type: String
@@ -299,7 +312,7 @@ class specificationUpdate extends PolymerElement {
 	}
 
 	_collapseChars(event) {
-		if(this.$.charSpecCollapse.opened == false) {
+		if(this.charSpecOpened == false) {
 			this.$.charSpecCollapse.show();
 		} else {
 			this.$.charSpecCollapse.hide();
@@ -307,11 +320,15 @@ class specificationUpdate extends PolymerElement {
 	}
 
 	_collapseFeat(event) {
-		if(this.$.featSpecCollapse.opened == false) {
+		if(this.featSpecOpened == false) {
 			this.$.featSpecCollapse.show();
 		} else {
 			this.$.featSpecCollapse.hide();
 		}
+	}
+
+	_resize() {
+		this.$.specificationUpdateModal.notifyResize();
 	}
 }
 
