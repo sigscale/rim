@@ -243,6 +243,12 @@ class specificationUpdate extends PolymerElement {
 			this.specificationEnabled = item.enabled;
 			this.specificationFeatures = item.features;
 			this.specificationChars = item.chars;
+			if(this.featSpecOpened == true) {
+				this.$.featSpecCollapse.hide();
+			}
+			if(this.charSpecOpened == true) {
+				this.$.charSpecCollapse.hide();
+			}
 			this.$.specificationUpdateModal.open();
 		} else {
 			this.specificationId = null;
