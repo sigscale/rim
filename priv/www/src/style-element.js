@@ -50,6 +50,8 @@ styleElement.innerHTML = `<template>
 			}
 			.dialog {
 				overflow: auto;
+				max-width: 80%;
+				max-height: 80%;
 			}	
 			.help {
 				position: fixed;
