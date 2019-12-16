@@ -50,17 +50,9 @@ styleElement.innerHTML = `<template>
 			}
 			.dialog {
 				overflow: auto;
-				max-width: 80%;
+				max-width: 60%;
 				max-height: 80%;
 			}	
-			.help {
-				position: fixed;
-				min-width: 20em;
-				right: -36px;
-				top: 41px;
-				overflow: auto;
-				display: inline-grid;
-			}
 			paper-dialog app-toolbar {
 				margin-top: 0px;
 				color: white;
@@ -166,6 +158,18 @@ styleElement.innerHTML = `<template>
 			.delete-button {
 				background: #EF5350;
 				color: black;
+			}
+			.help {
+				position: fixed;
+				min-width: 20em;
+				right: -36px;
+				top: 41px;
+				overflow: auto;
+				display: inline-grid;
+			}
+			paper-dialog-scrollable p {
+				margin-left: 40px;
+				margin-right: 40px;
 			}
 		</style>
 	</template>`;
