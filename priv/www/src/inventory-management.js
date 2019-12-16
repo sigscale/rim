@@ -152,7 +152,7 @@ class InventoryManagement extends PolymerElement {
 							attr-for-selected="name"
 							class="drawer-list"
 							role="navigation">
-						<a href="" on-click="_collapseLogs">
+						<a href="" on-click="_collapseCatalog">
 							<paper-icon-button
 									icon="my-icons:resourceCatalog">
 							</paper-icon-button>
@@ -226,13 +226,12 @@ class InventoryManagement extends PolymerElement {
 		`;
 	}
 
-	_collapseLogs(event) {
-		var im = document.body.querySelector('inventory-management')
-		var catObj = im.shadowRoot.getElementById('catalog');
-		if(catObj.opened == false) {
-			catObj.show();
+	_collapseCatalog(event) {
+		var cat = document.body.querySelector('inventory-management').shadowRoot.getElementById('catalog');
+		if(cat.opened == false) {
+			cat.show();
 		} else {
-			catObj.hide();
+			cat.hide();
 		}
 	}
 
