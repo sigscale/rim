@@ -93,6 +93,7 @@ styleElement.innerHTML = `<template>
 				display: block;
 				width: 100%;
 				margin: 0px;
+				padding: 0px;
 				--paper-progress-active-color: var(--paper-lime-a700);
 				--paper-progress-container-color: transparent;
 			}
