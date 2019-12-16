@@ -381,19 +381,21 @@ class inventoryHelp extends PolymerElement {
 
 	_dialog(newValue) {
 		var overFlow = document.querySelector('inventory-management').shadowRoot.getElementById('overFlowIcon');
+		var dialog = this.$.overFlowMenu;
 		if(newValue) {
-			this.$.overFlowMenu.positionTarget = overFlow;
-			this.$.overFlowMenu.open();
+			dialog.positionTarget = overFlow;
+			dialog.open();
 		} else {
-			this.$.overFlowMenu.close();
+			dialog.close();
 		}
 	}
 
 	_collapseLogsContact(event) {
-		if(this.$.contact.opened == false) {
-			this.$.contact.show();
+		var contact = this.$.contact;
+		if(contact.opened == false) {
+			contact.show();
 		} else {
-			this.$.contact.hide();
+			contact.hide();
 		}
 	}
 }
