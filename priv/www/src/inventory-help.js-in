@@ -111,7 +111,7 @@ class inventoryHelp extends PolymerElement {
 				User
 			</paper-icon-item>
 		</paper-dialog>
-		<paper-dialog id="helpCatalog">
+		<paper-dialog class="dialog" id="helpCatalog">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -135,7 +135,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpCategory">
+		<paper-dialog class="dialog" id="helpCategory">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -159,7 +159,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpCandidate">
+		<paper-dialog class="dialog" id="helpCandidate">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -183,7 +183,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpSpecification">
+		<paper-dialog class="dialog" id="helpSpecification">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -207,7 +207,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpRule">
+		<paper-dialog class="dialog" id="helpRule">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -230,7 +230,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="inventoryHelp">
+		<paper-dialog class="dialog" id="inventoryHelp">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -253,7 +253,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpHttp">
+		<paper-dialog class="dialog" id="helpHttp">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -276,7 +276,7 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpUsers">
+		<paper-dialog class="dialog" id="helpUsers">
 			<app-toolbar>
 				<paper-icon-button
 						icon="my-icons:arrow-back"
@@ -301,7 +301,7 @@ class inventoryHelp extends PolymerElement {
 				requires a unique <b>Username</b> and <b>Password</b>.</p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="aboutHelp">
+		<paper-dialog class="dialog" id="aboutHelp">
 			<app-toolbar>
 				<div main-title>About</div>
 			</app-toolbar>
