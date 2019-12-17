@@ -86,7 +86,7 @@ class specificationUpdate extends PolymerElement {
 				</paper-checkbox>
 				<div>
 					<span>Feature</span>
-						<paper-icon-button
+						<paper-icon-button id="featSpecCollapseButton"
 							id="collapseFeat"
 							icon="arrow-drop-down"
 							on-click="_collapseFeat">
@@ -115,7 +115,7 @@ class specificationUpdate extends PolymerElement {
 				</iron-collapse>
 				<div>
 					<span>Characteristics</span>
-						<paper-icon-button
+						<paper-icon-button id="charSpecCollapseButton"
 							icon="arrow-drop-down"
 							on-click="_collapseChars">
 						</paper-icon-button>
@@ -317,19 +317,23 @@ class specificationUpdate extends PolymerElement {
 		toast.open();
 	}
 
-	_collapseChars(event) {
-		if(this.charSpecOpened == false) {
-			this.$.charSpecCollapse.show();
-		} else {
-			this.$.charSpecCollapse.hide();
-		}
-	}
-
 	_collapseFeat(event) {
 		if(this.featSpecOpened == false) {
 			this.$.featSpecCollapse.show();
+			this.$.featSpecCollapseButton.icon = "arrow-drop-up";
 		} else {
 			this.$.featSpecCollapse.hide();
+			this.$.featSpecCollapseButton.icon = "arrow-drop-down";
+		}
+	}
+
+	_collapseChars(event) {
+		if(this.charSpecOpened == false) {
+			this.$.charSpecCollapse.show();
+			this.$.charSpecCollapseButton.icon = "arrow-drop-up";
+		} else {
+			this.$.charSpecCollapse.hide();
+			this.$.charSpecCollapseButton.icon = "arrow-drop-down";
 		}
 	}
 
