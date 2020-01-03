@@ -1,4 +1,4 @@
-/**
+/*
  * @license
  * Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -10,99 +10,105 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-item/paper-item.js'
-import '@polymer/paper-checkbox/paper-checkbox.js'
-import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
 class categoryAdd extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="addCategoryModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Category</h2></div>
-			</paper-toolbar>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="categoryAddModal" modal>
+				<app-toolbar>
+					<div main-title>Add Category</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
 				<paper-input
-						id="categoryName"
 						label="Name"
-						value="{{category.categoryName}}">
+						value="{{categoryName}}">
 				</paper-input>
-				<paper-input
-						id="categoryDesc"
+				<paper-textarea
 						label="Description"
-						value="{{category.categoryDesc}}">
-				</paper-input>
+						value="{{categoryDescription}}">
+				</paper-textarea>
 				<paper-input
-						id="categoryVersion"
 						label="Version"
-						value="{{category.categoryVersion}}">
+						value="{{categoryVersion}}">
 				</paper-input>
 				<paper-input
-						id="categoryClass"
 						label="Class"
-						value="{{category.categoryClass}}">
+						value="{{categoryType}}">
 				</paper-input>
 				<paper-input
-						id="categoryStatus"
 						label="Status"
-						value="{{category.categoryStatus}}">
+						value="{{categoryStatus}}">
 				</paper-input>
 				<paper-input
-						id="categoryParent"
 						label="Parent"
-						value="{{category.categoryParent}}">
+						value="{{categoryParent}}">
 				</paper-input>
 				<paper-input
-						id="categoryRoot"
 						label="Root"
-						value="{{category.categoryRoot}}">
+						value="{{categoryRoot}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addCategory">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteSpec">
-						Delete
-					</paper-button>
 				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="categoryAddAjax"
-			content-type="application/json"
-			on-loading-changed="_onLoadingChanged"
-			on-response="_categoryAddResponse"
-			on-error="_categoryAddError">
-		</iron-ajax>
+			</paper-dialog>
+			<iron-ajax
+					id="categoryAddAjax"
+					content-type="application/json"
+					loading="{{loading}}"
+					on-response="_response"
+					on-error="_error">
+			</iron-ajax>
 		`;
 	}
 
 	static get properties() {
 		return {
-			category: {
-				type: Object,
+			loading: {
+				type: Boolean,
+				value: false
+			},
+			categoryName: {
+				type: String
+			},
+			categoryDescription: {
+				type: String
+			},
+			categoryType: {
+				type: String
+			},
+			categoryStatus: {
+				type: String
+			},
+			categoryVersion: {
+				type: String
+			},
+			categoryParent: {
+				type: String
+			},
+			categoryRoot: {
+				type: Boolean
 			}
 		}
 	}
@@ -111,38 +117,63 @@ class categoryAdd extends PolymerElement {
       super.ready()
 	}
 
-	_addCategory() {
+	_cancel() {
+		this.$.categoryAddModal.close();
+		this.categoryName = null;
+		this.categoryDescription = null;
+		this.categoryType = null;
+		this.categoryStatus = null;
+		this.categoryVersion = null;
+		this.categoryParent = null;
+		this.categoryRoot = false;
+	}
+
+	_add() {
 		var ajax = this.$.categoryAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/";
 		var cat = new Object();
-		if(this.$.categoryName.value) {
-			cat.name = this.$.categoryName.value;
+		if(this.categoryName) {
+			cat.name = this.categoryName;
 		}
-		if(this.$.categoryDesc.value) {
-			cat.description = this.$.categoryDesc.value;
+		if(this.categoryDescription) {
+			cat.desription = this.categoryDescription;
 		}
-		if(this.$.categoryVersion.value) {
-			cat.version = this.$.categoryVersion.value;
+		if(this.categoryType) {
+			cat['@type'] =  this.categoryType;
 		}
-		if(this.$.categoryClass.value) {
-			cat.class = this.$.categoryClass.value;
+		if(this.categoryStatus) {
+			cat.lifecycleStatus =  this.categoryStatus;
 		}
-		if(this.$.categoryStatus.value) {
-			cat.status = this.$.categoryStatus.value;
+		if(this.categoryVersion) {
+			cat.version = this.categoryVersion;
 		}
-		if(this.$.categoryParent.value) {
-			cat.parent = this.$.categoryParent.value;
+		if(this.categoryParent) {
+			cat.parentId =  this.categoryParent;
 		}
-		if(this.$.categoryRoot.value) {
-			cat.root = this.$.categoryRoot.value;
+		if(this.categoryRoot) {
+			cat.isRoot =  this.categoryRoot;
 		}
 		ajax.body = JSON.stringify(cat);
 		ajax.generateRequest();
 	}
 
-	_categoryAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').close();
+	_response() {
+		this.$.categoryAddModal.close();
+		this.categoryName = null;
+		this.categoryDescription = null;
+		this.categoryType = null;
+		this.categoryStatus = null;
+		this.categoryVersion = null;
+		this.categoryParent = null;
+		this.categoryRoot = false;
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('categoryList').shadowRoot.getElementById('categoryGrid').clearCache();
+	}
+
+	_error(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

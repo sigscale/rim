@@ -11,20 +11,18 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 import './style-element.js';
 
-class rulesList extends PolymerElement {
+class ruleList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
-					id="rulesGrid"
+					id="ruleGrid"
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<vaadin-grid-column>
@@ -45,7 +43,7 @@ class rulesList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.ruleId]]
+						[[item.id]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -66,7 +64,7 @@ class rulesList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.ruleDescription]]
+						[[item.description]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -91,17 +89,8 @@ class rulesList extends PolymerElement {
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
-			<div class="add-button">
-				<paper-fab
-					icon="add"
-					on-tap = "showAddRulesModal">
-				</paper-fab>
-			</div>
-         <paper-toast
-            id="ruleError">
-         </paper-toast>
 			<iron-ajax
-				id="getRulesAjax"
+				id="rulesGetAjax"
 				url="resourceInventoryManagement/v1/logicalResource"
 				rejectWithRequest>
 			</iron-ajax>
@@ -140,29 +129,28 @@ class rulesList extends PolymerElement {
 
 	_activeItemChanged(item) {
 		if(item) {
-			var grid = this.$.rulesGrid;
-			grid.selectedItems = item ? [item] : [];
-			var updateRule = document.querySelector('inventory-management').shadowRoot.getElementById('updateRule');
-			updateRule.shadowRoot.getElementById('updateRuleModal').open();
-			updateRule.shadowRoot.getElementById('addRuleId').value = item.ruleId;
-			updateRule.shadowRoot.getElementById('addRule').value = item.rules;
-			updateRule.shadowRoot.getElementById('addRuleDesc').value = item.ruleDescription;
+			this.$.ruleGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.ruleGrid.selectedItems = [];
 		}
 	}
 
 	ready() {
 		super.ready();
-		var grid = this.shadowRoot.getElementById('rulesGrid');
+		var grid = this.shadowRoot.getElementById('ruleGrid');
 		grid.dataProvider = this._getRules;
 	}
 
 	_getRules(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list').shadowRoot.getElementById('getRulesAjax');
-		var rulesList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list');
+		if(!grid.size) {
+				grid.size = 0;
+		}
+		var ruleList = document.body.querySelector('inventory-management').shadowRoot.querySelector('rule-list');
+		var ajax = ruleList.shadowRoot.getElementById('rulesGetAjax');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				rulesList.etag = request.xhr.getResponseHeader('ETag');
+				ruleList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -174,20 +162,19 @@ class rulesList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.ruleId = request.response[index].id;
-					newRecord.ruleDescription = request.response[index].description;
+					newRecord.id = request.response[index].id;
+					newRecord.description = request.response[index].description;
 					newRecord.rules = request.response[index].rule;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
-			rulesList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('rules-list').shadowRoot.getElementById('ruleError');
+			ruleList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
          toast.text = error;
          toast.open();
 			callback([]);
@@ -196,8 +183,8 @@ class rulesList extends PolymerElement {
 			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
 				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (rulesList.etag && params.page > 0) {
-					ajax.headers['If-Range'] = rulesList.etag;
+				if (ruleList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = ruleList.etag;
 				} else {
 					delete ajax.headers['If-Range'];
 				}
@@ -207,8 +194,8 @@ class rulesList extends PolymerElement {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
 			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (rulesList.etag && params.page > 0) {
-				ajax.headers['If-Range'] = rulesList.etag;
+			if (ruleList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = ruleList.etag;
 			} else {
 				delete ajax.headers['If-Range'];
 			}
@@ -222,4 +209,4 @@ class rulesList extends PolymerElement {
    }
 }
 
-window.customElements.define('rules-list', rulesList);
+window.customElements.define('rule-list', ruleList);

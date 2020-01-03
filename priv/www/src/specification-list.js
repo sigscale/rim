@@ -11,7 +11,6 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -21,8 +20,7 @@ import './style-element.js';
 class specificationList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="specificationGrid"
 					loading="{{loading}}"
@@ -44,7 +42,7 @@ class specificationList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.specName]]</template>
+					<template>[[item.name]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="20ex" flex-grow="5">
 					<template class="header">
@@ -63,7 +61,7 @@ class specificationList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.specDesc]]</template>
+					<template>[[item.description]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="12ex" flex-grow="1">
 					<template class="header">
@@ -83,7 +81,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specClass]]
+						[[item.type]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="8ex" flex-grow="1">
@@ -104,7 +102,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specStatus]]
+						[[item.status]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="8ex" flex-grow="1">
@@ -125,7 +123,7 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specCat]]
+						[[item.category]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column width="6ex" flex-grow="1">
@@ -146,21 +144,18 @@ class specificationList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.specBundle]]
+						[[item.bundle]]
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
 			<div class="add-button">
 				<paper-fab
-					icon="add"
-					on-tap = "showAddSpecificationModal">
+						icon="add"
+						on-tap="_showAddSpecificationModal">
 				</paper-fab>
 			</div>
-			<paper-toast
-				id="specError">
-			</paper-toast>
 			<iron-ajax
-				id="getSpecificationAjax"
+				id="specificationGetAjax"
 				url="resourceCatalogManagement/v3/resourceSpecification"
 				rejectWithRequest>
 			</iron-ajax>
@@ -211,38 +206,9 @@ class specificationList extends PolymerElement {
 
 	_activeItemChanged(item) {
 		if(item) {
-			var grid = this.$.specificationGrid;
-			grid.selectedItems = item ? [item] : [];
-			var updateSpec = document.querySelector('inventory-management').shadowRoot.getElementById('updateSpec');
-			updateSpec.shadowRoot.getElementById('updateSpecModal').open();
-			updateSpec.shadowRoot.getElementById('addSpecId').value = item.specId;
-			updateSpec.shadowRoot.getElementById('addSpecName').value = item.specName;
-			updateSpec.shadowRoot.getElementById('addSpecDesc').value = item.specDesc;
-			updateSpec.shadowRoot.getElementById('addSpecType').value = item.specClass;
-			if(item.specStatus == "In Study") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 0;
-			}
-			if(item.specStatus == "In Design") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 1;
-			}
-			if(item.specStatus == "In Test") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 2;
-			}
-			if(item.specStatus == "Rejected") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 3;
-			}
-			if(item.specStatus == "Active") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 4;
-			}
-			if(item.specStatus == "Launched") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 5;
-			}
-			if(item.specStatus == "Retired") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 6;
-			}
-			if(item.specStatus == "Obsolete") {
-				updateSpec.shadowRoot.getElementById('updateStatus').selected = 7;
-			}
+			this.$.specificationGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.specificationGrid.selectedItems = [];
 		}
 	}
 
@@ -254,8 +220,11 @@ class specificationList extends PolymerElement {
 
 	_getSpecification(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('getSpecificationAjax');
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var specificationList = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list');
+		var ajax = specificationList.shadowRoot.getElementById('specificationGetAjax');
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];
 		var query = "";
@@ -386,31 +355,28 @@ class specificationList extends PolymerElement {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.specId = request.response[index].id;
-					newRecord.specName = request.response[index].name;
-					newRecord.specDesc = request.response[index].description;
-					newRecord.specClass = request.response[index]["@type"];
-					newRecord.specStatus = request.response[index].lifecycleStatus;
-					newRecord.specCat = request.response[index].category;
-					newRecord.specBundle = request.response[index].isBundle;
-					newRecord.specChars = request.response[index].resourceSpecCharacteristic;
-					newRecord.specFeat = request.response[index].resourceSpecFeature;
+					newRecord.id = request.response[index].id;
+					newRecord.name = request.response[index].name;
+					newRecord.description = request.response[index].description;
+					newRecord.type = request.response[index]["@type"];
+					newRecord.base = request.response[index]["@baseType"];
+					newRecord.status = request.response[index].lifecycleStatus;
+					newRecord.category = request.response[index].category;
+					newRecord.bundle = request.response[index].isBundle;
+					newRecord.chars = request.response[index].resourceSpecCharacteristic;
+					newRecord.feature = request.response[index].resourceSpecFeature;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
 			specificationList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-list').shadowRoot.getElementById('specError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {
@@ -443,8 +409,8 @@ class specificationList extends PolymerElement {
 		grid.size = 0;
 	}
 
-	showAddSpecificationModal(event) {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').open();
+	_showAddSpecificationModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 }
 

@@ -10,89 +10,91 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-item/paper-item.js'
-import '@polymer/paper-checkbox/paper-checkbox.js'
-import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
 class candidateAdd extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="addCandidateModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Category</h2></div>
-			</paper-toolbar>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="candidateAddModal" modal>
+				<app-toolbar>
+					<div main-title>Add Candidate</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
 				<paper-input
-						id="candidateName"
 						label="Name"
-						value="{{candidate.candidateName}}">
+						value="{{candidateName}}">
 				</paper-input>
-				<paper-input
-						id="candidateDesc"
+				<paper-textarea
 						label="Description"
-						value="{{candidate.candidateDesc}}">
-				</paper-input>
+						value="{{candidateDescription}}">
+				</paper-textarea>
 				<paper-input
-						id="candidateVersion"
 						label="Version"
-						value="{{candidate.candidateVersion}}">
+						value="{{candidateVersion}}">
 				</paper-input>
 				<paper-input
-						id="candidateClass"
 						label="Class"
-						value="{{candidate.candidateClass}}">
+						value="{{candidateType}}">
 				</paper-input>
 				<paper-input
-						id="candidateStatus"
 						label="Status"
-						value="{{candidate.candidateStatus}}">
+						value="{{candidateStatus}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addCandidate">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteSpec">
-						Delete
-					</paper-button>
 				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="candidateAddAjax"
-			content-type="application/json"
-			on-loading-changed="_onLoadingChanged"
-			on-response="_candidateAddResponse"
-			on-error="_candidateAddError">
-		</iron-ajax>
+			</paper-dialog>
+			<iron-ajax
+					id="candidateAddAjax"
+					content-type="application/json"
+					loading="{{loading}}"
+					on-response="_response"
+					on-error="_error">
+			</iron-ajax>
 		`;
 	}
 
 	static get properties() {
 		return {
-			candidate: {
-				type: Object,
+			loading: {
+				type: Boolean,
+				value: false
+			},
+			candidateName: {
+				type: String
+			},
+			candidateDescription: {
+				type: String
+			},
+			candidateType: {
+				type: String
+			},
+			candidateVersion: {
+				type: String
+			},
+			candidateStatus: {
+				type: String
 			}
 		}
 	}
@@ -101,32 +103,53 @@ class candidateAdd extends PolymerElement {
 		super.ready()
 	}
 
-	_addCandidate() {
+	_cancel() {
+		this.$.candidateAddModal.close();
+		this.candidateName = null;
+		this.candidateDescription = null;
+		this.candidateType = null;
+		this.candidateVersion = null;
+		this.candidateStatus = null;
+	}
+
+	_add() {
 		var ajax = this.$.candidateAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/";
-		var can = new Object();
-		if(this.$.candidateName.value) {
-			can.name = this.$.candidateName.value;
+		var cand = new Object();
+		if(this.candidateName) {
+			cand.name = this.candidateName;
 		}
-		if(this.$.candidateDesc.value) {
-			can.description = this.$.candidateDesc.value;
+		if(this.candidateDescription) {
+			cand.description= this.candidateDescription;
 		}
-		if(this.$.candidateVersion.value) {
-			can.version = this.$.candidateVersion.value;
+		if(this.candidateVersion) {
+			cand.version = this.candidateVersion;
 		}
-		if(this.$.candidateClass.value) {
-			can.class = this.$.candidateClass.value;
+		if(this.candidateType) {
+			cand['@type'] = this.candidateType;
 		}
-		if(this.$.candidateStatus.value) {
-			can.status = this.$.candidateStatus.value;
+		if(this.candidateStatus) {
+			cand.lifecycleStatus = this.candidateStatus;
 		}
-		ajax.body = JSON.stringify(can);
+		ajax.body = JSON.stringify(cand);
 		ajax.generateRequest();
 	}
 
-	_candidateAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-add').shadowRoot.getElementById('addCandidateModal').close();
+	_response() {
+		this.$.candidateAddModal.close();
+		this.candidateName = null;
+		this.candidateDescription = null;
+		this.candidateType = null;
+		this.candidateVersion = null;
+		this.candidateStatus = null;
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('candidateList').shadowRoot.getElementById('candidateGrid').clearCache();
+	}
+
+	_error(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

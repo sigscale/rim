@@ -11,7 +11,6 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -21,8 +20,7 @@ import './style-element.js';
 class candidateList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="candidateGrid"
 					loading="{{loading}}"
@@ -44,7 +42,7 @@ class candidateList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.candidateName]]</template>
+					<template>[[item.name]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -64,7 +62,7 @@ class candidateList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.candidateDescription]]
+						[[item.description]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -85,7 +83,7 @@ class candidateList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.candidateClass]]
+						[[item.type]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -106,7 +104,7 @@ class candidateList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.candidateStatus]]
+						[[item.status]]
 					</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
@@ -116,11 +114,8 @@ class candidateList extends PolymerElement {
 					on-tap = "showAddCandidateModal">
 				</paper-fab>
 			</div>
-			<paper-toast
-				id="candidateError">
-			</paper-toast>
 			<iron-ajax
-				id="getCandidateAjax"
+				id="candidateGetAjax"
 				url="resourceCatalogManagement/v3/resourceCandidate"
 				rejectWithRequest>
 			</iron-ajax>
@@ -161,53 +156,27 @@ class candidateList extends PolymerElement {
 		}
 	}
 
-	_activeItemChanged(item) {
-		if(item) {
-			var grid = this.$.candidateGrid;
-			grid.selectedItems = item ? [item] : [];
-			var updateCandidate = document.querySelector('inventory-management').shadowRoot.getElementById('updateCandidate');
-			updateCandidate.shadowRoot.getElementById('updateCandModal').open();
-			updateCandidate.shadowRoot.getElementById('addCandId').value = item.candidateId
-			updateCandidate.shadowRoot.getElementById('addCandName').value = item.candidateName
-			updateCandidate.shadowRoot.getElementById('addCandDesc').value = item.candidateDescription
-			updateCandidate.shadowRoot.getElementById('addCandType').value = item.candidateClass
-			if(item.candidateStatus == "In Study") {
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 0;
-			}
-			if(item.candidateStatus == "In Design"){
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 1;
-			}
-			if(item.candidateStatus == "In Test") {
-				updateCatalog.shadowRoot.getElementById('updateStatus').selected = 2;
-			}
-			if(item.candidateStatus == "Rejected") {
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 3;
-			}
-			if(item.candidateStatus == "Active") {
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 4;
-			}
-			if(item.candidateStatus == "Launched") {
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 5;
-			}
-			if(item.candidateStatus == "Retired") {
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 6;
-			}
-			if(item.candidateStatus == "Obsolete") {
-				updateCandidate.shadowRoot.getElementById('updateStatus').selected = 7;
-			}
-		}
-	}
-
 	ready() {
 		super.ready();
 		var grid = this.shadowRoot.getElementById('candidateGrid');
 		grid.dataProvider = this._getCandidate;
 	}
 
+	_activeItemChanged(item) {
+		if(item) {
+			this.$.candidateGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.candidateGrid.selectedItems = [];
+		}
+   }
+
 	_getCandidate(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('getCandidateAjax');
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var candidateList = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list');
+		var ajax = candidateList.shadowRoot.getElementById('candidateGetAjax');
 		var query = "";
 		delete ajax.params['filter'];
 		function checkHead(param) {
@@ -311,29 +280,23 @@ class candidateList extends PolymerElement {
 				var vaadinItems = new Array();
 					for(var index in request.response) {
 						var newRecord = new Object();
-						newRecord.candidateId = request.response[index].id;
-						newRecord.candidateName = request.response[index].name;
-						newRecord.candidateDescription = request.response[index].description;
-						newRecord.candidateClass = request.response[index]["@type"];
-						newRecord.candidateStatus = request.response[index].lifecycleStatus;
+						newRecord.id = request.response[index].id;
+						newRecord.name = request.response[index].name;
+						newRecord.description = request.response[index].description;
+						newRecord.type = request.response[index]["@type"];
+						newRecord.status = request.response[index].lifecycleStatus;
 						vaadinItems[index] = newRecord;
 					}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
 			candidateList.etag = null;
-console.log(document.body.querySelector('inventory-management'))
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-list').shadowRoot.getElementById('candidateError');
-console.log(toast);
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {
@@ -367,7 +330,7 @@ console.log(toast);
 	}
 
 	showAddCandidateModal(event) {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-add').shadowRoot.getElementById('addCandidateModal').open();
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('candidate-add').shadowRoot.getElementById('candidateAddModal').open();
 	}
 }
 

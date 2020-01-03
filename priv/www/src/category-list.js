@@ -11,7 +11,6 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -21,8 +20,7 @@ import './style-element.js';
 class categoryList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="categoryGrid"
 					loading="{{loading}}"
@@ -45,7 +43,7 @@ class categoryList extends PolymerElement {
 						</vaadin-grid-sorter>
 					</template>
 					<template>
-						[[item.categoryName]]
+						[[item.name]]
 					</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
@@ -65,7 +63,7 @@ class categoryList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.categoryDescription]]</template>
+					<template>[[item.description]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -84,7 +82,7 @@ class categoryList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.categoryClass]]</template>
+					<template>[[item.type]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -103,7 +101,7 @@ class categoryList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.categoryStatus]]</template>
+					<template>[[item.status]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -122,7 +120,7 @@ class categoryList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.categoryParent]]</template>
+					<template>[[item.parent]]</template>
 				</vaadin-grid-column>
 				<vaadin-grid-column>
 					<template class="header">
@@ -141,7 +139,7 @@ class categoryList extends PolymerElement {
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
 					</template>
-					<template>[[item.categoryRoot]]</template>
+					<template>[[item.root]]</template>
 				</vaadin-grid-column>
 			</vaadin-grid>
 			<div class="add-button">
@@ -150,11 +148,8 @@ class categoryList extends PolymerElement {
 					on-tap = "showAddCategoryModal">
 				</paper-fab>
 			</div>
-			<paper-toast
-				id="categoryError">
-			</paper-toast>
 			<iron-ajax
-				id="getCategoryAjax"
+				id="categoryGetAjax"
 				url="resourceCatalogManagement/v3/resourceCategory"
 				rejectWithRequest>
 			</iron-ajax>
@@ -203,42 +198,11 @@ class categoryList extends PolymerElement {
 		}
 	}
 
-_activeItemChanged(item) {
+	_activeItemChanged(item) {
 		if(item) {
-			var grid = this.$.categoryGrid;
-			grid.selectedItems = item ? [item] : [];
-			var updateCategory = document.querySelector('inventory-management').shadowRoot.getElementById('updateCategory');
-			updateCategory.shadowRoot.getElementById('updateCategoryModal').open();
-			updateCategory.shadowRoot.getElementById('categorySpecId').value = item.categoryId;
-			updateCategory.shadowRoot.getElementById('categorySpecName').value = item.categoryName;
-			updateCategory.shadowRoot.getElementById('categorySpecDesc').value = item.categoryDescription;
-			updateCategory.shadowRoot.getElementById('categorySpecType').value = item.categoryClass;
-			updateCategory.shadowRoot.getElementById('categorySpecParent').value = item.categoryParent;
-			updateCategory.shadowRoot.getElementById('categorySpecRoot').value = item.categoryRoot;
-			if(item.categoryStatus == "In Study") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 0;
-			}
-			if(item.categoryStatus == "In Design"){
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 1;
-			}
-			if(item.categoryStatus == "In Test") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 2;
-			}
-			if(item.categoryStatus == "Rejected") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 3;
-			}
-			if(item.categoryStatus == "Active") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 4;
-			}
-			if(item.categoryStatus == "Launched") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 5;
-			}
-			if(item.categoryStatus == "Retired") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 6;
-			}
-			if(item.categoryStatus == "Obsolete") {
-				updateCategory.shadowRoot.getElementById('updateStatus').selected = 7;
-			}
+			this.$.categoryGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.categoryGrid.selectedItems = [];
 		}
 	}
 
@@ -251,8 +215,11 @@ _activeItemChanged(item) {
 
 	_getCategory(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('getCategoryAjax');
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var categoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list');
+		var ajax = categoryList.shadowRoot.getElementById('categoryGetAjax');
 		var query = "";
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];
@@ -383,29 +350,25 @@ _activeItemChanged(item) {
 				var vaadinItems = new Array();
 				for(var index in request.response) {
 					var newRecord = new Object();
-					newRecord.categoryId = request.response[index].id;
-					newRecord.categoryName = request.response[index].name;
-					newRecord.categoryDescription = request.response[index].description;
-					newRecord.categoryClass = request.response[index]["@type"];
-					newRecord.categoryStatus = request.response[index].lifecycleStatus;
-					newRecord.categoryParent = request.response[index].parentId;
-					newRecord.categoryRoot = request.response[index].isRoot;
+					newRecord.id = request.response[index].id;
+					newRecord.name = request.response[index].name;
+					newRecord.description = request.response[index].description;
+					newRecord.type = request.response[index]["@type"];
+					newRecord.status = request.response[index].lifecycleStatus;
+					newRecord.parent = request.response[index].parentId;
+					newRecord.root = request.response[index].isRoot;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
 			categoryList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('category-list').shadowRoot.getElementById('categoryError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {
@@ -439,7 +402,7 @@ _activeItemChanged(item) {
 	}
 
 	showAddCategoryModal(event) {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('addCategoryModal').open();
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('category-add').shadowRoot.getElementById('categoryAddModal').open();
 	}
 }
 

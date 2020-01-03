@@ -13,7 +13,6 @@ import {} from '@polymer/polymer/lib/elements/dom-if.js';
 import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -24,8 +23,7 @@ import './style-element.js';
 class inventoryList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="inventoryGrid"
 					loading="{{loading}}"
@@ -60,17 +58,17 @@ class inventoryList extends PolymerElement {
 							<dt><b>Class</b></dt>
 							<dd>{{item.type}}</dd>
 						</template>
-						<template is="dom-if" if="{{item.base}}">
+						<template is="dom-if" if="{{item.type}}">
 							<dt><b>Type</b></dt>
-							<dd>{{item.base}}</dd>
+							<dd>{{item.type}}</dd>
 						</template>
 						<template is="dom-if" if="{{item.schema}}">
 							<dt><b>Schema</b></dt>
 							<dd>{{item.schema}}</dd>
 						</template>
-						<template is="dom-if" if="{{item.lifecycleState}}">
+						<template is="dom-if" if="{{item.status}}">
 							<dt><b>Status</b></dt>
-							<dd>{{item.lifecycleState}}</dd>
+							<dd>{{item.status}}</dd>
 						</template>
 						<template is="dom-if" if="{{item.version}}">
 							<dt><b>Version</b></dt>
@@ -198,11 +196,8 @@ class inventoryList extends PolymerElement {
 					on-tap = "showAddInventoryModal">
 				</paper-fab>
 			</div>
-         <paper-toast
-            id="inventoryError">
-         </paper-toast>
 			<iron-ajax
-				id="getInventoryAjax"
+				id="inventoryGetAjax"
 				url="resourceInventoryManagement/v3/resource"
 				rejectWithRequest>
 			</iron-ajax>
@@ -221,6 +216,7 @@ class inventoryList extends PolymerElement {
 			},
 			activeItem: {
 				type: Boolean,
+				notify: true,
 				observer: '_activeItemChanged'
 			},
 			_filterId: {
@@ -248,7 +244,7 @@ class inventoryList extends PolymerElement {
 
 	_activeItemChanged(item, last) {
 		if(item || last) {
-			var grid = this.shadowRoot.getElementById('inventoryGrid');
+			var grid = this.$.inventoryGrid;
 			var current;
 			if(item == null) {
 				current = last;
@@ -274,15 +270,18 @@ class inventoryList extends PolymerElement {
 
 	_getInventory(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('getInventoryAjax');
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
+		var ajax = inventoryList.shadowRoot.getElementById('inventoryGetAjax');
 		delete ajax.params['filter'];
 		delete ajax.params['sort'];
 		var query = "";
 		function checkLike(param) {
 			return param.path == "name" || param.path == "description"
 				|| param.path == "@type" || param.path == "category"
-				|| param.path == "lifecycleState" || param.path == "lifecycleSubState";
+				|| param.path == "lifecycleStatus" || param.path == "lifecycleSubStatus";
 		}
 		params.filters.filter(checkLike).forEach(function(filter) {
 			if(filter.value) {
@@ -358,11 +357,11 @@ class inventoryList extends PolymerElement {
 					if(request.response[index]["@schemaLocation"]) {
 						newRecord.schema = request.response[index]["@schemaLocation"];
 					}
-					if(request.response[index].lifecycleState) {
-						newRecord.lifecycleState = request.response[index].lifecycleState;
+					if(request.response[index].lifecycleStatus) {
+						newRecord.status = request.response[index].lifecycleStatus;
 					}
-					if(request.response[index].lifecycleSubState) {
-						newRecord.lifecycleSubState = request.response[index].lifecycleSubState;
+					if(request.response[index].lifecycleSubStatus) {
+						newRecord.substatus = request.response[index].lifecycleSubStatus;
 					}
 					if(request.response[index].version) {
 						newRecord.version = request.response[index].version;
@@ -396,18 +395,14 @@ class inventoryList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
 			inventoryList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list').shadowRoot.getElementById('inventoryError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {
@@ -442,7 +437,7 @@ class inventoryList extends PolymerElement {
 	}
 
 	showAddInventoryModal(event) {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('addInventoryModal').open();
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('inventoryAddModal').open();
 	}
 }
 

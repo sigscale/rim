@@ -23,8 +23,8 @@ MODULES = inventory-management.js \
 		specification-update.js \
 		inventory-help.js \
 		inventory-add.js \
-		rules-list.js \
-		rules-update.js \
+		rule-list.js \
+		rule-update.js \
 		http-list.js \
 		user-list.js \
 		style-element.js

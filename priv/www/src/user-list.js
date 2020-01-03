@@ -11,7 +11,6 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import './style-element.js';
@@ -19,8 +18,7 @@ import './style-element.js';
 class userList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="userGrid"
 					loading="{{loading}}">
@@ -47,9 +45,6 @@ class userList extends PolymerElement {
 					on-tap = "showAddUserModal">
 				</paper-fab>
 			</div>
-			<paper-toast
-				id="userError">
-			</paper-toast>
 			<iron-ajax
 				id="getUserAjax"
 				url="partyManagement/v2/individual"
@@ -77,15 +72,21 @@ class userList extends PolymerElement {
 		grid.dataProvider = this._getUsers;
 	}
 
-//	showAddUserModal(event) {
-//		document.getElementById("addUserModal").open();
-//		document.body.querySelector('inventory-management').shadowRoot.getElementById('addUserModal').open();
-//	}
+	_activeItemChanged(item) {
+		if(item) {
+			this.$.userGrid.selectedItems = item ? [item] : [];
+      } else {
+			this.$.userGrid.selectedItems = [];
+		}
+	}
 
 	_getUsers(params, callback) {
 		var grid = this;
-		var ajax = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('getUserAjax');
+		if(!grid.size) {
+				grid.size = 0;
+		}
 		var userList = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list');
+		var ajax = userList.shadowRoot.getElementById('getUserAjax');
 		if(userList.etag && params.page > 0) {
 			ajax.headers['If-Range'] = userList.etag;
 		}
@@ -115,18 +116,14 @@ class userList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
 			userList.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('user-list').shadowRoot.getElementById('userError');
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
-			if(!grid.size) {
-				grid.size = 0;
-			}
 			callback([]);
 		}
 		if(ajax.loading) {

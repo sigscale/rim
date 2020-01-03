@@ -50,15 +50,13 @@ styleElement.innerHTML = `<template>
 			}
 			.dialog {
 				overflow: auto;
+				max-width: 60%;
+				max-height: 80%;
 			}	
-			.dialogOne {
-				position: fixed;
-				min-width: 20em;
-				right: -36px;
-				top: 41px;
-				overflow: auto;
-				padding: 0px;
-				display: inline-grid;
+			paper-dialog app-toolbar {
+				margin-top: 0px;
+				color: white;
+				background-color: #bc5100;
 			}
 			paper-dialog > *:first-child {
 				margin-top: 0px;
@@ -80,20 +78,14 @@ styleElement.innerHTML = `<template>
 			paper-dialog iron-collapse > div:first-child {
 				padding-top: 0px
 			}
-			paper-item {
-				padding-right: 10px;
-			}
-			paper-toolbar{
-				margin-top: 0px;
-				color: white;
-				background-color: #bc5100;
-			}
 			.cancel-button {
 				color: black;
 			}
 			paper-progress {
 				display: block;
 				width: 100%;
+				margin: 0px;
+				padding: 0px;
 				--paper-progress-active-color: var(--paper-lime-a700);
 				--paper-progress-container-color: transparent;
 			}
@@ -166,6 +158,18 @@ styleElement.innerHTML = `<template>
 			.delete-button {
 				background: #EF5350;
 				color: black;
+			}
+			.help {
+				position: fixed;
+				min-width: 20em;
+				right: -36px;
+				top: 41px;
+				overflow: auto;
+				display: inline-grid;
+			}
+			paper-dialog-scrollable p {
+				margin-left: 40px;
+				margin-right: 40px;
 			}
 		</style>
 	</template>`;

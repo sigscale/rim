@@ -14,9 +14,7 @@ import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import './inventory-management-icons.js';
 import './style-element.js';
 
@@ -25,7 +23,7 @@ class inventoryHelp extends PolymerElement {
 		return html`
 			<style include="style-element">
 			</style>
-		<paper-dialog class="dialogOne" id="overFlowMenu">
+		<paper-dialog class="help" id="overFlowMenu">
 			<paper-icon-item class="menu-trigger menuitem"
 				on-click="_collapseLogsContact">
 				<iron-icon icon="my-icons:contactUs" item-icon></iron-icon>
@@ -68,64 +66,61 @@ class inventoryHelp extends PolymerElement {
 					About
 			</paper-icon-item>
 		</paper-dialog>
-		<paper-dialog id="helpMenu">
-			<paper-toolbar>
-				<div slot="top" class="title">
-					Help
-				</div>
-			</paper-toolbar>
+		<paper-dialog class="help" id="helpMenu">
+			<app-toolbar>
+				<div main-title>Help</div>
+			</app-toolbar> 
 			<paper-icon-item
 					on-click="catalog">
-					<iron-icon icon="my-icons:catalog" slot="item-icon"></iron-icon>
-						Catalog
+				<iron-icon icon="my-icons:catalog" slot="item-icon"></iron-icon>
+				Catalog
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="category">
-					<iron-icon icon="my-icons:category" slot="item-icon"></iron-icon>
-						Category
+				<iron-icon icon="my-icons:category" slot="item-icon"></iron-icon>
+				Category
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="candidate">
-					<iron-icon icon="my-icons:candidate" slot="item-icon"></iron-icon>
-						Candidate
+				<iron-icon icon="my-icons:candidate" slot="item-icon"></iron-icon>
+				Candidate
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="specification">
-					<iron-icon icon="my-icons:specification" slot="item-icon"></iron-icon>
-						Specification
+				<iron-icon icon="my-icons:specification" slot="item-icon"></iron-icon>
+				Specification
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="rule">
-					<iron-icon icon="my-icons:rule" slot="item-icon"></iron-icon>
-						Rule
+				<iron-icon icon="my-icons:rule" slot="item-icon"></iron-icon>
+				Rule
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="inventory">
-					<iron-icon icon="my-icons:inventory" slot="item-icon"></iron-icon>
-						Inventory
+				<iron-icon icon="my-icons:inventory" slot="item-icon"></iron-icon>
+				Inventory
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="http">
-					<iron-icon icon="my-icons:data" slot="item-icon"></iron-icon>
-						Http
+				<iron-icon icon="my-icons:data" slot="item-icon"></iron-icon>
+				HTTP
 			</paper-icon-item>
 			<paper-icon-item
 					on-click="user">
-					<iron-icon icon="my-icons:user" slot="item-icon"></iron-icon>
-						User
+				<iron-icon icon="my-icons:user" slot="item-icon"></iron-icon>
+				User
 			</paper-icon-item>
 		</paper-dialog>
-		<paper-dialog id="helpCatalog">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpCatalog">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Catalog
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Catalog
@@ -140,17 +135,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpCategory">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpCategory">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Category
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Category
@@ -165,17 +159,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpCandidate">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpCandidate">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Candidate
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Candidate
@@ -190,17 +183,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpSpecification">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpSpecification">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Specification
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Specification	
@@ -215,17 +207,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpRule">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpRule">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Rule
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Rule	
@@ -239,17 +230,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpInventory">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="inventoryHelp">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Inventory
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Inventory	
@@ -263,17 +253,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpHttp">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpHttp">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
-					Http
+				<div main-title>
+					HTTP
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Http	
@@ -287,17 +276,16 @@ class inventoryHelp extends PolymerElement {
 				<p></p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="helpUsers">
-			<paper-toolbar>
+		<paper-dialog class="dialog" id="helpUsers">
+			<app-toolbar>
 				<paper-icon-button
-						slot="top"
 						icon="my-icons:arrow-back"
 						on-click="helpBack">
 				</paper-icon-button>
-				<div slot="top" class="title">
+				<div main-title>
 					Help
 				</div>
-			</paper-toolbar>
+			</app-toolbar>
 			<paper-icon-item>
 				<iron-icon icon="my-icons:assignment" slot="item-icon"></iron-icon>
 				Users
@@ -313,10 +301,10 @@ class inventoryHelp extends PolymerElement {
 				requires a unique <b>Username</b> and <b>Password</b>.</p>
 			</paper-dialog-scrollable>
 		</paper-dialog>
-		<paper-dialog id="aboutHelp">
-			<paper-toolbar>
-			<div slot="top"><h2>About</h2></div>
-			</paper-toolbar>
+		<paper-dialog class="dialog" id="aboutHelp">
+			<app-toolbar>
+				<div main-title>About</div>
+			</app-toolbar>
 			<p>Inventory Management (IM)<br>
 			%PACKAGE%-%VERSION%<br>
 			Copyright 2019 SigScale Global Inc.<br>
@@ -340,102 +328,60 @@ class inventoryHelp extends PolymerElement {
 	}
 
 	_about(event) {
-		var aboutIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var aboutIm1 = aboutIm.shadowRoot.getElementById('overFlowMenu');
-		aboutIm1.close();
-		var aboutObj = aboutIm.shadowRoot.getElementById('aboutHelp');
-		aboutObj.open();
+		this.$.overFlowMenu.close();
+		this.$.aboutHelp.open();
 	}
 	helpId(event) {
-		var helpIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var helpIm1 = helpIm.shadowRoot.getElementById('overFlowMenu');
-		helpIm1.close();
-		var helpObj = helpIm.shadowRoot.getElementById('helpMenu');
-		helpObj.open();
+		this.$.overFlowMenu.close();
+		this.$.helpMenu.open();
 	}
 	http(event) {
-		var httpIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var httpObj = httpIm.shadowRoot.getElementById('helpMenu');
-		httpObj.close();
-		var httpObjDialog = httpIm.shadowRoot.getElementById('helpHttp');
-		httpObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpHttp.open();
 	}
 	inventory(event) {
-		var inventoryIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var inventoryObj = inventoryIm.shadowRoot.getElementById('helpMenu');
-		inventoryObj.close();
-		var inventoryObjDialog = inventoryIm.shadowRoot.getElementById('helpInventory');
-		inventoryObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.inventoryHelp.open();
 	}
 	rule(event) {
-		var ruleIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var ruleObj = ruleIm.shadowRoot.getElementById('helpMenu');
-		ruleObj.close();
-		var ruleObjDialog = ruleIm.shadowRoot.getElementById('helpRule');
-		ruleObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpRule.open();
 	}
 	specification(event) {
-		var specificationIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var specificationObj = specificationIm.shadowRoot.getElementById('helpMenu');
-		specificationObj.close();
-		var specificationObjDialog = specificationIm.shadowRoot.getElementById('helpSpecification');
-		specificationObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpSpecification.open();
 	}
 	candidate(event) {
-		var candidateIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var candidateObj = candidateIm.shadowRoot.getElementById('helpMenu');
-		candidateObj.close();
-		var candidateObjDialog = candidateIm.shadowRoot.getElementById('helpCandidate');
-		candidateObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpCandidate.open();
 	}
 	category(event) {
-		var categoryIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var categoryObj = categoryIm.shadowRoot.getElementById('helpMenu');
-		categoryObj.close();
-		var categoryObjDialog = categoryIm.shadowRoot.getElementById('helpCategory');
-		categoryObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpCategory.open();
 	}
 	catalog(event) {
-		var catalogIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var catalogObj = catalogIm.shadowRoot.getElementById('helpMenu');
-		catalogObj.close();
-		var catalogObjDialog = catalogIm.shadowRoot.getElementById('helpCatalog');
-		catalogObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpCatalog.open();
 	}
 	user(event) {
-		var userIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var userObj = userIm.shadowRoot.getElementById('helpMenu');
-		userObj.close();
-		var userObjDialog = userIm.shadowRoot.getElementById('helpUsers');
-		userObjDialog.open();
+		this.$.helpMenu.close();
+		this.$.helpUsers.open();
 	}
 	helpBack(event) {
-		var helpBackIm = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var helpHttpDialog = helpBackIm.shadowRoot.getElementById('helpHttp');
-		helpHttpDialog.close();
-		var helpInventoryDialog = helpBackIm.shadowRoot.getElementById('helpInventory');
-		helpInventoryDialog.close();
-		var helpRuleDialog = helpBackIm.shadowRoot.getElementById('helpRule');
-		helpRuleDialog.close();
-		var helpSpecificationDialog = helpBackIm.shadowRoot.getElementById('helpSpecification');
-		helpSpecificationDialog.close();
-		var helpCandidateDialog = helpBackIm.shadowRoot.getElementById('helpCandidate');
-		helpCandidateDialog.close();
-		var helpCatalogDialog = helpBackIm.shadowRoot.getElementById('helpCatalog');
-		helpCatalogDialog.close();
-		var helpCategoryDialog = helpBackIm.shadowRoot.getElementById('helpCategory');
-		helpCategoryDialog.close();
-		var helpObjDialog = helpBackIm.shadowRoot.getElementById('helpUsers');
-		helpObjDialog.close();
-		var helpBackObj = helpBackIm.shadowRoot.getElementById('helpMenu');
-		helpBackObj.open();
+		this.$.helpHttp.close();
+		this.$.inventoryHelp.close();
+		this.$.helpRule.close();
+		this.$.helpSpecification.close();
+		this.$.helpCandidate.close();
+		this.$.helpCatalog.close();
+		this.$.helpCategory.close();
+		this.$.helpUsers.close();
+		this.$.helpMenu.open();
 	}
 
 	_dialog(newValue) {
-		var im = document.querySelector('inventory-management');
-		var help = im.shadowRoot.getElementById('inventoryGetHelp');
-		var dialog = help.shadowRoot.getElementById('overFlowMenu');
-		var overFlow = im.shadowRoot.getElementById('overFlowIcon');
+		var overFlow = document.querySelector('inventory-management').shadowRoot.getElementById('overFlowIcon');
+		var dialog = this.$.overFlowMenu;
 		if(newValue) {
 			dialog.positionTarget = overFlow;
 			dialog.open();
@@ -445,12 +391,11 @@ class inventoryHelp extends PolymerElement {
 	}
 
 	_collapseLogsContact(event) {
-		var im = document.querySelector('inventory-management').shadowRoot.getElementById('inventoryGetHelp');
-		var imContact = im.shadowRoot.getElementById('contact');
-		if(imContact.opened == false) {
-			imContact.show();
+		var contact = this.$.contact;
+		if(contact.opened == false) {
+			contact.show();
 		} else {
-			imContact.hide();
+			contact.hide();
 		}
 	}
 }

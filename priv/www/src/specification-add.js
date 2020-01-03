@@ -10,99 +10,105 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-item/paper-item.js'
-import '@polymer/paper-checkbox/paper-checkbox.js'
-import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
 class specificationAdd extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="addSpecificationModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Category</h2></div>
-			</paper-toolbar>
+			<style include="style-element"></style>
+			<paper-dialog class="dialog" id="specificationAddModal" modal>
+				<app-toolbar>
+					<div main-title>Add Specification</div>
+				</app-toolbar>
+				<paper-progress
+						indeterminate
+						class="slow red"
+						disabled="{{!loading}}">
+				</paper-progress>
 				<paper-input
-						id="specificationName"
 						label="Name"
-						value="{{specification.specificationName}}">
+						value="{{specificationMame}}">
 				</paper-input>
-				<paper-input
-						id="specificationDesc"
+				<paper-textarea
 						label="Description"
-						value="{{specification.specificationDesc}}">
-				</paper-input>
+						value="{{specificationDescription}}">
+				</paper-textarea>
 				<paper-input
-						id="specificationVersion"
 						label="Version"
-						value="{{specification.specificationVersion}}">
+						value="{{specificationVersion}}">
 				</paper-input>
 				<paper-input
-						id="specificationClass"
 						label="Class"
-						value="{{specification.specificationClass}}">
+						value="{{specificationType}}">
 				</paper-input>
 				<paper-input
-						id="specificationStatus"
 						label="Status"
-						value="{{specification.specificationStatus}}">
+						value="{{specificationStatus}}">
 				</paper-input>
 				<paper-input
-						id="specificationCategory"
 						label="Category"
-						value="{{specification.specificationCategory}}">
+						value="{{specificationCategory}}">
 				</paper-input>
 				<paper-input
-						id="specificationBundle"
 						label="Bundle"
-						value="{{specification.specificationBundle}}">
+						value="{{specificationBundle}}">
 				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
 							class="submit-button"
-							on-tap="_addSpecification">
+							on-tap="_add">
 						Add
 					</paper-button>
 					<paper-button
 							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
+							on-tap="_cancel">
 						Cancel
 					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteSpec">
-						Delete
-					</paper-button>
 				</div>
-		</paper-dialog>
-		<iron-ajax
-			id="specificationAddAjax"
-			content-type="application/json"
-			on-loading-changed="_onLoadingChanged"
-			on-response="_specificationAddResponse"
-			on-error="_specificationAddError">
-		</iron-ajax>
+			</paper-dialog>
+			<iron-ajax
+					id="specificationAddAjax"
+					content-type="application/json"
+					loading="{{loading}}"
+					on-response="_response"
+					on-error="_error">
+			</iron-ajax>
 		`;
 	}
 
 	static get properties() {
 		return {
-			specification: {
-				type: Object,
+			loading: {
+				type: Boolean,
+				value: false
+			},
+			specificationName: {
+				type: String
+			},
+			specificationDescription: {
+				type: String
+			},
+			specificationType: {
+				type: String
+			},
+			specificationStatus: {
+				type: String
+			},
+			specificationVersion: {
+				type: String
+			},
+			specificationCategory: {
+				type: String
+			},
+			specificationBundle: {
+				type: Boolean
 			}
 		}
 	}
@@ -111,32 +117,63 @@ class specificationAdd extends PolymerElement {
 		super.ready()
 	}
 
-	_addSpecification() {
+	_cancel() {
+		this.$.specificationAddModal.close();
+		this.specificationName = null;
+		this.specificationDescription = null;
+		this.specificationType = null;
+		this.specificationStatus = null;
+		this.specificationVersion = null;
+		this.specificationCategory = null;
+		this.specificationBundle = false;
+	}
+
+	_add() {
 		var ajax = this.$.specificationAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/";
 		var spec = new Object();
-		if(this.$.specificationName.value) {
-			spec.name = this.$.specificationName.value;
+		if(this.specificationName) {
+			spec.name = this.specificationName;
 		}
-		if(this.$.specificationDesc.value) {
-			spec.description = this.$.specificationDesc.value;
+		if(this.specificationDescription) {
+			spec.description = this.specificationDescription;
 		}
-		if(this.$.specificationVersion.value) {
-			spec.version = this.$.specificationVersion.value;
+		if(this.specificationType) {
+			spec['@type'] = this.specificationType;
 		}
-		if(this.$.specificationClass.value) {
-			spec.class = this.$.specificationClass.value;
+		if(this.specificationStatus) {
+			spec.lifecycleStatus = this.specificationStatus;
 		}
-		if(this.$.specificationStatus.value) {
-			spec.status = this.$.specificationStatus.value;
+		if(this.specificationVersion) {
+			spec.version = this.specificationVersion;
+		}
+		if(this.specificationCategory) {
+			spec.category = this.specificationCategory;
+		}
+		if(this.specificationBundle) {
+			spec.isBundle = this.specificationBundle;
 		}
 		ajax.body = JSON.stringify(spec);
 		ajax.generateRequest();
 	}
 
-	_specificationAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('addSpecificationModal').close();
+	_response() {
+		this.$.specificationAddModal.close();
+		this.specificationName = null;
+		this.specificationDescription = null;
+		this.specificationType = null;
+		this.specificationStatus = null;
+		this.specificationVersion = null;
+		this.specificationCategory = null;
+		this.specificationBundle = false;
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('specificationList').shadowRoot.getElementById('specificationGrid').clearCache();
+	}
+
+	_error(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

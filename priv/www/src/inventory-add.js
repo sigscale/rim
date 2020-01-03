@@ -10,99 +10,105 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-toolbar/paper-toolbar.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-item/paper-item.js'
-import '@polymer/paper-checkbox/paper-checkbox.js'
-import '@polymer/iron-collapse/iron-collapse.js';
 import './style-element.js';
 
 class inventoryAdd extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
-		<paper-dialog class="dialog" id="addInventoryModal" modal>
-			<paper-toolbar>
-				<div slot="top"><h2>Add Inventory</h2></div>
-			</paper-toolbar>
-				<paper-input
-						id="inventoryName"
-						label="Name"
-						value="{{inventory.inventoryName}}">
-				</paper-input>
-				<paper-input
-						id="inventoryDesc"
-						label="Description"
-						value="{{inventory.inventoryDesc}}">
-				</paper-input>
-				<paper-input
-						id="inventoryVersion"
-						label="Version"
-						value="{{inventory.inventoryVersion}}">
-				</paper-input>
-				<paper-input
-						id="inventoryType"
-						label="Type"
-						value="{{inventory.inventoryType}}">
-				</paper-input>
-				<paper-input
-						id="inventoryStatus"
-						label="Status"
-						value="{{inventory.inventoryStatus}}">
-				</paper-input>
-				<paper-input
-						id="inventoryCategory"
-						label="Category"
-						value="{{inventory.inventoryCategory}}">
-				</paper-input>
-				<paper-input
-						id="inventorySpecification"
-						label="Specification"
-						value="{{inventory.inventorySpecification}}">
-				</paper-input>
-				<div class="buttons">
-					<paper-button
-							raised
-							class="submit-button"
-							on-tap="_addInventory">
-						Add
-					</paper-button>
-					<paper-button
-							class="cancel-button"
-							dialog-dismiss
-							on-tap="cancelSpec">
-						Cancel
-					</paper-button>
-					<paper-button
-							toggles
-							raised
-							class="delete-button"
-							on-tap="_deleteSpec">
-						Delete
-					</paper-button>
-				</div>
+			<style include="style-element"></style>
+		<paper-dialog class="dialog" id="inventoryAddModal" modal>
+			<app-toolbar>
+				<div main-title>Add Inventory</div>
+			</app-toolbar>
+			<paper-progress
+					indeterminate
+					class="slow red"
+					disabled="{{!loading}}">
+			</paper-progress>
+			<paper-textarea
+					label="Description"
+					value="{{inventoryName}}">
+			</paper-textarea>
+			<paper-input
+					label="Description"
+					value="{{inventoryDescription}}">
+			</paper-input>
+			<paper-input
+					label="Version"
+					value="{{inventoryVersion}}">
+			</paper-input>
+			<paper-input
+					label="Type"
+					value="{{inventoryType}}">
+			</paper-input>
+			<paper-input
+					label="Status"
+					value="{{inventoryStatus}}">
+			</paper-input>
+			<paper-input
+					label="Category"
+					value="{{inventoryCategory}}">
+			</paper-input>
+			<paper-input
+					label="Specification"
+					value="{{inventorySpecification}}">
+			</paper-input>
+			<div class="buttons">
+				<paper-button
+						raised
+						class="submit-button"
+						on-tap="_add">
+					Add
+				</paper-button>
+				<paper-button
+						class="cancel-button"
+						on-tap="_cancel">
+					Cancel
+				</paper-button>
+			</div>
 		</paper-dialog>
 		<iron-ajax
-			id="inventoryAddAjax"
-			content-type="application/json"
-			on-loading-changed="_onLoadingChanged"
-			on-response="_inventoryAddResponse"
-			on-error="_inventoryAddError">
+				id="inventoryAddAjax"
+				content-type="application/json"
+				loading="{{loading}}"
+				on-response="_response"
+				on-error="_error">
 		</iron-ajax>
 		`;
 	}
 
 	static get properties() {
 		return {
-			inventory: {
-				type: Object,
+			loading: {
+				type: Boolean,
+				value: false
+			},
+			inventoryName: {
+				type: String
+			},
+			inventoryDescription: {
+				type: String
+			},
+			inventoryType: {
+				type: String
+			},
+			inventoryStatus: {
+				type: String
+			},
+			inventoryVersion: {
+				type: String
+			},
+			inventoryCategory: {
+				type: String
+			},
+			inventorySpecification: {
+				type: String
 			}
 		}
 	}
@@ -111,38 +117,63 @@ class inventoryAdd extends PolymerElement {
 		super.ready()
 	}
 
-	_addInventory() {
+	_cancel() {
+		this.$.inventoryAddModal.close();
+		this.inventoryName = null;
+		this.inventoryDescription = null;
+		this.inventoryType = null;
+		this.inventoryStatus = null;
+		this.inventoryVersion = null;
+		this.inventoryCategory = null;
+		this.inventorySpecification = null;
+	}
+
+	_add() {
 		var ajax = this.$.inventoryAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceInventoryManagement/v3/resource/";
 		var inv = new Object();
-		if(this.$.inventoryName.value) {
-			inv.name = this.$.inventoryName.value;
+		if(this.inventoryName) {
+			inv.name = this.inventoryName;
 		}
-		if(this.$.inventoryDesc.value) {
-			inv.description = this.$.inventoryDesc.value;
+		if(this.inventoryDescription) {
+			inv.description = this.inventoryDescription;
 		}
-		if(this.$.inventoryVersion.value) {
-			inv.version = this.$.inventoryVersion.value;
+		if(this.inventoryVersion) {
+			inv.version = this.inventoryVersion;
 		}
-		if(this.$.inventoryType.value) {
-			inv.type = this.$.inventoryType.value;
+		if(this.inventoryType) {
+			inv['@type'] = this.inventoryType;
 		}
-		if(this.$.inventoryStatus.value) {
-			inv.status = this.$.inventoryStatus.value;
+		if(this.inventoryStatus) {
+			inv.lifecycleStatus = this.inventoryStatus;
 		}
-		if(this.$.inventoryCategory.value) {
-			inv.category = this.$.inventoryCategory.value;
+		if(this.inventoryCategory) {
+			inv.category = this.inventoryCategory;
 		}
-		if(this.$.inventorySpecification.value) {
-			inv.specification = this.$.inventorySpecification.value;
+		if(this.inventorySpecification) {
+			inv.category = this.inventorySpecification;
 		}
 		ajax.body = JSON.stringify(inv);
 		ajax.generateRequest();
 	}
 
-	_inventoryAddResponse() {
-		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('addInventoryModal').close();
+	_response() {
+		this.$.inventoryAddModal.close();
+		this.inventoryName = null;
+		this.inventoryDescription = null;
+		this.inventoryType = null;
+		this.inventoryStatus = null;
+		this.inventoryVersion = null;
+		this.inventoryCategory = null;
+		this.inventorySpecification = null;
+		document.body.querySelector('inventory-management').shadowRoot.getElementById('inventoryList').shadowRoot.getElementById('inventoryGrid').clearCache();
+	}
+
+	_error(event) {
+		var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
+		toast.text = event.detail.request.xhr.statusText;
+		toast.open();
 	}
 }
 

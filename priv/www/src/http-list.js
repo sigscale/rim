@@ -10,7 +10,6 @@
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-toast/paper-toast.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-column-group.js';
@@ -21,12 +20,10 @@ import './style-element.js';
 class httpList extends PolymerElement {
 	static get template() {
 		return html`
-			<style include="style-element">
-			</style>
+			<style include="style-element"></style>
 			<vaadin-grid
 					id="httpGrid"
-					loading="{{loading}}"
-					active-item="{{activeItem}}">
+					loading="{{loading}}">
 				<vaadin-grid-column
 								width="28ex"
 								flex-grow="2">
@@ -142,11 +139,8 @@ class httpList extends PolymerElement {
 				</template>
 			</vaadin-grid-column>
 		</vaadin-grid>
-		<paper-toast
-				id="httpError">
-		</paper-toast>
 		<iron-ajax
-			id="getHttpList"
+			id="httpGetAjax"
 			url="im/v1/log/http"
 			rejectWithRequest>
 		</iron-ajax>
@@ -158,30 +152,6 @@ class httpList extends PolymerElement {
 			loading: {
 				type: Boolean,
 				notify: true
-			},
-			activeItem: {
-					type: Boolean,
-					observer: '_activeItemChanged'
-				}
-			}
-		}
-
-	_activeItemChanged(item, last) {
-		if (item ||last) {
-			var grid = this.shadowRoot.getElementById('httpGrid');
-			var current;
-			if(item == null) {
-				current = last;
-			} else {
-				current = item
-			}
-			function checkExist(log) {
-				return log.id == current.id;
-			}
-			if(grid.detailsOpenedItems && grid.detailsOpenedItems.some(checkExist)) {
-				grid.closeItemDetails(current);
-			} else {
-				grid.openItemDetails(current);
 			}
 		}
 	}
@@ -194,11 +164,14 @@ class httpList extends PolymerElement {
 
 	_getHttpLog(params, callback) {
 		var grid = this;
-		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('getHttpList');
-		var httpList1 = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');
+		if(!grid.size) {
+				grid.size = 0;
+		}
+		var httpList = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list');
+		var ajax = httpList.shadowRoot.getElementById('httpGetAjax');
 		var handleAjaxResponse = function(request) {
 			if(request) {
-				httpList1.etag = request.xhr.getResponseHeader('ETag');
+				httpList.etag = request.xhr.getResponseHeader('ETag');
 				var range = request.xhr.getResponseHeader('Content-Range');
 				var range1 = range.split("/");
 				var range2 = range1[0].split("-");
@@ -220,13 +193,12 @@ class httpList extends PolymerElement {
 				}
 				callback(vaadinItems);
 			} else {
-				grid.size = 0;
 				callback([]);
 			}
 		};
 		var handleAjaxError = function(error) {
-			httpList1.etag = null;
-			var toast = document.body.querySelector('inventory-management').shadowRoot.querySelector('http-list').shadowRoot.getElementById('httpError');
+			httpList.etag = null;
+			var toast = document.body.querySelector('inventory-management').shadowRoot.getElementById('restError');
 			toast.text = error;
 			toast.open();
 			if(!grid.size) {
@@ -234,29 +206,29 @@ class httpList extends PolymerElement {
 			}
 				callback([]);
 		}
-		if(httpList.loading) {
-			httpList.lastRequest.completes.then(function(request) {
+		if(ajax.loading) {
+			ajax.lastRequest.completes.then(function(request) {
 				var startRange = params.page * params.pageSize + 1;
-				httpList.headers['Range'] = "items=" + startRange + "-" + endRange;
-				if (httpList1.etag && params.page > 0) {
-					httpList.headers['If-Range'] = httpList1.etag;
+				ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+				if (httpList.etag && params.page > 0) {
+					ajax.headers['If-Range'] = httpList.etag;
 				} else {
-					delete httpList.headers['If-Range'];
+					delete ajax.headers['If-Range'];
 				}
-				return httpList.generateRequest().completes;
+				return ajax.generateRequest().completes;
 			}, handleAjaxError).then(handleAjaxResponse, handleAjaxError);
 		} else {
 			var startRange = params.page * params.pageSize + 1;
 			var endRange = startRange + params.pageSize - 1;
-			httpList.headers['Range'] = "items=" + startRange + "-" + endRange;
-			if (httpList1.etag && params.page > 0) {
-				httpList.headers['If-Range'] = httpList1.etag;
+			ajax.headers['Range'] = "items=" + startRange + "-" + endRange;
+			if (httpList.etag && params.page > 0) {
+				ajax.headers['If-Range'] = httpList.etag;
 			} else {
-				delete httpList.headers['If-Range'];
+				delete ajax.headers['If-Range'];
 			}
-			httpList.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
+			ajax.generateRequest().completes.then(handleAjaxResponse, handleAjaxError);
 		}
 	}
 }
 
-	window.customElements.define('http-list', httpList);
+window.customElements.define('http-list', httpList);
