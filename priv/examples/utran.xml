@@ -92,7 +92,7 @@
 							<un:userLabel>rnc-asquith-iub-a</un:userLabel>
 							<un:iubLinkNodeBFunction>SubNetwork=1,ManagedElement=1,NodeBFunction=1</un:iubLinkNodeBFunction>
 							<un:iubLinkUtranCell>
-								<xn:dn>SubNetwork=1,ManagedElement=1,RncFunction=1,UtranCellFDD=1</xn:dn>
+								<xn:dn>DC=umts.sigscale.net,SubNetwork=1,ManagedElement=1,RncFunction=1,UtranCellFDD=1</xn:dn>
 							</un:iubLinkUtranCell>
 						</un:attributes>
 					</un:IubLink>
