@@ -203,14 +203,70 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 			characteristic = lists:reverse([PeeParam | RncAttr]),
 			related = Fdds ++ Lcrs ++ Hcrs ++ IubLinks},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = RncId} = R} ->
+			F = fun(F, [#resource_rel{id = IubId, name = IubDn,
+					href = Href} = ResourceRel | T], Acc) ->
+						RncEndPoint = #point{name = RncDn, id = RncId,
+								href = "/resourceInventoryManagement/v3/resource/" ++ RncId},
+						IubEndPoint = #point{name = IubDn, id = IubId, href = Href},
+						RncIubConnectivity = #connectivity{type = "Point-to-Point",
+								endPoints = [RncEndPoint, IubEndPoint]},
+						CellIubConnectivity = case im:get_resource(IubId) of
+							{ok, #resource{characteristic = Chars}} ->
+								build_iub_cell_connectivity(Chars, ResourceRel, []);
+							{error, Reason} ->
+								{error, Reason}
+						end,
+						F(F, T, [RncIubConnectivity] ++ CellIubConnectivity ++ Acc);
+					(_F, [], Acc) ->
+						Acc
+			end,
+			Connectivity = F(F, IubLinks, []),
+			NewResource = R#resource{connectivity = Connectivity},
+			Ftrans = fun() ->
+					case mnesia:delete(resource, RncId, write) of
+						ok ->
+							mnesia:write(resource, NewResource, write)
+					end
+			end,
+			case mnesia:transaction(Ftrans) of
+				{aborted, Reason} ->
+					{error, Reason};
+				{atomic, ok} ->
+					[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
 parse_rnc({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
+		value = IubUtranCellDnList} | T1], #resource_rel{id = IubId,
+		name = IubDn, href = IubHref} = IubRel, Acc) ->
+	F = fun(F, [CellDn | T2], ConnectivityList) when is_list(CellDn) ->
+				CellResource = case im:get_resource_name(CellDn) of
+					{ok, Resource} ->
+						Resource;
+					{error, Reason} ->
+						{error, Reason}
+				end,
+				#resource{id = CellId, href = CellHref} = CellResource,
+				CellEndPoint = #point{name = CellDn, id = CellId, href = CellHref},
+				IubEndPoint = #point{name = IubDn, id = IubId, href = IubHref},
+				Connectivity = #connectivity{type = "Point-to-Point",
+						endPoints = [CellEndPoint, IubEndPoint]},
+				F(F, T2, [Connectivity | ConnectivityList]);
+			(_F, [], ConnectivityList) ->
+				ConnectivityList
+	end,
+	build_iub_cell_connectivity(T1, IubRel, F(F, IubUtranCellDnList, Acc));
+build_iub_cell_connectivity([_ | T], IubRel, Acc) ->
+	build_iub_cell_connectivity(T, IubRel, Acc);
+build_iub_cell_connectivity([], _IubRel, Acc) ->
+	Acc.
 
 % @hidden
 parse_rnc_attr([{startElement, {_, "attributes"} = QName, []} | T1],
@@ -1192,9 +1248,10 @@ parse_iub_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 	parse_iub_attr1(T2, undefined, Acc);
 parse_iub_attr1([{endElement, {_, "iubLinkUtranCell"} = QName} | T1],
 		undefined, Acc) ->
-	% @todo dnList
-	{[_ | _IubLinkUtranCell], T2} = pop(startElement, QName, T1),
-	parse_iub_attr1(T2, undefined, Acc);
+	{[_ | IubLinkUtranCell], T2} = pop(startElement, QName, T1),
+	IubUtranCellDnList = parse_iub_utrancell(IubLinkUtranCell, undefined, []),
+	parse_iub_attr1(T2, undefined, [#resource_char{name = "iubLinkUtranCell",
+			value = IubUtranCellDnList} | Acc]);
 parse_iub_attr1([{characters, Chars} | T],
 		"layerProtocolNameList" = Attr, Acc) ->
 	parse_iub_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
@@ -1221,6 +1278,17 @@ parse_iub_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 parse_iub_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_iub_attr1(T, Attr, Acc);
 parse_iub_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_iub_utrancell([{startElement, {_, "dn"} = _QName, []} | T],
+		undefined, Acc) ->
+	parse_iub_utrancell(T, "dn", Acc);
+parse_iub_utrancell([{characters, DN} | T], "dn" = Attr, Acc) ->
+	parse_iub_utrancell(T, Attr, [DN | Acc]);
+parse_iub_utrancell([{endElement, {_, Attr}} | T], Attr, Acc) ->
+	parse_iub_utrancell(T, undefined, Acc);
+parse_iub_utrancell([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
