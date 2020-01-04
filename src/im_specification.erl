@@ -15,8 +15,9 @@
 %%% See the License for the specific language governing permissions and
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @doc This {@link //stdlib/application. application} behaviour callback
-%%% 	module starts and stops the {@link //sigcale_im. sigscale_im} application.
+%%% @doc This library module is used to create sample specifications for
+%%% 	3GPP resource functions in the
+%%% 	{@link //sigcale_im. sigscale_im} application.
 %%%
 -module(im_specification).
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
