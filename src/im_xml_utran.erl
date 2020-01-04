@@ -204,7 +204,7 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 			related = Fdds ++ Lcrs ++ Hcrs ++ IubLinks},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = RncId} = R} ->
-			F = fun(F, [#resource_rel{id = IubId, name = IubDn,
+			F = fun F([#resource_rel{id = IubId, name = IubDn,
 					href = Href} = ResourceRel | T], Acc) ->
 						RncEndPoint = #point{name = RncDn, id = RncId,
 								href = "/resourceInventoryManagement/v3/resource/" ++ RncId},
@@ -217,11 +217,11 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 							{error, Reason} ->
 								{error, Reason}
 						end,
-						F(F, T, [RncIubConnectivity] ++ CellIubConnectivity ++ Acc);
-					(_F, [], Acc) ->
+						F(T, [RncIubConnectivity] ++ CellIubConnectivity ++ Acc);
+					F([], Acc) ->
 						Acc
 			end,
-			Connectivity = F(F, IubLinks, []),
+			Connectivity = F(IubLinks, []),
 			NewResource = R#resource{connectivity = Connectivity},
 			Ftrans = fun() ->
 					case mnesia:delete(resource, RncId, write) of
