@@ -206,11 +206,11 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 		{ok, #resource{id = RncId} = R} ->
 			F = fun F([#resource_rel{id = IubId, name = IubDn,
 					href = Href} = ResourceRel | T], Acc) ->
-						RncEndPoint = #point{name = RncDn, id = RncId,
+						RncEndpoint = #point{name = RncDn, id = RncId,
 								href = "/resourceInventoryManagement/v3/resource/" ++ RncId},
-						IubEndPoint = #point{name = IubDn, id = IubId, href = Href},
+						IubEndpoint = #point{name = IubDn, id = IubId, href = Href},
 						RncIubConnectivity = #connectivity{type = "Point-to-Point",
-								endPoints = [RncEndPoint, IubEndPoint]},
+								endpoint = [RncEndpoint, IubEndpoint]},
 						CellIubConnectivity = case im:get_resource(IubId) of
 							{ok, #resource{characteristic = Chars}} ->
 								build_iub_cell_connectivity(Chars, ResourceRel, []);
@@ -254,10 +254,10 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 						{error, Reason}
 				end,
 				#resource{id = CellId, href = CellHref} = CellResource,
-				CellEndPoint = #point{name = CellDn, id = CellId, href = CellHref},
-				IubEndPoint = #point{name = IubDn, id = IubId, href = IubHref},
+				CellEndpoint = #point{name = CellDn, id = CellId, href = CellHref},
+				IubEndpoint = #point{name = IubDn, id = IubId, href = IubHref},
 				Connectivity = #connectivity{type = "Point-to-Point",
-						endPoints = [CellEndPoint, IubEndPoint]},
+						endpoint = [CellEndpoint, IubEndpoint]},
 				F(F, T2, [Connectivity | ConnectivityList]);
 			(_F, [], ConnectivityList) ->
 				ConnectivityList

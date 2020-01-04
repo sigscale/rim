@@ -558,12 +558,12 @@ connectivity_spec([type | T], #connectivity_spec{type = Type} = R, Acc)
 connectivity_spec([type | T], #{"type" := Type} = M, Acc)
 		when is_list(Type) ->
 	connectivity_spec(T, M, Acc#connectivity_spec{type = Type});
-connectivity_spec([endPoint | T], #connectivity_spec{endPoint = EndPoints} = R, Acc)
-		when is_list(EndPoints) ->
-	connectivity_spec(T, R, Acc#{"endPoint" => point_spec(EndPoints)});
-connectivity_spec([endPoint | T], #{"endPoint" := EndPoints} = M, Acc)
-		when is_list(EndPoints) ->
-	connectivity_spec(T, M, Acc#connectivity_spec{endPoint = point_spec(EndPoints)});
+connectivity_spec([endpoint | T], #connectivity_spec{endpoint = Endpoints} = R, Acc)
+		when is_list(Endpoints) ->
+	connectivity_spec(T, R, Acc#{"endpoint" => point_spec(Endpoints)});
+connectivity_spec([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
+		when is_list(Endpoints) ->
+	connectivity_spec(T, M, Acc#connectivity_spec{endpoint = point_spec(Endpoints)});
 connectivity_spec([minItems | T], #connectivity_spec{minItems = MinItems} = R, Acc)
 		when is_integer(MinItems) ->
 	connectivity_spec(T, R, Acc#{"minItems" => MinItems});
@@ -600,12 +600,12 @@ connectivity([type | T], #connectivity{type = Type} = R, Acc)
 connectivity([type | T], #{"type" := Type} = M, Acc)
 		when is_list(Type) ->
 	connectivity(T, M, Acc#connectivity{type = Type});
-connectivity([endPoints | T], #connectivity{endPoints = EndPoints} = R, Acc)
-		when is_list(EndPoints) ->
-	connectivity(T, R, Acc#{"endPoints" => point(EndPoints)});
-connectivity([endPoints | T], #{"endPoints" := EndPoints} = M, Acc)
-		when is_list(EndPoints) ->
-	connectivity(T, M, Acc#connectivity{endPoints = point(EndPoints)});
+connectivity([endpoint | T], #connectivity{endpoint = Endpoints} = R, Acc)
+		when is_list(Endpoints) ->
+	connectivity(T, R, Acc#{"endpoint" => point(Endpoints)});
+connectivity([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
+		when is_list(Endpoints) ->
+	connectivity(T, M, Acc#connectivity{endpoint = point(Endpoints)});
 connectivity([minItems | T], #connectivity{minItems = MinItems} = R, Acc)
 		when is_integer(MinItems) ->
 	connectivity(T, R, Acc#{"minItems" => MinItems});

@@ -249,14 +249,14 @@
 -record(connectivity_spec,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		endPoint = [] :: [point_spec()] | '_',
+		endpoint = [] :: [point_spec()] | '_',
 		minItems :: pos_integer() | undefined | '_'}).
 -type connectivity_spec() :: #connectivity_spec{}.
 
 -record(connectivity,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		endPoints = [] :: [point()] | '_',
+		endpoint = [] :: [point()] | '_',
 		minItems :: pos_integer() | undefined | '_'}).
 -type connectivity() :: #connectivity{}.
 

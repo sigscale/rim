@@ -109,7 +109,7 @@
 	"connectivity": [
 		{
 			"type": "Point-to-Point",
-			"endPoint": [
+			"endpoint": [
 				{
 					"id": "8994462918",
 					"href": "/resourceInventoryManagement/v3/resource/8994462918",
@@ -124,7 +124,7 @@
 		},
 		{
 			"type": "Point-to-Point",
-			"endPoint": [
+			"endpoint": [
 				{
 					"id": "8994635074",
 					"href": "/resourceInventoryManagement/v3/resource/8994635074",
@@ -139,7 +139,7 @@
 		},
 		{
 			"type": "Point-to-Point",
-			"endPoint": [
+			"endpoint": [
 				{
 					"id": "8994462918",
 					"href": "/resourceInventoryManagement/v3/resource/8994462918",
@@ -154,7 +154,7 @@
 		},
 		{
 			"type": "Point-to-Point",
-			"endPoint": [
+			"endpoint": [
 				{
 					"id": "8994648933",
 					"href": "/resourceInventoryManagement/v3/resource/8994648933",
@@ -169,7 +169,7 @@
 		},
 		{
 			"type": "Point-to-Point",
-			"endPoint": [
+			"endpoint": [
 				{
 					"id": "8994462918",
 					"href": "/resourceInventoryManagement/v3/resource/8994462918",
@@ -184,7 +184,7 @@
 		},
 		{
 			"type": "Point-to-Point",
-			"endPoint": [
+			"endpoint": [
 				{
 					"id": "8994645445",
 					"href": "/resourceInventoryManagement/v3/resource/8994645445",

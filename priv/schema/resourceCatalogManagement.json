@@ -953,7 +953,7 @@
 				"name": {
 					"type": "string"
 				},
-				"endPoint": {
+				"endpoint": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/EndpointSpec"
@@ -962,7 +962,7 @@
 			},
 			"required": [
 				"name",
-				"endPoint"
+				"endpoint"
 			]
 		},
 		"EndpointSpec": {
