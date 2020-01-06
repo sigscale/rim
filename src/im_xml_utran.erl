@@ -1245,12 +1245,17 @@ parse_iub_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 	% @todo vnfParametersListType
 	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
 	parse_iub_attr1(T2, undefined, Acc);
-parse_iub_attr1([{endElement, {_, "iubLinkUtranCell"} = QName} | T1],
-		undefined, Acc) ->
-	{[_ | IubLinkUtranCell], T2} = pop(startElement, QName, T1),
-	IubUtranCellDnList = parse_iub_utrancell(IubLinkUtranCell, undefined, []),
+parse_iub_attr1([{endElement, {_, "dn"} = QName} | T1],
+		"iubLinkUtranCell", Acc) ->
+	{[_ | IubLinkUtranCell], T2} = pop(startElement, {"un", "iubLinkUtranCell"}, T1),
+	IubUtranCellDnList = parse_iub_utrancell(IubLinkUtranCell ++
+			[{endElement, QName}], undefined, []),
 	parse_iub_attr1(T2, undefined, [#resource_char{name = "iubLinkUtranCell",
 			value = IubUtranCellDnList} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"iubLinkUtranCell" = Attr, Acc) ->
+	DnList = string:tokens(Chars, ";"),
+	parse_iub_attr1(T, Attr, [#resource_char{name = Attr, value = DnList} | Acc]);
 parse_iub_attr1([{characters, Chars} | T],
 		"layerProtocolNameList" = Attr, Acc) ->
 	parse_iub_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
