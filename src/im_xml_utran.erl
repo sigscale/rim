@@ -25,6 +25,7 @@
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
 
 
 %%----------------------------------------------------------------------
@@ -206,8 +207,8 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 		{ok, #resource{id = RncId} = R} ->
 			F = fun F([#resource_rel{id = IubId, name = IubDn,
 					href = Href} = ResourceRel | T], Acc) ->
-						RncEndpoint = #point{name = RncDn, id = RncId,
-								href = "/resourceInventoryManagement/v3/resource/" ++ RncId},
+						RncEndpoint = #point{name = RncDn,
+								id = RncId, href = ?ResourcePath ++ RncId},
 						IubEndpoint = #point{name = IubDn, id = IubId, href = Href},
 						RncIubConnectivity = #connectivity{type = "Point-to-Point",
 								endpoint = [RncEndpoint, IubEndpoint]},
@@ -222,12 +223,10 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 						Acc
 			end,
 			Connectivity = F(IubLinks, []),
-			NewResource = R#resource{connectivity = Connectivity},
 			Ftrans = fun() ->
-					case mnesia:delete(resource, RncId, write) of
-						ok ->
-							mnesia:write(resource, NewResource, write)
-					end
+					[R] = mnesia:read(resource, RncId, write),
+					mnesia:write(resource,
+						R#resource{connectivity = Connectivity}, write)
 			end,
 			case mnesia:transaction(Ftrans) of
 				{aborted, Reason} ->
@@ -254,10 +253,10 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 						{error, Reason}
 				end,
 				#resource{id = CellId, href = CellHref} = CellResource,
-				CellEndpoint = #point{name = CellDn, id = CellId, href = CellHref},
 				IubEndpoint = #point{name = IubDn, id = IubId, href = IubHref},
+				CellEndpoint = #point{name = CellDn, id = CellId, href = CellHref},
 				Connectivity = #connectivity{type = "Point-to-Point",
-						endpoint = [CellEndpoint, IubEndpoint]},
+						endpoint = [IubEndpoint, CellEndpoint]},
 				F(F, T2, [Connectivity | ConnectivityList]);
 			(_F, [], ConnectivityList) ->
 				ConnectivityList
@@ -384,8 +383,8 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			FddRel = #resource_rel{id = Id, name = FddDn,
+					type = "contains", href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = UtranState#utran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -698,8 +697,8 @@ parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 			characteristic = TddHcrAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			HcrRel = #resource_rel{id = Id, name = TddHcrDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			HcrRel = #resource_rel{id = Id, name = TddHcrDn,
+					type = "contains", href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{tdd_hcrs = [HcrRel | HcrRels]}} | T1];
 		{error, Reason} ->
@@ -960,8 +959,8 @@ parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
 			characteristic = TddLcrAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			LcrRel = #resource_rel{id = Id, name = TddLcrDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			LcrRel = #resource_rel{id = Id, name = TddLcrDn,
+					type = "contains", href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{tdd_lcrs = [LcrRel | LcrRels]}} | T1];
 		{error, Reason} ->
@@ -1224,8 +1223,8 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			IubRel = #resource_rel{id = Id, name = IubDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ Id},
+			IubRel = #resource_rel{id = Id, name = IubDn,
+					type = "contains", href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{iubs = [IubRel | IubRels]}} | T1];
 		{error, Reason} ->
@@ -1246,12 +1245,17 @@ parse_iub_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
 	% @todo vnfParametersListType
 	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
 	parse_iub_attr1(T2, undefined, Acc);
-parse_iub_attr1([{endElement, {_, "iubLinkUtranCell"} = QName} | T1],
-		undefined, Acc) ->
-	{[_ | IubLinkUtranCell], T2} = pop(startElement, QName, T1),
-	IubUtranCellDnList = parse_iub_utrancell(IubLinkUtranCell, undefined, []),
+parse_iub_attr1([{endElement, {_, "dn"} = QName} | T1],
+		"iubLinkUtranCell", Acc) ->
+	{[_ | IubLinkUtranCell], T2} = pop(startElement, {"un", "iubLinkUtranCell"}, T1),
+	IubUtranCellDnList = parse_iub_utrancell(IubLinkUtranCell ++
+			[{endElement, QName}], undefined, []),
 	parse_iub_attr1(T2, undefined, [#resource_char{name = "iubLinkUtranCell",
 			value = IubUtranCellDnList} | Acc]);
+parse_iub_attr1([{characters, Chars} | T],
+		"iubLinkUtranCell" = Attr, Acc) ->
+	DnList = string:tokens(Chars, ";"),
+	parse_iub_attr1(T, Attr, [#resource_char{name = Attr, value = DnList} | Acc]);
 parse_iub_attr1([{characters, Chars} | T],
 		"layerProtocolNameList" = Attr, Acc) ->
 	parse_iub_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
