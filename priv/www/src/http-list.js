@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+ * Copyright (c) 2020 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
  * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
@@ -12,9 +12,6 @@ import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
-import '@vaadin/vaadin-grid/vaadin-grid-column-group.js';
-import '@vaadin/vaadin-lumo-styles/color.js';
-import '@polymer/polymer/lib/elements/dom-repeat.js';
 import './style-element.js';
 
 class httpList extends PolymerElement {

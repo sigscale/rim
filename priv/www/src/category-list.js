@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+ * Copyright (c) 2020 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
  * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
@@ -222,110 +222,99 @@ class categoryList extends PolymerElement {
 		var ajax = categoryList.shadowRoot.getElementById('categoryGetAjax');
 		var query = "";
 		delete ajax.params['filter'];
-		delete ajax.params['sort'];
-		function checkLike(param) {
-			return param.path == "name" || param.path == "description"
-					|| param.path == "@type" || param.path == "parentId"
-		}
-		params.filters.filter(checkLike).forEach(function(filter) {
-			if(filter.value) {
-				if (query) {
-					query = query + "," + filter.path + ".like=[" + filter.value + "%]";
-				} else {
-					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
-				}
-			}
-		});
-		function checkLifeCycle(param) {
-			return param.path == "lifecycleStatus";
-		}
-		params.filters.filter(checkLifeCycle).forEach(function(filter) {
-			if(filter.value) {
-				if("Obsolete".startsWith(filter.value)) {
+		params.filters.forEach(function(filter) {
+			if(filter.path != "lifecycleStatus") {
+				if(filter.value) {
 					if (query) {
-						query = query + ",lifecycleStatus=Obsolete";
+						query = query + "," + filter.path + ".like=[" + filter.value + "%]";
 					} else {
-						query = "[{lifecycleStatus=Obsolete";
-					}
-				} else if("Launched".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Launched";
-					} else {
-						query = "[{lifecycleStatus=Launched";
-					}
-				} else if("Active".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Active";
-					} else {
-						query = "[{lifecycleStatus=Active";
-					}
-				} else if("In ".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus.in=[In Study,In Design, In Test]";
-					} else {
-						query = "[{lifecycleStatus.in=[In Study,In Design, In Test]";
-					}
-				} else if("In Study".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=In Study";
-					} else {
-						query = "[{lifecycleStatus=In Study";
-					}
-				} else if("In Design".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=In Design";
-					} else {
-						query = "[{lifecycleStatus=In Design";
-					}
-				} else if("Re".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus.in=[Rejected,Retired]";
-					} else {
-						query = "[{lifecycleStatus.in=[Rejected,Retired]";
-					}
-				} else if("Rejected".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Rejected";
-					} else {
-						query = "[{lifecycleStatus=Rejected";
-					}
-				} else if("Retired".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",lifecycleStatus=Retired";
-					} else {
-						query = "[{lifecycleStatus=Retired";
-					}
-				} else {
-					if (query) {
-						query = query + ",lifecycleStatus=" + filter.value;
-					} else {
-						query = "[{lifecycleStatus=" + filter.value;
+						query = "[{" + filter.path + ".like=[" + filter.value + "%]";
 					}
 				}
-			}
-		});
-		function checkBool(param) {
-			return param.path == "isRoot";
-		}
-		params.filters.filter(checkBool).forEach(function(filter) {
-			if(filter.value) {
-				if("true".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",isRoot=true";
+			} else if(filter.path == "isRoot") {
+				if(filter.value) {
+					if("true".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",isRoot=true";
+						} else {
+							query = "[{isRoot=true";
+						}
+					} else if("false".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",isRoot=false";
+						} else {
+							query = "[{isRoot=false";
+						}
 					} else {
-						query = "[{isRoot=true";
+						if (query) {
+							query = query + ",isRoot=" + filter.value;
+						} else {
+							query = "[{isRoot=" + filter.value;
+						}
 					}
-				} else if("false".startsWith(filter.value)) {
-					if (query) {
-						query = query + ",isRoot=false";
+				}
+			} else {
+				if(filter.value) {
+					if("Obsolete".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=Obsolete";
+						} else {
+							query = "[{lifecycleStatus=Obsolete";
+						}
+					} else if("Launched".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=Launched";
+						} else {
+							query = "[{lifecycleStatus=Launched";
+						}
+					} else if("Active".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=Active";
+						} else {
+							query = "[{lifecycleStatus=Active";
+						}
+					} else if("In ".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus.in=[In Study,In Design, In Test]";
+						} else {
+							query = "[{lifecycleStatus.in=[In Study,In Design, In Test]";
+						}
+					} else if("In Study".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=In Study";
+						} else {
+							query = "[{lifecycleStatus=In Study";
+						}
+					} else if("In Design".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=In Design";
+						} else {
+							query = "[{lifecycleStatus=In Design";
+						}
+					} else if("Re".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus.in=[Rejected,Retired]";
+						} else {
+							query = "[{lifecycleStatus.in=[Rejected,Retired]";
+						}
+					} else if("Rejected".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=Rejected";
+						} else {
+							query = "[{lifecycleStatus=Rejected";
+						}
+					} else if("Retired".startsWith(filter.value)) {
+						if (query) {
+							query = query + ",lifecycleStatus=Retired";
+						} else {
+							query = "[{lifecycleStatus=Retired";
+						}
 					} else {
-						query = "[{isRoot=false";
-					}
-				} else {
-					if (query) {
-						query = query + ",isRoot=" + filter.value;
-					} else {
-						query = "[{isRoot=" + filter.value;
+						if (query) {
+							query = query + ",lifecycleStatus=" + filter.value;
+						} else {
+							query = "[{lifecycleStatus=" + filter.value;
+						}
 					}
 				}
 			}
