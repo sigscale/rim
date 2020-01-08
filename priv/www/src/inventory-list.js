@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+ * Copyright (c) 2020 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
  * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
@@ -13,11 +13,9 @@ import {} from '@polymer/polymer/lib/elements/dom-if.js';
 import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/iron-icons/iron-icons.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
-import '@vaadin/vaadin-grid/vaadin-grid-column-group.js';
 import './style-element.js';
 
 class inventoryList extends PolymerElement {
@@ -276,29 +274,17 @@ class inventoryList extends PolymerElement {
 		var inventoryList = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-list');
 		var ajax = inventoryList.shadowRoot.getElementById('inventoryGetAjax');
 		delete ajax.params['filter'];
-		delete ajax.params['sort'];
 		var query = "";
-		function checkLike(param) {
-			return param.path == "name" || param.path == "description"
-				|| param.path == "@type" || param.path == "category"
-				|| param.path == "lifecycleStatus" || param.path == "lifecycleSubStatus";
-		}
-		params.filters.filter(checkLike).forEach(function(filter) {
+		params.filters.forEach(function(filter) {
 			if(filter.value) {
-				if(filter.path == "name") {
-					if(filter.value.includes("=")) {
-						var sourceReplace = filter.value.replace(/=/g, "\\=").replace(/,/g, "\\,");
-						if(query) {
-							query = query + "," + filter.path + ".like=[" + sourceReplace + "%]";
-						} else {
-							query = "[{" + filter.path + ".like=[" + sourceReplace + "%]";
-						}
-					} else if(query) {
-						query = query + "," + filter.path + ".like=[" + filter.value + "%]";
+				if(filter.value.includes("=")) {
+					var sourceReplace = filter.value.replace(/=/g, "\\=").replace(/,/g, "\\,");
+					if(query) {
+						query = query + "," + filter.path + ".like=[" + sourceReplace + "%]";
 					} else {
-						query = "[{" + filter.path + ".like=[" + filter.value + "%]";
+						query = "[{" + filter.path + ".like=[" + sourceReplace + "%]";
 					}
-				} else if (query) {
+				} else if(query) {
 					query = query + "," + filter.path + ".like=[" + filter.value + "%]";
 				} else {
 					query = "[{" + filter.path + ".like=[" + filter.value + "%]";
