@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+ * Copyright (c) 2020 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
  * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
@@ -100,23 +100,23 @@ class catalogAdd extends PolymerElement {
 		var ajax = this.$.catalogAddAjax;
 		ajax.method = "POST";
 		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/";
-		var cat = new Object();
+		var catalogAddObj = new Object();
 		if(this.catalogName) {
-			cat.name = this.catalogName;
+			catalogAddObj.name = this.catalogName;
 		}
 		if(this.catalogDescription) {
-			cat.description = this.catalogDescription;
+			catalogAddObj.description = this.catalogDescription;
 		}
 		if(this.catalogType) {
-			cat['@type'] = this.catalogType;
+			catalogAddObj['@type'] = this.catalogType;
 		}
 		if(this.catalogStatus) {
-			cat.lifecycleStatus = this.catalogStatus;
+			catalogAddObj.lifecycleStatus = this.catalogStatus;
 		}
 		if(this.catalogVersion) {
-			cat.version = this.catalogVersion;
+			catalogAddObj.version = this.catalogVersion;
 		}
-		ajax.body = JSON.stringify(cat);
+		ajax.body = JSON.stringify(catalogAddObj);
 		ajax.generateRequest();
 	}
 
