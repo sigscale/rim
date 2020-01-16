@@ -741,10 +741,12 @@ get_resource_name(ResourceName) when is_list(ResourceName) ->
 	case mnesia:transaction(F) of
 		{aborted, Reason} ->
 			{error, Reason};
-		{atomic, [Resource]} ->
-			{ok, Resource};
+%		{atomic, [Resource]} ->
+%			{ok, Resource};
 		{atomic, []} ->
-			{error, not_found}
+			{error, not_found};
+		{atomic, [Resource | _]} ->
+			{ok, Resource}
 	end.
 
 -spec add_user(Username, Password, Locale) -> Result
