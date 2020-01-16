@@ -185,6 +185,30 @@ parse_mo({startElement, _, "managedObject", QName,
 		[#state{parse_module = ?MODULE, parse_function = parse_ecell_fdd,
 		dn_prefix = [DN], location = Location,
 		stack = [{startElement, QName,Attributes} | Stack]} | State];
+parse_mo({startElement, _, "managedObject", QName,
+		[{[], [], "class", "FUUNIT"}, _, {[], [], "distName", DN}, _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack} | _] = State) ->
+		Tokens = string:tokens(DN, "/"),
+		F = fun(_F, ["HW-1" | _], Acc) ->
+					lists:flatten(lists:join("/", lists:reverse(Acc)));
+				(F, [H | T], Acc) ->
+					F(F, T, [H | Acc])
+		end,
+		MeDN = F(F, Tokens, []),
+		case im:get_resource_name(MeDN) of
+			{ok, #resource{characteristic = Chars}} ->
+				Fchars = fun(#resource_char{name = "peeParametersList"}) ->
+							true;
+						(_) ->
+							false
+				end,
+				[#resource_char{value = Location} | _] = lists:filter(Fchars, Chars),
+				[#state{parse_module = ?MODULE, parse_function = parse_hw,
+						dn_prefix = [DN], location = Location,
+						stack = [{startElement, QName, Attributes} | Stack]} | State];
+			{error, Reason} ->
+				{error, Reason}
+		end;
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
 	State.
@@ -508,18 +532,6 @@ parse_gsm_abis_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
-parse_hw({characters, SideId}, [#state{rule = RuleId, stack = [{startElement,
-		{_, "p"}, [{[], [], "name", "locationName"}]} | _]} = State | T]) ->
-	case im:get_pee(RuleId, SideId) of
-		{ok, []} ->
-			[State | T];
-		{ok, PEEMonitoredEntities} ->
-			PeeParametersList =
-					parse_peeParameterslist(PEEMonitoredEntities, []),
-			[State#state{location = PeeParametersList} | T];
-		{error, _Reason} ->
-			[State | T]
-	end;
 parse_hw({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_hw({startElement, _, _, QName, Attributes},
