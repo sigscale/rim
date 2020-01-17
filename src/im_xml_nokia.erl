@@ -548,8 +548,19 @@ parse_hw({endElement, _Uri, "managedObject", QName},
 			class_type = "PeeParametersListType", value = Location,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
 					"definitions/PeeParametersListType"},
+	Fchars = fun(#resource_char{name = "supportedByUnit"}) ->
+				true;
+			(_) ->
+				false
+	end,
+	Description = case lists:filter(Fchars, HwAttr) of
+		[#resource_char{value = SupportBy} | _] ->
+			SupportBy;
+		[] ->
+			undefined
+	end,
 	Resource = #resource{name = HwDn,
-			description = "Hardware Inventory",
+			description = Description,
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
@@ -570,16 +581,33 @@ parse_hw({endElement, _Uri, _LocalName, QName} = _Event,
 parse_hw_attr([{startElement, {[], "p"},
 		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
 	parse_hw_attr(T, Attr, Acc);
-parse_hw_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
-	% @todo bscOptions
-	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
-	parse_hw_attr(T2, undefined, Acc);
+parse_hw_attr([{startElement, {_, "list"} = QName,
+		[{[], [], "name", "supportedByUnit"}]} | T1], undefined, Acc) ->
+	{[_ | SupportedByUnit], T2} = pop(endElement, QName, T1),
+	Units = case parse_functional_unit_type(SupportedByUnit, []) of
+		[Name] ->
+			Name;
+		Names ->
+			lists:flatten(lists:join(",", Names))
+	end,
+	parse_hw_attr(T2, undefined,
+			[#resource_char{name = "supportedByUnit", value = Units} | Acc]);
 parse_hw_attr([{characters, Chars} | T], Attr, Acc) ->
 	parse_hw_attr(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
 parse_hw_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
 	parse_hw_attr(T, undefined, Acc);
 parse_hw_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_functional_unit_type([{startElement, {[], "p"}, []} | T], Acc) ->
+	parse_functional_unit_type(T, Acc);
+parse_functional_unit_type([{characters, Chars} | T], Acc) ->
+	parse_functional_unit_type(T, [Chars | Acc]);
+parse_functional_unit_type([{endElement, {[], "p"}} | T], Acc) ->
+	parse_functional_unit_type(T, Acc);
+parse_functional_unit_type([], Acc) ->
 	Acc.
 
 %% @hidden
