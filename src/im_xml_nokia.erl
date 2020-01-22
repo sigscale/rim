@@ -999,7 +999,13 @@ parse_ecell_fdd({endElement, _Uri, _LocalName, QName} = _Event,
 parse_ecell_fdd_attr([{startElement, {[], "p"},
 		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
 	parse_ecell_fdd_attr(T, Attr, Acc);
-parse_ecell_fdd_attr([{startElement, {_, "list"} = QName, _} | T1], undefined, Acc) ->
+parse_ecell_fdd_attr([{startElement,
+		{_, "defaults"} = QName, _} | T1],undefined, Acc) ->
+	% @todo
+	{[_ | _Defaults], T2} = pop(endElement, QName, T1),
+	parse_ecell_fdd_attr(T2, undefined, Acc);
+parse_ecell_fdd_attr([{startElement,
+		{_, "list"} = QName, _} | T1], undefined, Acc) ->
 	% @todo
 	{[_ | _BscOptions], T2} = pop(endElement, QName, T1),
 	parse_ecell_fdd_attr(T2, undefined, Acc);
