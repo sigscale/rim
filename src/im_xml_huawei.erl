@@ -21,7 +21,7 @@
 
 %% export the im private API
 -export([import/2, parse_mo/2, parse_gsm_mo/2, parse_umts_mo/2,
-		parse_msc_server_ne/2,
+		parse_core_mo/2,
 		parse_gsm_function/2, parse_gsm_bts/2, parse_gsm_gcell/2,
 		parse_umts_function/2, parse_umts_nodeb/2, parse_umts_ucell/2]).
 
@@ -124,10 +124,12 @@ parse_mo({startElement, _, "MO", QName,
 		dn_prefix = ["BSC6910UMTSNE"],
 		stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mo({startElement, _, "MO", QName,
-		[{[], [], "className", "MSCServerNE"} | _] = Attributes},
-		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
-		[State#state{parse_module = ?MODULE, parse_function = parse_msc_server_ne,
-		dn_prefix = ["MSCServerNE"],
+		[{[], [], "className", ClassName} | _] = Attributes},
+		[#state{dn_prefix = [], stack = Stack} = State | T])
+		when ClassName == "MSCServerNE"; ClassName == "MGWNE";
+		ClassName == "CGPOMUNE"; ClassName == "iGWBNE";
+		ClassName == "UGWNE"; ClassName == "USNNE" ->
+		[State#state{parse_module = ?MODULE, parse_function = parse_core_mo,
 		stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
@@ -216,13 +218,16 @@ parse_umts_mo(_Event, [#state{parse_module = ?MODULE,
 	State.
 
 %% @hidden
-parse_msc_server_ne({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+parse_core_mo({characters, DN}, [#state{stack = [{startElement, {_, "attr"},
+		[{[], [], "name", "name"}]} | _]} = State | T]) ->
+	[State#state{dn_prefix = [DN]} | T];
+parse_core_mo({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
-parse_msc_server_ne({startElement, _, "MO", _QName, _Attributes},
+parse_core_mo({startElement, _, "MO", _QName, _Attributes},
 		[#state{dn_prefix = [MeDn| _],
 		stack = Stack, spec_cache = Cache} = State]) ->
 	{[_ | T], _NewStack} = pop(startElement, {[], "MO"}, Stack),
-	MeAttr = parse_msc_server_ne_attr(T, undefined, []),
+	MeAttr = parse_core_mo_attr(T, undefined, []),
 	ClassType = "ManagedElement",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = MeDn,
@@ -239,23 +244,23 @@ parse_msc_server_ne({startElement, _, "MO", _QName, _Attributes},
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
-parse_msc_server_ne({startElement, _, _, QName, Attributes},
+parse_core_mo({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_msc_server_ne({endElement, _Uri, _LocalName, QName} = _Event,
+parse_core_mo({endElement, _Uri, _LocalName, QName} = _Event,
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
-parse_msc_server_ne_attr([{startElement, {[], "attr"},
+parse_core_mo_attr([{startElement, {[], "attr"},
 		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
-	parse_msc_server_ne_attr(T, Attr, Acc);
-parse_msc_server_ne_attr([{characters, Chars} | T], Attr, Acc) ->
-	parse_msc_server_ne_attr(T, Attr,
+	parse_core_mo_attr(T, Attr, Acc);
+parse_core_mo_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_core_mo_attr(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_msc_server_ne_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
-	parse_msc_server_ne_attr(T, undefined, Acc);
-parse_msc_server_ne_attr([], undefined, Acc) ->
+parse_core_mo_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_core_mo_attr(T, undefined, Acc);
+parse_core_mo_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
