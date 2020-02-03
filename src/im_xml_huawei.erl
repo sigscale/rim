@@ -125,12 +125,12 @@ parse_mo({startElement, _, "MO", QName,
 		stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mo({startElement, _, "MO", QName,
 		[{[], [], "className", ClassName} | _] = Attributes},
-		[#state{dn_prefix = [], stack = Stack} = State | T])
+		[#state{dn_prefix = [], rule = RuleId, stack = Stack} = State | T])
 		when ClassName == "MSCServerNE"; ClassName == "MGWNE";
 		ClassName == "CGPOMUNE"; ClassName == "iGWBNE";
 		ClassName == "UGWNE"; ClassName == "USNNE" ->
 		[State#state{parse_module = ?MODULE, parse_function = parse_core_mo,
-		stack = [{startElement, QName, Attributes} | Stack]} | T];
+		rule = RuleId, stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
 	State.
@@ -218,18 +218,31 @@ parse_umts_mo(_Event, [#state{parse_module = ?MODULE,
 	State.
 
 %% @hidden
-parse_core_mo({characters, DN}, [#state{stack = [{startElement, {_, "attr"},
-		[{[], [], "name", "name"}]} | _]} = State | T]) ->
-	[State#state{dn_prefix = [DN]} | T];
+parse_core_mo({characters, DN}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "attr"}, [{[], [], "name", "name"}]} | _]} = State | T]) ->
+	case im:get_pee(RuleId, DN) of
+		{ok, []} ->
+			[State | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{dn_prefix = [DN], location = PeeParametersList} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_core_mo({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_core_mo({startElement, _, "MO", _QName, _Attributes},
-		[#state{dn_prefix = [MeDn| _],
+		[#state{dn_prefix = [MeDn| _], location = Location,
 		stack = Stack, spec_cache = Cache} = State]) ->
 	{[_ | T], _NewStack} = pop(startElement, {[], "MO"}, Stack),
 	MeAttr = parse_core_mo_attr(T, undefined, []),
 	ClassType = "ManagedElement",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MeDn,
 			description = "",
 			category = "",
@@ -237,7 +250,7 @@ parse_core_mo({startElement, _, "MO", _QName, _Attributes},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/ManagedElement",
 			specification = Spec,
-			characteristic = MeAttr},
+			characteristic = [PeeParam | MeAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[State#state{spec_cache = NewCache, parse_function = parse_mo}];
@@ -768,6 +781,20 @@ parse_umts_ucell_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
 	parse_umts_ucell_attr(T, undefined, Acc);
 parse_umts_ucell_attr([], undefined, Acc) ->
 	Acc.
+
+% @hidden
+parse_peeParameterslist([#resource{characteristic = ResourceChars} | Resources], Acc) ->
+	parse_peeParameterslist1(ResourceChars, Resources, Acc);
+parse_peeParameterslist([], Acc) ->
+	Acc.
+% @hidden
+parse_peeParameterslist1([#resource_char{name = "peeMeDescription",
+		value = ValueMap} | _], Resources, Acc) ->
+	parse_peeParameterslist(Resources, [ValueMap | Acc]);
+parse_peeParameterslist1([_H | T], Resources, Acc) ->
+	parse_peeParameterslist1(T, Resources, Acc);
+parse_peeParameterslist1([], Resources, Acc) ->
+	parse_peeParameterslist(Resources, Acc).
 
 %%----------------------------------------------------------------------
 %%  internal functions
