@@ -82,6 +82,10 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-im-iu-sw.json \
 		$(abs_builddir)/specification-im-iu-lic.json \
 		$(abs_builddir)/specification-generic-me.json \
+		$(abs_builddir)/specification-huawei-core-usn.json \
+		$(abs_builddir)/specification-huawei-core-ugw.json \
+		$(abs_builddir)/specification-huawei-core-cgpomu.json \
+		$(abs_builddir)/specification-huawei-core-igwb.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -650,6 +654,38 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-generic-me.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/USNFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-huawei-core-usn.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/UGWFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-huawei-core-ugw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/CGPOMUFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-huawei-core-cgpomu.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/iGWBFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-huawei-core-igwb.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

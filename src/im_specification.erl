@@ -42,6 +42,7 @@
 -export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0,
 		im_iu_lic/0]).
 -export([generic_me/0]).
+-export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0]).
 
 -include("im.hrl").
 
@@ -4060,6 +4061,142 @@ gsm_abis_link() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "AbisLink",
 					schema = "/resourceInventoryManagement/v3/schema/AbisLink"},
+			characteristic = Chars}.
+
+-spec huawei_usn() -> specification().
+%% @doc Huawei Unified Serving Node (USN) resource specification.
+huawei_usn() ->
+	Fdn = #specification_char{name = "fdn",
+			description = "",
+			value_type = "string"},
+	ClassName = #specification_char{name = "className",
+			description = "",
+			value_type = "string"},
+	CLASSNAME = #specification_char{name = "cLASSNAME",
+			description = "",
+			value_type = "string"},
+	MoIndex = #specification_char{name = "mOIndex",
+			description = "Managed Object Index",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	NeID = #specification_char{name = "neID",
+			description = "Network Element Identity",
+			value_type = "string"},
+	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
+	#specification{name = "USNFunction",
+			description = "Unified Serving Node",
+			class_type = "USNFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/USNFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "USNFunction",
+					schema = ""},
+			characteristic = Chars}.
+
+-spec huawei_ugw() -> specification().
+%% @doc Huawei Universal Gateway (UGW) resource specification.
+huawei_ugw() ->
+	Fdn = #specification_char{name = "fdn",
+			description = "",
+			value_type = "string"},
+	ClassName = #specification_char{name = "className",
+			description = "",
+			value_type = "string"},
+	CLASSNAME = #specification_char{name = "CLASSNAME",
+			description = "",
+			value_type = "string"},
+	MoIndex = #specification_char{name = "MOIndex",
+			description = "Managed Object Index",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	NeID = #specification_char{name = "neID",
+			description = "Network Element Identity",
+			value_type = "string"},
+	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
+	#specification{name = "UGWFunction",
+			description = "Universal Gateway",
+			class_type = "UGWFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/UGWFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "UGWFunction",
+					schema = ""},
+			characteristic = Chars}.
+
+-spec huawei_cgpomu() -> specification().
+%% @doc Huawei Carrier Grade Platform (CGP) Operation and Management Unit (OMU) resource specification.
+huawei_cgpomu() ->
+	Fdn = #specification_char{name = "fdn",
+			description = "",
+			value_type = "string"},
+	ClassName = #specification_char{name = "className",
+			description = "",
+			value_type = "string"},
+	CLASSNAME = #specification_char{name = "CLASSNAME",
+			description = "",
+			value_type = "string"},
+	MoIndex = #specification_char{name = "MOIndex",
+			description = "Managed Object Index",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	NeID = #specification_char{name = "neID",
+			description = "Network Element Identity",
+			value_type = "string"},
+	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
+	#specification{name = "CGPOMUFunction",
+			description = "Carrier Grade Platform Operation and Management Unit",
+			class_type = "CGPOMUFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/CGPOMUFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "CGPOMUFunction",
+					schema = ""},
+			characteristic = Chars}.
+
+-spec huawei_igwb() -> specification().
+%% @doc Huawei Charging Gateway (iGWB) resource specification.
+huawei_igwb() ->
+	Fdn = #specification_char{name = "fdn",
+			description = "",
+			value_type = "string"},
+	ClassName = #specification_char{name = "className",
+			description = "",
+			value_type = "string"},
+	CLASSNAME = #specification_char{name = "CLASSNAME",
+			description = "",
+			value_type = "string"},
+	MoIndex = #specification_char{name = "MOIndex",
+			description = "Managed Object Index",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	NeID = #specification_char{name = "neID",
+			description = "Network Element Identity",
+			value_type = "string"},
+	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
+	#specification{name = "iGWBFunction",
+			description = "Charging Gateway",
+			class_type = "iGWBFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/iGWBFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "iGWBFunction",
+					schema = ""},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
