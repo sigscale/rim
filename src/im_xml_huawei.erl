@@ -21,7 +21,8 @@
 
 %% export the im private API
 -export([import/2, parse_mo/2, parse_gsm_mo/2, parse_umts_mo/2,
-		parse_core_mo/2,
+		parse_core_mo/2, parse_msc_server/2, parse_mgw/2, parse_usn_function/2,
+		parse_ugw_function/2, parse_cgpomu_function/2, parse_igwb_function/2,
 		parse_gsm_function/2, parse_gsm_bts/2, parse_gsm_gcell/2,
 		parse_umts_function/2, parse_umts_nodeb/2, parse_umts_ucell/2]).
 
@@ -124,13 +125,56 @@ parse_mo({startElement, _, "MO", QName,
 		dn_prefix = ["BSC6910UMTSNE"],
 		stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mo({startElement, _, "MO", QName,
-		[{[], [], "className", ClassName} | _] = Attributes},
-		[#state{dn_prefix = [], rule = RuleId, stack = Stack} = State | T])
+		[{[], [], "className", ClassName}, {[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], rule = RuleId, stack = Stack} | _] = State)
 		when ClassName == "MSCServerNE"; ClassName == "MGWNE";
 		ClassName == "CGPOMUNE"; ClassName == "iGWBNE";
 		ClassName == "UGWNE"; ClassName == "USNNE" ->
-		[State#state{parse_module = ?MODULE, parse_function = parse_core_mo,
-		rule = RuleId, stack = [{startElement, QName, Attributes} | Stack]} | T];
+		[#state{parse_module = ?MODULE, parse_function = parse_core_mo,
+		rule = RuleId, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "MSCServerFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_msc_server,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "MgwFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_mgw,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "USNFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_usn_function,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "UGWFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_ugw_function,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "CGPOMUFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_cgpomu_function,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "iGWBFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_igwb_function,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
 	State.
@@ -219,24 +263,25 @@ parse_umts_mo(_Event, [#state{parse_module = ?MODULE,
 
 %% @hidden
 parse_core_mo({characters, DN}, [#state{rule = RuleId, stack = [{startElement,
-		{_, "attr"}, [{[], [], "name", "name"}]} | _]} = State | T]) ->
+		{_, "attr"}, [{[], [], "name", "name"}]} | _] = Stack} = State | T]) ->
 	case im:get_pee(RuleId, DN) of
 		{ok, []} ->
-			[State | T];
+			[State#state{stack = [{characters, DN} | Stack]} | T];
 		{ok, PEEMonitoredEntities} ->
 			PeeParametersList =
 					parse_peeParameterslist(PEEMonitoredEntities, []),
-			[State#state{dn_prefix = [DN], location = PeeParametersList} | T];
+			[State#state{location = PeeParametersList,
+					stack = [{characters, DN} | Stack]} | T];
 		{error, _Reason} ->
 			[State | T]
 	end;
 parse_core_mo({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_core_mo({startElement, _, "MO", _QName, _Attributes},
-		[#state{dn_prefix = [MeDn| _], location = Location,
-		stack = Stack, spec_cache = Cache} = State]) ->
-	{[_ | T], _NewStack} = pop(startElement, {[], "MO"}, Stack),
-	MeAttr = parse_core_mo_attr(T, undefined, []),
+		[#state{dn_prefix = [MeDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MeAttr = parse_core_mo_attr(T2, undefined, []),
 	ClassType = "ManagedElement",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
@@ -253,7 +298,8 @@ parse_core_mo({startElement, _, "MO", _QName, _Attributes},
 			characteristic = [PeeParam | MeAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
-			[State#state{spec_cache = NewCache, parse_function = parse_mo}];
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -261,6 +307,222 @@ parse_core_mo({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_core_mo({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_msc_server({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_msc_server({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [MscDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MscServerAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "MscServerFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MscDn,
+			description = "Mobile Switch Center (MSC) Server",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/MscServerFunction",
+			specification = Spec,
+			characteristic = [PeeParam | MscServerAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_msc_server({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_msc_server({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_mgw({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_mgw({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [MgwDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MgwAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "CsMgwFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MgwDn,
+			description = "Circuit switched Media Gateway",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			specification = Spec,
+			characteristic = [PeeParam | MgwAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_mgw({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_mgw({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_usn_function({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_usn_function({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [UsnDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	UsnAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "USNFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = UsnDn,
+			description = "Circuit switched Media Gateway",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			specification = Spec,
+			characteristic = [PeeParam | UsnAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_usn_function({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_usn_function({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ugw_function({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ugw_function({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [UgwDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	UgwAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "UGWFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = UgwDn,
+			description = "Circuit switched Media Gateway",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			specification = Spec,
+			characteristic = [PeeParam | UgwAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ugw_function({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ugw_function({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_cgpomu_function({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_cgpomu_function({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [CgpomuDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	CgpomuAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "CGPOMUFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = CgpomuDn,
+			description = "Carrier Grade Platform Operation and Management Unit",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/CGPOMUFunction",
+			specification = Spec,
+			characteristic = [PeeParam | CgpomuAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_cgpomu_function({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_cgpomu_function({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_igwb_function({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_igwb_function({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_igwb_function({endElement, _, "MO", QName},
+		[#state{dn_prefix = [IgwbDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	IgwbAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "iGWBFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = IgwbDn,
+			description = "Carrier Grade Platform Operation and Management Unit",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/iGWBFunction",
+			specification = Spec,
+			characteristic = [PeeParam | IgwbAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_igwb_function({endElement, _Uri, _LocalName, QName} = _Event,
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
