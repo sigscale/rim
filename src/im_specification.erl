@@ -42,7 +42,8 @@
 -export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0,
 		im_iu_lic/0]).
 -export([generic_me/0]).
--export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0]).
+-export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
+		huawei_uscdb/0, huawei_spsv3/0]).
 
 -include("im.hrl").
 
@@ -4197,6 +4198,74 @@ huawei_igwb() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "iGWBFunction",
 					schema = ""},
+			characteristic = Chars}.
+
+-spec huawei_uscdb() -> specification().
+%% @doc
+huawei_uscdb() ->
+	Fdn = #specification_char{name = "fdn",
+			description = "",
+			value_type = "string"},
+	ClassName = #specification_char{name = "className",
+			description = "",
+			value_type = "string"},
+	CLASSNAME = #specification_char{name = "CLASSNAME",
+			description = "",
+			value_type = "string"},
+	MoIndex = #specification_char{name = "MOIndex",
+			description = "Managed Object Index",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	NeID = #specification_char{name = "neID",
+			description = "Network Element Identity",
+			value_type = "string"},
+	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
+	#specification{name = "USCDBFunction",
+			description = "",
+			class_type = "USCDBFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/USCDBFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "USCDBFunction",
+					schema = "/resourceInventoryManagement/v3/schema/USCDBFunction"},
+			characteristic = Chars}.
+
+-spec huawei_spsv3() -> specification().
+%% @doc
+huawei_spsv3() ->
+	Fdn = #specification_char{name = "fdn",
+			description = "",
+			value_type = "string"},
+	ClassName = #specification_char{name = "className",
+			description = "",
+			value_type = "string"},
+	CLASSNAME = #specification_char{name = "CLASSNAME",
+			description = "",
+			value_type = "string"},
+	MoIndex = #specification_char{name = "MOIndex",
+			description = "Managed Object Index",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	NeID = #specification_char{name = "neID",
+			description = "Network Element Identity",
+			value_type = "string"},
+	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
+	#specification{name = "SPSV3Function",
+			description = "",
+			class_type = "SPSV3FunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/SPSV3FunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "SPSV3Function",
+					schema = "/resourceInventoryManagement/v3/schema/SPSV3Function"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

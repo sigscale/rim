@@ -283,7 +283,8 @@ install8(Nodes, Acc) ->
 		pee_me,
 		epcn3ai_proxy, epcn3ai_server,
 		im_iu, im_tmaiu, im_aiu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic,
-		huawei_usn, huawei_ugw, huawei_cgpomu, huawei_igwb],
+		huawei_usn, huawei_ugw, huawei_cgpomu, huawei_igwb,
+		huawei_uscdb, huawei_spsv3],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
 install8([F | T], Nodes, Acc) ->

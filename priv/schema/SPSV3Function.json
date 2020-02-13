@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/SPSV3Function",
+	"title": "Huawei Core SPSV3",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"fdn",
+											"className",
+											"cLASSNAME",
+											"mOIndex",
+											"name",
+											"neID"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

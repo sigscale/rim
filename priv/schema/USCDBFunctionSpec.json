@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/USCDBFunctionSpec",
+	"title": "Huawei Core USCDB Specification",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"fdn",
+											"className",
+											"cLASSNAME",
+											"mOIndex",
+											"name",
+											"neID"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

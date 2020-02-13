@@ -1,0 +1,63 @@
+{
+	"name": "SPSV3Function",
+	"description": "",
+	"@type": "SPSV3FunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SPSV3FunctionSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-02-13T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "SPSV3FunctionSpec",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SPSV3FunctionSpec"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-02-13T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "fdn",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "className",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "cLASSNAME",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "mOIndex",
+			"description": "Managed Object Index",
+			"valueType": "string"
+		},
+		{
+			"name": "name",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "neID",
+			"description": "",
+			"valueType": "string"
+		}
+	]
+}

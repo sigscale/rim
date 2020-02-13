@@ -86,6 +86,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-huawei-core-ugw.json \
 		$(abs_builddir)/specification-huawei-core-cgpomu.json \
 		$(abs_builddir)/specification-huawei-core-igwb.json \
+		$(abs_builddir)/specification-huawei-core-uscdb.json \
+		$(abs_builddir)/specification-huawei-core-spsv3.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -686,6 +688,22 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-igwb.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/USCDBFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-huawei-core-uscdb.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SPSV3FunctionSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-huawei-core-spsv3.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
