@@ -24,6 +24,7 @@
 		parse_core_mo/2, parse_msc_server/2, parse_mgw/2, parse_usn_function/2,
 		parse_ugw_function/2, parse_cgpomu_function/2, parse_igwb_function/2,
 		parse_uscdb_function/2, parse_spsv3_function/2,
+		parse_msc_sig_point/2, parse_msc_server_office/2,
 		parse_gsm_function/2, parse_gsm_bts/2, parse_gsm_gcell/2,
 		parse_umts_function/2, parse_umts_nodeb/2, parse_umts_ucell/2]).
 
@@ -189,6 +190,20 @@ parse_mo({startElement, _, "MO", QName,
 		{[], [], "fdn", DN}] = Attributes},
 		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
 		[#state{parse_module = ?MODULE, parse_function = parse_spsv3_function,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "MSCServerIntraOfiSigPoint"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_msc_sig_point,
+		location = Location, dn_prefix = [DN],
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _, "MO", QName,
+		[{[], [], "className", "MSCServerOffice"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{dn_prefix = [], stack = Stack, location = Location} | _] = State) ->
+		[#state{parse_module = ?MODULE, parse_function = parse_msc_server_office,
 		location = Location, dn_prefix = [DN],
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
@@ -611,6 +626,134 @@ parse_spsv3_function({endElement, _, "MO", QName},
 			throw({add_resource, Reason})
 	end;
 parse_spsv3_function({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_msc_sig_point({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_msc_sig_point({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [MscSigPointDn | _], location = Location,
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MscSigPointAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "MSCServerIntraOfiSigPoint",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MscSigPointDn,
+			description = "",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/MSCServerIntraOfiSigPoint",
+			specification = Spec,
+			characteristic = [PeeParam | MscSigPointAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_msc_sig_point({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_msc_sig_point({endElement, _, "MO", _QName},
+		[#state{dn_prefix = [MscSigPointDn | _], location = Location,
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MscSigPointAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "MSCServerIntraOfiSigPoint",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MscSigPointDn,
+			description = "",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/MSCServerIntraOfiSigPoint",
+			specification = Spec,
+			characteristic = [PeeParam | MscSigPointAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_msc_sig_point({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_msc_server_office({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_msc_server_office({startElement, _, "MO", _QName, _Attributes},
+		[#state{dn_prefix = [MscServerOfficeDn | _], location = Location,
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MscServerOfficeAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "MSCServerOffice",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MscServerOfficeDn,
+			description = "",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/MSCServerOffice",
+			specification = Spec,
+			characteristic = [PeeParam | MscServerOfficeAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_msc_server_office({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_msc_server_office({endElement, _, "MO", _QName},
+		[#state{dn_prefix = [MscServerOfficeDn | _], location = Location,
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MscServerOfficeAttr = parse_core_mo_attr(T2, undefined, []),
+	ClassType = "MSCServerOffice",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MscServerOfficeDn,
+			description = "",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/MSCServerOffice",
+			specification = Spec,
+			characteristic = [PeeParam | MscServerOfficeAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_msc_server_office({endElement, _Uri, _LocalName, QName} = _Event,
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
