@@ -1,0 +1,61 @@
+{
+	"$id": "http://sigscale.org/schema/MSCServerIntraOfiSigPointSpec",
+	"title": "Core MSCServerIntraOfiSigPoint Specification",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"fdn",
+											"className",
+											"cNID",
+											"iN1",
+											"iN2",
+											"iNT2S",
+											"iNTS",
+											"iP2C",
+											"iPC",
+											"mOIndex",
+											"nN",
+											"nN2",
+											"nP2C",
+											"nPC",
+											"nT2S",
+											"nTS",
+											"officeName",
+											"rEALIDX",
+											"sPF",
+											"sTP",
+											"index",
+											"name",
+											"neID"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

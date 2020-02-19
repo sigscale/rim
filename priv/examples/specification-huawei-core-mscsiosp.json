@@ -1,0 +1,148 @@
+{
+	"name": "MSCServerIntraOfiSigPoint",
+	"description": "",
+	"@type": "MSCServerIntraOfiSigPointSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MSCServerIntraOfiSigPointSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-02-17T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "MSCServerIntraOfiSigPointSpec",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MSCServerIntraOfiSigPointSpec"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-02-17T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "fdn",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "className",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "cNID",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "iN1",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "iN2",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "iNT2S",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "iNTS",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "iP2C",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "iPC",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "mOIndex",
+			"description": "Managed Object Index",
+			"valueType": "string"
+		},
+		{
+			"name": "nN",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "nN2",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "nP2C",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "nPC",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "nT2S",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "nTS",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "officeName",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "rEALIDX",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "sPF",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "sTP",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "index",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "name",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "neID",
+			"description": "",
+			"valueType": "string"
+		}
+	]
+}

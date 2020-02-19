@@ -1,0 +1,173 @@
+{
+	"name": "MSCServerOffice",
+	"description": "",
+	"@type": "MSCServerOfficeSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MSCServerOfficeSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-02-17T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "MSCServerOfficeSpec",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MSCServerOfficeSpec"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-02-17T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "fdn",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "className",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "dOA",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC1",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC2",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC3",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC4",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC5",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC6",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC7",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC8",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC9",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC10",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC11",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC12",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC13",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC14",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC15",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "dPC16",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "mOIndex",
+			"description": "Managed Object Index",
+			"valueType": "string"
+		},
+		{
+			"name": "nI",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "oFCTYPE",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "officeName",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "sIG",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "destinationOfficeType",
+			"description": "",
+			"valueType": "integer"
+		},
+		{
+			"name": "name",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "neID",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "officeNo",
+			"description": "",
+			"valueType": "integer"
+		}
+	]
+}

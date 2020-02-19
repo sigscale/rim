@@ -88,6 +88,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-huawei-core-igwb.json \
 		$(abs_builddir)/specification-huawei-core-uscdb.json \
 		$(abs_builddir)/specification-huawei-core-spsv3.json \
+		$(abs_builddir)/specification-huawei-core-mscsiosp.json \
+		$(abs_builddir)/specification-huawei-core-mscso.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \

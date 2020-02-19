@@ -1,0 +1,61 @@
+{
+	"$id": "http://sigscale.org/schema/MSCServerIntraOfiSigPoint",
+	"title": "Huawei Core MSCServerIntraOfiSigPoint",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"fdn",
+											"className",
+											"cNID",
+											"iN1",
+											"iN2",
+											"iNT2S",
+											"iNTS",
+											"iP2C",
+											"iPC",
+											"mOIndex",
+											"nN",
+											"nN2",
+											"nP2C",
+											"nPC",
+											"nT2S",
+											"nTS",
+											"officeName",
+											"rEALIDX",
+											"sPF",
+											"sTP",
+											"index",
+											"name",
+											"neID"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

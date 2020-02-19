@@ -1,0 +1,66 @@
+{
+	"$id": "http://sigscale.org/schema/MSCServerOfficeSpec",
+	"title": "Core MSCServerOffice Specification",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"fdn",
+											"className",
+											"dOA",
+											"dPC1",
+											"dPC10",
+											"dPC11",
+											"dPC12",
+											"dPC13",
+											"dPC14",
+											"dPC15",
+											"dPC16",
+											"dPC2",
+											"dPC3",
+											"dPC4",
+											"dPC5",
+											"dPC6",
+											"dPC7",
+											"dPC8",
+											"dPC9",
+											"mOIndex",
+											"nI",
+											"oFCTYPE",
+											"officeName",
+											"sIG",
+											"destinationOfficeType",
+											"name",
+											"neID",
+											"officeNo"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
