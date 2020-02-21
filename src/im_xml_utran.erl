@@ -246,7 +246,7 @@ parse_rnc({endElement, _Uri, _LocalName, QName},
 build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 		value = IubUtranCellDnList} | T1], #resource_rel{id = IubId, name = IubDn,
 		href = IubHref, referred_type = IubRefType} = IubRel, Acc) ->
-	F = fun(F, [CellDn | T2], ConnectivityList) when is_list(CellDn) ->
+	F = fun F([CellDn | T2], ConnectivityList) when is_list(CellDn) ->
 				CellResource = case im:get_resource_name(CellDn) of
 					{ok, Resource} ->
 						Resource;
@@ -261,11 +261,11 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 						href = CellHref, referred_type = CellType},
 				Connectivity = #connectivity{type = "Point-to-Point",
 						endpoint = [IubEndpoint, CellEndpoint]},
-				F(F, T2, [Connectivity | ConnectivityList]);
-			(_F, [], ConnectivityList) ->
+				F(T2, [Connectivity | ConnectivityList]);
+			F([], ConnectivityList) ->
 				ConnectivityList
 	end,
-	build_iub_cell_connectivity(T1, IubRel, F(F, IubUtranCellDnList, Acc));
+	build_iub_cell_connectivity(T1, IubRel, F(IubUtranCellDnList, Acc));
 build_iub_cell_connectivity([_ | T], IubRel, Acc) ->
 	build_iub_cell_connectivity(T, IubRel, Acc);
 build_iub_cell_connectivity([], _IubRel, Acc) ->
