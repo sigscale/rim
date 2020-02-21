@@ -60,6 +60,7 @@
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
+		referred_type :: string() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
 		end_date :: pos_integer() | undefined | '_'}).
 -type resource_rel() :: #resource_rel{}.
@@ -274,6 +275,7 @@
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		isRoot :: boolean() | undefined | '_',
+		referred_type :: string() | undefined | '_',
 		connectionPoint = [] :: [connection_point()] | '_'}).
 -type point() :: #point{}.
 

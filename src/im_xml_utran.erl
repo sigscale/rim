@@ -206,10 +206,11 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = RncId} = R} ->
 			F = fun F([#resource_rel{id = IubId, name = IubDn,
-					href = Href} = ResourceRel | T], Acc) ->
-						RncEndpoint = #point{name = RncDn,
+					href = Href, referred_type = IubRefType} = ResourceRel | T], Acc) ->
+						RncEndpoint = #point{name = RncDn, referred_type = ClassType,
 								id = RncId, href = ?ResourcePath ++ RncId},
-						IubEndpoint = #point{name = IubDn, id = IubId, href = Href},
+						IubEndpoint = #point{name = IubDn, id = IubId,
+								href = Href, referred_type = IubRefType},
 						RncIubConnectivity = #connectivity{type = "Point-to-Point",
 								endpoint = [RncEndpoint, IubEndpoint]},
 						CellIubConnectivity = case im:get_resource(IubId) of
@@ -243,8 +244,8 @@ parse_rnc({endElement, _Uri, _LocalName, QName},
 
 %% @hidden
 build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
-		value = IubUtranCellDnList} | T1], #resource_rel{id = IubId,
-		name = IubDn, href = IubHref} = IubRel, Acc) ->
+		value = IubUtranCellDnList} | T1], #resource_rel{id = IubId, name = IubDn,
+		href = IubHref, referred_type = IubRefType} = IubRel, Acc) ->
 	F = fun(F, [CellDn | T2], ConnectivityList) when is_list(CellDn) ->
 				CellResource = case im:get_resource_name(CellDn) of
 					{ok, Resource} ->
@@ -252,9 +253,12 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 					{error, Reason} ->
 						{error, Reason}
 				end,
-				#resource{id = CellId, href = CellHref} = CellResource,
-				IubEndpoint = #point{name = IubDn, id = IubId, href = IubHref},
-				CellEndpoint = #point{name = CellDn, id = CellId, href = CellHref},
+				#resource{id = CellId, href = CellHref,
+					class_type = CellType} = CellResource,
+				IubEndpoint = #point{name = IubDn, id = IubId,
+						href = IubHref, referred_type = IubRefType},
+				CellEndpoint = #point{name = CellDn, id = CellId,
+						href = CellHref, referred_type = CellType},
 				Connectivity = #connectivity{type = "Point-to-Point",
 						endpoint = [IubEndpoint, CellEndpoint]},
 				F(F, T2, [Connectivity | ConnectivityList]);
@@ -383,8 +387,8 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			FddRel = #resource_rel{id = Id, name = FddDn,
-					type = "contains", href = ?ResourcePath ++ Id},
+			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = UtranState#utran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -697,8 +701,8 @@ parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 			characteristic = TddHcrAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			HcrRel = #resource_rel{id = Id, name = TddHcrDn,
-					type = "contains", href = ?ResourcePath ++ Id},
+			HcrRel = #resource_rel{id = Id, name = TddHcrDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{tdd_hcrs = [HcrRel | HcrRels]}} | T1];
 		{error, Reason} ->
@@ -959,8 +963,8 @@ parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
 			characteristic = TddLcrAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			LcrRel = #resource_rel{id = Id, name = TddLcrDn,
-					type = "contains", href = ?ResourcePath ++ Id},
+			LcrRel = #resource_rel{id = Id, name = TddLcrDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{tdd_lcrs = [LcrRel | LcrRels]}} | T1];
 		{error, Reason} ->
@@ -1223,8 +1227,8 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			IubRel = #resource_rel{id = Id, name = IubDn,
-					type = "contains", href = ?ResourcePath ++ Id},
+			IubRel = #resource_rel{id = Id, name = IubDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{iubs = [IubRel | IubRels]}} | T1];
 		{error, Reason} ->

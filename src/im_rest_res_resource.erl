@@ -502,12 +502,24 @@ resource_rel([href | T], #resource_rel{href = Href} = R, Acc)
 resource_rel([href | T], #{"href" := Href} = M, Acc)
 		when is_list(Href) ->
 	resource_rel(T, M, Acc#resource_rel{href = Href});
+resource_rel([name | T], #resource_rel{name = Name} = R, Acc)
+		when is_list(Name) ->
+	resource_rel(T, R, Acc#{"name" => Name});
+resource_rel([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	resource_rel(T, M, Acc#resource_rel{name = Name});
 resource_rel([type | T], #resource_rel{type = Type} = R, Acc)
 		when is_list(Type) ->
 	resource_rel(T, R, Acc#{"type" => Type});
 resource_rel([type | T], #{"type" := Type} = M, Acc)
 		when is_list(Type) ->
 	resource_rel(T, M, Acc#resource_rel{type = Type});
+resource_rel([referred_type | T],
+		#resource_rel{referred_type = RefType} = R, Acc) when is_list(RefType) ->
+	resource_rel(T, R, Acc#{"@referredType" => RefType});
+resource_rel([referred_type | T], #{"@referredType" := RefType} = M, Acc)
+		when is_list(RefType) ->
+	resource_rel(T, M, Acc#resource_rel{referred_type = RefType});
 resource_rel([start_date | T], #resource_rel{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
@@ -706,6 +718,12 @@ point([name | T], #point{name = Name} = R, Acc)
 point([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	point(T, M, Acc#point{name = Name});
+point([referred_type | T], #point{referred_type = RefType} = R, Acc)
+		when is_list(RefType) ->
+	point(T, R, Acc#{"@referredType" => RefType});
+point([name | T], #{"@referredType" := RefType} = M, Acc)
+		when is_list(RefType) ->
+	point(T, M, Acc#point{referred_type = RefType});
 point([isRoot | T], #point{isRoot = IsRoot} = R, Acc)
 		when is_boolean(IsRoot) ->
 	point(T, R, Acc#{"isRoot" => IsRoot});
@@ -713,10 +731,10 @@ point([isRoot | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
 	point(T, M, Acc#point{isRoot = IsRoot});
 point([connectionPoint | T], #point{connectionPoint = ConnectionPoint} = R, Acc)
-		when is_list(ConnectionPoint) ->
+		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
 	point(T, R, Acc#{"connectionPoint" => connection_point(ConnectionPoint)});
 point([connectionPoint | T], #{"connectionPoint" := ConnectionPoint} = M, Acc)
-		when is_list(ConnectionPoint) ->
+		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
 	point(T, M, Acc#point{connectionPoint = connection_point(ConnectionPoint)});
 point([_ | T], R, Acc) ->
 	point(T, R, Acc);
