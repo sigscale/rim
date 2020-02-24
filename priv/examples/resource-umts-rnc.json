@@ -33,16 +33,6 @@
 			"value" : "323"
 		}
 	],
-	"utranCellFDD": [
-		"SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1",
-		"SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=2",
-		"SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=3"
-	],
-	"iubLink": [
-		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1",
-		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=2",
-		"SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=3"
-	],
 	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam1",
