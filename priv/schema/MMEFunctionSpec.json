@@ -29,11 +29,7 @@
 											"vnfParametersList",
 											"pLMNIdList",
 											"mMEC",
-											"mMEPool",
-											"mMEFunctionOptionallyContainedNrmClass",
-											"eP_RP_EPS",
-											"eP_N26",
-											"vsDataContainer"
+											"mMEPool"
 										]
 									}
 								}

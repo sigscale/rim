@@ -109,7 +109,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-generic-me.json \
 		$(abs_builddir)/resource-lte-enb.json \
 		$(abs_builddir)/resource-lte-cell-fdd.json \
-		$(abs_builddir)/resource-lte-cell-tdd.json
+		$(abs_builddir)/resource-lte-cell-tdd.json \
+		$(abs_builddir)/resource-epc-mme.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -746,6 +747,8 @@ check_DATA = .validation_ok
 				-d resource-lte-cell-fdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-lte-cell-tdd.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-epc-mme.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
