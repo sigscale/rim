@@ -49,9 +49,6 @@
 				},
 				"iubLink": {
 					"$ref": "genericNrm#/definitions/DnList"
-				},
-				"vsDataContainer": {
-					"$ref": "genericNrm#/definitions/VsDataContainerList"
 				}
 			}
 		}
