@@ -1,5 +1,5 @@
 {
-	"$id": "http://sigscale.org/schema/RncFunction",
+	"$id": "http://sigscale.org/schema/IubLink",
 	"title": "UTRAN IUBLINK",
 	"description": "UTRAN Iub Link resource function",
 	"type": "object",
