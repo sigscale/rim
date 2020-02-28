@@ -20,12 +20,12 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([import/2, parse_mo/2, parse_gsm_mo/2, parse_umts_mo/2,
+-export([import/2, parse_mo/2, parse_umts_mo/2,
 		parse_core_mo/2, parse_msc_server/2, parse_mgw/2, parse_usn_function/2,
 		parse_ugw_function/2, parse_cgpomu_function/2, parse_igwb_function/2,
 		parse_uscdb_function/2, parse_spsv3_function/2,
 		parse_msc_sig_point/2, parse_msc_server_office/2,
-		parse_gsm_function/2, parse_gsm_bts/2, parse_gsm_gcell/2,
+		parse_ran_me/2, parse_gsm_function/2, parse_gsm_bts/2, parse_gsm_gcell/2,
 		parse_umts_function/2, parse_umts_nodeb/2, parse_umts_ucell/2]).
 
 -include("im.hrl").
@@ -109,17 +109,35 @@ parse_xml(_Event, _Location, [#state{parse_module = Mod, parse_function = F} | _
 
 %% @hidden
 parse_mo({startElement, _, "MO", QName,
-		[{[], [], "className", "BSC6910GSMNE"} | _] = Attributes},
-		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
-		[State#state{parse_module = ?MODULE, parse_function = parse_gsm_mo,
-		dn_prefix = ["BSC6910GSMNE"],
-		stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_mo({startElement, _, "MO", QName,
-		[{[], [], "className", "BSC6900GSMNE"} | _] = Attributes},
-		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
-		[State#state{parse_module = ?MODULE, parse_function = parse_gsm_mo,
-		dn_prefix = ["BSC6900GSMNE"],
-		stack = [{startElement, QName, Attributes} | Stack]} | T];
+		[{[], [], "className", ClassName}, {[], [], "fdn", DN}] = Attributes},
+		[#state{rule = RuleId, stack = Stack} | _] = State)
+		when ClassName == "BSC6910GSMNE"; ClassName == "BSC6900GSMNE" ->
+		[#state{parse_module = ?MODULE, parse_function = parse_ran_me,
+		dn_prefix = [DN], rule = RuleId,
+		stack = [{startElement, QName, Attributes} | Stack]} | State];
+parse_mo({startElement, _Uri, _, QName,
+		[{[], [], "className", ClassName}, {[], [], "fdn", DN}] = Attributes},
+		[#state{location = Location} | _] = State) when
+		ClassName == "BSC6910GSMFunction"; ClassName == "BSC6900GSMFunction" ->
+	[#state{dn_prefix = [DN], location = Location,
+			parse_module = ?MODULE, parse_function = parse_gsm_function,
+			parse_state = #huawei_state{gsm_function = #{"id" => "BSC6910GSMFunction"}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_mo({startElement, _Uri, _, QName, [{[], [], "className", ClassName},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{rule = RuleId} | _] = State) when
+		ClassName == "BSC6910GSMBTS"; ClassName == "BSC6900GSMBTS" ->
+	[#state{dn_prefix = [DN], rule = RuleId,
+			parse_module = ?MODULE, parse_function = parse_gsm_bts,
+			parse_state = #huawei_state{bts = #{"id" => "BSC6910GSMBTS"}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_mo({startElement, _Uri, _, QName,
+		[{[], [], "className", "BSC6910GSMGCELL"}, {[], [], "fdn", DN}] = Attributes},
+		[#state{rule = Rule} | _] = State) ->
+	[#state{dn_prefix = [DN], rule = Rule,
+			parse_module = ?MODULE, parse_function = parse_gsm_gcell,
+			parse_state = #huawei_state{gcell = #{"id" => "BSC6910GSMGCELL"}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_mo({startElement, _, "MO", QName,
 		[{[], [], "className", "BSC6910UMTSNE"} | _] = Attributes},
 		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
@@ -208,56 +226,6 @@ parse_mo({startElement, _, "MO", QName,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
-	State.
-
-%% @hidden
-parse_gsm_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6910GSMFunction"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6910GSMFunction",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_gsm_function,
-			parse_state = #huawei_state{gsm_function = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_gsm_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6910GSMBTS"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6910GSMBTS",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_gsm_bts,
-			parse_state = #huawei_state{bts = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_gsm_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6910GSMGCELL"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6910GSMGCELL",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_gsm_gcell,
-			parse_state = #huawei_state{gcell = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_gsm_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6900GSMFunction"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6900GSMFunction",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_gsm_function,
-			parse_state = #huawei_state{gsm_function = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_gsm_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6900GSMBTS"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6900GSMBTS",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_gsm_bts,
-			parse_state = #huawei_state{bts = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_gsm_mo(_Event, [#state{parse_module = ?MODULE,
-	parse_function = parse_gsm_mo} | _] = State) ->
 	State.
 
 %% @hidden
@@ -770,18 +738,84 @@ parse_core_mo_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_ran_me({characters, SiteId}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "attr"}, [{[], [], "name", "name"}]} | _] = Stack} = State | T]) ->
+	case im:get_pee(RuleId, SiteId) of
+		{ok, []} ->
+			[State#state{stack = [{characters, SiteId} | Stack]} | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList,
+					stack = [{characters, SiteId} | Stack]} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
+parse_ran_me({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ran_me({startElement, _, "MO", _QName, _Attributes} = Event,
+		[#state{parse_module = M, parse_function = F,
+		dn_prefix = [MeDn | _], location = Location, stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, {[], "MO"}, Stack),
+	MeAttr = parse_ran_me_attr(T2, undefined, []),
+	ClassType = "ManagedElement",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
+	Resource = #resource{name = MeDn,
+			description = "",
+			category = "",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/ManagedElement",
+			specification = Spec,
+			characteristic = [PeeParam | MeAttr]},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			M:F(Event, [PrevState#state{spec_cache = [NewCache | PrevCache],
+					location = Location} | T1]);
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ran_me({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ran_me({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ran_me_attr([{startElement, {[], "attr"},
+		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
+	parse_ran_me_attr(T, Attr, Acc);
+parse_ran_me_attr([{characters, Chars} | T], Attr, Acc) ->
+	parse_ran_me_attr(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ran_me_attr([{endElement, {[], _}} | T], _Attr, Acc) ->
+	parse_ran_me_attr(T, undefined, Acc);
+parse_ran_me_attr([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
 parse_gsm_function({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_gsm_function({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_gsm_function({endElement, _Uri, "MO", QName},
-		[#state{dn_prefix = [GsmFunDn | _], stack = Stack,
+		[#state{dn_prefix = [GsmFunDn | _], stack = Stack, location = Location,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GsmFunAttr = parse_gsm_function_attr(T2, undefined, []),
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = GsmFunDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
@@ -789,7 +823,7 @@ parse_gsm_function({endElement, _Uri, "MO", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
 			specification = Spec,
-			characteristic = GsmFunAttr},
+			characteristic = [PeeParam | GsmFunAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -821,18 +855,35 @@ parse_gsm_function_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_gsm_bts({characters, SiteId}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "attr"}, [{[], [], "name", "name"}]} | _] = Stack} = State | T]) ->
+	case im:get_pee(RuleId, SiteId) of
+		{ok, []} ->
+			[State#state{stack = [{characters, SiteId} | Stack]} | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList,
+					stack = [{characters, SiteId} | Stack]} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_gsm_bts({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_gsm_bts({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_gsm_bts({endElement, _Uri, "MO", QName},
-		[#state{dn_prefix = [BtsDn | _], stack = Stack,
+		[#state{dn_prefix = [BtsDn | _], location = Location, stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GsmBtsAttr = parse_gsm_bts_attr(T2, undefined, []),
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
@@ -840,7 +891,7 @@ parse_gsm_bts({endElement, _Uri, "MO", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
 			specification = Spec,
-			characteristic = GsmBtsAttr},
+			characteristic = [PeeParam | GsmBtsAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
