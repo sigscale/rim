@@ -300,16 +300,6 @@
 		value :: term() | undefined | '_'}).
 -type resource_char() :: #resource_char{}.
 
--record(sites,
-		{name :: string() | undefined | '_',
-		network :: string() | undefined | '_',
-		longtitude :: string() | undefined | '_',
-		latitude :: string() | undefined | '_',
-		city :: string() | undefined | '_',
-		country :: string() | undefined | '_',
-		countryCity :: string() | undefined | '_'}).
--type sites() :: #sites{}.
-
 -type rule() :: fun((Input :: term()) -> ets:match_spec()).
 -record(pee_rule,
 		{id :: string() | undefined,
@@ -317,10 +307,3 @@
 		rule :: rule() | string() | undefined}).
 -type pee_rule() :: #pee_rule{}.
 
--record('BssFunction',
-		{user_label:: string() | undefined | '_',
-		vs_data_container :: [term()] | undefined | '_'}).
-
--record('BtsSiteMgr',
-		{user_label:: string() | undefined | '_',
-		vs_data_container :: [term()] | undefined | '_'}).
