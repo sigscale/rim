@@ -791,6 +791,9 @@ parse_ran_me({endElement, _Uri, _LocalName, QName} = _Event,
 parse_ran_me_attr([{startElement, {[], "attr"},
 		[{[], [], "name", Attr}]} | T], undefined, Acc) ->
 	parse_ran_me_attr(T, Attr, Acc);
+parse_ran_me_attr([{characters, Chars} | T], "name" = Attr, Acc) ->
+	parse_ran_me_attr(T, Attr,
+			[#resource_char{name = "userLabel", value = Chars} | Acc]);
 parse_ran_me_attr([{characters, Chars} | T], Attr, Acc) ->
 	parse_ran_me_attr(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
@@ -957,18 +960,35 @@ parse_gsm_bts_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_gsm_gcell({characters, SiteId}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "attr"}, [{[], [], "name", "CELLNAME"}]} | _] = Stack} = State | T]) ->
+	case im:get_pee(RuleId, SiteId) of
+		{ok, []} ->
+			[State#state{stack = [{characters, SiteId} | Stack]} | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList,
+					stack = [{characters, SiteId} | Stack]} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_gsm_gcell({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_gsm_gcell({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_gsm_gcell({endElement, _Uri, "MO", QName},
-		[#state{dn_prefix = [GCellDn | _], stack = Stack,
+		[#state{dn_prefix = [GCellDn | _], location = Location, stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GCellAttr = parse_gsm_gcell_attr(T2, undefined, []),
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = GCellDn,
 			description = "GSM Radio",
 			category = "RAN",
@@ -976,7 +996,7 @@ parse_gsm_gcell({endElement, _Uri, "MO", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
 			specification = Spec,
-			characteristic = GCellAttr},
+			characteristic = [PeeParam | GCellAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
