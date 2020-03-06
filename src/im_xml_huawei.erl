@@ -20,7 +20,7 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([import/2, parse_mo/2, parse_umts_mo/2,
+-export([import/2, parse_mo/2,
 		parse_core_mo/2, parse_msc_server/2, parse_mgw/2, parse_usn_function/2,
 		parse_ugw_function/2, parse_cgpomu_function/2, parse_igwb_function/2,
 		parse_uscdb_function/2, parse_spsv3_function/2,
@@ -111,7 +111,8 @@ parse_xml(_Event, _Location, [#state{parse_module = Mod, parse_function = F} | _
 parse_mo({startElement, _, "MO", QName,
 		[{[], [], "className", ClassName}, {[], [], "fdn", DN}] = Attributes},
 		[#state{rule = RuleId, stack = Stack} | _] = State)
-		when ClassName == "BSC6910GSMNE"; ClassName == "BSC6900GSMNE" ->
+		when ClassName == "BSC6910GSMNE"; ClassName == "BSC6900GSMNE";
+		ClassName == "BSC6910UMTSNE" ->
 		[#state{parse_module = ?MODULE, parse_function = parse_ran_me,
 		dn_prefix = [DN], rule = RuleId,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
@@ -138,12 +139,26 @@ parse_mo({startElement, _Uri, _, QName,
 			parse_module = ?MODULE, parse_function = parse_gsm_gcell,
 			parse_state = #huawei_state{gcell = #{"id" => "BSC6910GSMGCELL"}},
 			stack = [{startElement, QName, Attributes}]} | State];
-parse_mo({startElement, _, "MO", QName,
-		[{[], [], "className", "BSC6910UMTSNE"} | _] = Attributes},
-		[#state{dn_prefix = [], stack = Stack} = State | T]) ->
-		[State#state{parse_module = ?MODULE, parse_function = parse_umts_mo,
-		dn_prefix = ["BSC6910UMTSNE"],
-		stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_mo({startElement, _Uri, _, QName,
+		[{[], [], "className", "BSC6910UMTSFunction"},
+		{[], [], "fdn", DN}] = Attributes},
+		[#state{location = Location} | _] = State) ->
+	[#state{dn_prefix = [DN], location = Location,
+			parse_module = ?MODULE, parse_function = parse_umts_function,
+			parse_state = #huawei_state{umts_function = #{"id" => "BSC6910UMTSFunction"}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_mo({startElement, _Uri, _, QName,
+		[{[], [], "className", "BSC6910UMTSNODEB"},
+		{[], [], "fdn", DN}] = Attributes}, [#state{rule = RuleId} | _] = State) ->
+	[#state{dn_prefix = [DN], rule = RuleId,
+			parse_module = ?MODULE, parse_function = parse_umts_nodeb,
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_mo({startElement, _Uri, _, QName,
+		[{[], [], "className", "BSC6910UMTSUCELL"},
+		{[], [], "fdn", DN}] = Attributes}, [#state{rule = RuleId} | _] = State) ->
+	[#state{dn_prefix = [DN], rule = RuleId,
+			parse_module = ?MODULE, parse_function = parse_umts_ucell,
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_mo({startElement, _, "MO", QName,
 		[{[], [], "className", ClassName}, {[], [], "fdn", DN}] = Attributes},
 		[#state{dn_prefix = [], rule = RuleId, stack = Stack} | _] = State)
@@ -226,38 +241,6 @@ parse_mo({startElement, _, "MO", QName,
 		stack = [{startElement, QName, Attributes} | Stack]} | State];
 parse_mo(_Event, [#state{parse_module = ?MODULE,
 		parse_function = parse_mo} | _] = State) ->
-	State.
-
-%% @hidden
-parse_umts_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6910UMTSFunction"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6910UMTSFunction",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_umts_function,
-			parse_state = #huawei_state{umts_function = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_umts_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6910UMTSNODEB"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6910UMTSNODEB",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_umts_nodeb,
-			parse_state = #huawei_state{nodeb = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_umts_mo({startElement, _Uri, _, QName,
-		[{[], [], "className", "BSC6910UMTSUCELL"} | _] = Attributes},
-		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
-	DnComponent = ",BSC6910UMTSUCELL",
-	NewDn = CurrentDn ++ DnComponent,
-	[#state{dn_prefix = [NewDn],
-			parse_module = ?MODULE, parse_function = parse_umts_ucell,
-			parse_state = #huawei_state{ucell = #{"id" => DnComponent}},
-			stack = [{startElement, QName, Attributes}]} | State];
-parse_umts_mo(_Event, [#state{parse_module = ?MODULE,
-	parse_function = parse_umts_mo} | _] = State) ->
 	State.
 
 %% @hidden
@@ -1098,12 +1081,16 @@ parse_umts_function({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_umts_function({endElement, _Uri, "MO", QName},
-		[#state{dn_prefix = [UmtsFunDn | _], stack = Stack,
+		[#state{dn_prefix = [UmtsFunDn | _], location = Location, stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UmtsFunAttr = parse_umts_function_attr(T2, undefined, []),
 	ClassType = "RncFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UmtsFunDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
@@ -1111,7 +1098,7 @@ parse_umts_function({endElement, _Uri, "MO", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
 			specification = Spec,
-			characteristic = UmtsFunAttr},
+			characteristic = [PeeParam | UmtsFunAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1144,18 +1131,35 @@ parse_umts_function_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_umts_nodeb({characters, SiteId}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "attr"}, [{[], [], "name", "NODEBNAME"}]} | _] = Stack} = State | T]) ->
+	case im:get_pee(RuleId, SiteId) of
+		{ok, []} ->
+			[State#state{stack = [{characters, SiteId} | Stack]} | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList,
+					stack = [{characters, SiteId} | Stack]} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_umts_nodeb({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_umts_nodeb({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_umts_nodeb({endElement, _Uri, "MO", QName},
-		[#state{dn_prefix = [UmtsNodebDn | _], stack = Stack,
+		[#state{dn_prefix = [UmtsNodebDn | _], location = Location, stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UmtsNodebAttr = parse_umts_nodeb_attr(T2, undefined, []),
 	ClassType = "NodeBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UmtsNodebDn,
 			description = "UMTS NodeB",
 			category = "RAN",
@@ -1163,7 +1167,7 @@ parse_umts_nodeb({endElement, _Uri, "MO", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
 			specification = Spec,
-			characteristic = UmtsNodebAttr},
+			characteristic = [PeeParam | UmtsNodebAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1219,18 +1223,35 @@ parse_umts_nodeb_attr([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_umts_ucell({characters, SiteId}, [#state{rule = RuleId, stack = [{startElement,
+		{_, "attr"}, [{[], [], "name", "CELLNAME"}]} | _] = Stack} = State | T]) ->
+	case im:get_pee(RuleId, SiteId) of
+		{ok, []} ->
+			[State#state{stack = [{characters, SiteId} | Stack]} | T];
+		{ok, PEEMonitoredEntities} ->
+			PeeParametersList =
+					parse_peeParameterslist(PEEMonitoredEntities, []),
+			[State#state{location = PeeParametersList,
+					stack = [{characters, SiteId} | Stack]} | T];
+		{error, _Reason} ->
+			[State | T]
+	end;
 parse_umts_ucell({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_umts_ucell({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_umts_ucell({endElement, _Uri, "MO", QName},
-		[#state{dn_prefix = [UmtsUCellDn | _], stack = Stack,
+		[#state{dn_prefix = [UmtsUCellDn | _], location = Location, stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UmtsUCellAttr = parse_umts_ucell_attr(T2, undefined, []),
 	ClassType = "UtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	PeeParam = #resource_char{name = "peeParametersList",
+			class_type = "PeeParametersListType", value = Location,
+			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UmtsUCellDn,
 			description = "UMTS Frequency Division Duplex (FDD) Radio Cell",
 			category = "RAN",
@@ -1238,7 +1259,7 @@ parse_umts_ucell({endElement, _Uri, "MO", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
 			specification = Spec,
-			characteristic = UmtsUCellAttr},
+			characteristic = [PeeParam | UmtsUCellAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
