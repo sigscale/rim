@@ -35,7 +35,7 @@
 		ngc_nwdaf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
-		epc_link_mme_servinggw/0]).
+		epc_link_mme_servinggw/0, epc_link_enb_mme/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0, core_auc/0,
 		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -2960,6 +2960,44 @@ epc_link_mme_servinggw() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_MME_ServingGW",
 					schema = "/resourceInventoryManagement/v3/schema/Link_MME_ServingGW"},
+			characteristic = Chars}.
+
+-spec epc_link_enb_mme() -> specification().
+%% @doc EPC MMEFunction and MMEFunction Link resource specification.
+epc_link_enb_mme() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	AEnd = #specification_char{name = "aEnd",
+			description = [],
+			value_type = "string"},
+	ZEnd = #specification_char{name = "zEnd",
+			description = [],
+			value_type = "string"},
+	LinkType = #specification_char{name = "linkType",
+			description = [],
+			value_type = "LinkType",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkType"},
+	ProtocolName = #specification_char{name = "protocolName",
+			description = [],
+			value_type = "string"},
+	ProtocolVersion = #specification_char{name = "protocolVersion",
+			description = [],
+			value_type = "string"},
+	Chars = [ID, UserLabel, AEnd, ZEnd, LinkType, ProtocolName, ProtocolVersion],
+	#specification{name = "Link_ENB_MME",
+			description = "EPC MMEFunction and ENBFunction Link",
+			class_type = "Link_ENB_MMESpec",
+			schema = "/resourceCatalogManagement/v3/schema/Link_ENB_MMESpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "Link_ENB_MME",
+					schema = "/resourceInventoryManagement/v3/schema/Link_ENB_MME"},
 			characteristic = Chars}.
 
 -spec core_msc() -> specification().
