@@ -2810,7 +2810,7 @@ epc_pcrf() ->
 			characteristic = Chars}.
 
 -spec epc_link_mme_mme() -> specification().
-%% @doc EPC Policy Control Rules Function (PCRF) resource specification.
+%% @doc EPC MMEFunction and MMEFunction Link resource specification.
 epc_link_mme_mme() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
