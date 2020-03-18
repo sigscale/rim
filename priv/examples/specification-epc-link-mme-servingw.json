@@ -1,0 +1,69 @@
+{
+	"name": "Link_MME_ServingGW",
+	"description": "EPC MMEFunction and ServingGWFunction Link resource specification",
+	"@type": "Link_MME_ServingGWSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/Link_MME_ServingGWSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-03-18T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "EPC",
+	"targetResourceSchema": {
+		"@type": "Link_MME_ServingGW",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/Link_MME_ServingGW"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-03-18T00:00:00Z",
+				"endDateTime": "2019-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "aEnd",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "linkType",
+			"description": "",
+			"valueType": "LinkType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkType"
+		},
+		{
+			"name": "protocolName",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "protocolVersion",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "zEnd",
+			"description": "",
+			"valueType": "string"
+		}
+	]
+}

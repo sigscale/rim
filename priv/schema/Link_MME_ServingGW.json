@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/Link_MME_ServingGW",
+	"title": "EPC Link_MME_ServingGW",
+	"description": "EPC MMEFunction and ServingGWFunction Link",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"aEnd",
+											"linkType",
+											"protocolName",
+											"protocolVersion",
+											"zEnd"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
