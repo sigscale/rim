@@ -24,7 +24,7 @@
 			"name": "ACME Inc.",
 			"validFor": {
 				"startDateTime": "2020-03-17T00:00:00Z",
-				"endDateTime": "2019-12-31T23:59:59Z"
+				"endDateTime": "2020-12-31T23:59:59Z"
 			}
 		}
 	],
