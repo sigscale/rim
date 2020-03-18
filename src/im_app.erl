@@ -277,7 +277,7 @@ install8(Nodes, Acc) ->
 		ngc_udsf, ngc_nrf, ngc_nssf, ngc_smsf, ngc_lmf, ngc_ngeir, ngc_sepp,
 		ngc_nwdaf,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
-		epc_link_mme_mme, epc_link_hss_mme,
+		epc_link_mme_mme, epc_link_hss_mme, epc_link_mme_sgsn,
 		core_msc, core_mgw, core_sgsn, core_ggsn, core_auc, core_hlr, core_eir,
 		core_mnpsrf, core_cgf,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
