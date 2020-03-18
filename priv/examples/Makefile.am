@@ -91,6 +91,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-huawei-core-mscsiosp.json \
 		$(abs_builddir)/specification-huawei-core-mscso.json \
 		$(abs_builddir)/specification-epc-link-mme-mme.json \
+		$(abs_builddir)/specification-epc-link-hss-mme.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -112,7 +113,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-lte-cell-fdd.json \
 		$(abs_builddir)/resource-lte-cell-tdd.json \
 		$(abs_builddir)/resource-epc-mme.json \
-		$(abs_builddir)/resource-epc-link-mme-mme.json
+		$(abs_builddir)/resource-epc-link-mme-mme.json \
+		$(abs_builddir)/resource-epc-link-hss-mme.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -717,6 +719,14 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-mme-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/Link_HSS_MMESpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-epc-link-hss-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
@@ -761,6 +771,8 @@ check_DATA = .validation_ok
 				-d resource-epc-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-epc-link-mme-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-epc-link-hss-mme.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi

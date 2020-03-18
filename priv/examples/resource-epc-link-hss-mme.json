@@ -1,0 +1,43 @@
+{
+	"id": "7594422901",
+	"href": "/resourceInventoryManagement/v3/resource/7594422901",
+	"name": "SubNetwork=2,Link_HSS_MME=1",
+	"description": "EPC HSSFunction and MMEFunction Link",
+	"category": "EPC",
+	"validFor": {
+		"startDateTime": "2020-03-18T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "Link_HSS_MME",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/Link_HSS_MME",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "798115602",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115602",
+		"@type": "Link_HSS_MMESpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "protocolName",
+			"value" : "protocol"
+		},
+		{
+			"name": "protocolVersion",
+			"value" : "0.2"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam2",
+			"vsDataFormatVersion": "acmeParams-v3",
+			"vsData": 52
+		}
+	]
+}

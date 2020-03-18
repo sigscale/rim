@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/Link_HSS_MMESpec",
+	"title": "EPC Link HSS MME Specification",
+	"description": "EPC HSSFunction and MMEFunction Link specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"aEnd",
+											"linkType",
+											"protocolName",
+											"protocolVersion",
+											"userLabel",
+											"zEnd"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
