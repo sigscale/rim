@@ -1,0 +1,41 @@
+{
+	"$id": "http://sigscale.org/schema/EP_RPSpec",
+	"title": " EP RP Specification",
+	"description": "End Point (EP) of Reference Point (RP) connection point specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"farEndEntity",
+											"userLabel"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
