@@ -136,6 +136,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/Link_MME_ServingGWSpec.json \
 		$(abs_builddir)/Link_ENB_MMESpec.json \
 		$(abs_builddir)/EP_RPSpec.json \
+		$(abs_builddir)/EP_RP_EPSSpec.json \
 		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -917,6 +918,15 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RPSpec.json \
 			-r genericNrm.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_RP_EPSSpec.json \
+			-r EP_RPSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \

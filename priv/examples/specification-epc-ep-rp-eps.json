@@ -1,0 +1,53 @@
+{
+	"name": "EP_RP_EPS",
+	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) resource specification",
+	"@type": "EP_RP_EPSSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPSSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-03-19T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "EPC",
+	"targetResourceSchema": {
+		"@type": "EP_RP_EPS",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPS"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-03-19T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "farEndEntity",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "farEndNeIpAddr",
+			"description": "",
+			"valueType": "string"
+		}
+	]
+}

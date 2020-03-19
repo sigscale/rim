@@ -35,7 +35,7 @@
 		ngc_nwdaf/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
-		epc_link_mme_servinggw/0, epc_link_enb_mme/0]).
+		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0, core_auc/0,
 		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
@@ -2998,6 +2998,34 @@ epc_link_enb_mme() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_ENB_MME",
 					schema = "/resourceInventoryManagement/v3/schema/Link_ENB_MME"},
+			characteristic = Chars}.
+
+-spec epc_ep_rp_eps() -> specification().
+%% @doc EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) resource specification.
+epc_ep_rp_eps() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	FarEndNeIpAddr = #specification_char{name = "farEndNeIpAddr",
+			description = [],
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, FarEndNeIpAddr],
+	#specification{name = "EP_RP_EPS",
+			description = "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS)",
+			class_type = "EP_RP_EPSSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_RP_EPSSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "EPC",
+			target_schema = #target_schema_ref{class_type = "EP_RP_EPS",
+					schema = "/resourceInventoryManagement/v3/schema/EP_RP_EPS"},
 			characteristic = Chars}.
 
 -spec core_msc() -> specification().
