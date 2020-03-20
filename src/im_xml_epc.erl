@@ -22,6 +22,7 @@
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -110,6 +111,7 @@ parse_mme({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mme({endElement, _Uri, "MMEFunction", QName},
 		[#state{dn_prefix = [MmeDn | _], stack = Stack,
+		parse_state = #epc_state{ep_rp_epss = EpRpEps},
 		spec_cache = Cache, location = Location},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -127,7 +129,8 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/MMEFunction",
 			specification = Spec,
-			characteristic = [PeeParam | MmeAttr]},
+			characteristic = [PeeParam | MmeAttr],
+			related = EpRpEps},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -403,12 +406,52 @@ parse_eprpeps({startElement, _Uri, "VsDataContainer", QName,
 parse_eprpeps({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_eprpeps({endElement, _Uri, "EP_RP_EPS", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
+parse_eprpeps({endElement, _Uri, "EP_RP_EPS", QName},
+		[#state{dn_prefix = [EpRpEpsDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = EpcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#epc_state{ep_rp_epss = EpRpEpsRels} = EpcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpRpEpsAttr = parse_ep_rp_eps_attr(T2, undefined, []),
+	ClassType = "EP_RP_EPS",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpRpEpsDn,
+			description = "End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS)",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_RP_EPS",
+			specification = Spec,
+			characteristic = EpRpEpsAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id} = _R} ->
+			EpRpEpsRel = #resource_rel{id = Id, name = EpRpEpsDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = EpcState#epc_state{
+					ep_rp_epss = [EpRpEpsRel | EpRpEpsRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_eprpeps({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_ep_rp_eps_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_ep_rp_eps_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_ep_rp_eps_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_ep_rp_eps_attr1(T, Attr, Acc);
+parse_ep_rp_eps_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
+	parse_ep_rp_eps_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ep_rp_eps_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_ep_rp_eps_attr1(T, undefined, Acc);
+parse_ep_rp_eps_attr1([], undefined, Acc) ->
+	Acc.
 
 %%----------------------------------------------------------------------
 %%  internal functions
