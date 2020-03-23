@@ -14,6 +14,8 @@
 
 %% export the im private API
 -export([parse_generic/2, parse_subnetwork/2, parse_mecontext/2,
+			parse_link_mme_sgw/2, parse_link_mme_mme/2, parse_link_mme_sgsn/2,
+			parse_link_hss_mme/2, parse_link_enb_mme/2,
 			parse_managed_element/2, parse_management_node/2, parse_vsdata/2]).
 
 -include("im.hrl").
@@ -92,6 +94,51 @@ parse_subnetwork({startElement, _Uri, "ManagementNode", QName,
 			parse_function = parse_management_node,
 			parse_state = #generic_state{node = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_subnetwork({startElement, _Uri, "Link_MME_ServingGW", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",Link_MME_ServingGW=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_link_mme_sgw,
+			parse_state = #generic_state{link_mme_sgw = [DnComponent]},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_subnetwork({startElement, _Uri, "Link_MME_MME", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",Link_MME_MME=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_link_mme_mme,
+			parse_state = #generic_state{link_mme_mme = [DnComponent]},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_subnetwork({startElement, _Uri, "Link_MME_SGSN", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",Link_MME_SGSN=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_link_mme_sgsn,
+			parse_state = #generic_state{link_mme_sgsn = [DnComponent]},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_subnetwork({startElement, _Uri, "Link_HSS_MME", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",Link_HSS_MME=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_link_hss_mme,
+			parse_state = #generic_state{link_hss_mme = [DnComponent]},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_subnetwork({startElement, _Uri, "Link_ENB_MME", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",Link_ENB_MME=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_link_enb_mme,
+			parse_state = #generic_state{link_enb_mme = [DnComponent]},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
@@ -145,6 +192,187 @@ parse_management_node({endElement, _Uri, "ManagementNode", _QName},
 parse_management_node({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_link_mme_sgw({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_link_mme_sgw({startElement,  _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
+		[#state{dn_prefix = [LinkMmeSgwDn | _],
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	LinkMmeSgwAttr = parse_mme_link_attr(T, undefined, []),
+	ClassType = "Link_MME_ServingGW",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = LinkMmeSgwDn,
+			description = "EPC MMEFunction and ServingGWFunction Link",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/Link_MME_ServingGW",
+			specification = Spec,
+			characteristic = LinkMmeSgwAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_link_mme_sgw({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_link_mme_mme({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_link_mme_mme({startElement,  _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_link_mme_mme({endElement, _Uri, "Link_MME_MME", QName},
+		[#state{dn_prefix = [LinkMmeMmeDn | _],
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	LinkMmeMmeAttr = parse_mme_link_attr(T, undefined, []),
+	ClassType = "Link_MME_MME",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = LinkMmeMmeDn,
+			description = "EPC MMEFunction and MMEFunction Link",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/Link_MME_MME",
+			specification = Spec,
+			characteristic = LinkMmeMmeAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_link_mme_mme({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_link_mme_sgsn({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_link_mme_sgsn({startElement,  _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_link_mme_sgsn({endElement, _Uri, "Link_MME_SGSN", QName},
+		[#state{dn_prefix = [LinkMmeSgsnDn | _],
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	LinkMmeSgsnAttr = parse_mme_link_attr(T, undefined, []),
+	ClassType = "Link_MME_SGSN",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = LinkMmeSgsnDn,
+			description = "EPC MMEFunction and SgsnFunction Link",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/Link_MME_SGSN",
+			specification = Spec,
+			characteristic = LinkMmeSgsnAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_link_mme_sgsn({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_link_hss_mme({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_link_hss_mme({startElement,  _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_link_hss_mme({endElement, _Uri, "Link_HSS_MME", QName},
+		[#state{dn_prefix = [LinkHssMmeDn | _],
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	LinkHssMmeAttr = parse_mme_link_attr(T, undefined, []),
+	ClassType = "Link_HSS_MME",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = LinkHssMmeDn,
+			description = "EPC HSSFunction and MMEFunction Link",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/Link_HSS_MME",
+			specification = Spec,
+			characteristic = LinkHssMmeAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_link_hss_mme({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_link_enb_mme({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_link_enb_mme({startElement,  _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_link_enb_mme({endElement, _Uri, "Link_ENB_MME", QName},
+		[#state{dn_prefix = [LinkEnbMmeDn | _],
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	LinkEnbMmeAttr = parse_mme_link_attr(T, undefined, []),
+	ClassType = "Link_ENB_MME",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = LinkEnbMmeDn,
+			description = "EPC ENBFunction and MMEFunction Link",
+			category = "EPC",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/Link_ENB_MME",
+			specification = Spec,
+			characteristic = LinkEnbMmeAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_link_enb_mme({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_mme_link_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_mme_link_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_mme_link_attr1([{characters, Chars} | T], "linkType" = Attr, Acc)
+		when Chars == "Signalling"; Chars == "Bearer";
+		Chars == "OAM_AND_P"; Chars == "Other" ->
+	parse_mme_link_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_mme_link_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
+	parse_mme_link_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_mme_link_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_mme_link_attr1(T, undefined, Acc);
+parse_mme_link_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_mme_link_attr1(T, Attr, Acc);
+parse_mme_link_attr1([], undefined, Acc) ->
+	Acc.
 
 %% @hidden
 parse_managed_element({characters, Location}, [#state{rule = RuleId,
@@ -544,3 +772,52 @@ parse_vsdata({endElement, _Uri, _LocalName, QName},
 %%  internal functions
 %%----------------------------------------------------------------------
 
+-type event() :: {startElement,
+		QName :: {Prefix :: string(), LocalName :: string()},
+		Attributes :: [tuple()]} | {endElement,
+		QName :: {Prefix :: string(), LocalName :: string()}}
+		| {characters, string()}.
+-spec pop(Element, QName, Stack) -> Result
+	when
+		Element :: startElement | endElement,
+		QName :: {Prefix, LocalName},
+		Prefix :: string(),
+		LocalName :: string(),
+		Stack :: [event()],
+		Result :: {Value, NewStack},
+		Value :: [event()],
+		NewStack :: [event()].
+%% @doc Pops all events up to an including `{Element, QName, ...}'.
+%% @private
+pop(Element, QName, Stack) ->
+	pop(Element, QName, Stack, []).
+%% @hidden
+pop(Element, QName, [H | T], Acc)
+		when element(1, H) == Element, element(2, H) == QName->
+	{[H | Acc], T};
+pop(Element, QName, [H | T], Acc) ->
+	pop(Element, QName, T, [H | Acc]).
+
+-spec get_specification_ref(Name, Cache) -> Result
+	when
+		Name :: string(),
+		Cache :: [SpecRef],
+		Result :: {SpecRef, Cache} | {error, Reason},
+		SpecRef :: specification_ref(),
+		Reason :: term().
+%% @hidden
+get_specification_ref(Name, Cache) ->
+	case lists:keyfind(Name, #specification_ref.name, Cache) of
+		#specification_ref{name = Name} = SpecRef ->
+			{SpecRef, Cache};
+		false ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Id, href = Href, name = Name,
+						version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
+							version = Version},
+					{SpecRef, [SpecRef | Cache]};
+				{error, Reason} ->
+					throw({get_specification_name, Reason})
+			end
+	end.

@@ -15,6 +15,11 @@
 		{subnet = [] :: [string()],
 		me_context = [] :: [string()],
 		managed_element = [] :: [string()],
+		link_mme_sgw = [] :: [string()],
+		link_mme_mme = [] :: [string()],
+		link_mme_sgsn = [] :: [string()],
+		link_hss_mme = [] :: [string()],
+		link_enb_mme = [] :: [string()],
 		node = [] :: [string()],
 		vs_data :: map() | undefined,
 		vs_data_container = [] :: [map()]}).
