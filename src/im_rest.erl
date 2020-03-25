@@ -468,15 +468,15 @@ specification_ref([connectivitySpecification | T],
       when is_list(ConnectivitySpec) ->
    specification_ref(T, M, Acc#specification_ref{connectivitySpecification =
 		im_rest_res_resource:connectivity_spec(ConnectivitySpec)});
-specification_ref([connectionPointSpecification| T],
-		#specification_ref{connectionPointSpecification = ConnectionPointSpecification} = R, Acc)
+specification_ref([connection_point_specification | T],
+		#specification_ref{connection_point_specification = ConnectionPointSpecification} = R, Acc)
       when is_list(ConnectionPointSpecification) ->
    specification_ref(T, R, Acc#{"connectionPointSpecification" =>
 		im_rest_res_resource:connection_point_spec(ConnectionPointSpecification)});
-specification_ref([connectionPointSpecification | T],
+specification_ref([connection_point_specification | T],
 		#{"connectionPointSpecification" := ConnectionPointSpecification} = M, Acc)
       when is_list(ConnectionPointSpecification) ->
-   specification_ref(T, M, Acc#specification_ref{connectionPointSpecification =
+   specification_ref(T, M, Acc#specification_ref{connection_point_specification =
 		im_rest_res_resource:connection_point_spec(ConnectionPointSpecification)});
 specification_ref([_ | T], R, Acc) ->
 	specification_ref(T, R, Acc);

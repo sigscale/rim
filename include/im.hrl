@@ -32,7 +32,7 @@
 		name :: string() | undefined | '_',
 		version :: string() | undefined | '_',
 		connectivitySpecification = [] :: [connectivity_spec()] | '_',
-		connectionPointSpecification = [] :: [connection_point_spec()] | '_'}).
+		connection_point_specification = [] :: [connection_point_spec()] | '_'}).
 -type specification_ref() :: #specification_ref{}.
 
 -record(specification_rel,
@@ -251,14 +251,14 @@
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
 		endpoint = [] :: [point_spec()] | '_',
-		minItems :: pos_integer() | undefined | '_'}).
+		min_items :: pos_integer() | undefined | '_'}).
 -type connectivity_spec() :: #connectivity_spec{}.
 
 -record(connectivity,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
 		endpoint = [] :: [point()] | '_',
-		minItems :: pos_integer() | undefined | '_'}).
+		min_items :: pos_integer() | undefined | '_'}).
 -type connectivity() :: #connectivity{}.
 
 -record(point_spec,
@@ -266,17 +266,17 @@
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		role :: string() | undefined | '_',
-		isRoot :: boolean() | undefined | '_',
-		connectionPointSpecification = [] :: [connection_point_spec()] | '_'}).
+		is_root :: boolean() | undefined | '_',
+		connection_point_specification = [] :: [connection_point_spec()] | '_'}).
 -type point_spec() :: #point_spec{}.
 
 -record(point,
 		{href :: string() | undefined | '_',
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		isRoot :: boolean() | undefined | '_',
+		is_root :: boolean() | undefined | '_',
 		referred_type :: string() | undefined | '_',
-		connectionPoint = [] :: [connection_point()] | '_'}).
+		connection_point = [] :: [connection_point()] | '_'}).
 -type point() :: #point{}.
 
 -record(connection_point_spec,

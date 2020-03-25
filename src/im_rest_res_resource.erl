@@ -576,12 +576,12 @@ connectivity_spec([endpoint | T], #connectivity_spec{endpoint = Endpoints} = R, 
 connectivity_spec([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
 		when is_list(Endpoints) ->
 	connectivity_spec(T, M, Acc#connectivity_spec{endpoint = point_spec(Endpoints)});
-connectivity_spec([minItems | T], #connectivity_spec{minItems = MinItems} = R, Acc)
+connectivity_spec([min_items | T], #connectivity_spec{min_items = MinItems} = R, Acc)
 		when is_integer(MinItems) ->
 	connectivity_spec(T, R, Acc#{"minItems" => MinItems});
-connectivity_spec([minItems | T], #{"minItems" := MinItems} = M, Acc)
+connectivity_spec([min_items | T], #{"minItems" := MinItems} = M, Acc)
 		when is_integer(MinItems) ->
-	connectivity_spec(T, M, Acc#connectivity_spec{minItems = MinItems});
+	connectivity_spec(T, M, Acc#connectivity_spec{min_items = MinItems});
 connectivity_spec([_ | T], R, Acc) ->
 	connectivity_spec(T, R, Acc);
 connectivity_spec([], _, Acc) ->
@@ -618,12 +618,12 @@ connectivity([endpoint | T], #connectivity{endpoint = Endpoints} = R, Acc)
 connectivity([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
 		when is_list(Endpoints) ->
 	connectivity(T, M, Acc#connectivity{endpoint = point(Endpoints)});
-connectivity([minItems | T], #connectivity{minItems = MinItems} = R, Acc)
+connectivity([min_items | T], #connectivity{min_items = MinItems} = R, Acc)
 		when is_integer(MinItems) ->
 	connectivity(T, R, Acc#{"minItems" => MinItems});
-connectivity([minItems | T], #{"minItems" := MinItems} = M, Acc)
+connectivity([min_items | T], #{"minItems" := MinItems} = M, Acc)
 		when is_integer(MinItems) ->
-	connectivity(T, M, Acc#connectivity{minItems = MinItems});
+	connectivity(T, M, Acc#connectivity{min_items = MinItems});
 connectivity([_ | T], R, Acc) ->
 	connectivity(T, R, Acc);
 connectivity([], _, Acc) ->
@@ -666,21 +666,21 @@ point_spec([role | T], #point_spec{role = Role} = R, Acc)
 point_spec([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
 	point_spec(T, M, Acc#point_spec{role = Role});
-point_spec([isRoot | T], #point_spec{isRoot = IsRoot} = R, Acc)
+point_spec([is_root | T], #point_spec{is_root = IsRoot} = R, Acc)
 		when is_boolean(IsRoot) ->
 	point_spec(T, R, Acc#{"isRoot" => IsRoot});
-point_spec([isRoot | T], #{"isRoot" := IsRoot} = M, Acc)
+point_spec([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
-	point_spec(T, M, Acc#point_spec{isRoot = IsRoot});
-point_spec([connectionPointSpecification | T],
-	#point_spec{connectionPointSpecification = ConnectPointSpec} = R, Acc)
+	point_spec(T, M, Acc#point_spec{is_root = IsRoot});
+point_spec([connection_point_specification | T],
+	#point_spec{connection_point_specification = ConnectPointSpec} = R, Acc)
 		when is_list(ConnectPointSpec) ->
 	point_spec(T, R, Acc#{"connectionPointSpecification" =>
 		connection_point_spec(ConnectPointSpec)});
-point_spec([connectionPointSpecification | T],
+point_spec([connection_point_specification | T],
 	#{"connectionPointSpecification" := ConnectPointSpec} = M, Acc)
 		when is_list(ConnectPointSpec) ->
-	point_spec(T, M, Acc#point_spec{connectionPointSpecification =
+	point_spec(T, M, Acc#point_spec{connection_point_specification =
 		connection_point_spec(ConnectPointSpec)});
 point_spec([_ | T], R, Acc) ->
 	point_spec(T, R, Acc);
@@ -724,18 +724,18 @@ point([referred_type | T], #point{referred_type = RefType} = R, Acc)
 point([name | T], #{"@referredType" := RefType} = M, Acc)
 		when is_list(RefType) ->
 	point(T, M, Acc#point{referred_type = RefType});
-point([isRoot | T], #point{isRoot = IsRoot} = R, Acc)
+point([is_root | T], #point{is_root = IsRoot} = R, Acc)
 		when is_boolean(IsRoot) ->
 	point(T, R, Acc#{"isRoot" => IsRoot});
-point([isRoot | T], #{"isRoot" := IsRoot} = M, Acc)
+point([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
-	point(T, M, Acc#point{isRoot = IsRoot});
-point([connectionPoint | T], #point{connectionPoint = ConnectionPoint} = R, Acc)
+	point(T, M, Acc#point{is_root = IsRoot});
+point([connection_point | T], #point{connection_point = ConnectionPoint} = R, Acc)
 		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
 	point(T, R, Acc#{"connectionPoint" => connection_point(ConnectionPoint)});
-point([connectionPoint | T], #{"connectionPoint" := ConnectionPoint} = M, Acc)
+point([connection_point | T], #{"connectionPoint" := ConnectionPoint} = M, Acc)
 		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
-	point(T, M, Acc#point{connectionPoint = connection_point(ConnectionPoint)});
+	point(T, M, Acc#point{connection_point = connection_point(ConnectionPoint)});
 point([_ | T], R, Acc) ->
 	point(T, R, Acc);
 point([], _, Acc) ->
