@@ -130,7 +130,8 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			schema = "/resourceInventoryManagement/v3/schema/MMEFunction",
 			specification = Spec,
 			characteristic = [PeeParam | MmeAttr],
-			related = EpRpEps},
+			related = EpRpEps,
+			connection_point = EpRpEps},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = MmeId} = R} ->
 			FendPoint = fun(F, [#resource_rel{id = EpRpEpsId, name = EpRpEpsDn, href = Href,
@@ -513,7 +514,8 @@ parse_sgw({endElement, _Uri, "ServingGWFunction", QName},
 			schema = "/resourceInventoryManagement/v3/schema/ServingGWFunction",
 			specification = Spec,
 			characteristic = SgwAttr,
-			related = EpRpEps},
+			related = EpRpEps,
+			connection_point = EpRpEps},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
