@@ -251,34 +251,34 @@
 -record(connectivity_spec,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		endpoint = [] :: [point_spec()] | '_',
+		endpoint = [] :: [endpoint_spec()] | '_',
 		min_items :: pos_integer() | undefined | '_'}).
 -type connectivity_spec() :: #connectivity_spec{}.
 
 -record(connectivity,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		endpoint = [] :: [point()] | '_',
+		endpoint = [] :: [endpoint()] | '_',
 		min_items :: pos_integer() | undefined | '_'}).
 -type connectivity() :: #connectivity{}.
 
--record(point_spec,
+-record(endpoint_spec,
 		{href :: string() | undefined | '_',
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		role :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		connection_point_specification = [] :: [connection_point_spec()] | '_'}).
--type point_spec() :: #point_spec{}.
+-type endpoint_spec() :: #endpoint_spec{}.
 
--record(point,
+-record(endpoint,
 		{href :: string() | undefined | '_',
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		referred_type :: string() | undefined | '_',
 		connection_point = [] :: [connection_point()] | '_'}).
--type point() :: #point{}.
+-type endpoint() :: #endpoint{}.
 
 -record(connection_point_spec,
 		{href :: string() | undefined | '_',

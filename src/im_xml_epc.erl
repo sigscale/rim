@@ -138,7 +138,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 						ConnectionPoint = #connection_point{id = EpRpEpsId,
 								href = Href, name = EpRpEpsDn,
 								type = EpRpEpsRefType},
-						MmeEndpoint = #point{id = MmeId, href = ?ResourcePath ++ MmeId,
+						MmeEndpoint = #endpoint{id = MmeId, href = ?ResourcePath ++ MmeId,
 								name = MmeDn, referred_type = ClassType,
 								connection_point = [ConnectionPoint]},
 						case im:get_resource(EpRpEpsId) of
@@ -154,7 +154,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 									{ok, #resource{id = LinkId, href = LinkHref,
 											class_type = LinkType,
 											characteristic = LinkChars}} ->
-										LinkEndpoint = #point{id = LinkId, name = LinkDn,
+										LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
 												href = LinkHref, referred_type = LinkType},
 										MmeLinkConnectivity
 												= #connectivity{type = "Point-to-Point",
@@ -176,7 +176,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 															class_type = FunctionType,
 															related = ResourceRel}} ->
 														FunctionEndpoint
-																= #point{id = FunctionId,
+																= #endpoint{id = FunctionId,
 																name = FunctionDn,
 																href = FunctionHref,
 																referred_type = FunctionType,
@@ -206,7 +206,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 															href = FunctionHref,
 															class_type = FunctionType}} ->
 														FunctionEndpoint
-																= #point{id = FunctionId,
+																= #endpoint{id = FunctionId,
 																name = FunctionDn,
 																href = FunctionHref,
 																referred_type = FunctionType},
@@ -234,7 +234,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 															href = FunctionHref,
 															class_type = FunctionType}} ->
 														FunctionEndpoint
-																= #point{id = FunctionId,
+																= #endpoint{id = FunctionId,
 																name = FunctionDn,
 																href = FunctionHref,
 																referred_type = FunctionType},
@@ -263,7 +263,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 															class_type = FunctionType,
 															related = ResourceRel}} ->
 														FunctionEndpoint
-																= #point{id = FunctionId,
+																= #endpoint{id = FunctionId,
 																name = FunctionDn,
 																href = FunctionHref,
 																referred_type = FunctionType,

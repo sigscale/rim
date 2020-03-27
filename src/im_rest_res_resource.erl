@@ -631,56 +631,56 @@ connectivity([], _, Acc) ->
 
 -spec point_spec(PointSpec) -> PointSpec
 	when
-		PointSpec :: [point_spec()] | [map()].
+		PointSpec :: [endpoint_spec()] | [map()].
 %% @doc CODEC for `Point spec'.
-point_spec([#point_spec{} | _] = List) ->
-	Fields = record_info(fields, point_spec),
+point_spec([#endpoint_spec{} | _] = List) ->
+	Fields = record_info(fields, endpoint_spec),
 	[point_spec(Fields, R, #{}) || R <- List];
 point_spec([#{} | _] = List) ->
-	Fields = record_info(fields, point_spec),
-	[point_spec(Fields, M, #point_spec{}) || M <- List];
+	Fields = record_info(fields, endpoint_spec),
+	[point_spec(Fields, M, #endpoint_spec{}) || M <- List];
 point_spec([]) ->
 	[].
 %% @hidden
-point_spec([href| T], #point_spec{href = Href} = R, Acc)
+point_spec([href| T], #endpoint_spec{href = Href} = R, Acc)
 		when is_list(Href) ->
 	point_spec(T, R, Acc#{"href" => Href});
 point_spec([href | T], #{"href" := Href} = M, Acc)
 		when is_list(Href) ->
-	point_spec(T, M, Acc#point_spec{href = Href});
-point_spec([id | T], #point_spec{id = Id} = R, Acc)
+	point_spec(T, M, Acc#endpoint_spec{href = Href});
+point_spec([id | T], #endpoint_spec{id = Id} = R, Acc)
 		when is_list(Id) ->
 	point_spec(T, R, Acc#{"id" => Id});
 point_spec([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
-	point_spec(T, M, Acc#point_spec{id = Id});
-point_spec([name | T], #point_spec{name = Name} = R, Acc)
+	point_spec(T, M, Acc#endpoint_spec{id = Id});
+point_spec([name | T], #endpoint_spec{name = Name} = R, Acc)
 		when is_list(Name) ->
 	point_spec(T, R, Acc#{"name" => Name});
 point_spec([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
-	point_spec(T, M, Acc#point_spec{name = Name});
-point_spec([role | T], #point_spec{role = Role} = R, Acc)
+	point_spec(T, M, Acc#endpoint_spec{name = Name});
+point_spec([role | T], #endpoint_spec{role = Role} = R, Acc)
 		when is_list(Role) ->
 	point_spec(T, R, Acc#{"role" => Role});
 point_spec([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
-	point_spec(T, M, Acc#point_spec{role = Role});
-point_spec([is_root | T], #point_spec{is_root = IsRoot} = R, Acc)
+	point_spec(T, M, Acc#endpoint_spec{role = Role});
+point_spec([is_root | T], #endpoint_spec{is_root = IsRoot} = R, Acc)
 		when is_boolean(IsRoot) ->
 	point_spec(T, R, Acc#{"isRoot" => IsRoot});
 point_spec([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
-	point_spec(T, M, Acc#point_spec{is_root = IsRoot});
+	point_spec(T, M, Acc#endpoint_spec{is_root = IsRoot});
 point_spec([connection_point_specification | T],
-	#point_spec{connection_point_specification = ConnectPointSpec} = R, Acc)
+	#endpoint_spec{connection_point_specification = ConnectPointSpec} = R, Acc)
 		when is_list(ConnectPointSpec) ->
 	point_spec(T, R, Acc#{"connectionPointSpecification" =>
 		connection_point_spec(ConnectPointSpec)});
 point_spec([connection_point_specification | T],
 	#{"connectionPointSpecification" := ConnectPointSpec} = M, Acc)
 		when is_list(ConnectPointSpec) ->
-	point_spec(T, M, Acc#point_spec{connection_point_specification =
+	point_spec(T, M, Acc#endpoint_spec{connection_point_specification =
 		connection_point_spec(ConnectPointSpec)});
 point_spec([_ | T], R, Acc) ->
 	point_spec(T, R, Acc);
@@ -689,53 +689,53 @@ point_spec([], _, Acc) ->
 
 -spec point(Point) -> Point
 	when
-		Point :: [point()] | [map()].
+		Point :: [endpoint()] | [map()].
 %% @doc CODEC for `Point'.
-point([#point{} | _] = List) ->
-	Fields = record_info(fields, point),
+point([#endpoint{} | _] = List) ->
+	Fields = record_info(fields, endpoint),
 	[point(Fields, R, #{}) || R <- List];
 point([#{} | _] = List) ->
-	Fields = record_info(fields, point),
-	[point(Fields, M, #point{}) || M <- List];
+	Fields = record_info(fields, endpoint),
+	[point(Fields, M, #endpoint{}) || M <- List];
 point([]) ->
 	[].
 %% @hidden
-point([href| T], #point{href = Href} = R, Acc)
+point([href| T], #endpoint{href = Href} = R, Acc)
 		when is_list(Href) ->
 	point(T, R, Acc#{"href" => Href});
 point([href | T], #{"href" := Href} = M, Acc)
 		when is_list(Href) ->
-	point(T, M, Acc#point{href = Href});
-point([id | T], #point{id = Id} = R, Acc)
+	point(T, M, Acc#endpoint{href = Href});
+point([id | T], #endpoint{id = Id} = R, Acc)
 		when is_list(Id) ->
 	point(T, R, Acc#{"id" => Id});
 point([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
-	point(T, M, Acc#point{id = Id});
-point([name | T], #point{name = Name} = R, Acc)
+	point(T, M, Acc#endpoint{id = Id});
+point([name | T], #endpoint{name = Name} = R, Acc)
 		when is_list(Name) ->
 	point(T, R, Acc#{"name" => Name});
 point([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
-	point(T, M, Acc#point{name = Name});
-point([referred_type | T], #point{referred_type = RefType} = R, Acc)
+	point(T, M, Acc#endpoint{name = Name});
+point([referred_type | T], #endpoint{referred_type = RefType} = R, Acc)
 		when is_list(RefType) ->
 	point(T, R, Acc#{"@referredType" => RefType});
 point([name | T], #{"@referredType" := RefType} = M, Acc)
 		when is_list(RefType) ->
-	point(T, M, Acc#point{referred_type = RefType});
-point([is_root | T], #point{is_root = IsRoot} = R, Acc)
+	point(T, M, Acc#endpoint{referred_type = RefType});
+point([is_root | T], #endpoint{is_root = IsRoot} = R, Acc)
 		when is_boolean(IsRoot) ->
 	point(T, R, Acc#{"isRoot" => IsRoot});
 point([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
-	point(T, M, Acc#point{is_root = IsRoot});
-point([connection_point | T], #point{connection_point = ConnectionPoint} = R, Acc)
+	point(T, M, Acc#endpoint{is_root = IsRoot});
+point([connection_point | T], #endpoint{connection_point = ConnectionPoint} = R, Acc)
 		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
 	point(T, R, Acc#{"connectionPoint" => connection_point(ConnectionPoint)});
 point([connection_point | T], #{"connectionPoint" := ConnectionPoint} = M, Acc)
 		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
-	point(T, M, Acc#point{connection_point = connection_point(ConnectionPoint)});
+	point(T, M, Acc#endpoint{connection_point = connection_point(ConnectionPoint)});
 point([_ | T], R, Acc) ->
 	point(T, R, Acc);
 point([], _, Acc) ->
