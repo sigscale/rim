@@ -148,20 +148,6 @@
 							</xn:attributes>
 						</xn:VsDataContainer>
 					</epc:EP_RP_EPS>
-					<epc:EP_RP_EPS id="2">
-						<epc:attributes>
-							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_ENB_MME=1</epc:farEndEntity>
-							<epc:userLabel>Paris KL13</epc:userLabel>
-						</epc:attributes>
-						<!--  Vendor specific data for EP_RP_EPS-->
-						<xn:VsDataContainer id="1">
-							<xn:attributes>
-								<xn:vsDataType>DataType=3</xn:vsDataType>
-								<xn:vsDataFormatVersion>DFV4</xn:vsDataFormatVersion>
-								<xn:vsData/>
-							</xn:attributes>
-						</xn:VsDataContainer>
-					</epc:EP_RP_EPS>
 				</epc:MMEFunction>
 				<epc:MMEFunction id="2">
 					<epc:attributes>
@@ -176,34 +162,6 @@
 						<epc:attributes>
 							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_MME_MME=1</epc:farEndEntity>
 							<epc:userLabel>Paris KL12</epc:userLabel>
-						</epc:attributes>
-						<!--  Vendor specific data for EP_RP_EPS-->
-						<xn:VsDataContainer id="1">
-							<xn:attributes>
-								<xn:vsDataType>DataType=2</xn:vsDataType>
-								<xn:vsDataFormatVersion>DFV3</xn:vsDataFormatVersion>
-								<xn:vsData/>
-							</xn:attributes>
-						</xn:VsDataContainer>
-					</epc:EP_RP_EPS>
-					<epc:EP_RP_EPS id="2">
-						<epc:attributes>
-							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_MME_SGSN=1</epc:farEndEntity>
-							<epc:userLabel>Paris KLO1</epc:userLabel>
-						</epc:attributes>
-						<!--  Vendor specific data for EP_RP_EPS-->
-						<xn:VsDataContainer id="1">
-							<xn:attributes>
-								<xn:vsDataType>DataType=1</xn:vsDataType>
-								<xn:vsDataFormatVersion>DFV2</xn:vsDataFormatVersion>
-								<xn:vsData/>
-							</xn:attributes>
-						</xn:VsDataContainer>
-					</epc:EP_RP_EPS>
-					<epc:EP_RP_EPS id="3">
-						<epc:attributes>
-							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_HSS_MME=1</epc:farEndEntity>
-							<epc:userLabel>Paris KLO2</epc:userLabel>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
