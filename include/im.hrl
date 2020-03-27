@@ -244,7 +244,8 @@
 		specification :: specification_ref() | undefined | '_' | '$20',
 		related_party = [] :: [related_party_ref()] | '_' | '$21',
 		characteristic = [] :: [resource_char()] | '_' | '$22',
-		connectivity = [] :: [connectivity()] | '_' | '$23'}). 
+		connectivity = [] :: [connectivity()] | '_' | '$23',
+		connection_point = [] :: [resource_rel()] | '_' | '$24'}).
 -type resource() :: #resource{}.
 
 -record(connectivity_spec,
