@@ -1,0 +1,59 @@
+{
+	"$id": "http://sigscale.org/schema/SubNetwork",
+	"title": "Generic SubNetwork",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"dnPrefix",
+											"userDefinedNetworkType",
+											"setOfMcc"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"subNetwork": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"managedElement": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"meContext": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"managementNode": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"iRPAgent": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eSPolicies": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

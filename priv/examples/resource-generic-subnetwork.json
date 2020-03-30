@@ -1,0 +1,138 @@
+{
+	"id": "8793462928",
+	"href": "/resourceInventoryManagement/v3/resource/8793462928",
+	"name": "SubNetwork=2",
+	"description": "",
+	"category": "",
+	"validFor": {
+		"startDateTime": "2020-03-30T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "SubNetwork",
+	"@baseType": "ResourceFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SubNetwork",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "789125649",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/789125649",
+		"@type": "SubNetworkSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "dnPrefix",
+			"value" : "sigscale.net"
+		},
+		{
+			"name": "userDefinedNetworkType",
+			"value" : "UDNT"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam3",
+			"vsDataFormatVersion": "acmeParams-v4",
+			"vsData": 34
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6874523911",
+				"href": "/resourceInventoryManagement/v3/resource/6874523911",
+				"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1",
+				"@referredType": "ServingGWFunction"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "6874523913",
+				"href": "/resourceInventoryManagement/v3/resource/6874523913",
+				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1",
+				"@referredType": "MMEFunction"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "7894623152",
+				"href": "/resourceInventoryManagement/v3/resource/7894623152",
+				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "7894623154",
+				"href": "/resourceInventoryManagement/v3/resource/7894623154",
+				"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "8974623056",
+				"href": "/resourceInventoryManagement/v3/resource/8974623056",
+				"name": "SubNetwork=2,Link_MME_ServingGW=1",
+				"@referredType": "Link_MME_ServingGW"
+			},
+			"type": "contains"
+		}
+	],
+	"connectivity": [
+		{
+			"type": "Point-to-Point",
+			"endpoint": [
+				{
+					"id": "8795462938",
+					"href": "/resourceInventoryManagement/v3/resource/8795462938",
+					"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1",
+					"@referredType": "MMEFunction",
+					"connectionPoint": {
+						"id": "8974623051",
+						"href": "/resourceInventoryManagement/v3/resource/8974623051",
+						"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
+						"@referredType": "EP_RP_EPS"
+					}
+				},
+				{
+					"id": "8974623056",
+					"href": "/resourceInventoryManagement/v3/resource/8974623056",
+					"name": "SubNetwork=2,Link_MME_ServingGW=1",
+					"@referredType": "Link_MME_ServingGW"
+				}
+			]
+		},
+		{
+			"type": "Point-to-Point",
+			"endpoint": [
+				{
+					"id": "8974623056",
+					"href": "/resourceInventoryManagement/v3/resource/8974623056",
+					"name": "SubNetwork=2,Link_MME_ServingGW=1",
+					"@referredType": "Link_MME_ServingGW"
+				},
+				{
+					"id": "6874523911",
+					"href": "/resourceInventoryManagement/v3/resource/6874523911",
+					"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1",
+					"@referredType": "ServingGWFunction",
+					"connectionPoint": {
+						"id": "7894623153",
+						"href": "/resourceInventoryManagement/v3/resource/7894623153",
+						"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
+						"@referredType": "EP_RP_EPS"
+					}
+				}
+			]
+		}
+	]
+}

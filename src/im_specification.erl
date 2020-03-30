@@ -43,7 +43,7 @@
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
 -export([im_iu/0, im_tmaiu/0, im_aiu/0, im_iu_ne/0, im_iu_hw/0, im_iu_sw/0,
 		im_iu_lic/0]).
--export([generic_me/0]).
+-export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
 
@@ -4248,6 +4248,38 @@ generic_me() ->
 			category = "",
 			target_schema = #target_schema_ref{class_type = "ManagedElement",
 					schema = "/resourceInventoryManagement/v3/schema/ManagedElement"},
+			characteristic = Chars}.
+
+-spec generic_subnetwork() -> specification().
+%% @doc Generic Subnetwork resource function specification.
+generic_subnetwork() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	DnPrefix = #specification_char{name = "dnPrefix",
+			description = "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	UserDefinedNetworkType = #specification_char{name = "userDefinedNetworkType",
+			description = "User defined network type (3GPP 28.620)",
+			value_type = "string"},
+	SetOfMcc = #specification_char{name = "setOfMcc",
+			description = "All Mobile Country Codes (MCC) included",
+			value_type = "string"},
+	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType, SetOfMcc],
+	#specification{name = "SubNetwork",
+			description = "",
+			class_type = "SubNetworkSpec",
+			schema = "/resourceCatalogManagement/v3/schema/SubNetworkSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "",
+			target_schema = #target_schema_ref{class_type = "SubNetwork",
+					schema = "/resourceInventoryManagement/v3/schema/SubNetwork"},
 			characteristic = Chars}.
 
 -spec gsm_abis_link() -> specification().

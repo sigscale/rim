@@ -266,7 +266,7 @@ install7(Nodes, Acc) ->
 	end.
 %% @hidden
 install8(Nodes, Acc) ->
-	SpecFuns = [generic_me,
+	SpecFuns = [generic_me, generic_subnetwork,
 		gsm_bss, gsm_bts, gsm_cell, gsm_abis_link,
 		umts_rnc, umts_nodeb, umts_cell_fdd,
 		umts_cell_tdd_lcr, umts_cell_tdd_hcr, umts_iub_link,
