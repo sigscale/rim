@@ -68,7 +68,7 @@
 		pgw :: map() | undefined,
 		sgw :: map() | undefined,
 		ep_rp_eps :: map() | undefined,
-		ep_rp_epss = [] :: [string()]}).
+		ep_rp_epss = [] :: [resource_rel()]}).
 -type epc_state() :: #epc_state{}.
 
 -record(core_state,
