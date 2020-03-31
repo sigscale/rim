@@ -134,7 +134,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			connection_point = EpRpEps},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = MmeId} = R} ->
-			FendPoint = fun(F, [#resource_rel{id = EpRpEpsId, name = EpRpEpsDn, href = Href,
+			FendPoint = fun F([#resource_rel{id = EpRpEpsId, name = EpRpEpsDn, href = Href,
 					referred_type = EpRpEpsRefType} | T], Acc) ->
 						ConnectionPoint = #connection_point{id = EpRpEpsId,
 								href = Href, name = EpRpEpsDn,
@@ -188,7 +188,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																= "Point-to-Point",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
-														F(F, T, [MmeLinkConnectivity,
+														F(T, [MmeLinkConnectivity,
 																LinkFunctionConnectivity | Acc]);
 													{error, Reason} ->
 														{error, Reason}
@@ -216,7 +216,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																= "Point-to-Point",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
-														F(F, T, [MmeLinkConnectivity,
+														F(T, [MmeLinkConnectivity,
 																LinkFunctionConnectivity | Acc]);
 													{error, Reason} ->
 														throw({add_resource, Reason})
@@ -244,7 +244,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																= "Point-to-Point",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
-														F(F, T, [MmeLinkConnectivity,
+														F(T, [MmeLinkConnectivity,
 																LinkFunctionConnectivity | Acc]);
 													{error, Reason} ->
 														throw({add_resource, Reason})
@@ -275,7 +275,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																= "Point-to-Point",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
-														F(F, T, [MmeLinkConnectivity,
+														F(T, [MmeLinkConnectivity,
 																LinkFunctionConnectivity | Acc]);
 													{error, Reason} ->
 														throw({add_resource, Reason})
@@ -287,10 +287,10 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 							{error, Reason} ->
 								{error, Reason}
 						end;
-					(_F, [], Acc) ->
+					F([], Acc) ->
 						Acc
 			end,
-			Connectivity = FendPoint(FendPoint, EpRpEps, []),
+			Connectivity = FendPoint(EpRpEps, []),
 			Ftrans = fun() ->
 					[R] = mnesia:read(resource, MmeId, write),
 					mnesia:write(resource,
