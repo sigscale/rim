@@ -22,6 +22,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+
 %%----------------------------------------------------------------------
 %%  The im public API
 %%----------------------------------------------------------------------
@@ -151,12 +153,48 @@ parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 parse_subnetwork({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_subnetwork({endElement, _Uri, "SubNetwork", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
+parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
+		[#state{dn_prefix = [SubNetworkDn | _], stack = Stack, spec_cache = Cache,
+		parse_state = #generic_state{link_mme_sgws = LinkMmeSgwRels}},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
+	SubNetworkAttr = parse_subnetwork_attr(T, undefined, []),
+	ClassType = "SubNetwork",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = SubNetworkDn,
+			description = "",
+			category = "",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/SubNetwork",
+			specification = Spec,
+			related = LinkMmeSgwRels,
+			characteristic = SubNetworkAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_subnetwork({endElement,  _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_subnetwork_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_subnetwork_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_subnetwork_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
+	parse_subnetwork_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_subnetwork_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_subnetwork_attr1(T, undefined, Acc);
+parse_subnetwork_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_subnetwork_attr1(T, Attr, Acc);
+parse_subnetwork_attr1([], undefined, Acc) ->
+	Acc.
 
 %% @hidden
 parse_mecontext({characters, Chars}, [#state{stack = Stack} = State | T]) ->
@@ -201,8 +239,9 @@ parse_link_mme_sgw({startElement,  _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 		[#state{dn_prefix = [LinkMmeSgwDn | _],
-		stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		stack = Stack, spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = GenericState} = PrevState | T1]) ->
+	#generic_state{link_mme_sgws = LinkMmeSgwRels} = GenericState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	LinkMmeSgwAttr = parse_mme_link_attr(T, undefined, []),
 	ClassType = "Link_MME_ServingGW",
@@ -216,8 +255,12 @@ parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 			specification = Spec,
 			characteristic = LinkMmeSgwAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id}} ->
+			LinkMmeSgwRel = #resource_rel{id = Id, name = LinkMmeSgwDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = GenericState#generic_state{
+					link_mme_sgws = [LinkMmeSgwRel | LinkMmeSgwRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;

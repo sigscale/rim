@@ -22,7 +22,8 @@
 		link_enb_mme = [] :: [string()],
 		node = [] :: [string()],
 		vs_data :: map() | undefined,
-		vs_data_container = [] :: [map()]}).
+		vs_data_container = [] :: [map()],
+		link_mme_sgws = [] :: [resource_rel()]}).
 -type generic_state() :: #generic_state{}.
 
 -record(geran_state,
