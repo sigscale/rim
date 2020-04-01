@@ -157,8 +157,8 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 		[#state{dn_prefix = [SubNetworkDn | _], stack = Stack, spec_cache = Cache,
 		parse_state = #generic_state{link_mme_sgws = LinkMmeSgwRels}},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
-	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
-	SubNetworkAttr = parse_subnetwork_attr(T, undefined, []),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	SubNetworkAttr = parse_subnetwork_attr(T2, undefined, []),
 	ClassType = "SubNetwork",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = SubNetworkDn,
@@ -171,14 +171,73 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 			related = LinkMmeSgwRels,
 			characteristic = SubNetworkAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = SubNetworkId}} ->
+			FConnectivity = fun F([#resource_rel{id = LinkId, name = LinkDn,
+					href = LinkHref, referred_type = LinkRefType} | T3], Acc) ->
+						LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
+								href = LinkHref, referred_type = LinkRefType},
+						case im:get_resource(LinkId) of
+							{ok, #resource{characteristic = LinkChars}} ->
+								FaEnd = fun (#resource_char{name = "aEnd"}) ->
+											true;
+										(_) ->
+											false
+								end,
+								[#resource_char{name = "aEnd", value = AEndDn}]
+										= lists:filter(FaEnd, LinkChars),
+								AEndPoint = build_function_endpoint(AEndDn),
+								AEndLinkConnectivity
+										= #connectivity{type = "Point-to-Point",
+										endpoint = [AEndPoint, LinkEndpoint]},
+								FzEnd = fun (#resource_char{name = "zEnd"}) ->
+											true;
+										(_) ->
+											false
+								end,
+								[#resource_char{name = "zEnd", value = ZEndDn}]
+										= lists:filter(FzEnd, LinkChars),
+								ZEndPoint = build_function_endpoint(ZEndDn),
+								LinkZEndConnectivity
+										= #connectivity{type = "Point-to-Point",
+										endpoint = [LinkEndpoint, ZEndPoint]},
+								F(T3, [AEndLinkConnectivity,
+										LinkZEndConnectivity | Acc]);
+							{error, Reason} ->
+								{error, Reason}
+						end;
+					F([], Acc) ->
+						Acc
+			end,
+			Connectivity = FConnectivity(LinkMmeSgwRels, []),
+			Ftrans = fun() ->
+					[R] = mnesia:read(resource, SubNetworkId, write),
+					mnesia:write(resource,
+						R#resource{connectivity = Connectivity}, write)
+			end,
+			case mnesia:transaction(Ftrans) of
+				{aborted, Reason} ->
+					throw({add_resource, Reason});
+				{atomic, ok} ->
+					[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
 parse_subnetwork({endElement,  _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+build_function_endpoint(EndDn) ->
+	case im:get_resource_name(EndDn) of
+		{ok, #resource{id = EndId, class_type = EndType,
+				related = ResourceRel}} ->
+			#endpoint{id = EndId, href = ?ResourcePath ++ EndId,
+					name = EndDn, referred_type = EndType,
+					connection_point = parse_resource_rel(ResourceRel)};
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 % @hidden
 parse_subnetwork_attr([{startElement, {_, "attributes"} = QName, []} | T1],
@@ -864,3 +923,19 @@ get_specification_ref(Name, Cache) ->
 					throw({get_specification_name, Reason})
 			end
 	end.
+
+-spec parse_resource_rel(ResourceRel) -> Result
+	when
+		ResourceRel :: [#resource_rel{}],
+		Result :: [#connection_point{}].
+% @hidden
+parse_resource_rel(ResourceRel) ->
+	parse_resource_rel(ResourceRel, []).
+% @hidden
+parse_resource_rel([#resource_rel{id = Id, name = Dn, href = Href,
+		referred_type = RefType} | T], Acc) ->
+	ConnectionPoint = #connection_point{id = Id, href = Href, name = Dn,
+			type = RefType},
+	parse_resource_rel(T, [ConnectionPoint | Acc]);
+parse_resource_rel([], Acc) ->
+	Acc.
