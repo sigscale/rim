@@ -150,7 +150,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 											false
 								end,
 								[#resource_char{name = "farEndEntity", value = LinkDn}]
-								= lists:filter(FlinkDn, Chars),
+										= lists:filter(FlinkDn, Chars),
 								case im:get_resource_name(LinkDn) of
 									{ok, #resource{id = LinkId, href = LinkHref,
 											class_type = LinkType,
@@ -301,7 +301,9 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 					throw({add_resource, Reason});
 				{atomic, ok} ->
 					[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1]
-			end
+			end;
+		{error, Reason} ->
+			throw({add_resource, Reason})
 	end;
 parse_mme({endElement, _Uri, _LocalName, QName} = _Event,
 		[#state{stack = Stack} = State | T]) ->
