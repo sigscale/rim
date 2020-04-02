@@ -155,7 +155,7 @@ parse_subnetwork({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 		[#state{dn_prefix = [SubNetworkDn | _], stack = Stack, spec_cache = Cache,
-		parse_state = #generic_state{link_mme_sgws = LinkMmeSgwRels}},
+		parse_state = #generic_state{links = LinkMmeSgwRels}},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	SubNetworkAttr = parse_subnetwork_attr(T2, undefined, []),
@@ -231,10 +231,10 @@ parse_subnetwork({endElement,  _Uri, _LocalName, QName},
 build_function_endpoint(EndDn) ->
 	case im:get_resource_name(EndDn) of
 		{ok, #resource{id = EndId, class_type = EndType,
-				related = ResourceRel}} ->
+				connection_point = EndPoints}} ->
 			#endpoint{id = EndId, href = ?ResourcePath ++ EndId,
 					name = EndDn, referred_type = EndType,
-					connection_point = parse_resource_rel(ResourceRel)};
+					connection_point = parse_resource_rel(EndPoints)};
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -300,7 +300,7 @@ parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 		[#state{dn_prefix = [LinkMmeSgwDn | _],
 		stack = Stack, spec_cache = Cache}, #state{spec_cache = PrevCache,
 		parse_state = GenericState} = PrevState | T1]) ->
-	#generic_state{link_mme_sgws = LinkMmeSgwRels} = GenericState,
+	#generic_state{links = LinkRels} = GenericState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	LinkMmeSgwAttr = parse_mme_link_attr(T, undefined, []),
 	ClassType = "Link_MME_ServingGW",
@@ -318,7 +318,7 @@ parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 			LinkMmeSgwRel = #resource_rel{id = Id, name = LinkMmeSgwDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
-					link_mme_sgws = [LinkMmeSgwRel | LinkMmeSgwRels]},
+					links = [LinkMmeSgwRel | LinkRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -335,8 +335,9 @@ parse_link_mme_mme({startElement,  _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_link_mme_mme({endElement, _Uri, "Link_MME_MME", QName},
 		[#state{dn_prefix = [LinkMmeMmeDn | _],
-		stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		stack = Stack, spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = GenericState} = PrevState | T1]) ->
+	#generic_state{links = LinkRels} = GenericState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	LinkMmeMmeAttr = parse_mme_link_attr(T, undefined, []),
 	ClassType = "Link_MME_MME",
@@ -350,8 +351,13 @@ parse_link_mme_mme({endElement, _Uri, "Link_MME_MME", QName},
 			specification = Spec,
 			characteristic = LinkMmeMmeAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id}} ->
+			LinkMmeMmeRel = #resource_rel{id = Id, name = LinkMmeMmeDn,
+					type = "contains", referred_type = ClassType,
+					href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = GenericState#generic_state{
+					links = [LinkMmeMmeRel | LinkRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -367,8 +373,9 @@ parse_link_mme_sgsn({startElement,  _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_link_mme_sgsn({endElement, _Uri, "Link_MME_SGSN", QName},
 		[#state{dn_prefix = [LinkMmeSgsnDn | _],
-		stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		stack = Stack, spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = GenericState} = PrevState | T1]) ->
+	#generic_state{links = LinkRels} = GenericState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	LinkMmeSgsnAttr = parse_mme_link_attr(T, undefined, []),
 	ClassType = "Link_MME_SGSN",
@@ -382,8 +389,13 @@ parse_link_mme_sgsn({endElement, _Uri, "Link_MME_SGSN", QName},
 			specification = Spec,
 			characteristic = LinkMmeSgsnAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id}} ->
+			LinkMmeSgsnRel = #resource_rel{id = Id, name = LinkMmeSgsnDn,
+					type = "contains", referred_type = ClassType,
+					href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = GenericState#generic_state{
+					links = [LinkMmeSgsnRel | LinkRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -399,8 +411,9 @@ parse_link_hss_mme({startElement,  _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_link_hss_mme({endElement, _Uri, "Link_HSS_MME", QName},
 		[#state{dn_prefix = [LinkHssMmeDn | _],
-		stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		stack = Stack, spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = GenericState} = PrevState | T1]) ->
+	#generic_state{links = LinkRels} = GenericState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	LinkHssMmeAttr = parse_mme_link_attr(T, undefined, []),
 	ClassType = "Link_HSS_MME",
@@ -414,8 +427,13 @@ parse_link_hss_mme({endElement, _Uri, "Link_HSS_MME", QName},
 			specification = Spec,
 			characteristic = LinkHssMmeAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id}} ->
+			LinkHssMmeRel = #resource_rel{id = Id, name = LinkHssMmeDn,
+					type = "contains", referred_type = ClassType,
+					href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = GenericState#generic_state{
+					links = [LinkHssMmeRel | LinkRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -431,8 +449,9 @@ parse_link_enb_mme({startElement,  _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_link_enb_mme({endElement, _Uri, "Link_ENB_MME", QName},
 		[#state{dn_prefix = [LinkEnbMmeDn | _],
-		stack = Stack, spec_cache = Cache},
-		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+		stack = Stack, spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = GenericState} = PrevState | T1]) ->
+	#generic_state{links = LinkRels} = GenericState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	LinkEnbMmeAttr = parse_mme_link_attr(T, undefined, []),
 	ClassType = "Link_ENB_MME",
@@ -446,8 +465,13 @@ parse_link_enb_mme({endElement, _Uri, "Link_ENB_MME", QName},
 			specification = Spec,
 			characteristic = LinkEnbMmeAttr},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
-			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{ok, #resource{id = Id}} ->
+			LinkEnbMmeRel = #resource_rel{id = Id, name = LinkEnbMmeDn,
+					type = "contains", referred_type = ClassType,
+					href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = GenericState#generic_state{
+					links = [LinkEnbMmeRel | LinkRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
