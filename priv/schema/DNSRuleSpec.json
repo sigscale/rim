@@ -1,0 +1,44 @@
+{
+	"$id": "http://sigscale.org/schema/DNSRuleSpec",
+	"title": "MEC DNSRule Specification",
+	"description": "",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"dnsRuleId",
+											"domainName",
+											"iPAddressType",
+											"iPAddress",
+											"timeToLive"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

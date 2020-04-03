@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/TrafficRuleSpec",
+	"title": "MEC TrafficRule Specification",
+	"description": "MEC TrafficRule resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"trafficRuleId",
+											"filterType",
+											"priority",
+											"trafficFilter",
+											"action",
+											"dstInterface"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

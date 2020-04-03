@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/MobileEdgeApplicationServiceSpec",
+	"title": "MEC MobileEdgeApplicationService Specification",
+	"description": "MEC Mobile Edge Application Service resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ResourceFunctionSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"address",
+											"operationalState",
+											"serName",
+											"serCategory",
+											"serVersion",
+											"transportsSupported"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

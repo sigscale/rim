@@ -138,6 +138,15 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_RPSpec.json \
 		$(abs_builddir)/EP_RP_EPSSpec.json \
 		$(abs_builddir)/SubNetworkSpec.json \
+		$(abs_builddir)/MobileEdgeHostFunctionSpec.json \
+		$(abs_builddir)/DNSRuleSpec.json \
+		$(abs_builddir)/LocationServiceSpec.json \
+		$(abs_builddir)/MobileEdgeApplicationServiceSpec.json \
+		$(abs_builddir)/MobileEdgeApplicationSpec.json \
+		$(abs_builddir)/MobileEdgePlatformServiceSpec.json \
+		$(abs_builddir)/MobileEdgePlatformSpec.json \
+		$(abs_builddir)/RNIServiceSpec.json \
+		$(abs_builddir)/TrafficRuleSpec.json \
 		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -937,6 +946,78 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s SubNetworkSpec.json \
 			-r genericNrm.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MobileEdgeHostFunctionSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s DNSRuleSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s LocationServiceSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MobileEdgeApplicationServiceSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MobileEdgeApplicationSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MobileEdgePlatformServiceSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s MobileEdgePlatformSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s RNIServiceSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s TrafficRuleSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
