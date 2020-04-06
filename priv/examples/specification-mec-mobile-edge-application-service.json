@@ -1,0 +1,69 @@
+{
+	"name": "MobileEdgeApplicationService",
+	"description": "MEC Mobile Edge Application Service resource function specification",
+	"@type": "MobileEdgeApplicationServiceSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgeApplicationServiceSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-04-06T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "MEC",
+	"targetResourceSchema": {
+		"@type": "MobileEdgeApplicationService",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgeApplicationService"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-04-06T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "address",
+			"description": "The IP address where mobile edge services can be accessed",
+			"valueType": "string"
+		},
+		{
+			"name": "operationalState",
+			"description": "It indicates the operational state of the object instance",
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
+		},
+		{
+			"name": "serName",
+			"description": "The name of the service",
+			"valueType": "string"
+		},
+		{
+			"name": "serCategory",
+			"description": "The category of the service",
+			"valueType": "string"
+		},
+		{
+			"name": "serVersion",
+			"description": "The version of the service",
+			"valueType": "string"
+		},
+		{
+			"name": "transportsSupported",
+			"description": "Indicates transports and serialization formats supported made available to the service-consuming application",
+			"valueType": ""
+		}
+	]
+}
