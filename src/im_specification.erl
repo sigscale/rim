@@ -46,7 +46,7 @@
 -export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
--export([mec_mehf/0, mec_mep/0]).
+-export([mec_mehf/0, mec_mep/0, mec_mea/0]).
 
 -include("im.hrl").
 
@@ -4752,6 +4752,60 @@ mec_mep() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgePlatform",
 					schema = "/resourceInventoryManagement/v3/schema/MobileEdgePlatform"},
+			characteristic = Chars}.
+
+-spec mec_mea() -> specification().
+%% @doc MEC Mobile Edge Application resource function specification.
+mec_mea() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	AppDId = #specification_char{name = "appDId",
+			description = "Identifier of the mobile edge application descriptor",
+			value_type = "string"},
+	AppName = #specification_char{name = "appName",
+			description = "Human readable name of the mobile edge application",
+			value_type = "string"},
+	AppProvider = #specification_char{name = "appProvider",
+			description = "Provider of the mobile edge application",
+			value_type = "string"},
+	AppSoftVersion = #specification_char{name = "appSoftVersion",
+			description = "Version of the mobile edge application",
+			value_type = "string"},
+	AppDVersion = #specification_char{name = "appDVersion",
+			description = "Identifies the version of the application descriptor",
+			value_type = "string"},
+	AppInfoName = #specification_char{name = "appInfoName",
+			description = "Human readable name for the application product",
+			value_type = "string"},
+	AppDescription = #specification_char{name = "appDescription",
+			description = "Human readable description of the mobile edge application",
+			value_type = "string"},
+	AppState = #specification_char{name = "appState",
+			description = "The state of the application",
+			value_type = "string"},
+	InstantiationState = #specification_char{name = "instantiationState",
+			description = "The instantiation state of the application",
+			value_type = "string"},
+	OperationalState = #specification_char{name = "operationalState",
+			description = "It indicates the operational state of the object instance",
+			value_type = ""},
+	AppInstanceId = #specification_char{name = "appInstanceId",
+			description = "Application instance identifier",
+			value_type = "string"},
+	Chars = [Id, AppDId, AppName, AppProvider, AppSoftVersion, AppDVersion,
+			AppInfoName, AppDescription, AppState, InstantiationState,
+			OperationalState, AppInstanceId],
+	#specification{name = "MobileEdgeApplication",
+			description = "MEC Mobile Edge Application",
+			class_type = "MobileEdgeApplicationSpec",
+			schema = "/resourceCatalogManagement/v3/schema/MobileEdgeApplicationSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "MobileEdgeApplication",
+					schema = "/resourceInventoryManagement/v3/schema/MobileEdgeApplication"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
