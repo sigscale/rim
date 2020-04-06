@@ -98,6 +98,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-epc-ep-rp-eps.json \
 		$(abs_builddir)/specification-generic-subnetwork.json \
 		$(abs_builddir)/specification-mec-mobile-edge-host-function.json \
+		$(abs_builddir)/specification-mec-mobile-edge-platform.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -786,6 +787,14 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-mobile-edge-host-function.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgePlatformSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-mec-mobile-edge-platform.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

@@ -46,7 +46,7 @@
 -export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
--export([mec_mehf/0]).
+-export([mec_mehf/0, mec_mep/0]).
 
 -include("im.hrl").
 
@@ -4733,6 +4733,25 @@ mec_mehf() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeHostFunction",
 					schema = "/resourceInventoryManagement/v3/schema/MobileEdgeHostFunction"},
+			characteristic = Chars}.
+
+-spec mec_mep() -> specification().
+%% @doc MEC Mobile Edge Platform resource specification.
+mec_mep() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	Chars = [Id],
+	#specification{name = "MobileEdgePlatform",
+			description = "MEC Mobile Edge Platform",
+			class_type = "MobileEdgePlatformSpec",
+			schema = "/resourceCatalogManagement/v3/schema/MobileEdgePlatformSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "MobileEdgePlatform",
+					schema = "/resourceInventoryManagement/v3/schema/MobileEdgePlatform"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------

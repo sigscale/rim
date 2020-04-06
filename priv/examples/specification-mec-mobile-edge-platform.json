@@ -1,0 +1,38 @@
+{
+	"name": "MobileEdgePlatform",
+	"description": "MEC Mobile Edge Platform resource function specification",
+	"@type": "MobileEdgePlatformSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgePlatformSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-04-06T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "MEC",
+	"targetResourceSchema": {
+		"@type": "MobileEdgePlatform",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgePlatform"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-04-06T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		}
+	]
+}
