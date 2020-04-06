@@ -46,7 +46,7 @@
 -export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
--export([mec_mehf/0, mec_mep/0, mec_mea/0]).
+-export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0]).
 
 -include("im.hrl").
 
@@ -4806,6 +4806,45 @@ mec_mea() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeApplication",
 					schema = "/resourceInventoryManagement/v3/schema/MobileEdgeApplication"},
+			characteristic = Chars}.
+
+-spec mec_meps() -> specification().
+%% @doc MEC Mobile Edge Platform Service resource specification.
+mec_meps() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	Address = #specification_char{name = "address",
+			description = "The IP address where mobile edge services can be accessed",
+			value_type = "string"},
+	OperationalState = #specification_char{name = "operationalState",
+			description = "It indicates the operational state of the object instance",
+			value_type = "OperationalStateType",
+			value_schema = "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"},
+	SerName = #specification_char{name = "serName",
+			description = "The name of the service",
+			value_type = "string"},
+	SerCategory = #specification_char{name = "serCategory",
+			description = "The category of the service",
+			value_type = "string"},
+	SerVersion = #specification_char{name = "serVersion",
+			description = "The version of the service",
+			value_type = "string"},
+	SerDataFormat = #specification_char{name = "serDataFormat",
+			description = [],
+			value_type = []},
+	Chars = [Id, Address, OperationalState, SerName, SerCategory, SerVersion,
+			SerDataFormat],
+	#specification{name = "MobileEdgePlatformService",
+			description = "MEC Mobile Edge Platform Service",
+			class_type = "MobileEdgePlatformServiceSpec",
+			schema = "/resourceCatalogManagement/v3/schema/MobileEdgePlatformServiceSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "MobileEdgePlatformService",
+					schema = "/resourceInventoryManagement/v3/schema/MobileEdgePlatformService"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
