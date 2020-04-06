@@ -1,0 +1,48 @@
+{
+	"name": "MobileEdgeHostFunction",
+	"description": "MEC Mobile Edge Host resource function specification",
+	"@type": "MobileEdgeHostFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgeHostFunctionSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-04-06T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "MEC",
+	"targetResourceSchema": {
+		"@type": "MobileEdgeHostFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgeHostFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-04-06T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class",
+			"valueType": "string"
+		},
+		{
+			"name": "supportedFeatures",
+			"description": "The features supported by the MobileEdgeHostFunction",
+			"valueType": "string"
+		},
+		{
+			"name": "version",
+			"description": "Version of the MEC system",
+			"valueType": "string"
+		}
+	]
+}

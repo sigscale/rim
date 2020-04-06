@@ -46,6 +46,7 @@
 -export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
+-export([mec_mehf/0]).
 
 -include("im.hrl").
 
@@ -4707,6 +4708,31 @@ huawei_mscso() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MSCServerOfficeSpec",
 					schema = "/resourceInventoryManagement/v3/schema/MSCServerOfficeSpec"},
+			characteristic = Chars}.
+
+-spec mec_mehf() -> specification().
+%% @doc MEC MobileEdgeHost resource function specification.
+mec_mehf() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class",
+			value_type = "string"},
+	SupportedFeatures = #specification_char{name = "supportedFeatures",
+			description = "The features supported by the MobileEdgeHostFunction",
+			value_type = "string"},
+	Version = #specification_char{name = "version",
+			description = "Version of the MEC system",
+			value_type = "string"},
+	Chars = [Id, SupportedFeatures, Version],
+	#specification{name = "MobileEdgeHostFunction",
+			description = "MEC Mobile Edge Host Function",
+			class_type = "MobileEdgeHostFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/MobileEdgeHostFunctionSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "MobileEdgeHostFunction",
+					schema = "/resourceInventoryManagement/v3/schema/MobileEdgeHostFunction"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
