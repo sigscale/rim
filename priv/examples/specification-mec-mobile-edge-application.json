@@ -82,7 +82,8 @@
 		{
 			"name": "operationalState",
 			"description": "It indicates the operational state of the object instance",
-			"valueType": ""
+			"valueType": "OperationalStateType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
 		},
 		{
 			"name": "appInstanceId",
