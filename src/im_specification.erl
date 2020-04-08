@@ -46,7 +46,8 @@
 -export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
--export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0]).
+-export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0,
+		mec_ls/0]).
 
 -include("im.hrl").
 
@@ -4904,6 +4905,25 @@ mec_rnis() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "RNIService",
 					schema = "/resourceInventoryManagement/v3/schema/RNIService"},
+			characteristic = Chars}.
+
+-spec mec_ls() -> specification().
+%% @doc MEC Location Service resource specification.
+mec_ls() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	Chars = [Id],
+	#specification{name = "LocationService",
+			description = "MEC Location Service",
+			class_type = "LocationServiceSpec",
+			schema = "/resourceCatalogManagement/v3/schema/LocationServiceSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "LocationService",
+					schema = "/resourceInventoryManagement/v3/schema/LocationService"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
