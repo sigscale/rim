@@ -46,7 +46,7 @@
 -export([generic_me/0, generic_subnetwork/0]).
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
--export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0]).
+-export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0]).
 
 -include("im.hrl").
 
@@ -4885,6 +4885,25 @@ mec_meas() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeApplicationService",
 					schema = "/resourceInventoryManagement/v3/schema/MobileEdgeApplicationService"},
+			characteristic = Chars}.
+
+-spec mec_rnis() -> specification().
+%% @doc MEC Radio Network Information (RNI) Service resource specification.
+mec_rnis() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	Chars = [Id],
+	#specification{name = "RNIService",
+			description = "MEC Radio Network Information (RNI)",
+			class_type = "RNIServiceSpec",
+			schema = "/resourceCatalogManagement/v3/schema/RNIServiceSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "RNIService",
+					schema = "/resourceInventoryManagement/v3/schema/RNIService"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
