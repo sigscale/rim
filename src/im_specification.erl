@@ -4896,7 +4896,7 @@ mec_rnis() ->
 			value_type = "string"},
 	Chars = [Id],
 	#specification{name = "RNIService",
-			description = "MEC Radio Network Information (RNI)",
+			description = "MEC Radio Network Information (RNI) Service",
 			class_type = "RNIServiceSpec",
 			schema = "/resourceCatalogManagement/v3/schema/RNIServiceSpec",
 			base_type = "ResourceFunctionSpecification",
