@@ -47,7 +47,7 @@
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
 -export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0,
-		mec_ls/0]).
+		mec_ls/0, mec_tr/0]).
 
 -include("im.hrl").
 
@@ -4924,6 +4924,46 @@ mec_ls() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "LocationService",
 					schema = "/resourceInventoryManagement/v3/schema/LocationService"},
+			characteristic = Chars}.
+
+-spec mec_tr() -> specification().
+%% @doc MEC Traffic Rule resource specification.
+mec_tr() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance"
+					" of the object class.",
+			value_type = "string"},
+	TrafficRuleId = #specification_char{name = "trafficRuleId",
+			description = "The identifier of the traffic rule",
+			value_type = "string"},
+	FilterType = #specification_char{name = "filterType",
+			description = "Definition of filter type",
+			value_type = []},
+	Priority = #specification_char{name = "priority",
+			description = "The priority of the associated traffic rule",
+			value_type = "integer"},
+	TrafficFilter = #specification_char{name = "trafficFilter",
+			description = "The traffic filter used to identify specific flow/packets"
+					"that need to be handled by the MEC host",
+			value_type = []},
+	Action = #specification_char{name = "action",
+			description = "The action to be applied to a packet in case it matches"
+					"the traffic rule or RAB filter rule",
+			value_type = []},
+	DstInterface = #specification_char{name = "dstInterface",
+			description = [], value_type = []},
+	Chars = [Id, TrafficRuleId, FilterType, Priority, TrafficFilter,
+			Action, DstInterface],
+	#specification{name = "TrafficRule",
+			description = "MEC Traffic Rule",
+			class_type = "TrafficRuleSpec",
+			schema = "/resourceCatalogManagement/v3/schema/TrafficRuleSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "TrafficRule",
+					schema = "/resourceInventoryManagement/v3/schema/TrafficRule"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
