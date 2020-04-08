@@ -47,7 +47,7 @@
 -export([huawei_usn/0, huawei_ugw/0, huawei_cgpomu/0, huawei_igwb/0,
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
 -export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0,
-		mec_ls/0, mec_tr/0]).
+		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 
 -include("im.hrl").
 
@@ -4964,6 +4964,41 @@ mec_tr() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "TrafficRule",
 					schema = "/resourceInventoryManagement/v3/schema/TrafficRule"},
+			characteristic = Chars}.
+
+-spec mec_dnsr() -> specification().
+%% @doc
+mec_dnsr() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance"
+					" of the object class.",
+			value_type = "string"},
+	DnsRuleId = #specification_char{name = "dnsRuleId",
+			description = "The DNS rule id",
+			value_type = []},
+	DomainName = #specification_char{name = "domainName",
+			description = "The FQDN of the DNS rule",
+			value_type = "string"},
+	IPAddressType = #specification_char{name = "iPAddressType",
+			description = "The IP address type",
+			value_type = []},
+	IPAddress = #specification_char{name = "iPAddress",
+			description = "The IP address to which the domain name is resolved",
+			value_type = "string"},
+	TimeToLive = #specification_char{name = "timeToLive",
+			description = "The time to life of the resolved IP address",
+			value_type = "integer"},
+	Chars = [Id, DnsRuleId, DomainName, IPAddressType, IPAddress, TimeToLive],
+	#specification{name = "DNSRule",
+			description = [],
+			class_type = "DNSRuleSpec",
+			schema = "/resourceCatalogManagement/v3/schema/DNSRuleSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "MEC",
+			target_schema = #target_schema_ref{class_type = "DNSRule",
+					schema = "/resourceInventoryManagement/v3/schema/DNSRule"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
