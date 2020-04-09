@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/RNIServiceSpec",
 	"title": "MEC RNIService Specification",
-	"description": "MEC Radio Network Information (RNI) Service resource function specification",
+	"description": "MEC Radio Network Information (RNI) Service resource specification",
 	"type": "object",
 	"allOf": [
 		{

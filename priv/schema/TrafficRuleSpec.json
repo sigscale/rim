@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/TrafficRuleSpec",
 	"title": "MEC TrafficRule Specification",
-	"description": "MEC Traffic Rule resource function specification",
+	"description": "MEC Traffic Rule resource specification",
 	"type": "object",
 	"allOf": [
 		{

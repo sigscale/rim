@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/LocationServiceSpec",
 	"title": "MEC LocationService Specification",
-	"description": "MEC Location Service resource function specification",
+	"description": "MEC Location Service resource specification",
 	"type": "object",
 	"allOf": [
 		{

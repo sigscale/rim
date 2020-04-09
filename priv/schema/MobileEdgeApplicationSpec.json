@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/MobileEdgeApplicationSpec",
 	"title": "MEC MobileEdgeApplication Specification",
-	"description": "MEC Mobile Edge Application resource function specification",
+	"description": "MEC Mobile Edge Application resource specification",
 	"type": "object",
 	"allOf": [
 		{
