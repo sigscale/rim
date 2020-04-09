@@ -1,0 +1,38 @@
+{
+	"$id": "http://sigscale.org/schema/LocationService",
+	"title": "MEC LocationService",
+	"description": "MEC Location Service resource",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

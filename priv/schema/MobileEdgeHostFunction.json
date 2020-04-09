@@ -1,0 +1,52 @@
+{
+	"$id": "http://sigscale.org/schema/MobileEdgeHostFunction",
+	"title": "MEC MobileEdgeHostFunction",
+	"description": "MEC Mobile Edge Host resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"supportedFeatures",
+											"version"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"mobileEdgePlatform": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"mobileEdgeApplication": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"trafficRule": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"dNSRule": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}
