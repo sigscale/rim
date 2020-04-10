@@ -1,0 +1,37 @@
+{
+	"id": "6798452939",
+	"href": "/resourceInventoryManagement/v3/resource/6798452939",
+	"name": "SubNetwork=2,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,LocationService=1",
+	"description": "MEC Location Service",
+	"category": "MEC",
+	"validFor": {
+		"startDateTime": "2020-04-10T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "LocationService",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/LocationService",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "789215631",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215631",
+		"@type": "LocationServiceSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam9",
+			"vsDataFormatVersion": "acmeParams-v10",
+			"vsData": 100
+		}
+	],
+	"resourceRelationship": [],
+	"connectivity": []
+}

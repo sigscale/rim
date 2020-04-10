@@ -141,7 +141,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/examples/resource-mec-mobile-edge-application-service.json \
 		$(abs_builddir)/resource-mec-traffic-rule.json \
 		$(abs_builddir)/resource-mec-dns-rule.json \
-		$(abs_builddir)/resource-mec-rni-service.json
+		$(abs_builddir)/resource-mec-rni-service.json \
+		$(abs_builddir)/resource-mec-location-service.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -938,6 +939,8 @@ check_DATA = .validation_ok
 				-d resource-mec-dns-rule.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-mec-rni-service.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-mec-location-service.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
