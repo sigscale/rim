@@ -26,7 +26,7 @@
 		},
 		{
 			"name": "priority",
-			"value" : "9"
+			"value" : 9
 		}
 	],
 	"vsDataContainer": [

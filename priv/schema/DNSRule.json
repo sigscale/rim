@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/DNSRule",
 	"title": "MEC DNSRule",
-	"description": "MEC DNSRule resource",
+	"description": "",
 	"type": "object",
 	"allOf": [
 		{

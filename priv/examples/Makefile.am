@@ -138,7 +138,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-mec-mobile-edge-platform.json \
 		$(abs_builddir)/resource-mec-mobile-edge-application.json \
 		$(abs_builddir)/resource-mec-mobile-edge-platform-service.json \
-		$(abs_builddir)/examples/resource-mec-mobile-edge-application-service.json \
+		$(abs_builddir)/resource-mec-mobile-edge-application-service.json \
 		$(abs_builddir)/resource-mec-traffic-rule.json \
 		$(abs_builddir)/resource-mec-dns-rule.json \
 		$(abs_builddir)/resource-mec-rni-service.json \

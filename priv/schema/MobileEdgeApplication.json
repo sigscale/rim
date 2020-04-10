@@ -1,6 +1,6 @@
 {
 	"$id": "http://sigscale.org/schema/MobileEdgeApplication",
-	"title": "UTRAN RNC",
+	"title": "MEC MobileEdgeApplication",
 	"description": "MEC Mobile Edge Application resource",
 	"type": "object",
 	"allOf": [
