@@ -135,7 +135,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-epc-ep-rp-eps.json \
 		$(abs_builddir)/resource-generic-subnetwork.json \
 		$(abs_builddir)/resource-mec-mobile-edge-host-function.json \
-		$(abs_builddir)/resource-mec-mobile-edge-platform.json
+		$(abs_builddir)/resource-mec-mobile-edge-platform.json \
+		$(abs_builddir)/resource-mec-mobile-edge-application.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -920,6 +921,8 @@ check_DATA = .validation_ok
 				-d resource-mec-mobile-edge-host-function.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-mec-mobile-edge-platform.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-mec-mobile-edge-application.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
