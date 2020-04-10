@@ -1,0 +1,41 @@
+{
+	"id": "6798452936",
+	"href": "/resourceInventoryManagement/v3/resource/6798452936",
+	"name": "SubNetwork=2,ManagedElement=1,MobileEdgeHostFunction=1,TrafficRule=1",
+	"description": "MEC Traffic Rule",
+	"category": "MEC",
+	"validFor": {
+		"startDateTime": "2020-04-10T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "TrafficRule",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/TrafficRule",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "789215634",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215634",
+		"@type": "TrafficRuleSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "trafficRuleId",
+			"value" : "1274"
+		},
+		{
+			"name": "priority",
+			"value" : "9"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam6",
+			"vsDataFormatVersion": "acmeParams-v7",
+			"vsData": 97
+		}
+	],
+	"resourceRelationship": [],
+	"connectivity": []
+}
