@@ -10,15 +10,6 @@
 		{
 			"type": "object",
 			"properties": {
-				"sapSpecification": {
-					"type": "array",
-					"description": "Service Access Point (SAP) Specifications",
-					"items": [
-						{
-							"$ref": "SAPSpecificationRef"
-						}
-					]
-				},
 				"connectionPointSpecification": {
 					"type": "array",
 					"description": "Connection Point (CP) Specifications",
