@@ -1,0 +1,81 @@
+{
+	"$id": "http://sigscale.org/schema/ENBFunction",
+	"title": "EUTRAN ENB",
+	"description": "LTE Evolved Node B (ENB) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"intraANRSwitch",
+											"iRATANRSwitch",
+											"eNBId",
+											"x2BlackList",
+											"x2WhiteList",
+											"x2HOBlackList",
+											"x2IpAddressList",
+											"tceIDMappingInfoList",
+											"sharNetTceMappingInfoList",
+											"netListeningRSForRIBS"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eUtranCellFDD": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eUtranCellTDD": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_RP_EPS": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_X2C": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_X2U": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_NgC": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_NgU": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_XnC": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_XnU": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"deNBCapability": {
+					"$ref": "eutranNrm#/definitions/DeNBCapabilityList"
+				},
+				"eSPolicies": {
+					"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
+				}
+			}
+		}
+	]
+}

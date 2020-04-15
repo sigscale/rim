@@ -37,20 +37,7 @@
 											"x2IpAddressList",
 											"tceIDMappingInfoList",
 											"sharNetTceMappingInfoList",
-											"netListeningRSForRIBS",
-											"eUtranCellFDD",
-											"eUtranCellTDD",
-											"eP_RP_EPS",
-											"eP_X2C",
-											"eP_X2U",
-											"eP_NgC",
-											"eP_NgU",
-											"eP_XnC",
-											"eP_XnU",
-											"eNBFunctionOptionallyContainedNrmClass",
-											"deNBCapability",
-											"vsDataContainer",
-											"eSPolicies"
+											"netListeningRSForRIBS"
 										]
 									}
 								}
