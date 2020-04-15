@@ -42,23 +42,12 @@
 			"value" : "5"
 		}
 	],
-	"gsmRelation": [
-		{
-			"adjacentCell": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=2"
-		}
-	],
-	"utranRelation": [
-		{
-			"adjacentCell": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCell=1"
-		}
-	],
-	"eUtranRelation": [
-	],
 	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam1",
 			"vsDataFormatVersion": "acmeParams-v2",
 			"vsData": 42
 		}
-	]
+	],
+	"resourceRelationship": []
 }

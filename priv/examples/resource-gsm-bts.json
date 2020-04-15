@@ -34,16 +34,27 @@
 			"value" : "-79.3898"
 		}
 	],
-	"gsmCell": [
-		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
-		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=2",
-		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=3"
-	],
 	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam1",
 			"vsDataFormatVersion": "acmeParams-v2",
 			"vsData": 42
+		}
+	],
+	"gsmCell": [
+		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
+		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=2",
+		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=3"
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "8794832002",
+				"href": "/resourceInventoryManagement/v3/resource/8794832002",
+				"name": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
+				"@referredType": "GsmCell"
+			},
+			"type": "contains"
 		}
 	]
 }
