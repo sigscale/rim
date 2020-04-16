@@ -1,0 +1,40 @@
+{
+	"$id": "http://sigscale.org/schema/EUtranCellFDD",
+	"title": "EUTRAN FDD Cell",
+	"description": "LTE Frequency Division Duplex (FDD) radio resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"earfcnDl",
+											"arfcnUl"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

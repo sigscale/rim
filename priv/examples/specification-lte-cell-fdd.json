@@ -207,54 +207,6 @@
 			"valueType": "integer",
 			"valueFrom": -32768,
 			"valueTo": 32767
-		},
-		{
-			"name": "eUtranRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target EUtranGenericCell",
-			"valueType": "EUtranRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/EUtranRelationList"
-		},
-		{
-			"name": "cdma2000Relation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target CDMA200 sector (3GPP2 TS S.S0028)",
-			"valueType": "Cdma2000RelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/Cdma2000RelationList"
-		},
-		{
-			"name": "gsmRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target GsmCell",
-			"valueType": "GsmRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/GsmRelationList"
-		},
-		{
-			"name": "utranRelation",
-			"description": "Neighbour cell Relation (NR) from a source cell to a target UtranGenericCell",
-			"valueType": "UtranRelationList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/UtranRelationList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
-		},
-		{
-			"name": "energySavingProperties",
-			"description": "Energy saving properties of a network element supporting Energy Saving Management",
-			"valueType": "EnergySavingPropertiesList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/EnergySavingPropertiesList"
-		},
-		{
-			"name": "eSPolicies",
-			"description": "Energy saving policies information",
-			"valueType": "ESPoliciesList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sonPolicyNrm#/definitions/ESPoliciesList"
-		},
-		{
-			"name": "eUtranCellFDDOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "EUtranCellFDDOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutramnNrm#/definitions/EUtranCellFDDOptionallyContainedNrmClassList"
 		}
 	]
 }
