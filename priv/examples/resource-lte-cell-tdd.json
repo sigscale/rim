@@ -33,24 +33,12 @@
 			"value" : "-3094"
 		}
 	],
-	"eutranRelation": [
-		{
-			"adjacentCell": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=1"
-		},
-		{
-			"adjacentCell": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=2"
-		}
-	],
-	"gsmRelation": [
-		{
-			"adjacentCell": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1"
-		}
-	],
 	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam5",
 			"vsDataFormatVersion": "acmeParams-v6",
 			"vsData": 72
 		}
-	]
+	],
+	"resourceRelationship": []
 }
