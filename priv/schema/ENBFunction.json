@@ -68,12 +68,6 @@
 				},
 				"eP_XnU": {
 					"$ref": "genericNrm#/definitions/DnList"
-				},
-				"deNBCapability": {
-					"$ref": "eutranNrm#/definitions/DeNBCapabilityList"
-				},
-				"eSPolicies": {
-					"$ref": "sonPolicyNrm#/definitions/ESPoliciesList"
 				}
 			}
 		}
