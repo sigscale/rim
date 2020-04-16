@@ -53,14 +53,7 @@
 						"nbIoTcellFlag",
 						"isChangeForEnergySavingAllowed",
 						"ngranCellFlag",
-						"nSSAI",
-						"eUtranRelation",
-						"cdma2000Relation",
-						"gsmRelation",
-						"utranRelation",
-						"vsDataContainer",
-						"energySavingProperties",
-						"eSPolicies"
+						"nSSAI"
 					]
 				}
 			}
