@@ -21,6 +21,7 @@
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -60,7 +61,7 @@ parse_bss({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_bss({endElement, _Uri, "BssFunction", QName},
 		[#state{dn_prefix = [BssDn | _], stack = Stack, rule = RuleId,
-		parse_state = #geran_state{btss = Btss, vs_data = NrmMap},
+		parse_state = #geran_state{btss = BtsRels, vs_data = NrmMap},
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	BssAttr = parse_bss_attr(T2, undefined, []),
@@ -79,7 +80,6 @@ parse_bss({endElement, _Uri, "BssFunction", QName},
 		{error, _Reason} ->
 			[]
 	end,
-	BtsSiteMgr = #resource_char{name = "BtsSiteMgr", value = Btss},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
@@ -97,7 +97,8 @@ parse_bss({endElement, _Uri, "BssFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
 			specification = Spec,
-			characteristic = lists:reverse([BtsSiteMgr, VsData, PeeParam | BssAttr])},
+			characteristic = lists:reverse([VsData, PeeParam | BssAttr]),
+			related = BtsRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -203,13 +204,12 @@ parse_bts({endElement, _Uri, "BtsSiteManager", QName},
 	end;
 parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 		[#state{dn_prefix = [BtsDn | _], location = Location,
-		parse_state = #geran_state{cells = Cells}, stack = Stack,
+		parse_state = #geran_state{cells = CellRels}, stack = Stack,
 		spec_cache = Cache}, #state{parse_state = GeranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#geran_state{btss = Btss, vs_data = NrmMap} = GeranState,
+	#geran_state{btss = BtsRels, vs_data = NrmMap} = GeranState,
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	BtsAttr = parse_bts_attr(T, undefined, []),
-	GsmCell = #resource_char{name = "GsmCell", value = Cells},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
@@ -227,11 +227,14 @@ parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
 			specification = Spec,
-			characteristic = lists:reverse([GsmCell, VsData, PeeParam | BtsAttr])},
+			characteristic = lists:reverse([VsData, PeeParam | BtsAttr]),
+			related = CellRels},
 	case im:add_resource(Resource) of
-		{ok, #resource{} = _R} ->
+		{ok, #resource{id = Id}} ->
+			BtsRel = #resource_rel{id = Id, name = BtsDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GeranState#geran_state{
-			btss = [BtsDn | Btss]}, spec_cache = [NewCache | PrevCache]} | T1];
+			btss = [BtsRel | BtsRels]}, spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -321,10 +324,11 @@ parse_gsm_cell({startElement, _Uri, _LocalName, QName, Attributes},
 parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 		[#state{dn_prefix = [CellDn | _], stack = Stack, spec_cache = Cache,
 		parse_state = #geran_state{vs_data = NrmMap}, location = Location},
-		#state{spec_cache = PrevCache, parse_state = GeranState} = PrevState | T1]) ->
+		#state{spec_cache = PrevCache,
+		parse_state = GeranState} = PrevState | T1]) ->
 	{[_ | T], _NewStack} = pop(startElement, QName, Stack),
 	GsmCellAttr = parse_gsm_cell_attr(T, []),
-	#geran_state{cells = Cells} = GeranState,
+	#geran_state{cells = GsmCellRels} = GeranState,
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
 			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
@@ -344,9 +348,12 @@ parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 			specification = Spec,
 			characteristic = lists:reverse([VsData, PeeParam | GsmCellAttr])},
 	case im:add_resource(Resource) of
-		{ok, #resource{}} ->
+		{ok, #resource{id = Id}} ->
+			GsmCellRel = #resource_rel{id = Id, name = CellDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
-					parse_state = GeranState#geran_state{cells = [CellDn | Cells]}} | T1];
+					parse_state = GeranState#geran_state{cells
+					= [GsmCellRel | GsmCellRels]}} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
