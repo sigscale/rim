@@ -41,11 +41,6 @@
 			"vsData": 42
 		}
 	],
-	"gsmCell": [
-		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
-		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=2",
-		"SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=3"
-	],
 	"resourceRelationship": [
 		{
 			"resourceRef": {
