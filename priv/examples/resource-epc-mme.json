@@ -177,6 +177,17 @@
 			"type": "contains"
 		}
 	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "7894623152",
+				"href": "/resourceInventoryManagement/v3/resource/7894623152",
+				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
 	"connectivity": [
 		{
 			"type": "Point-to-Point",
