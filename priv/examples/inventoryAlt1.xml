@@ -25,7 +25,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=3,ManagedElement=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -41,7 +41,7 @@
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
-						<xn:dn>SubNetwork=3,ManagementNode=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=3,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
 				<in:InventoryUnit id="1">

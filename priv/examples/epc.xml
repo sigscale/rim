@@ -25,7 +25,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=4,ManagedElement=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=4,ManagedElement=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -80,7 +80,7 @@
 						<xn:managedElementType>PGW</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:managedBy>
-						<xn:dn>SubNetwork=4,ManagementNode=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=4,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
 				<epc:EPDGFunction id="1">
@@ -95,7 +95,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP RP EPS 1</epc:userLabel>
 							<epc:farEndEntity>
-								SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
@@ -119,7 +119,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
@@ -159,7 +159,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-HSS-1</epc:userLabel>
 							<epc:farEndEntity>
-								SubNetwork=5,ManagedEntity=1,HssFunction=1
+								DC=sigscale.net,SubNetwork=5,ManagedEntity=1,HssFunction=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
@@ -167,7 +167,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP--1</epc:userLabel>
 							<epc:farEndEntity>
-								SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
@@ -175,7 +175,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
@@ -192,13 +192,17 @@
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2</epc:farEndEntity>
+							<epc:farEndEntity>
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2
+							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="2">
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2</epc:farEndEntity>
+							<epc:farEndEntity>
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2
+							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:MMEFunction>
