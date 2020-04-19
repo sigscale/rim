@@ -9,10 +9,10 @@
 		xmlns:genericIRPData="http://www.3gpp.org/ftp/specs/archive/32_series/32.316#GenericIRPData">
 	<fileHeader
 			fileFormatVersion="32.616 V15.1.0"		  
-			senderName="DC=example.net,SubNetwork=1,ManagementNode=1,IRPAgent=1"
-			vendorName="">
+			senderName="DC=example.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
+			vendorName="Acme">
 	<configData
-			dnPrefix="DC=example.net,SubNetwork=1">
+			dnPrefix="DC=sigscale.net,SubNetwork=3">
 		<xn:ManagementNode id="1">
 			<xn:IRPAgent id="1">
 				<xn:attributes>
@@ -20,13 +20,9 @@
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
-					<xn:managedElements>
-						<xn:dn>SubNetwork=1,ManagedElement=1</xn:dn>
-						<xn:dn>SubNetwork=1,ManagedElement=2</xn:dn>
-					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:systemDN>
-						DC=example.net,SubNetwork=1,ManagementNode=1,IRPAgent=1
+						DC=sigscale.net,SubNetwork=3,ManagementNode=1,IRPAgent=1
 					</xn:systemDN>
 					<genericIRPData:iRPVersions>
 						<genericIRPData:versionNumber>
