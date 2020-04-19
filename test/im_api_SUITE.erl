@@ -201,7 +201,7 @@ init_per_testcase(bulk_cm_utran, Config) ->
 										[indent(8), {'xn:dn', ["RncFunction=1,UtranCellFDD=1"]},
 										indent(8), {'xn:dn', ["RncFunction=1,UtranCellFDD=2"]}, indent(7)]},
 								indent(7), {'un:operationalState', ["enabled"]},
-								indent(7), {'un:numOfHspdschs', [integer_to_list(rand:uniform(96) - 1)]}, indent(6)]}, tabs(6)] ++ F1(3, []) ++
+								indent(7), {'un:numOfHspdschs', [integer_to_list(rand:uniform(96) - 1)]}, indent(6)]}] ++ F1(3, []) ++
 						[indent(6), {'xn:VsDataContainer', [{id, "1"}],
 								[indent(7), {'xn:attributes', [],
 										[indent(8), {'xn:vsDataType', ["DataType=" ++ integer_to_list(N)]},
@@ -424,7 +424,7 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 								indent(7), {'en:allowedAccessClasses', [],
 									[indent(8), {'en:allowedAccessClassesElement', ["EmergencyCall"]}, indent(7)]},
 								indent(7), {'en:earfcnDl', ["832"]},
-								indent(7), {'en:earfcnUl', ["391"]}, indent(6)]}, tabs(5)] ++ F1(3, []) ++
+								indent(7), {'en:earfcnUl', ["391"]}, indent(6)]}] ++ F1(3, []) ++
 						[indent(6), {'xn:VsDataContainer', [{id, "1"}],
 								[indent(7), {'xn:attributes', [],
 										[indent(8), {'xn:vsDataType', ["DataType=" ++ integer_to_list(N)]},
@@ -461,7 +461,7 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 									[indent(8), {'en:allowedAccessClassesElement', ["SecurityServices"]}, indent(7)]},
 								indent(7), {'en:earfcn', ["852"]},
 								indent(7), {'en:sfAssignment', ["635"]},
-								indent(7), {'en:specialSfPatterns', ["753"]}, indent(6)]}, tabs(5)] ++ F1(3, []) ++
+								indent(7), {'en:specialSfPatterns', ["753"]}, indent(6)]}] ++ F1(3, []) ++
 						[indent(6), {'xn:VsDataContainer', [{id, "1"}],
 								[indent(7), {'xn:attributes', [],
 										[indent(8), {'xn:vsDataType', ["DataType=" ++ integer_to_list(N)]},
@@ -633,7 +633,7 @@ init_per_testcase(bulk_cm_core, Config) ->
 								indent(7), {'cn:vnfParametersList', [],
 										[indent(8), {'xn:vnfInstanceId', [generate_identity(7)]},
 										indent(8), {'xn:autoScalable', ["true"]}, indent(7)]},
-								indent(7), {'cn:numOfHspdschs', ["0"]}, indent(6)]}, tabs(6)] ++
+								indent(7), {'cn:numOfHspdschs', ["0"]}, indent(6)]}] ++
 						[indent(6), {'xn:VsDataContainer', [{id, "1"}],
 								[indent(7), {'xn:attributes', [],
 										[indent(8), {'xn:vsDataType', ["DataType=" ++ integer_to_list(N)]},
@@ -651,7 +651,7 @@ init_per_testcase(bulk_cm_core, Config) ->
 								indent(7), {'cn:vnfParametersList', [],
 										[indent(8), {'xn:vnfInstanceId', [generate_identity(7)]},
 										indent(8), {'xn:autoScalable', ["true"]}, indent(7)]},
-								indent(7), {'cn:connectedHNBGW', [generate_identity(5)]}, indent(6)]}, tabs(6)] ++
+								indent(7), {'cn:connectedHNBGW', [generate_identity(5)]}, indent(6)]}] ++
 						[indent(6), {'xn:VsDataContainer', [{id, "1"}],
 								[indent(7), {'xn:attributes', [],
 										[indent(8), {'xn:vsDataType', ["DataType=" ++ integer_to_list(N)]},
@@ -2111,9 +2111,4 @@ fill_resource(N) ->
 indent(N) ->
 	Tabs = lists:duplicate(N, $\t),
 	#xmlText{value = "\n" ++ Tabs, type = text}.
-
-%% @hidden
-tabs(N) ->
-	Tabs = lists:duplicate(N, $\t),
-	#xmlText{value = Tabs, type = text}.
 
