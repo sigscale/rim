@@ -32,41 +32,46 @@
 			</xn:ManagementNode>
 			<epc:Link_MME_ServingGW id="1">
 				<epc:attributes>
-					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=1</epc:aEnd>
 					<epc:userLabel>Link MMEFunction ServingGWFunction</epc:userLabel>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=1</epc:aEnd>
 					<epc:zEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,ServingGWFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_MME_ServingGW>
 			<epc:Link_MME_MME id="1">
 				<epc:attributes>
-					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=2</epc:aEnd>
 					<epc:userLabel>Link MMEFunction MMEFunction</epc:userLabel>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=2</epc:aEnd>
 					<epc:zEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_MME_MME>
 			<epc:Link_MME_SGSN id="1">
 				<epc:attributes>
-					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=2</epc:aEnd>
 					<epc:userLabel>Link MMEFunction SgsnFunction</epc:userLabel>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=2</epc:aEnd>
 					<epc:zEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,SgsnFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_MME_SGSN>
 			<epc:Link_HSS_MME id="1">
 				<epc:attributes>
-					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,HSSFunction=1</epc:aEnd>
 					<epc:userLabel>Link HSSFunction MMEFunction</epc:userLabel>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,HSSFunction=1</epc:aEnd>
 					<epc:zEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=2</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_HSS_MME>
 			<epc:Link_ENB_MME id="1">
 				<epc:attributes>
-					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,ENBFunction=1</epc:aEnd>
 					<epc:userLabel>Link ENBFunction MMEFunction</epc:userLabel>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,ENBFunction=1</epc:aEnd>
 					<epc:zEnd>DC=sigscale.net,SubNetwork=1,ManagedElement=1,MMEFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_ENB_MME>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
+					<xn:userLabel>ME 1</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Gotham</xn:locationName>
+					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>EPDG</xn:managedElementType>
 						<xn:managedElementType>ServingGW</xn:managedElementType>
@@ -74,11 +79,6 @@
 						<xn:managedElementType>PCRF</xn:managedElementType>
 						<xn:managedElementType>PGW</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>ME 1</xn:userLabel>
-					<xn:vendorName>Acme</xn:vendorName>
-					<xn:userDefinedState>commercial</xn:userDefinedState>
-					<xn:locationName>Gotham</xn:locationName>
-					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
 						<xn:dn>SubNetwork=1,ManagementNode=1</xn:dn>
 					</xn:managedBy>
@@ -93,8 +93,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:farEndEntity>FEE</epc:farEndEntity>
 							<epc:userLabel>EP RP EPS 1</epc:userLabel>
+							<epc:farEndEntity>FEE</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -115,8 +115,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:farEndEntity>FEoiuewE</epc:farEndEntity>
 							<epc:userLabel>Paris UN6</epc:userLabel>
+							<epc:farEndEntity>FEoiuewE</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -139,8 +139,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_MME_ServingGW=1</epc:farEndEntity>
 							<epc:userLabel>Paris KLO8</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_MME_ServingGW=1</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -163,8 +163,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_MME_MME=1</epc:farEndEntity>
 							<epc:userLabel>Paris KL12</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=1,Link_MME_MME=1</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -185,8 +185,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:farEndEntity>FEEryqt</epc:farEndEntity>
 							<epc:userLabel>Paris EPMNO8</epc:userLabel>
+							<epc:farEndEntity>FEEryqt</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -208,8 +208,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:farEndEntity>iutwFEE</epc:farEndEntity>
 							<epc:userLabel>Paris ASMNO8</epc:userLabel>
+							<epc:farEndEntity>iutwFEE</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
