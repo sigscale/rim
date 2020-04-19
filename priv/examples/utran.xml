@@ -34,7 +34,6 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>RNC</xn:managedElementType>
 					</xn:managedElementTypeList>
@@ -142,7 +141,6 @@
 			</xn:ManagedElement>
 			<xn:ManagedElement id="2">
 				<xn:attributes>
-					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>NodeB</xn:managedElementType>
 					</xn:managedElementTypeList>

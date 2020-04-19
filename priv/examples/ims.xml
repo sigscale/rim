@@ -34,7 +34,6 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>AS</xn:managedElementType>
 						<xn:managedElementType>HSS</xn:managedElementType>

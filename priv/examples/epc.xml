@@ -67,7 +67,6 @@
 			</epc:Link_ENB_MME>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>EPDG</xn:managedElementType>
 						<xn:managedElementType>ServingGW</xn:managedElementType>

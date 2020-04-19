@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 32.616 Bulk CM data file with
+	3GPP TS 32.622 ManagementNode IRP Agent for SimpleUploadBulkCMIRP
+-->
+<bulkCmConfigDataFile
+		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/32_series/32.626#genericNrm"
+		xmlns:genericIRPData="http://www.3gpp.org/ftp/specs/archive/32_series/32.316#GenericIRPData">
+	<fileHeader
+			fileFormatVersion="32.616 V15.1.0"		  
+			senderName="DC=example.net,SubNetwork=1,ManagementNode=1,IRPAgent=1"
+			vendorName="">
+	<configData
+			dnPrefix="DC=example.net,SubNetwork=1">
+		<xn:ManagementNode id="1">
+			<xn:IRPAgent id="1">
+				<xn:attributes>
+					<xn:userLabel>EMS-1</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Gotham</xn:locationName>
+					<xn:managedElements>
+						<xn:dn>SubNetwork=1,ManagedElement=1</xn:dn>
+						<xn:dn>SubNetwork=1,ManagedElement=2</xn:dn>
+					</xn:managedElements>
+					<xn:swVersion>1.0</xn:swVersion>
+					<xn:systemDN>
+						DC=example.net,SubNetwork=1,ManagementNode=1,IRPAgent=1
+					</xn:systemDN>
+					<genericIRPData:iRPVersions>
+						<genericIRPData:versionNumber>
+							32.616-B V15.1
+						</genericIRPData:versionNumber>							
+					</genericIRPData:iRPVersions>
+					<genericIRPData:operationNameProfile>
+						<genericIRPData:operationSet>
+							<genericIRPData:operation>
+								<genericIRPData:operationName>
+									upload
+								</genericIRPData:operationName>
+							</genericIRPData:operation>
+						</genericIRPData:operationSet>
+					</genericIRPData:operationNameProfile>
+				</xn:attributes>
+			</xn:IRPAgent>
+		</xn:ManagementNode>
+	</configData>
+	<fileFooter dateTime="2020-04-18T10:54:43Z" />
+</bulkCmConfigDataFile>

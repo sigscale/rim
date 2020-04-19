@@ -32,7 +32,6 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix/>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>BSS</xn:managedElementType>
 					</xn:managedElementTypeList>

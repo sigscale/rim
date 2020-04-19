@@ -33,7 +33,6 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix>SubNetwork=1,ManagedElement=1</xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>RNC</xn:managedElementType>
 					</xn:managedElementTypeList>

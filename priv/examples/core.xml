@@ -33,7 +33,6 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>MscServer</xn:managedElementType>
 						<xn:managedElementType>CsMgw</xn:managedElementType>
