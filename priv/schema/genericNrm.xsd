@@ -149,7 +149,7 @@
 						<element name="attributes" minOccurs="0">
 							<complexType>
 								<all>
-									<element name="dnPrefix"/>
+									<element name="dnPrefix" minOccurs="0"/>
 									<element name="managedElementTypeList" type="xn:managedElementTypeListType" minOccurs="0"/>
 									<element name="userLabel"/>
 									<element name="vendorName"/>
