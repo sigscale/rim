@@ -70,6 +70,10 @@
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>EPDG</xn:managedElementType>
+						<xn:managedElementType>ServingGW</xn:managedElementType>
+						<xn:managedElementType>MME</xn:managedElementType>
+						<xn:managedElementType>PCRF</xn:managedElementType>
+						<xn:managedElementType>PGW</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>

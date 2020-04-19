@@ -35,6 +35,7 @@
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>3GPPAAAServer</xn:managedElementType>
+						<xn:managedElementType>3GPPAAAProxy</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>

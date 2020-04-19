@@ -36,6 +36,14 @@
 					<xn:dnPrefix></xn:dnPrefix>
 					<xn:managedElementTypeList>
 						<xn:managedElementType>MscServer</xn:managedElementType>
+						<xn:managedElementType>CsMgw</xn:managedElementType>
+						<xn:managedElementType>Ggsn</xn:managedElementType>
+						<xn:managedElementType>Sgsn</xn:managedElementType>
+						<xn:managedElementType>Auc</xn:managedElementType>
+						<xn:managedElementType>Alr</xn:managedElementType>
+						<xn:managedElementType>Eir</xn:managedElementType>
+						<xn:managedElementType>MnpSrf</xn:managedElementType>
+						<xn:managedElementType>Cgf</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
