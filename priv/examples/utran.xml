@@ -10,7 +10,7 @@
 		xmlns:vsRHO11="http://www.companyNN.com/xmlschemas/NNRncHandOver.1.1">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=umts.sigscale.net,SubNetwork=1,IRPAgent=1"
+			senderName="DC=umts.sigscale.net,SubNetwork=1,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=umts.sigscale.net">
 		<xn:SubNetwork id="1">

@@ -10,7 +10,7 @@
 
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=ims.sigscale.net,SubNetwork=1,IRPAgent=1"
+			senderName="DC=ims.sigscale.net,SubNetwork=1,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
 
 	<configData dnPrefix="DC=sigscale.net">
@@ -27,7 +27,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=1,AsFunction=1</xn:dn>
+						<xn:dn>SubNetwork=1,ManagedElement=1,AsFunction=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
