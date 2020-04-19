@@ -26,7 +26,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>SubNetwork=2,ManagedElement=1,MscFunction=1</xn:dn>
+						<xn:dn>SubNetwork=2,ManagedElement=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
