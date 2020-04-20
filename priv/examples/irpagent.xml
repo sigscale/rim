@@ -8,7 +8,7 @@
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/32_series/32.626#genericNrm"
 		xmlns:genericIRPData="http://www.3gpp.org/ftp/specs/archive/32_series/32.316#GenericIRPData">
 	<fileHeader
-			fileFormatVersion="32.616 V15.1.0"		  
+			fileFormatVersion="32.616 V15.1.0"
 			senderName="DC=example.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme">
 	<configData
@@ -27,7 +27,7 @@
 					<genericIRPData:iRPVersions>
 						<genericIRPData:versionNumber>
 							32.616-B V15.1
-						</genericIRPData:versionNumber>							
+						</genericIRPData:versionNumber>
 					</genericIRPData:iRPVersions>
 					<genericIRPData:operationNameProfile>
 						<genericIRPData:operationSet>
