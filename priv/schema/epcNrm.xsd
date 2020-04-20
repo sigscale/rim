@@ -23,7 +23,7 @@
 	<complexType name="PLMNId">
 		<sequence>
 			<element name="mcc" type="short" minOccurs="0"/>
-			<element name="mNc" type="short" minOccurs="0"/>
+			<element name="mnc" type="short" minOccurs="0"/>
 		</sequence>
 	</complexType>
 
