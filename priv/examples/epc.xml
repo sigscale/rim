@@ -175,7 +175,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ENBFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
@@ -193,15 +193,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2
-							</epc:farEndEntity>
-						</epc:attributes>
-					</epc:EP_RP_EPS>
-					<epc:EP_RP_EPS id="2">
-						<epc:attributes>
-							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=3
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
