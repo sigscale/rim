@@ -165,7 +165,7 @@
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="3">
 						<epc:attributes>
-							<epc:userLabel>EP--1</epc:userLabel>
+							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
 								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
 							</epc:farEndEntity>
@@ -173,7 +173,7 @@
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="4">
 						<epc:attributes>
-							<epc:userLabel>EP-MME-1</epc:userLabel>
+							<epc:userLabel>EP-ENB-1</epc:userLabel>
 							<epc:farEndEntity>
 								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ENBFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
