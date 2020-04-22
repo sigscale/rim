@@ -578,9 +578,8 @@ parse_eprpeps({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_eprpeps({endElement, _Uri, "EP_RP_EPS", QName},
 		[#state{dn_prefix = [EpRpEpsDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = EpcState,
+		#state{parse_state = PrevParseState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpsRels} = EpcState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpRpEpsAttr = parse_ep_rp_eps_attr(T2, undefined, []),
 	ClassType = "EP_RP_EPS",
@@ -597,9 +596,16 @@ parse_eprpeps({endElement, _Uri, "EP_RP_EPS", QName},
 		{ok, #resource{id = Id} = _R} ->
 			EpRpEpsRel = #resource_rel{id = Id, name = EpRpEpsDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = EpcState#epc_state{
-					ep_rp_epss = [EpRpEpsRel | EpRpEpsRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#epc_state{ep_rp_epss = EpRpEpsRels} ->
+					[PrevState#state{parse_state = PrevParseState#epc_state{
+							ep_rp_epss = [EpRpEpsRel | EpRpEpsRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_rp_epss = EpRpEpsRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_rp_epss = [EpRpEpsRel | EpRpEpsRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;

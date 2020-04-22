@@ -23,7 +23,7 @@
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
-
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -63,16 +63,23 @@ parse_enb({startElement, _Uri, "EUtranCellTDD", QName,
 			parse_function = parse_tdd, location = Location,
 			parse_state = #eutran_state{tdd = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_RP_EPS", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_RP_EPS=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_epc, parse_function = parse_eprpeps,
+			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_enb({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_enb({endElement, _Uri, "ENBFunction", QName},
-		[#state{parse_state =  #eutran_state{fdds = Fdds, tdds = Tdds},
-		location = Location,
+		[#state{parse_state =  #eutran_state{fdds = FddRels, tdds = TddRels,
+		ep_rp_epss = EpRpEpsRels}, location = Location,
 		dn_prefix = [EnbDn | _], stack = Stack, spec_cache = Cache},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
-	UtranCellFDD = #resource_char{name = "UtranCellFDD", value = Fdds},
-	UtranCellTDD = #resource_char{name = "UtranCellTDD", value = Tdds},
 	ClassType = "ENBFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -88,8 +95,9 @@ parse_enb({endElement, _Uri, "ENBFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/ENBFunction",
 			specification = Spec,
-			characteristic = lists:reverse([UtranCellFDD, UtranCellTDD,
-					PeeParam | EnbAttr])},
+			characteristic = lists:reverse([PeeParam | EnbAttr]),
+			related = FddRels ++ TddRels,
+			connection_point = EpRpEpsRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -226,7 +234,7 @@ parse_fdd({endElement, _Uri, "EUtranCellFDD", QName},
 		spec_cache = Cache, location = Location},
 		#state{parse_state = EUtranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#eutran_state{fdds = Fdds} = EUtranState,
+	#eutran_state{fdds = FddRels} = EUtranState,
 	ClassType = "EUtranCellFDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -244,9 +252,11 @@ parse_fdd({endElement, _Uri, "EUtranCellFDD", QName},
 			specification = Spec,
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
-		{ok, #resource{}} ->
+		{ok, #resource{id = Id}} ->
+			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
-					parse_state = EUtranState#eutran_state{fdds = [FddDn | Fdds]},
+					parse_state = EUtranState#eutran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -453,7 +463,7 @@ parse_tdd({endElement, _Uri, "EUtranCellTDD", QName},
 		spec_cache = Cache, location = Location},
 		#state{parse_state = EUtranState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#eutran_state{tdds = Tdds} = EUtranState,
+	#eutran_state{tdds = TddRels} = EUtranState,
 	ClassType = "EUtranCellTDD",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -471,9 +481,11 @@ parse_tdd({endElement, _Uri, "EUtranCellTDD", QName},
 			specification = Spec,
 			characteristic = [PeeParam | TddAttr]},
 	case im:add_resource(Resource) of
-		{ok, #resource{}} ->
+		{ok, #resource{id = Id}} ->
+			TddRel = #resource_rel{id = Id, name = TddDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
-					parse_state = EUtranState#eutran_state{tdds = [TddDn | Tdds]},
+					parse_state = EUtranState#eutran_state{tdds = [TddRel | TddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})

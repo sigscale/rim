@@ -58,8 +58,9 @@
 		fdd :: map() | undefined,
 		tdd :: map() | undefined,
 		eutran_rel :: map() | undefined,
-		fdds = [] :: [string()],
-		tdds = [] :: [string()]}).
+		fdds = [] :: [resource_rel()],
+		tdds = [] :: [resource_rel()],
+		ep_rp_epss = [] :: [resource_rel()]}).
 -type eutran_state() :: #eutran_state{}.
 
 -record(epc_state,
