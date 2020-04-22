@@ -32,8 +32,8 @@
 		cell :: map() | undefined,
 		gsm_rel :: map() | undefined,
 		vs_data :: map() | undefined,
-		btss = [] :: [string()],
-		cells = [] :: [string()]}).
+		btss = [] :: [resource_rel()],
+		cells = [] :: [resource_rel()]}).
 -type geran_state() :: #geran_state{}.
 
 -record(utran_state,
