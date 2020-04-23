@@ -3,7 +3,7 @@
 	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) resource specification",
 	"@type": "EP_RP_EPSSpec",
 	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPSSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@baseType": "EP_RPSpec",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-03-19T00:00:00Z",
@@ -35,13 +35,13 @@
 			"valueType": "string"
 		},
 		{
-			"name": "farEndEntity",
-			"description": "",
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
 			"valueType": "string"
 		},
 		{
-			"name": "userLabel",
-			"description": "A user-friendly (and user assignable) name of this object",
+			"name": "farEndEntity",
+			"description": "",
 			"valueType": "string"
 		},
 		{

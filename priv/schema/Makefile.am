@@ -927,7 +927,6 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RPSpec.json \
-			-r genericNrm.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \

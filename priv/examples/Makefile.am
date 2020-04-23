@@ -780,6 +780,7 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-enb-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_RP_EPSSpec.json \
+				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
 				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
 				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
