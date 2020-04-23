@@ -106,6 +106,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-mec-location-service.json \
 		$(abs_builddir)/specification-mec-traffic-rule.json \
 		$(abs_builddir)/specification-mec-dns-rule.json \
+		$(abs_builddir)/specification-nr-ep-x2c.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -142,7 +143,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-mec-traffic-rule.json \
 		$(abs_builddir)/resource-mec-dns-rule.json \
 		$(abs_builddir)/resource-mec-rni-service.json \
-		$(abs_builddir)/resource-mec-location-service.json
+		$(abs_builddir)/resource-mec-location-service.json \
+		$(abs_builddir)/resource-nr-ep-x2c.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -868,6 +870,15 @@ check_DATA = .validation_ok
 				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
 				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-dns-rule.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2CSpec.json \
+				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
+				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
+				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
+				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
+				-d specification-nr-ep-x2c.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
@@ -942,6 +953,8 @@ check_DATA = .validation_ok
 				-d resource-mec-rni-service.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-mec-location-service.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-ep-x2c.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi

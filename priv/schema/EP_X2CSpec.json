@@ -1,0 +1,40 @@
+{
+	"$id": "http://sigscale.org/schema/EP_X2CSpec",
+	"title": "NR EP X2C Specification",
+	"description": "NR End Point of the logical link, supporting X2-C application protocols",
+	"allOf": [
+		{
+			"$ref": "EP_RPSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"$ref": "EP_RPSpec#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

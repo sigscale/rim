@@ -147,6 +147,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/MobileEdgePlatformSpec.json \
 		$(abs_builddir)/RNIServiceSpec.json \
 		$(abs_builddir)/TrafficRuleSpec.json \
+		$(abs_builddir)/EP_X2CSpec.json \
 		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -1017,6 +1018,15 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TrafficRuleSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_X2CSpec.json \
+			-r EP_RPSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
