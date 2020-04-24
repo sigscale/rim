@@ -1820,7 +1820,7 @@ nr_sector_carrier() ->
 			characteristic = Chars}.
 
 -spec nr_ep_x2c() -> specification().
-%% @doc NR End Point of the logical link, supporting X2-C application protocols",
+%% @doc NR End Point X2C resource specification.
 nr_ep_x2c() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -1853,7 +1853,7 @@ nr_ep_x2c() ->
 			characteristic = Chars}.
 
 -spec nr_ep_x2u() -> specification().
-%% @doc NR End Point of the logical link, supporting X2-C application protocols",
+%% @doc NR End Point X2U resource specification.
 nr_ep_x2u() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
