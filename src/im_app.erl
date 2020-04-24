@@ -272,7 +272,7 @@ install8(Nodes, Acc) ->
 		umts_cell_tdd_lcr, umts_cell_tdd_hcr, umts_iub_link,
 		lte_enb, lte_cell_fdd, lte_cell_tdd,
 		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up, nr_sector_carrier,
-		nr_cell_cu, nr_cell_du, nr_ep_x2c, nr_ep_x2u, nr_ep_ngc,
+		nr_cell_cu, nr_cell_du, nr_ep_x2c, nr_ep_x2u, nr_ep_ngc, nr_ep_ngu,
 		ngc_slice, ngc_slice_subnet,
 		ngc_amf, ngc_smf, ngc_upf, ngc_n3iwf, ngc_pcf, ngc_ausf, ngc_udm, ngc_udr,
 		ngc_udsf, ngc_nrf, ngc_nssf, ngc_smsf, ngc_lmf, ngc_ngeir, ngc_sepp,
