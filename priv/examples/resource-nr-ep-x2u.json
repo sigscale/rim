@@ -1,7 +1,7 @@
 {
 	"id": "3597461905",
 	"href": "/resourceInventoryManagement/v3/resource/3597461905",
-	"name": "SubNetwork=2,ManagedElement=1,GNBCUCPFunction=1,EP_X2U=1",
+	"name": "SubNetwork=2,ManagedElement=1,GNBCUUPFunction=1,EP_X2U=1",
 	"description": "NR End Point of the logical link, supporting the X2 user plane (X2-U) interface",
 	"category": "NR",
 	"validFor": {
