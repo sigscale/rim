@@ -1,0 +1,39 @@
+{
+	"id": "3597461909",
+	"href": "/resourceInventoryManagement/v3/resource/3597461909",
+	"name": "SubNetwork=2,ManagedElement=1,GNBCUUPFunction=1,EP_XnU=1",
+	"description": "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
+	"category": "NR",
+	"validFor": {
+		"startDateTime": "2020-04-24T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_XnU",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_XnU",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "368125604",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125604",
+		"@type": "EP_XnUSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "localAddress",
+			"value" : "127.0.0.1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam6",
+			"vsDataFormatVersion": "acmeParams-v7",
+			"vsData": 76
+		}
+	]
+}

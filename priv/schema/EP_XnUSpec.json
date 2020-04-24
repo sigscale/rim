@@ -1,0 +1,40 @@
+{
+	"$id": "http://sigscale.org/schema/EP_XnUSpec",
+	"title": "NR EP XnU Specification",
+	"description": "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
+	"allOf": [
+		{
+			"$ref": "EP_RPSpec"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"$ref": "EP_RPSpec#/definitions/ResourceSpecCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,58 @@
+{
+	"name": "EP_XnU",
+	"description": "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
+	"@type": "EP_XnUSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_XnUSpec",
+	"@baseType": "EP_RPSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-04-24T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "NR",
+	"targetResourceSchema": {
+		"@type": "EP_XnU",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_XnU"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-04-24T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "farEndEntity",
+			"description": "",
+			"valueType": "string"
+		},
+		{
+			"name": "localAddress",
+			"description": "Includes IP address and VLAN ID used for initialization of the underlying transport",
+			"valueType": "string"
+		},
+		{
+			"name": "remoteAddress",
+			"description": "IP address used for initialization of the underlying transport",
+			"valueType": "string"
+		}
+	]
+}

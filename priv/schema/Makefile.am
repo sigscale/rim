@@ -152,6 +152,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_NgCSpec.json \
 		$(abs_builddir)/EP_NgUSpec.json \
 		$(abs_builddir)/EP_XnCSpec.json \
+		$(abs_builddir)/EP_XnUSpec.json \
 		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
@@ -1066,6 +1067,15 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnCSpec.json \
+			-r EP_RPSpec.json \
+			-r ResourceFunctionSpec.json \
+			-r SAPSpecificationRef.json \
+			-r ConnectivitySpecification.json \
+			-r ConnectionPointSpecificationRef.json \
+			-r entityCatalogManagement.json \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_XnUSpec.json \
 			-r EP_RPSpec.json \
 			-r ResourceFunctionSpec.json \
 			-r SAPSpecificationRef.json \
