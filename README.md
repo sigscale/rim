@@ -107,3 +107,5 @@ format XML files. Several vendor specific formats are also supported.
 |State Mgmt  |stateManagementIRP  | 28.626|
 |PEE CMON    |peeCmonNrm          | 28.306|
 
+Also support for Mobile Edge Management (ETSI GS MEC010).
+ 
