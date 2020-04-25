@@ -1,20 +1,20 @@
 {
-	"name": "EP_RP_EPS",
-	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) resource specification",
-	"@type": "EP_RP_EPSSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPSSpec",
+	"name": "EP_XnU",
+	"description": "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
+	"@type": "EP_XnUSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_XnUSpec",
 	"@baseType": "EP_RPSpec",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2020-03-19T00:00:00Z",
+		"startDateTime": "2020-04-24T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "EPC",
+	"category": "NR",
 	"targetResourceSchema": {
-		"@type": "EP_RP_EPS",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPS"
+		"@type": "EP_XnU",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_XnU"
 	},
 	"relatedParty": [
 		{
@@ -23,7 +23,7 @@
 			"role": "Supplier",
 			"name": "ACME Inc.",
 			"validFor": {
-				"startDateTime": "2020-03-19T00:00:00Z",
+				"startDateTime": "2020-04-24T00:00:00Z",
 				"endDateTime": "2020-12-31T23:59:59Z"
 			}
 		}
@@ -45,8 +45,13 @@
 			"valueType": "string"
 		},
 		{
-			"name": "farEndNeIpAddr",
-			"description": "",
+			"name": "localAddress",
+			"description": "Includes IP address and VLAN ID used for initialization of the underlying transport",
+			"valueType": "string"
+		},
+		{
+			"name": "remoteAddress",
+			"description": "IP address used for initialization of the underlying transport",
 			"valueType": "string"
 		}
 	]

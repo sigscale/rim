@@ -28,7 +28,9 @@
 		umts_cell_tdd_lcr/0, umts_cell_tdd_hcr/0, umts_iub_link/0]).
 -export([lte_enb/0, lte_cell_fdd/0, lte_cell_tdd/0]).
 -export([nr_gnb_du/0, nr_gnb_cu_cp/0, nr_gnb_cu_up/0,
-		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0]).
+		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0,
+		nr_ep_x2c/0, nr_ep_x2u/0, nr_ep_ngc/0, nr_ep_ngu/0,
+		nr_ep_xnc/0, nr_ep_xnu/0]).
 -export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0,
 		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0, ngc_udsf/0,
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
@@ -1816,6 +1818,204 @@ nr_sector_carrier() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NRSectorCarrier",
 					schema = "/resourceInventoryManagement/v3/schema/NRSectorCarrier"},
+			characteristic = Chars}.
+
+-spec nr_ep_x2c() -> specification().
+%% @doc NR End Point X2C resource specification.
+nr_ep_x2c() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_X2C",
+			description = "NR End Point of the logical link, supporting X2-C application protocols",
+			class_type = "EP_X2CSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_X2CSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "NR",
+			target_schema = #target_schema_ref{class_type = "EP_X2C",
+					schema = "/resourceInventoryManagement/v3/schema/EP_X2C"},
+			characteristic = Chars}.
+
+-spec nr_ep_x2u() -> specification().
+%% @doc NR End Point X2U resource specification.
+nr_ep_x2u() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_X2U",
+			description = "NR End Point of the logical link, supporting the X2 user plane (X2-U) interface",
+			class_type = "EP_X2USpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_X2USpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "NR",
+			target_schema = #target_schema_ref{class_type = "EP_X2U",
+					schema = "/resourceInventoryManagement/v3/schema/EP_X2U"},
+			characteristic = Chars}.
+
+-spec nr_ep_ngc() -> specification().
+%% @doc NR End Point NgC resource specification.
+nr_ep_ngc() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_NgC",
+			description = "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity",
+			class_type = "EP_NgCSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_NgCSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "NR",
+			target_schema = #target_schema_ref{class_type = "EP_NgC",
+					schema = "/resourceInventoryManagement/v3/schema/EP_NgC"},
+			characteristic = Chars}.
+
+-spec nr_ep_ngu() -> specification().
+%% @doc NR End Point NgU resource specification.
+nr_ep_ngu() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_NgU",
+			description = "NR End Point of the NG user plane (NG-U) interface between the gNB and the UPGW",
+			class_type = "EP_NgUSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_NgUSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "NR",
+			target_schema = #target_schema_ref{class_type = "EP_NgU",
+					schema = "/resourceInventoryManagement/v3/schema/EP_NgU"},
+			characteristic = Chars}.
+
+-spec nr_ep_xnc() -> specification().
+%% @doc NR End Point XnC resource specification.
+nr_ep_xnc() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_XnC",
+			description = "NR End Point of the logical link, supporting Xn Application protocols, to a neighbour gNB node",
+			class_type = "EP_XnCSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_XnCSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "NR",
+			target_schema = #target_schema_ref{class_type = "EP_XnC",
+					schema = "/resourceInventoryManagement/v3/schema/EP_XnC"},
+			characteristic = Chars}.
+
+-spec nr_ep_xnu() -> specification().
+%% @doc NR End Point XnU resource specification.
+nr_ep_xnu() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_XnU",
+			description = "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
+			class_type = "EP_XnUSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_XnUSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "NR",
+			target_schema = #target_schema_ref{class_type = "EP_XnU",
+					schema = "/resourceInventoryManagement/v3/schema/EP_XnU"},
 			characteristic = Chars}.
 
 -spec ngc_slice() -> specification().

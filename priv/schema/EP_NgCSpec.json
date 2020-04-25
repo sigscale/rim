@@ -1,7 +1,7 @@
 {
-	"$id": "http://sigscale.org/schema/EP_RP_EPSSpec",
-	"title": "EPC EP RP EPS Specification",
-	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) connection point specification",
+	"$id": "http://sigscale.org/schema/EP_NgCSpec",
+	"title": "NR EP NgC Specification",
+	"description": "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity", 
 	"allOf": [
 		{
 			"$ref": "EP_RPSpec"
@@ -25,7 +25,8 @@
 									"name": {
 										"enum": [
 											"id",
-											"farEndNeIpAddr"
+											"localAddress",
+											"remoteAddress"
 										]
 									}
 								}

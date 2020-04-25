@@ -470,6 +470,16 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 				F3(N - 1, [indent(5), CellTDD | Acc])
 	end,
 	CellTDD = F3(10, []),
+	EpRpEps = [indent(5), {'epc:EP_RP_EPS', [{id, 1}],
+			[indent(6), {'epc:attributes', [],
+					[indent(7), {'epc:farEndEntity', ["DC=sigscale.net,SubNetwork=4,"
+							"ManagedEntity=1,MMEFunction=1,EP_RP_EPS=4"]},
+					indent(7), {'epc:userLabel', ["EP-MME-1"]}, indent(6)]},
+			indent(6), {'xn:VsDataContainer', [{id, "1"}],
+					[indent(7), {'xn:attributes', [],
+							[indent(8), {'xn:vsDataType', ["DataType=2"]},
+							indent(8), {'xn:vsDataFormatVersion', [generate_identity(5)]},
+							indent(8), {'xn:vsData', []}, indent(7)]}, indent(6)]}, indent(5)]}, indent(4)],
 	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:en', "http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"}],
@@ -512,7 +522,7 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 											indent(6), {'en:x2HOBlackList', [],
 												[indent(7), {'xn:dn', ["ENBFunction=1,x2HOBlackList"]}, indent(6)]},
 											indent(6), {'en:tceIDMappingInfoList', [],
-												[indent(7), {'en:tceIDMappingInfo', []}, indent(6)]}, indent(5)]}] ++ CellFDD ++ CellTDD},
+												[indent(7), {'en:tceIDMappingInfo', []}, indent(6)]}, indent(5)]}] ++ CellFDD ++ CellTDD ++ EpRpEps},
 							indent(4), {'xn:VsDataContainer', [{id, "1"}],
 									[indent(5), {'xn:attributes', [],
 											[indent(6), {'xn:vsDataType', ["DataType=6"]},
@@ -1544,6 +1554,11 @@ bulk_cm_eutran(Config) ->
 			#xmlElement.name, EnbContent),
 	#xmlAttribute{value = TddId} = lists:keyfind(id,
 			#xmlAttribute.name, TddAttr),
+	#xmlElement{content = _EpRpEpsContent,
+			attributes = EpRpEpsAttr} = lists:keyfind('epc:EP_RP_EPS',
+			#xmlElement.name, EnbContent),
+	#xmlAttribute{value = EpRpEpsId} = lists:keyfind(id,
+			#xmlAttribute.name, EpRpEpsAttr),
 	EnbName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",ManagedElement=", MeId, ",ENBFunction=", EnbId]),
 	FddName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
@@ -1552,9 +1567,13 @@ bulk_cm_eutran(Config) ->
 	TddName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
 			",ManagedElement=", MeId, ",ENBFunction=", EnbId,
 			",EUtranCellTDD=", TddId]),
+	EpRpEpsName = lists:flatten([DnPrefix, ",SubNetwork=", SubnetId,
+			",ManagedElement=", MeId, ",ENBFunction=", EnbId,
+			",EP_RP_EPS=", EpRpEpsId]),
 	{ok, #resource{name = EnbName}} = im:get_resource_name(EnbName),
 	{ok, #resource{name = FddName}} = im:get_resource_name(FddName),
-	{ok, #resource{name = TddName}} = im:get_resource_name(TddName).
+	{ok, #resource{name = TddName}} = im:get_resource_name(TddName),
+	{ok, #resource{name = EpRpEpsName}} = im:get_resource_name(EpRpEpsName).
 
 bulk_cm_epc() ->
 	[{userdata, [{doc, "Import bulk CM for epc network resources"}]}].

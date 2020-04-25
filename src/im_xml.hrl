@@ -32,8 +32,8 @@
 		cell :: map() | undefined,
 		gsm_rel :: map() | undefined,
 		vs_data :: map() | undefined,
-		btss = [] :: [string()],
-		cells = [] :: [string()]}).
+		btss = [] :: [resource_rel()],
+		cells = [] :: [resource_rel()]}).
 -type geran_state() :: #geran_state{}.
 
 -record(utran_state,
@@ -58,8 +58,9 @@
 		fdd :: map() | undefined,
 		tdd :: map() | undefined,
 		eutran_rel :: map() | undefined,
-		fdds = [] :: [string()],
-		tdds = [] :: [string()]}).
+		fdds = [] :: [resource_rel()],
+		tdds = [] :: [resource_rel()],
+		ep_rp_epss = [] :: [resource_rel()]}).
 -type eutran_state() :: #eutran_state{}.
 
 -record(epc_state,

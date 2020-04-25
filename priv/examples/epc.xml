@@ -9,9 +9,9 @@
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=example.net,SubNetwork=4,ManagementNode=1,IRPAgent=1"
+			senderName="DC=sigscale.net,SubNetwork=4,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
-	<configData dnPrefix="DC=example.net">
+	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="4">
 			<xn:attributes>
 				<xn:userLabel>SubNet-1</xn:userLabel>
@@ -25,7 +25,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>DC=example.net,SubNetwork=4,ManagedElement=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=4,ManagedElement=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -33,36 +33,36 @@
 			<epc:Link_MME_ServingGW id="1">
 				<epc:attributes>
 					<epc:userLabel>Link-1</epc:userLabel>
-					<epc:aEnd>DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=1</epc:aEnd>
-					<epc:zEnd>DC=example.net,SubNetwork=4,ManagedElement=1,ServingGWFunction=1</epc:zEnd>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1</epc:aEnd>
+					<epc:zEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,ServingGWFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_MME_ServingGW>
 			<epc:Link_MME_MME id="1">
 				<epc:attributes>
 					<epc:userLabel>Link-2</epc:userLabel>
-					<epc:aEnd>DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=2</epc:aEnd>
-					<epc:zEnd>DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=1</epc:zEnd>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=2</epc:aEnd>
+					<epc:zEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_MME_MME>
 			<epc:Link_MME_SGSN id="1">
 				<epc:attributes>
 					<epc:userLabel>Link-3</epc:userLabel>
-					<epc:aEnd>DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=2</epc:aEnd>
-					<epc:zEnd>DC=example.net,SubNetwork=4,ManagedElement=1,SgsnFunction=1</epc:zEnd>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=2</epc:aEnd>
+					<epc:zEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,SgsnFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_MME_SGSN>
 			<epc:Link_HSS_MME id="1">
 				<epc:attributes>
 					<epc:userLabel>Link-4</epc:userLabel>
-					<epc:aEnd>DC=example.net,SubNetwork=5,ManagedElement=1,HSSFunction=1</epc:aEnd>
-					<epc:zEnd>DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=2</epc:zEnd>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=5,ManagedElement=1,HSSFunction=1</epc:aEnd>
+					<epc:zEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=2</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_HSS_MME>
 			<epc:Link_ENB_MME id="1">
 				<epc:attributes>
 					<epc:userLabel>Link-5</epc:userLabel>
-					<epc:aEnd>DC=example.net,SubNetwork=6,ManagedElement=1,ENBFunction=1</epc:aEnd>
-					<epc:zEnd>DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=1</epc:zEnd>
+					<epc:aEnd>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1</epc:aEnd>
+					<epc:zEnd>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1</epc:zEnd>
 				</epc:attributes>
 			</epc:Link_ENB_MME>
 			<xn:ManagedElement id="1">
@@ -80,7 +80,7 @@
 						<xn:managedElementType>PGW</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:managedBy>
-						<xn:dn>DC=example.net,SubNetwork=4,ManagementNode=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=4,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
 				<epc:EPDGFunction id="1">
@@ -95,7 +95,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP RP EPS 1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=example.net,SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
@@ -119,7 +119,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=example.net,SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
@@ -144,7 +144,7 @@
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
 							<epc:userLabel>EP-SGW-1</epc:userLabel>
-							<epc:farEndEntity>DC=example.net,SubNetwork=4,ServingGWFunction=1,EP_RP_EPS=1</epc:farEndEntity>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ServingGWFunction=1,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -159,23 +159,23 @@
 						<epc:attributes>
 							<epc:userLabel>EP-HSS-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=example.net,SubNetwork=5,ManagedEntity=1,HssFunction=1
+								DC=sigscale.net,SubNetwork=5,ManagedEntity=1,HssFunction=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="3">
 						<epc:attributes>
-							<epc:userLabel>EP--1</epc:userLabel>
+							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=example.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="4">
 						<epc:attributes>
-							<epc:userLabel>EP-MME-1</epc:userLabel>
+							<epc:userLabel>EP-ENB-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=example.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ENBFunction=1,EP_RP_EPS=1
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
@@ -193,15 +193,7 @@
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
 							<epc:farEndEntity>
-								DC=example.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2
-							</epc:farEndEntity>
-						</epc:attributes>
-					</epc:EP_RP_EPS>
-					<epc:EP_RP_EPS id="2">
-						<epc:attributes>
-							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=example.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=2
+								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=3
 							</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>

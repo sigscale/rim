@@ -1,0 +1,39 @@
+{
+	"id": "3597461906",
+	"href": "/resourceInventoryManagement/v3/resource/3597461906",
+	"name": "SubNetwork=2,ManagedElement=1,GNBCUCPFunction=1,EP_NgC=1",
+	"description": "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity",
+	"category": "NR",
+	"validFor": {
+		"startDateTime": "2020-04-24T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_NgC",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_NgC",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "368125607",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125607",
+		"@type": "EP_NgCSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "localAddress",
+			"value" : "127.0.0.1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam3",
+			"vsDataFormatVersion": "acmeParams-v4",
+			"vsData": 43
+		}
+	]
+}
