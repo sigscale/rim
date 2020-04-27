@@ -66,27 +66,21 @@
 					</un:attributes>
 					<un:EP_IuCS id="1">
 						<un:attributes>
-							<un:farEndEntity>
-								DC=sigscale.net,SubNetwork=2,ManagedElement=1,MscServerFunction=1
-							</un:farEndEntity>
+							<un:farEndEntity>DC=sigscale.net,SubNetwork=2,ManagedElement=1,MscServerFunction=1</un:farEndEntity>
 							<un:userLabel>rnc-asquith-iucs-a</un:userLabel>
 							<un:connMscNumber>16473840010</un:connMscNumber>
 						</un:attributes>
 					</un:EP_IuCS>
 					<un:EP_IuPS id="1">
 						<un:attributes>
-							<un:farEndEntity>
-								DC=sigscale.net,SubNetwork=2,ManagedElement=1,SgsnFunction=1
-							</un:farEndEntity>
+							<un:farEndEntity>DC=sigscale.net,SubNetwork=2,ManagedElement=1,SgsnFunction=1</un:farEndEntity>
 							<un:userLabel>rnc-asquith-iucs-a</un:userLabel>
 							<un:connSgsnNumber>16473840012</un:connSgsnNumber>
 						</un:attributes>
 					</un:EP_IuPS>
 					<un:EP_Iur id="1">
 						<un:attributes>
-							<un:farEndEntity>
-								DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1
-							</un:farEndEntity>
+							<un:farEndEntity>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</un:farEndEntity>
 							<un:userLabel>rnc-asquith-iur-a</un:userLabel>
 							<un:connectedRncId>41</un:connectedRncId>
 						</un:attributes>
@@ -94,9 +88,7 @@
 					<un:IubLink id="1">
 						<un:attributes>
 							<un:userLabel>rnc-asquith-iub-a</un:userLabel>
-							<un:iubLinkNodeBFunction>
-								DC=sigscale.net,SubNetwork=3,ManagedElement=1,NodeBFunction=1
-							</un:iubLinkNodeBFunction>
+							<un:iubLinkNodeBFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,NodeBFunction=1</un:iubLinkNodeBFunction>
 							<un:iubLinkUtranCell>
 								<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellFDD=1</xn:dn>
 							</un:iubLinkUtranCell>
@@ -130,9 +122,7 @@
 						</un:attributes>
 						<un:UtranRelation id="1">
 							<un:attributes>
-								<un:adjacentCell>
-									DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellFDD=1
-								</un:adjacentCell>
+								<un:adjacentCell>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellFDD=1</un:adjacentCell>
 							</un:attributes>
 						</un:UtranRelation>
 					</un:UtranCellFDD>
@@ -178,9 +168,7 @@
 							<xn:environmentType>Outdoor</xn:environmentType>
 							<xn:powerInterface>A3</xn:powerInterface>
 						</un:peeParametersList>
-						<un:nodeBFunctionIubLink>
-							DC=sigscale.net,SubNetwork=3,ManagementElement=1,RncFunction=1,IubLink=1
-						</un:nodeBFunctionIubLink>
+						<un:nodeBFunctionIubLink>DC=sigscale.net,SubNetwork=3,ManagementElement=1,RncFunction=1,IubLink=1</un:nodeBFunctionIubLink>
 					</un:attributes>
 				</un:NodeBFunction>
 			</xn:ManagedElement>
