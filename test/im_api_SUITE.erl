@@ -482,6 +482,7 @@ init_per_testcase(bulk_cm_eutran, Config) ->
 							indent(8), {'xn:vsData', []}, indent(7)]}, indent(6)]}, indent(5)]}, indent(4)],
 	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
+			{'xmlns:epc', "http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"},
 			{'xmlns:en', "http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"}],
 	FileHeader = {fileHeader, [{fileFormatVersion, "32.616 V15.0"},
 			{senderName, "DC=sigscale.net,SubNetwork=1,IRPAgent=1"},
