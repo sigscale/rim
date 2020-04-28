@@ -46,7 +46,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/inventoryNrmAlt2.json \
 		$(abs_builddir)/ManagedFunction.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
-		$(abs_builddir)/ResourceFunction.json \
 		$(abs_builddir)/SAPSpecificationRef.json \
 		$(abs_builddir)/SAPRef.json \
 		$(abs_builddir)/ConnectivitySpecification.json \
@@ -242,18 +241,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ResourceFunction.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
-			-r Connectivity.json \
-			-r ConnectionPointRef.json \
-			-r ResourceFunctionSpec.json \
-			-r entityCatalogManagement.json \
-			-r resourceCatalogManagement.json \
-			-r resourceInventoryManagement.json \
-			-r SAPSpecificationRef.json \
-			-r SAPRef.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BssFunctionSpec.json \
 			-r ResourceFunctionSpec.json \
