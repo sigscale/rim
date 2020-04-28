@@ -152,7 +152,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_NgUSpec.json \
 		$(abs_builddir)/EP_XnCSpec.json \
 		$(abs_builddir)/EP_XnUSpec.json \
-		$(abs_builddir)/entityCatalogManagement.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -214,10 +213,7 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s inventoryNrmAlt2.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s entityCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s resourceCatalogManagement.json \
-			-r entityCatalogManagement.json; \
+		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceInventoryManagement.json; \
 			then exit 1; fi; \
@@ -237,7 +233,6 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json \
-			-r entityCatalogManagement.json \
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json; \
@@ -247,7 +242,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BtsSiteMgrSpec.json \
@@ -255,7 +249,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GsmCellSpec.json \
@@ -263,7 +256,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s RncFunctionSpec.json \
@@ -273,7 +265,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NodeBFunctionSpec.json \
@@ -281,7 +272,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranGenericCellSpec.json \
@@ -289,7 +279,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellFDDSpec.json \
@@ -298,7 +287,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDSpec.json \
@@ -307,7 +295,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDLcrSpec.json \
@@ -317,7 +304,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDHcrSpec.json \
@@ -327,7 +313,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s IubLinkSpec.json \
@@ -337,7 +322,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ENBFunctionSpec.json \
@@ -345,7 +329,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranGenericCellSpec.json \
@@ -353,7 +336,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellFDDSpec.json \
@@ -362,7 +344,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDDSpec.json \
@@ -371,7 +352,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ServingGWFunctionSpec.json \
@@ -379,7 +359,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PGWFunctionSpec.json \
@@ -387,7 +366,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EPDGFunctionSpec.json\
@@ -395,7 +373,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MMEFunctionSpec.json \
@@ -403,7 +380,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCRFFunctionSpec.json \
@@ -411,7 +387,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MscServerFunctionSpec.json \
@@ -419,7 +394,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CsMgwFunctionSpec.json \
@@ -427,7 +401,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SgsnFunctionSpec.json \
@@ -435,7 +408,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GgsnFunctionSpec.json \
@@ -443,7 +415,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AucFunctionSpec.json \
@@ -451,7 +422,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HlrFunctionSpec.json \
@@ -459,7 +429,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EirFunctionSpec.json \
@@ -467,7 +436,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MnpSrfFunctionSpec.json \
@@ -475,7 +443,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CgfFunctionSpec.json \
@@ -483,7 +450,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ASFunctionSpec.json \
@@ -491,7 +457,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HSSFunctionSpec.json \
@@ -499,7 +464,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpec.json \
@@ -507,7 +471,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SCSCFFunctionSpec.json \
@@ -515,7 +478,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpec.json \
@@ -523,7 +485,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBDUFunctionSpec.json \
@@ -531,7 +492,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUCPFunctionSpec.json \
@@ -539,7 +499,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUUPFunctionSpec.json \
@@ -547,7 +506,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellDUSpec.json \
@@ -555,7 +513,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellCUSpec.json \
@@ -563,7 +520,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRSectorCarrierSpec.json \
@@ -571,7 +527,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSpec.json \
@@ -579,7 +534,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSubnetSpec.json \
@@ -587,7 +541,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AMFFunctionSpec.json \
@@ -595,7 +548,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMFFunctionSpec.json \
@@ -603,7 +555,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UPFFunctionSpec.json \
@@ -611,7 +562,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s N3IWFFunctionSpec.json \
@@ -619,7 +569,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCFFunctionSpec.json\
@@ -627,7 +576,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AUSFFunctionSpec.json \
@@ -635,7 +583,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDMFunctionSpec.json \
@@ -643,7 +590,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDRFunctionSpec.json \
@@ -651,7 +597,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDSFFunctionSpec.json \
@@ -659,7 +604,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRFFunctionSpec.json \
@@ -667,7 +611,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NSSFFunctionSpec.json \
@@ -675,7 +618,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMSFFunctionSpec.json \
@@ -683,7 +625,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s LMFFunctionSpec.json \
@@ -691,7 +632,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NGEIRFunctionSpec.json \
@@ -699,7 +639,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SEPPFunctionSpec.json \
@@ -707,7 +646,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NWDAFFunctionSpec.json \
@@ -715,7 +653,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PEEMonitoredEntitySpec.json \
@@ -723,7 +660,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitSpec.json \
@@ -733,7 +669,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TmaInventoryUnitSpec.json \
@@ -743,7 +678,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AntennaInventoryUnitSpec.json \
@@ -753,7 +687,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitNESpec.json \
@@ -763,7 +696,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitHwSpec.json \
@@ -773,7 +705,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitSwSpec.json \
@@ -783,7 +714,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitLicSpec.json \
@@ -793,7 +723,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ManagedElementSpec.json \
@@ -802,7 +731,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s USNFunctionSpec.json \
@@ -810,7 +738,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UGWFunctionSpec.json \
@@ -818,7 +745,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CGPOMUFunctionSpec.json \
@@ -826,7 +752,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s iGWBFunctionSpec.json \
@@ -834,7 +759,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s USCDBFunctionSpec.json \
@@ -842,7 +766,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SPSV3FunctionSpec.json \
@@ -850,7 +773,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MSCServerIntraOfiSigPointSpec.json \
@@ -858,7 +780,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MSCServerOfficeSpec.json \
@@ -866,7 +787,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_MMESpec.json \
@@ -876,7 +796,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_HSS_MMESpec.json \
@@ -886,7 +805,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_SGSNSpec.json \
@@ -896,7 +814,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_ServingGWSpec.json \
@@ -906,7 +823,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_ENB_MMESpec.json \
@@ -916,7 +832,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RPSpec.json \
@@ -924,7 +839,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RP_EPSSpec.json \
@@ -933,7 +847,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SubNetworkSpec.json \
@@ -942,7 +855,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeHostFunctionSpec.json \
@@ -950,7 +862,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s DNSRuleSpec.json \
@@ -958,7 +869,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s LocationServiceSpec.json \
@@ -966,7 +876,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeApplicationServiceSpec.json \
@@ -974,7 +883,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeApplicationSpec.json \
@@ -982,7 +890,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgePlatformServiceSpec.json \
@@ -990,7 +897,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgePlatformSpec.json \
@@ -998,7 +904,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s RNIServiceSpec.json \
@@ -1006,7 +911,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TrafficRuleSpec.json \
@@ -1014,7 +918,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2CSpec.json \
@@ -1023,7 +926,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2USpec.json \
@@ -1032,7 +934,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgCSpec.json \
@@ -1041,7 +942,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgUSpec.json \
@@ -1050,7 +950,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnCSpec.json \
@@ -1059,7 +958,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnUSpec.json \
@@ -1068,7 +966,6 @@ check_DATA = .validation_ok
 			-r SAPSpecificationRef.json \
 			-r ConnectivitySpecification.json \
 			-r ConnectionPointSpecificationRef.json \
-			-r entityCatalogManagement.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 	else \
