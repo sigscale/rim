@@ -158,7 +158,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 										LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
 												href = LinkHref, referred_type = LinkType},
 										MmeLinkConnectivity
-												= #connectivity{type = "Point-to-Point",
+												= #connectivity{type = "pointtoPoint",
 												endpoint = [MmeEndpoint, LinkEndpoint]},
 										case LinkType of
 											Type1 when Type1 == "Link_MME_MME";
@@ -185,7 +185,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																		parse_resource_rel(ResourceRel)},
 														LinkFunctionConnectivity
 																= #connectivity{type
-																= "Point-to-Point",
+																= "pointtoPoint",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
 														F(T, [MmeLinkConnectivity,
@@ -213,7 +213,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																referred_type = FunctionType},
 														LinkFunctionConnectivity
 																= #connectivity{type
-																= "Point-to-Point",
+																= "pointtoPoint",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
 														F(T, [MmeLinkConnectivity,
@@ -241,7 +241,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																referred_type = FunctionType},
 														LinkFunctionConnectivity
 																= #connectivity{type
-																= "Point-to-Point",
+																= "pointtoPoint",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
 														F(T, [MmeLinkConnectivity,
@@ -272,7 +272,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 																		parse_resource_rel(ResourceRel)},
 														LinkFunctionConnectivity
 																= #connectivity{type
-																= "Point-to-Point",
+																= "pointtoPoint",
 																endpoint = [LinkEndpoint,
 																FunctionEndpoint]},
 														F(T, [MmeLinkConnectivity,

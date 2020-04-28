@@ -566,8 +566,8 @@ connectivity_spec([name | T], #{"name" := Name} = M, Acc)
 	connectivity_spec(T, M, Acc#connectivity_spec{name = Name});
 connectivity_spec([type | T], #connectivity_spec{type = Type} = R, Acc)
 		when is_list(Type) ->
-	connectivity_spec(T, R, Acc#{"type" => Type});
-connectivity_spec([type | T], #{"type" := Type} = M, Acc)
+	connectivity_spec(T, R, Acc#{"associationType" => Type});
+connectivity_spec([type | T], #{"associationType" := Type} = M, Acc)
 		when is_list(Type) ->
 	connectivity_spec(T, M, Acc#connectivity_spec{type = Type});
 connectivity_spec([endpoint | T], #connectivity_spec{endpoint = Endpoints} = R, Acc)
@@ -608,8 +608,8 @@ connectivity([name | T], #{"name" := Name} = M, Acc)
 	connectivity(T, M, Acc#connectivity{name = Name});
 connectivity([type | T], #connectivity{type = Type} = R, Acc)
 		when is_list(Type) ->
-	connectivity(T, R, Acc#{"type" => Type});
-connectivity([type | T], #{"type" := Type} = M, Acc)
+	connectivity(T, R, Acc#{"associationType" => Type});
+connectivity([type | T], #{"associationType" := Type} = M, Acc)
 		when is_list(Type) ->
 	connectivity(T, M, Acc#connectivity{type = Type});
 connectivity([endpoint | T], #connectivity{endpoint = Endpoints} = R, Acc)

@@ -187,7 +187,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 										= lists:filter(FaEnd, LinkChars),
 								AEndPoint = build_function_endpoint(AEndDn),
 								AEndLinkConnectivity
-										= #connectivity{type = "Point-to-Point",
+										= #connectivity{type = "pointtoPoint",
 										endpoint = [AEndPoint, LinkEndpoint]},
 								FzEnd = fun (#resource_char{name = "zEnd"}) ->
 											true;
@@ -198,7 +198,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 										= lists:filter(FzEnd, LinkChars),
 								ZEndPoint = build_function_endpoint(ZEndDn),
 								LinkZEndConnectivity
-										= #connectivity{type = "Point-to-Point",
+										= #connectivity{type = "pointtoPoint",
 										endpoint = [LinkEndpoint, ZEndPoint]},
 								F(T3, [AEndLinkConnectivity,
 										LinkZEndConnectivity | Acc]);
