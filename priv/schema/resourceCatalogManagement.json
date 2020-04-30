@@ -1,4 +1,5 @@
 {
+    "$id": "http://sigscale.org/schema/resourceCatalogManagement",
     "swagger": "2.0",
     "info": {
         "title": "Resource Catalog Management",

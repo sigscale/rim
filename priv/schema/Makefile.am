@@ -232,740 +232,508 @@ check_DATA = .validation_ok
 		if ! ajv compile -s SAPRef.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ResourceFunctionSpec.json \
-			-r resourceCatalogManagement.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json; \
+			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BssFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BtsSiteMgrSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GsmCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s RncFunctionSpec.json \
-			-r genericNrm.json \
-			-r utranNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NodeBFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellFDDSpec.json \
-			-r UtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDSpec.json \
-			-r UtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			-r UtranGenericCellSpec \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDLcrSpec.json \
 			-r UtranCellTDDSpec.json \
 			-r UtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDHcrSpec.json \
 			-r UtranCellTDDSpec.json \
 			-r UtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s IubLinkSpec.json \
-			-r genericNrm.json \
-			-r utranNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ENBFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellFDDSpec.json \
-			-r EUtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDDSpec.json \
-			-r EUtranGenericCellSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ServingGWFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PGWFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EPDGFunctionSpec.json\
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+		if ! ajv compile -s EPDGFunctionSpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MMEFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCRFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MscServerFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CsMgwFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SgsnFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GgsnFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AucFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HlrFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EirFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MnpSrfFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CgfFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ASFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s HSSFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SCSCFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCSCFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBDUFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUCPFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBCUUPFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellDUSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRCellCUSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRSectorCarrierSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSubnetSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AMFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UPFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s N3IWFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s PCFFunctionSpec.json\
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+		if ! ajv compile -s PCFFunctionSpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AUSFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDMFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDRFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UDSFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NRFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NSSFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SMSFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s LMFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NGEIRFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SEPPFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NWDAFFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PEEMonitoredEntitySpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitSpec.json \
-			-r genericNrm.json \
-			-r inventoryNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TmaInventoryUnitSpec.json \
-			-r genericNrm.json \
-			-r inventoryNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s AntennaInventoryUnitSpec.json \
-			-r genericNrm.json \
-			-r inventoryNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitNESpec.json \
-			-r genericNrm.json \
-			-r inventoryNrmAlt2.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitHwSpec.json \
-			-r genericNrm.json \
-			-r inventoryNrmAlt2.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitSwSpec.json \
-			-r genericNrm.json \
-			-r inventoryNrmAlt2.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitLicSpec.json \
-			-r genericNrm.json \
-			-r inventoryNrmAlt2.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ManagedElementSpec.json \
-			-r genericNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s USNFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UGWFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CGPOMUFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s iGWBFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s USCDBFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SPSV3FunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MSCServerIntraOfiSigPointSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MSCServerOfficeSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_MMESpec.json \
-			-r genericNrm.json \
-			-r epcNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_HSS_MMESpec.json \
-			-r genericNrm.json \
-			-r epcNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_SGSNSpec.json \
-			-r genericNrm.json \
-			-r epcNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_ServingGWSpec.json \
-			-r genericNrm.json \
-			-r epcNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_ENB_MMESpec.json \
-			-r genericNrm.json \
-			-r epcNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RP_EPSSpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SubNetworkSpec.json \
-			-r genericNrm.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeHostFunctionSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s DNSRuleSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s LocationServiceSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeApplicationServiceSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeApplicationSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgePlatformServiceSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgePlatformSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s RNIServiceSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TrafficRuleSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2CSpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2USpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgCSpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgUSpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnCSpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnUSpec.json \
 			-r EP_RPSpec.json \
-			-r ResourceFunctionSpec.json \
-			-r SAPSpecificationRef.json \
-			-r ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 	else \

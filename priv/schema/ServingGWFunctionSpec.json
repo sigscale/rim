@@ -5,7 +5,7 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunctionSpec"
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
 		},
 		{
 			"type": "object",
@@ -16,7 +16,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
 							{
 								"type": "object",

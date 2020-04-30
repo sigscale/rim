@@ -14,7 +14,7 @@
 					"items": {
 						"oneOf": [
 							{
-								"$ref": "EP_RPSpec#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
 							{
 								"type": "object",

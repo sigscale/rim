@@ -4,7 +4,7 @@
 	"description": "LTE Time Division Duplex (TDD) radio resource function specification",
 	"allOf": [
 		{
-			"$ref": "EUtranGenericCellSpec"
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
 		},
 		{
 			"type": "object",
@@ -14,7 +14,7 @@
 					"items": {
 						"oneOf": [
 							{
-								"$ref": "EUtranGenericCellSpec#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
 							{
 								"type": "object",
