@@ -98,7 +98,7 @@
 	],
 	"connectivity": [
 		{
-			"type": "Point-to-Point",
+			"associationType": "pointtoPoint",
 			"endpoint": [
 				{
 					"id": "8994462918",
@@ -115,7 +115,7 @@
 			]
 		},
 		{
-			"type": "Point-to-Point",
+			"associationType": "pointtoPoint",
 			"endpoint": [
 				{
 					"id": "8994635074",
@@ -132,7 +132,7 @@
 			]
 		},
 		{
-			"type": "Point-to-Point",
+			"associationType": "pointtoPoint",
 			"endpoint": [
 				{
 					"id": "8994462918",
@@ -149,7 +149,7 @@
 			]
 		},
 		{
-			"type": "Point-to-Point",
+			"associationType": "pointtoPoint",
 			"endpoint": [
 				{
 					"id": "8994648933",
@@ -166,7 +166,7 @@
 			]
 		},
 		{
-			"type": "Point-to-Point",
+			"associationType": "pointtoPoint",
 			"endpoint": [
 				{
 					"id": "8994462918",
@@ -183,7 +183,7 @@
 			]
 		},
 		{
-			"type": "Point-to-Point",
+			"associationType": "pointtoPoint",
 			"endpoint": [
 				{
 					"id": "8994645445",

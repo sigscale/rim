@@ -10,7 +10,7 @@
 	<fileHeader
 			fileFormatVersion="32.616 V15.1.0"
 			senderName="DC=example.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
-			vendorName="Acme">
+			vendorName="Acme" />
 	<configData
 			dnPrefix="DC=sigscale.net,SubNetwork=3">
 		<xn:ManagementNode id="1">
