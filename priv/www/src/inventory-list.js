@@ -11,6 +11,8 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import {} from '@polymer/polymer/lib/elements/dom-if.js';
 import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
+import { select } from 'd3-selection';
+import { forceSimulation, forceManyBody, forceCenter, forceLink, forceY } from 'd3-force';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
@@ -85,15 +87,22 @@ class inventoryList extends PolymerElement {
 							<dd>{{item.lastModified}}</dd>
 						</template>
 					</dl>
-					<h3 class="inventoryH3">Resource Characteristics:</h3>
+					<h3 class="inventoryDetail">Resource Characteristics:</h3>
 					<dl class="details">
 						<template is="dom-if" if="{{item.resourceChar}}">
 							<template is="dom-repeat" items="{{item.resourceChar}}" as="detail">
-								<dt>{{detail.name}}</dt>
-								<dd>{{detail.value}}</dd>
+								<template is="dom-if" if="{{detail.value}}">
+									<dt>{{detail.name}}</dt>
+									<dd>{{detail.value}}</dd>
+								</template>
 							</template>
 						</template>
 					</dl>
+					<template is="dom-if" if="{{item.connectivity}}"
+							on-dom-change="showTopologyGraph">
+						<h3 class="inventoryDetail">Connectivity:</h3>
+						<svg id$="graph[[item.id]]" width="100%" />
+					</template>
 				</template>
 				<vaadin-grid-column width="13ex" flex-grow="2">
 					<template class="header">
@@ -361,6 +370,9 @@ class inventoryList extends PolymerElement {
 					if(request.response[index].lastUpdate) {
 						newRecord.lastModified = request.response[index].lastUpdate;
 					}
+					if(request.response[index].connectivity) {
+						newRecord.connectivity = request.response[index].connectivity;
+					}
 					var resChar = request.response[index].resourceCharacteristic;
 					for(var index1 in resChar) {
 						if(resChar[index1].value != []) {
@@ -424,6 +436,99 @@ class inventoryList extends PolymerElement {
 
 	showAddInventoryModal(event) {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('inventoryAddModal').open();
+	}
+
+	showTopologyGraph(event) {
+		var grid = this.$.inventoryGrid;
+		var connectivity = event.model.item.connectivity;
+		var gridGraph = grid.querySelector('#graph' + event.model.item.id);
+		var width = gridGraph.clientWidth;
+		var height = gridGraph.clientHeight;
+		// var height = Math.ceil(gridGraph.clientWidth * 0.5625);
+		// gridGraph.style.height = height + 'px';
+		var graph = select(this.$.inventoryGrid)
+				.select('#graph' + event.model.item.id);
+		var vertices = [];
+		function mapEdge(connection) {
+			let edge = {};
+			if(connection.id) {
+				edge.id = connection.id;
+			}
+			if(connection.name) {
+				edge.name = connection.name;
+			}
+			if(connection.associationType) {
+				edge.associationType = connection.associationType;
+			}
+			if(connection.endpoint) {
+				let index = vertices.findIndex(function (vertex) {
+					return vertex.id == connection.endpoint[0].id;
+				});
+				if(index == -1) {
+					let v0 = {};
+					v0.id = connection.endpoint[0].id;
+					if(connection.endpoint[0].name) {
+						v0.name = connection.endpoint[0].name;
+					}
+					if(connection.endpoint[0]["@referredType"]) {
+						v0.type = connection.endpoint[0]["@referredType"];
+					}
+					edge.source = vertices.push(v0) - 1;
+				} else {
+					edge.source = index;
+				}
+				index = vertices.findIndex(function (vertex) {
+					return vertex.id == connection.endpoint[1].id;
+				});
+				if(index == -1) {
+					let v1 = {};
+					v1.id = connection.endpoint[1].id;
+					if(connection.endpoint[1].name) {
+						v1.name = connection.endpoint[1].name;
+					}
+					if(connection.endpoint[1]["@referredType"]) {
+						v1.type = connection.endpoint[1]["@referredType"];
+					}
+					edge.target = vertices.push(v1) - 1;
+				} else {
+					edge.target = index;
+				}
+			}
+			return edge;
+		}
+		var edges = connectivity.map(mapEdge);
+		var simulation = forceSimulation(vertices)
+				.force("center", forceCenter(Math.ceil(width/2), Math.ceil(height/2)))
+				.force("charge", forceManyBody().strength(-800))
+				.force("link", forceLink(edges).distance(100))
+				.force('y', forceY());
+		var edge = graph.selectAll('.edge')
+				.data(edges)
+				.enter()
+				.append('line')
+						.attr('class', 'edge');
+		var vertex = graph.selectAll('g.vertex')
+				.data(vertices);
+		var vgroup = vertex.enter()
+				.append('g')
+		var circle = vgroup.append('circle')
+				.attr('r', Math.ceil(width / 100))
+				.attr('class', 'vertex')
+				.append('title')
+				.text(function(d) { return d.name});
+		vgroup.append('text')
+				.text(function(d) { return d.type })
+				.attr('y', - Math.ceil(width / 100) - 8 )
+				.attr('text-anchor', 'middle');
+		simulation.on('tick', function() {
+			vgroup.attr('transform', function(d) {
+					return 'translate(' + Math.ceil(d.x) + ',' + Math.ceil(d.y) + ')';
+			});
+			edge.attr('x1', function(d) { return Math.ceil(d.source.x) })
+					.attr('y1', function(d) { return Math.ceil(d.source.y) })
+					.attr('x2', function(d) { return Math.ceil(d.target.x) })
+					.attr('y2', function(d) { return Math.ceil(d.target.y) });
+		});
 	}
 }
 
