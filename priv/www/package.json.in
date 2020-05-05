@@ -30,12 +30,12 @@
     "@polymer/paper-item": "^3.0.0-pre.15",
     "@polymer/paper-card": "^3.0.0-pre.15",
     "@polymer/paper-fab": "^3.0.0-pre.15",
-	 "@polymer/paper-dialog": "^3.0.1",
+    "@polymer/paper-dialog": "^3.0.1",
     "@polymer/paper-input": "^3.0.1",
-	 "@polymer/paper-checkbox": "^3.1.0",
-	 "@polymer/paper-dropdown-menu": "^3.0.1",
+    "@polymer/paper-checkbox": "^3.1.0",
+    "@polymer/paper-dropdown-menu": "^3.0.1",
     "@polymer/paper-listbox": "^3.0.1",
-	 "@polymer/paper-button": "^3.0.1",
+    "@polymer/paper-button": "^3.0.1",
     "@polymer/iron-icons": "^3.0.0-pre.15",
     "@polymer/iron-ajax": "^3.0.1",
     "@polymer/iron-collapse": "^3.0.1",
@@ -44,10 +44,7 @@
     "@polymer/paper-progress": "^3.0.0-pre.25",
     "@vaadin/vaadin-grid": "^5.1.0-alpha3",
     "d3-selection": "1",
-    "d3-shape": "1",
-    "d3-scale": "1",
-    "shapefile": "0.6.6",
-    "topojson-client": "^3.0.0"
+    "d3-force": "1"
   },
   "devDependencies": {
     "polymer-cli": "^1.7.1",

@@ -22,8 +22,8 @@ styleElement.innerHTML = `<template>
 			dd {
 				margin: 0 0 0 22ch;
 			}
-			.inventoryH3 {
-				margin-bottom: -10px;
+			h3.inventoryDetail {
+				clear: left;
 			}
 			app-header {
 				position: fixed;
@@ -170,6 +170,13 @@ styleElement.innerHTML = `<template>
 			paper-dialog-scrollable p {
 				margin-left: 40px;
 				margin-right: 40px;
+			}
+			circle.vertex {
+				fill: #79b700;
+			}
+			.edge {
+				stroke: #616161;
+				stroke-width: 2px;
 			}
 		</style>
 	</template>`;
