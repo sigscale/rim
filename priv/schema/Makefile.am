@@ -400,7 +400,7 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s PCSCFFunctionSpec.json \
+		if ! ajv compile -s ICSCFFunctionSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
