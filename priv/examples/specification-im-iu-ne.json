@@ -2,7 +2,7 @@
 	"name": "InventoryUnitNE",
 	"description": "IM Inventory Unit Network Element resource function specification",
 	"@type": "InventoryUnitNESpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitNESpec",
+	"@schemaLocation": "http://sigscale.org/schema/InventoryUnitNESpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154985511356749",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154985511356749",
 			"role": "Supplier",
 			"name": "ACME Inc.",

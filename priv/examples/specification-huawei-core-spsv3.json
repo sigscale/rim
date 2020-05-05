@@ -2,7 +2,7 @@
 	"name": "SPSV3Function",
 	"description": "",
 	"@type": "SPSV3FunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SPSV3FunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/SPSV3FunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

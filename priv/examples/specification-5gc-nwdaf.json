@@ -2,7 +2,7 @@
 	"name": "NWDAFFunction",
 	"description": "5G Network Data Analytics Function (NWDAF) resource function specification",
 	"@type": "NWDAFFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NWDAFFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/NWDAFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

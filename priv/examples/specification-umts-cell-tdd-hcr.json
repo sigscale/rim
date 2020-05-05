@@ -2,7 +2,7 @@
 	"name": "UtranCellTDDHcr",
 	"description": "UMTS Time Division Duplex (TDD) high chip rate (HCR) radio cell resource function specification",
 	"@type": "UtranCellTDDHcrSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/UtranCellTDDHcrSpec",
+	"@schemaLocation": "http://sigscale.org/schema/UtranCellTDDHcrSpec",
 	"@baseType": "UtranCellTDDSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

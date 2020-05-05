@@ -2,7 +2,7 @@
 	"name": "EP_RP_EPS",
 	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) resource specification",
 	"@type": "EP_RP_EPSSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPSSpec",
+	"@schemaLocation": "http://sigscale.org/schema/EP_RP_EPSSpec",
 	"@baseType": "EP_RPSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

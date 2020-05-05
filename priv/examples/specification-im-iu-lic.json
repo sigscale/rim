@@ -2,7 +2,7 @@
 	"name": "InventoryUnitLic",
 	"description": "IM Inventory Unit License resource function specification",
 	"@type": "InventoryUnitLicSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitLicSpec",
+	"@schemaLocation": "http://sigscale.org/schema/InventoryUnitLicSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "264985511326749",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/264985511326749",
 			"role": "Supplier",
 			"name": "ACME Inc.",

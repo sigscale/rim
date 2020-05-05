@@ -2,7 +2,7 @@
 	"name": "UPFFunction",
 	"description": "5G User Plane Function (UPF) resource function specification",
 	"@type": "UPFFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/UPFFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/UPFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

@@ -2,7 +2,7 @@
 	"name": "GNBDUFunction",
 	"description": "NR gNB Distributed Unit (DU) resource function specification",
 	"@type": "GNBDUFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBDUFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/GNBDUFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

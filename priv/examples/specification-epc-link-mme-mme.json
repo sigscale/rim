@@ -2,7 +2,7 @@
 	"name": "Link_MME_MME",
 	"description": "EPC MMEFunction and MMEFunction Link resource specification",
 	"@type": "Link_MME_MMESpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/Link_MME_MMESpec",
+	"@schemaLocation": "http://sigscale.org/schema/Link_MME_MMESpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

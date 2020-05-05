@@ -2,7 +2,7 @@
 	"name": "AntennaInventoryUnit",
 	"description": "IM Antenna Inventory Unit resource function specification",
 	"@type": "AntennaInventoryUnitSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/AntennaInventoryUnitSpec",
+	"@schemaLocation": "http://sigscale.org/schema/AntennaInventoryUnitSpec",
 	"@baseType": "InventoryUnitSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154624519356769",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154624519356769",
 			"role": "Supplier",
 			"name": "ACME Inc.",

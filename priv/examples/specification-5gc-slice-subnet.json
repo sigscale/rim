@@ -2,7 +2,7 @@
 	"name": "NetworkSliceSubnet",
 	"description": "5G Core (5GC) Network Slice Subnet resource function specification",
 	"@type": "NetworkSliceSubnetSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSliceSubnetSpec",
+	"@schemaLocation": "http://sigscale.org/schema/NetworkSliceSubnetSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

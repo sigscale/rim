@@ -2,7 +2,7 @@
 	"name": "EP_XnC",
 	"description": "NR End Point of the logical link, supporting Xn Application protocols, to a neighbour gNB node",
 	"@type": "EP_XnCSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_XnCSpec",
+	"@schemaLocation": "http://sigscale.org/schema/EP_XnCSpec",
 	"@baseType": "EP_RPSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

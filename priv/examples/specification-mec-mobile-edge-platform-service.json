@@ -2,7 +2,7 @@
 	"name": "MobileEdgePlatformService",
 	"description": "MEC Mobile Edge Platform Service resource function specification",
 	"@type": "MobileEdgePlatformServiceSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgePlatformServiceSpec",
+	"@schemaLocation": "http://sigscale.org/schema/MobileEdgePlatformServiceSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

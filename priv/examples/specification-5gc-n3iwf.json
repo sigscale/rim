@@ -2,7 +2,7 @@
 	"name": "N3IWFFunction",
 	"description": "5G Non 3GPP Inter Working Function (N3IWF) resource function specification",
 	"@type": "N3IWFFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/N3IWFFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/N3IWFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

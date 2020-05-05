@@ -2,7 +2,7 @@
 	"name": "BssFunction",
 	"description": "GSM Base Station Subsystem (BSS) resource function specification",
 	"@type": "BssFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/BssFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

@@ -2,7 +2,7 @@
 	"name": "GsmCell",
 	"description": "GSM radio resource function specification",
 	"@type": "GsmCellSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GsmCellSpec",
+	"@schemaLocation": "http://sigscale.org/schema/GsmCellSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

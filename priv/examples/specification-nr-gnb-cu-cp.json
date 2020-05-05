@@ -2,7 +2,7 @@
 	"name": "GNBCUCPFunction",
 	"description": "NR gNB Central Unit (CU) Control Plane (CP) resource function specification",
 	"@type": "GNBCUCPFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUCPFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/GNBCUCPFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

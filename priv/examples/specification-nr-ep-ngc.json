@@ -2,7 +2,7 @@
 	"name": "EP_NgC",
 	"description": "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity",
 	"@type": "EP_NgCSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_NgCSpec",
+	"@schemaLocation": "http://sigscale.org/schema/EP_NgCSpec",
 	"@baseType": "EP_RPSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

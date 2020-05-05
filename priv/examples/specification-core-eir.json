@@ -2,7 +2,7 @@
 	"name": "EirFunction",
 	"description": "Core Equipment Identity Register (EIR) (3GPP 23.002)",
 	"@type": "EirFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EirFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/EirFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

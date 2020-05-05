@@ -2,7 +2,7 @@
 	"name": "MMEFunction",
 	"description": "Mobility Management Entity (MME) (3GPP 23.401)",
 	"@type": "MMEFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MMEFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/MMEFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

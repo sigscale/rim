@@ -2,7 +2,7 @@
 	"name": "CgfFunction",
 	"description": "Core Charging Gateway Function (CGF) (3GPP 23.060)",
 	"@type": "CgfFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/CgfFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/CgfFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

@@ -2,7 +2,7 @@
 	"name": "TmaInventoryUnit",
 	"description": "IM Tower Mounted Amplifier (TMA) Inventory Unit resource function specification",
 	"@type": "TmaInventoryUnitSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/TmaInventoryUnitSpec",
+	"@schemaLocation": "http://sigscale.org/schema/TmaInventoryUnitSpec",
 	"@baseType": "InventoryUnitSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154925519356769",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154925519356769",
 			"role": "Supplier",
 			"name": "ACME Inc.",

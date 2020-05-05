@@ -2,7 +2,7 @@
 	"name": "SMFFunction",
 	"description": "5G Session Management Function (SMF) resource function specification",
 	"@type": "SMFFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/SMFFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/SMFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

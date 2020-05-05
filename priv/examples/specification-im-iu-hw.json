@@ -2,7 +2,7 @@
 	"name": "InventoryUnitHw",
 	"description": "IM Inventory Unit Hardware resource function specification",
 	"@type": "InventoryUnitHwSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitHwSpec",
+	"@schemaLocation": "http://sigscale.org/schema/InventoryUnitHwSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154985511326749",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154985511326749",
 			"role": "Supplier",
 			"name": "ACME Inc.",

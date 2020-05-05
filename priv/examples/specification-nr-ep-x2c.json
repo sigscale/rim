@@ -2,7 +2,7 @@
 	"name": "EP_X2C",
 	"description": "NR End Point of the logical link, supporting X2-C application protocols",
 	"@type": "EP_X2CSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_X2CSpec",
+	"@schemaLocation": "http://sigscale.org/schema/EP_X2CSpec",
 	"@baseType": "EP_RPSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

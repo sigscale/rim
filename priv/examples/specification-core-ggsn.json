@@ -2,7 +2,7 @@
 	"name": "GgsnFunction",
 	"description": "Core Gateway GPRS Support Node (GGSN) (3GPP 23.002)",
 	"@type": "GgsnFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/GgsnFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/GgsnFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

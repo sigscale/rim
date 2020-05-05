@@ -185,754 +185,464 @@ check_DATA = .validation_ok
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d candidate.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/BtsSiteMgrSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-gsm-bts.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-gsm-cell.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/RncFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-rnc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NodeBFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-nodeb.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellFDDSpec.json \
-				-r $(top_builddir)/priv/schema/UtranGenericCellSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-cell-fdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDLcrSpec.json \
-				-r $(top_builddir)/priv/schema/UtranCellTDDSpec.json \
-				-r $(top_builddir)/priv/schema/UtranGenericCellSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-cell-tdd-lcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDHcrSpec.json \
-				-r $(top_builddir)/priv/schema/UtranCellTDDSpec.json \
-				-r $(top_builddir)/priv/schema/UtranGenericCellSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-cell-tdd-hcr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/IubLinkSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-umts-iublink.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-lte-enb.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellFDDSpec.json \
-				-r $(top_builddir)/priv/schema/EUtranGenericCellSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-lte-cell-fdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellTDDSpec.json \
-				-r $(top_builddir)/priv/schema/EUtranGenericCellSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-lte-cell-tdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ServingGWFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-sgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/PGWFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-pgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EPDGFunctionSpec.json\
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-epdg.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MMEFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/PCRFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-pcrf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MscServerFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-msc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/CsMgwFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-mgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SgsnFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-sgsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GgsnFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-ggsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/AucFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-auc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/HlrFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-hlr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EirFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-eir.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MnpSrfFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-mnpsrf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/CgfFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-core-cgf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-ims-as.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/HSSFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-ims-hss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/PCSCFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-ims-pcscf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SCSCFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-ims-scscf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ICSCFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-ims-icscf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GNBDUFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-gnb-du.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUCPFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-gnb-cu-cp.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUUPFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-gnb-cu-up.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellCUSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-cell-cu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellDUSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-cell-du.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NRSectorCarrierSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-sector-carrier.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-slice.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSubnetSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-slice-subnet.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/AMFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-amf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SMFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-smf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UPFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-upf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/N3IWFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-n3iwf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/PCFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-pcf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/AUSFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-ausf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UDMFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-udm.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UDRFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-udr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UDSFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-udsf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NRFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-nrf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NSSFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-nssf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SMSFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-smsf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/LMFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-lmf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NGEIRFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-ngeir.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SEPPFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-sepp.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NWDAFFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-5gc-nwdaf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/PEEMonitoredEntitySpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-pee-me.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-iu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/TmaInventoryUnitSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-tmaiu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/AntennaInventoryUnitSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-aiu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitNESpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-iu-ne.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitHwSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-iu-hw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitSwSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-iu-sw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitLicSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-im-iu-lic.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ManagedElementSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-generic-me.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/USNFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-usn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UGWFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-ugw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/CGPOMUFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-cgpomu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/iGWBFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-igwb.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/USCDBFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-uscdb.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SPSV3FunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-huawei-core-spsv3.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_MMESpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-mme-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/Link_HSS_MMESpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-hss-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_SGSNSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-mme-sgsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_ServingGWSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-mme-servingw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/Link_ENB_MMESpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-link-enb-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_RP_EPSSpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-epc-ep-rp-eps.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/SubNetworkSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-generic-subnetwork.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeHostFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-mobile-edge-host-function.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgePlatformSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-mobile-edge-platform.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeApplicationSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-mobile-edge-application.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgePlatformServiceSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-mobile-edge-platform-service.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeApplicationServiceSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-mobile-edge-application-service.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/RNIServiceSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-rni-service.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/LocationServiceSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-location-service.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/TrafficRuleSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-traffic-rule.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/DNSRuleSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-mec-dns-rule.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2CSpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-ep-x2c.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2USpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-ep-x2u.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgCSpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-ep-ngc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgUSpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-ep-ngu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnCSpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-ep-xnc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnUSpec.json \
-				-r $(top_builddir)/priv/schema/EP_RPSpec.json \
-				-r $(top_builddir)/priv/schema/ResourceFunctionSpec.json \
-				-r $(top_builddir)/priv/schema/entityCatalogManagement.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-r $(top_builddir)/priv/schema/SAPSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectionPointSpecificationRef.json \
-				-r $(top_builddir)/priv/schema/ConnectivitySpecification.json \
 				-d specification-nr-ep-xnu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \

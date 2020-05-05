@@ -2,7 +2,7 @@
 	"name": "UtranCellTDDLcr",
 	"description": "UMTS Time Division Duplex (TDD) low chip rate (LCR) radio cell resource function specification",
 	"@type": "UtranCellTDDLcrSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/UtranCellTDDLcrSpec",
+	"@schemaLocation": "http://sigscale.org/schema/UtranCellTDDLcrSpec",
 	"@baseType": "UtranCellTDDSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

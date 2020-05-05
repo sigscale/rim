@@ -2,7 +2,7 @@
 	"name": "MnpSrfFunction",
 	"description": "Core Mobile Number Portability-Signaling Relay Function (MNP-SRF) (3GPP 23.002)",
 	"@type": "MnpSrfFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/MnpSrfFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/MnpSrfFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

@@ -1,7 +1,7 @@
 { "name": "EPDGFunction",
 	"description": "EPC evolved Packet Data Gateway (ePDG) (3GPP 23.402)",
 	"@type": "EPDGFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/EPDGFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/EPDGFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -18,6 +18,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

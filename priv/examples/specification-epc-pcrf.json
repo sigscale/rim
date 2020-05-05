@@ -2,7 +2,7 @@
 	"name": "PCRFFunction",
 	"description": "Policy and Charging Rules Function (PCRF) (3GPP 23.401)",
 	"@type": "PCRFFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/PCRFFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/PCRFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

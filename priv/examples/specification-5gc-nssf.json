@@ -2,7 +2,7 @@
 	"name": "NSSFFunction",
 	"description": "5G Network Slice Selection Function (NSSF) resource function specification",
 	"@type": "NSSFFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/NSSFFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/NSSFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",

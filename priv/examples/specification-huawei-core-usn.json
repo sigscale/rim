@@ -2,7 +2,7 @@
 	"name": "USNFunction",
 	"description": "Huawei Core Unified Serving Node (USN) resource function specification",
 	"@type": "USNFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/USNFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/USNFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -19,6 +19,7 @@
 	"relatedParty": [
 		{
 			"id": "154995511356799",
+			"@referredType": "Organization",
 			"href": "/partyManagement/v2/organization/154995511356799",
 			"role": "Supplier",
 			"name": "ACME Inc.",
