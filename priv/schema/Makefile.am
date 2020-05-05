@@ -46,12 +46,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/inventoryNrmAlt2.json \
 		$(abs_builddir)/ManagedFunction.json \
 		$(abs_builddir)/ResourceFunctionSpec.json \
-		$(abs_builddir)/SAPSpecificationRef.json \
-		$(abs_builddir)/SAPRef.json \
-		$(abs_builddir)/ConnectivitySpecification.json \
-		$(abs_builddir)/Connectivity.json \
-		$(abs_builddir)/ConnectionPointSpecificationRef.json \
-		$(abs_builddir)/ConnectionPointRef.json \
 		$(abs_builddir)/BssFunctionSpec.json \
 		$(abs_builddir)/BtsSiteMgrSpec.json \
 		$(abs_builddir)/GsmCellSpec.json \
@@ -216,20 +210,6 @@ check_DATA = .validation_ok
 		if ! ajv compile -s resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ConnectionPointSpecificationRef.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ConnectionPointRef.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ConnectivitySpecification.json \
-			-r ConnectionPointSpecificationRef.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s Connectivity.json \
-			-r ConnectionPointRef.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s SAPSpecificationRef.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s SAPRef.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ResourceFunctionSpec.json \
 			-r resourceCatalogManagement.json; \
