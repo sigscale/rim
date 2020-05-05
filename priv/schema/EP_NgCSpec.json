@@ -2,9 +2,10 @@
 	"$id": "http://sigscale.org/schema/EP_NgCSpec",
 	"title": "NR EP NgC Specification",
 	"description": "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity", 
+	"type": "object",
 	"allOf": [
 		{
-			"$ref": "EP_RPSpec"
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
 		},
 		{
 			"type": "object",
@@ -12,7 +13,7 @@
 				"resourceSpecCharacteristic": {
 					"type": "array",
 					"items": {
-						"oneOf": [
+						"allOf": [
 							{
 								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
@@ -25,6 +26,8 @@
 									"name": {
 										"enum": [
 											"id",
+											"userLabel",
+											"farEndEntity",
 											"localAddress",
 											"remoteAddress"
 										]

@@ -276,15 +276,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDLcrSpec.json \
-			-r UtranCellTDDSpec.json \
-			-r UtranGenericCellSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDDHcrSpec.json \
-			-r UtranCellTDDSpec.json \
-			-r UtranGenericCellSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
@@ -645,7 +641,6 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RP_EPSSpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
@@ -701,37 +696,31 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2CSpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2USpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgCSpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgUSpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnCSpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnUSpec.json \
-			-r EP_RPSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \

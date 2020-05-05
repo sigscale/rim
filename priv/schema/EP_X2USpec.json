@@ -2,9 +2,10 @@
 	"$id": "http://sigscale.org/schema/EP_X2USpec",
 	"title": "NR EP X2U Specification",
 	"description": "NR End Point of the logical link, supporting the X2 user plane (X2-U) interface",
+	"type": "object",
 	"allOf": [
 		{
-			"$ref": "EP_RPSpec"
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
 		},
 		{
 			"type": "object",
@@ -12,7 +13,7 @@
 				"resourceSpecCharacteristic": {
 					"type": "array",
 					"items": {
-						"oneOf": [
+						"allOf": [
 							{
 								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
@@ -25,6 +26,8 @@
 									"name": {
 										"enum": [
 											"id",
+											"userLabel",
+											"farEndEntity",
 											"localAddress",
 											"remoteAddress"
 										]

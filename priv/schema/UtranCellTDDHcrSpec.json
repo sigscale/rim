@@ -5,7 +5,7 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "UtranCellTDDSpec"
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
 		},
 		{
 			"type": "object",
@@ -13,12 +13,9 @@
 				"resourceSpecCharacteristic": {
 					"type": "array",
 					"items": {
-						"oneOf": [
+						"allOf": [
 							{
-								"$ref": "UtranGenericCellSpec#/definitions/ResourceSpecCharacteristic"
-							},
-							{
-								"$ref": "UtranCellTDDSpec#/definitions/ResourceSpecCharacteristic"
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
 							{
 								"type": "object",
@@ -29,6 +26,48 @@
 									"name": {
 										"enum": [
 											"id",
+											"userLabel",
+											"vnfParametersList",
+											"cId",
+											"localCellId",
+											"maximumTransmissionPower",
+											"cellMode",
+											"pichPower",
+											"pchPower",
+											"fachPower",
+											"lac",
+											"rac",
+											"sac",
+											"uraList",
+											"utranCellIubLink",
+											"relatedAntennaList",
+											"relatedTmaList",
+											"operationalState",
+											"hsFlag",
+											"hsEnable",
+											"numOfHspdschs",
+											"numOfHsscchs",
+											"frameOffset",
+											"cellIndividualOffset",
+											"hcsPrio",
+											"maximumAllowedUlTxPower",
+											"snaInformation",
+											"qrxlevMin",
+											"deltaQrxlevmin",
+											"qhcs",
+											"penaltyTime",
+											"referenceTimeDifferenceToCell",
+											"readSFNIndicator",
+											"nsPlmnIdList",
+											"restrictionStateIndicator",
+											"dpcModechangeSupportIndicator",
+											"relatedSectorEquipment",
+											"uarfcn",
+											"cellParameterId",
+											"primaryCcpchPower",
+											"cellCapabilityContainerTDD",
+											"sctdIndicator",
+											"dpchConstantValue",
 											"schPower",
 											"temporaryOffset1",
 											"syncCase",

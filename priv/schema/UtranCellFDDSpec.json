@@ -2,6 +2,7 @@
 	"$id": "http://sigscale.org/schema/UtranCellFDDSpec",
 	"title": "UTRAN FDD Cell Specification",
 	"description": "UMTS Frequency Division Duplex (FDD) radio resource function specification",
+	"type": "object",
 	"allOf": [
 		{
 			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
@@ -12,7 +13,7 @@
 				"resourceSpecCharacteristic": {
 					"type": "array",
 					"items": {
-						"oneOf": [
+						"allOf": [
 							{
 								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
 							},
@@ -25,6 +26,42 @@
 									"name": {
 										"enum": [
 											"id",
+											"userLabel",
+											"vnfParametersList",
+											"cId",
+											"localCellId",
+											"maximumTransmissionPower",
+											"cellMode",
+											"pichPower",
+											"pchPower",
+											"fachPower",
+											"lac",
+											"rac",
+											"sac",
+											"uraList",
+											"utranCellIubLink",
+											"relatedAntennaList",
+											"relatedTmaList",
+											"operationalState",
+											"hsFlag",
+											"hsEnable",
+											"numOfHspdschs",
+											"numOfHsscchs",
+											"frameOffset",
+											"cellIndividualOffset",
+											"hcsPrio",
+											"maximumAllowedUlTxPower",
+											"snaInformation",
+											"qrxlevMin",
+											"deltaQrxlevmin",
+											"qhcs",
+											"penaltyTime",
+											"referenceTimeDifferenceToCell",
+											"readSFNIndicator",
+											"nsPlmnIdList",
+											"restrictionStateIndicator",
+											"dpcModechangeSupportIndicator",
+											"relatedSectorEquipment",
 											"uarfcnUl",
 											"uarfcnDl",
 											"primaryScramblingCode",
