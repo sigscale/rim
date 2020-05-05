@@ -35,6 +35,12 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-epc-epdg.json \
 		$(abs_builddir)/specification-epc-mme.json \
 		$(abs_builddir)/specification-epc-pcrf.json \
+		$(abs_builddir)/specification-epc-link-mme-mme.json \
+		$(abs_builddir)/specification-epc-link-hss-mme.json \
+		$(abs_builddir)/specification-epc-link-mme-sgsn.json \
+		$(abs_builddir)/specification-epc-link-mme-servingw.json \
+		$(abs_builddir)/specification-epc-link-enb-mme.json \
+		$(abs_builddir)/specification-epc-ep-rp-eps.json \
 		$(abs_builddir)/specification-core-msc.json \
 		$(abs_builddir)/specification-core-mgw.json \
 		$(abs_builddir)/specification-core-sgsn.json \
@@ -55,6 +61,12 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-nr-cell-cu.json \
 		$(abs_builddir)/specification-nr-cell-du.json \
 		$(abs_builddir)/specification-nr-sector-carrier.json \
+		$(abs_builddir)/specification-nr-ep-x2c.json \
+		$(abs_builddir)/specification-nr-ep-x2u.json \
+		$(abs_builddir)/specification-nr-ep-ngc.json \
+		$(abs_builddir)/specification-nr-ep-ngu.json \
+		$(abs_builddir)/specification-nr-ep-xnc.json \
+		$(abs_builddir)/specification-nr-ep-xnu.json \
 		$(abs_builddir)/specification-5gc-slice.json \
 		$(abs_builddir)/specification-5gc-slice-subnet.json \
 		$(abs_builddir)/specification-5gc-amf.json \
@@ -81,6 +93,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-im-iu-hw.json \
 		$(abs_builddir)/specification-im-iu-sw.json \
 		$(abs_builddir)/specification-im-iu-lic.json \
+		$(abs_builddir)/specification-generic-subnetwork.json \
 		$(abs_builddir)/specification-generic-me.json \
 		$(abs_builddir)/specification-huawei-core-usn.json \
 		$(abs_builddir)/specification-huawei-core-ugw.json \
@@ -90,13 +103,6 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-huawei-core-spsv3.json \
 		$(abs_builddir)/specification-huawei-core-mscsiosp.json \
 		$(abs_builddir)/specification-huawei-core-mscso.json \
-		$(abs_builddir)/specification-epc-link-mme-mme.json \
-		$(abs_builddir)/specification-epc-link-hss-mme.json \
-		$(abs_builddir)/specification-epc-link-mme-sgsn.json \
-		$(abs_builddir)/specification-epc-link-mme-servingw.json \
-		$(abs_builddir)/specification-epc-link-enb-mme.json \
-		$(abs_builddir)/specification-epc-ep-rp-eps.json \
-		$(abs_builddir)/specification-generic-subnetwork.json \
 		$(abs_builddir)/specification-mec-mobile-edge-host-function.json \
 		$(abs_builddir)/specification-mec-mobile-edge-platform.json \
 		$(abs_builddir)/specification-mec-mobile-edge-application.json \
@@ -106,12 +112,6 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-mec-location-service.json \
 		$(abs_builddir)/specification-mec-traffic-rule.json \
 		$(abs_builddir)/specification-mec-dns-rule.json \
-		$(abs_builddir)/specification-nr-ep-x2c.json \
-		$(abs_builddir)/specification-nr-ep-x2u.json \
-		$(abs_builddir)/specification-nr-ep-ngc.json \
-		$(abs_builddir)/specification-nr-ep-ngu.json \
-		$(abs_builddir)/specification-nr-ep-xnc.json \
-		$(abs_builddir)/specification-nr-ep-xnu.json \
 		$(abs_builddir)/resource-gsm-bss.json \
 		$(abs_builddir)/resource-gsm-bts.json \
 		$(abs_builddir)/resource-gsm-cell.json \
@@ -128,6 +128,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-im-iu-hw.json \
 		$(abs_builddir)/resource-im-iu-sw.json \
 		$(abs_builddir)/resource-im-iu-lic.json \
+		$(abs_builddir)/resource-generic-subnetwork.json \
 		$(abs_builddir)/resource-generic-me.json \
 		$(abs_builddir)/resource-lte-enb.json \
 		$(abs_builddir)/resource-lte-cell-fdd.json \
@@ -139,7 +140,6 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-epc-link-mme-servingw.json \
 		$(abs_builddir)/resource-epc-link-enb-mme.json \
 		$(abs_builddir)/resource-epc-ep-rp-eps.json \
-		$(abs_builddir)/resource-generic-subnetwork.json \
 		$(abs_builddir)/resource-mec-mobile-edge-host-function.json \
 		$(abs_builddir)/resource-mec-mobile-edge-platform.json \
 		$(abs_builddir)/resource-mec-mobile-edge-application.json \
@@ -269,6 +269,36 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-epc-pcrf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_MMESpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-link-mme-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/Link_HSS_MMESpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-link-hss-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_SGSNSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-link-mme-sgsn.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_ServingGWSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-link-mme-servingw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/Link_ENB_MMESpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-link-enb-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_RP_EPSSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-epc-ep-rp-eps.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MscServerFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -369,6 +399,36 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-sector-carrier.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2CSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-x2c.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2USpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-x2u.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgCSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-ngc.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgUSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-ngu.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnCSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-xnc.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnUSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-xnu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -504,6 +564,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-generic-me.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SubNetworkSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-generic-subnetwork.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/USNFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -534,41 +599,6 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-spsv3.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_MMESpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-epc-link-mme-mme.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/Link_HSS_MMESpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-epc-link-hss-mme.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_SGSNSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-epc-link-mme-sgsn.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/Link_MME_ServingGWSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-epc-link-mme-servingw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/Link_ENB_MMESpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-epc-link-enb-mme.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_RP_EPSSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-epc-ep-rp-eps.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/SubNetworkSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-generic-subnetwork.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeHostFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -614,36 +644,6 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-dns-rule.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2CSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nr-ep-x2c.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2USpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nr-ep-x2u.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgCSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nr-ep-ngc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgUSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nr-ep-ngu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnCSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nr-ep-xnc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnUSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-nr-ep-xnu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
