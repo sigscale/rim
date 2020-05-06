@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 32.616 Bulk CM data file with
+	3GPP TS 28.541 NR Network Resource Model (NRM)
+-->
+<bulkCmConfigDataFile
+		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm">
+	<fileHeader
+			fileFormatVersion="32.616 V15.0"
+			senderName="DC=sigscale.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
+			vendorName="Acme" />
+	<configData dnPrefix="DC=sigscale.net">
+		<xn:SubNetwork id="8">
+			<xn:attributes>
+				<xn:userLabel>sn-8</xn:userLabel>
+				<xn:userDefinedNetworkType>NR</xn:userDefinedNetworkType>
+				<xn:setOfMcc>582</xn:setOfMcc>
+			</xn:attributes>
+			<xn:ManagementNode id="1">
+				<xn:attributes>
+					<xn:userLabel>ems-nr-1</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Asquith</xn:locationName>
+					<xn:managedElements>
+						<xn:dn>DC=sigscale.net,SubNetwork=8,ManagedElement=1</xn:dn>
+					</xn:managedElements>
+					<xn:swVersion>1.1</xn:swVersion>
+				</xn:attributes>
+			</xn:ManagementNode>
+			<xn:ManagedElement id="1">
+				<xn:attributes>
+					<xn:managedElementTypeList>
+						<xn:managedElementType>NR</xn:managedElementType>
+					</xn:managedElementTypeList>
+					<xn:userLabel>rnc-asquith</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Asquith</xn:locationName>
+					<xn:swVersion>1.5.31</xn:swVersion>
+					<xn:managedBy>
+						<xn:dn>DC=sigscale.net,SubNetwork=8,ManagementNode=1</xn:dn>
+					</xn:managedBy>
+				</xn:attributes>
+				<nn:GNBDUFunction id="1">
+					<nn:attributes>
+						<nn:userLabel>gnbdu-asquith</nn:userLabel>
+						<nn:vnfParametersList>
+							<xn:vnfInstanceId>3742af1e-caf5-4690-8502-db7512815b5f</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</nn:vnfParametersList>
+						<nn:peeParametersList>
+							<xn:siteIdentification>ABC-3768</xn:siteIdentification>
+							<xn:siteLatitude>59.6714</xn:siteLatitude>
+							<xn:siteLongitude>-62.3862</xn:siteLongitude>
+							<xn:siteDescription>Asquith</xn:siteDescription>
+							<xn:equipmentType>3G</xn:equipmentType>
+							<xn:environmentType>Indoor</xn:environmentType>
+							<xn:powerInterface>A3</xn:powerInterface>
+						</nn:peeParametersList>
+						<nn:gnbId>4294967</nn:gnbId>
+						<nn:gnbIdLength>25</nn:gnbIdLength>
+						<nn:gnbDuId>68719476</nn:gnbDuId>
+					</nn:attributes>
+					<nn:NRCellDU id="1">
+						<nn:attributes>
+							<nn:userLabel>nr-cell-du</nn:userLabel>
+							<nn:vnfParametersList>
+								<xn:vnfInstanceId>674al1e-cnf5-4693-8502-dc7512815b5f</xn:vnfInstanceId>
+								<xn:autoScalable>false</xn:autoScalable>
+							</nn:vnfParametersList>
+							<nn:operationalState>enabled</nn:operationalState>
+							<nn:cellState>IDLE</nn:cellState>
+							<nn:pLMNIdList>
+								<en:pLMNId>
+									<en:mcc>167</en:mcc>
+									<en:mnc>772</en:mnc>
+								</en:pLMNId>
+							</nn:pLMNIdList>
+							<nn:nRpci>500</nn:nRpci>
+							<nn:nRTac>167772</nn:nRTac>
+							<nn:arfcnDL>5</nn:arfcnDL>
+							<nn:bSChannelBwDL>-15</nn:bSChannelBwDL>
+							<nn:bSChannelBwSUL>2</nn:bSChannelBwSUL>
+						</nn:attributes>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>NRCellDUHandOver</xn:vsDataType>
+								<xn:vsDataFormatVersion>HandOver.1.1</xn:vsDataFormatVersion>
+								<xn:vsData></xn:vsData>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</nn:NRCellDU>
+					<nn:NRSectorCarrier id="1">
+						<nn:attributes>
+							<nn:userLabel>nr-cell-du</nn:userLabel>
+							<nn:vnfParametersList>
+								<xn:vnfInstanceId>926al7e-dnf5-4623-1502-nc7612895b5f</xn:vnfInstanceId>
+								<xn:autoScalable>true</xn:autoScalable>
+							</nn:vnfParametersList>
+							<nn:txDirection>DL and UL</nn:txDirection>
+							<nn:configuredMaxTxPower>95</nn:configuredMaxTxPower>
+							<nn:arfcnUL>5</nn:arfcnUL>
+							<nn:bSChannelBwDL>-135</nn:bSChannelBwDL>
+							<nn:bSChannelBwUL>693</nn:bSChannelBwUL>
+						</nn:attributes>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>NRSCHandOver</xn:vsDataType>
+								<xn:vsDataFormatVersion>HandOver.1.2</xn:vsDataFormatVersion>
+								<xn:vsData></xn:vsData>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</nn:NRSectorCarrier>
+					<nn:EP_F1C id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_F1C=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_F1C>
+					<nn:EP_F1U id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_F1U=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUUP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_F1U>
+				</nn:GNBDUFunction>
+				<nn:GNBCUCPFunction id="1">
+					<nn:attributes>
+						<nn:userLabel>gnbcucp-asquith</nn:userLabel>
+						<nn:vnfParametersList>
+							<xn:vnfInstanceId>5741af1e-acf5-3690-8572-da5714320b5f</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</nn:vnfParametersList>
+						<nn:peeParametersList>
+							<xn:siteIdentification>KRC-3768</xn:siteIdentification>
+							<xn:siteLatitude>65.3754</xn:siteLatitude>
+							<xn:siteLongitude>-22.3862</xn:siteLongitude>
+							<xn:siteDescription>Asquith</xn:siteDescription>
+							<xn:equipmentType>3G</xn:equipmentType>
+							<xn:environmentType>Indoor</xn:environmentType>
+							<xn:powerInterface>A3</xn:powerInterface>
+						</nn:peeParametersList>
+						<nn:gnbId>429496</nn:gnbId>
+						<nn:gnbIdLength>28</nn:gnbIdLength>
+						<nn:pLMNIdList>
+							<en:pLMNId>
+								<en:mcc>167</en:mcc>
+								<en:mnc>772</en:mnc>
+							</en:pLMNId>
+						</nn:pLMNIdList>
+					</nn:attributes>
+					<nn:NRCellCU id="1">
+						<nn:attributes>
+							<nn:userLabel>nr-cell-cu</nn:userLabel>
+							<nn:vnfParametersList>
+								<xn:vnfInstanceId>873al1e-crf5-4593-8512-nc7592815b5d</xn:vnfInstanceId>
+								<xn:autoScalable>true</xn:autoScalable>
+							</nn:vnfParametersList>
+							<nn:nCGI>687194767</nn:nCGI>
+							<nn:pLMNIdList>
+								<en:pLMNId>
+									<en:mcc>137</en:mcc>
+									<en:mnc>762</en:mnc>
+								</en:pLMNId>
+							</nn:pLMNIdList>
+							<nn:rRMPolicyNSSIId>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,NRCellCU=1</nn:rRMPolicyNSSIId>
+							<nn:rRMPolicyRatio>1672</nn:rRMPolicyRatio>
+							<nn:rRMPolicy>Platinum</nn:rRMPolicy>
+						</nn:attributes>
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>NRCellCUHandOver</xn:vsDataType>
+								<xn:vsDataFormatVersion>HandOver.1.3</xn:vsDataFormatVersion>
+								<xn:vsData></xn:vsData>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</nn:NRCellCU>
+					<nn:EP_F1C id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1C=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBDU-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_F1C>
+					<nn:EP_E1 id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_E1=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUUP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_E1>
+					<nn:EP_XnC id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=2,EP_XnC=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-2</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_XnC>
+					<nn:EP_X2C id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1</nn:farEndEntity>
+							<nn:userLabel>EP-ENB-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_X2C>
+					<nn:EP_NgC id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgC=1</nn:farEndEntity>
+							<nn:userLabel>EP-ENB-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_NgC>
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>GNBCUCPHandOver</xn:vsDataType>
+							<xn:vsDataFormatVersion>NNGNBCUCPHandOver.1.1</xn:vsDataFormatVersion>
+							<xn:vsData></xn:vsData>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</nn:GNBCUCPFunction>
+				<nn:GNBCUCPFunction id="2">
+					<nn:attributes>
+						<nn:userLabel>gnbcucp-2</nn:userLabel>
+						<nn:vnfParametersList>
+							<xn:vnfInstanceId>9781ad1e-akf5-3792-3582-ta5874320rf</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</nn:vnfParametersList>
+						<nn:peeParametersList>
+							<xn:siteIdentification>KDH-6728</xn:siteIdentification>
+							<xn:siteLatitude>55.2714</xn:siteLatitude>
+							<xn:siteLongitude>-32.6852</xn:siteLongitude>
+							<xn:siteDescription>Asquith</xn:siteDescription>
+							<xn:equipmentType>3G</xn:equipmentType>
+							<xn:environmentType>Indoor</xn:environmentType>
+							<xn:powerInterface>A3</xn:powerInterface>
+						</nn:peeParametersList>
+						<nn:gnbId>328496</nn:gnbId>
+						<nn:gnbIdLength>26</nn:gnbIdLength>
+						<nn:pLMNIdList>
+							<en:pLMNId>
+								<en:mcc>367</en:mcc>
+								<en:mnc>723</en:mnc>
+							</en:pLMNId>
+						</nn:pLMNIdList>
+					</nn:attributes>
+					<nn:EP_XnC id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_XnC=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_XnC>
+				</nn:GNBCUCPFunction>
+				<nn:GNBCUUPFunction id="1">
+					<nn:attributes>
+						<nn:userLabel>gnbcuup-1</nn:userLabel>
+						<nn:vnfParametersList>
+							<xn:vnfInstanceId>6741an1e-kcf5-5680-8512-dr7562913bf</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</nn:vnfParametersList>
+						<nn:peeParametersList>
+							<xn:siteIdentification>NAH-6318</xn:siteIdentification>
+							<xn:siteLatitude>75.3784</xn:siteLatitude>
+							<xn:siteLongitude>-42.3882</xn:siteLongitude>
+							<xn:siteDescription>Asquith</xn:siteDescription>
+							<xn:equipmentType>3G</xn:equipmentType>
+							<xn:environmentType>Indoor</xn:environmentType>
+							<xn:powerInterface>A3</xn:powerInterface>
+						</nn:peeParametersList>
+						<nn:pLMNIdList>
+							<en:pLMNId>
+								<en:mcc>527</en:mcc>
+								<en:mnc>8623</en:mnc>
+							</en:pLMNId>
+						</nn:pLMNIdList>
+						<nn:gNBId>429496729</nn:gNBId>
+						<nn:gnbIdLength>30</nn:gnbIdLength>
+					</nn:attributes>
+					<nn:EP_E1 id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_E1=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_E1>
+					<nn:EP_F1U id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1U=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBDU-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_F1U>
+					<nn:EP_XnU id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnU=1</nn:farEndEntity>
+							<nn:userLabel>EP-ENB-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_XnU>
+					<nn:EP_NgU id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgU=1</nn:farEndEntity>
+							<nn:userLabel>EP-ENB-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_NgU>
+					<nn:EP_X2U id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2U=1</nn:farEndEntity>
+							<nn:userLabel>EP-ENB-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_X2U>
+					<nn:EP_S1U id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DN</nn:farEndEntity>
+							<nn:userLabel>EP-S1U-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_S1U>
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>GNBCUUPHandOver</xn:vsDataType>
+							<xn:vsDataFormatVersion>NNGNBCUUPHandOver.1.1</xn:vsDataFormatVersion>
+							<xn:vsData></xn:vsData>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</nn:GNBCUUPFunction>
+			</xn:ManagedElement>
+		</xn:SubNetwork>
+	</configData>
+	<fileFooter dateTime="2020-05-06T12:00:00Z" />
+</bulkCmConfigDataFile>
