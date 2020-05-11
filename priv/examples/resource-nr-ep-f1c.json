@@ -1,0 +1,39 @@
+{
+	"id": "3597461911",
+	"href": "/resourceInventoryManagement/v3/resource/3597461911",
+	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_XnC=1",
+	"description": "NR End Point of the control plane interface (F1-C) between the DU and CU or CUUP",
+	"category": "NR",
+	"validFor": {
+		"startDateTime": "2020-05-11T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_F1C",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_F1C",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "368125611",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125611",
+		"@type": "EP_F1CSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "localAddress",
+			"value" : "127.0.0.1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam35",
+			"vsDataFormatVersion": "acmeParams-v36",
+			"vsData": 165
+		}
+	]
+}
