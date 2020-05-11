@@ -1,7 +1,7 @@
 {
 	"id": "3597461906",
 	"href": "/resourceInventoryManagement/v3/resource/3597461906",
-	"name": "SubNetwork=2,ManagedElement=1,GNBCUCPFunction=1,EP_NgC=1",
+	"name": "SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_NgC=1",
 	"description": "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity",
 	"category": "NR",
 	"validFor": {

@@ -1,7 +1,7 @@
 {
 	"id": "3597461908",
 	"href": "/resourceInventoryManagement/v3/resource/3597461908",
-	"name": "SubNetwork=2,ManagedElement=1,GNBCUCPFunction=1,EP_XnC=1",
+	"name": "SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_XnC=1",
 	"description": "NR End Point of the logical link, supporting Xn Application protocols, to a neighbour gNB node",
 	"category": "NR",
 	"validFor": {

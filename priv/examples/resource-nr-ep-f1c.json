@@ -1,7 +1,7 @@
 {
 	"id": "3597461911",
 	"href": "/resourceInventoryManagement/v3/resource/3597461911",
-	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_XnC=1",
+	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1C=1",
 	"description": "NR End Point of the control plane interface (F1-C) between the DU and CU or CUUP",
 	"category": "NR",
 	"validFor": {
