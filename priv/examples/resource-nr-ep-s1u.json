@@ -1,0 +1,39 @@
+{
+	"id": "3597461914",
+	"href": "/resourceInventoryManagement/v3/resource/3597461914",
+	"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_S1U=1",
+	"description": "NR End Point of the logical link, supporting S1-U interface towards a S-GW node",
+	"category": "NR",
+	"validFor": {
+		"startDateTime": "2020-05-11T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_S1U",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_S1U",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "368125614",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125614",
+		"@type": "EP_S1USpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "localAddress",
+			"value" : "127.0.0.1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam38",
+			"vsDataFormatVersion": "acmeParams-v39",
+			"vsData": 169
+		}
+	]
+}

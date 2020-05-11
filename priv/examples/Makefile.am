@@ -71,6 +71,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-nr-ep-f1c.json \
 		$(abs_builddir)/specification-nr-ep-f1u.json \
 		$(abs_builddir)/specification-nr-ep-e1.json \
+		$(abs_builddir)/specification-nr-ep-s1u.json \
 		$(abs_builddir)/specification-5gc-slice.json \
 		$(abs_builddir)/specification-5gc-slice-subnet.json \
 		$(abs_builddir)/specification-5gc-amf.json \
@@ -161,7 +162,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-nr-ep-xnu.json \
 		$(abs_builddir)/resource-nr-ep-f1c.json \
 		$(abs_builddir)/resource-nr-ep-f1u.json \
-		$(abs_builddir)/resource-nr-ep-e1.json
+		$(abs_builddir)/resource-nr-ep-e1.json \
+		$(abs_builddir)/resource-nr-ep-s1u.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -451,6 +453,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-e1.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_S1USpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-nr-ep-s1u.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -758,6 +765,8 @@ check_DATA = .validation_ok
 				-d resource-nr-ep-f1u.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-nr-ep-e1.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-ep-s1u.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
