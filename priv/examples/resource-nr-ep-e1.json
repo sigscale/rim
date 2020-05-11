@@ -1,0 +1,39 @@
+{
+	"id": "3597461913",
+	"href": "/resourceInventoryManagement/v3/resource/3597461913",
+	"name": "SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_E1=1",
+	"description": "NR End Point of the logical link, supporting E1 interface between gNB-CU-CP and gNB-CUUP",
+	"category": "NR",
+	"validFor": {
+		"startDateTime": "2020-05-11T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_E1",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_E1",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "368125613",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125613",
+		"@type": "EP_E1Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "Embarcadero"
+		},
+		{
+			"name": "localAddress",
+			"value" : "127.0.0.1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam37",
+			"vsDataFormatVersion": "acmeParams-v38",
+			"vsData": 168
+		}
+	]
+}

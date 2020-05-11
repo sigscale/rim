@@ -148,6 +148,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_XnUSpec.json \
 		$(abs_builddir)/EP_F1CSpec.json \
 		$(abs_builddir)/EP_F1USpec.json \
+		$(abs_builddir)/EP_E1Spec.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
@@ -713,6 +714,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_F1USpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_E1Spec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
