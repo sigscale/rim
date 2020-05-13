@@ -10,7 +10,7 @@
 		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
+			senderName="DC=sigscale.net,SubNetwork=8,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="8">
@@ -34,9 +34,11 @@
 			<xn:ManagedElement id="1">
 				<xn:attributes>
 					<xn:managedElementTypeList>
-						<xn:managedElementType>NR</xn:managedElementType>
+						<xn:managedElementType>GNBDU</xn:managedElementType>
+						<xn:managedElementType>GNBCUCP</xn:managedElementType>
+						<xn:managedElementType>GNBCUUP</xn:managedElementType>
 					</xn:managedElementTypeList>
-					<xn:userLabel>rnc-asquith</xn:userLabel>
+					<xn:userLabel>gnbdu-asquith</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Asquith</xn:locationName>
@@ -96,7 +98,7 @@
 					</nn:NRCellDU>
 					<nn:NRSectorCarrier id="1">
 						<nn:attributes>
-							<nn:userLabel>nr-cell-du</nn:userLabel>
+							<nn:userLabel>nr-sector-carrier</nn:userLabel>
 							<nn:vnfParametersList>
 								<xn:vnfInstanceId>926al7e-dnf5-4623-1502-nc7612895b5f</xn:vnfInstanceId>
 								<xn:autoScalable>true</xn:autoScalable>
@@ -148,7 +150,7 @@
 						<nn:gnbIdLength>28</nn:gnbIdLength>
 						<nn:pLMNIdList>
 							<en:pLMNId>
-								<en:mcc>167</en:mcc>
+								<en:mcc>129</en:mcc>
 								<en:mnc>772</en:mnc>
 							</en:pLMNId>
 						</nn:pLMNIdList>
