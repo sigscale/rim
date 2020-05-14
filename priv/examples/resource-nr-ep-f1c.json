@@ -25,8 +25,8 @@
 			"value" : "Embarcadero"
 		},
 		{
-			"name": "localAddress",
-			"value" : "127.0.0.1"
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_F1C=1"
 		}
 	],
 	"vsDataContainer": [

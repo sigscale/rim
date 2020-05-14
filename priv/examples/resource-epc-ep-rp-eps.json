@@ -25,8 +25,8 @@
 			"value" : "Embarcadero"
 		},
 		{
-			"name": "farEndNeIpAddr",
-			"value" : "127.0.0.1"
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=4,ServingGWFunction=1,EP_RP_EPS=1"
 		}
 	],
 	"vsDataContainer": [

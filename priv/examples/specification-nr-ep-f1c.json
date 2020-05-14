@@ -48,12 +48,14 @@
 		{
 			"name": "localAddress",
 			"description": "Includes IP address and VLAN ID used for initialization of the underlying transport",
-			"valueType": "string"
+			"valueType": "IpEndPoint",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/IpEndPoint"
 		},
 		{
 			"name": "remoteAddress",
 			"description": "IP address used for initialization of the underlying transport",
-			"valueType": "string"
+			"valueType": "IpEndPoint",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/IpEndPoint"
 		}
 	]
 }
