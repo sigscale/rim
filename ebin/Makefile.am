@@ -23,6 +23,7 @@ beam_DATA = im_app.beam \
 			im_xml_inventory.beam \
 			im_xml_inventory2.beam \
 			im_xml_ims.beam \
+			im_xml_nr.beam \
 			im_xml_zte.beam \
 			im_xml_huawei.beam \
 			im_xml_nokia.beam \

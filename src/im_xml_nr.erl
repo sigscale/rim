@@ -1,0 +1,492 @@
+%%%     http://www.apache.org/licenses/LICENSE-2.0
+%%%
+%%% Unless required by applicable law or agreed to in writing, software
+%%% distributed under the License is distributed on an "AS IS" BASIS,
+%%% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%%% See the License for the specific language governing permissions and
+%%% limitations under the License.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @doc This library module implements the public API for the
+%%%   {@link //sigscale_im. sigscale_im} application.
+%%%
+-module(im_xml_nr).
+-copyright('Copyright (c) 2020 SigScale Global Inc.').
+
+%% export the im private API
+-export([parse_gnbdu/2, parse_nr_cell_du/2, parse_nr_sector_carrier/2,
+		parse_ep_f1c/2, parse_ep_f1u/2]).
+
+-include("im.hrl").
+-include_lib("inets/include/mod_auth.hrl").
+-include("im_xml.hrl").
+
+-define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
+-define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+
+%%----------------------------------------------------------------------
+%%  The im private API
+%%----------------------------------------------------------------------
+
+%% @hidden
+parse_gnbdu({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_gnbdu({startElement, _Uri, "NRCellDU", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",NRCellDU=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn], parse_module = im_xml_nr,
+			parse_function = parse_nr_cell_du,
+			parse_state = #nr_state{nr_cell_du = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_gnbdu({startElement, _Uri, "NRSectorCarrier", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",NRSectorCarrier=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn], parse_module = im_xml_nr,
+			parse_function = parse_nr_sector_carrier,
+			parse_state = #nr_state{nr_sector_carrier = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_gnbdu({startElement, _Uri, "EP_F1C", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_F1C=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_f1c,
+			parse_state = #nr_state{ep_f1c = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_gnbdu({startElement, _Uri, "EP_F1U", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_F1U=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_f1u,
+			parse_state = #nr_state{ep_f1u = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_gnbdu({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_gnbdu({endElement, _Uri, "GNBDUFunction", QName},
+		[#state{parse_state =  #nr_state{nr_cell_dus = NrCellDuRels,
+		nr_sector_carriers = NrSCRels, ep_f1cs = EpF1cRels, ep_f1us = EpF1uRels},
+		dn_prefix = [GnbduDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "GNBDUFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EnbAttr = parse_gnbdu_attr(T2, undefined, []),
+	Resource = #resource{name = GnbduDn,
+			description = "NR gNB Distributed Unit (DU)",
+			category = "NR",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/GNBDUFunction",
+			specification = Spec,
+			characteristic = EnbAttr,
+			related = NrCellDuRels ++ NrSCRels ++ EpF1cRels ++ EpF1uRels,
+			connection_point = EpF1cRels ++ EpF1uRels},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_gnbdu({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_gnbdu_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_gnbdu_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_gnbdu_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_gnbdu_attr1(T2, undefined, Acc);
+parse_gnbdu_attr1([{endElement, {_, "peeParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo peeParametersListType
+	{[_ | _PeeplType], T2} = pop(startElement, QName, T1),
+	parse_gnbdu_attr1(T2, undefined, Acc);
+parse_gnbdu_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_gnbdu_attr1(T, Attr, Acc);
+parse_gnbdu_attr1([{characters, Chars} | T], "gnbId" = Attr, Acc) ->
+	parse_gnbdu_attr1(T, Attr,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_gnbdu_attr1([{characters, Chars} | T], "gnbIdLength" = Attr, Acc) ->
+	parse_gnbdu_attr1(T, Attr,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_gnbdu_attr1([{characters, Chars} | T], "gnbDuId" = Attr, Acc) ->
+	parse_gnbdu_attr1(T, Attr,
+			[#resource_char{name = Attr, value = list_to_integer(Chars)} | Acc]);
+parse_gnbdu_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_gnbdu_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_gnbdu_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_gnbdu_attr1(T, undefined, Acc);
+parse_gnbdu_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_nr_cell_du({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_nr_cell_du({startElement, _Uri, _LocalName, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_nr_cell_du({endElement, _Uri, "NRCellDU", QName},
+		[#state{dn_prefix = [NrCellDuDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
+	#nr_state{nr_cell_dus = NrCellDuRels } = NrState,
+	ClassType = "NRCellDU",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	NrCellDUAttr = parse_nr_cell_du_attr(T2, []),
+	Resource = #resource{name = NrCellDuDn,
+			description = "NR Cell Distributed Unit (DU)",
+			category = "NR",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/NRCellDU",
+			specification = Spec,
+			characteristic = NrCellDUAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			NrCellDuRel = #resource_rel{id = Id, name = NrCellDuDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{
+					parse_state = NrState#nr_state{nr_cell_dus = [NrCellDuRel | NrCellDuRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_nr_cell_du({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_nr_cell_du_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		Acc) ->
+	{[_ | Attributes], _} = pop(endElement, QName, T1),
+	parse_nr_cell_du_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_nr_cell_du_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_nr_cell_du_attr1(T2, undefined, Acc);
+parse_nr_cell_du_attr1([{endElement, {_, "availabilityStatus"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo availabilityStatus
+	{[_ | _AvailabilityStatus], T2} = pop(startElement, QName, T1),
+	parse_nr_cell_du_attr1(T2, undefined, Acc);
+parse_nr_cell_du_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo PLMNIdList
+	{[_ | _PLMNIdList], T2} = pop(startElement, QName, T1),
+	parse_nr_cell_du_attr1(T2, undefined, Acc);
+parse_nr_cell_du_attr1([{endElement, {_, "sNSSAIList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo SNSSAIList 
+	{[_ | _SNSSAIList], T2} = pop(startElement, QName, T1),
+	parse_nr_cell_du_attr1(T2, undefined, Acc);
+parse_nr_cell_du_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, Acc);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "nCGI" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "nRpci" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "nRTac" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "arfcnDL" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "arfcnUL" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "arfcnSUL" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "bSChannelBwDL" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "bSChannelBwUL" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], "bSChannelBwSUL" = Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_cell_du_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_nr_cell_du_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_nr_cell_du_attr1(T, undefined, Acc);
+parse_nr_cell_du_attr1([], _Attr, Acc) ->
+	Acc.
+
+%% @hidden
+parse_nr_sector_carrier({characters, Chars},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_nr_sector_carrier({startElement, _Uri, _LocalName, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_nr_sector_carrier({endElement, _Uri, "NRSectorCarrier", QName},
+		[#state{dn_prefix = [NrSCDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
+	#nr_state{nr_sector_carriers = NrSCRels} = NrState,
+	ClassType = "NRSectorCarrier",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	NrSCAttr = parse_nr_sector_carrier_attr(T2, []),
+	Resource = #resource{name = NrSCDn,
+			description = "NR Sector Carrier",
+			category = "NR",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/NRSectorCarrier",
+			specification = Spec,
+			characteristic = NrSCAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			NrSCRel = #resource_rel{id = Id, name = NrSCDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{
+					parse_state = NrState#nr_state{nr_sector_carriers
+					= [NrSCRel | NrSCRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_nr_sector_carrier({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_nr_sector_carrier_attr([{startElement, {_, "attributes"} = QName,
+		[]} | T1], Acc) ->
+	{[_ | Attributes], _} = pop(endElement, QName, T1),
+	parse_nr_sector_carrier_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_nr_sector_carrier_attr1([{endElement,
+		{_, "vnfParametersList"} = QName} | T1], undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+parse_nr_sector_carrier_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr, Acc);
+parse_nr_sector_carrier_attr1([{characters, Chars} | T],
+		"configuredMaxTxPower" = Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_sector_carrier_attr1([{characters, Chars} | T],
+		"arfcnDL" = Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_sector_carrier_attr1([{characters, Chars} | T],
+		"arfcnUL" = Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_sector_carrier_attr1([{characters, Chars} | T],
+		"bSChannelBwDL" = Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_sector_carrier_attr1([{characters, Chars} | T],
+		"bSChannelBwUL" = Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr, [#resource_char{name = Attr,
+			value = list_to_integer(Chars)} | Acc]);
+parse_nr_sector_carrier_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_nr_sector_carrier_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_nr_sector_carrier_attr1(T, undefined, Acc);
+parse_nr_sector_carrier_attr1([], _Attr, Acc) ->
+	Acc.
+
+%% @hidden
+parse_ep_f1c({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_f1c({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_f1c({endElement, _Uri, "EP_F1C", QName},
+		[#state{dn_prefix = [EpF1cDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
+	#nr_state{ep_f1cs = EpF1cRels} = NrState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpF1cAttr = parse_ep_f1c_attr(T2, undefined, []),
+	ClassType = "EP_F1C",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpF1cDn,
+			description = "NR End Point of the control plane interface (F1-C)",
+			category = "NR",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_F1C",
+			specification = Spec,
+			characteristic = EpF1cAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpF1cRel = #resource_rel{id = Id, name = EpF1cDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NrState#nr_state{
+					ep_f1cs = [EpF1cRel | EpF1cRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_f1c({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_ep_f1c_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_ep_f1c_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_ep_f1c_attr1([{endElement, {_, "localAddress"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo IpEndPoint
+	{[_ | _LocalAddress], T2} = pop(startElement, QName, T1),
+	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+parse_ep_f1c_attr1([{endElement, {_, "remoteAddress"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo IpEndPoint
+	{[_ | _RemoteAddress], T2} = pop(startElement, QName, T1),
+	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+parse_ep_f1c_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_ep_f1c_attr1(T, Attr, Acc);
+parse_ep_f1c_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
+	parse_ep_f1c_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ep_f1c_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_ep_f1c_attr1(T, undefined, Acc);
+parse_ep_f1c_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_ep_f1u({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_f1u({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_f1u({endElement, _Uri, "EP_F1U", QName},
+		[#state{dn_prefix = [EpF1uDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
+	#nr_state{ep_f1us = EpF1uRels} = NrState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpF1uAttr = parse_ep_f1u_attr(T2, undefined, []),
+	ClassType = "EP_F1U",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpF1uDn,
+			description = "NR End Point of the control plane interface (F1-U)",
+			category = "NR",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_F1U",
+			specification = Spec,
+			characteristic = EpF1uAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpF1uRel = #resource_rel{id = Id, name = EpF1uDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NrState#nr_state{
+					ep_f1us = [EpF1uRel | EpF1uRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_f1u({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_ep_f1u_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_ep_f1u_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_ep_f1u_attr1([{endElement, {_, "localAddress"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo IpEndPoint
+	{[_ | _LocalAddress], T2} = pop(startElement, QName, T1),
+	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+parse_ep_f1u_attr1([{endElement, {_, "remoteAddress"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo IpEndPoint
+	{[_ | _RemoteAddress], T2} = pop(startElement, QName, T1),
+	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+parse_ep_f1u_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_ep_f1u_attr1(T, Attr, Acc);
+parse_ep_f1u_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
+	parse_ep_f1u_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ep_f1u_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_ep_f1u_attr1(T, undefined, Acc);
+parse_ep_f1u_attr1([], undefined, Acc) ->
+	Acc.
+
+%%----------------------------------------------------------------------
+%%  internal functions
+%%----------------------------------------------------------------------
+
+-type event() :: {startElement,
+		QName :: {Prefix :: string(), LocalName :: string()},
+		Attributes :: [tuple()]} | {endElement,
+		QName :: {Prefix :: string(), LocalName :: string()}}
+		| {characters, string()}.
+-spec pop(Element, QName, Stack) -> Result
+	when
+		Element :: startElement | endElement,
+		QName :: {Prefix, LocalName},
+		Prefix :: string(),
+		LocalName :: string(),
+		Stack :: [event()],
+		Result :: {Value, NewStack},
+		Value :: [event()],
+		NewStack :: [event()].
+%% @doc Pops all events up to an including `{Element, QName, ...}'.
+%% @private
+pop(Element, QName, Stack) ->
+	pop(Element, QName, Stack, []).
+%% @hidden
+pop(Element, QName, [H | T], Acc)
+		when element(1, H) == Element, element(2, H) == QName->
+	{[H | Acc], T};
+pop(Element, QName, [H | T], Acc) ->
+	pop(Element, QName, T, [H | Acc]).
+
+-spec get_specification_ref(Name, Cache) -> Result
+	when
+		Name :: string(),
+		Cache :: [SpecRef],
+		Result :: {SpecRef, Cache} | {error, Reason},
+		SpecRef :: specification_ref(),
+		Reason :: not_found | term().
+%% @hidden
+get_specification_ref(Name, Cache) ->
+	case lists:keyfind(Name, #specification_ref.name, Cache) of
+		#specification_ref{name = Name} = SpecRef ->
+			{SpecRef, Cache};
+		false ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Id, href = Href, name = Name,
+						version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
+							version = Version},
+					{SpecRef, [SpecRef | Cache]};
+				{error, Reason} ->
+					throw({get_specification_name, Reason})
+			end
+	end.
+

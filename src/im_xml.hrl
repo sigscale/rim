@@ -126,6 +126,18 @@
 		iu_lics = [] :: [string()]}).
 -type im2_state() :: #im2_state{}.
 
+-record(nr_state,
+		{gnbdu :: map() | undefined,
+		nr_cell_du :: map() | undefined,
+		nr_sector_carrier :: map() | undefined,
+		ep_f1c :: map() | undefined,
+		ep_f1u :: map() | undefined,
+		nr_cell_dus = [] :: [resource_rel()],
+		nr_sector_carriers = [] :: [resource_rel()],
+		ep_f1cs = [] :: [resource_rel()],
+		ep_f1us = [] :: [resource_rel()]}).
+-type nr_state() :: #nr_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,
