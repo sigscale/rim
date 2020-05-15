@@ -856,6 +856,15 @@ parse_managed_element({startElement, _, "GNBDUFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #nr_state{gnbdu = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "GNBCUCPFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",GNBCUCPFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_nr, parse_function = parse_gnbcucp,
+			dn_prefix = [NewDn],
+			parse_state = #nr_state{gnbcucp = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];

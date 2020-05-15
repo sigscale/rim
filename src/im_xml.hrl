@@ -128,14 +128,25 @@
 
 -record(nr_state,
 		{gnbdu :: map() | undefined,
+		gnbcucp :: map() | undefined,
 		nr_cell_du :: map() | undefined,
+		nr_cell_cu :: map() | undefined,
 		nr_sector_carrier :: map() | undefined,
 		ep_f1c :: map() | undefined,
 		ep_f1u :: map() | undefined,
+		ep_e1 :: map() | undefined,
+		ep_xnc :: map() | undefined,
+		ep_x2c :: map() | undefined,
+		ep_ngc :: map() | undefined,
 		nr_cell_dus = [] :: [resource_rel()],
+		nr_cell_cus = [] :: [resource_rel()],
 		nr_sector_carriers = [] :: [resource_rel()],
 		ep_f1cs = [] :: [resource_rel()],
-		ep_f1us = [] :: [resource_rel()]}).
+		ep_f1us = [] :: [resource_rel()],
+		ep_e1s = [] :: [resource_rel()],
+		ep_xncs = [] :: [resource_rel()],
+		ep_x2cs = [] :: [resource_rel()],
+		ep_ngcs = [] :: [resource_rel()]}).
 -type nr_state() :: #nr_state{}.
 
 -record(zte_state,
