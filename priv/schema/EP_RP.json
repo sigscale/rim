@@ -25,7 +25,13 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"farEndEntity"
+											"href",
+											"farEndEntity",
+											"version",
+											"baseType",
+											"schemaLocation",
+											"type",
+											"referredType"
 										]
 									}
 								}

@@ -13,26 +13,35 @@
 				"resourceSpecCharacteristic": {
 					"type": "array",
 					"items": {
-						"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"href",
+											"farEndEntity",
+											"userLabel",
+											"version",
+											"baseType",
+											"schemaLocation",
+											"type",
+											"referredType"
+										]
+									}
+								}
+							}
+						]
 					}
 				}
 			}
 		}
-	],
-	"definitions": {
-		"ResourceSpecCharacteristic": {
-			"type": "object",
-			"required": [
-				"name"
-			],
-			"properties": {
-				"name": {
-					"enum": [
-						"userLabel",
-						"farEndEntity"
-					]
-				}
-			}
-		}
-	}
+	]
 }
