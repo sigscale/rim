@@ -2322,7 +2322,7 @@ bulk_cm_nr(Config) ->
 			#xmlElement.name, MeContent),
 	#xmlAttribute{value = GNBCUCPId} = lists:keyfind(id,
 			#xmlAttribute.name, GNBCUCPAttr),
-	#xmlElement{content = _NRCellDUContent,
+	#xmlElement{content = _NRCellCUContent,
 			attributes = NRCellCUAttr} = lists:keyfind('nn:NRCellCU',
 			#xmlElement.name, GNBCUCPContent),
 	#xmlAttribute{value = NRCellCUId} = lists:keyfind(id,
