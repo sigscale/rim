@@ -327,7 +327,7 @@ parse_ep_f1c({endElement, _Uri, "EP_F1C", QName},
 		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
 	#nr_state{ep_f1cs = EpF1cRels} = NrState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	EpF1cAttr = parse_ep_f1c_attr(T2, undefined, []),
+	EpF1cAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_F1C",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = EpF1cDn,
@@ -352,32 +352,6 @@ parse_ep_f1c({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
-% @hidden
-parse_ep_f1c_attr([{startElement, {_, "attributes"} = QName, []} | T1],
-		undefined, Acc) ->
-	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_ep_f1c_attr1(Attributes, undefined, Acc).
-% @hidden
-parse_ep_f1c_attr1([{endElement, {_, "localAddress"} = QName} | T1],
-		undefined, Acc) ->
-	% @todo IpEndPoint
-	{[_ | _LocalAddress], T2} = pop(startElement, QName, T1),
-	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
-parse_ep_f1c_attr1([{endElement, {_, "remoteAddress"} = QName} | T1],
-		undefined, Acc) ->
-	% @todo IpEndPoint
-	{[_ | _RemoteAddress], T2} = pop(startElement, QName, T1),
-	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
-parse_ep_f1c_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
-	parse_ep_f1c_attr1(T, Attr, Acc);
-parse_ep_f1c_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
-	parse_ep_f1c_attr1(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_ep_f1c_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
-	parse_ep_f1c_attr1(T, undefined, Acc);
-parse_ep_f1c_attr1([], undefined, Acc) ->
-	Acc.
-
 %% @hidden
 parse_ep_f1u({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
@@ -389,7 +363,7 @@ parse_ep_f1u({endElement, _Uri, "EP_F1U", QName},
 		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
 	#nr_state{ep_f1us = EpF1uRels} = NrState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
-	EpF1uAttr = parse_ep_f1u_attr(T2, undefined, []),
+	EpF1uAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_F1U",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = EpF1uDn,
@@ -413,32 +387,6 @@ parse_ep_f1u({endElement, _Uri, "EP_F1U", QName},
 parse_ep_f1u({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
-
-% @hidden
-parse_ep_f1u_attr([{startElement, {_, "attributes"} = QName, []} | T1],
-		undefined, Acc) ->
-	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
-	parse_ep_f1u_attr1(Attributes, undefined, Acc).
-% @hidden
-parse_ep_f1u_attr1([{endElement, {_, "localAddress"} = QName} | T1],
-		undefined, Acc) ->
-	% @todo IpEndPoint
-	{[_ | _LocalAddress], T2} = pop(startElement, QName, T1),
-	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
-parse_ep_f1u_attr1([{endElement, {_, "remoteAddress"} = QName} | T1],
-		undefined, Acc) ->
-	% @todo IpEndPoint
-	{[_ | _RemoteAddress], T2} = pop(startElement, QName, T1),
-	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
-parse_ep_f1u_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
-	parse_ep_f1u_attr1(T, Attr, Acc);
-parse_ep_f1u_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
-	parse_ep_f1u_attr1(T, Attr,
-			[#resource_char{name = Attr, value = Chars} | Acc]);
-parse_ep_f1u_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
-	parse_ep_f1u_attr1(T, undefined, Acc);
-parse_ep_f1u_attr1([], undefined, Acc) ->
-	Acc.
 
 %% @hidden
 parse_gnbcucp({characters, Chars}, [#state{stack = Stack} = State | T]) ->
