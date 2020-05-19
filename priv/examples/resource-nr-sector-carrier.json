@@ -1,0 +1,45 @@
+{
+	"id": "6974362953",
+	"href": "/resourceInventoryManagement/v3/resource/6974362953",
+	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,NRSectorCarrier=1",
+	"description": "NR Sector Carrier",
+	"category": "NR",
+	"validFor": {
+		"startDateTime": "2020-05-18T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "NRSectorCarrier",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NRSectorCarrier",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362020",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362020",
+		"@type": "NRSectorCarrierSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "nr-sector-carrier"
+		},
+		{
+			"name": "txDirection",
+			"value" : "DL and UL"
+		},
+		{
+			"name": "bSChannelBwDL",
+			"value" : -135
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam70",
+			"vsDataFormatVersion": "acmeParams-v6",
+			"vsData": 706
+		}
+	],
+	"resourceRelationship": [],
+	"sap": []
+}

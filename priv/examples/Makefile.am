@@ -154,6 +154,12 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-mec-dns-rule.json \
 		$(abs_builddir)/resource-mec-rni-service.json \
 		$(abs_builddir)/resource-mec-location-service.json \
+		$(abs_builddir)/resource-nr-gnb-du.json \
+		$(abs_builddir)/resource-nr-gnb-cu-cp.json \
+		$(abs_builddir)/resource-nr-gnb-cu-up.json \
+		$(abs_builddir)/resource-nr-cell-du.json \
+		$(abs_builddir)/resource-nr-cell-cu.json \
+		$(abs_builddir)/resource-nr-sector-carrier.json \
 		$(abs_builddir)/resource-nr-ep-x2c.json \
 		$(abs_builddir)/resource-nr-ep-x2u.json \
 		$(abs_builddir)/resource-nr-ep-ngc.json \
@@ -767,6 +773,18 @@ check_DATA = .validation_ok
 				-d resource-nr-ep-e1.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-nr-ep-s1u.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-gnb-du.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-gnb-cu-cp.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-gnb-cu-up.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-cell-du.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-cell-cu.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-nr-sector-carrier.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
