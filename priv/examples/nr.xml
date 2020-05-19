@@ -250,6 +250,12 @@
 							<nn:userLabel>EP-GNBCUCP-1</nn:userLabel>
 						</nn:attributes>
 					</nn:EP_XnC>
+					<nn:EP_XnC id="2">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnC=1</nn:farEndEntity>
+							<nn:userLabel>EP-ENB-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_XnC>
 				</nn:GNBCUCPFunction>
 				<nn:GNBCUUPFunction id="1">
 					<nn:attributes>
