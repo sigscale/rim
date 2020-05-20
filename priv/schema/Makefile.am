@@ -77,6 +77,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EirFunctionSpec.json \
 		$(abs_builddir)/MnpSrfFunctionSpec.json \
 		$(abs_builddir)/CgfFunctionSpec.json \
+		$(abs_builddir)/SgwFunctionSpec.json \
 		$(abs_builddir)/ASFunctionSpec.json \
 		$(abs_builddir)/HSSFunctionSpec.json \
 		$(abs_builddir)/PCSCFFunctionSpec.json \
@@ -360,6 +361,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s CgfFunctionSpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SgwFunctionSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \

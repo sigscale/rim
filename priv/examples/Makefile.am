@@ -51,6 +51,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-core-eir.json \
 		$(abs_builddir)/specification-core-mnpsrf.json \
 		$(abs_builddir)/specification-core-cgf.json \
+		$(abs_builddir)/specification-core-sgw.json \
 		$(abs_builddir)/specification-ims-as.json \
 		$(abs_builddir)/specification-ims-hss.json \
 		$(abs_builddir)/specification-ims-pcscf.json \
@@ -169,7 +170,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-nr-ep-f1c.json \
 		$(abs_builddir)/resource-nr-ep-f1u.json \
 		$(abs_builddir)/resource-nr-ep-e1.json \
-		$(abs_builddir)/resource-nr-ep-s1u.json
+		$(abs_builddir)/resource-nr-ep-s1u.json \
+		$(abs_builddir)/resource-core-sgw.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -359,6 +361,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-cgf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SgwFunctionSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-sgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -785,6 +792,8 @@ check_DATA = .validation_ok
 				-d resource-nr-cell-cu.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-nr-sector-carrier.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-sgw.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
