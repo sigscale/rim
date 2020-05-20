@@ -60,7 +60,13 @@
 		eutran_rel :: map() | undefined,
 		fdds = [] :: [resource_rel()],
 		tdds = [] :: [resource_rel()],
-		ep_rp_epss = [] :: [resource_rel()]}).
+		ep_rp_epss = [] :: [resource_rel()],
+		ep_x2cs = [] :: [resource_rel()],
+		ep_x2us = [] :: [resource_rel()],
+		ep_ngcs = [] :: [resource_rel()],
+		ep_ngus = [] :: [resource_rel()],
+		ep_xncs = [] :: [resource_rel()],
+		ep_xnus = [] :: [resource_rel()]}).
 -type eutran_state() :: #eutran_state{}.
 
 -record(epc_state,

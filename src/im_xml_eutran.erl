@@ -72,12 +72,68 @@ parse_enb({startElement, _Uri, "EP_RP_EPS", QName,
 			parse_module = im_xml_epc, parse_function = parse_eprpeps,
 			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_X2C", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_X2C=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_x2c,
+			parse_state = #nr_state{ep_x2c = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_X2U", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_X2U=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_x2u,
+			parse_state = #nr_state{ep_x2u = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_NgC", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_NgC=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_ngc,
+			parse_state = #nr_state{ep_ngc = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_NgU", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_NgU=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_ngu,
+			parse_state = #nr_state{ep_ngu = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_XnC", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_XnC=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_xnc,
+			parse_state = #nr_state{ep_xnc = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_enb({startElement, _Uri, "EP_XnU", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_XnU=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_nr, parse_function = parse_ep_xnu,
+			parse_state = #nr_state{ep_xnu = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_enb({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_enb({endElement, _Uri, "ENBFunction", QName},
 		[#state{parse_state =  #eutran_state{fdds = FddRels, tdds = TddRels,
-		ep_rp_epss = EpRpEpsRels}, location = Location,
+		ep_rp_epss = EpRpEpsRels, ep_x2cs = EpX2cRels, ep_x2us = EpX2uRels,
+		ep_ngcs = EpNgcRels, ep_ngus = EpNguRels, ep_xncs = EpXncRels,
+		ep_xnus = EpXnuRels}, location = Location,
 		dn_prefix = [EnbDn | _], stack = Stack, spec_cache = Cache},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	ClassType = "ENBFunction",
@@ -97,7 +153,8 @@ parse_enb({endElement, _Uri, "ENBFunction", QName},
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | EnbAttr]),
 			related = FddRels ++ TddRels,
-			connection_point = EpRpEpsRels},
+			connection_point = EpRpEpsRels ++ EpX2cRels ++ EpX2uRels ++ EpNgcRels
+					++ EpNguRels ++ EpXncRels ++ EpXnuRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];

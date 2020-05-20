@@ -645,8 +645,8 @@ parse_ep_xnc({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_xnc({endElement, _Uri, "EP_XnC", QName},
 		[#state{dn_prefix = [EpXncDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
-	#nr_state{ep_xncs = EpXncRels} = NrState,
+		#state{parse_state = PrevParseState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpXncAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_XnC",
@@ -664,9 +664,16 @@ parse_ep_xnc({endElement, _Uri, "EP_XnC", QName},
 		{ok, #resource{id = Id}} ->
 			EpXncRel = #resource_rel{id = Id, name = EpXncDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NrState#nr_state{
-					ep_xncs = [EpXncRel | EpXncRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#nr_state{ep_xncs = EpXncRels} ->
+					[PrevState#state{parse_state = PrevParseState#nr_state{
+							ep_xncs = [EpXncRel | EpXncRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_xncs = EpXncRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_xncs = [EpXncRel | EpXncRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -682,8 +689,8 @@ parse_ep_x2c({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_x2c({endElement, _Uri, "EP_X2C", QName},
 		[#state{dn_prefix = [EpX2cDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
-	#nr_state{ep_x2cs = EpX2cRels} = NrState,
+		#state{parse_state = PrevParseState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpX2cAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_X2C",
@@ -701,9 +708,16 @@ parse_ep_x2c({endElement, _Uri, "EP_X2C", QName},
 		{ok, #resource{id = Id}} ->
 			EpX2cRel = #resource_rel{id = Id, name = EpX2cDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NrState#nr_state{
-					ep_x2cs = [EpX2cRel | EpX2cRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#nr_state{ep_x2cs = EpX2cRels} ->
+					[PrevState#state{parse_state = PrevParseState#nr_state{
+							ep_x2cs = [EpX2cRel | EpX2cRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_x2cs = EpX2cRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_x2cs = [EpX2cRel | EpX2cRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -719,8 +733,8 @@ parse_ep_ngc({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_ngc({endElement, _Uri, "EP_NgC", QName},
 		[#state{dn_prefix = [EpNgcDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
-	#nr_state{ep_ngcs = EpNgcRels} = NrState,
+		#state{parse_state = PrevParseState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpNgcAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_NgC",
@@ -738,9 +752,16 @@ parse_ep_ngc({endElement, _Uri, "EP_NgC", QName},
 		{ok, #resource{id = Id}} ->
 			EpNgcRel = #resource_rel{id = Id, name = EpNgcDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NrState#nr_state{
-					ep_ngcs = [EpNgcRel | EpNgcRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#nr_state{ep_ngcs = EpNgcRels} ->
+					[PrevState#state{parse_state = PrevParseState#nr_state{
+							ep_ngcs = [EpNgcRel | EpNgcRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_ngcs = EpNgcRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_ngcs = [EpNgcRel | EpNgcRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -911,8 +932,8 @@ parse_ep_xnu({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_xnu({endElement, _Uri, "EP_XnU", QName},
 		[#state{dn_prefix = [EpXnuDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
-	#nr_state{ep_xnus = EpXnuRels} = NrState,
+		#state{parse_state = PrevParseState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpXnuAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_XnU",
@@ -930,9 +951,16 @@ parse_ep_xnu({endElement, _Uri, "EP_XnU", QName},
 		{ok, #resource{id = Id}} ->
 			EpXnuRel = #resource_rel{id = Id, name = EpXnuDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NrState#nr_state{
-					ep_xnus = [EpXnuRel | EpXnuRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#nr_state{ep_xnus = EpXnuRels} ->
+					[PrevState#state{parse_state = PrevParseState#nr_state{
+							ep_xnus = [EpXnuRel | EpXnuRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_xnus = EpXnuRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_xnus = [EpXnuRel | EpXnuRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -948,8 +976,8 @@ parse_ep_ngu({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_ngu({endElement, _Uri, "EP_NgU", QName},
 		[#state{dn_prefix = [EpNguDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
-	#nr_state{ep_ngus = EpNguRels} = NrState,
+		#state{parse_state = PrevParseState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpNguAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_NgU",
@@ -967,9 +995,16 @@ parse_ep_ngu({endElement, _Uri, "EP_NgU", QName},
 		{ok, #resource{id = Id}} ->
 			EpNguRel = #resource_rel{id = Id, name = EpNguDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NrState#nr_state{
-					ep_ngus = [EpNguRel | EpNguRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#nr_state{ep_ngus = EpNguRels} ->
+					[PrevState#state{parse_state = PrevParseState#nr_state{
+							ep_ngus = [EpNguRel | EpNguRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_ngus = EpNguRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_ngus = [EpNguRel | EpNguRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
@@ -985,8 +1020,8 @@ parse_ep_x2u({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_x2u({endElement, _Uri, "EP_X2U", QName},
 		[#state{dn_prefix = [EpX2uDn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NrState, spec_cache = PrevCache} = PrevState | T1]) ->
-	#nr_state{ep_x2us = EpX2uRels} = NrState,
+		#state{parse_state = PrevParseState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpX2uAttr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_X2U",
@@ -1004,9 +1039,16 @@ parse_ep_x2u({endElement, _Uri, "EP_X2U", QName},
 		{ok, #resource{id = Id}} ->
 			EpX2uRel = #resource_rel{id = Id, name = EpX2uDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NrState#nr_state{
-					ep_x2us = [EpX2uRel | EpX2uRels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#nr_state{ep_x2us = EpX2uRels} ->
+					[PrevState#state{parse_state = PrevParseState#nr_state{
+							ep_x2us = [EpX2uRel | EpX2uRels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#eutran_state{ep_x2us = EpX2uRels} ->
+					[PrevState#state{parse_state = PrevParseState#eutran_state{
+							ep_x2us = [EpX2uRel | EpX2uRels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;

@@ -7,6 +7,7 @@
 		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm"
+		xmlns:nn="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#nrNrm"
 		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
@@ -192,6 +193,42 @@
 							</xn:attributes>
 						</xn:VsDataContainer>
 					</epc:EP_RP_EPS>
+					<nn:EP_X2C id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_X2C=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_X2C>
+					<nn:EP_X2U id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_X2U=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUUP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_X2U>
+					<nn:EP_NgC id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_NgC=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_NgC>
+					<nn:EP_NgU id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_NgU=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUUP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_NgU>
+					<nn:EP_XnC id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUCPFunction=2,EP_XnC=2</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUCP-2</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_XnC>
+					<nn:EP_XnU id="1">
+						<nn:attributes>
+							<nn:farEndEntity>DC=sigscale.net,SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_XnU=1</nn:farEndEntity>
+							<nn:userLabel>EP-GNBCUUP-1</nn:userLabel>
+						</nn:attributes>
+					</nn:EP_XnU>
 				</en:ENBFunction>
 				<!--  Vendor specific data for ENB -->
 				<xn:VsDataContainer id="1">
