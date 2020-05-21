@@ -1,0 +1,43 @@
+{
+	"id": "6974362503",
+	"href": "/resourceInventoryManagement/v3/resource/6974362503",
+	"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,IupsLink=1",
+	"description": "Core Iu-ps interface link",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-29T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "IupsLink",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/IupsLink",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362587",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362587",
+		"@type": "IupsLinkSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-iups-link-1"
+		},
+		{
+			"name": "connectedRnc",
+			"value" : "SubNetwork=3,ManagedElement=1,RncFunction=1"
+		},
+		{
+			"name": "connectedBss",
+			"value" : "SubNetwork=1,ManagedElement=1,BssFunction=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam147",
+			"vsDataFormatVersion": "acmeParams-v86",
+			"vsData": 186
+		}
+	]
+}
