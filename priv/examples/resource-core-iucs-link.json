@@ -26,7 +26,7 @@
 		},
 		{
 			"name": "connectedRnc",
-			"value" : "SubNetwork=2,ManagedElement=1,RncFunction=1"
+			"value" : "SubNetwork=3,ManagedElement=1,RncFunction=1"
 		},
 		{
 			"name": "connectedBss",
@@ -36,7 +36,7 @@
 	"vsDataContainer": [
 		{
 			"vsDataType": "acmeParam146",
-			"vsDataFormatVersion": "acmeParams-v855555",
+			"vsDataFormatVersion": "acmeParams-v85",
 			"vsData": 185
 		}
 	]

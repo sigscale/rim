@@ -1,6 +1,6 @@
 {
 	"name": "IucsLink",
-	"description": "Core Iu-cs interface link (connecting an MSCserver to the RNC, BSC and HNB GW) resource function specification",
+	"description": "Core Iu-cs interface link (connecting a MSCserver to the RNC, BSC and HNB GW) resource function specification",
 	"@type": "IucsLinkSpec",
 	"@schemaLocation": "http://sigscale.org/schema/IucsLinkSpec",
 	"@baseType": "ResourceFunctionSpec",

@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/IupsLinkSpec",
 	"title": "Core IupsLink Specification",
-	"description": "Core Iu-ps interface link (connecting an SGSN to the RNC, BSC and HNB GW) resource function specification",
+	"description": "Core Iu-ps interface link (connecting a SGSN to the RNC, BSC and HNB GW) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

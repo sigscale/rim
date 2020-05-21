@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/IucsLink",
 	"title": "Core IucsLink",
-	"description": "Core Iu-cs interface link (connecting an MSCserver to the RNC, BSC and HNB GW) resource function",
+	"description": "Core Iu-cs interface link (connecting a MSCserver to the RNC, BSC and HNB GW) resource function",
 	"type": "object",
 	"allOf": [
 		{
