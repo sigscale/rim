@@ -1,0 +1,41 @@
+{
+	"$id": "http://sigscale.org/schema/IucsLink",
+	"title": "Core IucsLink",
+	"description": "Core Iu-cs interface link (connecting an MSCserver to the RNC, BSC and HNB GW) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"connectedRnc",
+											"connectedBss",
+											"connectedHNBGW"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

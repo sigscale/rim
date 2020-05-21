@@ -1,0 +1,43 @@
+{
+	"id": "6974362502",
+	"href": "/resourceInventoryManagement/v3/resource/6974362502",
+	"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,IucsLink=1",
+	"description": "Core Iu-cs interface link",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-29T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "IucsLink",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/IucsLink",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362588",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362588",
+		"@type": "IucsLinkSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-iucs-link-1"
+		},
+		{
+			"name": "connectedRnc",
+			"value" : "SubNetwork=2,ManagedElement=1,RncFunction=1"
+		},
+		{
+			"name": "connectedBss",
+			"value" : "SubNetwork=1,ManagedElement=1,BssFunction=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam146",
+			"vsDataFormatVersion": "acmeParams-v855555",
+			"vsData": 185
+		}
+	]
+}
