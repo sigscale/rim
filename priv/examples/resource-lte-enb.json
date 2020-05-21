@@ -45,25 +45,7 @@
 			"resourceRef": {
 				"id": "8994643080",
 				"href": "/resourceInventoryManagement/v3/resource/8994643080",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=1",
-				"@referredType": "EUtranCellFDD"
-			},
-			"type": "contains"
-		},
-		{
-			"resourceRef": {
-				"id": "8994630174",
-				"href": "/resourceInventoryManagement/v3/resource/8994630172",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=2",
-				"@referredType": "EUtranCellFDD"
-			},
-			"type": "contains"
-		},
-		{
-			"resourceRef": {
-				"id": "8994631530",
-				"href": "/resourceInventoryManagement/v3/resource/8994631533",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCell=3",
+				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
 				"@referredType": "EUtranCellFDD"
 			},
 			"type": "contains"
@@ -73,15 +55,6 @@
 				"id": "8794531620",
 				"href": "/resourceInventoryManagement/v3/resource/8994631533",
 				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
-				"@referredType": "EUtranCellTDD"
-			},
-			"type": "contains"
-		},
-		{
-			"resourceRef": {
-				"id": "8794531621",
-				"href": "/resourceInventoryManagement/v3/resource/8794531621",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellTDD=2",
 				"@referredType": "EUtranCellTDD"
 			},
 			"type": "contains"
