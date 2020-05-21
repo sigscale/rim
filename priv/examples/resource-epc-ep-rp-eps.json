@@ -1,7 +1,7 @@
 {
 	"id": "7594422906",
 	"href": "/resourceInventoryManagement/v3/resource/7594422906",
-	"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
+	"name": "SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
 	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS)",
 	"category": "EPC",
 	"validFor": {

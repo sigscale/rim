@@ -1,7 +1,7 @@
 {
 	"id": "8593562918",
 	"href": "/resourceInventoryManagement/v3/resource/8593562918",
-	"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
+	"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
 	"description": "LTE Frequency Division Duplex (FDD)",
 	"category": "RAN",
 	"validFor": {

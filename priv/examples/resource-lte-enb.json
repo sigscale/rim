@@ -1,7 +1,7 @@
 {
 	"id": "7994462918",
 	"href": "/resourceInventoryManagement/v3/resource/7994462918",
-	"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1",
+	"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1",
 	"description": "LTE Evolved Node B (ENB)",
 	"category": "RAN",
 	"validFor": {
@@ -45,7 +45,7 @@
 			"resourceRef": {
 				"id": "8994643080",
 				"href": "/resourceInventoryManagement/v3/resource/8994643080",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
 				"@referredType": "EUtranCellFDD"
 			},
 			"type": "contains"
@@ -54,7 +54,7 @@
 			"resourceRef": {
 				"id": "8794531620",
 				"href": "/resourceInventoryManagement/v3/resource/8994631533",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
 				"@referredType": "EUtranCellTDD"
 			},
 			"type": "contains"
@@ -63,7 +63,7 @@
 			"resourceRef": {
 				"id": "8794531622",
 				"href": "/resourceInventoryManagement/v3/resource/8794531622",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_X2C=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1",
 				"@referredType": "EP_X2C"
 			},
 			"type": "contains"
@@ -72,7 +72,7 @@
 			"resourceRef": {
 				"id": "8794531623",
 				"href": "/resourceInventoryManagement/v3/resource/8794531623",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_X2U=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2U=1",
 				"@referredType": "EP_X2U"
 			},
 			"type": "contains"
@@ -81,7 +81,7 @@
 			"resourceRef": {
 				"id": "8794531624",
 				"href": "/resourceInventoryManagement/v3/resource/8794531624",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_NgC=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgC=1",
 				"@referredType": "EP_NgC"
 			},
 			"type": "contains"
@@ -90,7 +90,7 @@
 			"resourceRef": {
 				"id": "8794531625",
 				"href": "/resourceInventoryManagement/v3/resource/8794531625",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_NgU=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgU=1",
 				"@referredType": "EP_NgU"
 			},
 			"type": "contains"
@@ -99,7 +99,7 @@
 			"resourceRef": {
 				"id": "8794531626",
 				"href": "/resourceInventoryManagement/v3/resource/8794531626",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_XnC=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnC=1",
 				"@referredType": "EP_XnC"
 			},
 			"type": "contains"
@@ -108,7 +108,7 @@
 			"resourceRef": {
 				"id": "8794531627",
 				"href": "/resourceInventoryManagement/v3/resource/8794531627",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_XnU=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnU=1",
 				"@referredType": "EP_XnU"
 			},
 			"type": "contains"
@@ -119,7 +119,7 @@
 			"resourceRef": {
 				"id": "8794531622",
 				"href": "/resourceInventoryManagement/v3/resource/8794531622",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_X2C=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1",
 				"@referredType": "EP_X2C"
 			},
 			"type": "contains"
@@ -128,7 +128,7 @@
 			"resourceRef": {
 				"id": "8794531623",
 				"href": "/resourceInventoryManagement/v3/resource/8794531623",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_X2U=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2U=1",
 				"@referredType": "EP_X2U"
 			},
 			"type": "contains"
@@ -137,7 +137,7 @@
 			"resourceRef": {
 				"id": "8794531624",
 				"href": "/resourceInventoryManagement/v3/resource/8794531624",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_NgC=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgC=1",
 				"@referredType": "EP_NgC"
 			},
 			"type": "contains"
@@ -146,7 +146,7 @@
 			"resourceRef": {
 				"id": "8794531625",
 				"href": "/resourceInventoryManagement/v3/resource/8794531625",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_NgU=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgU=1",
 				"@referredType": "EP_NgU"
 			},
 			"type": "contains"
@@ -155,7 +155,7 @@
 			"resourceRef": {
 				"id": "8794531626",
 				"href": "/resourceInventoryManagement/v3/resource/8794531626",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_XnC=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnC=1",
 				"@referredType": "EP_XnC"
 			},
 			"type": "contains"
@@ -164,7 +164,7 @@
 			"resourceRef": {
 				"id": "8794531627",
 				"href": "/resourceInventoryManagement/v3/resource/8794531627",
-				"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EP_XnU=1",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnU=1",
 				"@referredType": "EP_XnU"
 			},
 			"type": "contains"

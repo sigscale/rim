@@ -1,7 +1,7 @@
 {
 	"id": "8597462917",
 	"href": "/resourceInventoryManagement/v3/resource/8597462917",
-	"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
+	"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
 	"description": "Tower Mounted Amplifier (TMA) Inventory Unit",
 	"category": "RAN",
 	"validFor": {

@@ -1,7 +1,7 @@
 {
 	"id": "8597462918",
 	"href": "/resourceInventoryManagement/v3/resource/8597462918",
-	"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1",
+	"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1",
 	"description": "Inventory Unit",
 	"category": "RAN",
 	"validFor": {
@@ -34,12 +34,12 @@
 		}
 	],
 	"tmaInventoryUnit": [
-		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=1"
+		"SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1"
 	],
 	"antennaInventoryUnit": [
-		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
-		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
-		"SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=4"
+		"SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
+		"SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
+		"SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=4"
 	],
 	"vsDataContainer": [
 		{
@@ -53,7 +53,7 @@
 			"resourceRef": {
 				"id": "8597462917",
 				"href": "/resourceInventoryManagement/v3/resource/8597462917",
-				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
+				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
 				"@referredType": "TmaInventoryUnit"
 			},
 			"type": "contains"
@@ -62,7 +62,7 @@
 			"resourceRef": {
 				"id": "7597462917",
 				"href": "/resourceInventoryManagement/v3/resource/7597462917",
-				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
+				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
 				"@referredType": "AntennaInventoryUnit"
 			},
 			"type": "contains"
@@ -71,7 +71,7 @@
 			"resourceRef": {
 				"id": "7600371350",
 				"href": "/resourceInventoryManagement/v3/resource/7600371350",
-				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
+				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
 				"@referredType": "AntennaInventoryUnit"
 			},
 			"type": "contains"
@@ -80,7 +80,7 @@
 			"resourceRef": {
 				"id": "1409318377",
 				"href": "/resourceInventoryManagement/v3/resource/1409318377",
-				"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",
+				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",
 				"@referredType": "AntennaInventoryUnit"
 			},
 			"type": "contains"

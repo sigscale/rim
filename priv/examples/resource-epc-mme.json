@@ -1,7 +1,7 @@
 {
 	"id": "8795462938",
 	"href": "/resourceInventoryManagement/v3/resource/8795462938",
-	"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1",
+	"name": "SubNetwork=4,ManagedElement=1,MMEFunction=1",
 	"description": "EPC Mobility Management Entity (MME)",
 	"category": "EPC",
 	"validFor": {

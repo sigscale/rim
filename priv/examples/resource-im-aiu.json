@@ -1,7 +1,7 @@
 {
 	"id": "7597462917",
 	"href": "/resourceInventoryManagement/v3/resource/7597462917",
-	"name": "SubNetwork=2,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
+	"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
 	"description": "Antenna Inventory Unit",
 	"category": "RAN",
 	"validFor": {

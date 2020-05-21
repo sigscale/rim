@@ -1,7 +1,7 @@
 {
 	"id": "5797462918",
 	"href": "/resourceInventoryManagement/v3/resource/5797462918",
-	"name": "SubNetwork=2,ManagedElement=1,InventoryUnit=2",
+	"name": "SubNetwork=10,ManagedElement=1,InventoryUnit=2",
 	"description": "Hardware Inventory Unit",
 	"category": "RAN",
 	"validFor": {
@@ -30,19 +30,19 @@
 		},
 		{
 			"name": "mFunction",
-			"value" : "SubNetwork=2,ManagedElement=1,RncFunction=1"
+			"value" : "SubNetwork=3,ManagedElement=1,RncFunction=1"
 		},
 		{
 			"name": "nEList",
-			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=1"
+			"value" : "SubNetwork=10,ManagedElement=1,InventoryUnit=1"
 		},
 		{
 			"name": "sWList",
-			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=3"
+			"value" : "SubNetwork=10,ManagedElement=1,InventoryUnit=3"
 		},
 		{
 			"name": "lICList",
-			"value" : "SubNetwork=2,ManagedElement=1,InventoryUnit=4"
+			"value" : "SubNetwork=10,ManagedElement=1,InventoryUnit=4"
 		}
 	]
 }

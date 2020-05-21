@@ -1,7 +1,7 @@
 {
 	"id": "7594422905",
 	"href": "/resourceInventoryManagement/v3/resource/7594422905",
-	"name": "SubNetwork=2,Link_ENB_MME=1",
+	"name": "SubNetwork=4,Link_ENB_MME=1",
 	"description": "EPC ENBFunction and MMEFunction Link",
 	"category": "EPC",
 	"validFor": {

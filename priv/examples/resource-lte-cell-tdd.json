@@ -1,7 +1,7 @@
 {
 	"id": "8593562978",
 	"href": "/resourceInventoryManagement/v3/resource/8593562978",
-	"name": "SubNetwork=2,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
+	"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
 	"description": "LTE Time Division Duplex (TDD)",
 	"category": "RAN",
 	"validFor": {
