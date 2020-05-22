@@ -40,7 +40,7 @@
 		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0, core_auc/0,
 		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0, core_sgw/0,
-		core_iucs/0, core_iups/0, core_iubc/0]).
+		core_iucs/0, core_iups/0, core_iubc/0, core_alink/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
 -export([epcn3ai_proxy/0, epcn3ai_server/0]).
@@ -3895,6 +3895,36 @@ core_iubc() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "IubcLink",
 					schema = "/resourceInventoryManagement/v3/schema/IubcLink"},
+			characteristic = Chars}.
+
+-spec core_alink() -> specification().
+%% @doc Core A Interface Link resource specification.
+core_alink() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	ConnectedBss = #specification_char{name = "connectedBss",
+			description = "Holds the DN of an BssFunction or an ExternalBssFunction",
+			value_type = "Dn",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"},
+	Chars = [ID, UserLabel, VnfParametersList, ConnectedBss],
+	#specification{name = "ALink",
+			description = "Core A interface link",
+			class_type = "ALinkSpec",
+			schema = "/resourceCatalogManagement/v3/schema/ALink",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "ALink",
+					schema = "/resourceInventoryManagement/v3/schema/ALink"},
 			characteristic = Chars}.
 
 -spec ims_as() -> specification().

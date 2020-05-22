@@ -1,0 +1,39 @@
+{
+	"id": "6974362505",
+	"href": "/resourceInventoryManagement/v3/resource/6974362505",
+	"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,ALink=1",
+	"description": "Core A interface link",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "ALink",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/ALink",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362585",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362585",
+		"@type": "ALinkSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-a-link-1"
+		},
+		{
+			"name": "connectedBss",
+			"value" : "SubNetwork=1,ManagedElement=1,BssFunction=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam149",
+			"vsDataFormatVersion": "acmeParams-v88",
+			"vsData": 188
+		}
+	]
+}

@@ -1,0 +1,56 @@
+{
+	"name": "ALink",
+	"description": "Core A interface link (connecting a MSC to the GERAN) resource function specification",
+	"@type": "ALinkSpec",
+	"@schemaLocation": "http://sigscale.org/schema/ALinkSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "ALink",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ALink"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"@referredType": "Organization",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-01-01T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		},
+		{
+			"name": "connectedBss",
+			"description": "Holds the DN of an RncFunction or an ExternalRncFunction",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+		}
+	]
+}

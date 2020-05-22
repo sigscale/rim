@@ -1,0 +1,42 @@
+{
+	"$id": "http://sigscale.org/schema/ALinkSpec",
+	"title": "Core ALink Specification",
+	"description": "Core A interface link (connecting a MSC to the GERAN) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"vnfParametersList",
+											"connectedBss"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
