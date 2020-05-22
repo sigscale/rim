@@ -373,6 +373,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-cgf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SgwFunctionSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-sgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/CbcFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
