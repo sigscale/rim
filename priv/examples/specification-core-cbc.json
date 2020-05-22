@@ -1,0 +1,50 @@
+{
+	"name": "CbcFunction",
+	"description": "Core Cell Broadcast Centre (CBC) resource function specification",
+	"@type": "CbcFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/CbcFunctionSpec",
+	"@baseType": "ResourceFunctionSpec",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "Core",
+	"targetResourceSchema": {
+		"@type": "CbcFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/CbcFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "154995511356799",
+			"@referredType": "Organization",
+			"href": "/partyManagement/v2/organization/154995511356799",
+			"role": "Supplier",
+			"name": "ACME Inc.",
+			"validFor": {
+				"startDateTime": "2020-01-01T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecCharacteristic": [
+		{
+			"name": "id",
+			"description": "Used as an RDN when naming an instance of the object class.",
+			"valueType": "string"
+		},
+		{
+			"name": "userLabel",
+			"description": "A user-friendly (and user assignable) name of this object",
+			"valueType": "string"
+		},
+		{
+			"name": "vnfParametersList",
+			"description": "Parameter set of the VNF instance(s)",
+			"valueType": "VnfParametersList",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+		}
+	]
+}

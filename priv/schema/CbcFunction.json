@@ -1,0 +1,29 @@
+{
+	"$id": "http://sigscale.org/schema/CbcFunction",
+	"title": "UTRAN Cbc",
+	"description": "Core Cell Broadcast Centre (CBC) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							}
+						]
+					}
+				},
+				"iubcLink": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

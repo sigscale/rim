@@ -282,7 +282,7 @@ install8(Nodes, Acc) ->
 		epc_link_mme_mme, epc_link_hss_mme, epc_link_mme_sgsn,
 		epc_link_mme_servinggw, epc_link_enb_mme, epc_ep_rp_eps,
 		core_msc, core_mgw, core_sgsn, core_ggsn, core_auc, core_hlr, core_eir,
-		core_mnpsrf, core_cgf, core_sgw,
+		core_mnpsrf, core_cgf, core_sgw, core_cbc,
 		core_iucs, core_iups, core_iubc, core_alink, core_gb_link,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
 		pee_me,

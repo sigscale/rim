@@ -78,6 +78,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/MnpSrfFunctionSpec.json \
 		$(abs_builddir)/CgfFunctionSpec.json \
 		$(abs_builddir)/SgwFunctionSpec.json \
+		$(abs_builddir)/CbcFunctionSpec.json \
 		$(abs_builddir)/IucsLinkSpec.json \
 		$(abs_builddir)/IupsLinkSpec.json \
 		$(abs_builddir)/IubcLinkSpec.json \
@@ -371,6 +372,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SgwFunctionSpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s CbcFunctionSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \

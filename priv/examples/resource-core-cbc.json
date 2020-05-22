@@ -1,0 +1,46 @@
+{
+	"id": "6974362507",
+	"href": "/resourceInventoryManagement/v3/resource/6974362507",
+	"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1",
+	"description": "Core Gb interface link",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "CbcFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CbcFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362583",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362583",
+		"@type": "CbcFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-cbc-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam151",
+			"vsDataFormatVersion": "acmeParams-v90",
+			"vsData": 190
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362504",
+				"href": "/resourceInventoryManagement/v3/resource/6974362504",
+				"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1,IubcLink=1",
+				"@referredType": "IubcLink"
+			},
+			"type": "contains"
+		}
+	]
+}

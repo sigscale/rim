@@ -52,6 +52,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-core-mnpsrf.json \
 		$(abs_builddir)/specification-core-cgf.json \
 		$(abs_builddir)/specification-core-sgw.json \
+		$(abs_builddir)/specification-core-cbc.json \
 		$(abs_builddir)/specification-core-iucs-link.json \
 		$(abs_builddir)/specification-core-iups-link.json \
 		$(abs_builddir)/specification-core-iubc-link.json \
@@ -177,6 +178,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-nr-ep-e1.json \
 		$(abs_builddir)/resource-nr-ep-s1u.json \
 		$(abs_builddir)/resource-core-sgw.json \
+		$(abs_builddir)/resource-core-cbc.json \
 		$(abs_builddir)/resource-core-iucs-link.json \
 		$(abs_builddir)/resource-core-iups-link.json \
 		$(abs_builddir)/resource-core-iubc-link.json \
@@ -371,6 +373,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-cgf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/CbcFunctionSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-cbc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/IucsLinkSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -824,6 +831,8 @@ check_DATA = .validation_ok
 				-d resource-nr-sector-carrier.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-sgw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-cbc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-iucs-link.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

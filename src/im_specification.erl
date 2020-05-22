@@ -39,7 +39,7 @@
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
 		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
 -export([core_msc/0, core_mgw/0, core_sgsn/0, core_ggsn/0, core_auc/0,
-		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0, core_sgw/0,
+		core_hlr/0, core_eir/0, core_mnpsrf/0, core_cgf/0, core_sgw/0, core_cbc/0,
 		core_iucs/0, core_iups/0, core_iubc/0, core_alink/0, core_gb_link/0]).
 -export([ims_as/0, ims_hss/0, ims_pcscf/0, ims_scscf/0, ims_icscf/0]).
 -export([pee_me/0]).
@@ -3783,6 +3783,32 @@ core_sgw() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SgwFunction",
 					schema = "/resourceInventoryManagement/v3/schema/SgwFunction"},
+			characteristic = Chars}.
+
+-spec core_cbc() -> specification().
+%% @doc Core Cell Broadcast Centre (CBC) resource specification.
+core_cbc() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersList",
+			value_schema = "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"},
+	Chars = [ID, UserLabel, VnfParametersList],
+	#specification{name = "CbcFunction",
+			description = "Core Cell Broadcast Centre (CBC)",
+			class_type = "CbcFunctionSpec",
+			schema = "/resourceCatalogManagement/v3/schema/CbcFunction",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "CbcFunction",
+					schema = "/resourceInventoryManagement/v3/schema/CbcFunction"},
 			characteristic = Chars}.
 
 -spec core_iucs() -> specification().
