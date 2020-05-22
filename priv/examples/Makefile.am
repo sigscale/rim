@@ -56,6 +56,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-core-iups-link.json \
 		$(abs_builddir)/specification-core-iubc-link.json \
 		$(abs_builddir)/specification-core-a-link.json \
+		$(abs_builddir)/specification-core-gb-link.json \
 		$(abs_builddir)/specification-ims-as.json \
 		$(abs_builddir)/specification-ims-hss.json \
 		$(abs_builddir)/specification-ims-pcscf.json \
@@ -179,7 +180,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-core-iucs-link.json \
 		$(abs_builddir)/resource-core-iups-link.json \
 		$(abs_builddir)/resource-core-iubc-link.json \
-		$(abs_builddir)/resource-core-a-link.json
+		$(abs_builddir)/resource-core-a-link.json \
+		$(abs_builddir)/resource-core-gb-link.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -389,6 +391,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-a-link.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/GbLinkSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-core-gb-link.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -825,6 +832,8 @@ check_DATA = .validation_ok
 				-d resource-core-iubc-link.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-a-link.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-gb-link.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi

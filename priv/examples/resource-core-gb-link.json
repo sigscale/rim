@@ -1,0 +1,39 @@
+{
+	"id": "6974362506",
+	"href": "/resourceInventoryManagement/v3/resource/6974362506",
+	"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,GbLink=1",
+	"description": "Core Gb interface link",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "GbLink",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/GbLink",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362584",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362584",
+		"@type": "GbLinkSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-gb-link-1"
+		},
+		{
+			"name": "connectedBss",
+			"value" : "SubNetwork=1,ManagedElement=1,BssFunction=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam150",
+			"vsDataFormatVersion": "acmeParams-v89",
+			"vsData": 189
+		}
+	]
+}

@@ -82,6 +82,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/IupsLinkSpec.json \
 		$(abs_builddir)/IubcLinkSpec.json \
 		$(abs_builddir)/ALinkSpec.json \
+		$(abs_builddir)/GbLinkSpec.json \
 		$(abs_builddir)/ASFunctionSpec.json \
 		$(abs_builddir)/HSSFunctionSpec.json \
 		$(abs_builddir)/PCSCFFunctionSpec.json \
@@ -390,6 +391,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ALinkSpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s GbLinkSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
