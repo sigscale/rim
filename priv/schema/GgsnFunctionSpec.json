@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/GgsnFunctionSpec",
 	"title": "Core GGSN Specification",
-	"description": "Core Gateway GPRS Support Node (SGSN) resource function specification",
+	"description": "Core Gateway GPRS Support Node (GGSN) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

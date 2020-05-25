@@ -1,6 +1,6 @@
 {
 	"$id": "http://sigscale.org/schema/MscServerFunction",
-	"title": "EUTRAN MscServer",
+	"title": "Core MscServer",
 	"description": "Core Mobile Switching Center (MSC) Server resource function",
 	"type": "object",
 	"allOf": [

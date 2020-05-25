@@ -10,9 +10,9 @@
 	},
 	"lifecycleState": "operating",
 	"lifecycleSubState": "working",
-	"@type": "MscServerFunction",
+	"@type": "CsMgwFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MscServerFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CsMgwFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362581",

@@ -12,12 +12,12 @@
 	"lifecycleSubState": "working",
 	"@type": "GgsnFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/GgsnFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362580",
 		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362580",
-		"@type": "CsMgwFunctionSpec"
+		"@type": "GgsnFunctionSpec"
 	},
 	"resourceCharacteristic": [
 		{

@@ -1,6 +1,6 @@
 {
 	"$id": "http://sigscale.org/schema/CsMgwFunction",
-	"title": "EUTRAN CsMgw",
+	"title": "Core CsMgw",
 	"description": "Core Circuit Switched (CS) Media Gateway (MGW) resource function",
 	"type": "object",
 	"allOf": [
