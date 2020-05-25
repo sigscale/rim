@@ -1,0 +1,63 @@
+{
+	"id": "6974362508",
+	"href": "/resourceInventoryManagement/v3/resource/6974362508",
+	"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1",
+	"description": "Core Mobile Switching Center (MSC) Server",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2019-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "MscServerFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MscServerFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362582",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362582",
+		"@type": "MscServerFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-msc-server-1"
+		},
+		{
+			"name": "mscId",
+			"value" : 92233720368547758
+		},
+		{
+			"name": "defaultMsc",
+			"value" : 0
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam152",
+			"vsDataFormatVersion": "acmeParams-v91",
+			"vsData": 191
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362502",
+				"href": "/resourceInventoryManagement/v3/resource/6974362502",
+				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,IucsLink=1",
+				"@referredType": "IucsLink"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "6974362505",
+				"href": "/resourceInventoryManagement/v3/resource/6974362505",
+				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,ALink=1",
+				"@referredType": "ALink"
+			},
+			"type": "contains"
+		}
+	]
+}

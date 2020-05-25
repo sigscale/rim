@@ -116,24 +116,6 @@
 			"description": "Whether this MSC-Server is default CN node in MscPool or not (3GPP 23.236)",
 			"valueType": "DefaultMscType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/DefaultMscType"
-		},
-		{
-			"name": "iucsLink",
-			"description": "Iu-cs interface link connecting MSCserver to RNC, BSC and HNB GW (3GPP 23.002)",
-			"valueType": "IucsLinkList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/IucsLinkList"
-		},
-		{
-			"name": "aLink",
-			"description": "A interface link connecting an MSC to GERAN (3GPP 23.002)",
-			"valueType": "ALinkList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/ALinkList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

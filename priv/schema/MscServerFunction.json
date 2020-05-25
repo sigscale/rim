@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/MscServerFunctionSpec",
-	"title": "Core MSC-Server Specification",
-	"description": "Core Mobile Switching Center (MSC) Server resource function specification",
+	"$id": "http://sigscale.org/schema/MscServerFunction",
+	"title": "EUTRAN MscServer",
+	"description": "Core Mobile Switching Center (MSC) Server resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",
@@ -24,9 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"id",
-											"userLabel",
-											"vnfParametersList",
 											"mccList",
 											"mncList",
 											"lacList",
@@ -45,6 +43,12 @@
 							}
 						]
 					}
+				},
+				"iucsLink": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"aLink": {
+					"$ref": "genericNrm#/definitions/DnList"
 				}
 			}
 		}
