@@ -29,8 +29,7 @@
 											"vnfParametersList",
 											"csMgwFunctionMscServerFunction",
 											"csMgwFunctionIucsLink",
-											"csMgwFunctionALink",
-											"vsDataContainer"
+											"csMgwFunctionALink"
 										]
 									}
 								}

@@ -1,0 +1,41 @@
+{
+	"$id": "http://sigscale.org/schema/CsMgwFunction",
+	"title": "EUTRAN CsMgw",
+	"description": "Core Circuit Switched (CS) Media Gateway (MGW) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"csMgwFunctionMscServerFunction",
+											"csMgwFunctionIucsLink",
+											"csMgwFunctionALink"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,40 @@
+{
+	"id": "6974362509",
+	"href": "/resourceInventoryManagement/v3/resource/6974362509",
+	"name": "SubNetwork=2,ManagedElement=1,CsMgwFunction=1",
+	"description": "Core Circuit Switched (CS) Media Gateway (MGW)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "MscServerFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MscServerFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362581",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362581",
+		"@type": "CsMgwFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-cs-mgw-1"
+		},
+		{
+			"name": "csMgwFunctionMscServerFunction",
+			"value" : "core-msc-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam153",
+			"vsDataFormatVersion": "acmeParams-v92",
+			"vsData": 192
+		}
+	],
+	"resourceRelationship": []
+}

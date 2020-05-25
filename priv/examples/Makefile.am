@@ -178,6 +178,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-nr-ep-e1.json \
 		$(abs_builddir)/resource-nr-ep-s1u.json \
 		$(abs_builddir)/resource-core-msc.json \
+		$(abs_builddir)/resource-core-mgw.json \
 		$(abs_builddir)/resource-core-sgw.json \
 		$(abs_builddir)/resource-core-cbc.json \
 		$(abs_builddir)/resource-core-iucs-link.json \
@@ -837,6 +838,8 @@ check_DATA = .validation_ok
 				-d resource-nr-sector-carrier.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-msc.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-mgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-sgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
