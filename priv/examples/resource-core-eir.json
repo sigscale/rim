@@ -1,0 +1,36 @@
+{
+	"id": "6974362514",
+	"href": "/resourceInventoryManagement/v3/resource/6974362514",
+	"name": "SubNetwork=2,ManagedElement=1,EirFunction=1",
+	"description": "Core Equipment Identity Register (EIR)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EirFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EirFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362576",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362576",
+		"@type": "EirFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-eir-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam158",
+			"vsDataFormatVersion": "acmeParams-v102",
+			"vsData": 202
+		}
+	],
+	"resourceRelationship": []
+}
