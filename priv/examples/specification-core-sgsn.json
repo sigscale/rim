@@ -104,24 +104,6 @@
 			"description": "Procedural status of the object instance (ITU-T X.731)",
 			"valueType": "ProceduralStatus",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/ProceduralStatus"
-		},
-		{
-			"name": "gbLink",
-			"description": "Gb interface link connecting SGSN to the GERAN (3GPP 23.002)",
-			"valueType": "GbLinkList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/GbLinkList"
-		},
-		{
-			"name": "iupsLink",
-			"description": "Iu-cs interface link connecting MSCserver to RNC, BSC and HNB GW (3GPP 23.002)",
-			"valueType": "IucsLinkList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/IucsLinkList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

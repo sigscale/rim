@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/SgsnFunctionSpec",
-	"title": "Core SGSN Specification",
-	"description": "Core Serving GPRS Support Node (SGSN) resource function specification",
+	"$id": "http://sigscale.org/schema/SgsnFunction",
+	"title": "Core Sgsn",
+	"description": "Core Serving GPRS Support Node (SGSN) resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",
@@ -24,9 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"id",
-											"userLabel",
-											"vnfParametersList",
 											"mccList",
 											"mncList",
 											"lacList",
@@ -43,6 +41,12 @@
 							}
 						]
 					}
+				},
+				"gbLink": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"iupsLink": {
+					"$ref": "genericNrm#/definitions/DnList"
 				}
 			}
 		}

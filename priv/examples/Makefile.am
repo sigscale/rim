@@ -179,6 +179,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-nr-ep-s1u.json \
 		$(abs_builddir)/resource-core-msc.json \
 		$(abs_builddir)/resource-core-mgw.json \
+		$(abs_builddir)/resource-core-sgsn.json \
 		$(abs_builddir)/resource-core-ggsn.json \
 		$(abs_builddir)/resource-core-sgw.json \
 		$(abs_builddir)/resource-core-cbc.json \
@@ -841,6 +842,8 @@ check_DATA = .validation_ok
 				-d resource-core-msc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-mgw.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-sgsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-ggsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

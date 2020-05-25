@@ -1,0 +1,63 @@
+{
+	"id": "6974362511",
+	"href": "/resourceInventoryManagement/v3/resource/6974362511",
+	"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1",
+	"description": "Core Serving GPRS Support Node (SGSN)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "SgsnFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SgsnFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362579",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362579",
+		"@type": "SgsnFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-sgsn-1"
+		},
+		{
+			"name": "sgsnId",
+			"value" : 91234720368547953
+		},
+		{
+			"name": "sgsnFunctionSgsnPool",
+			"value" : "SubNetwork=2,ManagedElement=1,SgsnFunction=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam155",
+			"vsDataFormatVersion": "acmeParams-v99",
+			"vsData": 199
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362506",
+				"href": "/resourceInventoryManagement/v3/resource/6974362506",
+				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,GbLink=1",
+				"@referredType": "GbLink"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "6974362503",
+				"href": "/resourceInventoryManagement/v3/resource/6974362503",
+				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,IupsLink=1",
+				"@referredType": "IupsLink"
+			},
+			"type": "contains"
+		}
+	]
+}
