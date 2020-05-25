@@ -1,0 +1,36 @@
+{
+	"id": "6974362512",
+	"href": "/resourceInventoryManagement/v3/resource/6974362512",
+	"name": "SubNetwork=2,ManagedElement=1,AucFunction=1",
+	"description": "Core Authentication Center (AUC)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "AucFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/AucFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362578",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362578",
+		"@type": "AucFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-auc-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam156",
+			"vsDataFormatVersion": "acmeParams-v100",
+			"vsData": 200
+		}
+	],
+	"resourceRelationship": []
+}
