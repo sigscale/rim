@@ -45,12 +45,6 @@
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

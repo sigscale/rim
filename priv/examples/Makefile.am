@@ -182,6 +182,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-core-sgsn.json \
 		$(abs_builddir)/resource-core-ggsn.json \
 		$(abs_builddir)/resource-core-auc.json \
+		$(abs_builddir)/resource-core-hlr.json \
 		$(abs_builddir)/resource-core-sgw.json \
 		$(abs_builddir)/resource-core-cbc.json \
 		$(abs_builddir)/resource-core-iucs-link.json \
@@ -849,6 +850,8 @@ check_DATA = .validation_ok
 				-d resource-core-ggsn.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-auc.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-hlr.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-sgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

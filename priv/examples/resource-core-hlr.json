@@ -1,0 +1,36 @@
+{
+	"id": "6974362513",
+	"href": "/resourceInventoryManagement/v3/resource/6974362513",
+	"name": "SubNetwork=2,ManagedElement=1,HlrFunction=1",
+	"description": "Core Home Location Register (HLR)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "HlrFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/HlrFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362577",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362577",
+		"@type": "HlrFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-hlr-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam157",
+			"vsDataFormatVersion": "acmeParams-v101",
+			"vsData": 201
+		}
+	],
+	"resourceRelationship": []
+}
