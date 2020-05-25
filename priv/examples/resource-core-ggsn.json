@@ -1,0 +1,36 @@
+{
+	"id": "6974362510",
+	"href": "/resourceInventoryManagement/v3/resource/6974362510",
+	"name": "SubNetwork=2,ManagedElement=1,GgsnFunction=1",
+	"description": "Core Gateway GPRS Support Node (GGSN)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "GgsnFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362580",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362580",
+		"@type": "CsMgwFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "core-ggsn-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam154",
+			"vsDataFormatVersion": "acmeParams-v98",
+			"vsData": 198
+		}
+	],
+	"resourceRelationship": []
+}
