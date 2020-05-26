@@ -185,6 +185,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-core-hlr.json \
 		$(abs_builddir)/resource-core-eir.json \
 		$(abs_builddir)/resource-core-mnpsrf.json \
+		$(abs_builddir)/resource-core-cgf.json \
 		$(abs_builddir)/resource-core-sgw.json \
 		$(abs_builddir)/resource-core-cbc.json \
 		$(abs_builddir)/resource-core-iucs-link.json \
@@ -858,6 +859,8 @@ check_DATA = .validation_ok
 				-d resource-core-eir.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-mnpsrf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-core-cgf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-sgw.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
