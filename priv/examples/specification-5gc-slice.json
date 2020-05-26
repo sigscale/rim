@@ -1,4 +1,4 @@
-{
+
 	"name": "NetworkSlice",
 	"description": "5G Core (5GC) Network Slice resource function specification",
 	"@type": "NetworkSliceSpec",

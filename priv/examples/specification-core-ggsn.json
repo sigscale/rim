@@ -43,8 +43,8 @@
 		{
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
-			"valueType": "VnfParametersList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersList"
+			"valueType": "VnfParametersListType",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "proceduralStatus",
