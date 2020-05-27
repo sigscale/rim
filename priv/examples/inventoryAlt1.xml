@@ -9,10 +9,10 @@
 		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
+			senderName="DC=sigscale.net,SubNetwork=10,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=sigscale.net">
-		<xn:SubNetwork id="3">
+		<xn:SubNetwork id="10">
 			<xn:attributes>
 				<xn:userLabel>SN 1</xn:userLabel>
 				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
@@ -25,7 +25,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.0</xn:swVersion>
 				</xn:attributes>
@@ -41,7 +41,7 @@
 					<xn:locationName>Gotham</xn:locationName>
 					<xn:swVersion>1.0</xn:swVersion>
 					<xn:managedBy>
-						<xn:dn>DC=sigscale.net,SubNetwork=3,ManagementNode=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=10,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
 				<in:InventoryUnit id="1">

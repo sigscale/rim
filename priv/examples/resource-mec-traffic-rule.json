@@ -1,7 +1,7 @@
 {
 	"id": "6798452936",
 	"href": "/resourceInventoryManagement/v3/resource/6798452936",
-	"name": "SubNetwork=2,ManagedElement=1,MobileEdgeHostFunction=1,TrafficRule=1",
+	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,TrafficRule=1",
 	"description": "MEC Traffic Rule",
 	"category": "MEC",
 	"validFor": {

@@ -9,10 +9,10 @@
 		xmlns:in="http://www.3gpp.org/ftp/specs/archive/28_series/28.633#inventoryNrmAlt2">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=3,ManagementNode=1,IRPAgent=1"
+			senderName="DC=sigscale.net,SubNetwork=10,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=sigscale.net">
-		<xn:SubNetwork id="3">
+		<xn:SubNetwork id="10">
 			<xn:attributes>
 				<xn:userLabel>SN 1</xn:userLabel>
 				<xn:userDefinedNetworkType>UMTS</xn:userDefinedNetworkType>
@@ -25,7 +25,7 @@
 					<xn:userDefinedState>commercial</xn:userDefinedState>
 					<xn:locationName>Asquith</xn:locationName>
 					<xn:managedElements>
-						<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1</xn:dn>
 					</xn:managedElements>
 					<xn:swVersion>1.1</xn:swVersion>
 				</xn:attributes>
@@ -41,7 +41,7 @@
 					<xn:locationName>Asquith</xn:locationName>
 					<xn:swVersion>1.5.31</xn:swVersion>
 					<xn:managedBy>
-						<xn:dn>DC=sigscale.net,SubNetwork=1,ManagementNode=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=10,ManagementNode=1</xn:dn>
 					</xn:managedBy>
 				</xn:attributes>
 				<in:InventoryUnitNE id="1">
@@ -55,15 +55,15 @@
 						<in:operatorUniqueName>rnc-asquith-a</in:operatorUniqueName>
 						<in:siteId>1</in:siteId>
 						<in:additionalInformation>[BA:3,CF:77]</in:additionalInformation>
-						<in:mFunction>DC=sigscale.net,SubNetwork=1,ManagedElement=1,RncFunction=1</in:mFunction>
+						<in:mFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</in:mFunction>
 						<in:hWList>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitHw=1</xn:dn>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=2</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitHw=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=2</xn:dn>
 						</in:hWList>
 						<in:sWList>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitSw=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitSw=1</xn:dn>
 						</in:sWList>
 						<in:lICList></in:lICList>
 					</in:attributes>
@@ -84,7 +84,7 @@
 						<in:additionalInformation>[CD:0,BF:3,EH:16]</in:additionalInformation>
 						<in:mFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</in:mFunction>
 						<in:nEList>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitNE=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitNE=1</xn:dn>
 						</in:nEList>
 						<in:sWList></in:sWList>
 					</in:attributes>
@@ -103,7 +103,7 @@
 							<in:additionalInformation>[AA:00]</in:additionalInformation>
 							<in:mFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</in:mFunction>
 							<in:nEList>
-								<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitNE=1</xn:dn>
+								<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitNE=1</xn:dn>
 							</in:nEList>
 							<in:sWList></in:sWList>
 						</in:attributes>
@@ -121,10 +121,10 @@
 								<in:manualDataEntry>active</in:manualDataEntry>
 								<in:mFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</in:mFunction>
 								<in:nEList>
-									<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitNE=1</xn:dn>
+									<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitNE=1</xn:dn>
 								</in:nEList>
 								<in:sWList>
-									<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitSw=1</xn:dn>
+									<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitSw=1</xn:dn>
 								</in:sWList>
 							</in:attributes>
 						</in:InventoryUnitHw>
@@ -142,7 +142,7 @@
 								<in:manualDataEntry>active</in:manualDataEntry>
 								<in:mFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</in:mFunction>
 								<in:nEList>
-									<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitNE=1</xn:dn>
+									<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitNE=1</xn:dn>
 								</in:nEList>
 								<in:sWList></in:sWList>
 							</in:attributes>
@@ -162,10 +162,10 @@
 						<in:additionalInformation></in:additionalInformation>
 						<in:mFunction>DC=sigscale.net,SubNetwork=3,ManagedElement=1,RncFunction=1</in:mFunction>
 						<in:nEList>
-							<xn:dn>DC=sigscale.net,SubNetwork=3,ManagedElement=1,InventoryUnitNE=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitNE=1</xn:dn>
 						</in:nEList>
 						<in:hWList>
-							<xn:dn>SDC=sigscale.net,ubNetwork=3,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
+							<xn:dn>DC=sigscale.net,SubNetwork=10,ManagedElement=1,InventoryUnitHw=1,InventoryUnitHw=1,InventoryUnitHw=1</xn:dn>
 						</in:hWList>
 						<in:lICList></in:lICList>
 					</in:attributes>

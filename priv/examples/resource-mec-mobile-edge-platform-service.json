@@ -1,7 +1,7 @@
 {
 	"id": "6798452934",
 	"href": "/resourceInventoryManagement/v3/resource/6798452934",
-	"name": "SubNetwork=2,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1",
+	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1",
 	"description": "MEC Mobile Edge Platform Service",
 	"category": "MEC",
 	"validFor": {
@@ -45,7 +45,7 @@
 			"resourceRef": {
 				"id": "7894653027",
 				"href": "/resourceInventoryManagement/v3/resource/7894653027",
-				"name": "SubNetwork=2,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,RNIService=1",
+				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,RNIService=1",
 				"@referredType": "RNIService"
 			},
 			"type": "contains"
@@ -54,7 +54,7 @@
 			"resourceRef": {
 				"id": "7894653028",
 				"href": "/resourceInventoryManagement/v3/resource/7894653028",
-				"name": "SubNetwork=2,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,LocationService=1",
+				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,LocationService=1",
 				"@referredType": "LocationService"
 			},
 			"type": "contains"

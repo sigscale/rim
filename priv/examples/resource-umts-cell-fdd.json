@@ -1,7 +1,7 @@
 {
 	"id": "8593462918",
 	"href": "/resourceInventoryManagement/v3/resource/8593462918",
-	"name": "SubNetwork=2,ManagedElement=1,RncFunction=1,UtranCellFDD=1",
+	"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellFDD=1",
 	"description": "UMTS Frequency Division Duplex (FDD)",
 	"category": "RAN",
 	"validFor": {

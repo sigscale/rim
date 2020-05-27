@@ -1,7 +1,7 @@
 {
 	"id": "8594362918",
 	"href": "/resourceInventoryManagement/v3/resource/8594362918",
-	"name": "SubNetwork=2,ManagedElement=2,NodeBFunction=1",
+	"name": "SubNetwork=3,ManagedElement=2,NodeBFunction=1",
 	"description": "UMTS NodeB",
 	"category": "RAN",
 	"validFor": {
@@ -26,7 +26,7 @@
 		},
 		{
 			"name": "nodeBFunctionIubLink",
-			"value": "SubNetwork=2,ManagedElement=1,RncFunction=1,IubLink=1"
+			"value": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=1"
 		}
 	],
 	"vsDataContainer": [
