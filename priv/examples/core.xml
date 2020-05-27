@@ -39,10 +39,12 @@
 						<xn:managedElementType>Ggsn</xn:managedElementType>
 						<xn:managedElementType>Sgsn</xn:managedElementType>
 						<xn:managedElementType>Auc</xn:managedElementType>
-						<xn:managedElementType>Alr</xn:managedElementType>
+						<xn:managedElementType>Hlr</xn:managedElementType>
 						<xn:managedElementType>Eir</xn:managedElementType>
 						<xn:managedElementType>MnpSrf</xn:managedElementType>
 						<xn:managedElementType>Cgf</xn:managedElementType>
+						<xn:managedElementType>Sgw</xn:managedElementType>
+						<xn:managedElementType>Cbc</xn:managedElementType>
 					</xn:managedElementTypeList>
 					<xn:userLabel>ME 1</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
@@ -90,6 +92,8 @@
 								<xn:vnfInstanceId>plkasfjh</xn:vnfInstanceId>
 								<xn:autoScalable>true</xn:autoScalable>
 							</cn:vnfParametersList>
+							<cn:connectedRnc>SubNetwork=3,ManagedElement=1,RncFunction=1</cn:connectedRnc>
+							<cn:connectedBss>SubNetwork=1,ManagedElement=1,BssFunction=1</cn:connectedBss>
 						</cn:attributes>
 						<!--  Vendor specific data for IucsLink-->
 						<xn:VsDataContainer id="1">
@@ -100,8 +104,24 @@
 							</xn:attributes>
 						</xn:VsDataContainer>
 					</cn:IucsLink>
-					<cn:IucsLink id="2">
-					</cn:IucsLink>
+					<cn:ALink id="1">
+						<cn:attributes>
+							<cn:userLabel>a-link-1</cn:userLabel>
+							<cn:vnfParametersList>
+								<xn:vnfInstanceId>vnf-54</xn:vnfInstanceId>
+								<xn:autoScalable>true</xn:autoScalable>
+							</cn:vnfParametersList>
+							<cn:connectedBss>SubNetwork=1,ManagedElement=1,BssFunction=1</cn:connectedBss>
+						</cn:attributes>
+						<!--  Vendor specific data for ALink-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=36</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV85</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</cn:ALink>
 				</cn:MscServerFunction>
 				<cn:CsMgwFunction id="1">
 					<cn:attributes>
@@ -173,14 +193,33 @@
 						</cn:proceduralStatus>
 					</cn:attributes>
 					<!-- Multiple IupsLink in a SGSN -->
+					<cn:GbLink id="1">
+						<cn:attributes>
+							<cn:userLabel>gb-link-1</cn:userLabel>
+							<cn:vnfParametersList>
+								<xn:vnfInstanceId>vnf-gb-link-1</xn:vnfInstanceId>
+								<xn:autoScalable>false</xn:autoScalable>
+							</cn:vnfParametersList>
+							<cn:connectedBss>SubNetwork=1,ManagedElement=1,BssFunction=1</cn:connectedBss>
+						</cn:attributes>
+						<!--  Vendor specific data for GbLink-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=284</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV63</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</cn:GbLink>
 					<cn:IupsLink id="1">
 						<cn:attributes>
 							<cn:userLabel>IuPS 1</cn:userLabel>
 							<cn:vnfParametersList>
-								<xn:vnfInstanceId>plkasfjh</xn:vnfInstanceId>
+								<xn:vnfInstanceId>vnf-iups-1</xn:vnfInstanceId>
 								<xn:autoScalable>true</xn:autoScalable>
 							</cn:vnfParametersList>
-							<cn:connectedHNBGW>chnbgw</cn:connectedHNBGW>
+							<cn:connectedRnc>SubNetwork=3,ManagedElement=1,RncFunction=1</cn:connectedRnc>
+							<cn:connectedBss>SubNetwork=1,ManagedElement=1,BssFunction=1</cn:connectedBss>
 						</cn:attributes>
 						<!--  Vendor specific data for IupsLink-->
 						<xn:VsDataContainer id="1">
@@ -200,7 +239,7 @@
 							<xn:autoScalable>false</xn:autoScalable>
 						</cn:vnfParametersList>
 					</cn:attributes>
-					<!--  Vendor specific data for GGSN-->
+					<!--  Vendor specific data for Auc-->
 					<xn:VsDataContainer id="1">
 						<xn:attributes>
 							<xn:vsDataType>DataType=3</xn:vsDataType>
@@ -217,7 +256,7 @@
 							<xn:autoScalable>true</xn:autoScalable>
 						</cn:vnfParametersList>
 					</cn:attributes>
-					<!--  Vendor specific data for GGSN-->
+					<!--  Vendor specific data for Hlr-->
 					<xn:VsDataContainer id="1">
 						<xn:attributes>
 							<xn:vsDataType>DataType=4</xn:vsDataType>
@@ -234,7 +273,7 @@
 							<xn:autoScalable>false</xn:autoScalable>
 						</cn:vnfParametersList>
 					</cn:attributes>
-					<!--  Vendor specific data for GGSN-->
+					<!--  Vendor specific data for Eir-->
 					<xn:VsDataContainer id="1">
 						<xn:attributes>
 							<xn:vsDataType>DataType=5</xn:vsDataType>
@@ -251,7 +290,7 @@
 							<xn:autoScalable>true</xn:autoScalable>
 						</cn:vnfParametersList>
 					</cn:attributes>
-					<!--  Vendor specific data for GGSN-->
+					<!--  Vendor specific data for MnpSrf-->
 					<xn:VsDataContainer id="1">
 						<xn:attributes>
 							<xn:vsDataType>DataType=6</xn:vsDataType>
@@ -268,7 +307,7 @@
 							<xn:autoScalable>false</xn:autoScalable>
 						</cn:vnfParametersList>
 					</cn:attributes>
-					<!--  Vendor specific data for GGSN-->
+					<!--  Vendor specific data for Cgf-->
 					<xn:VsDataContainer id="1">
 						<xn:attributes>
 							<xn:vsDataType>DataType=7</xn:vsDataType>
@@ -277,6 +316,50 @@
 						</xn:attributes>
 					</xn:VsDataContainer>
 				</cn:CgfFunction>
+				<cn:SgwFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>SGW 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>vnf-sgw-1</xn:vnfInstanceId>
+							<xn:autoScalable>true</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<!--  Vendor specific data for Sgw-->
+					<xn:VsDataContainer id="1">
+						<xn:attributes>
+							<xn:vsDataType>DataType=73</xn:vsDataType>
+							<xn:vsDataFormatVersion>DFV78</xn:vsDataFormatVersion>
+							<xn:vsData/>
+						</xn:attributes>
+					</xn:VsDataContainer>
+				</cn:SgwFunction>
+				<cn:CbcFunction id="1">
+					<cn:attributes>
+						<cn:userLabel>CBC 1</cn:userLabel>
+						<cn:vnfParametersList>
+							<xn:vnfInstanceId>vnf-cbc-1</xn:vnfInstanceId>
+							<xn:autoScalable>false</xn:autoScalable>
+						</cn:vnfParametersList>
+					</cn:attributes>
+					<cn:IubcLink id="1">
+						<cn:attributes>
+							<cn:userLabel>Iubc 1</cn:userLabel>
+							<cn:vnfParametersList>
+								<xn:vnfInstanceId>vnf-iubc-1</xn:vnfInstanceId>
+								<xn:autoScalable>true</xn:autoScalable>
+							</cn:vnfParametersList>
+							<cn:connectedRnc>SubNetwork=3,ManagedElement=1,RncFunction=1</cn:connectedRnc>
+						</cn:attributes>
+						<!--  Vendor specific data for IubcLink-->
+						<xn:VsDataContainer id="1">
+							<xn:attributes>
+								<xn:vsDataType>DataType=64</xn:vsDataType>
+								<xn:vsDataFormatVersion>DFV242</xn:vsDataFormatVersion>
+								<xn:vsData/>
+							</xn:attributes>
+						</xn:VsDataContainer>
+					</cn:IubcLink>
+				</cn:CbcFunction>
 				<!--  Vendor specific data for ManagedElement -->
 				<xn:VsDataContainer id="1">
 					<xn:attributes>
