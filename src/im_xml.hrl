@@ -81,16 +81,22 @@
 
 -record(core_state,
 		{msc :: map() | undefined,
-		iucs :: map() | undefined,
+		iucs_link :: map() | undefined,
+		a_link :: map() | undefined,
 		mgw :: map() | undefined,
 		ggsn :: map() | undefined,
 		sgsn :: map() | undefined,
-		iups :: map() | undefined,
+		iups_link :: map() | undefined,
+		gb_link :: map() | undefined,
 		auc :: map() | undefined,
 		hlr :: map() | undefined,
 		eir :: map() | undefined,
 		mnp_srf :: map() | undefined,
-		cgf :: map() | undefined}).
+		cgf :: map() | undefined,
+		iucs_links = [] :: [resource_rel()],
+		iups_links = [] :: [resource_rel()],
+		a_links = [] :: [resource_rel()],
+		gb_links = [] :: [resource_rel()]}).
 -type core_state() :: #core_state{}.
 
 -record(pee_state,

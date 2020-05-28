@@ -13,9 +13,9 @@
 -copyright('Copyright (c) 2019 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_msc/2, parse_iucs/2, parse_mgw/2, parse_ggsn/2, parse_sgsn/2,
-		parse_iups/2, parse_auc/2, parse_hlr/2, parse_eir/2, parse_mnp_srf/2,
-		parse_cgf/2]).
+-export([parse_msc/2, parse_iucs/2, parse_alink/2, parse_mgw/2, parse_ggsn/2,
+		parse_sgsn/2, parse_iups/2, parse_gb_link/2,
+		parse_auc/2, parse_hlr/2, parse_eir/2, parse_mnp_srf/2, parse_cgf/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -23,6 +23,7 @@
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
 -define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -38,7 +39,16 @@ parse_msc({startElement,  _Uri, "IucsLink", QName,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{dn_prefix = [NewDn],
 			parse_module = im_xml_core, parse_function = parse_iucs,
-			parse_state = #core_state{iucs = #{"id" => DnComponent}},
+			parse_state = #core_state{iucs_link = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_msc({startElement,  _Uri, "ALink", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",ALink=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_core, parse_function = parse_alink,
+			parse_state = #core_state{a_link = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_msc({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -157,10 +167,80 @@ parse_iucs({startElement, _Uri, "VsDataContainer", QName,
 parse_iucs({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_iucs({endElement, _Uri, "IucsLink", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
+parse_iucs({endElement, _Uri, "IucsLink", QName},
+		[#state{dn_prefix = [IucsDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = CoreState} = PrevState | T1]) ->
+	#core_state{iucs_links = IucsRels} = CoreState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	IucsAttr = parse_link_attr(T2, undefined, []),
+	ClassType = "IucsLink",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IucsDn,
+			description = "Core Iu-cs interface link",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/IucsLink",
+			specification = Spec,
+			characteristic = IucsAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			IucsRel = #resource_rel{id = Id, name = IucsDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = CoreState#core_state{iucs_links
+					= [IucsRel | IucsRels]}} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_iucs({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_alink({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_alink({startElement, _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_alink({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_alink({endElement, _Uri, "ALink", QName},
+		[#state{dn_prefix = [ALinkDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = CoreState} = PrevState | T1]) ->
+	#core_state{a_links = ALinkRels} = CoreState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	ALinkAttr = parse_link_attr(T2, undefined, []),
+	ClassType = "ALink",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = ALinkDn,
+			description = "Core A interface link",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/ALink",
+			specification = Spec,
+			characteristic = ALinkAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			ALinkRel = #resource_rel{id = Id, name = ALinkDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = CoreState#core_state{iucs_links
+					= [ALinkRel| ALinkRels]}} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_alink({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
@@ -328,7 +408,16 @@ parse_sgsn({startElement,  _Uri, "IupsLink", QName,
 	NewDn = CurrentDn ++ DnComponent,
 	[#state{dn_prefix = [NewDn],
 			parse_module = im_xml_core, parse_function = parse_iups,
-			parse_state = #core_state{iups = #{"id" => DnComponent}},
+			parse_state = #core_state{iups_link = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_sgsn({startElement,  _Uri, "GbLink", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",GbLink=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_core, parse_function = parse_gb_link,
+			parse_state = #core_state{gb_link = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
 parse_sgsn({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
@@ -451,10 +540,80 @@ parse_iups({startElement, _Uri, "VsDataContainer", QName,
 parse_iups({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
-parse_iups({endElement, _Uri, "IupsLink", _QName},
-		[_State, PrevState | T]) ->
-	[PrevState | T];
+parse_iups({endElement, _Uri, "IupsLink", QName},
+		[#state{dn_prefix = [IupsDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = CoreState} = PrevState | T1]) ->
+	#core_state{iups_links = IupsRels} = CoreState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	IupsAttr = parse_link_attr(T2, undefined, []),
+	ClassType = "IupsLink",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IupsDn,
+			description = "Core Iu-ps interface link",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/IupsLink",
+			specification = Spec,
+			characteristic = IupsAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			IupsRel = #resource_rel{id = Id, name = IupsDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = CoreState#core_state{iups_links
+					= [IupsRel | IupsRels]}} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
 parse_iups({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_gb_link({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_gb_link({startElement, _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_gb_link({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_gb_link({endElement, _Uri, "GbLink", QName},
+		[#state{dn_prefix = [GbLinkDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = CoreState} = PrevState | T1]) ->
+	#core_state{a_links = GbLinkRels} = CoreState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	GbLinkAttr = parse_link_attr(T2, undefined, []),
+	ClassType = "GbLink",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = GbLinkDn,
+			description = "Core Gb interface link",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/GbLink",
+			specification = Spec,
+			characteristic = GbLinkAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			GbLinkRel = #resource_rel{id = Id, name = GbLinkDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = CoreState#core_state{iucs_links
+					= [GbLinkRel| GbLinkRels]}} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_gb_link({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
@@ -795,6 +954,27 @@ parse_cgf_attr1([{characters, _Chars} | T], Attr, Acc) ->
 parse_cgf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_cgf_attr1(T, undefined, Acc);
 parse_cgf_attr1([], undefined, Acc) ->
+	Acc.
+
+% @hidden
+parse_link_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_link_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_link_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_link_attr1(T2, undefined, Acc);
+parse_link_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_link_attr1(T, Attr, Acc);
+parse_link_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_link_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_link_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_link_attr1(T, undefined, Acc);
+parse_link_attr1([], undefined, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
