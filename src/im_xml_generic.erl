@@ -684,6 +684,15 @@ parse_managed_element({startElement, _, "CgfFunction", QName,
 			dn_prefix = [NewDn], rule = RuleId, location = Location,
 			parse_state = #core_state{cgf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "SgwFunction", QName,
+		[{[], [], "id", Id}] = Attributes}, [#state{dn_prefix = [CurrentDn | _],
+		rule = RuleId, location = Location} | _T] = State) ->
+	DnComponent = ",SgwFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_core, parse_function = parse_sgw,
+			dn_prefix = [NewDn], rule = RuleId, location = Location,
+			parse_state = #core_state{sgw = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement, _, "VsDataContainer", QName,
 		[{[], [], "id", Id}] = Attributes},
 		[#state{dn_prefix = [CurrentDn | _], location = Location} | _T] = State) ->

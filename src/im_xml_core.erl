@@ -15,7 +15,8 @@
 %% export the im private API
 -export([parse_msc/2, parse_iucs/2, parse_alink/2, parse_mgw/2, parse_ggsn/2,
 		parse_sgsn/2, parse_iups/2, parse_gb_link/2,
-		parse_auc/2, parse_hlr/2, parse_eir/2, parse_mnp_srf/2, parse_cgf/2]).
+		parse_auc/2, parse_hlr/2, parse_eir/2, parse_mnp_srf/2, parse_cgf/2,
+		parse_sgw/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -954,6 +955,67 @@ parse_cgf_attr1([{characters, _Chars} | T], Attr, Acc) ->
 parse_cgf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_cgf_attr1(T, undefined, Acc);
 parse_cgf_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_sgw({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_sgw({startElement, _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_sgw({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_sgw({endElement, _Uri, "SgwFunction", QName},
+		[#state{dn_prefix = [SgwDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	SgwAttr = parse_sgw_attr(T2, undefined, []),
+	ClassType = "SgwFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = SgwDn,
+			description = "Core Signalling Gateway (Sgw)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/SgwFunction",
+			specification = Spec,
+			characteristic = SgwAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_sgw({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_sgw_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_sgw_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_sgw_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_sgw_attr1(T2, undefined, Acc);
+parse_sgw_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_sgw_attr1(T, Attr, Acc);
+parse_sgw_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_sgw_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_sgw_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_sgw_attr1(T, undefined, Acc);
+parse_sgw_attr1([], undefined, Acc) ->
 	Acc.
 
 % @hidden

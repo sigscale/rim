@@ -93,6 +93,7 @@
 		eir :: map() | undefined,
 		mnp_srf :: map() | undefined,
 		cgf :: map() | undefined,
+		sgw :: map() | undefined,
 		iucs_links = [] :: [resource_rel()],
 		iups_links = [] :: [resource_rel()],
 		a_links = [] :: [resource_rel()],
