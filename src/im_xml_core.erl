@@ -55,7 +55,8 @@ parse_msc({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_msc({endElement, _Uri, "MscServerFunction", QName},
-		[#state{dn_prefix = [MscDn | _], stack = Stack,
+		[#state{parse_state = #core_state{iucs_links = IucsLinks,
+		a_links = ALinks}, dn_prefix = [MscDn | _], stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	MscAttr = parse_msc_attr(T2, undefined, []),
@@ -68,7 +69,8 @@ parse_msc({endElement, _Uri, "MscServerFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/MscServerFunction",
 			specification = Spec,
-			characteristic = MscAttr},
+			characteristic = MscAttr,
+			related = IucsLinks ++ ALinks},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -236,7 +238,7 @@ parse_alink({endElement, _Uri, "ALink", QName},
 			ALinkRel = #resource_rel{id = Id, name = ALinkDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
-					parse_state = CoreState#core_state{iucs_links
+					parse_state = CoreState#core_state{a_links
 					= [ALinkRel| ALinkRels]}} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
@@ -424,8 +426,10 @@ parse_sgsn({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
-		[#state{dn_prefix = [SgsnDn | _], stack = Stack, spec_cache = Cache,
-		location = Location}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+		[#state{parse_state =  #core_state{iups_links = IupsLinks,
+		gb_links = GbLinks}, dn_prefix = [SgsnDn | _], stack = Stack,
+		spec_cache = Cache, location = Location},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	SgsnAttr = parse_sgsn_attr(T2, undefined, []),
 	ClassType = "SgsnFunction",
@@ -441,7 +445,8 @@ parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/SgsnFunction",
 			specification = Spec,
-			characteristic = [PeeParam | SgsnAttr]},
+			characteristic = [PeeParam | SgsnAttr],
+			related = IupsLinks ++ GbLinks},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -591,7 +596,7 @@ parse_gb_link({endElement, _Uri, "GbLink", QName},
 		[#state{dn_prefix = [GbLinkDn | _], stack = Stack,
 		spec_cache = Cache}, #state{spec_cache = PrevCache,
 		parse_state = CoreState} = PrevState | T1]) ->
-	#core_state{a_links = GbLinkRels} = CoreState,
+	#core_state{gb_links = GbLinkRels} = CoreState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GbLinkAttr = parse_link_attr(T2, undefined, []),
 	ClassType = "GbLink",
@@ -609,7 +614,7 @@ parse_gb_link({endElement, _Uri, "GbLink", QName},
 			GbLinkRel = #resource_rel{id = Id, name = GbLinkDn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
-					parse_state = CoreState#core_state{iucs_links
+					parse_state = CoreState#core_state{gb_links
 					= [GbLinkRel| GbLinkRels]}} | T1];
 		{error, Reason} ->
 			throw({add_resource, Reason})
