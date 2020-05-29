@@ -16,7 +16,7 @@
 -export([parse_msc/2, parse_iucs/2, parse_alink/2, parse_mgw/2, parse_ggsn/2,
 		parse_sgsn/2, parse_iups/2, parse_gb_link/2,
 		parse_auc/2, parse_hlr/2, parse_eir/2, parse_mnp_srf/2, parse_cgf/2,
-		parse_sgw/2]).
+		parse_sgw/2, parse_cbc/2, parse_iubc/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -1022,6 +1022,114 @@ parse_sgw_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_sgw_attr1(T, undefined, Acc);
 parse_sgw_attr1([], undefined, Acc) ->
 	Acc.
+
+%% @hidden
+parse_cbc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_cbc({startElement,  _Uri, "IubcLink", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",IubcLink=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_core, parse_function = parse_iubc,
+			parse_state = #core_state{iubc_link = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_cbc({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_cbc({endElement, _Uri, "CbcFunction", QName},
+		[#state{parse_state = #core_state{iubc_links = IubcLinks},
+		dn_prefix = [CbcDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	CbcAttr = parse_cbc_attr(T2, undefined, []),
+	ClassType = "CbcFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = CbcDn,
+			description = "Core Cell Broadcast Centre (CBC)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/CbcFunction",
+			specification = Spec,
+			characteristic = CbcAttr,
+			related = IubcLinks},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_cbc({endElement, _Uri, _LocalName, QName} = _Event,
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_cbc_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_cbc_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_cbc_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _vnfParametersList], T2} = pop(startElement, QName, T1),
+	parse_cbc_attr1(T2, undefined, Acc);
+parse_cbc_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_cbc_attr1(T, Attr, Acc);
+parse_cbc_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_cbc_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
+parse_cbc_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_cbc_attr1(T, undefined, Acc);
+parse_cbc_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_iubc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_iubc({startElement, _Uri, "VsDataContainer", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",VsDataContainer=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_generic, parse_function = parse_vsdata,
+			parse_state = #generic_state{vs_data = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_iubc({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_iubc({endElement, _Uri, "IubcLink", QName},
+		[#state{dn_prefix = [IubcDn | _], stack = Stack,
+		spec_cache = Cache}, #state{spec_cache = PrevCache,
+		parse_state = CoreState} = PrevState | T1]) ->
+	#core_state{iubc_links = IubcRels} = CoreState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	IubcAttr = parse_link_attr(T2, undefined, []),
+	ClassType = "IubcLink",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = IubcDn,
+			description = "Core Iu-bc interface link",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/IubcLink",
+			specification = Spec,
+			characteristic = IubcAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			IubcRel = #resource_rel{id = Id, name = IubcDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{spec_cache = [NewCache | PrevCache],
+					parse_state = CoreState#core_state{iubc_links
+					= [IubcRel | IubcRels]}} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_iubc({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 % @hidden
 parse_link_attr([{startElement, {_, "attributes"} = QName, []} | T1],

@@ -94,8 +94,11 @@
 		mnp_srf :: map() | undefined,
 		cgf :: map() | undefined,
 		sgw :: map() | undefined,
+		cbc :: map() | undefined,
+		iubc_link :: map() | undefined,
 		iucs_links = [] :: [resource_rel()],
 		iups_links = [] :: [resource_rel()],
+		iubc_links = [] :: [resource_rel()],
 		a_links = [] :: [resource_rel()],
 		gb_links = [] :: [resource_rel()]}).
 -type core_state() :: #core_state{}.
