@@ -2,7 +2,7 @@
 	"id": "6974362507",
 	"href": "/resourceInventoryManagement/v3/resource/6974362507",
 	"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1",
-	"description": "Core Gb interface link",
+	"description": "Core Cell Broadcast Centre (CBC)",
 	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
