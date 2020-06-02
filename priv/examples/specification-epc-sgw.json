@@ -1,8 +1,8 @@
 {
-	"name": "ServingGwFunction",
+	"name": "ServingGWFunction",
 	"description": "Serving GW (SGW) is the gateway which terminates the interface towards E-UTRAN (3GPP 23.401)",
-	"@type": "ServingGwFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/ServingGwFunctionSpec",
+	"@type": "ServingGWFunctionSpec",
+	"@schemaLocation": "http://sigscale.org/schema/ServingGWFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -13,8 +13,8 @@
 	"isBundle": false,
 	"category": "EPC",
 	"targetResourceSchema": {
-		"@type": "ServingGwFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGwFunction"
+		"@type": "ServingGWFunction",
+		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGWFunction"
 	},
 	"relatedParty": [
 		{
@@ -57,24 +57,6 @@
 			"description": "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
 			"valueType": "TACList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/TACList"
-		},
-		{
-			"name": "servingGWFunctionOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "ServingGWFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/ServingGWFunctionOptionallyContainedNrmClassList"
-		},
-		{
-			"name": "eP_RP_EPS",
-			"description": "Endpoint of reference point in EPS (3GPP 23.401)",
-			"valueType": "EP_RP_EPSList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

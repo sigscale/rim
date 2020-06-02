@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/ServingGWFunction",
+	"title": "EPC SGW",
+	"description": "EPC Serving Gateway (SGW) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"pLMNIdList",
+											"tACList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_RP_EPS": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

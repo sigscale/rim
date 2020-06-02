@@ -1,0 +1,58 @@
+{
+	"id": "6974362837",
+	"href": "/resourceInventoryManagement/v3/resource/6974362837",
+	"name": "SubNetwork=4,ManagedElement=1,ServingGWFunction=1",
+	"description": "EPC Serving Gateway (SGW)",
+	"category": "EPC",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "ServingGWFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/ServingGWFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362856",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362856",
+		"@type": "ServingGWFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "SGW 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam428",
+			"vsDataFormatVersion": "acmeParams-v381",
+			"vsData": 81
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362838",
+				"href": "/resourceInventoryManagement/v3/resource/6974362838",
+				"name": "SubNetwork=4,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "6974362838",
+				"href": "/resourceInventoryManagement/v3/resource/6974362838",
+				"name": "SubNetwork=4,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"connectivity": []
+}
