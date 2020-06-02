@@ -1,0 +1,58 @@
+{
+	"id": "6974362831",
+	"href": "/resourceInventoryManagement/v3/resource/6974362831",
+	"name": "SubNetwork=4,ManagedElement=1,EPDGFunction=1",
+	"description": "EPC evolved Packet Data Gateway (ePDG)",
+	"category": "EPC",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EPDGFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EPDGFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362859",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362859",
+		"@type": "EPDGFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "EPDG 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam425",
+			"vsDataFormatVersion": "acmeParams-v378",
+			"vsData": 58
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362832",
+				"href": "/resourceInventoryManagement/v3/resource/6974362832",
+				"name": "SubNetwork=2,ManagedElement=1,EPDGFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "6974362832",
+				"href": "/resourceInventoryManagement/v3/resource/6974362832",
+				"name": "SubNetwork=2,ManagedElement=1,EPDGFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"connectivity": []
+}
