@@ -1,0 +1,58 @@
+{
+	"id": "6974362835",
+	"href": "/resourceInventoryManagement/v3/resource/6974362835",
+	"name": "SubNetwork=4,ManagedElement=1,PGWFunction=1",
+	"description": "EPC PDN Gateway (PGW)",
+	"category": "EPC",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "PGWFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/PGWFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362857",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362857",
+		"@type": "PGWFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "PGW 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam427",
+			"vsDataFormatVersion": "acmeParams-v380",
+			"vsData": 70
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362836",
+				"href": "/resourceInventoryManagement/v3/resource/6974362836",
+				"name": "SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "6974362836",
+				"href": "/resourceInventoryManagement/v3/resource/6974362836",
+				"name": "SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"connectivity": []
+}

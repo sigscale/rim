@@ -26,10 +26,7 @@
 										"enum": [
 											"id",
 											"userLabel",
-											"vnfParametersList",
-											"pGWFunctionOptionallyContainedNrmClass",
-											"eP_RP_EPS",
-											"vsDataContainer"
+											"vnfParametersList"
 										]
 									}
 								}

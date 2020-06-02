@@ -44,24 +44,6 @@
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
-		},
-		{
-			"name": "pGWFunctionOptionallyContainedNrmClass",
-			"description": "List of optionally contained NRM Class objects",
-			"valueType": "PGWFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PGWFunctionOptionallyContainedNrmClassList"
-		},
-		{
-			"name": "eP_RP_EPS",
-			"description": "Endpoint of reference point in EPS (3GPP 23.401)",
-			"valueType": "EP_RP_EPSList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/EP_RP_EPSList"
-		},
-		{
-			"name": "vsDataContainer",
-			"description": "Container for vendor specific data",
-			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }
