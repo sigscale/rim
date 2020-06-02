@@ -147,6 +147,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-lte-cell-tdd.json \
 		$(abs_builddir)/resource-epc-epdg.json \
 		$(abs_builddir)/resource-epc-mme.json \
+		$(abs_builddir)/resource-epc-pcrf.json \
 		$(abs_builddir)/resource-epc-link-mme-mme.json \
 		$(abs_builddir)/resource-epc-link-hss-mme.json \
 		$(abs_builddir)/resource-epc-link-mme-sgsn.json \
@@ -782,6 +783,8 @@ check_DATA = .validation_ok
 				-d resource-epc-epdg.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-epc-mme.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-epc-pcrf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-epc-link-mme-mme.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

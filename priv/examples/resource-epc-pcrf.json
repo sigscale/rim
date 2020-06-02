@@ -1,0 +1,58 @@
+{
+	"id": "6974362833",
+	"href": "/resourceInventoryManagement/v3/resource/6974362833",
+	"name": "SubNetwork=4,ManagedElement=1,PCRFFunction=1",
+	"description": "EPC Policy and Charging Control (PCRF)",
+	"category": "EPC",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "PCRFFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/PCRFFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "6974362858",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362858",
+		"@type": "PCRFFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "PCRF 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam426",
+			"vsDataFormatVersion": "acmeParams-v379",
+			"vsData": 69
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "6974362834",
+				"href": "/resourceInventoryManagement/v3/resource/6974362834",
+				"name": "SubNetwork=4,ManagedElement=1,PCRFFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "6974362834",
+				"href": "/resourceInventoryManagement/v3/resource/6974362834",
+				"name": "SubNetwork=4,ManagedElement=1,PCRFFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"type": "contains"
+		}
+	],
+	"connectivity": []
+}
