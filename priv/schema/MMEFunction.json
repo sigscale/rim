@@ -35,14 +35,8 @@
 						]
 					}
 				},
-				"mMEFunctionOptionallyContainedNrmClass": {
-					"$ref": "epcNrm/definitions/MMEFunctionOptionallyContainedNrmClassList"
-				},
 				"eP_RP_EPS": {
 					"$ref": "epcNrm/definitions/EP_RP_EPSList"
-				},
-				"eP_N26": {
-					"$ref": "ngcNrm#/definitions/EP_N26List"
 				}
 			}
 		}
