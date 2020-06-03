@@ -93,10 +93,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:userLabel>EP RP EPS 1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1
-							</epc:farEndEntity>
+							<epc:userLabel>EP-PGW-1</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -106,6 +104,12 @@
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="2">
+						<epc:attributes>
+							<epc:userLabel>EP-PCRF-2</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedElement=1,PCRFFunction=1,EP_RP_EPS=1</epc:farEndEntity>
+						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:EPDGFunction>
 				<epc:ServingGWFunction id="1">
@@ -118,9 +122,7 @@
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1
-							</epc:farEndEntity>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -130,6 +132,18 @@
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="2">
+						<epc:attributes>
+							<epc:userLabel>EP-PCRF-2</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedElement=1,PCRFFunction=1,EP_RP_EPS=3</epc:farEndEntity>
+						</epc:attributes>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="3">
+						<epc:attributes>
+							<epc:userLabel>EP-PGW-3</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=3</epc:farEndEntity>
+						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:ServingGWFunction>
 				<epc:MMEFunction id="1">
@@ -157,26 +171,20 @@
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="2">
 						<epc:attributes>
-							<epc:userLabel>EP-HSS-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=5,ManagedEntity=1,HssFunction=1
-							</epc:farEndEntity>
+							<epc:userLabel>EP-HSS-2</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=5,ManagedEntity=1,HssFunction=1</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="3">
 						<epc:attributes>
-							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1
-							</epc:farEndEntity>
+							<epc:userLabel>EP-MME-3</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=2,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 					<epc:EP_RP_EPS id="4">
 						<epc:attributes>
-							<epc:userLabel>EP-ENB-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ENBFunction=1,EP_RP_EPS=1
-							</epc:farEndEntity>
+							<epc:userLabel>EP-ENB-4</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ENBFunction=1,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:MMEFunction>
@@ -192,9 +200,7 @@
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
 							<epc:userLabel>EP-MME-1</epc:userLabel>
-							<epc:farEndEntity>
-								DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=3
-							</epc:farEndEntity>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,MMEFunction=1,EP_RP_EPS=3</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:MMEFunction>
@@ -207,8 +213,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:userLabel>Paris EPMNO8</epc:userLabel>
-							<epc:farEndEntity>FEEryqt</epc:farEndEntity>
+							<epc:userLabel>EP-EPDG-1</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,EPDGFunction=1,EP_RP_EPS=2</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -218,6 +224,18 @@
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="2">
+						<epc:attributes>
+							<epc:userLabel>EP-PGW-2</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,PGWFunction=1,EP_RP_EPS=2</epc:farEndEntity>
+						</epc:attributes>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="3">
+						<epc:attributes>
+							<epc:userLabel>EP-ServingGW-2</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ServingGWFunction=1,EP_RP_EPS=2</epc:farEndEntity>
+						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:PCRFFunction>
 				<epc:PGWFunction id="1">
@@ -230,8 +248,8 @@
 					</epc:attributes>
 					<epc:EP_RP_EPS id="1">
 						<epc:attributes>
-							<epc:userLabel>Paris ASMNO8</epc:userLabel>
-							<epc:farEndEntity>iutwFEE</epc:farEndEntity>
+							<epc:userLabel>EP-EPDG-1</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,EPDGFunction=1,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 						<!--  Vendor specific data for EP_RP_EPS-->
 						<xn:VsDataContainer id="1">
@@ -241,6 +259,18 @@
 								<xn:vsData/>
 							</xn:attributes>
 						</xn:VsDataContainer>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="2">
+						<epc:attributes>
+							<epc:userLabel>EP-PCRF-2</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,PCRFFunction=1,EP_RP_EPS=2</epc:farEndEntity>
+						</epc:attributes>
+					</epc:EP_RP_EPS>
+					<epc:EP_RP_EPS id="3">
+						<epc:attributes>
+							<epc:userLabel>EP-ServingGW-3</epc:userLabel>
+							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ServingGWFunction=1,EP_RP_EPS=3</epc:farEndEntity>
+						</epc:attributes>
 					</epc:EP_RP_EPS>
 				</epc:PGWFunction>
 				<!--  Vendor specific data for ManagedElement-->
