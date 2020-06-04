@@ -43,12 +43,11 @@ parse_epdg({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_epdg({endElement, _Uri, "EPDGFunction", QName},
-		[#state{dn_prefix = [EpdgDn | _], stack = Stack, parse_state = EpcState,
+		[#state{dn_prefix = [EpdgDn | _], stack = Stack,
+		parse_state = #epc_state{ep_rp_epss = EpResRels},
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpdgAttr = parse_epdg_attr(T2, undefined, []),
-	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
 	ClassType = "EPDGFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = EpdgDn,
@@ -58,7 +57,9 @@ parse_epdg({endElement, _Uri, "EPDGFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/EPDGFunction",
 			specification = Spec,
-			characteristic = lists:reverse([EpRpEps | EpdgAttr])},
+			characteristic = EpdgAttr,
+			related = EpResRels,
+			connection_point = EpResRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -365,12 +366,11 @@ parse_pcrf({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_pcrf({endElement, _Uri, "PCRFFunction", QName},
-		[#state{dn_prefix = [PcrfDn | _], stack = Stack, parse_state = EpcState,
+		[#state{dn_prefix = [PcrfDn | _], stack = Stack,
+		parse_state = #epc_state{ep_rp_epss = EpResRels},
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpses} = EpcState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	PcrfAttr = parse_pcrf_attr(T2, undefined, []),
-	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpses},
 	ClassType = "PCRFFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = PcrfDn,
@@ -380,7 +380,9 @@ parse_pcrf({endElement, _Uri, "PCRFFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/PCRFFunction",
 			specification = Spec,
-			characteristic = lists:reverse([EpRpEps | PcrfAttr])},
+			characteristic = PcrfAttr,
+			related = EpResRels,
+			connection_point = EpResRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -435,12 +437,11 @@ parse_pgw({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_pgw({endElement, _Uri, "PGWFunction", QName},
-		[#state{dn_prefix = [PgwDn | _], stack = Stack, parse_state = EpcState,
+		[#state{dn_prefix = [PgwDn | _], stack = Stack,
+		parse_state = #epc_state{ep_rp_epss = EpResRels},
 		spec_cache = Cache}, #state{spec_cache = PrevCache} = PrevState | T1]) ->
-	#epc_state{ep_rp_epss = EpRpEpss} = EpcState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	PgwAttr = parse_pgw_attr(T2, undefined, []),
-	EpRpEps = #resource_char{name = "EP_RP_EPS", value = EpRpEpss},
 	ClassType = "PGWFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	Resource = #resource{name = PgwDn,
@@ -450,7 +451,9 @@ parse_pgw({endElement, _Uri, "PGWFunction", QName},
 			base_type = "ResourceFunction",
 			schema = "/resourceInventoryManagement/v3/schema/PGWFunction",
 			specification = Spec,
-			characteristic = lists:reverse([EpRpEps | PgwAttr])},
+			characteristic = PgwAttr,
+			related = EpResRels,
+			connection_point = EpResRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
