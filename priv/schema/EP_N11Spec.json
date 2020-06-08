@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/EP_N11Spec",
+	"title": "5GC EP N11 Specification",
+	"description": "5G Core N11 interface between AMF and SMF",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"farEndEntity",
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

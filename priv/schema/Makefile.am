@@ -115,6 +115,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/NWDAFFunctionSpec.json \
 		$(abs_builddir)/EP_N2Spec.json \
 		$(abs_builddir)/EP_N8Spec.json \
+		$(abs_builddir)/EP_N11Spec.json \
 		$(abs_builddir)/PEEMonitoredEntitySpec.json \
 		$(abs_builddir)/InventoryUnitSpec.json \
 		$(abs_builddir)/TmaInventoryUnitSpec.json \
@@ -559,6 +560,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_N8Spec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_N11Spec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
