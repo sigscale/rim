@@ -1,0 +1,40 @@
+{
+	"$id": "http://sigscale.org/schema/EP_N14",
+	"title": "5GC EP N14",
+	"description": "5G Core N14 interface between two AMFs",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "EP_RP"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

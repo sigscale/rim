@@ -1,0 +1,39 @@
+{
+	"id": "3597468025",
+	"href": "/resourceInventoryManagement/v3/resource/3597468025",
+	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N14=1",
+	"description": "5G Core N14 interface between two AMFs",
+	"category": "5GC",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N14",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N14",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597468016",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468016",
+		"@type": "EP_N14Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n14-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,AMFFunction=2,EP_N14=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam825",
+			"vsDataFormatVersion": "acmeParams-v96",
+			"vsData": 896
+		}
+	]
+}
