@@ -2843,7 +2843,7 @@ ngc_ep_n2() ->
 			characteristic = Chars}.
 
 -spec ngc_ep_n8() -> specification().
-%% @doc 5GC End Point N2 resource specification.
+%% @doc 5GC End Point N8 resource specification.
 ngc_ep_n8() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2877,7 +2877,7 @@ ngc_ep_n8() ->
 			characteristic = Chars}.
 
 -spec ngc_ep_n11() -> specification().
-%% @doc 5GC End Point N2 resource specification.
+%% @doc 5GC End Point N11 resource specification.
 ngc_ep_n11() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
