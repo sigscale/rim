@@ -108,6 +108,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-5gc-ep-n22.json \
 		$(abs_builddir)/specification-5gc-ep-n26.json \
 		$(abs_builddir)/specification-5gc-ep-nls.json \
+		$(abs_builddir)/specification-5gc-ep-nlg.json \
 		$(abs_builddir)/specification-pee-me.json \
 		$(abs_builddir)/specification-im-iu.json \
 		$(abs_builddir)/specification-im-tmaiu.json \
@@ -202,7 +203,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-5gc-ep-n20.json \
 		$(abs_builddir)/resource-5gc-ep-n22.json \
 		$(abs_builddir)/resource-5gc-ep-n26.json \
-		$(abs_builddir)/resource-5gc-ep-nls.json \
+		$(abs_builddir)/resource-5gc-ep-nlg.json \
 		$(abs_builddir)/resource-core-msc.json \
 		$(abs_builddir)/resource-core-mgw.json \
 		$(abs_builddir)/resource-core-sgsn.json \
@@ -693,6 +694,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-5gc-ep-nls.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NLGSpec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-5gc-ep-nlg.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/PEEMonitoredEntitySpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -954,6 +960,8 @@ check_DATA = .validation_ok
 				-d resource-5gc-ep-n26.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-5gc-ep-nls.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-5gc-ep-nlg.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-msc.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
