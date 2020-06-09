@@ -278,7 +278,7 @@ install8(Nodes, Acc) ->
 		ngc_amf, ngc_smf, ngc_upf, ngc_n3iwf, ngc_pcf, ngc_ausf, ngc_udm, ngc_udr,
 		ngc_udsf, ngc_nrf, ngc_nssf, ngc_smsf, ngc_lmf, ngc_ngeir, ngc_sepp,
 		ngc_nwdaf, ngc_ep_n2, ngc_ep_n8, ngc_ep_n11, ngc_ep_n12, ngc_ep_n14,
-		ngc_ep_n15,
+		ngc_ep_n15, ngc_ep_n17,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
 		epc_link_mme_mme, epc_link_hss_mme, epc_link_mme_sgsn,
 		epc_link_mme_servinggw, epc_link_enb_mme, epc_ep_rp_eps,
