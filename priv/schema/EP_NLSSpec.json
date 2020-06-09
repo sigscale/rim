@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/EP_NLSSpec",
+	"title": "5GC EP NLS Specification",
+	"description": "5G Core NLs interface (between AMF and LMF) resource function specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"farEndEntity",
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
