@@ -35,7 +35,7 @@
 		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0, ngc_udsf/0,
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
 		ngc_nwdaf/0, ngc_ep_n2/0, ngc_ep_n8/0, ngc_ep_n11/0, ngc_ep_n12/0,
-		ngc_ep_n14/0, ngc_ep_n15/0, ngc_ep_n17/0, ngc_ep_n20/0]).
+		ngc_ep_n14/0, ngc_ep_n15/0, ngc_ep_n17/0, ngc_ep_n20/0, ngc_ep_n22/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
 		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
@@ -3079,6 +3079,40 @@ ngc_ep_n20() ->
 			category = "5GC",
 			target_schema = #target_schema_ref{class_type = "EP_N20",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N20"},
+			characteristic = Chars}.
+
+-spec ngc_ep_n22() -> specification().
+%% @doc 5GC End Point N22 resource specification.
+ngc_ep_n22() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_N22",
+			description = "5G Core N22 interface (between AMF and NSSF)"
+					"resource function specification",
+			class_type = "EP_N22Spec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_N22Spec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "5GC",
+			target_schema = #target_schema_ref{class_type = "EP_N22",
+					schema = "/resourceInventoryManagement/v3/schema/EP_N22"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
