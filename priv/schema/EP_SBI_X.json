@@ -1,0 +1,40 @@
+{
+	"$id": "http://sigscale.org/schema/EP_SBI_X",
+	"title": "5GC EP SBI X",
+	"description": "5G Core End Point (EP) Service Based Interface (SBI) X resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "EP_RP"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,39 @@
+{
+	"id": "3597468033",
+	"href": "/resourceInventoryManagement/v3/resource/3597468033",
+	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_SBI_X=1",
+	"description": "5G Core End Point (EP) Service Based Interface (SBI) X",
+	"category": "5GC",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_SBI_X",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_SBI_X",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597468008",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468008",
+		"@type": "EP_SBI_XSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-sbi-x-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_SBI_X=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam833",
+			"vsDataFormatVersion": "acmeParams-v104",
+			"vsData": 904
+		}
+	]
+}
