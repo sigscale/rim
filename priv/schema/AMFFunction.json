@@ -1,0 +1,84 @@
+{
+	"$id": "http://sigscale.org/schema/AMFFunction",
+	"title": "5GC AMF",
+	"description": "5G Core Access and Mobility Management Function (AMF) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList",
+											"amfIdentifier",
+											"sBIFqdn",
+											"sBIServiceList",
+											"weightFactor",
+											"snssaiList",
+											"amfSet"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_N2": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N8": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N11": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N12": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N14": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N15": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N17": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N20": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N22": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N26": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_NLS": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_NLG": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_SBI_X": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

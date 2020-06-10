@@ -1,6 +1,6 @@
 {
 	"name": "AMFFunction",
-	"description": "5G Access and Mobility Management Function (AMF) resource function specification",
+	"description": "5G Core Access and Mobility Management Function (AMF) resource function specification",
 	"@type": "AMFFunctionSpec",
 	"@schemaLocation": "http://sigscale.org/schema/AMFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
@@ -81,6 +81,12 @@
 			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"valueType": "SnssaiList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
+		},
+		{
+			"name": "aMFSet",
+			"description": "DN of an AMF set",
+			"valueType": "Dn",
+			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
 		}
 	]
 }

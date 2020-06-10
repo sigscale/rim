@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/AMFFunctionSpec",
-	"title": "5G AMF Specification",
-	"description": "5G Access and Mobility Management Function (AMF) resource function specification",
+	"title": "5GC AMF Specification",
+	"description": "5G Core Access and Mobility Management Function (AMF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
@@ -33,7 +33,7 @@
 											"sBIServiceList",
 											"weightFactor",
 											"snssaiList",
-											"amfSet"
+											"aMFSet"
 										]
 									}
 								}
