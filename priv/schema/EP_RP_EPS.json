@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_RP_EPS",
 	"title": "EPC EP RP EPS",
-	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS)",
+	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) connection point",
 	"type": "object",
 	"allOf": [
 		{

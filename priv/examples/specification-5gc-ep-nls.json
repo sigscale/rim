@@ -1,6 +1,6 @@
 {
 	"name": "EP_NLS",
-	"description": "5G Core NLs interface (between AMF and LMF) resource function specification",
+	"description": "5G Core NLs interface (between AMF and LMF) resource specification",
 	"@type": "EP_NLSSpec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_NLSSpec",
 	"@baseType": "EP_RPSpec",

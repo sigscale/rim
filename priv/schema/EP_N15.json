@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N15",
 	"title": "5GC EP N15",
-	"description": "5G Core N15 interface between AMF and PCF",
+	"description": "5G Core End Point of N15 interface (between AMF and PCF) connection point",
 	"type": "object",
 	"allOf": [
 		{

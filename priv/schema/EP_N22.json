@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N22",
 	"title": "5GC EP N22",
-	"description": "5G Core N22 interface (between AMF and NSSF) resource function",
+	"description": "5G Core End Point of N22 interface (between AMF and NSSF) connection point",
 	"type": "object",
 	"allOf": [
 		{

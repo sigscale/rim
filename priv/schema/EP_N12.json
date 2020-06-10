@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N12",
 	"title": "5GC EP N12",
-	"description": "5G Core N12 interface between AMF and AUSF resource function",
+	"description": "5G Core End Point of N12 interface (between AMF and AUSF) connection point",
 	"type": "object",
 	"allOf": [
 		{

@@ -1,6 +1,6 @@
 {
 	"name": "EP_N17",
-	"description": "5G Core N17 interface (between AMF and 5G-EIR) resource function specification",
+	"description": "5G Core N17 interface (between AMF and 5G-EIR) resource specification",
 	"@type": "EP_N17Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N17Spec",
 	"@baseType": "EP_RPSpec",

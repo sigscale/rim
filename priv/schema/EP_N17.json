@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N17",
 	"title": "5GC EP N17",
-	"description": "5G Core N17 interface (between AMF and 5G-EIR) resource function",
+	"description": "5G Core End Point of N17 interface (between AMF and 5G-EIR) connection point",
 	"type": "object",
 	"allOf": [
 		{

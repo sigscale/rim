@@ -1,6 +1,6 @@
 {
 	"name": "EP_N8",
-	"description": "5G Core N8 interface between AMF and UDM resource function specification",
+	"description": "5G Core N8 interface between AMF and UDM resource specification",
 	"@type": "EP_N8Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N8Spec",
 	"@baseType": "EP_RPSpec",

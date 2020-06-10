@@ -1,6 +1,6 @@
 {
 	"name": "EP_NLG",
-	"description": "5G Core NLg interface (between AMF and GMLC) resource function specification",
+	"description": "5G Core NLg interface (between AMF and GMLC) resource specification",
 	"@type": "EP_NLGSpec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_NLGSpec",
 	"@baseType": "EP_RPSpec",

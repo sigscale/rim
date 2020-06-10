@@ -1,6 +1,6 @@
 {
 	"name": "EP_N12",
-	"description": "5G Core N12 interface between AMF and AUSF resource function specification",
+	"description": "5G Core N12 interface between AMF and AUSF resource specification",
 	"@type": "EP_N12Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N12Spec",
 	"@baseType": "EP_RPSpec",

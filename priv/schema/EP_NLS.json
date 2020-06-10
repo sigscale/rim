@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_NLS",
 	"title": "5GC EP NLS",
-	"description": "5G Core NLs interface (between AMF and LMF) resource function",
+	"description": "5G Core End Point of NLs interface (between AMF and LMF) connection point",
 	"type": "object",
 	"allOf": [
 		{

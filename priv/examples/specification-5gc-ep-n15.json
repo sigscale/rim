@@ -1,6 +1,6 @@
 {
 	"name": "EP_N15",
-	"description": "5G Core N15 interface between AMF and PCF resource function specification",
+	"description": "5G Core N15 interface between AMF and PCF resource specification",
 	"@type": "EP_N15Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N15Spec",
 	"@baseType": "EP_RPSpec",

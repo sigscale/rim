@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N11",
 	"title": "5GC EP N11",
-	"description": "5G Core N11 interface between AMF and SMF resource function",
+	"description": "5G Core End Point of N11 interface (between AMF and SMF) connection point",
 	"type": "object",
 	"allOf": [
 		{

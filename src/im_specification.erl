@@ -36,7 +36,7 @@
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
 		ngc_nwdaf/0, ngc_ep_n2/0, ngc_ep_n8/0, ngc_ep_n11/0, ngc_ep_n12/0,
 		ngc_ep_n14/0, ngc_ep_n15/0, ngc_ep_n17/0, ngc_ep_n20/0, ngc_ep_n22/0,
-		ngc_ep_n26/0, ngc_ep_nls/0, ngc_ep_nlg/0, '5gc_ep_sbi_x'/0]).
+		ngc_ep_n26/0, ngc_ep_nls/0, ngc_ep_nlg/0, ngc_ep_sbi_x/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
 		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
@@ -2833,7 +2833,7 @@ ngc_ep_n2() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N2",
 			description = "5G Core N2 interface between (R)AN and AMF"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N2Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N2Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -2867,7 +2867,7 @@ ngc_ep_n8() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N8",
 			description = "5G Core N8 interface between AMF and UDM"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N8Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N8Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -2901,7 +2901,7 @@ ngc_ep_n11() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N11",
 			description = "5G Core N11 interface between AMF and SMF"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N11Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N11Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -2935,7 +2935,7 @@ ngc_ep_n12() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N12",
 			description = "5G Core N12 interface between AMF and AUSF"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N12Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N12Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -2969,7 +2969,7 @@ ngc_ep_n14() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N14",
 			description = "5G Core N14 interface between two AMFs"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N14Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N14Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -3003,7 +3003,7 @@ ngc_ep_n15() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N15",
 			description = "5G Core N15 interface between AMF and PCF"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N15Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N15Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -3037,7 +3037,7 @@ ngc_ep_n17() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N17",
 			description = "5G Core N17 interface (between AMF and 5G-EIR)"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N17Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N17Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -3071,7 +3071,7 @@ ngc_ep_n20() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N20",
 			description = "5G Core N20 interface (between AMF and SMSF)"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N20Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N20Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -3105,7 +3105,7 @@ ngc_ep_n22() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N22",
 			description = "5G Core N22 interface (between AMF and NSSF)"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N22Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N22Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -3139,7 +3139,7 @@ ngc_ep_n26() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N26",
 			description = "5G Core N26 interface (between AMF and MME)"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_N26Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N26Spec",
 			base_type = "ResourceFunctionSpecification",
@@ -3173,7 +3173,7 @@ ngc_ep_nls() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_NLS",
 			description = "5G Core NLs interface (between AMF and LMF)"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_NLSSpec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_NLSSpec",
 			base_type = "ResourceFunctionSpecification",
@@ -3207,7 +3207,7 @@ ngc_ep_nlg() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_NLG",
 			description = "5G Core NLg interface (between AMF and GMLC)"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_NLGSpec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_NLGSpec",
 			base_type = "ResourceFunctionSpecification",
@@ -3218,9 +3218,9 @@ ngc_ep_nlg() ->
 					schema = "/resourceInventoryManagement/v3/schema/EP_NLG"},
 			characteristic = Chars}.
 
--spec '5gc_ep_sbi_x'() -> specification().
+-spec ngc_ep_sbi_x() -> specification().
 %% @doc 5GC End Point Service Based Interface X resource specification.
-'5gc_ep_sbi_x'() ->
+ngc_ep_sbi_x() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
@@ -3241,7 +3241,7 @@ ngc_ep_nlg() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_SBI_X",
 			description = "5G Core End Point (EP) Service Based Interface (SBI) X"
-					"resource function specification",
+					"resource specification",
 			class_type = "EP_SBI_XSpec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_SBI_XSpec",
 			base_type = "ResourceFunctionSpecification",

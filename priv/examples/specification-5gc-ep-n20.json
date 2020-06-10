@@ -1,6 +1,6 @@
 {
 	"name": "EP_N20",
-	"description": "5G Core N20 interface (between AMF and SMSF) resource function specification",
+	"description": "5G Core N20 interface (between AMF and SMSF) resource specification",
 	"@type": "EP_N20Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N20Spec",
 	"@baseType": "EP_RPSpec",

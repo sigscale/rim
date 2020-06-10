@@ -1,6 +1,6 @@
 {
 	"name": "EP_N11",
-	"description": "5G Core N11 interface between AMF and SMF resource function specification",
+	"description": "5G Core N11 interface between AMF and SMF resource specification",
 	"@type": "EP_N11Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N11Spec",
 	"@baseType": "EP_RPSpec",

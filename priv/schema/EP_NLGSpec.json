@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_NLGSpec",
 	"title": "5GC EP NLG Specification",
-	"description": "5G Core NLg interface (between AMF and GMLC) resource function specification",
+	"description": "5G Core End Point of NLg interface (between AMF and GMLC) connection point specification",
 	"type": "object",
 	"allOf": [
 		{

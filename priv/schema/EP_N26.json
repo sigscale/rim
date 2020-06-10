@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N26",
 	"title": "5GC EP N26",
-	"description": "5G Core N26 interface (between AMF and MME) resource function",
+	"description": "5G Core End Point of N26 interface (between AMF and MME) connection point",
 	"type": "object",
 	"allOf": [
 		{

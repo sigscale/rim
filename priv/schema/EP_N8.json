@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N8",
 	"title": "5GC EP N8",
-	"description": "5G Core N8 interface between AMF and UDM resource function",
+	"description": "5G Core End Point of N8 interface (between AMF and UDM) connection point",
 	"type": "object",
 	"allOf": [
 		{

@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N2",
 	"title": "5GC EP N2",
-	"description": "5G Core N2 interface between (R)AN and AMF resource function",
+	"description": "5G Core End Point of N2 interface (between (R)AN and AMF) connection point",
 	"type": "object",
 	"allOf": [
 		{

@@ -1,6 +1,6 @@
 {
 	"name": "EP_N2",
-	"description": "5G Core N2 interface between (R)AN and AMF resource function specification",
+	"description": "5G Core N2 interface between (R)AN and AMF resource specification",
 	"@type": "EP_N2Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N2Spec",
 	"@baseType": "EP_RPSpec",

@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N14Spec",
 	"title": "5GC EP N14 Specification",
-	"description": "5G Core N14 interface between two AMFs",
+	"description": "5G Core End Point of N14 interface (between two AMFs) connection point specification",
 	"type": "object",
 	"allOf": [
 		{

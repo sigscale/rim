@@ -1,6 +1,6 @@
 {
 	"name": "EP_N26",
-	"description": "5G Core N26 interface (between AMF and MME) resource function specification",
+	"description": "5G Core N26 interface (between AMF and MME) resource specification",
 	"@type": "EP_N26Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N26Spec",
 	"@baseType": "EP_RPSpec",

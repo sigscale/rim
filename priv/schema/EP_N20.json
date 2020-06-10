@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/EP_N20",
 	"title": "5GC EP N20",
-	"description": "5G Core N20 interface (between AMF and SMSF) resource function",
+	"description": "5G Core End Point of N20 interface (between AMF and SMSF) connection point",
 	"type": "object",
 	"allOf": [
 		{
