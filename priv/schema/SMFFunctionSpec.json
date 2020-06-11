@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/SMFFunctionSpec",
-	"title": "5G SMF Specification",
-	"description": "5G Session Management Function (SMF) resource function specification",
+	"title": "5GC SMF Specification",
+	"description": "5G Core Session Management Function (SMF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

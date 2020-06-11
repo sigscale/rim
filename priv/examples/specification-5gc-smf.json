@@ -1,13 +1,13 @@
 {
 	"name": "SMFFunction",
-	"description": "5G Session Management Function (SMF) resource function specification",
+	"description": "5G Core Session Management Function (SMF) resource function specification",
 	"@type": "SMFFunctionSpec",
 	"@schemaLocation": "http://sigscale.org/schema/SMFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00:00Z",
-		"endDateTime": "2019-12-31T23:59:59Z"
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,

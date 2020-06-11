@@ -2203,7 +2203,7 @@ ngc_amf() ->
 			characteristic = Chars}.
 
 -spec ngc_smf() -> specification().
-%% @doc 5G Session Management Function (SMF) resource function specification.
+%% @doc 5GC Session Management Function (SMF) resource function specification.
 ngc_smf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2238,7 +2238,8 @@ ngc_smf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TacList,
 			SBIFqdn, SBIServiceList, SNSSAIList],
 	#specification{name = "SMFFunction",
-			description = "5G Session Management Function (SMF)",
+			description = "5G Core Session Management Function (SMF)"
+					"resource function specification",
 			class_type = "SMFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/SMFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",
