@@ -1,0 +1,39 @@
+{
+	"id": "3597468038",
+	"href": "/resourceInventoryManagement/v3/resource/3597468038",
+	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N16=1",
+	"description": "5G Core End Point of N16 interface (between two SMFs)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N16",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N16",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597468003",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468003",
+		"@type": "EP_N16Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n16-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N16=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam838",
+			"vsDataFormatVersion": "acmeParams-v109",
+			"vsData": 909
+		}
+	]
+}
