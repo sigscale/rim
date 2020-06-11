@@ -130,6 +130,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_NLSSpec.json \
 		$(abs_builddir)/EP_NLGSpec.json \
 		$(abs_builddir)/EP_SBI_XSpec.json \
+		$(abs_builddir)/EP_S5CSpec.json \
 		$(abs_builddir)/PEEMonitoredEntitySpec.json \
 		$(abs_builddir)/InventoryUnitSpec.json \
 		$(abs_builddir)/TmaInventoryUnitSpec.json \
@@ -649,6 +650,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_SBI_XSpec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_S5CSpec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \

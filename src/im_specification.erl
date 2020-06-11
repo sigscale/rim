@@ -36,8 +36,8 @@
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
 		ngc_nwdaf/0, ngc_ep_n2/0, ngc_ep_n4/0, ngc_ep_n7/0, ngc_ep_n8/0,
 		ngc_ep_n10/0, ngc_ep_n11/0, ngc_ep_n12/0, ngc_ep_n14/0, ngc_ep_n15/0,
-		ngc_ep_n16/0, ngc_ep_n17/0, ngc_ep_n20/0,
-		ngc_ep_n22/0, ngc_ep_n26/0, ngc_ep_nls/0, ngc_ep_nlg/0, ngc_ep_sbi_x/0]).
+		ngc_ep_n16/0, ngc_ep_n17/0, ngc_ep_n20/0, ngc_ep_n22/0, ngc_ep_n26/0,
+		ngc_ep_nls/0, ngc_ep_nlg/0, ngc_ep_sbi_x/0, ngc_ep_s5c/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
 		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
@@ -3387,6 +3387,40 @@ ngc_ep_sbi_x() ->
 			category = "5GC",
 			target_schema = #target_schema_ref{class_type = "EP_SBI_X",
 					schema = "/resourceInventoryManagement/v3/schema/EP_SBI_X"},
+			characteristic = Chars}.
+
+-spec ngc_ep_s5c() -> specification().
+%% @doc 5GC End Point S5-C resource specification.
+ngc_ep_s5c() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_S5C",
+			description = "5G Core End Point (EP) of S5-C interface"
+					"resource specification",
+			class_type = "EP_S5CSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_S5CSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "EP_S5C",
+					schema = "/resourceInventoryManagement/v3/schema/EP_S5C"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
