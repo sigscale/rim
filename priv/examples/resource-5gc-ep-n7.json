@@ -1,0 +1,39 @@
+{
+	"id": "3597468036",
+	"href": "/resourceInventoryManagement/v3/resource/3597468036",
+	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N7=1",
+	"description": "5G Core Core End Point of N7 interface (between SMF and PCF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N7",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N7",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597468005",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468005",
+		"@type": "EP_N7Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n7-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N7=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam836",
+			"vsDataFormatVersion": "acmeParams-v107",
+			"vsData": 907
+		}
+	]
+}

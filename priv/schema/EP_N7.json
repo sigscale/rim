@@ -1,0 +1,40 @@
+{
+	"$id": "http://sigscale.org/schema/EP_N7",
+	"title": "5GC EP N7",
+	"description": "5G Core End Point of N7 interface (between SMF and PCF) connection point",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "EP_RP"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
