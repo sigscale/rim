@@ -2148,7 +2148,7 @@ ngc_slice_subnet() ->
 			characteristic = Chars}.
 
 -spec ngc_amf() -> specification().
-%% @doc 5G Access and Mobility Management Function (AMF) resource function specification.
+%% @doc 5GC Access and Mobility Management Function (AMF) resource function specification.
 ngc_amf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2191,7 +2191,7 @@ ngc_amf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, AmfIdentifier,
 			SBIFqdn, SBIServiceList, WeightFactor, SNSSAIList, AmfSet],
 	#specification{name = "AMFFunction",
-			description = "5G Access and Mobility Management Function (AMF)",
+			description = "5G Core Access and Mobility Management Function (AMF)",
 			class_type = "AMFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/AMFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",
@@ -2834,14 +2834,14 @@ ngc_ep_n2() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N2",
-			description = "5G Core N2 interface between (R)AN and AMF"
+			description = "5G Core End Point of N2 interface (between (R)AN and AMF)"
 					"resource specification",
 			class_type = "EP_N2Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N2Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N2",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N2"},
 			characteristic = Chars}.
@@ -2936,14 +2936,14 @@ ngc_ep_n8() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N8",
-			description = "5G Core N8 interface between AMF and UDM"
+			description = "5G Core End Point of N8 interface (between AMF and UDM)"
 					"resource specification",
 			class_type = "EP_N8Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N8Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N8",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N8"},
 			characteristic = Chars}.
@@ -3004,14 +3004,14 @@ ngc_ep_n11() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N11",
-			description = "5G Core N11 interface between AMF and SMF"
+			description = "5G Core End Point of N11 interface (between AMF and SMF)"
 					"resource specification",
 			class_type = "EP_N11Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N11Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N11",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N11"},
 			characteristic = Chars}.
@@ -3038,14 +3038,14 @@ ngc_ep_n12() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N12",
-			description = "5G Core N12 interface between AMF and AUSF"
+			description = "5G Core End Point of N12 interface (between AMF and AUSF)"
 					"resource specification",
 			class_type = "EP_N12Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N12Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N12",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N12"},
 			characteristic = Chars}.
@@ -3072,14 +3072,14 @@ ngc_ep_n14() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N14",
-			description = "5G Core N14 interface between two AMFs"
+			description = "5G Core End Point of N14 interface (between two AMFs)"
 					"resource specification",
 			class_type = "EP_N14Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N14Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N14",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N14"},
 			characteristic = Chars}.
@@ -3106,14 +3106,14 @@ ngc_ep_n15() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N15",
-			description = "5G Core N15 interface between AMF and PCF"
+			description = "5G Core End Point of N15 interface (between AMF and PCF)"
 					"resource specification",
 			class_type = "EP_N15Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N15Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N15",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N15"},
 			characteristic = Chars}.
@@ -3174,14 +3174,14 @@ ngc_ep_n17() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N17",
-			description = "5G Core N17 interface (between AMF and 5G-EIR)"
+			description = "5G Core End Point of N17 interface (between AMF and 5G-EIR)"
 					"resource specification",
 			class_type = "EP_N17Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N17Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N17",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N17"},
 			characteristic = Chars}.
@@ -3208,14 +3208,14 @@ ngc_ep_n20() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N20",
-			description = "5G Core N20 interface (between AMF and SMSF)"
+			description = "5G Core End Point of N20 interface (between AMF and SMSF)"
 					"resource specification",
 			class_type = "EP_N20Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N20Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N20",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N20"},
 			characteristic = Chars}.
@@ -3242,14 +3242,14 @@ ngc_ep_n22() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N22",
-			description = "5G Core N22 interface (between AMF and NSSF)"
+			description = "5G Core End Point of N22 interface (between AMF and NSSF)"
 					"resource specification",
 			class_type = "EP_N22Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N22Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N22",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N22"},
 			characteristic = Chars}.
@@ -3276,14 +3276,14 @@ ngc_ep_n26() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_N26",
-			description = "5G Core N26 interface (between AMF and MME)"
+			description = "5G Core End Point of N26 interface (between AMF and MME)"
 					"resource specification",
 			class_type = "EP_N26Spec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_N26Spec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N26",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N26"},
 			characteristic = Chars}.
@@ -3310,14 +3310,14 @@ ngc_ep_nls() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_NLS",
-			description = "5G Core NLs interface (between AMF and LMF)"
+			description = "5G Core End Point of NLs interface (between AMF and LMF)"
 					"resource specification",
 			class_type = "EP_NLSSpec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_NLSSpec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_NLS",
 					schema = "/resourceInventoryManagement/v3/schema/EP_NLS"},
 			characteristic = Chars}.
@@ -3344,14 +3344,14 @@ ngc_ep_nlg() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_NLG",
-			description = "5G Core NLg interface (between AMF and GMLC)"
+			description = "5G Core End Point of NLg interface (between AMF and GMLC)"
 					"resource specification",
 			class_type = "EP_NLGSpec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_NLGSpec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_NLG",
 					schema = "/resourceInventoryManagement/v3/schema/EP_NLG"},
 			characteristic = Chars}.
@@ -3378,14 +3378,14 @@ ngc_ep_sbi_x() ->
 			value_type = "string"},
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_SBI_X",
-			description = "5G Core End Point (EP) Service Based Interface (SBI) X"
+			description = "5G Core End Point (EP) of Service Based Interface (SBI) X"
 					"resource specification",
 			class_type = "EP_SBI_XSpec",
 			schema = "/resourceCatalogManagement/v3/schema/EP_SBI_XSpec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "5GC",
+			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_SBI_X",
 					schema = "/resourceInventoryManagement/v3/schema/EP_SBI_X"},
 			characteristic = Chars}.

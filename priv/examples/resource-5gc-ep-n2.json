@@ -2,8 +2,8 @@
 	"id": "3597468021",
 	"href": "/resourceInventoryManagement/v3/resource/3597468021",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N2=1",
-	"description": "5G Core N2 interface between (R)AN and AMF",
-	"category": "5GC",
+	"description": "5G Core End Point of N2 interface (between (R)AN and AMF)",
+	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"

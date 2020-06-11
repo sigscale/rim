@@ -1,6 +1,6 @@
 {
 	"name": "EP_N26",
-	"description": "5G Core N26 interface (between AMF and MME) resource specification",
+	"description": "5G Core End Point of N26 interface (between AMF and MME) resource specification",
 	"@type": "EP_N26Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N26Spec",
 	"@baseType": "EP_RPSpec",
@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "5GC",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_N26",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_N26"

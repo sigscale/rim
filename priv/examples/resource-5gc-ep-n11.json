@@ -2,8 +2,8 @@
 	"id": "3597468023",
 	"href": "/resourceInventoryManagement/v3/resource/3597468023",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N11=1",
-	"description": "5G Core N11 interface between AMF and SMF",
-	"category": "5GC",
+	"description": "5G Core End Point of N11 interface (between AMF and SMF)",
+	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"

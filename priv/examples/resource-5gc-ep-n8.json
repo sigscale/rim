@@ -2,8 +2,8 @@
 	"id": "3597468022",
 	"href": "/resourceInventoryManagement/v3/resource/3597468022",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N8=1",
-	"description": "5G Core N8 interface between AMF and UDM",
-	"category": "5GC",
+	"description": "5G Core End Point of N8 interface (between AMF and UDM)",
+	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"

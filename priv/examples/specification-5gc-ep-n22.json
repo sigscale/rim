@@ -1,6 +1,6 @@
 {
 	"name": "EP_N22",
-	"description": "5G Core N22 interface (between AMF and NSSF) resource specification",
+	"description": "5G Core End Point of N22 interface (between AMF and NSSF) resource specification",
 	"@type": "EP_N22Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N22Spec",
 	"@baseType": "EP_RPSpec",
@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "5GC",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_N22",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_N22"

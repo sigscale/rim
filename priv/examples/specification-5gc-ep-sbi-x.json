@@ -1,6 +1,6 @@
 {
 	"name": "EP_SBI_X",
-	"description": "5G Core End Point (EP) Service Based Interface (SBI) X resource specification",
+	"description": "5G Core End Point (EP) of Service Based Interface (SBI) X resource specification",
 	"@type": "EP_SBI_XSpec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_SBI_XSpec",
 	"@baseType": "EP_RPSpec",
@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "5GC",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_SBI_X",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_SBI_X"

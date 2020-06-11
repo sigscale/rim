@@ -1,6 +1,6 @@
 {
 	"name": "EP_N17",
-	"description": "5G Core N17 interface (between AMF and 5G-EIR) resource specification",
+	"description": "5G Core End Point of N17 interface (between AMF and 5G-EIR) resource specification",
 	"@type": "EP_N17Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N17Spec",
 	"@baseType": "EP_RPSpec",
@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "5GC",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_N17",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_N17"

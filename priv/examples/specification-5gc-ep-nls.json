@@ -1,6 +1,6 @@
 {
 	"name": "EP_NLS",
-	"description": "5G Core NLs interface (between AMF and LMF) resource specification",
+	"description": "5G Core End Point of NLs interface (between AMF and LMF) resource specification",
 	"@type": "EP_NLSSpec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_NLSSpec",
 	"@baseType": "EP_RPSpec",
@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "5GC",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_NLS",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_NLS"

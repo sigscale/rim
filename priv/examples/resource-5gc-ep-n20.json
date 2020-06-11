@@ -2,8 +2,8 @@
 	"id": "3597468028",
 	"href": "/resourceInventoryManagement/v3/resource/3597468028",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N20=1",
-	"description": "5G Core N20 interface between AMF and SMSF",
-	"category": "5GC",
+	"description": "5G Core End Point of N20 interface (between AMF and SMSF)",
+	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"

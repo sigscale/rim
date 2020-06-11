@@ -2,8 +2,8 @@
 	"id": "3597468032",
 	"href": "/resourceInventoryManagement/v3/resource/3597468032",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLG=1",
-	"description": "5G Core NLg interface between AMF and GMLC",
-	"category": "5GC",
+	"description": "5G Core End Point of NLg interface (between AMF and GMLC)",
+	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"

@@ -2,7 +2,7 @@
 	"id": "3597468036",
 	"href": "/resourceInventoryManagement/v3/resource/3597468036",
 	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N7=1",
-	"description": "5G Core Core End Point of N7 interface (between SMF and PCF)",
+	"description": "5G Core End Point of N7 interface (between SMF and PCF)",
 	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

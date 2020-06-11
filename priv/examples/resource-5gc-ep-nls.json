@@ -2,8 +2,8 @@
 	"id": "3597468031",
 	"href": "/resourceInventoryManagement/v3/resource/3597468031",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLS=1",
-	"description": "5G Core NLs interface between AMF and LMF",
-	"category": "5GC",
+	"description": "5G Core End Point of NLs interface (between AMF and LMF)",
+	"category": "Core",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
 		"endDateTime": "2020-12-31T23:59:59Z"

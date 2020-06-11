@@ -1,6 +1,6 @@
 {
 	"name": "EP_N14",
-	"description": "5G Core N14 interface between two AMFs resource specification",
+	"description": "5G Core End Point of N14 interface (between two AMFs) resource specification",
 	"@type": "EP_N14Spec",
 	"@schemaLocation": "http://sigscale.org/schema/EP_N14Spec",
 	"@baseType": "EP_RPSpec",
@@ -11,7 +11,7 @@
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "5GC",
+	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_N14",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_N14"
