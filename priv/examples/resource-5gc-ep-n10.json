@@ -1,0 +1,39 @@
+{
+	"id": "3597468037",
+	"href": "/resourceInventoryManagement/v3/resource/3597468037",
+	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N10=1",
+	"description": "5G Core End Point of N10 interface (between SMF and UDM)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N10",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N10",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597468004",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468004",
+		"@type": "EP_N10Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n10-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N10=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam837",
+			"vsDataFormatVersion": "acmeParams-v108",
+			"vsData": 908
+		}
+	]
+}

@@ -35,7 +35,7 @@
 		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0, ngc_udsf/0,
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
 		ngc_nwdaf/0, ngc_ep_n2/0, ngc_ep_n4/0, ngc_ep_n7/0, ngc_ep_n8/0,
-		ngc_ep_n11/0,
+		ngc_ep_n10/0, ngc_ep_n11/0,
 		ngc_ep_n12/0, ngc_ep_n14/0, ngc_ep_n15/0, ngc_ep_n17/0, ngc_ep_n20/0,
 		ngc_ep_n22/0, ngc_ep_n26/0, ngc_ep_nls/0, ngc_ep_nlg/0, ngc_ep_sbi_x/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
@@ -2945,6 +2945,40 @@ ngc_ep_n8() ->
 			category = "5GC",
 			target_schema = #target_schema_ref{class_type = "EP_N8",
 					schema = "/resourceInventoryManagement/v3/schema/EP_N8"},
+			characteristic = Chars}.
+
+-spec ngc_ep_n10() -> specification().
+%% @doc 5GC End Point N10 resource specification.
+ngc_ep_n10() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_N10",
+			description = "5G Core End Point of N10 interface (between SMF and UDM)"
+					"resource specification",
+			class_type = "EP_N10Spec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_N10Spec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "EP_N10",
+					schema = "/resourceInventoryManagement/v3/schema/EP_N10"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n11() -> specification().
