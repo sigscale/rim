@@ -1,0 +1,43 @@
+{
+	"$id": "http://sigscale.org/schema/EP_N4Spec",
+	"title": "5GC EP N4 Specification",
+	"description": "5G Core End Point of N4 interface (between SMF and UPF) connection point specification",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"resourceSpecCharacteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"id",
+											"userLabel",
+											"farEndEntity",
+											"localAddress",
+											"remoteAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

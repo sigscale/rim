@@ -1,0 +1,39 @@
+{
+	"id": "3597468035",
+	"href": "/resourceInventoryManagement/v3/resource/3597468035",
+	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N4=1",
+	"description": "5G Core Core End Point of N4 interface (between SMF and UPF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N4",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N4",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597468006",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468006",
+		"@type": "EP_N4Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n4-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N4=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam835",
+			"vsDataFormatVersion": "acmeParams-v106",
+			"vsData": 906
+		}
+	]
+}
