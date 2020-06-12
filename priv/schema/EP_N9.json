@@ -1,0 +1,39 @@
+{
+	"$id": "http://sigscale.org/schema/EP_N9",
+	"title": "5GC EP N9",
+	"description": "5G Core End Point of N9 interface (between two UPFs) connection point",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "EP_RP"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"localAddress"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}
