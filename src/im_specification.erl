@@ -2252,7 +2252,7 @@ ngc_smf() ->
 			characteristic = Chars}.
 
 -spec ngc_upf() -> specification().
-%% @doc 5G User Plane Function (UPF) resource function specification.
+%% @doc 5GC User Plane Function (UPF) resource function specification.
 ngc_upf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2278,7 +2278,7 @@ ngc_upf() ->
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TacList, SNSSAIList],
 	#specification{name = "UPFFunction",
-			description = "5G User Plane Function (UPF)",
+			description = "5G Core User Plane Function (UPF)",
 			class_type = "UPFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/UPFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

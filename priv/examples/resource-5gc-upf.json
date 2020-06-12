@@ -1,0 +1,147 @@
+{
+	"id": "3597468045",
+	"href": "/resourceInventoryManagement/v3/resource/3597468045",
+	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1",
+	"description": "5G Core User Plane Function (UPF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "UPFFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UPFFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467996",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467996",
+		"@type": "UPFFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "UPF 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam845",
+			"vsDataFormatVersion": "acmeParams-v116",
+			"vsData": 916
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "3597468041",
+				"href": "/resourceInventoryManagement/v3/resource/3597468041",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N3=1",
+				"@referredType": "EP_N3"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "35974680352",
+				"href": "/resourceInventoryManagement/v3/resource/35974680352",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N4=1",
+				"@referredType": "EP_N4"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468043",
+				"href": "/resourceInventoryManagement/v3/resource/3597468043",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N6=1",
+				"@referredType": "EP_N6"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468042",
+				"href": "/resourceInventoryManagement/v3/resource/3597468042",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N9=1",
+				"@referredType": "EP_N9"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468044",
+				"href": "/resourceInventoryManagement/v3/resource/3597468044",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_S5U=1",
+				"@referredType": "EP_S5U"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "35974680332",
+				"href": "/resourceInventoryManagement/v3/resource/35974680332",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_SBI_X=1",
+				"@referredType": "EP_SBI_X"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "3597468041",
+				"href": "/resourceInventoryManagement/v3/resource/3597468041",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N3=1",
+				"@referredType": "EP_N3"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "35974680352",
+				"href": "/resourceInventoryManagement/v3/resource/35974680352",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N4=1",
+				"@referredType": "EP_N4"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468043",
+				"href": "/resourceInventoryManagement/v3/resource/3597468043",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N6=1",
+				"@referredType": "EP_N6"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468042",
+				"href": "/resourceInventoryManagement/v3/resource/3597468042",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N9=1",
+				"@referredType": "EP_N9"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468044",
+				"href": "/resourceInventoryManagement/v3/resource/3597468044",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_S5U=1",
+				"@referredType": "EP_S5U"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "35974680332",
+				"href": "/resourceInventoryManagement/v3/resource/35974680332",
+				"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_SBI_X=1",
+				"@referredType": "EP_SBI_X"
+			},
+			"type": "contains"
+		}
+	]
+}

@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/UPFFunctionSpec",
-	"title": "5G UPF Specification",
-	"description": "5G User Plane Function (UPF) resource function specification",
+	"title": "5GC UPF Specification",
+	"description": "5G Core User Plane Function (UPF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
