@@ -1,0 +1,39 @@
+{
+	"id": "3597468043",
+	"href": "/resourceInventoryManagement/v3/resource/3597468043",
+	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N6=1",
+	"description": "5G Core End Point of N6 interface (between UPF and DN)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N6",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N6",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467998",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467998",
+		"@type": "EP_N6Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n6-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "SubNetwork=12,ManagedElement=1,DNFunction=1,EP_N6=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam843",
+			"vsDataFormatVersion": "acmeParams-v114",
+			"vsData": 914
+		}
+	]
+}
