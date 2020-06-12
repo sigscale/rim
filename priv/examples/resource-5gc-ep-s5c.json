@@ -26,7 +26,7 @@
 		},
 		{
 			"name": "farEndEntity",
-			"value" : "DC=sigscale.net,SubNetwork=2,ManagedElement=1,SgwFunction=1,EP_S5C=1"
+			"value" : "DC=sigscale.net,SubNetwork=4,ManagedElement=1,ServingGWFunction=1,EP_S5C=1"
 		}
 	],
 	"vsDataContainer": [
