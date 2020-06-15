@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/PCFFunctionSpec",
-	"title": "5G PCF Specification",
-	"description": "5G Policy Control Function (PCF) resource function specification",
+	"title": "5GC PCF Specification",
+	"description": "5G Core Policy Control Function (PCF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
