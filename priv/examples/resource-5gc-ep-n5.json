@@ -1,0 +1,39 @@
+{
+	"id": "3597468047",
+	"href": "/resourceInventoryManagement/v3/resource/3597468047",
+	"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N5=1",
+	"description": "5G Core End Point of N5 interface (between PCF and AF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N5",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N5",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467994",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467994",
+		"@type": "EP_N5Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n5-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,AFFunction=1,EP_N5=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam846",
+			"vsDataFormatVersion": "acmeParams-v117",
+			"vsData": 917
+		}
+	]
+}
