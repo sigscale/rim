@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/AUSFFunctionSpec",
-	"title": "5G AUSF Specification",
-	"description": "5G Authentication Server Function (AUSF) resource function specification",
+	"title": "5GC AUSF Specification",
+	"description": "5G Core Authentication Server Function (AUSF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

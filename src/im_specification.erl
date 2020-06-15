@@ -2365,7 +2365,7 @@ ngc_pcf() ->
 			characteristic = Chars}.
 
 -spec ngc_ausf() -> specification().
-%% @doc 5G Authentication Server Function (AUSF) resource function specification.
+%% @doc 5GC Authentication Server Function (AUSF) resource function specification.
 ngc_ausf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2396,7 +2396,7 @@ ngc_ausf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
 	#specification{name = "AUSFFunction",
-			description = "5G Authentication Server Function (AUSF)",
+			description = "5G Core Authentication Server Function (AUSF)",
 			class_type = "AUSFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/AUSFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",
