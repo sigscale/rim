@@ -1,13 +1,13 @@
 {
 	"name": "N3IWFFunction",
-	"description": "5G Non 3GPP Inter Working Function (N3IWF) resource function specification",
+	"description": "5G Core Non 3GPP Inter Working Function (N3IWF) resource function specification",
 	"@type": "N3IWFFunctionSpec",
 	"@schemaLocation": "http://sigscale.org/schema/N3IWFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00:00Z",
-		"endDateTime": "2019-12-31T23:59:59Z"
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
@@ -24,8 +24,8 @@
 			"role": "Supplier",
 			"name": "ACME Inc.",
 			"validFor": {
-				"startDateTime": "2019-01-29T00:00:00Z",
-				"endDateTime": "2019-12-31T23:59:59Z"
+				"startDateTime": "2020-01-01T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
 			}
 		}
 	],

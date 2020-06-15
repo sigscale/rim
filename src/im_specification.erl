@@ -2290,7 +2290,7 @@ ngc_upf() ->
 			characteristic = Chars}.
 
 -spec ngc_n3iwf() -> specification().
-%% @doc 5G Non 3GPP Inter Working Function (N3IWF) resource function specification.
+%% @doc 5GC Non 3GPP Inter Working Function (N3IWF) resource function specification.
 ngc_n3iwf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2308,7 +2308,7 @@ ngc_n3iwf() ->
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
 	#specification{name = "N3IWFFunction",
-			description = "5G Non 3GPP Inter Working Function (N3IWF)",
+			description = "5G Core Non 3GPP Inter Working Function (N3IWF)",
 			class_type = "N3IWFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/N3IWFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

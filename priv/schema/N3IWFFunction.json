@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/N3IWFFunction",
+	"title": "5GC N3IWF",
+	"description": "5G Core Non 3GPP Inter Working Function (N3IWF) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_N2": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N3": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}
