@@ -1,0 +1,39 @@
+{
+	"id": "3597468056",
+	"href": "/resourceInventoryManagement/v3/resource/3597468056",
+	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N13=1",
+	"description": "5G Core End Point of N13 interface (between AUSF and UDM)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N13",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N13",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467993",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467993",
+		"@type": "EP_N13Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n13-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N13=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam848",
+			"vsDataFormatVersion": "acmeParams-v119",
+			"vsData": 919
+		}
+	]
+}

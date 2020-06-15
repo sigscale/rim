@@ -124,6 +124,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_N10Spec.json \
 		$(abs_builddir)/EP_N11Spec.json \
 		$(abs_builddir)/EP_N12Spec.json \
+		$(abs_builddir)/EP_N13Spec.json \
 		$(abs_builddir)/EP_N14Spec.json \
 		$(abs_builddir)/EP_N15Spec.json \
 		$(abs_builddir)/EP_N16Spec.json \
@@ -626,6 +627,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_N12Spec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_N13Spec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
