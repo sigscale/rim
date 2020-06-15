@@ -15,8 +15,8 @@
 	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N13",
 	"version": "0.1",
 	"resourceSpecification": {
-		"id": "3597467993",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467993",
+		"id": "3597467991",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467991",
 		"@type": "EP_N13Spec"
 	},
 	"resourceCharacteristic": [

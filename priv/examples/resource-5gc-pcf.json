@@ -15,7 +15,7 @@
 	"@schemaLocation": "/resourceInventoryManagement/v3/schema/PCFFunction",
 	"version": "0.1",
 	"resourceSpecification": {
-		"id": "3597467994",
+		"id": "3597467992",
 		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467994",
 		"@type": "PCFFunctionSpec"
 	},

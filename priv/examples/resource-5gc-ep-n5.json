@@ -1,6 +1,6 @@
 {
-	"id": "3597468047",
-	"href": "/resourceInventoryManagement/v3/resource/3597468047",
+	"id": "3597468049",
+	"href": "/resourceInventoryManagement/v3/resource/3597468049",
 	"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N5=1",
 	"description": "5G Core End Point of N5 interface (between PCF and AF)",
 	"category": "Core",
