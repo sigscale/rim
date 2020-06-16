@@ -622,11 +622,6 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-5gc-ausf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/AUSFFunctionSpec.json \
-				--unknown-formats="base64" \
-				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-5gc-ausf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/UDMFunctionSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
