@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/UDSFFunction",
+	"title": "5GC UDSF",
+	"description": "5G Core Unified Data Storage Function (UDSF) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList",
+											"sBIFqdn",
+											"sBIServiceList",
+											"snssaiList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_SBI_X": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

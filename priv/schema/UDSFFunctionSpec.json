@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/UDSFFunctionSpec",
-	"title": "5G UDSF Specification",
-	"description": "5G Unified Data Storage Function (UDSF) resource function specification",
+	"title": "5GC UDSF Specification",
+	"description": "5G Core Unified Data Storage Function (UDSF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

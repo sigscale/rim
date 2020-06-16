@@ -2494,7 +2494,7 @@ ngc_udr() ->
 			characteristic = Chars}.
 
 -spec ngc_udsf() -> specification().
-%% @doc 5G Unified Data Storage Function (UDSF) resource function specification.
+%% @doc 5GC Unified Data Storage Function (UDSF) resource function specification.
 ngc_udsf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2525,7 +2525,7 @@ ngc_udsf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
 	#specification{name = "UDSFFunction",
-			description = "5G Unified Data Storage Function (UDSF)",
+			description = "5G Core Unified Data Storage Function (UDSF)",
 			class_type = "UDSFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/UDSFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",
