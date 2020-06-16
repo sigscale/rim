@@ -2408,7 +2408,7 @@ ngc_ausf() ->
 			characteristic = Chars}.
 
 -spec ngc_udm() -> specification().
-%% @doc 5G Unified Data Management (UDM) resource function specification.
+%% @doc 5GC Unified Data Management (UDM) resource function specification.
 ngc_udm() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2439,7 +2439,7 @@ ngc_udm() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
 	#specification{name = "UDMFunction",
-			description = "5G Unified Data Management (UDF)",
+			description = "5G Core Unified Data Management (UDM)",
 			class_type = "UDMFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/UDMFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

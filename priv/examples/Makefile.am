@@ -212,6 +212,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-5gc-n3iwf.json \
 		$(abs_builddir)/resource-5gc-pcf.json \
 		$(abs_builddir)/resource-5gc-ausf.json \
+		$(abs_builddir)/resource-5gc-udm.json \
 		$(abs_builddir)/resource-5gc-ep-n2.json \
 		$(abs_builddir)/resource-5gc-ep-n3.json \
 		$(abs_builddir)/resource-5gc-ep-n4.json \
@@ -1052,6 +1053,8 @@ check_DATA = .validation_ok
 				-d resource-5gc-pcf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-5gc-ausf.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-5gc-udm.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-5gc-ep-n2.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \

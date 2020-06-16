@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/UDMFunctionSpec",
-	"title": "5G UDM Specification",
-	"description": "5G Unified Data Management (UDM) resource function specification",
+	"title": "5GC UDM Specification",
+	"description": "5G Core Unified Data Management (UDM) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
