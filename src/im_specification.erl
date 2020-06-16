@@ -2584,7 +2584,7 @@ ngc_nrf() ->
 			characteristic = Chars}.
 
 -spec ngc_nssf() -> specification().
-%% @doc 5G Network Slice Selection Function (NSSF) resource function specification.
+%% @doc 5GC Network Slice Selection Function (NSSF) resource function specification.
 ngc_nssf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2619,7 +2619,7 @@ ngc_nssf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			NSIIdList, NFProfileList, SNSSAIList],
 	#specification{name = "NSSFFunction",
-			description = "5G Network Slice Selection Function (NSSF)",
+			description = "5G Core Network Slice Selection Function (NSSF)",
 			class_type = "NSSFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/NSSFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

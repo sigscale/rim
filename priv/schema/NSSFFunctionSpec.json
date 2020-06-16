@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/NSSFFunctionSpec",
-	"title": "5G NSSF Specification",
-	"description": "5G Network Slice Selection Function (NSSF) resource function specification",
+	"title": "5GC NSSF Specification",
+	"description": "5G Core Network Slice Selection Function (NSSF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
