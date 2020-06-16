@@ -2451,7 +2451,7 @@ ngc_udm() ->
 			characteristic = Chars}.
 
 -spec ngc_udr() -> specification().
-%% @doc 5G Unified Data Repository (UDR) resource function specification.
+%% @doc 5GC Unified Data Repository (UDR) resource function specification.
 ngc_udr() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2482,7 +2482,7 @@ ngc_udr() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
 	#specification{name = "UDRFunction",
-			description = "5G Unified Data Repository (UDR)",
+			description = "5G Core Unified Data Repository (UDR)",
 			class_type = "UDRFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/UDRFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

@@ -1,20 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/UDRFunctionSpec",
-	"title": "5GC UDR Specification",
-	"description": "5G Core Unified Data Repository (UDR) resource function specification",
+	"$id": "http://sigscale.org/schema/UDRFunction",
+	"title": "5GC UDR",
+	"description": "5G Core Unified Data Repository (UDR) resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
+					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
 							},
 							{
 								"type": "object",
@@ -24,9 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"id",
-											"userLabel",
-											"vnfParametersList",
 											"plmnIdList",
 											"sBIFqdn",
 											"sBIServiceList",
@@ -37,6 +35,9 @@
 							}
 						]
 					}
+				},
+				"eP_SBI_X": {
+					"$ref": "genericNrm#/definitions/DnList"
 				}
 			}
 		}
