@@ -1,0 +1,39 @@
+{
+	"id": "3597468073",
+	"href": "/resourceInventoryManagement/v3/resource/3597468073",
+	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N31=1",
+	"description": "5G Core End Point of N31 interface",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N31",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N31",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467984",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467984",
+		"@type": "EP_N31Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n31-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DN"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam855",
+			"vsDataFormatVersion": "acmeParams-v126",
+			"vsData": 926
+		}
+	]
+}
