@@ -1,0 +1,39 @@
+{
+	"id": "3597468069",
+	"href": "/resourceInventoryManagement/v3/resource/3597468069",
+	"name": "SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_N27=1",
+	"description": "5G Core End Point of N27 interface",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_N27",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N27",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467986",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467986",
+		"@type": "EP_N27Spec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-n27-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DN"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam853",
+			"vsDataFormatVersion": "acmeParams-v124",
+			"vsData": 924
+		}
+	]
+}

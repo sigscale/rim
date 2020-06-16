@@ -116,6 +116,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-5gc-ep-n20.json \
 		$(abs_builddir)/specification-5gc-ep-n22.json \
 		$(abs_builddir)/specification-5gc-ep-n26.json \
+		$(abs_builddir)/specification-5gc-ep-n27.json \
 		$(abs_builddir)/specification-5gc-ep-nls.json \
 		$(abs_builddir)/specification-5gc-ep-nlg.json \
 		$(abs_builddir)/specification-5gc-ep-sbi-x.json \
@@ -234,6 +235,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-5gc-ep-n20.json \
 		$(abs_builddir)/resource-5gc-ep-n22.json \
 		$(abs_builddir)/resource-5gc-ep-n26.json \
+		$(abs_builddir)/resource-5gc-ep-n27.json \
 		$(abs_builddir)/resource-5gc-ep-nlg.json \
 		$(abs_builddir)/resource-5gc-ep-sbi-x.json \
 		$(abs_builddir)/resource-5gc-ep-s5c.json \
@@ -769,6 +771,11 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-5gc-ep-n26.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/EP_N27Spec.json \
+				--unknown-formats="base64" \
+				--unknown-formats="float" \
+				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d specification-5gc-ep-n27.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NLSSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -1094,6 +1101,8 @@ check_DATA = .validation_ok
 				-d resource-5gc-ep-n22.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-5gc-ep-n26.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-5gc-ep-n27.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-5gc-ep-nls.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
