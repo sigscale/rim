@@ -1,13 +1,13 @@
 {
 	"name": "NRFFunction",
-	"description": "5G Network Repository Function (NRF) resource function specification",
+	"description": "5G Core Network Repository Function (NRF) resource function specification",
 	"@type": "NRFFunctionSpec",
 	"@schemaLocation": "http://sigscale.org/schema/NRFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00:00Z",
-		"endDateTime": "2019-12-31T23:59:59Z"
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
@@ -24,8 +24,8 @@
 			"role": "Supplier",
 			"name": "ACME Inc.",
 			"validFor": {
-				"startDateTime": "2019-01-29T00:00:00Z",
-				"endDateTime": "2019-12-31T23:59:59Z"
+				"startDateTime": "2020-01-29T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
 			}
 		}
 	],

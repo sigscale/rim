@@ -2537,7 +2537,7 @@ ngc_udsf() ->
 			characteristic = Chars}.
 
 -spec ngc_nrf() -> specification().
-%% @doc 5G Network Repository Function (NRF) resource function specification.
+%% @doc 5GC Network Repository Function (NRF) resource function specification.
 ngc_nrf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2572,7 +2572,7 @@ ngc_nrf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			NSIIdList, NFProfileList, SNSSAIList],
 	#specification{name = "NRFFunction",
-			description = "5G Network Repository Function (NRF)",
+			description = "5G Core Network Repository Function (NRF)",
 			class_type = "NRFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/NRFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

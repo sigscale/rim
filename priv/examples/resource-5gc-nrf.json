@@ -1,0 +1,75 @@
+{
+	"id": "3597468070",
+	"href": "/resourceInventoryManagement/v3/resource/3597468070",
+	"name": "SubNetwork=12,ManagedElement=1,NRFFunction=1",
+	"description": "5G Core Network Repository Function (NRF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "NRFFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NRFFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467985",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467985",
+		"@type": "NRFFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "NRF 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam854",
+			"vsDataFormatVersion": "acmeParams-v125",
+			"vsData": 925
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "3597468071",
+				"href": "/resourceInventoryManagement/v3/resource/3597468071",
+				"name": "SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_N27=1",
+				"@referredType": "EP_N27"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468072",
+				"href": "/resourceInventoryManagement/v3/resource/3597468072",
+				"name": "SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_SBI_X=1",
+				"@referredType": "EP_SBI_X"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "3597468071",
+				"href": "/resourceInventoryManagement/v3/resource/3597468071",
+				"name": "SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_N27=1",
+				"@referredType": "EP_N27"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468072",
+				"href": "/resourceInventoryManagement/v3/resource/3597468072",
+				"name": "SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_SBI_X=1",
+				"@referredType": "EP_SBI_X"
+			},
+			"type": "contains"
+		}
+	]
+}
