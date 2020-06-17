@@ -1,19 +1,19 @@
 {
 	"name": "LMFFunction",
-	"description": "5G Location Management Function (LMF) resource function specification",
+	"description": "5G Core Location Management Function (LMF) resource function specification",
 	"@type": "LMFFunctionSpec",
 	"@schemaLocation": "http://sigscale.org/schema/LMFFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00:00Z",
-		"endDateTime": "2019-12-31T23:59:59Z"
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
 	"category": "Core",
 	"targetResourceSchema": {
-		"@type": "SMSFFunction",
+		"@type": "LMFFunction",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/LMFFunction"
 	},
 	"relatedParty": [
@@ -24,8 +24,8 @@
 			"role": "Supplier",
 			"name": "ACME Inc.",
 			"validFor": {
-				"startDateTime": "2019-01-29T00:00:00Z",
-				"endDateTime": "2019-12-31T23:59:59Z"
+				"startDateTime": "2020-01-01T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
 			}
 		}
 	],

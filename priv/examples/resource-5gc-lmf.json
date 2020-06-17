@@ -1,0 +1,57 @@
+{
+	"id": "3597468080",
+	"href": "/resourceInventoryManagement/v3/resource/3597468080",
+	"name": "SubNetwork=12,ManagedElement=1,LMFFunction=1",
+	"description": "5G Core Location Management Function (LMF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "LMFFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/LMFFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467979",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467979",
+		"@type": "LMFFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "LMF 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam860",
+			"vsDataFormatVersion": "acmeParams-v131",
+			"vsData": 931
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "3597468081",
+				"href": "/resourceInventoryManagement/v3/resource/3597468081",
+				"name": "SubNetwork=12,ManagedElement=1,LMFFunction=1,EP_NLS=1",
+				"@referredType": "EP_NLS"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "3597468081",
+				"href": "/resourceInventoryManagement/v3/resource/3597468081",
+				"name": "SubNetwork=12,ManagedElement=1,LMFFunction=1,EP_NLS=1",
+				"@referredType": "EP_NLS"
+			},
+			"type": "contains"
+		}
+	]
+}

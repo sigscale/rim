@@ -1,0 +1,42 @@
+{
+	"$id": "http://sigscale.org/schema/LMFFunction",
+	"title": "5GC LMF",
+	"description": "5G Core Location Management Function (LMF) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_NLS": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

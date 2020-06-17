@@ -2671,7 +2671,7 @@ ngc_smsf() ->
 			characteristic = Chars}.
 
 -spec ngc_lmf() -> specification().
-%% @doc 5G Location Management Function (LMF) resource function specification.
+%% @doc 5GC Location Management Function (LMF) resource function specification.
 ngc_lmf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2689,7 +2689,7 @@ ngc_lmf() ->
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
 	#specification{name = "LMFFunction",
-			description = "5G Location Management Function (LMF)",
+			description = "5G Core Location Management Function (LMF)",
 			class_type = "LMFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/LMFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",
