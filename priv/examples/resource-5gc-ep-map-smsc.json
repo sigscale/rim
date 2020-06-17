@@ -1,0 +1,39 @@
+{
+	"id": "3597468079",
+	"href": "/resourceInventoryManagement/v3/resource/3597468079",
+	"name": "SubNetwork=12,ManagedElement=1,SMSFunction=1,EP_MAP_SMSC=1",
+	"description": "5G Core End Point of MAP interface",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_MAP_SMSC",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_MAP_SMSC",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467980",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467982",
+		"@type": "EP_MAP_SMSCSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-map-smsc-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DN"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam859",
+			"vsDataFormatVersion": "acmeParams-v130",
+			"vsData": 930
+		}
+	]
+}

@@ -41,7 +41,7 @@
 		ngc_ep_n20/0, ngc_ep_n21/0, ngc_ep_n22/0, ngc_ep_n26/0, ngc_ep_n27/0,
 		ngc_ep_n31/0,
 		ngc_ep_nls/0, ngc_ep_nlg/0, ngc_ep_sbi_x/0, ngc_ep_s5c/0, ngc_ep_s5u/0,
-		ngc_ep_rx/0]).
+		ngc_ep_rx/0, ngc_ep_map_smsc/0]).
 -export([epc_sgw/0, epc_pgw/0, epc_mme/0, epc_pcrf/0, epc_epdg/0,
 		epc_link_mme_mme/0, epc_link_hss_mme/0, epc_link_mme_sgsn/0,
 		epc_link_mme_servinggw/0, epc_link_enb_mme/0, epc_ep_rp_eps/0]).
@@ -3754,6 +3754,40 @@ ngc_ep_rx() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_Rx",
 					schema = "/resourceInventoryManagement/v3/schema/EP_Rx"},
+			characteristic = Chars}.
+
+-spec ngc_ep_map_smsc() -> specification().
+%% @doc 5GC End Point MAP SMSC resource specification.
+ngc_ep_map_smsc() ->
+	ID = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	FarEndEntity = #specification_char{name = "farEndEntity",
+			description = [],
+			value_type = "string"},
+	LocalAddress = #specification_char{name = "localAddress",
+			description = "Includes IP address and VLAN ID used for initialization"
+					"of the underlying transport",
+			value_type = "string"},
+	RemoteAddress = #specification_char{name = "remoteAddress",
+			description = "IP address used for initialization of the"
+					"underlying transport",
+			value_type = "string"},
+	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
+	#specification{name = "EP_MAP_SMSC",
+			description = "5G Core End Point of MAP interface"
+					"resource specification",
+			class_type = "EP_MAP_SMSCSpec",
+			schema = "/resourceCatalogManagement/v3/schema/EP_MAP_SMSCSpec",
+			base_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "Core",
+			target_schema = #target_schema_ref{class_type = "EP_MAP_SMSC",
+					schema = "/resourceInventoryManagement/v3/schema/EP_MAP_SMSC"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
