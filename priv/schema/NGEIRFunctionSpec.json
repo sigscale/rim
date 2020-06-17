@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/NGEIRFunctionSpec",
-	"title": "5G NGEIR Specification",
-	"description": "5G NG Equipment Identity Register (NGEIR) resource function specification",
+	"title": "5GC NGEIR Specification",
+	"description": "5G Core NG Equipment Identity Register (NGEIR) resource function specification",
 	"type": "object",
 	"allOf": [
 		{

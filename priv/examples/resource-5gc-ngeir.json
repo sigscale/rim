@@ -1,0 +1,57 @@
+{
+	"id": "3597468082",
+	"href": "/resourceInventoryManagement/v3/resource/3597468082",
+	"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1",
+	"description": "5G Core NG Equipment Identity Register (NGEIR)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "NGEIRFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NGEIRFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467978",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467978",
+		"@type": "NGEIRFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "NGEIR 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam861",
+			"vsDataFormatVersion": "acmeParams-v132",
+			"vsData": 932
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "3597468083",
+				"href": "/resourceInventoryManagement/v3/resource/3597468083",
+				"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1,EP_N17=1",
+				"@referredType": "EP_N17"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "3597468083",
+				"href": "/resourceInventoryManagement/v3/resource/3597468083",
+				"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1,EP_N17=1",
+				"@referredType": "EP_N17"
+			},
+			"type": "contains"
+		}
+	]
+}

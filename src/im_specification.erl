@@ -2701,7 +2701,7 @@ ngc_lmf() ->
 			characteristic = Chars}.
 
 -spec ngc_ngeir() -> specification().
-%% @doc 5G NG Equipment Identity Register (ngEIR) resource function specification.
+%% @doc 5GC NG Equipment Identity Register (ngEIR) resource function specification.
 ngc_ngeir() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2732,7 +2732,7 @@ ngc_ngeir() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
 	#specification{name = "NGEIRFunction",
-			description = "5G NG Equipment Identity Register (ngEIR)",
+			description = "5G Core NG Equipment Identity Register (ngEIR)",
 			class_type = "NGEIRFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/NGEIRFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

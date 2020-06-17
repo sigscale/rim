@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/NGEIRFunction",
+	"title": "5GC NGEIR",
+	"description": "5G Core NG Equipment Identity Register (NGEIR) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList",
+											"sBIFqdn",
+											"sBIServiceList",
+											"snssaiList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_N17": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}
