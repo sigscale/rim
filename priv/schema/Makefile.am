@@ -130,6 +130,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_N16Spec.json \
 		$(abs_builddir)/EP_N17Spec.json \
 		$(abs_builddir)/EP_N20Spec.json \
+		$(abs_builddir)/EP_N21Spec.json \
 		$(abs_builddir)/EP_N22Spec.json \
 		$(abs_builddir)/EP_N26Spec.json \
 		$(abs_builddir)/EP_N27Spec.json \
@@ -659,6 +660,11 @@ check_DATA = .validation_ok
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_N20Spec.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s EP_N21Spec.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
