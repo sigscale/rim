@@ -1,0 +1,50 @@
+{
+	"$id": "http://sigscale.org/schema/SMSFFunction",
+	"title": "5GC SMSF",
+	"description": "5G Core Short Message Service Function (SMSF) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList",
+											"sBIFqdn",
+											"sBISerivceList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_N20": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_N21": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_MAP_SMSC": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

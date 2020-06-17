@@ -2632,7 +2632,7 @@ ngc_nssf() ->
 			characteristic = Chars}.
 
 -spec ngc_smsf() -> specification().
-%% @doc 5G Short Message Service Function (SMSF) resource function specification.
+%% @doc 5GC Short Message Service Function (SMSF) resource function specification.
 ngc_smsf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2659,7 +2659,7 @@ ngc_smsf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList],
 	#specification{name = "SMSFFunction",
-			description = "5G Short Message Service Function (SMSF)",
+			description = "5G Core Short Message Service Function (SMSF)",
 			class_type = "SMSFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/SMSFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

@@ -1,0 +1,93 @@
+{
+	"id": "3597468076",
+	"href": "/resourceInventoryManagement/v3/resource/3597468074",
+	"name": "SubNetwork=12,ManagedElement=1,SMSFunction=1",
+	"description": "5G Core Short Message Service Function (SMSF)",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "SMSFFunction",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SMSFFunction",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467981",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467981",
+		"@type": "SMSFFunctionSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "SMSF 1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam858",
+			"vsDataFormatVersion": "acmeParams-v129",
+			"vsData": 929
+		}
+	],
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "3597468077",
+				"href": "/resourceInventoryManagement/v3/resource/3597468077",
+				"name": "SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_N20=1",
+				"@referredType": "EP_N20"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468078",
+				"href": "/resourceInventoryManagement/v3/resource/3597468078",
+				"name": "SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_N21=1",
+				"@referredType": "EP_N21"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468079",
+				"href": "/resourceInventoryManagement/v3/resource/3597468079",
+				"name": "SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_MAP_SMSC=1",
+				"@referredType": "EP_MAP_SMSC"
+			},
+			"type": "contains"
+		}
+	],
+	"sap": [
+		{
+			"resourceRef": {
+				"id": "3597468077",
+				"href": "/resourceInventoryManagement/v3/resource/3597468077",
+				"name": "SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_N20=1",
+				"@referredType": "EP_N20"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468078",
+				"href": "/resourceInventoryManagement/v3/resource/3597468078",
+				"name": "SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_N21=1",
+				"@referredType": "EP_N21"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "3597468079",
+				"href": "/resourceInventoryManagement/v3/resource/3597468079",
+				"name": "SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_MAP_SMSC=1",
+				"@referredType": "EP_MAP_SMSC"
+			},
+			"type": "contains"
+		}
+	]
+}

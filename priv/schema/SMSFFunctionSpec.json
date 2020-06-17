@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/SMSFFunctionSpec",
-	"title": "5G SMSF Specification",
-	"description": "5G Short Message Service Function (SMSF) resource function specification",
+	"title": "5GC SMSF Specification",
+	"description": "5G Core Short Message Service Function (SMSF) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
