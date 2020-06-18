@@ -1,0 +1,42 @@
+{
+	"$id": "http://sigscale.org/schema/NWDAFFunction",
+	"title": "5GC NWDAF",
+	"description": "5G Network Data Analytics Function (NWDAF) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_SBI_X": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

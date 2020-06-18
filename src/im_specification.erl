@@ -2774,7 +2774,7 @@ ngc_sepp() ->
 			characteristic = Chars}.
 
 -spec ngc_nwdaf() -> specification().
-%% @doc 5G Network Data Analytics Function (NWDAF) resource function specification.
+%% @doc 5GC Network Data Analytics Function (NWDAF) resource function specification.
 ngc_nwdaf() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2805,7 +2805,7 @@ ngc_nwdaf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
 	#specification{name = "NWDAFFunction",
-			description = "5G Network Data Analytics Function (NWDAF)",
+			description = "5G Core Network Data Analytics Function (NWDAF)",
 			class_type = "NWDAFFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/NWDAFFunctionSpec",
 			base_type = "ResourceFunctionSpecification",
