@@ -1,0 +1,39 @@
+{
+	"id": "3597468085",
+	"href": "/resourceInventoryManagement/v3/resource/3597468085",
+	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_SBI_IPX=1",
+	"description": "5G Core End Point (EP) of Service Based Interface (SBI) IPX",
+	"category": "Core",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "EP_SBI_IPX",
+	"@baseType": "ManagedFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_SBI_IPX",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "3597467976",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467976",
+		"@type": "EP_SBI_IPXSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "userLabel",
+			"value" : "ep-sbi-ipx-1"
+		},
+		{
+			"name": "farEndEntity",
+			"value" : "DC=sigscale.net,SubNetwork=12,ManagedElement=1,SEPPFunction=1,EP_SBI_IPX=1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam863",
+			"vsDataFormatVersion": "acmeParams-v134",
+			"vsData": 934
+		}
+	]
+}

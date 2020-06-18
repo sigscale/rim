@@ -282,7 +282,7 @@ install8(Nodes, Acc) ->
 		ngc_ep_n11, ngc_ep_n12, ngc_ep_n13, ngc_ep_n14, ngc_ep_n15, ngc_ep_n16,
 		ngc_ep_n17, ngc_ep_n20, ngc_ep_n21, ngc_ep_n22, ngc_ep_n26, ngc_ep_n27,
 		ngc_ep_n31, ngc_ep_n32, ngc_ep_nls, ngc_ep_nlg, ngc_ep_sbi_x,
-		ngc_ep_s5c, ngc_ep_s5u, ngc_ep_rx, ngc_ep_map_smsc,
+		ngc_ep_sbi_ipx, ngc_ep_s5c, ngc_ep_s5u, ngc_ep_rx, ngc_ep_map_smsc,
 		epc_sgw, epc_pgw, epc_mme, epc_pcrf, epc_epdg,
 		epc_link_mme_mme, epc_link_hss_mme, epc_link_mme_sgsn,
 		epc_link_mme_servinggw, epc_link_enb_mme, epc_ep_rp_eps,
