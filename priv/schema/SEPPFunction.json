@@ -1,0 +1,45 @@
+{
+	"$id": "http://sigscale.org/schema/SEPPFunction",
+	"title": "5GC SEPP",
+	"description": "5G Core Security Edge Protection Proxy (SEPP) resource function",
+	"type": "object",
+	"allOf": [
+		{
+			"$ref": "ManagedFunction"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"characteristic": {
+					"type": "array",
+					"items": {
+						"allOf": [
+							{
+								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+							},
+							{
+								"type": "object",
+								"required": [
+									"name"
+								],
+								"properties": {
+									"name": {
+										"enum": [
+											"plmnIdList"
+										]
+									}
+								}
+							}
+						]
+					}
+				},
+				"eP_N32": {
+					"$ref": "genericNrm#/definitions/DnList"
+				},
+				"eP_SBI_IPX": {
+					"$ref": "genericNrm#/definitions/DnList"
+				}
+			}
+		}
+	]
+}

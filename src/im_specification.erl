@@ -2744,7 +2744,7 @@ ngc_ngeir() ->
 			characteristic = Chars}.
 
 -spec ngc_sepp() -> specification().
-%% @doc 5G Security Edge Protection Proxy (SEPP) resource function specification.
+%% @doc 5GC Security Edge Protection Proxy (SEPP) resource function specification.
 ngc_sepp() ->
 	ID = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
@@ -2762,7 +2762,7 @@ ngc_sepp() ->
 			value_schema = "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
 	#specification{name = "SEPPFunction",
-			description = "5G Security Edge Protection Proxy (SEPP)",
+			description = "5G Core Security Edge Protection Proxy (SEPP)",
 			class_type = "SEPPFunctionSpec",
 			schema = "/resourceCatalogManagement/v3/schema/SEPPFunctionSpec",
 			base_type = "ResourceFunctionSpecification",

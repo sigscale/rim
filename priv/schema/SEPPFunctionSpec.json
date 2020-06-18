@@ -1,7 +1,7 @@
 {
 	"$id": "http://sigscale.org/schema/SEPPFunctionSpec",
-	"title": "5G SEPP Specification",
-	"description": "5G Security Edge Protection Proxy (SEPP) resource function specification",
+	"title": "5GC SEPP Specification",
+	"description": "5G Core Security Edge Protection Proxy (SEPP) resource function specification",
 	"type": "object",
 	"allOf": [
 		{
