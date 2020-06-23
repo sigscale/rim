@@ -1,7 +1,7 @@
 {
 	"id": "3597468073",
 	"href": "/resourceInventoryManagement/v3/resource/3597468073",
-	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N31=1",
+	"name": "SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N31=1",
 	"description": "5G Core End Point of N31 interface",
 	"category": "Core",
 	"validFor": {

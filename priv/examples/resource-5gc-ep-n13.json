@@ -1,7 +1,7 @@
 {
 	"id": "3597468056",
 	"href": "/resourceInventoryManagement/v3/resource/3597468056",
-	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N13=1",
+	"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N13=1",
 	"description": "5G Core End Point of N13 interface (between AUSF and UDM)",
 	"category": "Core",
 	"validFor": {
