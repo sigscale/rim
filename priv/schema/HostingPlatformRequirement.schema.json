@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://datamodel.tmforum.org/HostingPlatformRequirement.schema.json",
+    "title": "HostingPlatformRequirement",
+    "definitions": {
+        "HostingPlatformRequirement": {
+            "$id": "#HostingPlatformRequirement",
+            "description": "A HostingPlatformRequirement implements a HostingPlatformRequirementSpecification for a specific InstalledSoftware.",
+            "type": "object",
+            "properties": {
+                "resourceCapacityDemand": {
+                    "description": "The amount of ResourceCapacity that is required, planned to be consumed or has been consumed.",
+                    "$ref": "../Resource/ResourceCapacityDemand.schema.json#ResourceCapacityDemand"
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "../Resource/LogicalResource.schema.json#LogicalResource"
+                }
+            ]
+        }
+    }
+}

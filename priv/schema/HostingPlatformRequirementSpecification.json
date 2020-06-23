@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://datamodel.tmforum.org/HostingPlatformRequirementResourceSpecification.json",
+    "title": "HostingPlatformRequirementSpecification",
+    "definitions": {
+        "HostingPlatformRequirementSpecification": {
+            "$id": "#HostingPlatformRequirementSpecification",
+            "description": "This is a base class that is used to define the invariant characteristics and behavior (attributes, constraints, and relationships) of a HostingPlatformRequirement Resource.",
+            "type": "object",
+            "properties": {
+                "isVirtualizable": {
+                    "type": "boolean",
+                    "description": "True if the Capacity required can be virtualized."
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "resourceCatalogManagement.json#LogicalResourceSpecification"
+                }
+            ]
+        }
+    }
+}

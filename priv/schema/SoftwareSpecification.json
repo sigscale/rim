@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://datamodel.tmforum.org/SoftwareSpecification.json",
+    "title": "SoftwareSpecification",
+    "definitions": {
+        "SoftwareSpecification": {
+            "$id": "#SoftwareSpecification",
+            "description": "This is a base class that is used to define the invariant characteristics and behavior (attributes, constraints, and relationships) of an InstalledSoftware.",
+            "type": "object",
+            "properties": {
+                "numUsersMax": {
+                    "type": "number",
+                    "description": "Defines the maximum number of users for a SoftwareSpecifciation."
+                },
+                "numberProcessActiveTotal": {
+                    "type": "number",
+                    "description": "Defines the maximum number of total processes that a SoftwareSpecifciation can support at any given time."
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "SoftwareResourceSpecification.json#SoftwareResourceSpecification"
+                }
+            ]
+        }
+    }
+}

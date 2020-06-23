@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://datamodel.tmforum.org/SoftwareSupportPackage.json",
+    "title": "SoftwareSupportPackage",
+    "definitions": {
+        "SoftwareSupportPackage": {
+            "$id": "#SoftwareSupportPackage",
+            "description": "A SofwareSupportPackage represents the package acquired by a consumer from a software vendor. It can be materialized as one or several files (data) downloaded online or copied on a physical support. It contains all files required for deployment and installation such as installation manager and at minimum, one of the files constitutes the set of machine readable instructions that will be executed automatically after it is installed.",
+            "type": "object",
+            "properties": {
+            },
+            "allOf": [
+                {
+                    "$ref": "../Resource/PhysicalResource.schema.json#PhysicalResource"
+                }
+            ]
+        }
+    }
+}

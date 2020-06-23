@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://datamodel.tmforum.org/SoftwareResourceSpecification.json",
+    "title": "SoftwareResourceSpecification",
+    "definitions": {
+        "SoftwareResourceSpecification": {
+            "$id": "#SoftwareResourceSpecification",
+            "description": "This is a base class that is used to define the invariant characteristics and behavior (attributes, constraints, and relationships) of a SoftwareResource.",
+            "type": "object",
+            "properties": {
+                "releaseStatus": {
+                    "type": "string",
+                    "description": "Defines the particualr release status of this SoftwareResourceSpecification.",
+							"enum": [
+								"alpha",
+								"beta",
+								"firstCustomerShipment",
+								"generalDeployment",
+								"specialVersion",
+								"endOfEngineering",
+								"endOfSale",
+								"endOfLife"
+							]
+                },
+                "buildNumber": {
+                    "type": "string",
+                    "description": "Defines the internal identifier for the compilation of this unit of a SoftwareResourceSpecification."
+                },
+                "majorVersion": {
+                    "type": "string",
+                    "description": "Defines the major number component of the version of SoftwareResourceSpecification."
+                },
+                "minorVersion": {
+                    "type": "string",
+                    "description": "Defines the minor number component of the version of SoftwareResourceSpecification."
+                },
+                "maintenanceVersion": {
+                    "type": "string",
+                    "description": "Defines the maintenance number component of the version of SoftwareResourceSpecification."
+                },
+                "isDistributable": {
+                    "type": "boolean",
+                    "description": "Designates the SoftwareResource as being able to be distributed across multiple physically distinct Resources."
+                },
+                "installSize": {
+                    "$ref": "resourceCatalogManagement.json#Quantity",
+                    "description": "The amount and units (e.g. 800MB) required to install the SoftwareResource."
+                },
+                "otherDesignator": {
+                    "type": "string",
+                    "description": "Enables the manufacturer to label this software as having some set of special restrictions."
+                },
+                "isExperimental": {
+                    "type": "boolean",
+                    "description": "True represents a special build (perhaps as a trial to suit specific customer needs)."
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "resourceCatalogManagement.json#LogicalResourceSpecification"
+                }
+            ]
+        }
+    }
+}
