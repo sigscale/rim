@@ -557,6 +557,8 @@
 							</complexType>
 						</element>
 						<choice minOccurs="0" maxOccurs="unbounded">
+							<!-- There is a EP_N22 interface AMF and NSSF -->
+							<element ref="ngc:EP_N22"/>
 							<element ref="ngc:EP_N27"/>
 							<element ref="ngc:EP_N31"/>
 							<element ref="ngc:EP_SBI_X"/>
