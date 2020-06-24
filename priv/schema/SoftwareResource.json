@@ -19,7 +19,7 @@
             },
             "allOf": [
                 {
-                    resourceCatalogManagement.json#LogicalResourceSpecification
+                    "$ref": "resourceInventoryManagement.json#LogicalResource"
                 }
             ]
         }
