@@ -193,6 +193,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/HostingPlatformRequirement.schema.json \
 		$(abs_builddir)/HostingPlatformRequirementSpecification.json \
 		$(abs_builddir)/InstalledSoftware.json \
+		$(abs_builddir)/SoftwareResource.json \
 		$(abs_builddir)/SoftwareResourceSpecification.json \
 		$(abs_builddir)/SoftwareSpecification.json \
 		$(abs_builddir)/SoftwareSupportPackage.json \
