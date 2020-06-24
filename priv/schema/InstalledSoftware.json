@@ -1,23 +1,23 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://datamodel.tmforum.org/InstalledSoftware.json",
-    "title": "InstalledSoftware",
-    "definitions": {
-        "InstalledSoftware": {
-            "$id": "#InstalledSoftware",
-            "description": "An InstalledSoftware is a SoftwareSpecification deployed using the SoftwareSupportPackage on platform which meets the HostingPlatformRequirements.",
-            "type": "object",
-            "properties": {
-                "serialNumber": {
-                    "description": "A set of identifying characters and/or numbers assigned to, and usually marked on, each of a series of identical Software instances.",
-                    "type": "string"
-                }
-            },
-            "allOf": [
-                {
-                    "$ref": "SoftwareResource.json#SoftwareResource"
-                }
-            ]
-        }
-    }
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://datamodel.tmforum.org/InstalledSoftware.json",
+	"title": "InstalledSoftware",
+	"definitions": {
+		"InstalledSoftware": {
+			"$id": "#InstalledSoftware",
+			"description": "An InstalledSoftware is a SoftwareSpecification deployed using the SoftwareSupportPackage on platform which meets the HostingPlatformRequirements.",
+			"type": "object",
+			"properties": {
+				"serialNumber": {
+					"description": "A set of identifying characters and/or numbers assigned to, and usually marked on, each of a series of identical Software instances.",
+					"type": "string"
+				}
+			},
+			"allOf": [
+				{
+					"$ref": "SoftwareResource.json#SoftwareResource"
+				}
+			]
+		}
+	}
 }
