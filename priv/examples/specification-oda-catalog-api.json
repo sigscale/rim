@@ -1,0 +1,66 @@
+{
+	"id": "20a5d4787d97",
+	"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
+	"name": "Component Catalog API",
+	"description": "Component catalog API specification.",
+	"@type": "ApiSpecification",
+	"@baseType": "LogicalResource",
+	"@schemaLocation": "/resourceCatalogManagement/v4/schema/ApiSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-06-23T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "ODA",
+	"targetResourceSchema": {
+		"@type": "API",
+		"@schemaLocation": "/resourceInventoryManagement/v4/schema/API"
+	},
+	"relatedParty": [
+		{
+			"id": "9f16f654223e",
+			"@referredType": "Organization",
+			"href": "/partyManagement/v4/organization/9f16f654223e",
+			"role": "Supplier",
+			"name": "SigScale",
+			"validFor": {
+				"startDateTime": "2020-06-23T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecRelationship": [],
+	"targetPlatform": "ODA Canvas",
+	"isDistributedCurrent": false,
+	"serialNumber": "",
+	"releaseStatus": "alpha",
+	"majorVersion": "4",
+	"minorVersion": "0",
+	"maintenanceVersion": "0",
+	"buildNumber": "1",
+	"isDistributable": false,
+	"installSize": "40MB",
+	"otherDesignator": "TMF634",
+	"isExperimental": true,
+	"apiProtocolType": "REST",
+	"externalUrl": "/resourceCatalogManagement/v4/",
+	"internalUrl": "/resourceCatalogManagement/v4/",
+	"externalSchema": "/resourceCatalogManagement/v4/schema/swagger.json",
+	"internalSchema": "/resourceCatalogManagement/v4/schema/swagger.json",
+	"authenticationType": "Basic",
+	"allowedOperations": [
+		"GET",
+		"POST",
+		"PATCH",
+		"DELETE"
+	],
+	"allowedApiEntities": [
+		"catalog",
+		"category",
+		"specification"
+	],
+	"responseTypeFormat": "application/json",
+	"resourceSpecCharacteristic": []
+}

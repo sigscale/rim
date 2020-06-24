@@ -1,0 +1,73 @@
+{
+	"id": "1df6e191c3b2",
+	"href": "/resourceCatalogManagement/v4/specification/1df6e191c3b2",
+	"name": "Component Manager",
+	"description": "Software specification for component catalog and inventory.",
+	"@type": "SoftwareSpecification",
+	"@schemaLocation": "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
+	"@baseType": "LogicalResourceSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-06-23T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "ODA",
+	"targetResourceSchema": {
+		"@type": "InstalledSoftware",
+		"@schemaLocation": "/resourceInventoryManagement/v4/schema/InstalledSoftware"
+	},
+	"relatedParty": [
+		{
+			"id": "9f16f654223e",
+			"@referredType": "Organization",
+			"href": "/partyManagement/v4/organization/9f16f654223e",
+			"role": "Supplier",
+			"name": "SigScale",
+			"validFor": {
+				"startDateTime": "2020-06-23T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "e030a0e0be79",
+			"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
+			"name": "Component Catalog",
+			"relationshipType": "contains",
+			"minimumQuantity": 0
+		},
+		{
+			"id": "7213863ca330",
+			"href": "/resourceCatalogManagement/v4/specification/7213863ca330",
+			"name": "Component Inventory",
+			"relationshipType": "contains",
+			"minimumQuantity": 1
+		},
+		{
+			"id": "20a5d4787d97",
+			"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
+			"name": "Component Catalog API",
+			"@type": "ApiSpecification",
+			"minimumQuantity": 0
+		},
+		{
+			"id": "2f1fcba1d58f",
+			"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
+			"name": "Component Inventory API",
+			"minimumQuantity": 1
+		}
+	],
+	"releaseStatus": "alpha",
+	"buildNumber": "1",
+	"majorVersion": "0",
+	"minorVersion": "1",
+	"maintenanceVersion": "0",
+	"isDistributable": false,
+	"installSize": "40MB",
+	"otherDesignator": "",
+	"isExperimental": true,
+	"resourceSpecCharacteristic": []
+}

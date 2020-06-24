@@ -1,0 +1,28 @@
+{
+	"id": "243db7f6e71b",
+	"href": "/resourceInventoryManagement/v4/resource/243db7f6e71b",
+	"name": "Component Inventory API",
+	"description": "Component inventory API",
+	"category": "ODA",
+	"@type": "API",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-06-23T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"administrativeState": "unlocked",
+	"operationalState": "enable",
+	"resourceStatus": "available",
+	"usageState": "unlocked",
+	"resourceSpecification": {
+		"id": "2f1fcba1d58f",
+		"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
+		"name": "Component Inventory API",
+		"@type": "ApiSpecification"
+	},
+	"resourceRelationship": [],
+	"targetPlatform": "ODA Canvas",
+	"isDistributedCurrent": false,
+	"serialNumber": "",
+	"resourceCharacteristic": []
+}
