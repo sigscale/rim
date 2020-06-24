@@ -274,7 +274,17 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-core-iups-link.json \
 		$(abs_builddir)/resource-core-iubc-link.json \
 		$(abs_builddir)/resource-core-a-link.json \
-		$(abs_builddir)/resource-core-gb-link.json
+		$(abs_builddir)/resource-core-gb-link.json \
+		$(abs_builddir)/specification-oda-manager.json \
+		$(abs_builddir)/specification-oda-catalog.json \
+		$(abs_builddir)/specification-oda-inventory.json \
+		$(abs_builddir)/specification-oda-catalog-api.json \
+		$(abs_builddir)/specification-oda-inventory-api.json \
+		$(abs_builddir)/resource-oda-manager.json \
+		$(abs_builddir)/resource-oda-catalog.json \
+		$(abs_builddir)/resource-oda-inventory.json \
+		$(abs_builddir)/resource-oda-catalog-api.json \
+		$(abs_builddir)/resource-oda-inventory-api.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -1214,6 +1224,22 @@ check_DATA = .validation_ok
 				-d resource-core-a-link.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-gb-link.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d resource-oda-catalog.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-d resource-oda-inventory.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/SoftwareSpecification.json \
+				-d specification-oda-manager.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ApiSpecification.json \
+				-d specification-oda-catalog-api.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ApiSpecification.json \
+				-d specification-oda-inventory-api.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/InstalledSoftware.json \
+				-d resource-oda-manager.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/API.json \
+				-d resource-oda-catalog-api.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/API.json \
+				-d resource-oda-inventory-api.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
