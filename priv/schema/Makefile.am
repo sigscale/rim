@@ -190,7 +190,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_S1USpec.json \
 		$(abs_builddir)/API.json \
 		$(abs_builddir)/ApiSpecification.json \
-		$(abs_builddir)/HostingPlatformRequirement.schema.json \
+		$(abs_builddir)/HostingPlatformRequirement.json \
 		$(abs_builddir)/HostingPlatformRequirementSpecification.json \
 		$(abs_builddir)/InstalledSoftware.json \
 		$(abs_builddir)/SoftwareResource.json \
@@ -966,10 +966,23 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s API.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
+		if ! ajv compile -s SoftwareResourceSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SoftwareSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ApiSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s HostingPlatformRequirementSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SoftwareResource.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s InstalledSoftware.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s API.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s HostingPlatformRequirement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SoftwareSupportPackage.json; \
 			then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON Schema"; \
