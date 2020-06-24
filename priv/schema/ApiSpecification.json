@@ -53,7 +53,7 @@
             },
             "allOf": [
                 {
-                    "$ref": "SoftwareResourceSpecification.json#SoftwareResourceSpecification"
+                    "$ref": "SoftwareResourceSpecification#/definitions/SoftwareResourceSpecification"
                 }
             ]
         }

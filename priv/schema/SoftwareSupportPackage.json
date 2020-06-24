@@ -11,7 +11,7 @@
 			},
 			"allOf": [
 				{
-					"$ref": "../Resource/PhysicalResource.schema.json#PhysicalResource"
+					"$ref": "resourceInventory#/definitions/PhysicalResource"
 				}
 			]
 		}

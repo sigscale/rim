@@ -43,7 +43,7 @@
 					"description": "Designates the SoftwareResource as being able to be distributed across multiple physically distinct Resources."
 				},
 				"installSize": {
-					"$ref": "resourceCatalogManagement.json#Quantity",
+					"$ref": "resourceCatalogManagement#/definitions/Quantity",
 					"description": "The amount and units (e.g. 800MB) required to install the SoftwareResource."
 				},
 				"otherDesignator": {
@@ -57,7 +57,7 @@
 			},
 			"allOf": [
 				{
-					"$ref": "resourceCatalogManagement.json#LogicalResourceSpecification"
+					"$ref": "resourceCatalogManagement#/definitions/LogicalResourceSpecification"
 				}
 			]
 		}

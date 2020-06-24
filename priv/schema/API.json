@@ -11,7 +11,7 @@
 			},
 			"allOf": [
 				{
-					"$ref": "SoftwareResource.json#SoftwareResource"
+					"$ref": "SoftwareResource#/definitions/SoftwareResource"
 				}
 			]
 		}
