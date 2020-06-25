@@ -45,7 +45,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/inventoryNrm.json \
 		$(abs_builddir)/inventoryNrmAlt2.json \
 		$(abs_builddir)/ManagedFunction.json \
-		$(abs_builddir)/ResourceFunctionSpec.json \
 		$(abs_builddir)/BssFunctionSpec.json \
 		$(abs_builddir)/BtsSiteMgrSpec.json \
 		$(abs_builddir)/GsmCellSpec.json \
@@ -197,6 +196,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/SoftwareSpecification.json \
 		$(abs_builddir)/SoftwareSupportPackage.json \
 		$(abs_builddir)/resourceCatalogManagement.json \
+		$(abs_builddir)/resourceFunctionActivation.json \
 		$(abs_builddir)/resourceInventoryManagement.json
 
 $(abs_builddir)/%.xsd:	$(srcdir)/%.xsd
@@ -261,7 +261,7 @@ check_DATA = .validation_ok
 			then exit 1; fi; \
 		if ! ajv compile -s resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s ResourceFunctionSpec.json \
+		if ! ajv compile -s resourceFunctionActivation.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s BssFunctionSpec.json \
