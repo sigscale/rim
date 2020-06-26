@@ -5,7 +5,7 @@
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunction"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
@@ -15,7 +15,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/Characteristic"
 							},
 							{
 								"type": "object",
@@ -25,8 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"userLabel",
-											"vnfParametersList",
 											"cId",
 											"localCellId",
 											"maximumTransmissionPower",
@@ -67,9 +65,6 @@
 							}
 						]
 					}
-				},
-				"vsDataContainer": {
-					"$ref": "genericNrm#/definitions/VsDataContainerList"
 				}
 			}
 		}

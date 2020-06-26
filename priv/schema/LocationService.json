@@ -15,19 +15,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
-							},
-							{
-								"type": "object",
-								"required": [
-									"name"
-								],
-								"properties": {
-									"name": {
-										"enum": [
-										]
-									}
-								}
+								"$ref": "resourceInventoryManagement#/definitions/Characteristic"
 							}
 						]
 					}

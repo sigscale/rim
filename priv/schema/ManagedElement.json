@@ -1,11 +1,11 @@
 {
-	"$id": "http://sigscale.org/schema/ManagedFunction",
+	"$id": "http://sigscale.org/schema/ManagedElement",
 	"title": "Managed Element",
 	"description": "",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "ResourceFunction"
+			"$ref": "ManagedFunction"
 		},
 		{
 			"type": "object",
@@ -15,7 +15,7 @@
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceInventoryManagement#/definitions/ResourceCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/Characteristic"
 							},
 							{
 								"type": "object",
@@ -25,12 +25,11 @@
 								"properties": {
 									"name": {
 										"enum": [
+											"id",
 											"dnPrefix",
 											"managedElementTypeList",
-											"userLabel",
 											"locationName",
 											"managedBy",
-											"id",
 											"vendorName",
 											"userDefinedState",
 											"swVersion",
@@ -41,9 +40,6 @@
 							}
 						]
 					}
-				},
-				"vsDataContainer": {
-					"$ref": "genericNrm#/definitions/VsDataContainerList"
 				}
 			}
 		}
