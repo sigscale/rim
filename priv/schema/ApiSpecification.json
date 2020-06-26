@@ -13,11 +13,13 @@
                     "description": "API protocol type like REST, SOAP and so on."
                 },
                 "externalUrl": {
-                    "type": "URL",
+                    "type": "string",
+                    "format": "uri",
                     "description": "The URL of an API offered to the user. This is seen as external url for an API brokerage."
                 },
                 "internalUrl": {
-                    "type": "URL",
+                    "type": "string",
+                    "format": "uri",
                     "description": "The URL of an API offered to an API brokerage."
                 },
                 "externalSchema": {
@@ -37,7 +39,7 @@
                     "description": "List of authorised operations like POST, PATCH for this API.",
                     "items": {
                         "type": "string"
-                    }`
+                    }
                 },
                 "allowedApiEntities": {
                     "type": "array",
@@ -53,7 +55,7 @@
             },
             "allOf": [
                 {
-                    "$ref": "SoftwareResourceSpecification.json#SoftwareResourceSpecification"
+                    "$ref": "SoftwareResourceSpecification#/definitions/SoftwareResourceSpecification"
                 }
             ]
         }

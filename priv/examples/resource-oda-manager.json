@@ -1,0 +1,64 @@
+{
+	"id": "02b1bd098f82",
+	"href": "/resourceInventoryManagement/v4/resource/02b1bd098f82",
+	"name": "Component Manager",
+	"description": "Component specification catalog and instance inventory",
+	"category": "ODA",
+	"@type": "InstalledSoftware",
+	"@baseType": "LogicalResource",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/InstalledSoftware",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-06-23T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"administrativeState": "unlocked",
+	"operationalState": "enable",
+	"resourceStatus": "available",
+	"usageState": "unlocked",
+	"resourceSpecification": {
+		"id": "1df6e191c3b2",
+		"href": "/resourceCatalogManagement/v4/specification/1df6e191c3b2",
+		"name": "Component Manager",
+		"@type": "SoftwareSpecification"
+	},
+	"resourceRelationship": [
+		{
+			"resourceRef": {
+				"id": "ca546f3485c8",
+				"href": "/resourceInventoryManagement/v4/resource/ca546f3485c8",
+				"name": "Component Catalog",
+				"@referredType": "ResourceFunction"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "f65b562c0791",
+				"href": "/resourceInventoryManagement/v4/resource/f65b562c0791",
+				"name": "Component Inventory",
+				"@referredType": "ResourceFunction"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "7afe4da36289",
+				"href": "/resourceInventoryManagement/v4/resource/7afe4da36289",
+				"name": "Component Catalog API",
+				"@referredType": "API"
+			},
+			"type": "contains"
+		},
+		{
+			"resourceRef": {
+				"id": "243db7f6e71b",
+				"href": "/resourceInventoryManagement/v4/resource/243db7f6e71b",
+				"name": "Component Inventory API",
+				"@referredType": "API"
+			},
+			"type": "contains"
+		}
+	],
+	"resourceCharacteristic": []
+}

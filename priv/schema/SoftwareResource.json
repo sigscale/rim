@@ -1,0 +1,27 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://datamodel.tmforum.org/SoftwareResource.schema.json",
+	"title": "SoftwareResource",
+	"definitions": {
+		"SoftwareResource": {
+			"$id": "#SoftwareResource",
+			"description": "Software resource is a type of resource that describes the common set of attributes shared by all concrete software resources (e.g. API, InstalledSoftware) in the inventory.",
+			"type": "object",
+			"properties": {
+				"targetPlatform": {
+					"type": "string",
+					"description": "Defines the target platform that the SoftwareResource will be deployed on."
+				},
+				"isDistributedCurrent": {
+					"type": "boolean",
+					"description": "True defines this SoftwareResource as being currently distributed across several Resource nodes."
+				}
+			},
+			"allOf": [
+				{
+					"$ref": "resourceInventoryManagement#/definitions/LogicalResource"
+				}
+			]
+		}
+	}
+}

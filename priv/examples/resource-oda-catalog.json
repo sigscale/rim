@@ -1,0 +1,35 @@
+{
+	"id": "ca546f3485c8",
+	"href": "/resourceInventoryManagement/v4/resource/ca546f3485c8",
+	"name": "Component Catalog",
+	"description": "Component catalog resource function",
+	"category": "ODA",
+	"@type": "ResourceFunction",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-06-23T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"administrativeState": "unlocked",
+	"operationalState": "enable",
+	"resourceStatus": "available",
+	"usageState": "unlocked",
+	"resourceSpecification": {
+		"id": "e030a0e0be79",
+		"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
+		"@type": "ResourceFunctionSpecification"
+	},
+	"resourceRelationship": [],
+	"connectionPoint": [
+		{
+			"id": "7afe4da36289",
+			"href": "/resourceInventoryManagement/v4/resource/7afe4da36289",
+			"name": "Component Catalog API",
+			"@referredType": "API"
+		}
+	],
+	"targetPlatform": "ODA Canvas",
+	"isDistributedCurrent": false,
+	"serialNumber": "",
+	"resourceCharacteristic": []
+}

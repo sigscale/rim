@@ -314,9 +314,10 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/3GPPAAAServerFunctionSpec.json \
 		$(abs_builddir)/API.json \
 		$(abs_builddir)/ApiSpecification.json \
-		$(abs_builddir)/HostingPlatformRequirement.schema.json \
+		$(abs_builddir)/HostingPlatformRequirement.json \
 		$(abs_builddir)/HostingPlatformRequirementSpecification.json \
 		$(abs_builddir)/InstalledSoftware.json \
+		$(abs_builddir)/SoftwareResource.json \
 		$(abs_builddir)/SoftwareResourceSpecification.json \
 		$(abs_builddir)/SoftwareSpecification.json \
 		$(abs_builddir)/SoftwareSupportPackage.json \
@@ -389,10 +390,23 @@ check_DATA = .validation_ok
 		if ! ajv compile -s resourceFunctionActivation.json \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s API.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
+		if ! ajv compile -s SoftwareResourceSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SoftwareSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s ApiSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s HostingPlatformRequirementSpecification.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SoftwareResource.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s InstalledSoftware.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s API.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s HostingPlatformRequirement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s SoftwareSupportPackage.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s ManagedFunction.json \
 			-r genericNrm.json \

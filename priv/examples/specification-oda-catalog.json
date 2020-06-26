@@ -1,0 +1,41 @@
+{
+	"id": "e030a0e0be79",
+	"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
+	"name": "Component Catalog",
+	"description": "Component catalog resource function specification.",
+	"@type": "ResourceFunctionSpecification",
+	"version": "0.1",
+	"validFor": {
+		"startDateTime": "2020-06-23T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleStatus": "In Test",
+	"isBundle": false,
+	"category": "ODA",
+	"targetResourceSchema": {
+		"@type": "ResourceFunction"
+	},
+	"relatedParty": [
+		{
+			"id": "9f16f654223e",
+			"@referredType": "Organization",
+			"href": "/partyManagement/v4/organization/9f16f654223e",
+			"role": "Supplier",
+			"name": "SigScale",
+			"validFor": {
+				"startDateTime": "2020-06-23T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
+			}
+		}
+	],
+	"resourceSpecRelationship": [],
+	"connectionPointSpecification": [
+		{
+			"id": "20a5d4787d97",
+			"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
+			"name": "Component Catalog API",
+			"@referredType": "ApiSpecification"
+		}
+	],
+	"resourceSpecCharacteristic": []
+}
