@@ -36,6 +36,7 @@
 			"id": "e030a0e0be79",
 			"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
 			"name": "Component Catalog",
+			"@type": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"minimumQuantity": 0
 		},
@@ -43,6 +44,7 @@
 			"id": "7213863ca330",
 			"href": "/resourceCatalogManagement/v4/specification/7213863ca330",
 			"name": "Component Inventory",
+			"@type": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"minimumQuantity": 1
 		},
@@ -57,6 +59,7 @@
 			"id": "2f1fcba1d58f",
 			"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
 			"name": "Component Inventory API",
+			"@type": "ApiSpecification",
 			"minimumQuantity": 1
 		}
 	],
