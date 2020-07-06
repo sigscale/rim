@@ -31,7 +31,7 @@
 			<element name="amfPointer" type="ngc:AmfPointer"/>
 		</sequence>
 	</complexType>
-		<simpleType name="AmfRegionId">
+	<simpleType name="AmfRegionId">
 		<restriction base="integer">
 			<maxInclusive value="255"/>
 			<!-- The AMF Region ID is 8-bitslength, defined in 23.003 -->
