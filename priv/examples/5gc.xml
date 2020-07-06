@@ -181,7 +181,7 @@
 							<ngc:farEndEntity>
 								DC=sigscale.net,SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_N20=1
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-NSSF-1</ngc:userLabel>
+							<ngc:userLabel>EP-SMSF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_N20>
 					<ngc:EP_N22 id="1">
@@ -363,7 +363,7 @@
 					<ngc:EP_N6 id="1">
 						<ngc:attributes>
 							<ngc:farEndEntity>
-								SubNetwork=12,ManagedElement=1,DNFunction=1,EP_N6=1
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,DNFunction=1,EP_N6=1
 							</ngc:farEndEntity>
 							<ngc:userLabel>EP-DN-1</ngc:userLabel>
 						</ngc:attributes>
@@ -371,7 +371,7 @@
 					<ngc:EP_N9 id="1">
 						<ngc:attributes>
 							<ngc:farEndEntity>
-								SubNetwork=12,ManagedElement=1,UPFFunction=2,EP_N9=1
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,UPFFunction=2,EP_N9=1
 							</ngc:farEndEntity>
 							<ngc:userLabel>EP-UPF-2</ngc:userLabel>
 						</ngc:attributes>
@@ -471,7 +471,7 @@
 							<ngc:farEndEntity>
 								DC=sigscale.net,SubNetwork=12,ManagedElement=1,AFFunction=1,EP_N5=1
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-PCF-1</ngc:userLabel>
+							<ngc:userLabel>EP-AF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_N5>
 					<ngc:EP_N7 id="1">
@@ -503,7 +503,7 @@
 							<ngc:farEndEntity>
 								DC=sigscale.net,SubNetwork=12,ManagedElement=1,AFFunction=1,EP_Rx=1
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-Rx-1</ngc:userLabel>
+							<ngc:userLabel>EP-AF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_Rx>
 					<ngc:EP_SBI_X id="1">
@@ -537,7 +537,7 @@
 									<ngc:ipEndPoint>
 										<nn:ipv4Address>71.92.31.225</nn:ipv4Address>
 										<nn:ipv6Address>2113:4570:1FE2:0:0:0:4559:1FE2</nn:ipv6Address>
-										<nn:ipv6Prefix>2112:4569:1FE2:0000::</nn:ipv6Prefix>
+										<nn:ipv6Prefix>2113:4570:1FE2:0000::</nn:ipv6Prefix>
 										<nn:vlanId>3127</nn:vlanId>
 									</ngc:ipEndPoint>
 								</ngc:ipEndPoints>
@@ -580,9 +580,9 @@
 					<ngc:EP_SBI_X id="1">
 						<ngc:attributes>
 							<ngc:farEndEntity>
-								DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=1
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=2
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-UDSF-1</ngc:userLabel>
+							<ngc:userLabel>EP-UDSF-2</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
 				</ngc:AUSFFunction>
@@ -659,9 +659,9 @@
 					<ngc:EP_SBI_X id="1">
 						<ngc:attributes>
 							<ngc:farEndEntity>
-								DC=sigscale.net,SubNetwork=12,ManagedElement=1,NWDAFFunction=1,EP_SBI_X=1
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,NWDAFFunction=1,EP_SBI_X=2
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-NWDAF-1</ngc:userLabel>
+							<ngc:userLabel>EP-NWDAF-2</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
 				</ngc:UDMFunction>
@@ -774,6 +774,14 @@
 							<ngc:userLabel>EP-UPF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
+					<ngc:EP_SBI_X id="2">
+						<ngc:attributes>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_SBI_X=1
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-AUSF-1</ngc:userLabel>
+						</ngc:attributes>
+					</ngc:EP_SBI_X>
 				</ngc:UDSFFunction>
 				<ngc:NRFFunction id="1">
 					<ngc:attributes>
@@ -788,14 +796,18 @@
 					</ngc:attributes>
 					<ngc:EP_N27 id="1">
 						<ngc:attributes>
-							<ngc:farEndEntity>EP-N27-DN</ngc:farEndEntity>
-							<ngc:userLabel>EP-N27</ngc:userLabel>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N27=1
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-NSSF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_N27>
 					<ngc:EP_SBI_X id="1">
 						<ngc:attributes>
-							<ngc:farEndEntity>EP-SBI-X-DN</ngc:farEndEntity>
-							<ngc:userLabel>EP-SBI-X</ngc:userLabel>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_SBI_X=1
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-AMF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
 				</ngc:NRFFunction>
@@ -819,6 +831,14 @@
 							<ngc:userLabel>EP-AMF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_N22>
+					<ngc:EP_N27 id="1">
+						<ngc:attributes>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_N27=1
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-NRF-1</ngc:userLabel>
+						</ngc:attributes>
+					</ngc:EP_N27>
 					<ngc:EP_N31 id="1">
 						<ngc:attributes>
 							<ngc:farEndEntity>EP-N31-DN</ngc:farEndEntity>
@@ -1044,6 +1064,14 @@
 						<ngc:attributes>
 							<ngc:farEndEntity>
 								DC=sigscale.net,SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_SBI_X=1
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-PCF-1</ngc:userLabel>
+						</ngc:attributes>
+					</ngc:EP_SBI_X>
+					<ngc:EP_SBI_X id="2">
+						<ngc:attributes>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_SBI_X=1
 							</ngc:farEndEntity>
 							<ngc:userLabel>EP-PCF-1</ngc:userLabel>
 						</ngc:attributes>
