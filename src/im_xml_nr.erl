@@ -779,12 +779,12 @@ parse_ep_attr1([{endElement, {_, "localAddress"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo IpEndPoint
 	{[_ | _LocalAddress], T2} = pop(startElement, QName, T1),
-	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+	parse_ep_attr1(T2, undefined, Acc);
 parse_ep_attr1([{endElement, {_, "remoteAddress"} = QName} | T1],
 		undefined, Acc) ->
 	% @todo IpEndPoint
 	{[_ | _RemoteAddress], T2} = pop(startElement, QName, T1),
-	parse_nr_sector_carrier_attr1(T2, undefined, Acc);
+	parse_ep_attr1(T2, undefined, Acc);
 parse_ep_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_ep_attr1(T, Attr, Acc);
 parse_ep_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
