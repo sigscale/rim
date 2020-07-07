@@ -174,6 +174,36 @@
 		ep_ngus = [] :: [resource_rel()]}).
 -type nr_state() :: #nr_state{}.
 
+-record(ngc_state,
+		{amf :: map() | undefined,
+		ep_n2 :: map() | undefined,
+		ep_n8 :: map() | undefined,
+		ep_n11 :: map() | undefined,
+		ep_n12 :: map() | undefined,
+		ep_n14 :: map() | undefined,
+		ep_n15 :: map() | undefined,
+		ep_n17 :: map() | undefined,
+		ep_n20 :: map() | undefined,
+		ep_n22 :: map() | undefined,
+		ep_n26 :: map() | undefined,
+		ep_nls :: map() | undefined,
+		ep_nlg :: map() | undefined,
+		ep_sbi_x :: map() | undefined,
+		ep_n2s = [] :: [resource_rel()],
+		ep_n8s = [] :: [resource_rel()],
+		ep_n11s = [] :: [resource_rel()],
+		ep_n12s = [] :: [resource_rel()],
+		ep_n14s = [] :: [resource_rel()],
+		ep_n15s = [] :: [resource_rel()],
+		ep_n17s = [] :: [resource_rel()],
+		ep_n20s = [] :: [resource_rel()],
+		ep_n22s = [] :: [resource_rel()],
+		ep_n26s = [] :: [resource_rel()],
+		ep_nlss = [] :: [resource_rel()],
+		ep_nlgs = [] :: [resource_rel()],
+		ep_sbi_xs = [] :: [resource_rel()]}).
+-type ngc_state() :: #ngc_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,
