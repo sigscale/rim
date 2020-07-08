@@ -13,11 +13,12 @@
 -copyright('Copyright (c) 2020 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_amf/2, parse_smf/2, parse_ep_n2/2, parse_ep_n4/2, parse_ep_n7/2,
-		parse_ep_n8/2, parse_ep_n10/2, parse_ep_n11/2, parse_ep_n16/2,
+-export([parse_amf/2, parse_smf/2, parse_upf/2, parse_ep_n2/2, parse_ep_n3/2,
+		parse_ep_n4/2, parse_ep_n6/2, parse_ep_n7/2, parse_ep_n8/2, parse_ep_n9/2,
+		parse_ep_n10/2, parse_ep_n11/2, parse_ep_n16/2,
 		parse_ep_n12/2, parse_ep_n14/2, parse_ep_n15/2, parse_ep_n17/2,
 		parse_ep_n20/2, parse_ep_n22/2, parse_ep_n26/2, parse_ep_nls/2,
-		parse_ep_nlg/2, parse_ep_sbi_x/2, parse_ep_s5c/2]).
+		parse_ep_nlg/2, parse_ep_sbi_x/2, parse_ep_s5c/2, parse_ep_s5u/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -377,6 +378,133 @@ parse_smf_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_upf({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_upf({startElement, _Uri, "EP_N3", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N3=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n3,
+			parse_state = #ngc_state{ep_n3 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_upf({startElement, _Uri, "EP_N4", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N4=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n4,
+			parse_state = #ngc_state{ep_n4 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_upf({startElement, _Uri, "EP_N6", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N6=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n6,
+			parse_state = #ngc_state{ep_n6 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_upf({startElement, _Uri, "EP_N9", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N9=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n9,
+			parse_state = #ngc_state{ep_n9 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_upf({startElement, _Uri, "EP_S5U", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_S5U=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_s5u,
+			parse_state = #ngc_state{ep_s5u = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_upf({startElement, _Uri, "EP_SBI_X", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_SBI_X=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_sbi_x,
+			parse_state = #ngc_state{ep_sbi_x = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_upf({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_upf({endElement, _Uri, "UPFFunction", QName},
+		[#state{parse_state =  #ngc_state{ep_n3s = EpN3Rels, ep_n4s = EpN4Rels,
+		ep_n6s = EpN6Rels, ep_n9s = EpN9Rels,
+		ep_s5us = EpS5uRels, ep_sbi_xs = EpSbiXRels},
+		dn_prefix = [UpfDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "UPFFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	UpfAttr = parse_upf_attr(T2, undefined, []),
+	Resource = #resource{name = UpfDn,
+			description = "5G Core User Plane Function (UPF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/UPFFunction",
+			specification = Spec,
+			characteristic = UpfAttr,
+			related = EpN3Rels ++ EpN4Rels ++ EpN6Rels ++ EpN9Rels
+					++ EpS5uRels ++ EpSbiXRels,
+			connection_point = EpN3Rels ++ EpN4Rels ++ EpN6Rels ++ EpN9Rels
+					++ EpS5uRels ++ EpSbiXRels},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_upf({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_upf_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_upf_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_upf_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_upf_attr1(T2, undefined, Acc);
+parse_upf_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo PLMNIdList
+	{[_ | _PlmnIdList], T2} = pop(startElement, QName, T1),
+	parse_upf_attr1(T2, undefined, Acc);
+parse_upf_attr1([{endElement, {_, "nRTACList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo NrTACList
+	{[_ | _NrTACList], T2} = pop(startElement, QName, T1),
+	parse_upf_attr1(T2, undefined, Acc);
+parse_upf_attr1([{endElement, {_, "snssaiList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo SnssaiList
+	{[_ | _SnssaiList], T2} = pop(startElement, QName, T1),
+	parse_upf_attr1(T2, undefined, Acc);
+parse_upf_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_upf_attr1(T, Attr, Acc);
+parse_upf_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_upf_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
+parse_upf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_upf_attr1(T, undefined, Acc);
+parse_upf_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
 parse_ep_n2({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_ep_n2({startElement, _, _, QName, Attributes},
@@ -410,6 +538,44 @@ parse_ep_n2({endElement, _Uri, "EP_N2", QName},
 			throw({add_resource, Reason})
 	end;
 parse_ep_n2({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ep_n3({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_n3({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_n3({endElement, _Uri, "EP_N3", QName},
+		[#state{dn_prefix = [EpN3Dn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NgcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#ngc_state{ep_n3s = EpN3Rels} = NgcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpN3Attr = parse_ep_attr(T2, undefined, []),
+	ClassType = "EP_N3",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpN3Dn,
+			description = "5G Core End Point of N3 interface"
+					"(between (R)AN and UPF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_N3",
+			specification = Spec,
+			characteristic = EpN3Attr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpN3Rel = #resource_rel{id = Id, name = EpN3Dn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NgcState#ngc_state{
+					ep_n3s = [EpN3Rel | EpN3Rels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_n3({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
@@ -448,6 +614,43 @@ parse_ep_n4({endElement, _Uri, "EP_N4", QName},
 			throw({add_resource, Reason})
 	end;
 parse_ep_n4({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ep_n6({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_n6({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_n6({endElement, _Uri, "EP_N6", QName},
+		[#state{dn_prefix = [EpN6Dn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NgcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#ngc_state{ep_n6s = EpN6Rels} = NgcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpN6Attr = parse_ep_attr(T2, undefined, []),
+	ClassType = "EP_N6",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpN6Dn,
+			description = "5G Core End Point of N6 interface (between UPF and DN)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_N6",
+			specification = Spec,
+			characteristic = EpN6Attr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpN6Rel = #resource_rel{id = Id, name = EpN6Dn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NgcState#ngc_state{
+					ep_n6s = [EpN6Rel | EpN6Rels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_n6({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
@@ -523,6 +726,43 @@ parse_ep_n8({endElement, _Uri, "EP_N8", QName},
 			throw({add_resource, Reason})
 	end;
 parse_ep_n8({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ep_n9({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_n9({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_n9({endElement, _Uri, "EP_N9", QName},
+		[#state{dn_prefix = [EpN9Dn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NgcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#ngc_state{ep_n8s = EpN9Rels} = NgcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpN9Attr = parse_ep_attr(T2, undefined, []),
+	ClassType = "EP_N9",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpN9Dn,
+			description = "5G Core End Point of N9 interface (between two UPFs)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_N9",
+			specification = Spec,
+			characteristic = EpN9Attr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpN9Rel = #resource_rel{id = Id, name = EpN9Dn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NgcState#ngc_state{
+					ep_n9s = [EpN9Rel | EpN9Rels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_n9({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
@@ -1052,6 +1292,43 @@ parse_ep_s5c({endElement, _Uri, "EP_S5C", QName},
 			throw({add_resource, Reason})
 	end;
 parse_ep_s5c({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ep_s5u({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_s5u({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_s5u({endElement, _Uri, "EP_S5U", QName},
+		[#state{dn_prefix = [EpS5uDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NgcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#ngc_state{ep_s5us = EpS5uRels} = NgcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpS5uAttr = parse_ep_attr(T2, undefined, []),
+	ClassType = "EP_S5U",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpS5uDn,
+			description = "5G Core End Point of S5-U interface",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_S5U",
+			specification = Spec,
+			characteristic = EpS5uAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpS5uRel = #resource_rel{id = Id, name = EpS5uDn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NgcState#ngc_state{
+					ep_s5us = [EpS5uRel | EpS5uRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_s5u({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
