@@ -1073,6 +1073,9 @@ parse_ep_attr1([{endElement, {_, "remoteAddress"} = QName} | T1],
 	parse_ep_attr1(T2, undefined, Acc);
 parse_ep_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_ep_attr1(T, Attr, Acc);
+parse_ep_attr1([{characters, Chars} | T], "farEndEntity" = Attr, Acc) ->
+	[Dn] = string:tokens(Chars, "\n$\t"),
+	parse_ep_attr1(T, Attr, [#resource_char{name = Attr, value = Dn} | Acc]);
 parse_ep_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
 	parse_ep_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
 parse_ep_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
