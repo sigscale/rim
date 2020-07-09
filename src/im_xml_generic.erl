@@ -937,6 +937,15 @@ parse_managed_element({startElement, _, "PCFFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #ngc_state{pcf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "AUSFFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",AUSFFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_5gc, parse_function = parse_ausf,
+			dn_prefix = [NewDn],
+			parse_state = #ngc_state{ausf = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
