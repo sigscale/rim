@@ -179,9 +179,11 @@
 		smf :: map() | undefined,
 		upf :: map() | undefined,
 		n3iwf :: map() | undefined,
+		pcf :: map() | undefined,
 		ep_n2 :: map() | undefined,
 		ep_n3 :: map() | undefined,
 		ep_n4 :: map() | undefined,
+		ep_n5 :: map() | undefined,
 		ep_n6 :: map() | undefined,
 		ep_n7 :: map() | undefined,
 		ep_n8 :: map() | undefined,
@@ -201,9 +203,11 @@
 		ep_sbi_x :: map() | undefined,
 		ep_s5c :: map() | undefined,
 		ep_s5u :: map() | undefined,
+		ep_rx :: map() | undefined,
 		ep_n2s = [] :: [resource_rel()],
 		ep_n3s = [] :: [resource_rel()],
 		ep_n4s = [] :: [resource_rel()],
+		ep_n5s = [] :: [resource_rel()],
 		ep_n6s = [] :: [resource_rel()],
 		ep_n7s = [] :: [resource_rel()],
 		ep_n8s = [] :: [resource_rel()],
@@ -222,7 +226,9 @@
 		ep_nlgs = [] :: [resource_rel()],
 		ep_sbi_xs = [] :: [resource_rel()],
 		ep_s5cs = [] :: [resource_rel()],
-		ep_s5us = [] :: [resource_rel()]}).
+		ep_s5us = [] :: [resource_rel()],
+		ep_rxs = [] :: [resource_rel()]
+}).
 -type ngc_state() :: #ngc_state{}.
 
 -record(zte_state,
