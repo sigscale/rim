@@ -13,9 +13,9 @@
 -copyright('Copyright (c) 2020 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_amf/2, parse_smf/2, parse_upf/2, parse_ep_n2/2, parse_ep_n3/2,
-		parse_ep_n4/2, parse_ep_n6/2, parse_ep_n7/2, parse_ep_n8/2, parse_ep_n9/2,
-		parse_ep_n10/2, parse_ep_n11/2, parse_ep_n16/2,
+-export([parse_amf/2, parse_smf/2, parse_upf/2, parse_n3iwf/2, parse_ep_n2/2,
+		parse_ep_n3/2, parse_ep_n4/2, parse_ep_n6/2, parse_ep_n7/2, parse_ep_n8/2,
+		parse_ep_n9/2, parse_ep_n10/2, parse_ep_n11/2, parse_ep_n16/2,
 		parse_ep_n12/2, parse_ep_n14/2, parse_ep_n15/2, parse_ep_n17/2,
 		parse_ep_n20/2, parse_ep_n22/2, parse_ep_n26/2, parse_ep_nls/2,
 		parse_ep_nlg/2, parse_ep_sbi_x/2, parse_ep_s5c/2, parse_ep_s5u/2]).
@@ -502,6 +502,83 @@ parse_upf_attr1([{characters, Chars} | T], Attr, Acc) ->
 parse_upf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_upf_attr1(T, undefined, Acc);
 parse_upf_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_n3iwf({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_n3iwf({startElement, _Uri, "EP_N2", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N2=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n2,
+			parse_state = #ngc_state{ep_n2 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_n3iwf({startElement, _Uri, "EP_N3", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N3=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n3,
+			parse_state = #ngc_state{ep_n3 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_n3iwf({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_n3iwf({endElement, _Uri, "N3IWFFunction", QName},
+		[#state{parse_state =  #ngc_state{ep_n2s = EpN2Rels, ep_n3s = EpN3Rels},
+		dn_prefix = [N3iwfDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "N3IWFFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	N3iwfAttr = parse_n3iwf_attr(T2, undefined, []),
+	Resource = #resource{name = N3iwfDn,
+			description = "5G Core Non 3GPP Inter Working Function (N3IWF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/N3IWFFunction",
+			specification = Spec,
+			characteristic = N3iwfAttr,
+			related = EpN2Rels ++ EpN3Rels,
+			connection_point = EpN2Rels ++ EpN3Rels},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_n3iwf({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_n3iwf_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_n3iwf_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_n3iwf_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_n3iwf_attr1(T2, undefined, Acc);
+parse_n3iwf_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo PLMNIdList
+	{[_ | _PlmnIdList], T2} = pop(startElement, QName, T1),
+	parse_n3iwf_attr1(T2, undefined, Acc);
+parse_n3iwf_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_n3iwf_attr1(T, Attr, Acc);
+parse_n3iwf_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_n3iwf_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
+parse_n3iwf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_n3iwf_attr1(T, undefined, Acc);
+parse_n3iwf_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden

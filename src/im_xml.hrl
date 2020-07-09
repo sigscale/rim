@@ -178,6 +178,7 @@
 		{amf :: map() | undefined,
 		smf :: map() | undefined,
 		upf :: map() | undefined,
+		n3iwf :: map() | undefined,
 		ep_n2 :: map() | undefined,
 		ep_n3 :: map() | undefined,
 		ep_n4 :: map() | undefined,
