@@ -186,6 +186,7 @@
 		udsf :: map() | undefined,
 		nrf :: map() | undefined,
 		nssf :: map() | undefined,
+		sms :: map() | undefined,
 		ep_n2 :: map() | undefined,
 		ep_n3 :: map() | undefined,
 		ep_n4 :: map() | undefined,
@@ -203,6 +204,7 @@
 		ep_n16 :: map() | undefined,
 		ep_n17 :: map() | undefined,
 		ep_n20 :: map() | undefined,
+		ep_n21 :: map() | undefined,
 		ep_n22 :: map() | undefined,
 		ep_n26 :: map() | undefined,
 		ep_n27 :: map() | undefined,
@@ -213,6 +215,7 @@
 		ep_s5c :: map() | undefined,
 		ep_s5u :: map() | undefined,
 		ep_rx :: map() | undefined,
+		ep_map_smsc :: map() | undefined,
 		ep_n2s = [] :: [resource_rel()],
 		ep_n3s = [] :: [resource_rel()],
 		ep_n4s = [] :: [resource_rel()],
@@ -230,6 +233,7 @@
 		ep_n16s = [] :: [resource_rel()],
 		ep_n17s = [] :: [resource_rel()],
 		ep_n20s = [] :: [resource_rel()],
+		ep_n21s = [] :: [resource_rel()],
 		ep_n22s = [] :: [resource_rel()],
 		ep_n26s = [] :: [resource_rel()],
 		ep_n27s = [] :: [resource_rel()],
@@ -239,7 +243,8 @@
 		ep_sbi_xs = [] :: [resource_rel()],
 		ep_s5cs = [] :: [resource_rel()],
 		ep_s5us = [] :: [resource_rel()],
-		ep_rxs = [] :: [resource_rel()]}).
+		ep_rxs = [] :: [resource_rel()],
+		ep_map_smscs = [] :: [resource_rel()]}).
 -type ngc_state() :: #ngc_state{}.
 
 -record(zte_state,

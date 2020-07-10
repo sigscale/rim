@@ -991,6 +991,15 @@ parse_managed_element({startElement, _, "NSSFFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #ngc_state{nssf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "SMSFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",SMSFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_5gc, parse_function = parse_sms,
+			dn_prefix = [NewDn],
+			parse_state = #ngc_state{sms = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];

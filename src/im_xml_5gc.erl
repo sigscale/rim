@@ -15,15 +15,15 @@
 %% export the im private API
 -export([parse_amf/2, parse_smf/2, parse_upf/2, parse_n3iwf/2, parse_pcf/2,
 		parse_ausf/2, parse_udm/2, parse_udr/2, parse_udsf/2, parse_nrf/2,
-		parse_nssf/2,
+		parse_nssf/2, parse_sms/2,
 		parse_ep_n2/2, parse_ep_n3/2, parse_ep_n4/2, parse_ep_n5/2, parse_ep_n6/2,
 		parse_ep_n7/2, parse_ep_n8/2, parse_ep_n9/2, parse_ep_n10/2,
 		parse_ep_n11/2, parse_ep_n16/2, parse_ep_n12/2, parse_ep_n13/2,
-		parse_ep_n14/2, parse_ep_n15/2, parse_ep_n17/2,
-		parse_ep_n20/2, parse_ep_n22/2, parse_ep_n26/2, parse_ep_n27/2,
+		parse_ep_n14/2, parse_ep_n15/2, parse_ep_n17/2, parse_ep_n20/2,
+		parse_ep_n21/2, parse_ep_n22/2, parse_ep_n26/2, parse_ep_n27/2,
 		parse_ep_n31/2,
 		parse_ep_nls/2, parse_ep_nlg/2, parse_ep_sbi_x/2, parse_ep_s5c/2,
-		parse_ep_s5u/2, parse_ep_rx/2]).
+		parse_ep_s5u/2, parse_ep_rx/2, parse_ep_map_smsc/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -1267,6 +1267,98 @@ parse_nssf_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
+parse_sms({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_sms({startElement, _Uri, "EP_N20", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N20=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n20,
+			parse_state = #ngc_state{ep_n20 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_sms({startElement, _Uri, "EP_N21", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N21=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n21,
+			parse_state = #ngc_state{ep_n21 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_sms({startElement, _Uri, "EP_MAP_SMSC", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_MAP_SMSC=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_map_smsc,
+			parse_state = #ngc_state{ep_map_smsc = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_sms({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_sms({endElement, _Uri, "SMSFunction", QName},
+		[#state{parse_state =  #ngc_state{ep_n20s = EpN20Rels,
+		ep_n21s = EpN21Rels, ep_map_smscs = EpMapSmscRels},
+		dn_prefix = [SmsDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "SMSFFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	SmsAttr = parse_sms_attr(T2, undefined, []),
+	Resource = #resource{name = SmsDn,
+			description = "5G Core Short Message Service Function (SMSF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/SMSFunction",
+			specification = Spec,
+			characteristic = SmsAttr,
+			related = EpN20Rels ++ EpN21Rels ++ EpMapSmscRels,
+			connection_point = EpN20Rels ++ EpN21Rels ++ EpMapSmscRels},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_sms({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_sms_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_sms_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_sms_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_sms_attr1(T2, undefined, Acc);
+parse_sms_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo PLMNIdList
+	{[_ | _PlmnIdList], T2} = pop(startElement, QName, T1),
+	parse_sms_attr1(T2, undefined, Acc);
+parse_sms_attr1([{endElement, {_, "sBISerivceList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo SBIServiceList
+	{[_ | _SBIServiceList], T2} = pop(startElement, QName, T1),
+	parse_sms_attr1(T2, undefined, Acc);
+parse_sms_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_sms_attr1(T, Attr, Acc);
+parse_sms_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_sms_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
+parse_sms_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_sms_attr1(T, undefined, Acc);
+parse_sms_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
 parse_ep_n2({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_ep_n2({startElement, _, _, QName, Attributes},
@@ -1906,6 +1998,44 @@ parse_ep_n20({endElement, _Uri, _LocalName, QName},
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
 %% @hidden
+parse_ep_n21({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_n21({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_n21({endElement, _Uri, "EP_N21", QName},
+		[#state{dn_prefix = [EpN21Dn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NgcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#ngc_state{ep_n21s = EpN21Rels} = NgcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpN21Attr = parse_ep_attr(T2, undefined, []),
+	ClassType = "EP_N21",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpN21Dn,
+			description = "5G Core End Point of N21 interface"
+					"(between SMSF and UDM)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_N21",
+			specification = Spec,
+			characteristic = EpN21Attr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpN21Rel = #resource_rel{id = Id, name = EpN21Dn, type = "contains",
+					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NgcState#ngc_state{
+					ep_n21s = [EpN21Rel | EpN21Rels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_n21({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
 parse_ep_n22({characters, Chars}, [#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{characters, Chars} | Stack]} | T];
 parse_ep_n22({startElement, _, _, QName, Attributes},
@@ -2277,6 +2407,44 @@ parse_ep_rx({endElement, _Uri, "EP_Rx", QName},
 			throw({add_resource, Reason})
 	end;
 parse_ep_rx({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+%% @hidden
+parse_ep_map_smsc({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ep_map_smsc({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ep_map_smsc({endElement, _Uri, "EP_MAP_SMSC", QName},
+		[#state{dn_prefix = [EpMapSmscDn | _], stack = Stack, spec_cache = Cache},
+		#state{parse_state = NgcState,
+		spec_cache = PrevCache} = PrevState | T1]) ->
+	#ngc_state{ep_map_smscs = EpMapSmscRels} = NgcState,
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	EpMapSmscAttr = parse_ep_attr(T2, undefined, []),
+	ClassType = "EP_MAP_SMSC",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	Resource = #resource{name = EpMapSmscDn,
+			description = "5G Core End Point of MAP interface",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/EP_MAP_SMSC",
+			specification = Spec,
+			characteristic = EpMapSmscAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{id = Id}} ->
+			EpMapSmscRel = #resource_rel{id = Id, name = EpMapSmscDn,
+					type = "contains", referred_type = ClassType,
+					href = ?ResourcePath ++ Id},
+			[PrevState#state{parse_state = NgcState#ngc_state{
+					ep_map_smscs = [EpMapSmscRel | EpMapSmscRels]},
+					spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ep_map_smsc({endElement, _Uri, _LocalName, QName},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{endElement, QName} | Stack]} | T].
 
