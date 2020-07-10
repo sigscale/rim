@@ -973,6 +973,15 @@ parse_managed_element({startElement, _, "UDSFFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #ngc_state{udsf = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "NRFFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",NRFFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_5gc, parse_function = parse_nrf,
+			dn_prefix = [NewDn],
+			parse_state = #ngc_state{nrf = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
