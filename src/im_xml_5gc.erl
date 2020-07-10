@@ -15,7 +15,7 @@
 %% export the im private API
 -export([parse_amf/2, parse_smf/2, parse_upf/2, parse_n3iwf/2, parse_pcf/2,
 		parse_ausf/2, parse_udm/2, parse_udr/2, parse_udsf/2, parse_nrf/2,
-		parse_nssf/2, parse_sms/2,
+		parse_nssf/2, parse_sms/2, parse_lmf/2,
 		parse_ep_n2/2, parse_ep_n3/2, parse_ep_n4/2, parse_ep_n5/2, parse_ep_n6/2,
 		parse_ep_n7/2, parse_ep_n8/2, parse_ep_n9/2, parse_ep_n10/2,
 		parse_ep_n11/2, parse_ep_n16/2, parse_ep_n12/2, parse_ep_n13/2,
@@ -1356,6 +1356,74 @@ parse_sms_attr1([{characters, Chars} | T], Attr, Acc) ->
 parse_sms_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_sms_attr1(T, undefined, Acc);
 parse_sms_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_lmf({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_lmf({startElement, _Uri, "EP_NLS", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_NLS=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_nls,
+			parse_state = #ngc_state{ep_nls = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_lmf({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_lmf({endElement, _Uri, "LMFFunction", QName},
+		[#state{parse_state =  #ngc_state{ep_nlss = EpNlsRels},
+		dn_prefix = [LmfDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "LMFFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	LmfAttr = parse_lmf_attr(T2, undefined, []),
+	Resource = #resource{name = LmfDn,
+			description = "5G Core Location Management Function (LMF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/LMFFunction",
+			specification = Spec,
+			characteristic = LmfAttr,
+			related = EpNlsRels,
+			connection_point = EpNlsRels},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_lmf({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_lmf_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_lmf_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_lmf_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_lmf_attr1(T2, undefined, Acc);
+parse_lmf_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo PLMNIdList
+	{[_ | _PlmnIdList], T2} = pop(startElement, QName, T1),
+	parse_lmf_attr1(T2, undefined, Acc);
+parse_lmf_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_lmf_attr1(T, Attr, Acc);
+parse_lmf_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_lmf_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
+parse_lmf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_lmf_attr1(T, undefined, Acc);
+parse_lmf_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
