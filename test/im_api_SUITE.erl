@@ -2452,10 +2452,22 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
 																	"AMFFunction=1,EP_N22=1"]},
 													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
+									indent(5), {'ngc:EP_N27', [{id, "1"}],
+											[indent(6), {'ngc:attributes', [],
+													[indent(7), {'ngc:farEndEntity',
+															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
+																	"NRFFunction=1,EP_N27=1"]},
+													indent(7), {'ngc:userLabel', ["EP-NRF-1"]}, indent(6)]}, indent(5)]},
 									indent(5), {'ngc:EP_N31', [{id, "1"}],
 											[indent(6), {'ngc:attributes', [],
 													[indent(7), {'ngc:farEndEntity', ["EP-N31-DN"]},
 													indent(7), {'ngc:userLabel', ["EP-N31"]}, indent(6)]}, indent(5)]},
+									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
+											[indent(6), {'ngc:attributes', [],
+													[indent(7), {'ngc:farEndEntity',
+															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
+																	"UDRFunction=1,EP_SBI_X=2"]},
+													indent(7), {'ngc:userLabel', ["EP-UDR-1"]}, indent(6)]}, indent(5)]},
 															indent(4)]},
 							indent(4), {'ngc:SMSFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
