@@ -183,6 +183,7 @@
 		ausf :: map() | undefined,
 		udm :: map() | undefined,
 		udr :: map() | undefined,
+		udsf :: map() | undefined,
 		ep_n2 :: map() | undefined,
 		ep_n3 :: map() | undefined,
 		ep_n4 :: map() | undefined,
