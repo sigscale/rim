@@ -719,6 +719,14 @@
 							<ngc:userLabel>EP-SMF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
+					<ngc:EP_SBI_X id="2">
+						<ngc:attributes>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_SBI_X=1
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-SMF-1</ngc:userLabel>
+						</ngc:attributes>
+					</ngc:EP_SBI_X>
 				</ngc:UDRFunction>
 				<ngc:UDSFFunction id="1">
 					<ngc:attributes>
@@ -845,6 +853,14 @@
 							<ngc:userLabel>EP-N31</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_N31>
+					<ngc:EP_SBI_X id="1">
+						<ngc:attributes>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDRFunction=1,EP_SBI_X=2
+							</ngc:farEndEntity>
+							<ngc:userLabel>EP-UDR-1</ngc:userLabel>
+						</ngc:attributes>
+					</ngc:EP_SBI_X>
 				</ngc:NSSFFunction>
 				<ngc:SMSFunction id="1">
 					<ngc:attributes>
