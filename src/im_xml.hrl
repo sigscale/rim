@@ -190,6 +190,7 @@
 		lmf :: map() | undefined,
 		ngeir :: map() | undefined,
 		sepp :: map() | undefined,
+		nwdaf :: map() | undefined,
 		ep_n2 :: map() | undefined,
 		ep_n3 :: map() | undefined,
 		ep_n4 :: map() | undefined,

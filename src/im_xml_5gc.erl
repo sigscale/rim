@@ -21,7 +21,7 @@
 		parse_ep_n11/2, parse_ep_n16/2, parse_ep_n12/2, parse_ep_n13/2,
 		parse_ep_n14/2, parse_ep_n15/2, parse_ep_n17/2, parse_ep_n20/2,
 		parse_ep_n21/2, parse_ep_n22/2, parse_ep_n26/2, parse_ep_n27/2,
-		parse_ep_n31/2, parse_ep_n32/2,
+		parse_ep_n31/2, parse_ep_n32/2, parse_nwdaf/2,
 		parse_ep_nls/2, parse_ep_nlg/2, parse_ep_sbi_x/2, parse_ep_sbi_ipx/2,
 		parse_ep_s5c/2, parse_ep_s5u/2, parse_ep_rx/2, parse_ep_map_smsc/2]).
 
@@ -1580,6 +1580,85 @@ parse_sepp_attr1([{characters, Chars} | T], Attr, Acc) ->
 parse_sepp_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_sepp_attr1(T, undefined, Acc);
 parse_sepp_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_nwdaf({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_nwdaf({startElement, _Uri, "EP_SBI_X", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_SBI_X=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_sbi_x,
+			parse_state = #ngc_state{ep_sbi_x = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
+parse_nwdaf({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_nwdaf({endElement, _Uri, "NWDAFFunction", QName},
+		[#state{parse_state = #ngc_state{ep_sbi_xs = EpSbiXRels},
+		dn_prefix = [NwdafDn | _],
+		stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "NWDAFFunction",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	NwdafAttr = parse_nwdaf_attr(T2, undefined, []),
+	Resource = #resource{name = NwdafDn,
+			description = "5G Core Network Data Analytics Function (NWDAF)",
+			category = "Core",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/NWDAFFunction",
+			specification = Spec,
+			characteristic = NwdafAttr,
+			related = EpSbiXRels,
+			connection_point = EpSbiXRels},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_nwdaf({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_nwdaf_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_nwdaf_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_nwdaf_attr1([{endElement, {_, "vnfParametersList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo vnfParametersListType
+	{[_ | _VnfpList], T2} = pop(startElement, QName, T1),
+	parse_nwdaf_attr1(T2, undefined, Acc);
+parse_nwdaf_attr1([{endElement, {_, "pLMNIdList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo PLMNIdList
+	{[_ | _PlmnIdList], T2} = pop(startElement, QName, T1),
+	parse_nwdaf_attr1(T2, undefined, Acc);
+parse_nwdaf_attr1([{endElement, {_, "sBISerivceList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo SBIServiceList
+	{[_ | _SBIServiceList], T2} = pop(startElement, QName, T1),
+	parse_nwdaf_attr1(T2, undefined, Acc);
+parse_nwdaf_attr1([{endElement, {_, "snssaiList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo SnssaiList
+	{[_ | _SnssaiList], T2} = pop(startElement, QName, T1),
+	parse_nwdaf_attr1(T2, undefined, Acc);
+parse_nwdaf_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_nwdaf_attr1(T, Attr, Acc);
+parse_nwdaf_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_nwdaf_attr1(T, Attr, [#resource_char{name = Attr, value = Chars} | Acc]);
+parse_nwdaf_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_nwdaf_attr1(T, undefined, Acc);
+parse_nwdaf_attr1([], undefined, Acc) ->
 	Acc.
 
 %% @hidden
