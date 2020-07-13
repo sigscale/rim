@@ -1018,6 +1018,15 @@ parse_managed_element({startElement, _, "NGEIRFunction", QName,
 			dn_prefix = [NewDn],
 			parse_state = #ngc_state{ngeir = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_managed_element({startElement, _, "SEPPFunction", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _T] = State) ->
+	DnComponent = ",SEPPFunction=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{parse_module = im_xml_5gc, parse_function = parse_sepp,
+			dn_prefix = [NewDn],
+			parse_state = #ngc_state{sepp = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_managed_element({startElement,  _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
