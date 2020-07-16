@@ -1809,6 +1809,129 @@ init_per_testcase(bulk_cm_nr, Config) ->
 	file:write_file(XMLPath, NrNrmXML),
 	Config;
 init_per_testcase(bulk_cm_5gc, Config) ->
+	Endpoint = fun (Name, Id, UserLabel, FarEndEntity) ->
+			{Name, [{id, Id}],
+					[indent(6), {'ngc:attributes', [],
+							[indent(7), {'ngc:farEndEntity', [indent(8), FarEndEntity,
+									indent(7)]},
+							indent(7), {'ngc:userLabel', [UserLabel]},
+									indent(6)]}, indent(5)]}
+	end,
+	AmfEpN2 = Endpoint('ngc:EP_N2', "1", "EP-N3IWF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N2=1"),
+	AmfEpN8 = Endpoint('ngc:EP_N8', "1", "EP-UDM-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N8=1"),
+	AmfEpN11 = Endpoint('ngc:EP_N11', "1", "EP-SMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N11=1"),
+	AmfEpN12 = Endpoint('ngc:EP_N12', "1", "EP-AUSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N12=1"),
+	AmfEpN14 = Endpoint('ngc:EP_N14', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=2,EP_N14=1"),
+	AmfEpN15 = Endpoint('ngc:EP_N15', "1", "EP-PCF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N15=1"),
+	AmfEpN17 = Endpoint('ngc:EP_N17', "1", "EP-NGEIR-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NGEIRFunction=1,EP_N17=1"),
+	AmfEpN20 = Endpoint('ngc:EP_N20', "1", "EP-SMSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMSFFunction=1,EP_N20=1"),
+	AmfEpN22 = Endpoint('ngc:EP_N22', "1", "EP-NSSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N22=1"),
+	AmfEpN26 = Endpoint('ngc:EP_N26', "1", "EP-MME-1", "DC=sigscale.net,"
+			"SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_N26=1"),
+	AmfEpNls = Endpoint('ngc:EP_NLS', "1", "EP-LMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,LMFFunction=1,EP_NLS=1"),
+	AmfEpNlg = Endpoint('ngc:EP_NLG', "1", "EP-Gmlc-1", "DC=sigscale.net,"
+			"SubNetwork=2,ManagedElement=1,GmlcFunction=1"),
+	AmfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-NRF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_SBI_X=1"),
+	SmfEpN4 = Endpoint('ngc:EP_N4', "1", "EP-UPF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N4=1"),
+	SmfEpN7 = Endpoint('ngc:EP_N7', "1", "EP-PCF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N7=1"),
+	SmfEpN10 = Endpoint('ngc:EP_N10', "1", "EP-UDM-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N10=1"),
+	SmfEpN11 = Endpoint('ngc:EP_N11', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N11=1"),
+	SmfEpN16 = Endpoint('ngc:EP_N16', "1", "EP-SMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMFFunction=2,EP_N16=1"),
+	SmfEpS5c = Endpoint('ngc:EP_S5C', "1", "EP-ServingGW-1", "DC=sigscale.net,"
+			"SubNetwork=4,ManagedElement=1,ServingGWFunction=1,EP_S5C=1"),
+	SmfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-UDR-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDRFunction=1,EP_SBI_X=1"),
+	UpfEpN3 = Endpoint('ngc:EP_N3', "1", "EP-ENB-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N3=1"),
+	UpfEpN4 = Endpoint('ngc:EP_N4', "1", "EP-SMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N4=1"),
+	UpfEpN6 = Endpoint('ngc:EP_N6', "1", "EP-DN-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,DNFunction=1,EP_N6=1"),
+	UpfEpN9 = Endpoint('ngc:EP_N9', "1", "EP-UPF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UPFFunction=2,EP_N9=1"),
+	UpfEpS5u = Endpoint('ngc:EP_S5U', "1", "EP-ServingGW-1", "DC=sigscale.net,"
+			"SubNetwork=4,ManagedElement=1,ServingGWFunction=1,EP_S5U=1"),
+	UpfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-UDSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=1"),
+	N3iwfEpN2 = Endpoint('ngc:EP_N2', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N2=1"),
+	N3iwfEpN3 = Endpoint('ngc:EP_N3', "1", "EP-ENB-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N3=1"),
+	PcfEpN5 = Endpoint('ngc:EP_N5', "1", "EP-AF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AFFunction=1,EP_N5=1"),
+	PcfEpN7 = Endpoint('ngc:EP_N7', "1", "EP-SMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N7=1"),
+	PcfEpN15 = Endpoint('ngc:EP_N15', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N15=1"),
+	PcfEpN16 = Endpoint('ngc:EP_N16', "1", "EP-PCF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,PCFFunction=2,EP_N16=1"),
+	PcfEpRx = Endpoint('ngc:EP_Rx', "1", "EP-AF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AFFunction=1,EP_Rx=1"),
+	PcfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-NWDAF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NWDAFFunction=1,EP_SBI_X=1"),
+	AusfEpN12 = Endpoint('ngc:EP_N12', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N12=1"),
+	AusfEpN13 = Endpoint('ngc:EP_N13', "1", "EP-UDM-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N13=1"),
+	AusfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-UDSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=1"),
+	UdmEpN8 = Endpoint('ngc:EP_N8', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N8=1"),
+	UdmEpN10 = Endpoint('ngc:EP_N10', "1", "EP-SMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N10=1"),
+	UdmEpN13 = Endpoint('ngc:EP_N13', "1", "EP-AUSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N13=1"),
+	UdmEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-NWDAF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NWDAFFunction=1,EP_SBI_X=1"),
+	UdrEpSbiX1 = Endpoint('ngc:EP_SBI_X', "1", "EP-SMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_SBI_X=1"),
+	UdrEpSbiX2 = Endpoint('ngc:EP_SBI_X', "2", "EP-NSSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_SBI_X=1"),
+	UdsfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-UPF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_SBI_X=1"),
+	NrfEpN27 = Endpoint('ngc:EP_N27', "1", "EP-NSSF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N27=1"),
+	NrfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_SBI_X=1"),
+	NssfEpN22 = Endpoint('ngc:EP_N22', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N22=1"),
+	NssfEpN27 = Endpoint('ngc:EP_N27', "1", "EP-NRF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,NRFFunction=1,EP_N27=1"),
+	NssfEpN31 = Endpoint('ngc:EP_N31', "1", "EP-N31", "EP-N31-DN"),
+	NssfEpSbiX = Endpoint('ngc:EP_SBI_X', "1", "EP-UDR-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDRFunction=1,EP_SBI_X=2"),
+	SmsEpN20 = Endpoint('ngc:EP_N20', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N20=1"),
+	SmsEpN21 = Endpoint('ngc:EP_N21', "1", "EP-UDM-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N21=1"),
+	SmsEpMapSmsc = Endpoint('ngc:EP_MAP_SMSC', "1", "EP-MAP-SMSC-1", "EP-MAP-SMSC-DN"),
+	LmfEpNls = Endpoint('ngc:EP_NLS', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLS=1"),
+	NgeirEpN17 = Endpoint('ngc:EP_N17', "1", "EP-AMF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N17=1"),
+	SeppEpN32 = Endpoint('ngc:EP_N32', "1", "EP-SEPP-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,SEPPFunction=2,EP_N32=1"),
+	SeppEpSbiIpx = Endpoint('ngc:EP_SBI_IPX', "1", "EP-SBI-IPX-1", "EP-SBI-IPX-DN"),
+	NwdafEpSbiX1 = Endpoint('ngc:EP_SBI_X', "1", "EP-PCF-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_SBI_X=1"),
+	NwdafEpSbiX2 = Endpoint('ngc:EP_SBI_X', "2", "EP-UDM-1", "DC=sigscale.net,"
+			"SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_SBI_X=1"),
 	FileAttributes = [{xmlns, "http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"},
 			{'xmlns:xn', "http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"},
 			{'xmlns:en', "http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"},
@@ -1908,84 +2031,10 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															[indent(8), {'ngc:sst', ["235"]},
 															indent(8), {'ngc:sd', ["65432"]}, indent(7)]}, indent(6)]},
 											indent(6), {'ngc:aMFSet', ["85"]}, indent(5)]},
-									indent(5), {'ngc:EP_N2', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"N3IWFFunction=1,EP_N2=1"]},
-													indent(7), {'ngc:userLabel', ["EP-N3IWF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N8', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDMFunction=1,EP_N8=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDM-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N11', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMFFunction=1,EP_N11=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N12', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AUSFFunction=1,EP_N12=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AUSF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N14', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=2,EP_N14=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N15', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"PCFFunction=1,EP_N15=1"]},
-													indent(7), {'ngc:userLabel', ["EP-PCF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N17', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"NGEIRFunction=1,EP_N17=1"]},
-													indent(7), {'ngc:userLabel', ["EP-NGEIR-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N20', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMSFFunction=1,EP_N20=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMSF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N22', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"NSSFFunction=1,EP_N22=1"]},
-													indent(7), {'ngc:userLabel', ["EP-NSSF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N26', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=4,ManagedElement=1,"
-																	"MMEFunction=1,EP_N26=1"]},
-													indent(7), {'ngc:userLabel', ["EP-MME-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_NLS', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"LMFFunction=1,EP_NLS=1"]},
-													indent(7), {'ngc:userLabel', ["EP-LMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_NLG', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=2,ManagedElement=1,GmlcFunction=1"]},
-													indent(7), {'ngc:userLabel', ["EP-Gmlc-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"NRFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-NRF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), AmfEpN2, indent(5), AmfEpN8, indent(5), AmfEpN11, indent(5), AmfEpN12,
+									indent(5), AmfEpN14, indent(5), AmfEpN15, indent(5), AmfEpN17, indent(5), AmfEpN20,
+									indent(5), AmfEpN22, indent(5), AmfEpN26, indent(5), AmfEpNls, indent(5), AmfEpNlg,
+									indent(5), AmfEpSbiX, indent(4)]},
 							indent(4), {'ngc:SMFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["smf-asquith"]},
@@ -2026,49 +2075,8 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["low"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N4', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UPFFunction=1,EP_N4=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UPF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N7', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"PCFFunction=1,EP_N7=1"]},
-													indent(7), {'ngc:userLabel', ["EP-PCF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N10', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDMFunction=1,EP_N10=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDM-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N11', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N11=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N16', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMFFunction=2,EP_N16=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_S5C', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=4,ManagedElement=1,"
-																	"ServingGWFunction=1,EP_S5C=1"]},
-													indent(7), {'ngc:userLabel', ["EP-ServingGW-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDRFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDR-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), SmfEpN4, indent(5), SmfEpN7, indent(5), SmfEpN10, indent(5), SmfEpN11,
+									indent(5), SmfEpN16, indent(5), SmfEpS5c, indent(5), SmfEpSbiX, indent(4)]},
 							indent(4), {'ngc:UPFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["upf-asquith"]},
@@ -2078,43 +2086,8 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'en:mnc', ["786"]}, indent(7)]}, indent(6)]},
 											indent(6), {'ngc:nRTACList', [],
 													[indent(7), {'ngc:tac', ["168"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N3', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"N3IWFFunction=1,EP_N3=1"]},
-													indent(7), {'ngc:userLabel', ["EP-ENB-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N4', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMFFunction=1,EP_N4=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N6', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"DNFunction=1,EP_N6=1"]},
-													indent(7), {'ngc:userLabel', ["EP-DN-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N9', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UPFFunction=2,EP_N9=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UPF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_S5U', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=4,ManagedElement=1,"
-																	"ServingGWFunction=1,EP_S5U=1"]},
-													indent(7), {'ngc:userLabel', ["EP-ServingGW-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDSFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDSF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), UpfEpN3, indent(5), UpfEpN4, indent(5), UpfEpN6, indent(5), UpfEpN9,
+									indent(5), UpfEpS5u, indent(5), UpfEpSbiX, indent(4)]},
 							indent(4), {'ngc:N3IWFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["n3iwf-asquith"]},
@@ -2122,19 +2095,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 													[indent(7), {'en:pLMNId', [],
 															[indent(8), {'en:mcc', ["296"]},
 															indent(8), {'en:mnc', ["787"]}, indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N2', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N2=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N3', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UPFFunction=1,EP_N3=1"]},
-													indent(7), {'ngc:userLabel', ["EP-ENB-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), N3iwfEpN2, indent(5), N3iwfEpN3, indent(4)]},
 							indent(4), {'ngc:PCFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["pcf-asquith"]},
@@ -2173,43 +2134,8 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["high"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N5', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AFFunction=1,EP_N5=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N7', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMFFunction=1,EP_N7=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N15', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N15=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N16', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"PCFFunction=2,EP_N16=1"]},
-													indent(7), {'ngc:userLabel', ["EP-PCF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_Rx', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AFFunction=1,EP_Rx=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"NWDAFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-NWDAF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), PcfEpN5, indent(5), PcfEpN7, indent(5), PcfEpN15, indent(5), PcfEpN16,
+									indent(5), PcfEpRx, indent(5), PcfEpSbiX, indent(4)]},
 							indent(4), {'ngc:AUSFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["ausf-asquith"]},
@@ -2248,25 +2174,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["low"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N12', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N12=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N13', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDMFunction=1,EP_N13=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDM-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDSFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDSF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), AusfEpN12, indent(5), AusfEpN13, indent(5), AusfEpSbiX, indent(4)]},
 							indent(4), {'ngc:UDMFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["udm-asquith"]},
@@ -2305,31 +2213,8 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["high"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N8', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N8=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N10', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMFFunction=1,EP_N10=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N13', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AUSFFunction=1,EP_N13=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AUSF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"NWDAFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-NWDAF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), UdmEpN8, indent(5), UdmEpN10, indent(5), UdmEpN13, 
+									indent(5), UdmEpSbiX, indent(4)]},
 							indent(4), {'ngc:UDRFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["udr-asquith"]},
@@ -2368,13 +2253,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["low"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SMFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SMF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), UdrEpSbiX1, indent(5), UdrEpSbiX2, indent(4)]},
 							indent(4), {'ngc:UDSFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["udsf-asquith"]},
@@ -2413,13 +2292,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["high"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UPFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UPF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), UdsfEpSbiX, indent(4)]},
 							indent(4), {'ngc:NRFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["nrf-asquith"]},
@@ -2428,15 +2301,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															[indent(8), {'en:mcc', ["281"]},
 															indent(8), {'en:mnc', ["772"]}, indent(7)]}, indent(6)]},
 											indent(6), {'ngc:sBIFqdn', [generate_identity(7)]}, indent(5)]},
-									indent(5), {'ngc:EP_N27', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity', ["EP-N27-DN"]},
-													indent(7), {'ngc:userLabel', ["EP-N27"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity', ["EP-SBI-X-DN"]},
-													indent(7), {'ngc:userLabel', ["EP-SBI-X"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), NrfEpN27, indent(5), NrfEpSbiX, indent(4)]},
 							indent(4), {'ngc:NSSFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["nssf-asquith"]},
@@ -2446,29 +2311,8 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'en:mnc', ["771"]}, indent(7)]}, indent(6)]},
 											indent(6), {'ngc:sBIFqdn', [generate_identity(7)]},
 											indent(6), {'ngc:nSIIdList', ["105"]}, indent(5)]},
-									indent(5), {'ngc:EP_N22', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N22=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N27', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"NRFFunction=1,EP_N27=1"]},
-													indent(7), {'ngc:userLabel', ["EP-NRF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N31', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity', ["EP-N31-DN"]},
-													indent(7), {'ngc:userLabel', ["EP-N31"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDRFunction=1,EP_SBI_X=2"]},
-													indent(7), {'ngc:userLabel', ["EP-UDR-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), NssfEpN22, indent(5), NssfEpN27, indent(5), NssfEpN31,
+									indent(5), NssfEpSbiX, indent(4)]},
 							indent(4), {'ngc:SMSFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["smsf-asquith"]},
@@ -2507,23 +2351,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["low"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N20', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N20=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N21', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"UDMFunction=1,EP_N21=1"]},
-													indent(7), {'ngc:userLabel', ["EP-UDM-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_MAP_SMSC', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity', ["EP-MAP-SMSC-DN"]},
-													indent(7), {'ngc:userLabel', ["EP-MAP-SMSC-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), SmsEpN20, indent(5), SmsEpN21, indent(5), SmsEpMapSmsc, indent(4)]},
 							indent(4), {'ngc:LMFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["lmf-asquith"]},
@@ -2532,13 +2360,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															[indent(8), {'en:mcc', ["277"]},
 															indent(8), {'en:mnc', ["768"]}, indent(7)]},
 																	indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_NLS', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_NLS=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), LmfEpNls, indent(4)]},
 							indent(4), {'ngc:NGEIRFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["ngeir-asquith"]},
@@ -2577,13 +2399,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["high"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N17', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"AMFFunction=1,EP_N17=1"]},
-													indent(7), {'ngc:userLabel', ["EP-AMF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), NgeirEpN17, indent(4)]},
 							indent(4), {'ngc:SEPPFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["sepp-asquith"]},
@@ -2591,17 +2407,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 													[indent(7), {'en:pLMNId', [],
 															[indent(8), {'en:mcc', ["274"]},
 															indent(8), {'en:mnc', ["765"]}, indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_N32', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"SEPPFunction=2,EP_N32=1"]},
-													indent(7), {'ngc:userLabel', ["EP-SEEP-1"]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_IPX', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity', ["EP-SBI-IPX-DN"]},
-													indent(7), {'ngc:userLabel', ["EP-SBI-IPX-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), SeppEpN32, indent(5), SeppEpSbiIpx, indent(4)]},
 							indent(4), {'ngc:NWDAFFunction', [{id, "1"}],
 									[indent(5), {'ngc:attributes', [],
 											[indent(6), {'ngc:userLabel', ["nwdaf-asquith"]},
@@ -2640,13 +2446,7 @@ init_per_testcase(bulk_cm_5gc, Config) ->
 															indent(8), {'ngc:capacity', ["low"]},
 															indent(8), {'ngc:supportedFeatures', [generate_identity(7)]},
 																	indent(7)]}, indent(6)]}, indent(5)]},
-									indent(5), {'ngc:EP_SBI_X', [{id, "1"}],
-											[indent(6), {'ngc:attributes', [],
-													[indent(7), {'ngc:farEndEntity',
-															["DC=sigscale.net,SubNetwork=12,ManagedElement=1,"
-																	"PCFFunction=1,EP_SBI_X=1"]},
-													indent(7), {'ngc:userLabel', ["EP-PCF-1"]}, indent(6)]}, indent(5)]},
-															indent(4)]},
+									indent(5), NwdafEpSbiX1, indent(5), NwdafEpSbiX2, indent(4)]},
 							indent(4), {'xn:VsDataContainer', [{id, "1"}],
 									[indent(5), {'xn:attributes', [],
 											[indent(6), {'xn:vsDataType', ["DataType=189"]},
@@ -4421,4 +4221,3 @@ fill_resource(N) ->
 indent(N) ->
 	Tabs = lists:duplicate(N, $\t),
 	#xmlText{value = "\n" ++ Tabs, type = text}.
-
