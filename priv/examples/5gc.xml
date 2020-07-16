@@ -724,7 +724,7 @@
 							<ngc:farEndEntity>
 								DC=sigscale.net,SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_SBI_X=1
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-SMF-1</ngc:userLabel>
+							<ngc:userLabel>EP-NSSF-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
 				</ngc:UDRFunction>
@@ -1089,7 +1089,7 @@
 							<ngc:farEndEntity>
 								DC=sigscale.net,SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_SBI_X=1
 							</ngc:farEndEntity>
-							<ngc:userLabel>EP-PCF-1</ngc:userLabel>
+							<ngc:userLabel>EP-UDM-1</ngc:userLabel>
 						</ngc:attributes>
 					</ngc:EP_SBI_X>
 				</ngc:NWDAFFunction>
