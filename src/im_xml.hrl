@@ -76,7 +76,8 @@
 		pgw :: map() | undefined,
 		sgw :: map() | undefined,
 		ep_rp_eps :: map() | undefined,
-		ep_rp_epss = [] :: [resource_rel()]}).
+		ep_rp_epss = [] :: [resource_rel()],
+		ep_n26s = [] :: [resource_rel()]}).
 -type epc_state() :: #epc_state{}.
 
 -record(core_state,

@@ -6,6 +6,7 @@
 <bulkCmConfigDataFile
 		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
 		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
 		xmlns:epc="http://www.3gpp.org/ftp/specs/archive/28_series/28.709#epcNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
@@ -187,6 +188,14 @@
 							<epc:farEndEntity>DC=sigscale.net,SubNetwork=4,ManagedEntity=1,ENBFunction=1,EP_RP_EPS=1</epc:farEndEntity>
 						</epc:attributes>
 					</epc:EP_RP_EPS>
+					<ngc:EP_N26 id="1">
+						<ngc:attributes>
+							<ngc:userLabel>EP-AMF-1</ngc:userLabel>
+							<ngc:farEndEntity>
+								DC=sigscale.net,SubNetwork=12,ManagedEntity=1,AMFFunction=1,EP_N26=1
+							</ngc:farEndEntity>
+						</ngc:attributes>
+					</ngc:EP_N26>
 				</epc:MMEFunction>
 				<epc:MMEFunction id="2">
 					<epc:attributes>

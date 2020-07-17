@@ -107,12 +107,21 @@ parse_mme({startElement,  _Uri, "EP_RP_EPS", QName,
 			parse_module = im_xml_epc, parse_function = parse_eprpeps,
 			parse_state = #epc_state{ep_rp_eps = #{"id" => DnComponent}},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_mme({startElement,  _Uri, "EP_N26", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _]} | _] = State) ->
+	DnComponent = ",EP_N26=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn],
+			parse_module = im_xml_5gc, parse_function = parse_ep_n26,
+			parse_state = #ngc_state{ep_n26 = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_mme({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_mme({endElement, _Uri, "MMEFunction", QName},
 		[#state{dn_prefix = [MmeDn | _], stack = Stack,
-		parse_state = #epc_state{ep_rp_epss = EpRpEps},
+		parse_state = #epc_state{ep_rp_epss = EpRpEps, ep_n26s = EpN26s},
 		spec_cache = Cache, location = Location},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -131,8 +140,8 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			schema = "/resourceInventoryManagement/v3/schema/MMEFunction",
 			specification = Spec,
 			characteristic = [PeeParam | MmeAttr],
-			related = EpRpEps,
-			connection_point = EpRpEps},
+			related = EpRpEps ++ EpN26s,
+			connection_point = EpRpEps ++ EpN26s},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];

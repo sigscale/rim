@@ -2384,9 +2384,8 @@ parse_ep_n26({startElement, _, _, QName, Attributes},
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
 parse_ep_n26({endElement, _Uri, "EP_N26", QName},
 		[#state{dn_prefix = [EpN26Dn | _], stack = Stack, spec_cache = Cache},
-		#state{parse_state = NgcState,
+		#state{parse_state = PrevParseState,
 		spec_cache = PrevCache} = PrevState | T1]) ->
-	#ngc_state{ep_n26s = EpN26Rels} = NgcState,
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	EpN26Attr = parse_ep_attr(T2, undefined, []),
 	ClassType = "EP_N26",
@@ -2404,9 +2403,16 @@ parse_ep_n26({endElement, _Uri, "EP_N26", QName},
 		{ok, #resource{id = Id}} ->
 			EpN26Rel = #resource_rel{id = Id, name = EpN26Dn, type = "contains",
 					referred_type = ClassType, href = ?ResourcePath ++ Id},
-			[PrevState#state{parse_state = NgcState#ngc_state{
-					ep_n26s = [EpN26Rel | EpN26Rels]},
-					spec_cache = [NewCache | PrevCache]} | T1];
+			case PrevParseState of
+				#ngc_state{ep_n26s = EpN26Rels} ->
+					[PrevState#state{parse_state = PrevParseState#ngc_state{
+							ep_n26s = [EpN26Rel | EpN26Rels]},
+							spec_cache = [NewCache | PrevCache]} | T1];
+				#epc_state{ep_n26s = EpN26Rels} ->
+					[PrevState#state{parse_state = PrevParseState#epc_state{
+							ep_n26s = [EpN26Rel | EpN26Rels]},
+							spec_cache = [NewCache | PrevCache]} | T1]
+			end;
 		{error, Reason} ->
 			throw({add_resource, Reason})
 	end;
