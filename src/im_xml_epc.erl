@@ -465,6 +465,10 @@ parse_ep_rp_eps_attr([{startElement, {_, "attributes"} = QName, []} | T1],
 % @hidden
 parse_ep_rp_eps_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
 	parse_ep_rp_eps_attr1(T, Attr, Acc);
+parse_ep_rp_eps_attr1([{characters, Chars} | T], "farEndEntity" = Attr, Acc) ->
+	[Dn] = string:tokens(Chars, "\n$\t"),
+	parse_ep_rp_eps_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Dn} | Acc]);
 parse_ep_rp_eps_attr1([{characters, Chars} | T], Attr, Acc) when is_list(Chars) ->
 	parse_ep_rp_eps_attr1(T, Attr,
 			[#resource_char{name = Attr, value = Chars} | Acc]);
