@@ -251,7 +251,7 @@
 						<element name="attributes">
 							<complexType>
 								<all>
-								<element name="userLabel" type="string"/>
+									<element name="userLabel" type="string"/>
 									<element name="vnfParametersList" type="xn:vnfParametersListType" minOccurs="0"/>
 									<element name="pLMNIdList" type="en:PLMNIdList"/>
 									<element name="aMFIdentifier" type="ngc:aMFIdentifier"/>
