@@ -80,7 +80,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-nr-ep-f1u.json \
 		$(abs_builddir)/specification-nr-ep-e1.json \
 		$(abs_builddir)/specification-nr-ep-s1u.json \
-		$(abs_builddir)/specification-5gc-slice.json \
+		$(abs_builddir)/specification-network-slice.json \
 		$(abs_builddir)/specification-5gc-slice-subnet.json \
 		$(abs_builddir)/specification-5gc-amf.json \
 		$(abs_builddir)/specification-5gc-smf.json \
@@ -275,6 +275,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-core-iubc-link.json \
 		$(abs_builddir)/resource-core-a-link.json \
 		$(abs_builddir)/resource-core-gb-link.json \
+		$(abs_builddir)/resource-network-slice.json \
 		$(abs_builddir)/specification-oda-manager.json \
 		$(abs_builddir)/specification-oda-catalog.json \
 		$(abs_builddir)/specification-oda-inventory.json \
@@ -618,7 +619,7 @@ check_DATA = .validation_ok
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
-				-d specification-5gc-slice.json; then exit 1; fi; \
+				-d specification-network-slice.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSubnetSpec.json \
 				--unknown-formats="base64" \
 				--unknown-formats="float" \
@@ -1224,6 +1225,8 @@ check_DATA = .validation_ok
 				-d resource-core-a-link.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-core-gb-link.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
+				-d resource-network-slice.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d resource-oda-catalog.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \

@@ -31,7 +31,7 @@
 		nr_cell_cu/0, nr_cell_du/0, nr_sector_carrier/0,
 		nr_ep_x2c/0, nr_ep_x2u/0, nr_ep_ngc/0, nr_ep_ngu/0, nr_ep_xnc/0,
 		nr_ep_xnu/0, nr_ep_f1c/0, nr_ep_f1u/0, nr_ep_e1/0, nr_ep_s1u/0]).
--export([ngc_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0,
+-export([network_slice/0, ngc_slice_subnet/0, ngc_amf/0, ngc_smf/0, ngc_upf/0,
 		ngc_n3iwf/0, ngc_pcf/0, ngc_ausf/0, ngc_udm/0, ngc_udr/0, ngc_udsf/0,
 		ngc_nrf/0, ngc_nssf/0, ngc_smsf/0, ngc_lmf/0, ngc_ngeir/0, ngc_sepp/0,
 		ngc_nwdaf/0, ngc_ep_n2/0, ngc_ep_n3/0, ngc_ep_n4/0, ngc_ep_n5/0,
@@ -2044,9 +2044,9 @@ nr_ep_s1u() ->
 					schema = "/resourceInventoryManagement/v3/schema/EP_S1U"},
 			characteristic = Chars}.
 
--spec ngc_slice() -> specification().
-%% @doc 5G Core (5GC) Network Slice resource function specification.
-ngc_slice() ->
+-spec network_slice() -> specification().
+%% @doc Network Slice resource function specification.
+network_slice() ->
 	Id = #specification_char{name = "id",
 			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
@@ -2074,7 +2074,8 @@ ngc_slice() ->
 	AdministrativeState = #specification_char{name = "administrativeState",
 			description = "Indicates the administrative state of the object instance (ITU-T X.731)",
 			value_type = "administrativeStateType",
-			value_schema = "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/administrativeStateType"},
+			value_schema = "/resourceCatalogManagement/v3/schema/stateManagementIRP#/"
+					"definitions/administrativeStateType"},
 	ServiceProfileList = #specification_char{name = "serviceProfileList",
 			description = "Service Profiles (3GPP TS 28.541 clause 6.3.3)",
 			value_type = "ServiceProfileList",
@@ -2082,13 +2083,13 @@ ngc_slice() ->
 	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType, SetOfMcc, NSSIId,
 			OperationalState, AdministrativeState, ServiceProfileList, ServiceProfileList],
 	#specification{name = "NetworkSlice",
-			description = "5G Network Slice",
+			description = "Network Slice",
 			class_type = "NetworkSliceSpec",
 			schema = "/resourceCatalogManagement/v3/schema/NetworkSliceSpec",
 			base_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "Core",
+			category = "Slice",
 			target_schema = #target_schema_ref{class_type = "NetworkSlice",
 					schema = "/resourceInventoryManagement/v3/schema/NetworkSlice"},
 			characteristic = Chars}.

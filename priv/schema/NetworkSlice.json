@@ -1,21 +1,21 @@
 {
-	"$id": "http://sigscale.org/schema/NetworkSliceSpec",
-	"title": "Network Slice Specification",
-	"description": "Network Slice resource function specification",
+	"$id": "http://sigscale.org/schema/NetworkSlice",
+	"title": "Network Slice",
+	"description": "Network Slice resource function",
 	"type": "object",
 	"allOf": [
 		{
-			"$ref": "resourceCatalogManagement#/definitions/ResourceFunctionSpecification"
+			"$ref": "SubNetwork"
 		},
 		{
 			"type": "object",
 			"properties": {
-				"resourceSpecCharacteristic": {
+				"characteristic": {
 					"type": "array",
 					"items": {
 						"allOf": [
 							{
-								"$ref": "resourceCatalogManagement#/definitions/ResourceSpecificationCharacteristic"
+								"$ref": "resourceInventoryManagement#/definitions/Characteristic"
 							},
 							{
 								"type": "object",
@@ -25,11 +25,6 @@
 								"properties": {
 									"name": {
 										"enum": [
-											"id",
-											"dnPrefix",
-											"userLabel",
-											"userDefinedNetworkType",
-											"setOfMcc",
 											"nSSIId",
 											"operationalState",
 											"administrativeState",

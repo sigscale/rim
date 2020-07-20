@@ -128,6 +128,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/NRCellCUSpec.json \
 		$(abs_builddir)/NRSectorCarrierSpec.json \
 		$(abs_builddir)/NetworkSliceSpec.json \
+		$(abs_builddir)/NetworkSlice.json \
 		$(abs_builddir)/NetworkSliceSubnetSpec.json \
 		$(abs_builddir)/AMFFunctionSpec.json \
 		$(abs_builddir)/AMFFunction.json \
@@ -941,6 +942,15 @@ check_DATA = .validation_ok
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
+			then exit 1; fi; \
+		if ! ajv compile -s NetworkSlice.json \
+			-r SubNetwork.json \
+			-r ManagedFunction.json \
+			-r genericNrm.json \
+			--unknown-formats="base64" \
+			--unknown-formats="float" \
+			-r resourceFunctionActivation.json \
+			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSubnetSpec.json \
 			--unknown-formats="base64" \

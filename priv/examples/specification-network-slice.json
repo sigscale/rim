@@ -1,17 +1,17 @@
 {
 	"name": "NetworkSlice",
-	"description": "5G Core (5GC) Network Slice resource function specification",
+	"description": "Network Slice resource function specification",
 	"@type": "NetworkSliceSpec",
 	"@schemaLocation": "http://sigscale.org/schema/NetworkSliceSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
-		"startDateTime": "2019-01-29T00:00:00Z",
-		"endDateTime": "2019-12-31T23:59:59Z"
+		"startDateTime": "2020-01-29T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
 	},
 	"lifecycleStatus": "In Test",
 	"isBundle": false,
-	"category": "Core",
+	"category": "Slice",
 	"targetResourceSchema": {
 		"@type": "NetworkSlice",
 		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSlice"
@@ -24,8 +24,8 @@
 			"role": "Supplier",
 			"name": "ACME Inc.",
 			"validFor": {
-				"startDateTime": "2019-01-29T00:00:00Z",
-				"endDateTime": "2019-12-31T23:59:59Z"
+				"startDateTime": "2020-01-01T00:00:00Z",
+				"endDateTime": "2020-12-31T23:59:59Z"
 			}
 		}
 	],
