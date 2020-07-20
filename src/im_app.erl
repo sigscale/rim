@@ -274,7 +274,7 @@ install8(Nodes, Acc) ->
 		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up, nr_sector_carrier,
 		nr_cell_cu, nr_cell_du, nr_ep_x2c, nr_ep_x2u, nr_ep_ngc, nr_ep_ngu,
 		nr_ep_xnc, nr_ep_xnu, nr_ep_f1c, nr_ep_f1u, nr_ep_e1, nr_ep_s1u,
-		network_slice, ngc_slice_subnet,
+		network_slice, network_slice_subnet,
 		ngc_amf, ngc_smf, ngc_upf, ngc_n3iwf, ngc_pcf, ngc_ausf, ngc_udm, ngc_udr,
 		ngc_udsf, ngc_nrf, ngc_nssf, ngc_smsf, ngc_lmf, ngc_ngeir, ngc_sepp,
 		ngc_nwdaf, ngc_ep_n2, ngc_ep_n3, ngc_ep_n4, ngc_ep_n5, ngc_ep_n6,

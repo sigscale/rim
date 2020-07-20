@@ -1,0 +1,40 @@
+{
+	"id": "3597460188",
+	"href": "/resourceInventoryManagement/v3/resource/3597460188",
+	"name": "SubNetwork=3,ManagedElement=1,NetworkSliceSubnet=1",
+	"description": "Network Slice Subnet",
+	"category": "Slice",
+	"validFor": {
+		"startDateTime": "2020-01-01T00:00:00Z",
+		"endDateTime": "2020-12-31T23:59:59Z"
+	},
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"@type": "NetworkSliceSubnet",
+	"@baseType": "SubNetwork",
+	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NetworkSliceSubnet",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "7981256431",
+		"href": "/resourceInventoryManagement/v3/resourceSpecification/7981256431",
+		"@type": "NetworkSliceSpec"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "dnPrefix",
+			"value" : "DC=example.net"
+		},
+		{
+			"name": "userLabel",
+			"value" : "network-slice-subnet-1"
+		}
+	],
+	"vsDataContainer": [
+		{
+			"vsDataType": "acmeParam979",
+			"vsDataFormatVersion": "acmeParams-v246",
+			"vsData": 946
+		}
+	],
+	"resourceRelationship": []
+}
