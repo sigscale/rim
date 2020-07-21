@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	3GPP TS 32.616 Bulk CM data file with
+	3GPP TS 28.541 Slice Network Resource Model (NRM)
+-->
+<bulkCmConfigDataFile
+		xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.616#configData"
+		xmlns:xn="http://www.3gpp.org/ftp/specs/archive/28_series/28.623#genericNrm"
+		xmlns:en="http://www.3gpp.org/ftp/specs/archive/28_series/28.659#eutranNrm"
+		xmlns:ngc="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#ngcNrm"
+		xmlns:sl="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#sliceNrm">
+	<fileHeader
+			fileFormatVersion="32.616 V15.0"
+			senderName="DC=sigscale.net,SubNetwork=8,ManagementNode=1,IRPAgent=1"
+			vendorName="Acme" />
+	<configData dnPrefix="DC=sigscale.net">
+		<xn:SubNetwork id="13">
+			<xn:attributes>
+				<xn:userLabel>sn-13</xn:userLabel>
+				<xn:userDefinedNetworkType>Slice</xn:userDefinedNetworkType>
+				<xn:setOfMcc>594</xn:setOfMcc>
+			</xn:attributes>
+			<xn:ManagementNode id="1">
+				<xn:attributes>
+					<xn:userLabel>ems-slice-1</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Asquith</xn:locationName>
+					<xn:managedElements>
+						<xn:dn>DC=sigscale.net,SubNetwork=13,ManagedElement=1</xn:dn>
+					</xn:managedElements>
+					<xn:swVersion>1.1</xn:swVersion>
+				</xn:attributes>
+			</xn:ManagementNode>
+			<xn:ManagedElement id="1">
+				<xn:attributes>
+					<xn:managedElementTypeList>
+						<xn:managedElementType>NS</xn:managedElementType>
+						<xn:managedElementType>NSS</xn:managedElementType>
+					</xn:managedElementTypeList>
+					<xn:userLabel>ns-asquith</xn:userLabel>
+					<xn:vendorName>Acme</xn:vendorName>
+					<xn:userDefinedState>commercial</xn:userDefinedState>
+					<xn:locationName>Asquith</xn:locationName>
+					<xn:swVersion>1.5.31</xn:swVersion>
+					<xn:managedBy>
+						<xn:dn>DC=sigscale.net,SubNetwork=13,ManagementNode=1</xn:dn>
+					</xn:managedBy>
+				</xn:attributes>
+				<xn:VsDataContainer id="1">
+					<xn:attributes>
+						<xn:vsDataType>acmeParam967</xn:vsDataType>
+						<xn:vsDataFormatVersion>acmeParams-v236</xn:vsDataFormatVersion>
+						<xn:vsData></xn:vsData>
+					</xn:attributes>
+				</xn:VsDataContainer>
+			</xn:ManagedElement>
+			<sl:NetworkSlice id="1">
+				<sl:attributes>
+					<sl:dnPrefix>DC=sigscale.net</sl:dnPrefix>
+					<sl:userLabel>network-slice-1</sl:userLabel>
+					<sl:userDefinedNetworkType>Slice</sl:userDefinedNetworkType>
+					<sl:nSSIId>DC=sigscale.net,SubNetwork=13,ManagedElement=1,NetworkSliceSubnet=1</sl:nSSIId>
+					<sl:operationalState>enabled</sl:operationalState>
+					<sl:administrativeState>locked</sl:administrativeState>
+					<sl:serviceProfileList>
+						<sl:serviceProfile>
+							<sl:serviceProfileId>sp-001</sl:serviceProfileId>
+							<sl:sNSSAIList>
+								<ngc:sNssai>
+									<ngc:sst>250</ngc:sst>
+									<ngc:sd>65525</ngc:sd>
+								</ngc:sNssai>
+							</sl:sNSSAIList>
+							<sl:pLMNIdList>
+								<en:pLMNId>
+									<en:mcc>291</en:mcc>
+									<en:mnc>782</en:mnc>
+								</en:pLMNId>
+							</sl:pLMNIdList>
+							<sl:perfReq>
+								<sl:perfReqEMBB>
+									<sl:expDataRateUL>178</sl:expDataRateUL>
+									<sl:userDensity>569</sl:userDensity>
+								</sl:perfReqEMBB>
+							</sl:perfReq>
+							<sl:sst>245</sl:sst>
+						</sl:serviceProfile>
+					</sl:serviceProfileList>
+				</sl:attributes>
+			</sl:NetworkSlice>
+			<sl:NetworkSliceSubnet id="1">
+				<sl:attributes>
+					<sl:dnPrefix>DC=sigscale.net</sl:dnPrefix>
+					<sl:userLabel>network-slice-1</sl:userLabel>
+					<sl:userDefinedNetworkType>Slice</sl:userDefinedNetworkType>
+					<sl:mFIdList>
+						<xn:dn>DN-1</xn:dn>
+					</sl:mFIdList>
+					<sl:ConstituentNSSIIdList>
+						<xn:dn>DC=sigscale.net,SubNetwork=13,ManagedElement=1,NetworkSliceSubnet=1</xn:dn>
+					</sl:ConstituentNSSIIdList>
+					<sl:operationalState>disabled</sl:operationalState>
+					<sl:administrativeState>shuttingDown</sl:administrativeState>
+					<sl:sliceProfileList>
+						<sl:sliceProfile>
+							<sl:sliceProfileId>slp-001</sl:sliceProfileId>
+							<sl:sNSSAIList>
+								<ngc:sNssai>
+									<ngc:sst>249</ngc:sst>
+									<ngc:sd>65524</ngc:sd>
+								</ngc:sNssai>
+							</sl:sNSSAIList>
+							<sl:pLMNIdList>
+								<en:pLMNId>
+									<en:mcc>290</en:mcc>
+									<en:mnc>781</en:mnc>
+								</en:pLMNId>
+							</sl:pLMNIdList>
+							<sl:perfReq>
+								<sl:perfReqEMBB>
+									<sl:expDataRateUL>179</sl:expDataRateUL>
+									<sl:userDensity>570</sl:userDensity>
+								</sl:perfReqEMBB>
+							</sl:perfReq>
+						</sl:sliceProfile>
+					</sl:sliceProfileList>
+				</sl:attributes>
+			</sl:NetworkSliceSubnet>
+		</xn:SubNetwork>
+	</configData>
+	<fileFooter dateTime="2020-07-20T12:00:00Z" />
+</bulkCmConfigDataFile>
