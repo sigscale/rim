@@ -90,7 +90,7 @@
 			<element name="latency" type="integer" minOccurs="0"/>
 			<element name="uEMobilityLevel" type="integer" minOccurs="0"/>
 			<element name="resourceSharingLevel" type="integer" minOccurs="0"/>
-		<element name="sst" type="ngc:Sst"/>
+			<element name="sst" type="ngc:Sst"/>
 			<element name="availability" type="float" minOccurs="0"/>
 		</sequence>
 	</complexType>

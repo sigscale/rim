@@ -11,7 +11,7 @@
 		xmlns:sl="http://www.3gpp.org/ftp/specs/archive/28_series/28.541#sliceNrm">
 	<fileHeader
 			fileFormatVersion="32.616 V15.0"
-			senderName="DC=sigscale.net,SubNetwork=8,ManagementNode=1,IRPAgent=1"
+			senderName="DC=sigscale.net,SubNetwork=13,ManagementNode=1,IRPAgent=1"
 			vendorName="Acme" />
 	<configData dnPrefix="DC=sigscale.net">
 		<xn:SubNetwork id="13">
@@ -34,10 +34,6 @@
 			</xn:ManagementNode>
 			<xn:ManagedElement id="1">
 				<xn:attributes>
-					<xn:managedElementTypeList>
-						<xn:managedElementType>NS</xn:managedElementType>
-						<xn:managedElementType>NSS</xn:managedElementType>
-					</xn:managedElementTypeList>
 					<xn:userLabel>ns-asquith</xn:userLabel>
 					<xn:vendorName>Acme</xn:vendorName>
 					<xn:userDefinedState>commercial</xn:userDefinedState>
@@ -60,7 +56,7 @@
 					<sl:dnPrefix>DC=sigscale.net</sl:dnPrefix>
 					<sl:userLabel>network-slice-1</sl:userLabel>
 					<sl:userDefinedNetworkType>Slice</sl:userDefinedNetworkType>
-					<sl:nSSIId>DC=sigscale.net,SubNetwork=13,ManagedElement=1,NetworkSliceSubnet=1</sl:nSSIId>
+					<sl:nSSIId>DC=sigscale.net,SubNetwork=13,NetworkSliceSubnet=1</sl:nSSIId>
 					<sl:operationalState>enabled</sl:operationalState>
 					<sl:administrativeState>locked</sl:administrativeState>
 					<sl:serviceProfileList>
@@ -92,13 +88,13 @@
 			<sl:NetworkSliceSubnet id="1">
 				<sl:attributes>
 					<sl:dnPrefix>DC=sigscale.net</sl:dnPrefix>
-					<sl:userLabel>network-slice-1</sl:userLabel>
+					<sl:userLabel>network-slice-subnet-1</sl:userLabel>
 					<sl:userDefinedNetworkType>Slice</sl:userDefinedNetworkType>
 					<sl:mFIdList>
 						<xn:dn>DN-1</xn:dn>
 					</sl:mFIdList>
 					<sl:ConstituentNSSIIdList>
-						<xn:dn>DC=sigscale.net,SubNetwork=13,ManagedElement=1,NetworkSliceSubnet=1</xn:dn>
+						<xn:dn>DC=sigscale.net,SubNetwork=13,NetworkSliceSubnet=1</xn:dn>
 					</sl:ConstituentNSSIIdList>
 					<sl:operationalState>disabled</sl:operationalState>
 					<sl:administrativeState>shuttingDown</sl:administrativeState>
