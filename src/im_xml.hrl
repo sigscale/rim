@@ -257,7 +257,8 @@
 -type ngc_state() :: #ngc_state{}.
 
 -record(slice_state,
-		{network_slice :: map() | undefined}).
+		{network_slice :: map() | undefined,
+		ns_subnet :: map() | undefined}).
 -type slice_state() :: #slice_state{}.
 
 -record(zte_state,

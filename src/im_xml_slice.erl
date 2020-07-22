@@ -13,7 +13,7 @@
 -copyright('Copyright (c) 2020 SigScale Global Inc.').
 
 %% export the im private API
--export([parse_network_slice/2]).
+-export([parse_network_slice/2, parse_ns_subnet/2]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -36,7 +36,6 @@ parse_network_slice({startElement, _, _, QName, Attributes},
 parse_network_slice({endElement, _Uri, "NetworkSlice", QName},
 		[#state{dn_prefix = [NSDn | _], stack = Stack, spec_cache = Cache},
 		#state{spec_cache = PrevCache} = PrevState | T1]) ->
-erlang:display({?MODULE, ?LINE, NSDn}),
 	ClassType = "NetworkSlice",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
@@ -78,6 +77,68 @@ parse_network_slice_attr1([{characters, Chars} | T], Attr, Acc) ->
 parse_network_slice_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
 	parse_network_slice_attr1(T, undefined, Acc);
 parse_network_slice_attr1([], undefined, Acc) ->
+	Acc.
+
+%% @hidden
+parse_ns_subnet({characters, Chars}, [#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{characters, Chars} | Stack]} | T];
+parse_ns_subnet({startElement, _, _, QName, Attributes},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
+parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
+		[#state{dn_prefix = [NSSDn | _], stack = Stack, spec_cache = Cache},
+		#state{spec_cache = PrevCache} = PrevState | T1]) ->
+	ClassType = "NetworkSliceSubnet",
+	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
+	NSSAttr = parse_ns_subnet_attr(T2, undefined, []),
+	Resource = #resource{name = NSSDn,
+			description = "Network Slice Subnet",
+			category = "Slice",
+			class_type = ClassType,
+			base_type = "ResourceFunction",
+			schema = "/resourceInventoryManagement/v3/schema/NetworkSliceSubnet",
+			specification = Spec,
+			characteristic = NSSAttr},
+	case im:add_resource(Resource) of
+		{ok, #resource{} = _R} ->
+			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
+		{error, Reason} ->
+			throw({add_resource, Reason})
+	end;
+parse_ns_subnet({endElement, _Uri, _LocalName, QName},
+		[#state{stack = Stack} = State | T]) ->
+	[State#state{stack = [{endElement, QName} | Stack]} | T].
+
+% @hidden
+parse_ns_subnet_attr([{startElement, {_, "attributes"} = QName, []} | T1],
+		undefined, Acc) ->
+	{[_ | Attributes], _T2} = pop(endElement, QName, T1),
+	parse_ns_subnet_attr1(Attributes, undefined, Acc).
+% @hidden
+parse_ns_subnet_attr1([{endElement, {_, Attr} = QName} | T1], undefined, Acc)
+		when Attr == "mFIdList"; Attr == "ConstituentNSSIIdList" ->
+	% @todo dnList
+	{[_ | _DnList], T2} = pop(startElement, QName, T1),
+	parse_ns_subnet_attr1(T2, undefined, Acc);
+parse_ns_subnet_attr1([{endElement, {_, "nsInfo"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo nsInfo
+	{[_ | _NsInfo], T2} = pop(startElement, QName, T1),
+	parse_ns_subnet_attr1(T2, undefined, Acc);
+parse_ns_subnet_attr1([{endElement, {_, "sliceProfileList"} = QName} | T1],
+		undefined, Acc) ->
+	% @todo sliceProfileList
+	{[_ | _SliceProfileList], T2} = pop(startElement, QName, T1),
+	parse_ns_subnet_attr1(T2, undefined, Acc);
+parse_ns_subnet_attr1([{endElement, {_, Attr}} | T], undefined, Acc) ->
+	parse_ns_subnet_attr1(T, Attr, Acc);
+parse_ns_subnet_attr1([{characters, Chars} | T], Attr, Acc) ->
+	parse_ns_subnet_attr1(T, Attr,
+			[#resource_char{name = Attr, value = Chars} | Acc]);
+parse_ns_subnet_attr1([{startElement, {_, Attr}, _} | T], Attr, Acc) ->
+	parse_ns_subnet_attr1(T, undefined, Acc);
+parse_ns_subnet_attr1([], undefined, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
