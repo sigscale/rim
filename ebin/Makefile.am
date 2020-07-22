@@ -25,6 +25,7 @@ beam_DATA = im_app.beam \
 			im_xml_ims.beam \
 			im_xml_nr.beam \
 			im_xml_5gc.beam \
+			im_xml_slice.beam \
 			im_xml_zte.beam \
 			im_xml_huawei.beam \
 			im_xml_nokia.beam \

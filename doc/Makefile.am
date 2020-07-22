@@ -13,6 +13,7 @@ modhtml = im_app.html \
 			im_xml_epcn3ai.html \
 			im_xml_nr.html \
 			im_xml_5gc.html \
+			im_xml_slice.html \
 			im_server.html \
 			mod_im_rest_accepted_content.html \
 			mod_im_rest_get.html \

@@ -34,6 +34,7 @@
 			im_xml_inventory2,
 			im_xml_nr,
 			im_xml_5gc,
+			im_xml_slice,
 			im_xml_zte,
 			im_xml_nokia,
 			mod_im_rest_accepted_content,
