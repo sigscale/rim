@@ -256,6 +256,10 @@
 		ep_map_smscs = [] :: [resource_rel()]}).
 -type ngc_state() :: #ngc_state{}.
 
+-record(slice_state,
+		{network_slice :: map() | undefined}).
+-type slice_state() :: #slice_state{}.
+
 -record(zte_state,
 		{bts :: map() | undefined,
 		vs_data :: map() | undefined,

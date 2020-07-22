@@ -150,6 +150,16 @@ parse_subnetwork({startElement, _Uri, "ManagedElement", QName,
 			parse_module = im_xml_generic, parse_function = parse_managed_element,
 			parse_state = #generic_state{managed_element = [DnComponent]},
 			stack = [{startElement, QName, Attributes}]} | State];
+parse_subnetwork({startElement, _Uri, "NetworkSlice", QName,
+		[{[], [], "id", Id}] = Attributes},
+		[#state{dn_prefix = [CurrentDn | _], rule = RuleId} | _] = State) ->
+erlang:display({?MODULE, ?LINE, QName}),
+	DnComponent = ",NetworkSlice=" ++ Id,
+	NewDn = CurrentDn ++ DnComponent,
+	[#state{dn_prefix = [NewDn], rule = RuleId,
+			parse_module = im_xml_slice, parse_function = parse_network_slice,
+			parse_state = #slice_state{network_slice = #{"id" => DnComponent}},
+			stack = [{startElement, QName, Attributes}]} | State];
 parse_subnetwork({startElement, _, _, QName, Attributes},
 		[#state{stack = Stack} = State | T]) ->
 	[State#state{stack = [{startElement, QName, Attributes} | Stack]} | T];
