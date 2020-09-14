@@ -19,7 +19,7 @@ and [3GPP](http://www.3gpp.org) Network Resource Models
 
 The project creators authored the [TM Forum](https://www.tmforum.org) best practice document
 [IG1217 Resource Inventory of 3GPP NRM for Service Assurance](https://www.tmforum.org/resources/reference/ig1217-resource-inventory-of-3gpp-nrm-for-service-assurance-v1-0-0/)
-which details the rational for, and process of, mapping 3GPP and ETSI information models to TMF634/TMF639.
+which details the rational for, and process of, mapping 3GPP information models to TMF634/TMF639 implemented here.
 
 ### Graphical User Interface (GUI)
 A web front end built with Google [Polymer](https://www.polymer-project.org)
