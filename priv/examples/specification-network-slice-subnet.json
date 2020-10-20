@@ -97,74 +97,207 @@
 		{
 			"id": "16029108611704547",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
-			"name": "AMFFunction",
 			"@type": "AMFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/AMFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "AMFFunction"
 		},
 		{
 			"id": "16029108611551283",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
-			"name": "SMFFunction",
 			"@type": "SMFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/SMFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "SMFFunction"
 		},
 		{
 			"id": "1602910861147484",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
-			"name": "UPFFunction",
 			"@type": "UPFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/UPFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "UPFFunction"
 		},
 		{
 			"id": "16029108611581827",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
-			"name": "AUSFFunction",
 			"@type": "AUSFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/AUSFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "AUSFFunction"
 		},
 		{
 			"id": "16029108611684227",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684227",
-			"name": "NSSFFunction",
 			"@type": "NSSFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/NSSFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "NSSFFunction"
 		},
 		{
 			"id": "1602910861153931",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
-			"name": "UDMFunction",
 			"@type": "UDMFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/UDMFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "UDMFunction"
 		},
 		{
 			"id": "16029108611561347",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
-			"name": "PCFFunction",
 			"@type": "PCFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/PCFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "PCFFunction"
 		},
 		{
 			"id": "16029108611592019",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611592019",
-			"name": "AFFunction",
 			"@type": "AFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/AFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains"
+			"relationshipType": "contains",
+			"name": "AFFunction"
+		},
+		{
+			"@type": "EP_N2Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N2Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N2"
+		},
+		{
+			"id": "16029108611684003",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+			"@type": "EP_N3Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N3Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N3"
+		},
+		{
+			"id": "16029108611571507",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+			"@type": "EP_N4Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N4Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N4"
+		},
+		{
+			"id": "16029108611561315",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
+			"@type": "EP_N5Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N5Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N5"
+		},
+		{
+			"id": "16029108611632915",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+			"@type": "EP_N6Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N6Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N6"
+		},
+		{
+			"id": "1602910861149579",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+			"@type": "EP_N7Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N7Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N7"
+		},
+		{
+			"id": "16029108611643011",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+			"@type": "EP_N8Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N8Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N8"
+		},
+		{
+			"id": "16029108611571603",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+			"@type": "EP_N9Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N9Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N9"
+		},
+		{
+			"id": "16029108611602371",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+			"@type": "EP_N10Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N10Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N10"
+		},
+		{
+			"id": "16029108611602243",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+			"@type": "EP_N11Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N11Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N11"
+		},
+		{
+			"id": "16029108611581859",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+			"@type": "EP_N12Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N12Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N12"
+		},
+		{
+			"id": "1602910861141164",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+			"@type": "EP_N13Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N13Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N13"
+		},
+		{
+			"id": "16029108611541091",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+			"@type": "EP_N14Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N14Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N14"
+		},
+		{
+			"id": "16029108611581923",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+			"@type": "EP_N15Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N15Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N15"
+		},
+		{
+			"id": "1602910861144388",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+			"@type": "EP_N22Spec",
+			"@schemaLocation": "http://sigscale.org/schema/EP_N22Spec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains",
+			"name": "EP_N22"
 		}
 	],
 	"connectionPointSpecification": [
@@ -181,82 +314,10 @@
 			"name": "EP_N3"
 		},
 		{
-			"id": "16029108611571507",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
-			"@referredType": "EP_N4Spec",
-			"name": "EP_N4"
-		},
-		{
-			"id": "16029108611561315",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
-			"@referredType": "EP_N5Spec",
-			"name": "EP_N5"
-		},
-		{
 			"id": "16029108611632915",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
 			"@referredType": "EP_N6Spec",
 			"name": "EP_N6"
-		},
-		{
-			"id": "1602910861149579",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
-			"@referredType": "EP_N7Spec",
-			"name": "EP_N7"
-		},
-		{
-			"id": "16029108611643011",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
-			"@referredType": "EP_N8Spec",
-			"name": "EP_N8"
-		},
-		{
-			"id": "16029108611571603",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
-			"@referredType": "EP_N9Spec",
-			"name": "EP_N9"
-		},
-		{
-			"id": "16029108611602371",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
-			"@referredType": "EP_N10Spec",
-			"name": "EP_N10"
-		},
-		{
-			"id": "16029108611602243",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
-			"@referredType": "EP_N11Spec",
-			"name": "EP_N11"
-		},
-		{
-			"id": "16029108611581859",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
-			"@referredType": "EP_N12Spec",
-			"name": "EP_N12"
-		},
-		{
-			"id": "1602910861141164",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
-			"@referredType": "EP_N13Spec",
-			"name": "EP_N13"
-		},
-		{
-			"id": "16029108611541091",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
-			"@referredType": "EP_N14Spec",
-			"name": "EP_N14"
-		},
-		{
-			"id": "16029108611581923",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
-			"@referredType": "EP_N15Spec",
-			"name": "EP_N15"
-		},
-		{
-			"id": "1602910861144388",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
-			"@referredType": "EP_N22Spec",
-			"name": "EP_N22"
 		}
 	],
 	"connectivitySpecification": [
