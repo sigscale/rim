@@ -166,5 +166,85 @@
 			"@baseType": "ResourceFunctionSpec",
 			"relationshipType": "contains"
 		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "16029108611581731",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581731",
+			"@referredType": "EP_N2Spec",
+			"name": "EP_N2"
+		},
+		{
+			"id": "16029108611684003",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+			"@referredType": "EP_N3Spec",
+			"name": "EP_N3"
+		},
+		{
+			"id": "16029108611571507",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+			"@referredType": "EP_N4Spec",
+			"name": "EP_N4"
+		},
+		{
+			"id": "16029108611561315",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
+			"@referredType": "EP_N5Spec",
+			"name": "EP_N5"
+		},
+		{
+			"id": "16029108611632915",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+			"@referredType": "EP_N6Spec",
+			"name": "EP_N6"
+		},
+		{
+			"id": "1602910861149579",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+			"@referredType": "EP_N7Spec",
+			"name": "EP_N7"
+		},
+		{
+			"id": "16029108611643011",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+			"@referredType": "EP_N8Spec",
+			"name": "EP_N8"
+		},
+		{
+			"id": "16029108611602371",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+			"@referredType": "EP_N10Spec",
+			"name": "EP_N10"
+		},
+		{
+			"id": "16029108611602243",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+			"@referredType": "EP_N11Spec",
+			"name": "EP_N11"
+		},
+		{
+			"id": "16029108611581859",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+			"@referredType": "EP_N12Spec",
+			"name": "EP_N12"
+		},
+		{
+			"id": "1602910861141164",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+			"@referredType": "EP_N13Spec",
+			"name": "EP_N13"
+		},
+		{
+			"id": "16029108611581923",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+			"@referredType": "EP_N15Spec",
+			"name": "EP_N15"
+		},
+		{
+			"id": "1602910861144388",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+			"@referredType": "EP_N22Spec",
+			"name": "EP_N22"
+		}
 	]
 }
