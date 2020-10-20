@@ -92,5 +92,79 @@
 			"valueType": "SliceProfileList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/SliceProfileList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "16029108611704547",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+			"name": "AMFFunction",
+			"@type": "AMFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/AMFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "16029108611551283",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+			"name": "SMFFunction",
+			"@type": "SMFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/SMFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "1602910861147484",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+			"name": "UPFFunction",
+			"@type": "UPFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/UPFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "16029108611581827",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
+			"name": "AUSFFunction",
+			"@type": "AUSFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/AUSFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "16029108611684227",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684227",
+			"name": "NSSFFunction",
+			"@type": "NSSFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/NSSFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "1602910861153931",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+			"name": "UDMFunction",
+			"@type": "UDMFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/UDMFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "16029108611561347",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+			"name": "PCFFunction",
+			"@type": "PCFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/PCFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		},
+		{
+			"id": "16029108611592019",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611592019",
+			"name": "AFFunction",
+			"@type": "AFFunctionSpec",
+			"@schemaLocation": "http://sigscale.org/schema/AFFunctionSpec",
+			"@baseType": "ResourceFunctionSpec",
+			"relationshipType": "contains"
+		}
 	]
 }
