@@ -432,6 +432,12 @@ specification_rel([type | T], #specification_rel{type = Type} = R, Acc)
 specification_rel([type | T], #{"type" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification_rel(T, M, Acc#specification_rel{type = Type});
+specification_rel([rel_type | T], #specification_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_rel(T, R, Acc#{"relationshipType" => Type});
+specification_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_rel(T, M, Acc#specification_rel{rel_type = Type});
 specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
 		when is_list(Role) ->
 	specification_rel(T, R, Acc#{"role" => Role});
