@@ -253,6 +253,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-5gc-ep-n27.json \
 		$(abs_builddir)/resource-5gc-ep-n31.json \
 		$(abs_builddir)/resource-5gc-ep-n32.json \
+		$(abs_builddir)/resource-5gc-ep-nls.json \
 		$(abs_builddir)/resource-5gc-ep-nlg.json \
 		$(abs_builddir)/resource-5gc-ep-sbi-x.json \
 		$(abs_builddir)/resource-5gc-ep-sbi-ipx.json \
