@@ -211,6 +211,12 @@
 			"name": "EP_N8"
 		},
 		{
+			"id": "16029108611571603",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+			"@referredType": "EP_N9Spec",
+			"name": "EP_N9"
+		},
+		{
 			"id": "16029108611602371",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
 			"@referredType": "EP_N10Spec",
@@ -235,6 +241,12 @@
 			"name": "EP_N13"
 		},
 		{
+			"id": "16029108611541091",
+			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+			"@referredType": "EP_N14Spec",
+			"name": "EP_N14"
+		},
+		{
 			"id": "16029108611581923",
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
 			"@referredType": "EP_N15Spec",
@@ -245,6 +257,478 @@
 			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
 			"@referredType": "EP_N22Spec",
 			"name": "EP_N22"
+		}
+	],
+	"connectivitySpecification": [
+		{
+			"id": "16029108611571539",
+			"@type": "ResourceGraphSpecification",
+			"name": "Adjacency Graph",
+			"description": "Topology of network function adjacency.",
+			"connectionSpecification": [
+				{
+					"id": "16029108611684067",
+					"name": "N2",
+					"description": "N2 interface between (R)AN and AMF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611581731",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581731",
+							"@referredType": "EP_N2Spec",
+							"name": "EP_N2"
+						},
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611581731",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581731",
+								"@referredType": "EP_N2Spec",
+								"name": "EP_N2"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611602403",
+					"name": "N3",
+					"description": "N3 interface between (R)AN and UPF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611684003",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+							"@referredType": "EP_N3Spec",
+							"name": "EP_N3"
+						},
+						{
+							"id": "1602910861147484",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"@referredType": "UPFFunctionSpec",
+							"name": "UPFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611684003",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+								"@referredType": "EP_N3Spec",
+								"name": "EP_N3"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611541123",
+					"name": "N4",
+					"description": "N4 interface between SMF and UPF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611551283",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"@referredType": "SMFFunctionSpec",
+							"name": "SMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611571507",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+								"@referredType": "EP_N4Spec",
+								"name": "EP_N4"
+							}
+						},
+						{
+							"id": "1602910861147484",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"@referredType": "UPFFunctionSpec",
+							"name": "UPFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611571507",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+								"@referredType": "EP_N4Spec",
+								"name": "EP_N4"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611684195",
+					"name": "N5",
+					"description": "N5 interface between PCF and AF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611561347",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+							"@referredType": "PCFFunctionSpec",
+							"name": "PCFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611561315",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
+								"@referredType": "EP_N5Spec",
+								"name": "EP_N5"
+							}
+						},
+						{
+							"id": "16029108611592019",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611592019",
+							"name": "AFFunction",
+							"@referredType": "AFFunctionSpec",
+							"connectionPointSpecification": {
+								"id": "16029108611561315",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
+								"@referredType": "EP_N5Spec",
+								"name": "EP_N5"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611581763",
+					"name": "N6",
+					"description": "N6 interface between UPF and DN.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "1602910861147484",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"@referredType": "UPFFunctionSpec",
+							"name": "UPFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611632915",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+								"@referredType": "EP_N6Spec",
+								"name": "EP_N6"
+							}
+						},
+						{
+							"id": "16029108611632915",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+							"@referredType": "EP_N6Spec",
+							"name": "EP_N6"
+						}
+					]
+				},
+				{
+					"id": "16029108611632819",
+					"name": "N7",
+					"description": "N7 interface between SMF and PCF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611551283",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"@referredType": "SMFFunctionSpec",
+							"name": "SMFFunction",
+							"connectionPointSpecification": {
+								"id": "1602910861149579",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+								"@referredType": "EP_N7Spec",
+								"name": "EP_N7"
+							}
+						},
+						{
+							"id": "16029108611561347",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+							"@referredType": "PCFFunctionSpec",
+							"name": "PCFFunction",
+							"connectionPointSpecification": {
+								"id": "1602910861149579",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+								"@referredType": "EP_N7Spec",
+								"name": "EP_N7"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611694387",
+					"name": "N8",
+					"description": "N8 interface between AMF and UDM.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611643011",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+								"@referredType": "EP_N8Spec",
+								"name": "EP_N8"
+							}
+						},
+						{
+							"id": "1602910861153931",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+							"@referredType": "UDMFunctionSpec",
+							"name": "UDMFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611643011",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+								"@referredType": "EP_N8Spec",
+								"name": "EP_N8"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611622595",
+					"name": "N9",
+					"description": "N9 interface between two UPFs.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "1602910861147484",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"@referredType": "UPFFunctionSpec",
+							"name": "UPFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611571603",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+								"@referredType": "EP_N9Spec",
+								"name": "EP_N9"
+							}
+						},
+						{
+							"id": "1602910861147484",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"@referredType": "UPFFunctionSpec",
+							"name": "UPFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611571603",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+								"@referredType": "EP_N9Spec",
+								"name": "EP_N9"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611541059",
+					"name": "N10",
+					"description": "N10 interface between SMF and UDM.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611551283",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"@referredType": "SMFFunctionSpec",
+							"name": "SMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611602371",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+								"@referredType": "EP_N10Spec",
+								"name": "EP_N10"
+							}
+						},
+						{
+							"id": "1602910861153931",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+							"@referredType": "UDMFunctionSpec",
+							"name": "UDMFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611602371",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+								"@referredType": "EP_N10Spec",
+								"name": "EP_N10"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611622755",
+					"name": "N11",
+					"description": "N11 interface between AMF and SMF",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611602243",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+								"@referredType": "EP_N11Spec",
+								"name": "EP_N11"
+							}
+						},
+						{
+							"id": "16029108611551283",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"@referredType": "SMFFunctionSpec",
+							"name": "SMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611602243",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+								"@referredType": "EP_N11Spec",
+								"name": "EP_N11"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611602211",
+					"name": "N12",
+					"description": "N12 interface between AMF and AUSF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611581859",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+								"@referredType": "EP_N12Spec",
+								"name": "EP_N12"
+							}
+						},
+						{
+							"id": "16029108611581827",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
+							"@referredType": "AUSFFunctionSpec",
+							"name": "AUSFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611581859",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+								"@referredType": "EP_N12Spec",
+								"name": "EP_N12"
+							}
+						}
+					]
+				},
+				{
+					"id": "1602910861151675",
+					"name": "N13",
+					"description": "N13 interface between AUSF and UDM.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611581827",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
+							"@referredType": "AUSFFunctionSpec",
+							"name": "AUSFFunction",
+							"connectionPointSpecification": {
+								"id": "1602910861141164",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+								"@referredType": "EP_N13Spec",
+								"name": "EP_N13"
+							}
+						},
+						{
+							"id": "1602910861153931",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+							"@referredType": "UDMFunctionSpec",
+							"name": "UDMFunction",
+							"connectionPointSpecification": {
+								"id": "1602910861141164",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+								"@referredType": "EP_N13Spec",
+								"name": "EP_N13"
+							}
+						}
+					]
+				},
+				{
+					"id": "1602910861142260",
+					"name": "N14",
+					"description": "N14 interface between two AMFs.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611541091",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+								"@referredType": "EP_N14Spec",
+								"name": "EP_N14"
+							}
+						},
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611541091",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+								"@referredType": "EP_N14Spec",
+								"name": "EP_N14"
+							}
+						}
+					]
+				},
+				{
+					"id": "16029108611684099",
+					"name": "N15",
+					"description": "N15 interface between AMF and PCF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611581923",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+								"@referredType": "EP_N15Spec",
+								"name": "EP_N15"
+							}
+						},
+						{
+							"id": "16029108611561347",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+							"@referredType": "PCFFunctionSpec",
+							"name": "PCFFunction",
+							"connectionPointSpecification": {
+								"id": "16029108611581923",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+								"@referredType": "EP_N15Spec",
+								"name": "EP_N15"
+							}
+						}
+					]
+				},
+				{
+					"id": "1602910861149547",
+					"name": "N22",
+					"description": "N22 interface between AMF and NSSF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611704547",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"@referredType": "AMFFunctionSpec",
+							"name": "AMFFunction",
+							"connectionPointSpecification": {
+								"id": "1602910861144388",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+								"@referredType": "EP_N22Spec",
+								"name": "EP_N22"
+							}
+						},
+						{
+							"id": "16029108611684227",
+							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684227",
+							"@referredType": "NSSFFunctionSpec",
+							"name": "NSSFFunction",
+							"connectionPointSpecification": {
+								"id": "1602910861144388",
+								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+								"@referredType": "EP_N22Spec",
+								"name": "EP_N22"
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }
