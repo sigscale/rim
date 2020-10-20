@@ -158,15 +158,6 @@
 			"name": "PCFFunction"
 		},
 		{
-			"id": "16029108611592019",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611592019",
-			"@type": "AFFunctionSpec",
-			"@schemaLocation": "http://sigscale.org/schema/AFFunctionSpec",
-			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains",
-			"name": "AFFunction"
-		},
-		{
 			"@type": "EP_N2Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N2Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -190,15 +181,6 @@
 			"@baseType": "ResourceFunctionSpec",
 			"relationshipType": "contains",
 			"name": "EP_N4"
-		},
-		{
-			"id": "16029108611561315",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
-			"@type": "EP_N5Spec",
-			"@schemaLocation": "http://sigscale.org/schema/EP_N5Spec",
-			"@baseType": "ResourceFunctionSpec",
-			"relationshipType": "contains",
-			"name": "EP_N5"
 		},
 		{
 			"id": "16029108611632915",
@@ -407,38 +389,6 @@
 								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
 								"@referredType": "EP_N4Spec",
 								"name": "EP_N4"
-							}
-						}
-					]
-				},
-				{
-					"id": "16029108611684195",
-					"name": "N5",
-					"description": "N5 interface between PCF and AF.",
-					"associationType": "pointtoPoint",
-					"endpointSpecification": [
-						{
-							"id": "16029108611561347",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
-							"@referredType": "PCFFunctionSpec",
-							"name": "PCFFunction",
-							"connectionPointSpecification": {
-								"id": "16029108611561315",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
-								"@referredType": "EP_N5Spec",
-								"name": "EP_N5"
-							}
-						},
-						{
-							"id": "16029108611592019",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611592019",
-							"name": "AFFunction",
-							"@referredType": "AFFunctionSpec",
-							"connectionPointSpecification": {
-								"id": "16029108611561315",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561315",
-								"@referredType": "EP_N5Spec",
-								"name": "EP_N5"
 							}
 						}
 					]
