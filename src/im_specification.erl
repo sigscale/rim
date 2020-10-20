@@ -2141,6 +2141,24 @@ network_slice_subnet() ->
 	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType,
 			SetOfMcc, MFIdList, ConstituentNSSIIdList,
 			OperationalState, AdministrativeState, NsInfo, SliceProfileList],
+	SpecificationNames = ["AMFFunction", "SMFFunction", "UPFFunction",
+			"AUSFFunction", "NSSFFunction", "UDMFunction", "PCFFunction",
+			"EP_N2", "EP_N3", "EP_N4", "EP_N5", "EP_N6", "EP_N7", "EP_N8",
+			"EP_N9", "EP_N10", "EP_N11", "EP_N12", "EP_N13", "EP_N14",
+			"EP_N15", "EP_N22"],
+	Fspecrel = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Sid,
+						href = Shref, name = Sname, class_type = Stype}} ->
+					[#specification_rel{id = Sid, href = Shref, name = Sname,
+							type = Stype, rel_type = "contains"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResourceSpecRelationship = lists:foldl(Fspecrel, [], SpecificationNames),
 	#specification{name = "NetworkSliceSubnet",
 			description = "Network Slice Subnet",
 			class_type = "NetworkSliceSubnetSpec",
@@ -2151,7 +2169,8 @@ network_slice_subnet() ->
 			category = "Slice",
 			target_schema = #target_schema_ref{class_type = "NetworkSliceSubnet",
 					schema = "/resourceInventoryManagement/v3/schema/NetworkSliceSubnet"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = ResourceSpecRelationship}.
 
 -spec ngc_amf() -> specification().
 %% @doc 5GC Access and Mobility Management Function (AMF) resource function specification.

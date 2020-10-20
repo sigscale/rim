@@ -274,7 +274,6 @@ install8(Nodes, Acc) ->
 		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up, nr_sector_carrier,
 		nr_cell_cu, nr_cell_du, nr_ep_x2c, nr_ep_x2u, nr_ep_ngc, nr_ep_ngu,
 		nr_ep_xnc, nr_ep_xnu, nr_ep_f1c, nr_ep_f1u, nr_ep_e1, nr_ep_s1u,
-		network_slice, network_slice_subnet,
 		ngc_amf, ngc_smf, ngc_upf, ngc_n3iwf, ngc_pcf, ngc_ausf, ngc_udm, ngc_udr,
 		ngc_udsf, ngc_nrf, ngc_nssf, ngc_smsf, ngc_lmf, ngc_ngeir, ngc_sepp,
 		ngc_nwdaf, ngc_ep_n2, ngc_ep_n3, ngc_ep_n4, ngc_ep_n5, ngc_ep_n6,
@@ -290,13 +289,12 @@ install8(Nodes, Acc) ->
 		core_mnpsrf, core_cgf, core_sgw, core_cbc,
 		core_iucs, core_iups, core_iubc, core_alink, core_gb_link,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
-		pee_me,
-		epcn3ai_proxy, epcn3ai_server,
+		pee_me, epcn3ai_proxy, epcn3ai_server,
 		im_iu, im_tmaiu, im_aiu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic,
 		huawei_usn, huawei_ugw, huawei_cgpomu, huawei_igwb,
 		huawei_uscdb, huawei_spsv3, huawei_mscsiosp, huawei_mscso,
 		mec_mehf, mec_mep, mec_mea, mec_meps, mec_meas, mec_rnis, mec_ls,
-		mec_tr, mec_dnsr],
+		mec_tr, mec_dnsr, network_slice, network_slice_subnet],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
 install8([F | T], Nodes, Acc) ->
