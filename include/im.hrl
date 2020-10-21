@@ -30,9 +30,7 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		version :: string() | undefined | '_',
-		connectivitySpecification = [] :: [connectivity_spec()] | '_',
-		connection_point_specification = [] :: [connection_point_spec()] | '_'}).
+		version :: string() | undefined | '_'}).
 -type specification_ref() :: #specification_ref{}.
 
 -record(specification_rel,
