@@ -43,6 +43,14 @@ class catalogAdd extends PolymerElement {
 						label="Version"
 						value="{{catalogVersion}}">
 				</paper-input>
+				<paper-input
+						label="Class"
+						value="{{catalogClass}}">
+				</paper-input>
+				<paper-input
+						label="Status"
+						value="{{catalogStatus}}">
+				</paper-input>
 				<div class="buttons">
 					<paper-button
 							raised
@@ -81,6 +89,12 @@ class catalogAdd extends PolymerElement {
 			},
 			catalogVersion: {
 				type: String
+			},
+			catalogClass: {
+				type: String
+			},
+			catalogStatus: {
+				type: String
 			}
 		}
 	}
@@ -94,6 +108,8 @@ class catalogAdd extends PolymerElement {
 		this.catalogName = null;
 		this.catalogDescription = null;
 		this.catalogVersion = null;
+		this.catalogClass = null;
+		this.catalogStatus = null;
 	}
 
 	_add() {
@@ -107,8 +123,8 @@ class catalogAdd extends PolymerElement {
 		if(this.catalogDescription) {
 			catalogAddObj.description = this.catalogDescription;
 		}
-		if(this.catalogType) {
-			catalogAddObj['@type'] = this.catalogType;
+		if(this.catalogClass) {
+			catalogAddObj['@type'] = this.catalogClass;
 		}
 		if(this.catalogStatus) {
 			catalogAddObj.lifecycleStatus = this.catalogStatus;
@@ -125,6 +141,8 @@ class catalogAdd extends PolymerElement {
 		this.catalogName = null;
 		this.catalogDescription = null;
 		this.catalogVersion = null;
+		this.catalogClass = null;
+		this.catalogStatus = null;
 		document.body.querySelector('inventory-management').shadowRoot.getElementById('catalogList').shadowRoot.getElementById('catalogGrid').clearCache();
 	}
 
