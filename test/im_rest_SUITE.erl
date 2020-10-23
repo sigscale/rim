@@ -1215,25 +1215,17 @@ map_to_resource(_Config) ->
 	true = is_integer(StartDate),
 	true = is_integer(EndDate),
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
-			version = "1.1", connectivitySpecification = [ConEnd],
-			connection_point_specification = [ConPointSpec]} = S,
+			version = "1.1"} = S,
 	#related_party_ref{id = PartyId, href = PartyHref} = RP,
 	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
 			schema = CharSchema, value = CharValue} = C,
 	#connectivity{name = "Connectivity test", type = "Connectivity type",
 			min_items = 5, endpoint = [Point]} = End,
-	#connectivity_spec{name = "Connectivity spec test", type =
-			"Connectivity spec type", min_items = 2, endpoint = [PointSpec]} = ConEnd,
 	#endpoint{href = "http://35.229.193.25:8088/eventManagement/v1/event",
 			id = "123", name = "Point name", is_root = true,
 			connection_point = [ConPoint]} = Point,
-	#endpoint_spec{href = "http://35.229.193.25:8088/eventManagement/v1/event",
-			id = "258", name = "Point spec name", role = "Reversal",
-			is_root = true, connection_point_specification = [ConPointSpec]} = PointSpec,
 	#connection_point{href = "http://35.229.193.25:8088/eventManagement/v1/event",
-			id = "321", name = "Connection point", type = "Connection point type"} = ConPoint,
-	#connection_point_spec{href = "http://35.229.193.25:8088/eventManagement/v1/event",
-			id = "963", name = "Connection point spec", type = "Con pointType"} = ConPointSpec.
+			id = "321", name = "Connection point", type = "Connection point type"} = ConPoint.
 	
 resource_to_map() ->
 	[{userdata, [{doc, "Encode Resource map()"}]}].
@@ -1278,19 +1270,7 @@ resource_to_map(_Config) ->
 							name = "Connection point", type = "Connection point type",
 							href = "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}],
 			specification = #specification_ref{id = ResourceId,
-					href = ResouceHref, name = ResourceName, version = "1.1",
-					connectivitySpecification = [#connectivity_spec{
-						name = "Connectivity spec test", min_items = 2,
-						type = "Connectivity spec type",
-						endpoint = [#endpoint_spec{id = "258", name = "Point spec name",
-							href = "http://35.229.193.25:8088/eventManagement/v1/event",
-							is_root = true, role = "Reversal",
-							connection_point_specification = [#connection_point_spec{id = "963",
-								href = "http://35.229.193.25:8088/eventManagement/v1/event",
-								name = "Connection point spec", type = "Con pointType"}]}]}],
-					connection_point_specification = [#connection_point_spec{id = "963",
-						href = "http://35.229.193.25:8088/eventManagement/v1/event",
-						name = "Connection point spec", type = "Con pointType"}]},
+					href = ResouceHref, name = ResourceName, version = "1.1"},
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
