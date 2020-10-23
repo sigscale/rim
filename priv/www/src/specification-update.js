@@ -237,6 +237,8 @@ class specificationUpdate extends PolymerElement {
 			this.specificationId = item.id;
 			this.specificationName = item.name;
 			this.specificationDescription = item.description;
+			this.specificationType = item.type;
+			this.specificationStatus = item.status;
 			this.specificationVersion = item.version;
 			this.specificationBundle = item.bundle;
 			this.specificationEnabled = item.enabled;
