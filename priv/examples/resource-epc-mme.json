@@ -51,7 +51,7 @@
 			"relationshipType": "contains"
 		}
 	],
-	"sap": [
+	"connectionPoint": [
 		{
 			"resourceRef": {
 				"id": "7894623152",
