@@ -116,58 +116,58 @@
 	],
 	"connectionPoint": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794531622",
 				"href": "/resourceInventoryManagement/v4/resource/8794531622",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1",
 				"@referredType": "EP_X2C"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794531623",
 				"href": "/resourceInventoryManagement/v4/resource/8794531623",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2U=1",
 				"@referredType": "EP_X2U"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794531624",
 				"href": "/resourceInventoryManagement/v4/resource/8794531624",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgC=1",
 				"@referredType": "EP_NgC"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794531625",
 				"href": "/resourceInventoryManagement/v4/resource/8794531625",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgU=1",
 				"@referredType": "EP_NgU"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794531626",
 				"href": "/resourceInventoryManagement/v4/resource/8794531626",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnC=1",
 				"@referredType": "EP_XnC"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794531627",
 				"href": "/resourceInventoryManagement/v4/resource/8794531627",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnU=1",
 				"@referredType": "EP_XnU"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

@@ -77,7 +77,7 @@
 			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "1409318377",
 				"href": "/resourceInventoryManagement/v4/resource/1409318377",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",

@@ -63,31 +63,31 @@
 	],
 	"connectionPoint": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468075",
 				"href": "/resourceInventoryManagement/v4/resource/3597468075",
 				"name": "SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N27=1",
 				"@referredType": "EP_N27"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468076",
 				"href": "/resourceInventoryManagement/v4/resource/3597468076",
 				"name": "SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N31=1",
 				"@referredType": "EP_N31"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468077",
 				"href": "/resourceInventoryManagement/v4/resource/3597468077",
 				"name": "SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }
