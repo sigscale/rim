@@ -905,7 +905,6 @@ map_to_specification(_Config) ->
 					"href" => ResouceHref,
 					"role" => "Supplier",
 					"name" => ResourceName,
-					"type" => "substitution",
 					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 							"endDateTime" => "2019-12-31T23:59"}}]},
 	#specification{id = SpecificationId, href = SpecificationHref,
@@ -1170,7 +1169,6 @@ map_to_resource(_Config) ->
 					"isRoot" => true,
 					"connectionPoint" => [#{"id" => "321",
 						"name" => "Connection point",
-						"type" => "Connection point type",
 						"href" => "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}],
 			"resourceSpecification" => #{"id" => ResourceId,
 					"href" => ResouceHref,
@@ -1186,12 +1184,10 @@ map_to_resource(_Config) ->
 							"isRoot" => true,
 							"connectionPointSpecification" => [#{"id" => "963",
 								"href" => "http://35.229.193.25:8088/eventManagement/v1/event",
-								"name" => "Connection point spec",
-								"type" => "Con pointType"}]}]}],
+								"name" => "Connection point spec"}]}]}],
 					"connectionPointSpecification" => [#{"id" => "963",
 						"href" => "http://35.229.193.25:8088/eventManagement/v1/event",
-						"name" => "Connection point spec",
-						"type" => "Con pointType"}]},
+						"name" => "Connection point spec"}]},
 			"relatedParty" => [#{"id" => PartyId,
 					"href" => PartyHref,
 					"role" => "Supplier",
@@ -1251,12 +1247,11 @@ resource_to_map(_Config) ->
 			state = "Active",
 			substate = "Reject",
 			connectivity = [#connectivity{name = "Connectivity test",
-					type = "Connectivity type",
 					endpoint = [#endpoint{id = "123", name = "Point name",
 						href = "http://35.229.193.25:8088/eventManagement/v1/event",
 						is_root = true,
 						connection_point = [#connection_point{id = "321",
-							name = "Connection point", type = "Connection point type",
+							name = "Connection point",
 							href = "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}],
 			specification = #specification_ref{id = ResourceId,
 					href = ResouceHref, name = ResourceName, version = "1.1"},
@@ -1285,14 +1280,13 @@ resource_to_map(_Config) ->
 	#{"id" := PartyId, "href" := PartyHref} = RP,
 	#{"name" := "BtsSiteMgr", "value" := CharValue, "@type" := "BtsSiteMgrList",
 			"@schemaLocation" := CharSchema} = C,
-	#{"name" := "Connectivity test", "associationType" := "Connectivity type",
+	#{"name" := "Connectivity test",
 			"endpoint" := [#{"id" := "123",
 				"href" := "http://35.229.193.25:8088/eventManagement/v1/event",
 				"name" := "Point name",
 				"isRoot" := true,
 				"connectionPoint" := [#{"id" := "321",
 						"name" := "Connection point",
-						"type" := "Connection point type",
 						"href" := "http://35.229.193.25:8088/eventManagement/v1/event"}]}]} = Con.
 
 post_resource() ->
@@ -1745,11 +1739,11 @@ is_target_ref(_) ->
 	false.
 
 is_related_ref(#{"id" := Id, "href" := Href,
-		"name" := Name, "role" := Role, "type" := Type,
+		"name" := Name, "role" := Role,
 		"validFor" := #{"startDateTime" := Start,
 		"endDateTime" := End}}) when is_list(Id),
 		is_list(Href), is_list(Name), is_list(Role),
-		is_list(Start), is_list(End), is_list(Type) ->
+		is_list(Start), is_list(End) ->
 	im_rest:iso8601(End) > im_rest:iso8601(Start);
 is_related_ref(_R) ->
 	false.
