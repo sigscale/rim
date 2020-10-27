@@ -19,8 +19,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -53,16 +53,16 @@ parse_pee_me({endElement, _Uri, "PEEMonitoredEntity", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	MeDResourceChar = #resource_char{name = "peeMeDescription",
 		class_type = "PEEMEDescription", value = MeDescription,
-		schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription"},
+		schema = ?PathCatalogSchema ++ "/PEEMEDescription"},
 	MeCResourceChar = #resource_char{name = "peeMeConfiguration",
 		class_type = "PEEMEConfiguration", value = MeConfig,
-		schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration"},
+		schema = ?PathCatalogSchema ++ "/PEEMEConfiguration"},
 	Resource = #resource{name = MeDn ++ "mEId=" ++ MeId,
 			description = "PEE Monitored Entity (ME)",
 			category = "PEE",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity",
+			schema = ?PathInventorySchema ++ "/PEEMonitoredEntity",
 			specification = Spec,
 			characteristic = [MeAttr, MeDResourceChar, MeCResourceChar]},
 	case im:add_resource(Resource) of

@@ -21,6 +21,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+
 %%----------------------------------------------------------------------
 %%  The im private API
 %%----------------------------------------------------------------------
@@ -72,7 +74,7 @@ parse_iu({endElement, _Uri, "InventoryUnit", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnit",
+			schema = ?PathInventorySchema ++ "/InventoryUnit",
 			specification = Spec,
 			characteristic = IuAttr,
 			related = Ius ++ TmaIus ++ Aius},
@@ -151,7 +153,7 @@ parse_tmaiu({endElement, _Uri, "TmaInventoryUnit", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "InventoryUnit",
-			schema = "/resourceInventoryManagement/v3/schema/TmaInventoryUnit",
+			schema = ?PathInventorySchema ++ "/TmaInventoryUnit",
 			specification = Spec,
 			characteristic = TmaIuAttr},
 	case im:add_resource(Resource) of
@@ -275,7 +277,7 @@ parse_aiu({endElement, _Uri, "AntennaInventoryUnit", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "InventoryUnit",
-			schema = "/resourceInventoryManagement/v3/schema/AntennaInventoryUnit",
+			schema = ?PathInventorySchema ++ "/AntennaInventoryUnit",
 			specification = Spec,
 			characteristic = AntennaIuAttr},
 	case im:add_resource(Resource) of

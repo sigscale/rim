@@ -55,7 +55,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resource'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resource'
 %% 	requests.
 get_resources(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of

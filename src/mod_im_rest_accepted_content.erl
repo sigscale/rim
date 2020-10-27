@@ -60,19 +60,19 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
 						["partyManagement", "v2", "individual", _Id] ->
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
-						["resourceCatalogManagement", "v3", "resourceCatalog" | _] ->
+						["resourceCatalogManagement", "v4", "resourceCatalog" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_catalog, Data);
-						["resourceCatalogManagement", "v3", "resourceCategory" | _] ->
+						["resourceCatalogManagement", "v4", "resourceCategory" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_category, Data);
-						["resourceCatalogManagement", "v3", "resourceCandidate" | _] ->
+						["resourceCatalogManagement", "v4", "resourceCandidate" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_candidate, Data);
-						["resourceCatalogManagement", "v3", "resourceSpecification" | _] ->
+						["resourceCatalogManagement", "v4", "resourceSpecification" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_specification, Data);
-						["resourceInventoryManagement", "v3", "resource" | _] ->
+						["resourceInventoryManagement", "v4", "resource" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_resource, Data);
-						["resourceInventoryManagement", "v1", "logicalResource"] ->
+						["resourceInventoryManagement", "v4", "logicalResource"] ->
                      check_content_type_header(Headers, Method, im_rest_res_rules, Data);
-						["resourceInventoryManagement", "v1", "logicalResource" | _] ->
+						["resourceInventoryManagement", "v4", "logicalResource" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_rules, Data);
 						["im", "v1", "log", "http"] ->
 							check_content_type_header(Headers, Method, im_rest_res_http, Data);

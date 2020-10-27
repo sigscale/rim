@@ -31,7 +31,7 @@
 -include("im.hrl").
 -define(MILLISECOND, milli_seconds).
 
--define(PathCatalog, "/resourceCatalogManagement/v3/").
+-define(PathCandidate, "/resourceCatalogManagement/v4/resourceCandidate/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -60,7 +60,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceCandidate'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resourceCandidate'
 %% 	requests.
 get_candidates(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
@@ -187,7 +187,7 @@ post_candidate(RequestBody) ->
 			| {error, ErrorCode :: integer()} .
 %% @doc Update a existing `resourceCandidate'.
 %%
-%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCandidate/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v4/resourceCandidate/{Id}' request.
 %%
 patch_candidate(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try
@@ -224,7 +224,7 @@ patch_candidate(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{atomic, #candidate{last_modified = LM1} = NewCandidate} ->
 					Body = zj:encode(candidate(NewCandidate)),
 					Headers = [{content_type, "application/json"},
-							{location, "/resourceCatalogManagement/v3/resourceCatalog/" ++ Id},
+							{location, ?PathCandidate ++ Id},
 							{etag, im_rest:etag(LM1)}],
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->

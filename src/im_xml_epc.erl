@@ -20,9 +20,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -55,7 +55,7 @@ parse_epdg({endElement, _Uri, "EPDGFunction", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EPDGFunction",
+			schema = ?PathInventorySchema ++ "/EPDGFunction",
 			specification = Spec,
 			characteristic = EpdgAttr,
 			related = EpResRels,
@@ -130,14 +130,14 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathInventorySchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MmeDn,
 			description = "Mobility Management Entity(MME)",
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MMEFunction",
+			schema = ?PathInventorySchema ++ "/MMEFunction",
 			specification = Spec,
 			characteristic = [PeeParam | MmeAttr],
 			related = EpRpEps ++ EpN26s,
@@ -219,7 +219,7 @@ parse_pcrf({endElement, _Uri, "PCRFFunction", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/PCRFFunction",
+			schema = ?PathInventorySchema ++ "/PCRFFunction",
 			specification = Spec,
 			characteristic = PcrfAttr,
 			related = EpResRels,
@@ -290,7 +290,7 @@ parse_pgw({endElement, _Uri, "PGWFunction", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/PGWFunction",
+			schema = ?PathInventorySchema ++ "/PGWFunction",
 			specification = Spec,
 			characteristic = PgwAttr,
 			related = EpResRels,
@@ -357,7 +357,7 @@ parse_sgw({endElement, _Uri, "ServingGWFunction", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ServingGWFunction",
+			schema = ?PathInventorySchema ++ "/ServingGWFunction",
 			specification = Spec,
 			characteristic = SgwAttr,
 			related = EpRpEps,
@@ -433,7 +433,7 @@ parse_eprpeps({endElement, _Uri, "EP_RP_EPS", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_RP_EPS",
+			schema = ?PathInventorySchema ++ "/EP_RP_EPS",
 			specification = Spec,
 			characteristic = EpRpEpsAttr},
 	case im:add_resource(Resource) of

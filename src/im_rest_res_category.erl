@@ -30,6 +30,8 @@
 
 -include("im.hrl").
 -define(MILLISECOND, milli_seconds).
+  
+-define(PathCategory, "/resourceCatalogManagement/v4/resourceCategory/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -58,7 +60,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceCategory'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resourceCategory'
 %% 	requests.
 get_categories(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
@@ -163,7 +165,7 @@ get_category(_, _, _) ->
 			| {error, ErrorCode :: integer()} .
 %% @doc Update a existing `category'.
 %%
-%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCategory/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v4/resourceCategory/{Id}' request.
 %%
 patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try
@@ -200,7 +202,7 @@ patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{atomic, #category{last_modified = LM1} = NewCategory} ->
 					Body = zj:encode(category(NewCategory)),
 					Headers = [{content_type, "application/json"},
-							{location, "/resourceCatalogManagement/v3/resourceCategory/" ++ Id},
+							{location, ?PathCategory ++ Id},
 							{etag, im_rest:etag(LM1)}],
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->

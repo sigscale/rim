@@ -19,8 +19,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -52,7 +52,7 @@ parse_as({endElement, _Uri, "ASFunction", QName},
 			category = "IMS",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ASFunction",
+			schema = ?PathInventorySchema ++ "/ASFunction",
 			specification = Spec,
 			characteristic = AsAttr},
 	case im:add_resource(Resource) of
@@ -113,14 +113,14 @@ parse_hss({endElement, _Uri, "HSSFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = HssDn,
 			description = "IMS Home Subscriber Server (HSS)",
 			category = "IMS",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/HSSFunction",
+			schema = ?PathInventorySchema ++ "/HSSFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | HssAttr])},
 	case im:add_resource(Resource) of
@@ -186,7 +186,7 @@ parse_icscf({endElement, _Uri, "ICSCFFunction", QName},
 			category = "IMS",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ICSCFFunction",
+			schema = ?PathInventorySchema ++ "/ICSFFunction",
 			specification = Spec,
 			characteristic = IcscfAttr},
 	case im:add_resource(Resource) of
@@ -250,7 +250,7 @@ parse_pcscf({endElement, _Uri, "PCSCFFunction", QName},
 			category = "IMS",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/PCSCFFunction",
+			schema = ?PathInventorySchema ++ "/PCSFFunction",
 			specification = Spec,
 			characteristic = PcscfAttr},
 	case im:add_resource(Resource) of
@@ -314,7 +314,7 @@ parse_scscf({endElement, _Uri, "SCSCFFunction", QName},
 			category = "IMS",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/SCSCFFunction",
+			schema = ?PathInventorySchema ++ "/SCSCFFunction",
 			specification = Spec,
 			characteristic = ScscfAttr},
 	case im:add_resource(Resource) of

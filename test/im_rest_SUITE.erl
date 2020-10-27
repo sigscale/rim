@@ -29,11 +29,9 @@
 -include("im.hrl").
 -include_lib("common_test/include/ct.hrl").
 
--define(PathCatalog, "/resourceCatalogManagement/v3/").
--define(PathInventory, "/resourceInventoryManagement/v3/").
--define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
+-define(PathCatalog, "/resourceCatalogManagement/v4/").
+-define(PathInventory, "/resourceInventoryManagement/v4/").
 -define(PathParty, "/partyManagement/v2/").
--define(PathInventoryRule, "/resourceInventoryManagement/v1/").
 
 %% support deprecated_time_unit()
 -define(SECOND, seconds).
@@ -1508,7 +1506,7 @@ query_category(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
 	Query = "name=" ++ Name,
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCategory?" ++ Query,
+	Request = {HostUrl ++ ?PathCatalog ++ "/resourceCategory?" ++ Query,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1541,7 +1539,7 @@ advanced_query_category(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
    Filter = "?filter=\"[{name=RAN}]\"",
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCategory" ++ Filter,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCategory" ++ Filter,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1570,7 +1568,7 @@ query_candidate(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
 	Query = "name=" ++ Name,
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCandidate?" ++ Query,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCandidate?" ++ Query,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1603,7 +1601,7 @@ advanced_query_candidate(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
    Filter = "?filter=\"[{name=EPC}]\"",
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCandidate" ++ Filter,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCandidate" ++ Filter,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1633,7 +1631,7 @@ query_catalog(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
 	Query = "name=" ++ Name,
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCatalog?" ++ Query,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCatalog?" ++ Query,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1666,7 +1664,7 @@ advanced_query_catalog(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
    Filter = "?filter=\"[{name=Core}]\"",
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCatalog" ++ Filter,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCatalog" ++ Filter,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,

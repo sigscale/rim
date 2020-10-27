@@ -32,8 +32,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -268,14 +268,14 @@ parse_core_mo({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MeDn,
 			description = "",
 			category = "",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ManagedElement",
+			schema = ?PathInventorySchema ++ "/ManagedElement",
 			specification = Spec,
 			characteristic = [PeeParam | MeAttr]},
 	case im:add_resource(Resource) of
@@ -304,14 +304,14 @@ parse_msc_server({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MscDn,
 			description = "Mobile Switch Center (MSC) Server",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MscServerFunction",
+			schema = ?PathInventorySchema ++ "/MscServerFunction",
 			specification = Spec,
 			characteristic = [PeeParam | MscServerAttr]},
 	case im:add_resource(Resource) of
@@ -340,14 +340,14 @@ parse_mgw({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MgwDn,
 			description = "Circuit switched Media Gateway",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			schema = ?PathInventorySchema ++ "/CsMgwFunction",
 			specification = Spec,
 			characteristic = [PeeParam | MgwAttr]},
 	case im:add_resource(Resource) of
@@ -376,14 +376,14 @@ parse_usn_function({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UsnDn,
 			description = "Circuit switched Media Gateway",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			schema = ?PathInventorySchema ++ "/CsMgwFunction",
 			specification = Spec,
 			characteristic = [PeeParam | UsnAttr]},
 	case im:add_resource(Resource) of
@@ -412,14 +412,14 @@ parse_ugw_function({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UgwDn,
 			description = "Circuit switched Media Gateway",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			schema = ?PathInventorySchema ++ "/CsMgwFunction",
 			specification = Spec,
 			characteristic = [PeeParam | UgwAttr]},
 	case im:add_resource(Resource) of
@@ -448,14 +448,14 @@ parse_cgpomu_function({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = CgpomuDn,
 			description = "Carrier Grade Platform Operation and Management Unit",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CGPOMUFunction",
+			schema = ?PathInventorySchema ++ "/CGPOMUFunction",
 			specification = Spec,
 			characteristic = [PeeParam | CgpomuAttr]},
 	case im:add_resource(Resource) of
@@ -487,14 +487,14 @@ parse_igwb_function({endElement, _, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = IgwbDn,
 			description = "Carrier Grade Platform Operation and Management Unit",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/iGWBFunction",
+			schema = ?PathInventorySchema ++ "/iGWBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | IgwbAttr]},
 	case im:add_resource(Resource) of
@@ -523,14 +523,14 @@ parse_uscdb_function({endElement, _, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UscdbDn,
 			description = "",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/USCDBFunction",
+			schema = ?PathInventorySchema ++ "/USCDBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | UscdbAttr]},
 	case im:add_resource(Resource) of
@@ -559,14 +559,14 @@ parse_spsv3_function({endElement, _, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = Spsv3Dn,
 			description = "",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/SPSV3Function",
+			schema = ?PathInventorySchema ++ "/SPSV3Function",
 			specification = Spec,
 			characteristic = [PeeParam | Spsv3Attr]},
 	case im:add_resource(Resource) of
@@ -593,14 +593,14 @@ parse_msc_sig_point({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MscSigPointDn,
 			description = "",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MSCServerIntraOfiSigPoint",
+			schema = ?PathInventorySchema ++ "/MSCServerIntraOfiSigPoint",
 			specification = Spec,
 			characteristic = [PeeParam | MscSigPointAttr]},
 	case im:add_resource(Resource) of
@@ -623,14 +623,14 @@ parse_msc_sig_point({endElement, _, "MO", _QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MscSigPointDn,
 			description = "",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MSCServerIntraOfiSigPoint",
+			schema = ?PathInventorySchema ++ "/MSCServerIntraOfiSigPoint",
 			specification = Spec,
 			characteristic = [PeeParam | MscSigPointAttr]},
 	case im:add_resource(Resource) of
@@ -657,14 +657,14 @@ parse_msc_server_office({startElement, _, "MO", _QName, _Attributes},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MscServerOfficeDn,
 			description = "",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MSCServerOffice",
+			schema = ?PathInventorySchema ++ "/MSCServerOffice",
 			specification = Spec,
 			characteristic = [PeeParam | MscServerOfficeAttr]},
 	case im:add_resource(Resource) of
@@ -687,14 +687,14 @@ parse_msc_server_office({endElement, _, "MO", _QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MscServerOfficeDn,
 			description = "",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MSCServerOffice",
+			schema = ?PathInventorySchema ++ "/MSCServerOffice",
 			specification = Spec,
 			characteristic = [PeeParam | MscServerOfficeAttr]},
 	case im:add_resource(Resource) of
@@ -746,14 +746,14 @@ parse_ran_me({startElement, _, "MO", _QName, _Attributes} = Event,
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MeDn,
 			description = "",
 			category = "",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ManagedElement",
+			schema = ?PathInventorySchema ++ "/ManagedElement",
 			specification = Spec,
 			characteristic = [PeeParam | MeAttr]},
 	case im:add_resource(Resource) of
@@ -800,14 +800,14 @@ parse_gsm_function({endElement, _Uri, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = GsmFunDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+			schema = ?PathInventorySchema ++ "/BssFunction",
 			specification = Spec,
 			characteristic = [PeeParam | GsmFunAttr]},
 	case im:add_resource(Resource) of
@@ -868,14 +868,14 @@ parse_gsm_bts({endElement, _Uri, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			schema = ?PathInventorySchema ++ "/BtsSiteMgr",
 			specification = Spec,
 			characteristic = [PeeParam | GsmBtsAttr]},
 	case im:add_resource(Resource) of
@@ -970,14 +970,14 @@ parse_gsm_gcell({endElement, _Uri, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = GCellDn,
 			description = "GSM Radio",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
+			schema = ?PathInventorySchema ++ "/GsmCell",
 			specification = Spec,
 			characteristic = [PeeParam | GCellAttr]},
 	case im:add_resource(Resource) of
@@ -1089,14 +1089,14 @@ parse_umts_function({endElement, _Uri, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UmtsFunDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			schema = ?PathInventorySchema ++ "/RncFunction",
 			specification = Spec,
 			characteristic = [PeeParam | UmtsFunAttr]},
 	case im:add_resource(Resource) of
@@ -1158,14 +1158,14 @@ parse_umts_nodeb({endElement, _Uri, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UmtsNodebDn,
 			description = "UMTS NodeB",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			schema = ?PathInventorySchema ++ "/NodeBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | UmtsNodebAttr]},
 	case im:add_resource(Resource) of
@@ -1250,14 +1250,14 @@ parse_umts_ucell({endElement, _Uri, "MO", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UmtsUCellDn,
 			description = "UMTS Frequency Division Duplex (FDD) Radio Cell",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+			schema = ?PathInventorySchema ++ "/UtranCellFDD",
 			specification = Spec,
 			characteristic = [PeeParam | UmtsUCellAttr]},
 	case im:add_resource(Resource) of

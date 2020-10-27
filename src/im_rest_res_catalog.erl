@@ -31,6 +31,8 @@
 -include("im.hrl").
 -define(MILLISECOND, milli_seconds).
 
+-define(PathCatalog, "/resourceCatalogManagement/v4/resourceCatalog/").
+
 %%----------------------------------------------------------------------
 %%  The im public API
 %%----------------------------------------------------------------------
@@ -58,7 +60,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceCatalog'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resourceCatalog'
 %% 	requests.
 get_catalogs(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
@@ -183,9 +185,9 @@ post_catalog(RequestBody) ->
 		ReqBody :: list(),
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 			| {error, ErrorCode :: integer()} .
-%% @doc Update a existing `catalogm'.
+%% @doc Update a existing `catalog'.
 %%
-%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCatalog/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v4/resourceCatalog/{Id}' request.
 %%
 patch_catalog(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try
@@ -222,7 +224,7 @@ patch_catalog(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{atomic, #catalog{last_modified = LM1} = NewCatalog} ->
 					Body = zj:encode(catalog(NewCatalog)),
 					Headers = [{content_type, "application/json"},
-							{location, "/resourceCatalogManagement/v3/resourceCatalog/" ++ Id},
+							{location, ?PathCatalog ++ Id},
 							{etag, im_rest:etag(LM1)}],
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->

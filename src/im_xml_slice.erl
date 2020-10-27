@@ -19,9 +19,7 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -45,7 +43,7 @@ parse_network_slice({endElement, _Uri, "NetworkSlice", QName},
 			category = "Slice",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NetworkSlice",
+			schema = ?PathInventorySchema ++ "/NetworkSlice",
 			specification = Spec,
 			characteristic = NSAttr},
 	case im:add_resource(Resource) of
@@ -97,7 +95,7 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 			category = "Slice",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NetworkSliceSubnet",
+			schema = ?PathInventorySchema ++ "/NetworkSliceSubnet",
 			specification = Spec,
 			characteristic = NSSAttr},
 	case im:add_resource(Resource) of

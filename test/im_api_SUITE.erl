@@ -32,6 +32,9 @@
 -include_lib("common_test/include/ct.hrl").
 -include_lib("inets/include/mod_auth.hrl").
 
+-define(PathCatalog, "/resourceCatalogManagement/v4/").
+-define(PathInventory, "/resourceInventoryManagement/v4/").
+
 %%---------------------------------------------------------------------
 %%  Test server callback functions
 %%---------------------------------------------------------------------
@@ -4294,13 +4297,13 @@ get_pee(_Config) ->
 			category = "PEE", class_type = "PEEMonitoredEntity", base_type = "ResourceFunction",
 			characteristic = [#resource_char{name = "mEId", class_type = undefined, schema = undefined, value = SiteId},
 			#resource_char{name = "peeMeDescription", class_type = "PEEMEDescription",
-			schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription",
+			schema = ?PathCatalog ++ "schema/peeCmonNrm#/definitions/PEEMEDescription",
 			value = #{"environmentType" => "hut",
 			"equipmentType" => "9G", "powerInterface" => "petrol", "sensorDescription" => "SensorPack-3",
 			"siteDescription" => "Fullerton Falls", "siteIdentification" => SiteId, "siteLatitude" => "23.54294",
 			"siteLongitude" => "90.60755", "vSRmsDescription" => "Sunken", "xcuDguDescription" => "DGUv1"}},
 			#resource_char{name = "peeMeConfiguration", class_type = "PEEMEConfiguration",
-			schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration",
+			schema = ?PathCatalog ++ "schema/peeCmonNrm#/definitions/PEEMEConfiguration",
 			value = #{"currentMaxThreshold" => "35", "currentMinThreshold" => "15", "humidityMaxThreshold" => "66",
 			"humidityMinThreshold" => "6", "powerMaxThreshold" => "2500", "powerMinThreshold" => "500",
 			"temperatureMaxThreshold" => "15", "temperatureMinThreshold" => "15", "voltageMaxThreshold" => "245",
@@ -4382,7 +4385,7 @@ fill_resource(N) ->
 	Resource = #resource{name = "DC=sigscale.net,SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=" ++
 			integer_to_list(N), description = "GSM Base Transceiver Station (BTS)", category = "RAN",
 			class_type = "BtsSiteMgr", base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			schema = ?PathInventory ++ "schema/BtsSiteMgr",
 			specification = #specification_ref{id = "149672829752946", name = "BtsSiteMgr", version = "1.0"}},
 	{ok, #resource{}} = im:add_resource(Resource),
 	fill_resource(N - 1).

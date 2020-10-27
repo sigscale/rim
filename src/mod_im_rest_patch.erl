@@ -113,27 +113,27 @@ get_etag(Headers) ->
 %% @hidden
 do_patch(Resource,
 		#mod{parsed_header = Headers} = ModData, ContentType, Body,
-		["resourceCatalogManagement", "v3", "resourceCatalog", Identity], []) ->
+		["resourceCatalogManagement", "v4", "resourceCatalog", Identity], []) ->
 	do_response(ModData, Resource:patch_catalog(Identity,
 			get_etag(Headers), ContentType, Body));
 do_patch(Resource,
 		#mod{parsed_header = Headers} = ModData, ContentType, Body,
-		["resourceCatalogManagement", "v3", "resourceSpecification", Identity], []) ->
+		["resourceCatalogManagement", "v4", "resourceSpecification", Identity], []) ->
 	do_response(ModData, Resource:patch_specification(Identity,
 			get_etag(Headers), ContentType, Body));
 do_patch(Resource,
 		#mod{parsed_header = Headers} = ModData, ContentType, Body,
-		["resourceCatalogManagement", "v3", "resourceCategory", Identity], []) ->
+		["resourceCatalogManagement", "v4", "resourceCategory", Identity], []) ->
 	do_response(ModData, Resource:patch_category(Identity,
 			get_etag(Headers), ContentType, Body));
 do_patch(Resource,
 		#mod{parsed_header = Headers} = ModData, ContentType, Body,
-		["resourceCatalogManagement", "v3", "resourceCandidate", Identity], []) ->
+		["resourceCatalogManagement", "v4", "resourceCandidate", Identity], []) ->
 	do_response(ModData, Resource:patch_candidate(Identity,
 			get_etag(Headers), ContentType, Body));
 do_patch(Resource,
 		#mod{parsed_header = Headers} = ModData, ContentType, Body,
-		["resourceInventoryManagement", "v1", "logicalResource", Identity], []) ->
+		["resourceInventoryManagement", "v4", "logicalResource", Identity], []) ->
 	do_response(ModData, Resource:patch_rules(Identity,
 			get_etag(Headers), ContentType, Body));
 do_patch(_, #mod{data = Data}, _, _, _, _) ->

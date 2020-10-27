@@ -19,8 +19,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -53,14 +53,14 @@ parse_proxy({endElement, _Uri, "3GPPAAAProxyFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = ProxyDn,
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy",
 			category = "EPCN3AI",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/3GPPAAAProxyFunction",
+			schema = ?PathInventorySchema ++ "/3GPPAAAProxyFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | ProxyAttr])},
 	case im:add_resource(Resource) of
@@ -123,14 +123,14 @@ parse_server({endElement, _Uri, "3GPPAAAServerFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = ServerDn,
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Server",
 			category = "EPCN3AI",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/3GPPAAAServerFunction",
+			schema = ?PathInventorySchema ++ "/3GPPAAAServerFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | ServerAttr])},
 	case im:add_resource(Resource) of

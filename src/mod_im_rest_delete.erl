@@ -69,13 +69,13 @@ do(#mod{method = Method, request_uri = Uri, data = Data} = ModData) ->
 %% @hidden
 do_delete(Resource, ModData, ["resourceInventoryManagement", "v1", "logicalResource", Identity]) ->
 	do_response(ModData, Resource:delete_rule(Identity));
-do_delete(Resource, ModData, ["resourceCatalogManagement", "v3", "resourceCatalog", Identity]) ->
+do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceCatalog", Identity]) ->
 	do_response(ModData, Resource:delete_catalog(Identity));
-do_delete(Resource, ModData, ["resourceCatalogManagement", "v3", "resourceCategory", Identity]) ->
+do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceCategory", Identity]) ->
 	do_response(ModData, Resource:delete_category(Identity));
-do_delete(Resource, ModData, ["resourceCatalogManagement", "v3", "resourceCandidate", Identity]) ->
+do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceCandidate", Identity]) ->
 	do_response(ModData, Resource:delete_candidate(Identity));
-do_delete(Resource, ModData, ["resourceCatalogManagement", "v3", "resourceSpecification", Identity]) ->
+do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceSpecification", Identity]) ->
 	do_response(ModData, Resource:delete_specification(Identity));
 do_delete(_Resource, #mod{data = Data} = _ModData, _) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",

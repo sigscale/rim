@@ -23,9 +23,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 
 %%----------------------------------------------------------------------
@@ -45,7 +45,7 @@ parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	NodeBAttr = parse_nodeb_attr(T2, undefined, []),
 	ClassType = "NodeBFunction",
@@ -55,7 +55,7 @@ parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			schema = ?PathInventorySchema ++ "/NodeBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | NodeBAttr]},
 	case im:add_resource(Resource) of
@@ -192,14 +192,14 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 	RncAttr = parse_rnc_attr(T2, undefined, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = RncDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			schema = ?PathInventorySchema ++ "/RncFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | RncAttr]),
 			related = Fdds ++ Lcrs ++ Hcrs ++ IubLinks},
@@ -375,14 +375,14 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 	FddAttr = parse_fdd_attr(T2, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = FddDn,
 			description = "UMTS radio",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "UtranGenericCell",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+			schema = ?PathInventorySchema ++ "/UtranCellFDD",
 			specification = Spec,
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
@@ -697,7 +697,7 @@ parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "UtranCellTDD",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
+			schema = ?PathInventorySchema ++ "/UtranCellTDDHcr",
 			specification = Spec,
 			characteristic = TddHcrAttr},
 	case im:add_resource(Resource) of
@@ -960,7 +960,7 @@ parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "UtranCellTDD",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
+			schema = ?PathInventorySchema ++ "/UtranCellTDDLcr",
 			specification = Spec,
 			characteristic = TddLcrAttr},
 	case im:add_resource(Resource) of
@@ -1218,14 +1218,14 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = IubDn,
 			description = "UMTS IUB interface",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+			schema = ?PathInventorySchema ++ "/IubLink",
 			specification = Spec,
 			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of

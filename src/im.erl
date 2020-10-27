@@ -47,8 +47,8 @@
 -define(MILLISECOND, milli_seconds).
 %-define(MILLISECOND, millisecond).
 
--define(PathCatalog, "/resourceCatalogManagement/v3/").
--define(PathInventory, "/resourceInventoryManagement/v3/").
+-define(PathCatalog, "/resourceCatalogManagement/v4/").
+-define(PathInventory, "/resourceInventoryManagement/v4/").
 
 %%----------------------------------------------------------------------
 %%  The im public API

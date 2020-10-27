@@ -31,6 +31,8 @@
 -include("im.hrl").
 -define(MILLISECOND, milli_seconds).
 
+-define(PathSpecification, "/resourceCatalogManagement/v4/resourceSpecification/").
+
 %%----------------------------------------------------------------------
 %%  The im public API
 %%----------------------------------------------------------------------
@@ -57,7 +59,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceSpecification'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resourceSpecification'
 %% 	requests.
 get_specifications(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
@@ -162,7 +164,7 @@ get_specification(_, _, _) ->
 			| {error, ErrorCode :: integer()} .
 %% @doc Update a existing `specification'.
 %%
-%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceSpecification/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v4/resourceSpecification/{Id}' request.
 %%
 patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try
@@ -199,7 +201,7 @@ patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{atomic, #specification{last_modified = LM1} = NewSpecification} ->
 					Body = zj:encode(specification(NewSpecification)),
 					Headers = [{content_type, "application/json"},
-							{location, "/resourceCatalogManagement/v3/resourceSpecification/" ++ Id},
+							{location, ?PathSpecification ++ Id},
 							{etag, im_rest:etag(LM1)}],
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->

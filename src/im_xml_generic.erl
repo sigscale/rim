@@ -22,7 +22,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -184,7 +185,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 			category = "",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/SubNetwork",
+			schema = ?PathInventorySchema ++ "/SubNetwork",
 			specification = Spec,
 			related = LinkMmeSgwRels,
 			characteristic = SubNetworkAttr},
@@ -328,7 +329,7 @@ parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_MME_ServingGW",
+			schema = ?PathInventorySchema ++ "/Link_MME_ServingGW",
 			specification = Spec,
 			characteristic = LinkMmeSgwAttr},
 	case im:add_resource(Resource) of
@@ -365,7 +366,7 @@ parse_link_mme_mme({endElement, _Uri, "Link_MME_MME", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_MME_MME",
+			schema = ?PathInventorySchema ++ "/Link_MME_MME",
 			specification = Spec,
 			characteristic = LinkMmeMmeAttr},
 	case im:add_resource(Resource) of
@@ -403,7 +404,7 @@ parse_link_mme_sgsn({endElement, _Uri, "Link_MME_SGSN", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_MME_SGSN",
+			schema = ?PathInventorySchema ++ "/Link_MME_SGSN",
 			specification = Spec,
 			characteristic = LinkMmeSgsnAttr},
 	case im:add_resource(Resource) of
@@ -441,7 +442,7 @@ parse_link_hss_mme({endElement, _Uri, "Link_HSS_MME", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_HSS_MME",
+			schema = ?PathInventorySchema ++ "/Link_HSS_MME",
 			specification = Spec,
 			characteristic = LinkHssMmeAttr},
 	case im:add_resource(Resource) of
@@ -479,7 +480,7 @@ parse_link_enb_mme({endElement, _Uri, "Link_ENB_MME", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_ENB_MME",
+			schema = ?PathInventorySchema ++ "/Link_ENB_MME",
 			specification = Spec,
 			characteristic = LinkEnbMmeAttr},
 	case im:add_resource(Resource) of
