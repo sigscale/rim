@@ -115,7 +115,7 @@ class catalogAdd extends PolymerElement {
 	_add() {
 		var ajax = this.$.catalogAddAjax;
 		ajax.method = "POST";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/";
+		ajax.url = "/resourceCatalogManagement/v4/resourceCatalog/";
 		var catalogAddObj = new Object();
 		if(this.catalogName) {
 			catalogAddObj.name = this.catalogName;

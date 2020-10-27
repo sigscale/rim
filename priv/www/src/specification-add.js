@@ -131,7 +131,7 @@ class specificationAdd extends PolymerElement {
 	_add() {
 		var ajax = this.$.specificationAddAjax;
 		ajax.method = "POST";
-		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/";
+		ajax.url = "/resourceCatalogManagement/v4/resourceSpecification/";
 		var spec = new Object();
 		if(this.specificationName) {
 			spec.name = this.specificationName;

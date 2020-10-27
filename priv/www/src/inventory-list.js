@@ -205,7 +205,7 @@ class inventoryList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="inventoryGetAjax"
-				url="resourceInventoryManagement/v3/resource"
+				url="resourceInventoryManagement/v4/resource"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
@@ -303,7 +303,7 @@ class inventoryList extends PolymerElement {
 		if(query) {
 			if(query.includes("like=[%")) {
 				delete params.filters[0];
-				ajax.params['filter'] = "resourceInventoryManagement/v3/resource";
+				ajax.params['filter'] = "resourceInventoryManagement/v4/resource";
 			} else {
 				ajax.params['filter'] = "\"" + query + "}]\"";
 			}
