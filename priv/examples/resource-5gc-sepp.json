@@ -1,6 +1,6 @@
 {
 	"id": "3597468086",
-	"href": "/resourceInventoryManagement/v3/resource/3597468086",
+	"href": "/resourceInventoryManagement/v4/resource/3597468086",
 	"name": "SubNetwork=12,ManagedElement=1,SEPPFunction=1",
 	"description": "5G Core Security Edge Protection Proxy (SEPP)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "SEPPFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SEPPFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/SEPPFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467975",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467975",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467975",
 		"@type": "SEPPFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "3597468084",
-				"href": "/resourceInventoryManagement/v3/resource/3597468084",
+				"href": "/resourceInventoryManagement/v4/resource/3597468084",
 				"name": "SubNetwork=12,ManagedElement=1,SEPPFunction=1,EP_N32=1",
 				"@referredType": "EP_N32"
 			},
@@ -45,7 +45,7 @@
 		{
 			"resource": {
 				"id": "3597468085",
-				"href": "/resourceInventoryManagement/v3/resource/3597468085",
+				"href": "/resourceInventoryManagement/v4/resource/3597468085",
 				"name": "SubNetwork=12,ManagedElement=1,SEPPFunction=1,EP_SBI_IPX=1",
 				"@referredType": "EP_SBI_IPX"
 			},
@@ -56,7 +56,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468084",
-				"href": "/resourceInventoryManagement/v3/resource/3597468084",
+				"href": "/resourceInventoryManagement/v4/resource/3597468084",
 				"name": "SubNetwork=12,ManagedElement=1,SEPPFunction=1,EP_N32=1",
 				"@referredType": "EP_N32"
 			},
@@ -65,7 +65,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468085",
-				"href": "/resourceInventoryManagement/v3/resource/3597468085",
+				"href": "/resourceInventoryManagement/v4/resource/3597468085",
 				"name": "SubNetwork=12,ManagedElement=1,SEPPFunction=1,EP_SBI_IPX=1",
 				"@referredType": "EP_SBI_IPX"
 			},

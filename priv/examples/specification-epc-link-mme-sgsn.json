@@ -14,7 +14,7 @@
 	"category": "EPC",
 	"targetResourceSchema": {
 		"@type": "Link_MME_SGSN",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/Link_MME_SGSN"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/Link_MME_SGSN"
 	},
 	"relatedParty": [
 		{
@@ -44,7 +44,7 @@
 			"name": "linkType",
 			"description": "",
 			"valueType": "LinkType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/LinkType"
 		},
 		{
 			"name": "protocolName",

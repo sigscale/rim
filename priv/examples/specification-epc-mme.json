@@ -14,7 +14,7 @@
 	"category": "EPC",
 	"targetResourceSchema": {
 		"@type": "MMEFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MMEFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/MMEFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "pLMNIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PLMNIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/epcNrm#/definitions/PLMNIdList"
 		},
 		{
 			"name": "mMEC",
@@ -63,7 +63,7 @@
 			"name": "mMEPool",
 			"description": "DN of a MMEPool instance",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
 	]
 }

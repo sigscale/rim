@@ -1,6 +1,6 @@
 {
 	"id": "3597468084",
-	"href": "/resourceInventoryManagement/v3/resource/3597468084",
+	"href": "/resourceInventoryManagement/v4/resource/3597468084",
 	"name": "SubNetwork=12,ManagedElement=1,SEPPFunction=1,EP_N32=1",
 	"description": "5G Core End Point of N32 interface",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N32",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N32",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N32",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467977",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467977",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467977",
 		"@type": "EP_N32Spec"
 	},
 	"resourceCharacteristic": [

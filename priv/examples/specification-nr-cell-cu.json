@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "NRCellCU",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NRCellCU"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/NRCellCU"
 	},
 	"relatedParty": [
 		{
@@ -44,25 +44,25 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "nCi",
 			"description": "Uniquely identifies a NR cell within a PLMN (3GPP 38.300)",
 			"valueType": "Nci",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/Nci"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/Nci"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		},
 		{
 			"name": "snssaiList",
 			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"valueType": "SnssaiList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		},
 		{
 			"name": "rrmPolicyType",
@@ -73,13 +73,13 @@
 			"name": "rrmPolicyNSSIId",
 			"description": "S-NSSAIs for which a rrmPolicyRatio value is specified",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "rrmPolicy",
 			"description": "Radio Resource Management (RRM) policy",
 			"valueType": "RrmPolicy",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/RrmPolicy"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/RrmPolicy"
 		},
 		{
 			"name": "rrmPolicyRatio",
@@ -90,7 +90,7 @@
 			"name": "rrmPolicyRatio2",
 			"description": "Ratio for the split between the supported S-NSSAI lists",
 			"valueType": "RrmPolicyRatio2",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/RrmPolicyRatio2"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/RrmPolicyRatio2"
 		}
 	]
 }

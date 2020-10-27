@@ -1,6 +1,6 @@
 {
 	"id": "8593562918",
-	"href": "/resourceInventoryManagement/v3/resource/8593562918",
+	"href": "/resourceInventoryManagement/v4/resource/8593562918",
 	"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
 	"description": "LTE Frequency Division Duplex (FDD)",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EUtranCellFDD",
 	"@baseType": "EUtranGenericCell",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EUtranCellFDD",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EUtranCellFDD",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798225649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798225649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798225649",
 		"@type": "EUtranCellFDDSpec"
 	},
 	"resourceCharacteristic": [

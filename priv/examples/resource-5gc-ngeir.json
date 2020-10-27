@@ -1,6 +1,6 @@
 {
 	"id": "3597468082",
-	"href": "/resourceInventoryManagement/v3/resource/3597468082",
+	"href": "/resourceInventoryManagement/v4/resource/3597468082",
 	"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1",
 	"description": "5G Core NG Equipment Identity Register (NGEIR)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "NGEIRFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NGEIRFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/NGEIRFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467978",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467978",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467978",
 		"@type": "NGEIRFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "3597468083",
-				"href": "/resourceInventoryManagement/v3/resource/3597468083",
+				"href": "/resourceInventoryManagement/v4/resource/3597468083",
 				"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1,EP_N17=1",
 				"@referredType": "EP_N17"
 			},
@@ -47,7 +47,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468083",
-				"href": "/resourceInventoryManagement/v3/resource/3597468083",
+				"href": "/resourceInventoryManagement/v4/resource/3597468083",
 				"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1,EP_N17=1",
 				"@referredType": "EP_N17"
 			},

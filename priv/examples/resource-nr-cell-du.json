@@ -1,6 +1,6 @@
 {
 	"id": "6974362952",
-	"href": "/resourceInventoryManagement/v3/resource/6974362952",
+	"href": "/resourceInventoryManagement/v4/resource/6974362952",
 	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,NRCellDU=1",
 	"description": "NR Cell Distributed Unit (DU)",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "NRCellDU",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NRCellDU",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/NRCellDU",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362018",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362018",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362018",
 		"@type": "NRCellDUSpec"
 	},
 	"resourceCharacteristic": [

@@ -1,6 +1,6 @@
 {
 	"id": "3597468060",
-	"href": "/resourceInventoryManagement/v3/resource/3597468060",
+	"href": "/resourceInventoryManagement/v4/resource/3597468060",
 	"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1",
 	"description": "5G Core Unified Data Management (UDM)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "UDMFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UDMFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/UDMFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467989",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467989",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467989",
 		"@type": "UDMFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "3597468061",
-				"href": "/resourceInventoryManagement/v3/resource/3597468061",
+				"href": "/resourceInventoryManagement/v4/resource/3597468061",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N8=1",
 				"@referredType": "EP_N8"
 			},
@@ -45,7 +45,7 @@
 		{
 			"resource": {
 				"id": "3597468062",
-				"href": "/resourceInventoryManagement/v3/resource/3597468062",
+				"href": "/resourceInventoryManagement/v4/resource/3597468062",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N10=1",
 				"@referredType": "EP_N10"
 			},
@@ -54,7 +54,7 @@
 		{
 			"resource": {
 				"id": "3597468063",
-				"href": "/resourceInventoryManagement/v3/resource/3597468063",
+				"href": "/resourceInventoryManagement/v4/resource/3597468063",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N13=1",
 				"@referredType": "EP_N13"
 			},
@@ -63,7 +63,7 @@
 		{
 			"resource": {
 				"id": "3597468064",
-				"href": "/resourceInventoryManagement/v3/resource/3597468064",
+				"href": "/resourceInventoryManagement/v4/resource/3597468064",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
@@ -74,7 +74,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468061",
-				"href": "/resourceInventoryManagement/v3/resource/3597468061",
+				"href": "/resourceInventoryManagement/v4/resource/3597468061",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N8=1",
 				"@referredType": "EP_N8"
 			},
@@ -83,7 +83,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468062",
-				"href": "/resourceInventoryManagement/v3/resource/3597468062",
+				"href": "/resourceInventoryManagement/v4/resource/3597468062",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N10=1",
 				"@referredType": "EP_N10"
 			},
@@ -92,7 +92,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468063",
-				"href": "/resourceInventoryManagement/v3/resource/3597468063",
+				"href": "/resourceInventoryManagement/v4/resource/3597468063",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N13=1",
 				"@referredType": "EP_N13"
 			},
@@ -101,7 +101,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468064",
-				"href": "/resourceInventoryManagement/v3/resource/3597468064",
+				"href": "/resourceInventoryManagement/v4/resource/3597468064",
 				"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},

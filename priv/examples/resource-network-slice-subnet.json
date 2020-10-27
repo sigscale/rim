@@ -1,6 +1,6 @@
 {
 	"id": "3597460188",
-	"href": "/resourceInventoryManagement/v3/resource/3597460188",
+	"href": "/resourceInventoryManagement/v4/resource/3597460188",
 	"name": "SubNetwork=3,ManagedElement=1,NetworkSliceSubnet=1",
 	"description": "Network Slice Subnet",
 	"category": "Slice",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "NetworkSliceSubnet",
 	"@baseType": "SubNetwork",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NetworkSliceSubnet",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/NetworkSliceSubnet",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "7981256431",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/7981256431",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/7981256431",
 		"@type": "NetworkSliceSpec"
 	},
 	"resourceCharacteristic": [

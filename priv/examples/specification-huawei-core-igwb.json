@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "iGWBFunctionSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/iGWBFunctionSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/iGWBFunctionSpec"
 	},
 	"relatedParty": [
 		{

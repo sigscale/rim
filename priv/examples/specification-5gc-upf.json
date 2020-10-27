@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "UPFFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/UPFFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/UPFFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,25 +44,25 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		},
 		{
 			"name": "nrTacList",
 			"description": "Tracking Area Code (TAC) where management function serving (3GPP TS 38.413)",
 			"valueType": "TACList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/TACList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/TACList"
 		},
 		{
 			"name": "snssaiList",
 			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"valueType": "SnssaiList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		}
 	]
 }

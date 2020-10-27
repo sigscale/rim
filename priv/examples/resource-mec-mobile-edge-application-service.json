@@ -1,6 +1,6 @@
 {
 	"id": "6798452935",
-	"href": "/resourceInventoryManagement/v3/resource/6798452935",
+	"href": "/resourceInventoryManagement/v4/resource/6798452935",
 	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgeApplication=1,MobileEdgeApplicationService=1",
 	"description": "MEC Mobile Edge Application Service",
 	"category": "MEC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "MobileEdgeApplicationService",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MobileEdgeApplicationService",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/MobileEdgeApplicationService",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789215635",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215635",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/789215635",
 		"@type": "MobileEdgeApplicationServiceSpec"
 	},
 	"resourceCharacteristic": [

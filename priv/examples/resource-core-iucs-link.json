@@ -1,6 +1,6 @@
 {
 	"id": "6974362502",
-	"href": "/resourceInventoryManagement/v3/resource/6974362502",
+	"href": "/resourceInventoryManagement/v4/resource/6974362502",
 	"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,IucsLink=1",
 	"description": "Core Iu-cs interface link",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "IucsLink",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/IucsLink",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/IucsLink",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362588",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362588",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362588",
 		"@type": "IucsLinkSpec"
 	},
 	"resourceCharacteristic": [

@@ -14,7 +14,7 @@
 	"category": "MEC",
 	"targetResourceSchema": {
 		"@type": "MobileEdgePlatform",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgePlatform"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/MobileEdgePlatform"
 	},
 	"relatedParty": [
 		{

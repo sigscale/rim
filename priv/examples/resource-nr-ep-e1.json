@@ -1,6 +1,6 @@
 {
 	"id": "3597461913",
-	"href": "/resourceInventoryManagement/v3/resource/3597461913",
+	"href": "/resourceInventoryManagement/v4/resource/3597461913",
 	"name": "SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_E1=1",
 	"description": "NR End Point of the logical link, supporting E1 interface between gNB-CU-CP and gNB-CUUP",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_E1",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_E1",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_E1",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "368125613",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125613",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/368125613",
 		"@type": "EP_E1Spec"
 	},
 	"resourceCharacteristic": [

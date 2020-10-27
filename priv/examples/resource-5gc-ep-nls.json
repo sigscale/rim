@@ -1,6 +1,6 @@
 {
 	"id": "3597468031",
-	"href": "/resourceInventoryManagement/v3/resource/3597468031",
+	"href": "/resourceInventoryManagement/v4/resource/3597468031",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLS=1",
 	"description": "5G Core End Point of NLs interface (between AMF and LMF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_NLS",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_NLS",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_NLS",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468010",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468010",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468010",
 		"@type": "EP_NLSSpec"
 	},
 	"resourceCharacteristic": [

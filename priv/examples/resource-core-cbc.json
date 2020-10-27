@@ -1,6 +1,6 @@
 {
 	"id": "6974362507",
-	"href": "/resourceInventoryManagement/v3/resource/6974362507",
+	"href": "/resourceInventoryManagement/v4/resource/6974362507",
 	"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1",
 	"description": "Core Cell Broadcast Centre (CBC)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "CbcFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CbcFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/CbcFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362583",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362583",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362583",
 		"@type": "CbcFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "6974362504",
-				"href": "/resourceInventoryManagement/v3/resource/6974362504",
+				"href": "/resourceInventoryManagement/v4/resource/6974362504",
 				"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1,IubcLink=1",
 				"@referredType": "IubcLink"
 			},

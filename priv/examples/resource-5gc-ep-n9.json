@@ -1,6 +1,6 @@
 {
 	"id": "3597468042",
-	"href": "/resourceInventoryManagement/v3/resource/3597468042",
+	"href": "/resourceInventoryManagement/v4/resource/3597468042",
 	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N9=1",
 	"description": "5G Core End Point of N9 interface (between two UPFs)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N9",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N9",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N9",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467999",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467999",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467999",
 		"@type": "EP_N9Spec"
 	},
 	"resourceCharacteristic": [

@@ -1,6 +1,6 @@
 {
 	"id": "8593562978",
-	"href": "/resourceInventoryManagement/v3/resource/8593562978",
+	"href": "/resourceInventoryManagement/v4/resource/8593562978",
 	"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
 	"description": "LTE Time Division Duplex (TDD)",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EUtranCellTDD",
 	"@baseType": "EUtranGenericCell",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EUtranCellTDD",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EUtranCellTDD",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798295649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798295649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798295649",
 		"@type": "EUtranCellTDDSpec"
 	},
 	"resourceCharacteristic": [

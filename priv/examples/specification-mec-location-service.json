@@ -14,7 +14,7 @@
 	"category": "MEC",
 	"targetResourceSchema": {
 		"@type": "LocationService",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/LocationService"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/LocationService"
 	},
 	"relatedParty": [
 		{

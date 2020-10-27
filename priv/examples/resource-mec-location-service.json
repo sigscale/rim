@@ -1,6 +1,6 @@
 {
 	"id": "6798452939",
-	"href": "/resourceInventoryManagement/v3/resource/6798452939",
+	"href": "/resourceInventoryManagement/v4/resource/6798452939",
 	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,LocationService=1",
 	"description": "MEC Location Service",
 	"category": "MEC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "LocationService",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/LocationService",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/LocationService",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789215631",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215631",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/789215631",
 		"@type": "LocationServiceSpec"
 	},
 	"resourceCharacteristic": [

@@ -14,7 +14,7 @@
 	"category": "IMS",
 	"targetResourceSchema": {
 		"@type": "ICSCFFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ICSCFFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/ICSCFFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,25 +44,25 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "linkList",
 			"description": "List of related link object distiguished names (DN)",
 			"valueType": "LinkListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/LinkListType"
 		},
 		{
 			"name": "iCSCFFunctionOptionallyContainedNrmClass",
 			"description": "List of optionally contained NRM Class objects",
 			"valueType": "ICSCFFunctionOptionallyContainedNrmClassList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/imsNrm#/definitions/ICSCFFunctionOptionallyContainedNrmClassList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/imsNrm#/definitions/ICSCFFunctionOptionallyContainedNrmClassList"
 		},
 		{
 			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

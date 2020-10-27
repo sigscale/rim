@@ -1,6 +1,6 @@
 {
 	"id": "8594362918",
-	"href": "/resourceInventoryManagement/v3/resource/8594362918",
+	"href": "/resourceInventoryManagement/v4/resource/8594362918",
 	"name": "SubNetwork=3,ManagedElement=2,NodeBFunction=1",
 	"description": "UMTS NodeB",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "NodeBFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NodeBFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/NodeBFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798115649",
 		"@type": "NodeBFunctionSpec"
 	},
 	"resourceCharacteristic": [

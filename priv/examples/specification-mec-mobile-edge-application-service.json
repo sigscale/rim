@@ -14,7 +14,7 @@
 	"category": "MEC",
 	"targetResourceSchema": {
 		"@type": "MobileEdgeApplicationService",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MobileEdgeApplicationService"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/MobileEdgeApplicationService"
 	},
 	"relatedParty": [
 		{
@@ -44,7 +44,7 @@
 			"name": "operationalState",
 			"description": "It indicates the operational state of the object instance",
 			"valueType": "OperationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
 		},
 		{
 			"name": "serName",

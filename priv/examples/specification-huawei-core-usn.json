@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "USNFunctionSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/USNFunctionSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/USNFunctionSpec"
 	},
 	"relatedParty": [
 		{

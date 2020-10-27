@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "EP_NLS",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_NLS"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/EP_NLS"
 	},
 	"relatedParty": [
 		{
@@ -49,13 +49,13 @@
 			"name": "localAddress",
 			"description": "Includes IP address and VLAN ID used for initialization of the underlying transport",
 			"valueType": "IpEndPoint",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/IpEndPoint"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/IpEndPoint"
 		},
 		{
 			"name": "remoteAddress",
 			"description": "IP address used for initialization of the underlying transport",
 			"valueType": "IpEndPoint",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/IpEndPoint"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/IpEndPoint"
 		}
 	]
 }

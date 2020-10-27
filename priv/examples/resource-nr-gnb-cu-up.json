@@ -1,6 +1,6 @@
 {
 	"id": "6974362963",
-	"href": "/resourceInventoryManagement/v3/resource/6974362963",
+	"href": "/resourceInventoryManagement/v4/resource/6974362963",
 	"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1",
 	"description": "NR gNB Central Unit (CU) User Plane (UP)",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "GNBCUUPFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/GNBCUUPFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/GNBCUUPFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362017",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362017",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362017",
 		"@type": "GNBCUUPFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -44,7 +44,7 @@
 		{
 			"resource": {
 				"id": "6974362964",
-				"href": "/resourceInventoryManagement/v3/resource/6974362964",
+				"href": "/resourceInventoryManagement/v4/resource/6974362964",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_E1=1",
 				"@referredType": "EP_E1"
 			},
@@ -53,7 +53,7 @@
 		{
 			"resource": {
 				"id": "6974362965",
-				"href": "/resourceInventoryManagement/v3/resource/6974362965",
+				"href": "/resourceInventoryManagement/v4/resource/6974362965",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_F1U=1",
 				"@referredType": "EP_F1U"
 			},
@@ -62,7 +62,7 @@
 		{
 			"resource": {
 				"id": "6974362966",
-				"href": "/resourceInventoryManagement/v3/resource/6974362966",
+				"href": "/resourceInventoryManagement/v4/resource/6974362966",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_XnU=1",
 				"@referredType": "EP_XnU"
 			},
@@ -71,7 +71,7 @@
 		{
 			"resource": {
 				"id": "6974362967",
-				"href": "/resourceInventoryManagement/v3/resource/6974362967",
+				"href": "/resourceInventoryManagement/v4/resource/6974362967",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_NgU=1",
 				"@referredType": "EP_NgU"
 			},
@@ -80,7 +80,7 @@
 		{
 			"resource": {
 				"id": "6974362968",
-				"href": "/resourceInventoryManagement/v3/resource/6974362968",
+				"href": "/resourceInventoryManagement/v4/resource/6974362968",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_X2U=1",
 				"@referredType": "EP_X2U"
 			},
@@ -89,7 +89,7 @@
 		{
 			"resource": {
 				"id": "6974362969",
-				"href": "/resourceInventoryManagement/v3/resource/6974362969",
+				"href": "/resourceInventoryManagement/v4/resource/6974362969",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_S1U=1",
 				"@referredType": "EP_S1U"
 			},
@@ -100,7 +100,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362964",
-				"href": "/resourceInventoryManagement/v3/resource/6974362964",
+				"href": "/resourceInventoryManagement/v4/resource/6974362964",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_E1=1",
 				"@referredType": "EP_E1"
 			},
@@ -109,7 +109,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362965",
-				"href": "/resourceInventoryManagement/v3/resource/6974362965",
+				"href": "/resourceInventoryManagement/v4/resource/6974362965",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_F1U=1",
 				"@referredType": "EP_F1U"
 			},
@@ -118,7 +118,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362966",
-				"href": "/resourceInventoryManagement/v3/resource/6974362966",
+				"href": "/resourceInventoryManagement/v4/resource/6974362966",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_XnU=1",
 				"@referredType": "EP_XnU"
 			},
@@ -127,7 +127,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362967",
-				"href": "/resourceInventoryManagement/v3/resource/6974362967",
+				"href": "/resourceInventoryManagement/v4/resource/6974362967",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_NgU=1",
 				"@referredType": "EP_NgU"
 			},
@@ -136,7 +136,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362968",
-				"href": "/resourceInventoryManagement/v3/resource/6974362968",
+				"href": "/resourceInventoryManagement/v4/resource/6974362968",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_X2U=1",
 				"@referredType": "EP_X2U"
 			},
@@ -145,7 +145,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362969",
-				"href": "/resourceInventoryManagement/v3/resource/6974362969",
+				"href": "/resourceInventoryManagement/v4/resource/6974362969",
 				"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_S1U=1",
 				"@referredType": "EP_S1U"
 			},

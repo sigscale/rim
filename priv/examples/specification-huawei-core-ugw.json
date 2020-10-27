@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "UGWFunctionSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/UGWFunctionSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/UGWFunctionSpec"
 	},
 	"relatedParty": [
 		{

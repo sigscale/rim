@@ -1,6 +1,6 @@
 {
 	"id": "3597468087",
-	"href": "/resourceInventoryManagement/v3/resource/3597468087",
+	"href": "/resourceInventoryManagement/v4/resource/3597468087",
 	"name": "SubNetwork=12,ManagedElement=1,NWDAFFunction=1",
 	"description": "5G Core Network Data Analytics Function (NWDAF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "NWDAFFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NWDAFFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/NWDAFFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467974",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467974",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467974",
 		"@type": "NWDAFFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "3597468088",
-				"href": "/resourceInventoryManagement/v3/resource/3597468088",
+				"href": "/resourceInventoryManagement/v4/resource/3597468088",
 				"name": "SubNetwork=12,ManagedElement=1,NWDAFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
@@ -47,7 +47,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468088",
-				"href": "/resourceInventoryManagement/v3/resource/3597468088",
+				"href": "/resourceInventoryManagement/v4/resource/3597468088",
 				"name": "SubNetwork=12,ManagedElement=1,NWDAFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},

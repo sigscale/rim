@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "MSCServerOfficeSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MSCServerOfficeSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/MSCServerOfficeSpec"
 	},
 	"relatedParty": [
 		{

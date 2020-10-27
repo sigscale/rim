@@ -1,6 +1,6 @@
 {
 	"id": "6974362509",
-	"href": "/resourceInventoryManagement/v3/resource/6974362509",
+	"href": "/resourceInventoryManagement/v4/resource/6974362509",
 	"name": "SubNetwork=2,ManagedElement=1,CsMgwFunction=1",
 	"description": "Core Circuit Switched (CS) Media Gateway (MGW)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "CsMgwFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/CsMgwFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362581",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362581",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362581",
 		"@type": "CsMgwFunctionSpec"
 	},
 	"resourceCharacteristic": [

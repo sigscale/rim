@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "AMFFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/AMFFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/AMFFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,49 +44,49 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		},
 		{
 			"name": "amfIdentifier",
 			"description": "Uniquely identify an AMF instance",
 			"valueType": "AMFIdentifier",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/AMFIdentifier"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/AMFIdentifier"
 		},
 		{
 			"name": "sBIFqdn",
 			"description": "FQDN of the registered NF instance in service-based interface",
 			"valueType": "SBIFqdn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIFqdn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/SBIFqdn"
 		},
 		{
 			"name": "sBIServiceList",
 			"description": "All supported NF services registered on service-based interface",
 			"valueType": "SBIServiceList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIServiceList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/SBIServiceList"
 		},
 		{
 			"name": "weightFactor",
 			"description": "Capacity of local node relative to other nodes in the same type (3GPP 23.501)",
 			"valueType": "WeightFactor",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/WeightFactor"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/WeightFactor"
 		},
 		{
 			"name": "snssaiList",
 			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"valueType": "SnssaiList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		},
 		{
 			"name": "aMFSet",
 			"description": "DN of an AMF set",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
 	]
 }

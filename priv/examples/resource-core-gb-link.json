@@ -1,6 +1,6 @@
 {
 	"id": "6974362506",
-	"href": "/resourceInventoryManagement/v3/resource/6974362506",
+	"href": "/resourceInventoryManagement/v4/resource/6974362506",
 	"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,GbLink=1",
 	"description": "Core Gb interface link",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "GbLink",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/GbLink",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/GbLink",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362584",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362584",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362584",
 		"@type": "GbLinkSpec"
 	},
 	"resourceCharacteristic": [

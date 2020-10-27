@@ -1,6 +1,6 @@
 {
 	"id": "8493562318",
-	"href": "/resourceInventoryManagement/v3/resource/8493562318",
+	"href": "/resourceInventoryManagement/v4/resource/8493562318",
 	"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellTDDHcr=1",
 	"description": "UTRAN UMTS Time Division Duplex (TDD) high chip rate (HCR)",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "UtranCellTDDHcr",
 	"@baseType": "UtranCellTDD",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/UtranCellTDDHcr",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "728123649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/728123649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/728123649",
 		"@type": "UtranCellTDDHcrSpec"
 	},
 	"resourceCharacteristic": [

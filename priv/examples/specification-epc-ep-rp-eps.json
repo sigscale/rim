@@ -14,7 +14,7 @@
 	"category": "EPC",
 	"targetResourceSchema": {
 		"@type": "EP_RP_EPS",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EP_RP_EPS"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/EP_RP_EPS"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "farEndEntity",
 			"description": "",
 			"valueType": "IpEndPoint",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/IpEndPoint"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/IpEndPoint"
 		},
 		{
 			"name": "farEndNeIpAddr",
 			"description": "",
 			"valueType": "IpEndPoint",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/IpEndPoint"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/IpEndPoint"
 		}
 	]
 }

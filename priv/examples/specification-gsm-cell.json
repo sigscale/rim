@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "GsmCell",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/GsmCell"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/GsmCell"
 	},
 	"relatedParty": [
 		{
@@ -44,7 +44,7 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "cellIdentity",
@@ -181,7 +181,7 @@
 			"name": "hoppingSequenceList",
 			"description": "List of hopping sequence: MA (3GPP 44.018) and HSN (3GPP 45.002)",
 			"valueType": "HoppingSequenceList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/geranNrm#/definitions/HoppingSequenceList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/geranNrm#/definitions/HoppingSequenceList"
 		},
 		{
 			"name": "plmnPermitted",

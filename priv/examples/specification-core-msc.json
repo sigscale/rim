@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "MscServerFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MscServerFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/MscServerFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,37 +44,37 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "mccList",
 			"description": "List of Mobile Country Codes (MCC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mncList",
 			"description": "List of Mobile Network Codes (MNC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "lacList",
 			"description": "List of Location Area Codes (LAC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "sacList",
 			"description": "List of Service Area Codes (SAC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "gcaList",
 			"description": "List of Group Call Area (GCA) Codes  (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mscId",
@@ -85,37 +85,37 @@
 			"name": "mscServerFunctionGsmCell",
 			"description": "This holds a set of DNs of GsmCell",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "mscServerFunctionExternalGsmCell",
 			"description": "This holds a set of DNs of ExternalGsmCell",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "mscServerFunctionCsMgwFunction",
 			"description": "This holds a set of DNs of CsMgwFunction",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "nriList",
 			"description": "NRI shall be part of the TMSI (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mscServerFunctionMscPool",
 			"description": "This holds a set of DNs of MscPool",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "defaultMsc",
 			"description": "Whether this MSC-Server is default CN node in MscPool or not (3GPP 23.236)",
 			"valueType": "DefaultMscType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/DefaultMscType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/DefaultMscType"
 		}
 	]
 }

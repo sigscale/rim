@@ -1,6 +1,6 @@
 {
 	"id": "6974362508",
-	"href": "/resourceInventoryManagement/v3/resource/6974362508",
+	"href": "/resourceInventoryManagement/v4/resource/6974362508",
 	"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1",
 	"description": "Core Mobile Switching Center (MSC) Server",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "MscServerFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MscServerFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/MscServerFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362582",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362582",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362582",
 		"@type": "MscServerFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -44,7 +44,7 @@
 		{
 			"resource": {
 				"id": "6974362502",
-				"href": "/resourceInventoryManagement/v3/resource/6974362502",
+				"href": "/resourceInventoryManagement/v4/resource/6974362502",
 				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,IucsLink=1",
 				"@referredType": "IucsLink"
 			},
@@ -53,7 +53,7 @@
 		{
 			"resource": {
 				"id": "6974362505",
-				"href": "/resourceInventoryManagement/v3/resource/6974362505",
+				"href": "/resourceInventoryManagement/v4/resource/6974362505",
 				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,ALink=1",
 				"@referredType": "ALink"
 			},

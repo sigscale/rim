@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "SPSV3FunctionSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SPSV3FunctionSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/SPSV3FunctionSpec"
 	},
 	"relatedParty": [
 		{

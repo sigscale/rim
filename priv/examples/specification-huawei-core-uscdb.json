@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "USCDBFunctionSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/USCDBFunctionSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/USCDBFunctionSpec"
 	},
 	"relatedParty": [
 		{

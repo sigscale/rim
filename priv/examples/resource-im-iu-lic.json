@@ -1,6 +1,6 @@
 {
 	"id": "3785462918",
-	"href": "/resourceInventoryManagement/v3/resource/3785462918",
+	"href": "/resourceInventoryManagement/v4/resource/3785462918",
 	"name": "SubNetwork=10,ManagedElement=1,InventoryUnit=4",
 	"description": "License Inventory Unit",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "InventoryUnitLic",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitLic",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/InventoryUnitLic",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "0115153649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/0115153649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/0115153649",
 		"@type": "InventoryUnitLicSpec"
 	},
 	"resourceCharacteristic": [

@@ -1,6 +1,6 @@
 {
 	"id": "8597462918",
-	"href": "/resourceInventoryManagement/v3/resource/8597462918",
+	"href": "/resourceInventoryManagement/v4/resource/8597462918",
 	"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1",
 	"description": "Inventory Unit",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "InventoryUnit",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnit",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/InventoryUnit",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "722155649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/722155649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/722155649",
 		"@type": "InventoryUnitSpec"
 	},
 	"resourceCharacteristic": [
@@ -52,7 +52,7 @@
 		{
 			"resource": {
 				"id": "8597462917",
-				"href": "/resourceInventoryManagement/v3/resource/8597462917",
+				"href": "/resourceInventoryManagement/v4/resource/8597462917",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
 				"@referredType": "TmaInventoryUnit"
 			},
@@ -61,7 +61,7 @@
 		{
 			"resource": {
 				"id": "7597462917",
-				"href": "/resourceInventoryManagement/v3/resource/7597462917",
+				"href": "/resourceInventoryManagement/v4/resource/7597462917",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
 				"@referredType": "AntennaInventoryUnit"
 			},
@@ -70,7 +70,7 @@
 		{
 			"resource": {
 				"id": "7600371350",
-				"href": "/resourceInventoryManagement/v3/resource/7600371350",
+				"href": "/resourceInventoryManagement/v4/resource/7600371350",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
 				"@referredType": "AntennaInventoryUnit"
 			},
@@ -79,7 +79,7 @@
 		{
 			"resourceRef": {
 				"id": "1409318377",
-				"href": "/resourceInventoryManagement/v3/resource/1409318377",
+				"href": "/resourceInventoryManagement/v4/resource/1409318377",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",
 				"@referredType": "AntennaInventoryUnit"
 			},

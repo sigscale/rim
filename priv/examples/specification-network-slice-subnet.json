@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "NetworkSliceSubnet",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSliceSubnet"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/NetworkSliceSubnet"
 	},
 	"relatedParty": [
 		{
@@ -39,7 +39,7 @@
 			"name": "dnPrefix",
 			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "userLabel",
@@ -60,43 +60,43 @@
 			"name": "mFIdList",
 			"description": "Associated Network Functions (NF)",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "constituentNSSIIdList",
 			"description": "Constituent Network Slice SubNetwork Instance (NSSI) list",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "operationalState",
 			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
 			"valueType": "OperationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRP#/definitions/OperationalStateType"
 		},
 		{
 			"name": "administrativeState",
 			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
 			"valueType": "AdministrativeStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRP#/definitions/AdministrativeStateType"
 		},
 		{
 			"name": "nsInfo",
 			"description": "Network Service (NS) info (ETSI GS NFV-IFA 013 clause 8.3.3.2.2)",
 			"valueType": "NsInfo",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/NsInfo"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/sliceNrm#/definitions/NsInfo"
 		},
 		{
 			"name": "sliceProfileList",
 			"description": "Slice Profiles (3GPP TS 28.541 clause 6.3.4)",
 			"valueType": "SliceProfileList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/SliceProfileList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/sliceNrm#/definitions/SliceProfileList"
 		}
 	],
 	"resourceSpecRelationship": [
 		{
 			"id": "16029108611704547",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 			"@type": "AMFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/AMFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -105,7 +105,7 @@
 		},
 		{
 			"id": "16029108611551283",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611551283",
 			"@type": "SMFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/SMFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -114,7 +114,7 @@
 		},
 		{
 			"id": "1602910861147484",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 			"@type": "UPFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/UPFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -123,7 +123,7 @@
 		},
 		{
 			"id": "16029108611581827",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581827",
 			"@type": "AUSFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/AUSFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -132,7 +132,7 @@
 		},
 		{
 			"id": "16029108611684227",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684227",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684227",
 			"@type": "NSSFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/NSSFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -141,7 +141,7 @@
 		},
 		{
 			"id": "1602910861153931",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861153931",
 			"@type": "UDMFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/UDMFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -150,7 +150,7 @@
 		},
 		{
 			"id": "16029108611561347",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611561347",
 			"@type": "PCFFunctionSpec",
 			"@schemaLocation": "http://sigscale.org/schema/PCFFunctionSpec",
 			"@baseType": "ResourceFunctionSpec",
@@ -166,7 +166,7 @@
 		},
 		{
 			"id": "16029108611684003",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
 			"@type": "EP_N3Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N3Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -175,7 +175,7 @@
 		},
 		{
 			"id": "16029108611571507",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571507",
 			"@type": "EP_N4Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N4Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -184,7 +184,7 @@
 		},
 		{
 			"id": "16029108611632915",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611632915",
 			"@type": "EP_N6Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N6Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -193,7 +193,7 @@
 		},
 		{
 			"id": "1602910861149579",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861149579",
 			"@type": "EP_N7Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N7Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -202,7 +202,7 @@
 		},
 		{
 			"id": "16029108611643011",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611643011",
 			"@type": "EP_N8Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N8Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -211,7 +211,7 @@
 		},
 		{
 			"id": "16029108611571603",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571603",
 			"@type": "EP_N9Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N9Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -220,7 +220,7 @@
 		},
 		{
 			"id": "16029108611602371",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602371",
 			"@type": "EP_N10Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N10Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -229,7 +229,7 @@
 		},
 		{
 			"id": "16029108611602243",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602243",
 			"@type": "EP_N11Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N11Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -238,7 +238,7 @@
 		},
 		{
 			"id": "16029108611581859",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581859",
 			"@type": "EP_N12Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N12Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -247,7 +247,7 @@
 		},
 		{
 			"id": "1602910861141164",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861141164",
 			"@type": "EP_N13Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N13Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -256,7 +256,7 @@
 		},
 		{
 			"id": "16029108611541091",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611541091",
 			"@type": "EP_N14Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N14Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -265,7 +265,7 @@
 		},
 		{
 			"id": "16029108611581923",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581923",
 			"@type": "EP_N15Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N15Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -274,7 +274,7 @@
 		},
 		{
 			"id": "1602910861144388",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861144388",
 			"@type": "EP_N22Spec",
 			"@schemaLocation": "http://sigscale.org/schema/EP_N22Spec",
 			"@baseType": "ResourceFunctionSpec",
@@ -285,19 +285,19 @@
 	"connectionPointSpecification": [
 		{
 			"id": "16029108611581731",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581731",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581731",
 			"@referredType": "EP_N2Spec",
 			"name": "EP_N2"
 		},
 		{
 			"id": "16029108611684003",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
 			"@referredType": "EP_N3Spec",
 			"name": "EP_N3"
 		},
 		{
 			"id": "16029108611632915",
-			"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611632915",
 			"@referredType": "EP_N6Spec",
 			"name": "EP_N6"
 		}
@@ -317,18 +317,18 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611581731",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581731",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581731",
 							"@referredType": "EP_N2Spec",
 							"name": "EP_N2"
 						},
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611581731",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581731",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581731",
 								"@referredType": "EP_N2Spec",
 								"name": "EP_N2"
 							}
@@ -343,18 +343,18 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611684003",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
 							"@referredType": "EP_N3Spec",
 							"name": "EP_N3"
 						},
 						{
 							"id": "1602910861147484",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 							"@referredType": "UPFFunctionSpec",
 							"name": "UPFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611684003",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684003",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
 								"@referredType": "EP_N3Spec",
 								"name": "EP_N3"
 							}
@@ -369,24 +369,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611551283",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611551283",
 							"@referredType": "SMFFunctionSpec",
 							"name": "SMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611571507",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571507",
 								"@referredType": "EP_N4Spec",
 								"name": "EP_N4"
 							}
 						},
 						{
 							"id": "1602910861147484",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 							"@referredType": "UPFFunctionSpec",
 							"name": "UPFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611571507",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571507",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571507",
 								"@referredType": "EP_N4Spec",
 								"name": "EP_N4"
 							}
@@ -401,19 +401,19 @@
 					"endpointSpecification": [
 						{
 							"id": "1602910861147484",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 							"@referredType": "UPFFunctionSpec",
 							"name": "UPFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611632915",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611632915",
 								"@referredType": "EP_N6Spec",
 								"name": "EP_N6"
 							}
 						},
 						{
 							"id": "16029108611632915",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611632915",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611632915",
 							"@referredType": "EP_N6Spec",
 							"name": "EP_N6"
 						}
@@ -427,24 +427,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611551283",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611551283",
 							"@referredType": "SMFFunctionSpec",
 							"name": "SMFFunction",
 							"connectionPointSpecification": {
 								"id": "1602910861149579",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861149579",
 								"@referredType": "EP_N7Spec",
 								"name": "EP_N7"
 							}
 						},
 						{
 							"id": "16029108611561347",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611561347",
 							"@referredType": "PCFFunctionSpec",
 							"name": "PCFFunction",
 							"connectionPointSpecification": {
 								"id": "1602910861149579",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861149579",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861149579",
 								"@referredType": "EP_N7Spec",
 								"name": "EP_N7"
 							}
@@ -459,24 +459,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611643011",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611643011",
 								"@referredType": "EP_N8Spec",
 								"name": "EP_N8"
 							}
 						},
 						{
 							"id": "1602910861153931",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861153931",
 							"@referredType": "UDMFunctionSpec",
 							"name": "UDMFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611643011",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611643011",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611643011",
 								"@referredType": "EP_N8Spec",
 								"name": "EP_N8"
 							}
@@ -491,24 +491,24 @@
 					"endpointSpecification": [
 						{
 							"id": "1602910861147484",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 							"@referredType": "UPFFunctionSpec",
 							"name": "UPFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611571603",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571603",
 								"@referredType": "EP_N9Spec",
 								"name": "EP_N9"
 							}
 						},
 						{
 							"id": "1602910861147484",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861147484",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 							"@referredType": "UPFFunctionSpec",
 							"name": "UPFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611571603",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611571603",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571603",
 								"@referredType": "EP_N9Spec",
 								"name": "EP_N9"
 							}
@@ -523,24 +523,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611551283",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611551283",
 							"@referredType": "SMFFunctionSpec",
 							"name": "SMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611602371",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602371",
 								"@referredType": "EP_N10Spec",
 								"name": "EP_N10"
 							}
 						},
 						{
 							"id": "1602910861153931",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861153931",
 							"@referredType": "UDMFunctionSpec",
 							"name": "UDMFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611602371",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602371",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602371",
 								"@referredType": "EP_N10Spec",
 								"name": "EP_N10"
 							}
@@ -555,24 +555,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611602243",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602243",
 								"@referredType": "EP_N11Spec",
 								"name": "EP_N11"
 							}
 						},
 						{
 							"id": "16029108611551283",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611551283",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611551283",
 							"@referredType": "SMFFunctionSpec",
 							"name": "SMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611602243",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611602243",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602243",
 								"@referredType": "EP_N11Spec",
 								"name": "EP_N11"
 							}
@@ -587,24 +587,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611581859",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581859",
 								"@referredType": "EP_N12Spec",
 								"name": "EP_N12"
 							}
 						},
 						{
 							"id": "16029108611581827",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581827",
 							"@referredType": "AUSFFunctionSpec",
 							"name": "AUSFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611581859",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581859",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581859",
 								"@referredType": "EP_N12Spec",
 								"name": "EP_N12"
 							}
@@ -619,24 +619,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611581827",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581827",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581827",
 							"@referredType": "AUSFFunctionSpec",
 							"name": "AUSFFunction",
 							"connectionPointSpecification": {
 								"id": "1602910861141164",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861141164",
 								"@referredType": "EP_N13Spec",
 								"name": "EP_N13"
 							}
 						},
 						{
 							"id": "1602910861153931",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861153931",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861153931",
 							"@referredType": "UDMFunctionSpec",
 							"name": "UDMFunction",
 							"connectionPointSpecification": {
 								"id": "1602910861141164",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861141164",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861141164",
 								"@referredType": "EP_N13Spec",
 								"name": "EP_N13"
 							}
@@ -651,24 +651,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611541091",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611541091",
 								"@referredType": "EP_N14Spec",
 								"name": "EP_N14"
 							}
 						},
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611541091",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611541091",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611541091",
 								"@referredType": "EP_N14Spec",
 								"name": "EP_N14"
 							}
@@ -683,24 +683,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611581923",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581923",
 								"@referredType": "EP_N15Spec",
 								"name": "EP_N15"
 							}
 						},
 						{
 							"id": "16029108611561347",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611561347",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611561347",
 							"@referredType": "PCFFunctionSpec",
 							"name": "PCFFunction",
 							"connectionPointSpecification": {
 								"id": "16029108611581923",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611581923",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581923",
 								"@referredType": "EP_N15Spec",
 								"name": "EP_N15"
 							}
@@ -715,24 +715,24 @@
 					"endpointSpecification": [
 						{
 							"id": "16029108611704547",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611704547",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 							"@referredType": "AMFFunctionSpec",
 							"name": "AMFFunction",
 							"connectionPointSpecification": {
 								"id": "1602910861144388",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861144388",
 								"@referredType": "EP_N22Spec",
 								"name": "EP_N22"
 							}
 						},
 						{
 							"id": "16029108611684227",
-							"href": "/resourceCatalogManagement/v3/resourceSpecification/16029108611684227",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684227",
 							"@referredType": "NSSFFunctionSpec",
 							"name": "NSSFFunction",
 							"connectionPointSpecification": {
 								"id": "1602910861144388",
-								"href": "/resourceCatalogManagement/v3/resourceSpecification/1602910861144388",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861144388",
 								"@referredType": "EP_N22Spec",
 								"name": "EP_N22"
 							}

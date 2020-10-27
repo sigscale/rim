@@ -1,6 +1,6 @@
 {
 	"id": "8994422915",
-	"href": "/resourceInventoryManagement/v3/resource/8994422915",
+	"href": "/resourceInventoryManagement/v4/resource/8994422915",
 	"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=1",
 	"description": "UMTS Iub Link",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "IubLink",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/IubLink",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/IubLink",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798215749",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798215749",
 		"@type": "IubLinkSpec"
 	},
 	"resourceCharacteristic": [

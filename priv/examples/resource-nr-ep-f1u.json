@@ -1,6 +1,6 @@
 {
 	"id": "3597461912",
-	"href": "/resourceInventoryManagement/v3/resource/3597461912",
+	"href": "/resourceInventoryManagement/v4/resource/3597461912",
 	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1U=1",
 	"description": "NR End Point of the user plane interface (F1-U) between the DU and CU or CUUP",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_F1U",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_F1U",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_F1U",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "368125612",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125612",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/368125612",
 		"@type": "EP_F1USpec"
 	},
 	"resourceCharacteristic": [

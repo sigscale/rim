@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "GgsnFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/GgsnFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/GgsnFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "proceduralStatus",
 			"description": "Procedural status of the object instance (ITU-T X.731)",
 			"valueType": "ProceduralStatus",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/ProceduralStatus"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/statemanagementIRP#/definitions/ProceduralStatus"
 		}
 	]
 }

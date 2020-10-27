@@ -1,6 +1,6 @@
 {
 	"id": "6974362511",
-	"href": "/resourceInventoryManagement/v3/resource/6974362511",
+	"href": "/resourceInventoryManagement/v4/resource/6974362511",
 	"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1",
 	"description": "Core Serving GPRS Support Node (SGSN)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "SgsnFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SgsnFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/SgsnFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362579",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362579",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362579",
 		"@type": "SgsnFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -44,7 +44,7 @@
 		{
 			"resource": {
 				"id": "6974362506",
-				"href": "/resourceInventoryManagement/v3/resource/6974362506",
+				"href": "/resourceInventoryManagement/v4/resource/6974362506",
 				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,GbLink=1",
 				"@referredType": "GbLink"
 			},
@@ -53,7 +53,7 @@
 		{
 			"resource": {
 				"id": "6974362503",
-				"href": "/resourceInventoryManagement/v3/resource/6974362503",
+				"href": "/resourceInventoryManagement/v4/resource/6974362503",
 				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,IupsLink=1",
 				"@referredType": "IupsLink"
 			},

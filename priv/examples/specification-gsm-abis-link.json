@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "AbisLink",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/AbisLink"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/AbisLink"
 	},
 	"relatedParty": [
 		{

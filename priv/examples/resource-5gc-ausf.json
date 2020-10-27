@@ -1,6 +1,6 @@
 {
 	"id": "3597468057",
-	"href": "/resourceInventoryManagement/v3/resource/3597468047",
+	"href": "/resourceInventoryManagement/v4/resource/3597468047",
 	"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1",
 	"description": "5G Core Authentication Server Function (AUSF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "AUSFFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/AUSFFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/AUSFFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467990",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467990",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467990",
 		"@type": "AUSFFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "3597468058",
-				"href": "/resourceInventoryManagement/v3/resource/3597468058",
+				"href": "/resourceInventoryManagement/v4/resource/3597468058",
 				"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N12=1",
 				"@referredType": "EP_N12"
 			},
@@ -45,7 +45,7 @@
 		{
 			"resource": {
 				"id": "3597468056",
-				"href": "/resourceInventoryManagement/v3/resource/3597468056",
+				"href": "/resourceInventoryManagement/v4/resource/3597468056",
 				"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N13=1",
 				"@referredType": "EP_N13"
 			},
@@ -54,7 +54,7 @@
 		{
 			"resource": {
 				"id": "3597468059",
-				"href": "/resourceInventoryManagement/v3/resource/3597468059",
+				"href": "/resourceInventoryManagement/v4/resource/3597468059",
 				"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
@@ -65,7 +65,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468058",
-				"href": "/resourceInventoryManagement/v3/resource/3597468058",
+				"href": "/resourceInventoryManagement/v4/resource/3597468058",
 				"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N12=1",
 				"@referredType": "EP_N12"
 			},
@@ -74,7 +74,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468056",
-				"href": "/resourceInventoryManagement/v3/resource/3597468056",
+				"href": "/resourceInventoryManagement/v4/resource/3597468056",
 				"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N13=1",
 				"@referredType": "EP_N13"
 			},
@@ -83,7 +83,7 @@
 		{
 			"resourceRef": {
 				"id": "3597468059",
-				"href": "/resourceInventoryManagement/v3/resource/3597468059",
+				"href": "/resourceInventoryManagement/v4/resource/3597468059",
 				"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},

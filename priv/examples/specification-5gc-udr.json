@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "UDRFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/UDRFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/UDRFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,31 +44,31 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		},
 		{
 			"name": "sBIFqdn",
 			"description": "FQDN of the registered NF instance in service-based interface",
 			"valueType": "SBIFqdn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIFqdn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/SBIFqdn"
 		},
 		{
 			"name": "sBIServiceList",
 			"description": "All supported NF services registered on service-based interface",
 			"valueType": "SBIServiceList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIServiceList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/SBIServiceList"
 		},
 		{
 			"name": "snssaiList",
 			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"valueType": "SnssaiList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		}
 	]
 }

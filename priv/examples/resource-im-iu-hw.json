@@ -1,6 +1,6 @@
 {
 	"id": "5797462918",
-	"href": "/resourceInventoryManagement/v3/resource/5797462918",
+	"href": "/resourceInventoryManagement/v4/resource/5797462918",
 	"name": "SubNetwork=10,ManagedElement=1,InventoryUnit=2",
 	"description": "Hardware Inventory Unit",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "InventoryUnitHw",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitHw",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/InventoryUnitHw",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "702153649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/702153649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/702153649",
 		"@type": "InventoryUnitHwSpec"
 	},
 	"resourceCharacteristic": [

@@ -1,6 +1,6 @@
 {
 	"id": "6787462918",
-	"href": "/resourceInventoryManagement/v3/resource/6787462918",
+	"href": "/resourceInventoryManagement/v4/resource/6787462918",
 	"name": "SubNetwork=10,ManagedElement=1,InventoryUnit=3",
 	"description": "Software Inventory Unit",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "InventoryUnitSw",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitSw",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/InventoryUnitSw",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "0112153649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/0112153649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/0112153649",
 		"@type": "InventoryUnitSwSpec"
 	},
 	"resourceCharacteristic": [

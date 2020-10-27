@@ -14,7 +14,7 @@
 	"category": "MEC",
 	"targetResourceSchema": {
 		"@type": "TrafficRule",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/TrafficRule"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/TrafficRule"
 	},
 	"relatedParty": [
 		{

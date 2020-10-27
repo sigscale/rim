@@ -1,6 +1,6 @@
 {
 	"id": "6974362513",
-	"href": "/resourceInventoryManagement/v3/resource/6974362513",
+	"href": "/resourceInventoryManagement/v4/resource/6974362513",
 	"name": "SubNetwork=2,ManagedElement=1,HlrFunction=1",
 	"description": "Core Home Location Register (HLR)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "HlrFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/HlrFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/HlrFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362577",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362577",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362577",
 		"@type": "HlrFunctionSpec"
 	},
 	"resourceCharacteristic": [

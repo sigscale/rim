@@ -1,6 +1,6 @@
 {
 	"id": "3597468033",
-	"href": "/resourceInventoryManagement/v3/resource/3597468033",
+	"href": "/resourceInventoryManagement/v4/resource/3597468033",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_SBI_X=1",
 	"description": "5G Core End Point (EP) of Service Based Interface (SBI) X",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_SBI_X",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_SBI_X",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_SBI_X",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468008",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468008",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468008",
 		"@type": "EP_SBI_XSpec"
 	},
 	"resourceCharacteristic": [

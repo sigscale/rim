@@ -1,6 +1,6 @@
 {
 	"id": "3597461914",
-	"href": "/resourceInventoryManagement/v3/resource/3597461914",
+	"href": "/resourceInventoryManagement/v4/resource/3597461914",
 	"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_S1U=1",
 	"description": "NR End Point of the logical link, supporting S1-U interface towards a S-GW node",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_S1U",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_S1U",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_S1U",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "368125614",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125614",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/368125614",
 		"@type": "EP_S1USpec"
 	},
 	"resourceCharacteristic": [

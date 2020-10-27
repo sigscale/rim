@@ -1,6 +1,6 @@
 {
 	"id": "8793462928",
-	"href": "/resourceInventoryManagement/v3/resource/8793462928",
+	"href": "/resourceInventoryManagement/v4/resource/8793462928",
 	"name": "SubNetwork=2",
 	"description": "",
 	"category": "",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "SubNetwork",
 	"@baseType": "ResourceFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SubNetwork",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/SubNetwork",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789125649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/789125649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/789125649",
 		"@type": "SubNetworkSpec"
 	},
 	"resourceCharacteristic": [
@@ -44,7 +44,7 @@
 		{
 			"resource": {
 				"id": "6874523911",
-				"href": "/resourceInventoryManagement/v3/resource/6874523911",
+				"href": "/resourceInventoryManagement/v4/resource/6874523911",
 				"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1",
 				"@referredType": "ServingGWFunction"
 			},
@@ -53,7 +53,7 @@
 		{
 			"resource": {
 				"id": "6874523913",
-				"href": "/resourceInventoryManagement/v3/resource/6874523913",
+				"href": "/resourceInventoryManagement/v4/resource/6874523913",
 				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1",
 				"@referredType": "MMEFunction"
 			},
@@ -62,7 +62,7 @@
 		{
 			"resource": {
 				"id": "7894623152",
-				"href": "/resourceInventoryManagement/v3/resource/7894623152",
+				"href": "/resourceInventoryManagement/v4/resource/7894623152",
 				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},
@@ -71,7 +71,7 @@
 		{
 			"resource": {
 				"id": "7894623154",
-				"href": "/resourceInventoryManagement/v3/resource/7894623154",
+				"href": "/resourceInventoryManagement/v4/resource/7894623154",
 				"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},
@@ -80,7 +80,7 @@
 		{
 			"resource": {
 				"id": "8974623056",
-				"href": "/resourceInventoryManagement/v3/resource/8974623056",
+				"href": "/resourceInventoryManagement/v4/resource/8974623056",
 				"name": "SubNetwork=2,Link_MME_ServingGW=1",
 				"@referredType": "Link_MME_ServingGW"
 			},
@@ -93,19 +93,19 @@
 			"endpoint": [
 				{
 					"id": "8795462938",
-					"href": "/resourceInventoryManagement/v3/resource/8795462938",
+					"href": "/resourceInventoryManagement/v4/resource/8795462938",
 					"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1",
 					"@referredType": "MMEFunction",
 					"connectionPoint": {
 						"id": "8974623051",
-						"href": "/resourceInventoryManagement/v3/resource/8974623051",
+						"href": "/resourceInventoryManagement/v4/resource/8974623051",
 						"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
 						"@referredType": "EP_RP_EPS"
 					}
 				},
 				{
 					"id": "8974623056",
-					"href": "/resourceInventoryManagement/v3/resource/8974623056",
+					"href": "/resourceInventoryManagement/v4/resource/8974623056",
 					"name": "SubNetwork=2,Link_MME_ServingGW=1",
 					"@referredType": "Link_MME_ServingGW"
 				}
@@ -116,18 +116,18 @@
 			"endpoint": [
 				{
 					"id": "8974623056",
-					"href": "/resourceInventoryManagement/v3/resource/8974623056",
+					"href": "/resourceInventoryManagement/v4/resource/8974623056",
 					"name": "SubNetwork=2,Link_MME_ServingGW=1",
 					"@referredType": "Link_MME_ServingGW"
 				},
 				{
 					"id": "6874523911",
-					"href": "/resourceInventoryManagement/v3/resource/6874523911",
+					"href": "/resourceInventoryManagement/v4/resource/6874523911",
 					"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1",
 					"@referredType": "ServingGWFunction",
 					"connectionPoint": {
 						"id": "7894623153",
-						"href": "/resourceInventoryManagement/v3/resource/7894623153",
+						"href": "/resourceInventoryManagement/v4/resource/7894623153",
 						"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
 						"@referredType": "EP_RP_EPS"
 					}

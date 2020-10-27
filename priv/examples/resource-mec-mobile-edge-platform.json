@@ -1,6 +1,6 @@
 {
 	"id": "6798452932",
-	"href": "/resourceInventoryManagement/v3/resource/6798452932",
+	"href": "/resourceInventoryManagement/v4/resource/6798452932",
 	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1",
 	"description": "MEC Mobile Edge Platform",
 	"category": "MEC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "MobileEdgePlatform",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MobileEdgePlatform",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/MobileEdgePlatform",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789215638",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215638",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/789215638",
 		"@type": "MobileEdgePlatformSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "7894653025",
-				"href": "/resourceInventoryManagement/v3/resource/7894653025",
+				"href": "/resourceInventoryManagement/v4/resource/7894653025",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1",
 				"@referredType": "MobileEdgePlatformService"
 			},

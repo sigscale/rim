@@ -1,6 +1,6 @@
 {
 	"id": "6974362835",
-	"href": "/resourceInventoryManagement/v3/resource/6974362835",
+	"href": "/resourceInventoryManagement/v4/resource/6974362835",
 	"name": "SubNetwork=4,ManagedElement=1,PGWFunction=1",
 	"description": "EPC PDN Gateway (PGW)",
 	"category": "EPC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "PGWFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/PGWFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/PGWFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362857",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362857",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362857",
 		"@type": "PGWFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -36,7 +36,7 @@
 		{
 			"resource": {
 				"id": "6974362836",
-				"href": "/resourceInventoryManagement/v3/resource/6974362836",
+				"href": "/resourceInventoryManagement/v4/resource/6974362836",
 				"name": "SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},
@@ -47,7 +47,7 @@
 		{
 			"resourceRef": {
 				"id": "6974362836",
-				"href": "/resourceInventoryManagement/v3/resource/6974362836",
+				"href": "/resourceInventoryManagement/v4/resource/6974362836",
 				"name": "SubNetwork=4,ManagedElement=1,PGWFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},

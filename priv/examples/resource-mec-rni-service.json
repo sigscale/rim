@@ -1,6 +1,6 @@
 {
 	"id": "6798452938",
-	"href": "/resourceInventoryManagement/v3/resource/6798452938",
+	"href": "/resourceInventoryManagement/v4/resource/6798452938",
 	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,RNIService=1",
 	"description": "MEC Radio Network Information (RNI) Service",
 	"category": "MEC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "RNIService",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/RNIService",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/RNIService",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789215632",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215632",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/789215632",
 		"@type": "RNIServiceSpec"
 	},
 	"resourceCharacteristic": [
