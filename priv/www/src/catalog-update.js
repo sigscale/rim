@@ -167,14 +167,14 @@ class catalogUpdate extends PolymerElement {
 	_delete() {
 		var ajax = this.$.catalogDeleteAjax;
 		ajax.method = "DELETE";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogId.value;
+		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.catalogId;
 		ajax.generateRequest();
 	}
 
 	_update() {
 		var ajax = this.$.catalogUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.$.catalogId.value;
+		ajax.url = "/resourceCatalogManagement/v3/resourceCatalog/" + this.catalogId;
 		var cat = new Object();
 		if(this.catalogId) {
 			cat.id= this.catalogId;

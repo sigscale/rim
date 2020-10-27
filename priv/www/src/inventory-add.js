@@ -32,7 +32,7 @@ class inventoryAdd extends PolymerElement {
 					disabled="{{!loading}}">
 			</paper-progress>
 			<paper-textarea
-					label="Description"
+					label="Name"
 					value="{{inventoryName}}">
 			</paper-textarea>
 			<paper-input
