@@ -34,13 +34,13 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468083",
 				"href": "/resourceInventoryManagement/v3/resource/3597468083",
 				"name": "SubNetwork=12,ManagedElement=1,NGEIRFunction=1,EP_N17=1",
 				"@referredType": "EP_N17"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"sap": [

@@ -34,13 +34,13 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894653025",
 				"href": "/resourceInventoryManagement/v3/resource/7894653025",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1",
 				"@referredType": "MobileEdgePlatformService"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"connectivity": []

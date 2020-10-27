@@ -50,31 +50,31 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8597462917",
 				"href": "/resourceInventoryManagement/v3/resource/8597462917",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
 				"@referredType": "TmaInventoryUnit"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7597462917",
 				"href": "/resourceInventoryManagement/v3/resource/7597462917",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
 				"@referredType": "AntennaInventoryUnit"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7600371350",
 				"href": "/resourceInventoryManagement/v3/resource/7600371350",
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
 				"@referredType": "AntennaInventoryUnit"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
 			"resourceRef": {
@@ -83,7 +83,7 @@
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",
 				"@referredType": "AntennaInventoryUnit"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

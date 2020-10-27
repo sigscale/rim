@@ -42,49 +42,49 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "6874523911",
 				"href": "/resourceInventoryManagement/v3/resource/6874523911",
 				"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1",
 				"@referredType": "ServingGWFunction"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "6874523913",
 				"href": "/resourceInventoryManagement/v3/resource/6874523913",
 				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1",
 				"@referredType": "MMEFunction"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894623152",
 				"href": "/resourceInventoryManagement/v3/resource/7894623152",
 				"name": "SubNetwork=2,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894623154",
 				"href": "/resourceInventoryManagement/v3/resource/7894623154",
 				"name": "SubNetwork=2,ManagedElement=1,ServingGWFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8974623056",
 				"href": "/resourceInventoryManagement/v3/resource/8974623056",
 				"name": "SubNetwork=2,Link_MME_ServingGW=1",
 				"@referredType": "Link_MME_ServingGW"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"connectivity": [

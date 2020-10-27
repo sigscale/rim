@@ -481,6 +481,9 @@ attachment([], _, Acc) ->
 	when
 		ResourceRelationship :: [resource_rel()] | [map()].
 %% @doc CODEC for `ResourceRelationship'.
+%%
+%% Internally we condense `ResourceRefOrValue' with one record.
+%%
 resource_rel([#resource_rel{} | _] = List) ->
 	Fields = record_info(fields, resource_rel),
 	[resource_rel(Fields, R, #{}) || R <- List];
@@ -508,38 +511,18 @@ resource_rel([name | T], #resource_rel{name = Name} = R, Acc)
 resource_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	resource_rel(T, M, Acc#resource_rel{name = Name});
-resource_rel([type | T], #resource_rel{type = Type} = R, Acc)
-		when is_list(Type) ->
-	resource_rel(T, R, Acc#{"type" => Type});
-resource_rel([type | T], #{"type" := Type} = M, Acc)
-		when is_list(Type) ->
-	resource_rel(T, M, Acc#resource_rel{type = Type});
-resource_rel([referred_type | T],
-		#resource_rel{referred_type = RefType} = R, Acc) when is_list(RefType) ->
+resource_rel([rel_type | T], #resource_rel{rel_type = RelType} = R, Acc)
+		when is_list(RelType) ->
+	resource_rel(T, R, Acc#{"relationshipType" => RelType});
+resource_rel([rel_type | T], #{"relationshipType" := RelType} = M, Acc)
+		when is_list(RelType) ->
+	resource_rel(T, M, Acc#resource_rel{rel_type = RelType});
+resource_rel([ref_type | T],
+		#resource_rel{ref_type = RefType} = R, Acc) when is_list(RefType) ->
 	resource_rel(T, R, Acc#{"@referredType" => RefType});
-resource_rel([referred_type | T], #{"@referredType" := RefType} = M, Acc)
+resource_rel([ref_type | T], #{"@referredType" := RefType} = M, Acc)
 		when is_list(RefType) ->
-	resource_rel(T, M, Acc#resource_rel{referred_type = RefType});
-resource_rel([start_date | T], #resource_rel{start_date = StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	resource_rel(T, R, Acc#{"validFor" => ValidFor});
-resource_rel([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
-		when is_list(Start) ->
-	resource_rel(T, M, Acc#resource_rel{start_date = im_rest:iso8601(Start)});
-resource_rel([end_date | T], #resource_rel{end_date = End} = R,
-		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
-	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	resource_rel(T, R, Acc#{"validFor" := NewValidFor});
-resource_rel([end_date | T], #resource_rel{end_date = End} = R, Acc)
-		when is_integer(End) ->
-	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	resource_rel(T, R, Acc#{"validFor" := ValidFor});
-resource_rel([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
-		when is_list(End) ->
-	resource_rel(T, M, Acc#resource_rel{end_date = im_rest:iso8601(End)});
+	resource_rel(T, M, Acc#resource_rel{ref_type = RefType});
 resource_rel([_ | T], R, Acc) ->
 	resource_rel(T, R, Acc);
 resource_rel([], _, Acc) ->

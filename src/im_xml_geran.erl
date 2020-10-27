@@ -231,8 +231,8 @@ parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 			related = CellRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			BtsRel = #resource_rel{id = Id, name = BtsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			BtsRel = #resource_rel{id = Id, name = BtsDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GeranState#geran_state{
 			btss = [BtsRel | BtsRels]}, spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
@@ -349,8 +349,8 @@ parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 			characteristic = lists:reverse([VsData, PeeParam | GsmCellAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			GsmCellRel = #resource_rel{id = Id, name = CellDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			GsmCellRel = #resource_rel{id = Id, name = CellDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = GeranState#geran_state{cells
 					= [GsmCellRel | GsmCellRels]}} | T1];

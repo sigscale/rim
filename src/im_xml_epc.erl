@@ -438,8 +438,8 @@ parse_eprpeps({endElement, _Uri, "EP_RP_EPS", QName},
 			characteristic = EpRpEpsAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			EpRpEpsRel = #resource_rel{id = Id, name = EpRpEpsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpRpEpsRel = #resource_rel{id = Id, name = EpRpEpsDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#epc_state{ep_rp_epss = EpRpEpsRels} ->
 					[PrevState#state{parse_state = PrevParseState#epc_state{

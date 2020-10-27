@@ -34,22 +34,22 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468047",
 				"href": "/resourceInventoryManagement/v3/resource/3597468047",
 				"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N2=1",
 				"@referredType": "EP_N2"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468048",
 				"href": "/resourceInventoryManagement/v3/resource/3597468048",
 				"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N3=1",
 				"@referredType": "EP_N3"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"sap": [

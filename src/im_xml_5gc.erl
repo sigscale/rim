@@ -1686,8 +1686,8 @@ parse_ep_n2({endElement, _Uri, "EP_N2", QName},
 			characteristic = EpN2Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN2Rel = #resource_rel{id = Id, name = EpN2Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN2Rel = #resource_rel{id = Id, name = EpN2Dn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n2s = [EpN2Rel | EpN2Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1724,8 +1724,8 @@ parse_ep_n3({endElement, _Uri, "EP_N3", QName},
 			characteristic = EpN3Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN3Rel = #resource_rel{id = Id, name = EpN3Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN3Rel = #resource_rel{id = Id, name = EpN3Dn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n3s = [EpN3Rel | EpN3Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1762,8 +1762,9 @@ parse_ep_n4({endElement, _Uri, "EP_N4", QName},
 			characteristic = EpN4Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN4Rel = #resource_rel{id = Id, name = EpN4Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN4Rel = #resource_rel{id = Id, name = EpN4Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n4s = [EpN4Rel | EpN4Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1799,8 +1800,9 @@ parse_ep_n5({endElement, _Uri, "EP_N5", QName},
 			characteristic = EpN5Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN5Rel = #resource_rel{id = Id, name = EpN5Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN5Rel = #resource_rel{id = Id, name = EpN5Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n5s = [EpN5Rel | EpN5Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1836,8 +1838,9 @@ parse_ep_n6({endElement, _Uri, "EP_N6", QName},
 			characteristic = EpN6Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN6Rel = #resource_rel{id = Id, name = EpN6Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN6Rel = #resource_rel{id = Id, name = EpN6Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n6s = [EpN6Rel | EpN6Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1874,8 +1877,9 @@ parse_ep_n7({endElement, _Uri, "EP_N7", QName},
 			characteristic = EpN7Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN7Rel = #resource_rel{id = Id, name = EpN7Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN7Rel = #resource_rel{id = Id, name = EpN7Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n7s = [EpN7Rel | EpN7Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1911,8 +1915,9 @@ parse_ep_n8({endElement, _Uri, "EP_N8", QName},
 			characteristic = EpN8Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN8Rel = #resource_rel{id = Id, name = EpN8Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN8Rel = #resource_rel{id = Id, name = EpN8Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n8s = [EpN8Rel | EpN8Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1948,8 +1953,9 @@ parse_ep_n9({endElement, _Uri, "EP_N9", QName},
 			characteristic = EpN9Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN9Rel = #resource_rel{id = Id, name = EpN9Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN9Rel = #resource_rel{id = Id, name = EpN9Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n9s = [EpN9Rel | EpN9Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1986,8 +1992,9 @@ parse_ep_n10({endElement, _Uri, "EP_N10", QName},
 			characteristic = EpN10Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN10Rel = #resource_rel{id = Id, name = EpN10Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN10Rel = #resource_rel{id = Id, name = EpN10Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n10s = [EpN10Rel | EpN10Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2024,8 +2031,9 @@ parse_ep_n11({endElement, _Uri, "EP_N11", QName},
 			characteristic = EpN11Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN11Rel = #resource_rel{id = Id, name = EpN11Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN11Rel = #resource_rel{id = Id, name = EpN11Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n11s = [EpN11Rel | EpN11Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2062,8 +2070,9 @@ parse_ep_n12({endElement, _Uri, "EP_N12", QName},
 			characteristic = EpN12Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN12Rel = #resource_rel{id = Id, name = EpN12Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN12Rel = #resource_rel{id = Id, name = EpN12Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n12s = [EpN12Rel | EpN12Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2100,8 +2109,9 @@ parse_ep_n13({endElement, _Uri, "EP_N13", QName},
 			characteristic = EpN13Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN13Rel = #resource_rel{id = Id, name = EpN13Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN13Rel = #resource_rel{id = Id, name = EpN13Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n13s = [EpN13Rel | EpN13Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2137,8 +2147,9 @@ parse_ep_n14({endElement, _Uri, "EP_N14", QName},
 			characteristic = EpN14Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN14Rel = #resource_rel{id = Id, name = EpN14Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN14Rel = #resource_rel{id = Id, name = EpN14Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n14s = [EpN14Rel | EpN14Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2175,8 +2186,9 @@ parse_ep_n15({endElement, _Uri, "EP_N15", QName},
 			characteristic = EpN15Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN15Rel = #resource_rel{id = Id, name = EpN15Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN15Rel = #resource_rel{id = Id, name = EpN15Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n15s = [EpN15Rel | EpN15Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2212,8 +2224,9 @@ parse_ep_n16({endElement, _Uri, "EP_N16", QName},
 			characteristic = EpN16Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN16Rel = #resource_rel{id = Id, name = EpN16Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN16Rel = #resource_rel{id = Id, name = EpN16Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n16s = [EpN16Rel | EpN16Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2250,8 +2263,9 @@ parse_ep_n17({endElement, _Uri, "EP_N17", QName},
 			characteristic = EpN17Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN17Rel = #resource_rel{id = Id, name = EpN17Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN17Rel = #resource_rel{id = Id, name = EpN17Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n17s = [EpN17Rel | EpN17Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2288,8 +2302,9 @@ parse_ep_n20({endElement, _Uri, "EP_N20", QName},
 			characteristic = EpN20Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN20Rel = #resource_rel{id = Id, name = EpN20Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN20Rel = #resource_rel{id = Id, name = EpN20Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n20s = [EpN20Rel | EpN20Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2326,8 +2341,9 @@ parse_ep_n21({endElement, _Uri, "EP_N21", QName},
 			characteristic = EpN21Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN21Rel = #resource_rel{id = Id, name = EpN21Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN21Rel = #resource_rel{id = Id, name = EpN21Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n21s = [EpN21Rel | EpN21Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2364,8 +2380,9 @@ parse_ep_n22({endElement, _Uri, "EP_N22", QName},
 			characteristic = EpN22Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN22Rel = #resource_rel{id = Id, name = EpN22Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN22Rel = #resource_rel{id = Id, name = EpN22Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n22s = [EpN22Rel | EpN22Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2401,8 +2418,9 @@ parse_ep_n26({endElement, _Uri, "EP_N26", QName},
 			characteristic = EpN26Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN26Rel = #resource_rel{id = Id, name = EpN26Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN26Rel = #resource_rel{id = Id, name = EpN26Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#ngc_state{ep_n26s = EpN26Rels} ->
 					[PrevState#state{parse_state = PrevParseState#ngc_state{
@@ -2445,8 +2463,9 @@ parse_ep_n27({endElement, _Uri, "EP_N27", QName},
 			characteristic = EpN27Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN27Rel = #resource_rel{id = Id, name = EpN27Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN27Rel = #resource_rel{id = Id, name = EpN27Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n27s = [EpN27Rel | EpN27Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2482,8 +2501,9 @@ parse_ep_n31({endElement, _Uri, "EP_N31", QName},
 			characteristic = EpN31Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN31Rel = #resource_rel{id = Id, name = EpN31Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN31Rel = #resource_rel{id = Id, name = EpN31Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n31s = [EpN31Rel | EpN31Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2519,8 +2539,9 @@ parse_ep_n32({endElement, _Uri, "EP_N32", QName},
 			characteristic = EpN32Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpN32Rel = #resource_rel{id = Id, name = EpN32Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpN32Rel = #resource_rel{id = Id, name = EpN32Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_n32s = [EpN32Rel | EpN32Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2557,8 +2578,9 @@ parse_ep_nls({endElement, _Uri, "EP_NLS", QName},
 			characteristic = EpNlsAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpNlsRel = #resource_rel{id = Id, name = EpNlsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpNlsRel = #resource_rel{id = Id, name = EpNlsDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_nlss = [EpNlsRel | EpNlsRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2595,8 +2617,9 @@ parse_ep_nlg({endElement, _Uri, "EP_NLG", QName},
 			characteristic = EpNlgAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpNlgRel = #resource_rel{id = Id, name = EpNlgDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpNlgRel = #resource_rel{id = Id, name = EpNlgDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_nlgs = [EpNlgRel | EpNlgRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2633,8 +2656,9 @@ parse_ep_sbi_x({endElement, _Uri, "EP_SBI_X", QName},
 			characteristic = EpSbiXAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpSbiXRel = #resource_rel{id = Id, name = EpSbiXDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpSbiXRel = #resource_rel{id = Id, name = EpSbiXDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_sbi_xs = [EpSbiXRel | EpSbiXRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2672,7 +2696,7 @@ parse_ep_sbi_ipx({endElement, _Uri, "EP_SBI_IPX", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			EpSbiIpxRel = #resource_rel{id = Id, name = EpSbiIpxDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_sbi_ipxs = [EpSbiIpxRel | EpSbiIpxRels]},
@@ -2709,8 +2733,9 @@ parse_ep_s5c({endElement, _Uri, "EP_S5C", QName},
 			characteristic = EpS5cAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpS5cRel = #resource_rel{id = Id, name = EpS5cDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpS5cRel = #resource_rel{id = Id, name = EpS5cDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_s5cs = [EpS5cRel | EpS5cRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2746,8 +2771,9 @@ parse_ep_s5u({endElement, _Uri, "EP_S5U", QName},
 			characteristic = EpS5uAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpS5uRel = #resource_rel{id = Id, name = EpS5uDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpS5uRel = #resource_rel{id = Id, name = EpS5uDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_s5us = [EpS5uRel | EpS5uRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2783,8 +2809,9 @@ parse_ep_rx({endElement, _Uri, "EP_Rx", QName},
 			characteristic = EpRxAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpRxRel = #resource_rel{id = Id, name = EpRxDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpRxRel = #resource_rel{id = Id, name = EpRxDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_rxs = [EpRxRel | EpRxRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -2821,7 +2848,7 @@ parse_ep_map_smsc({endElement, _Uri, "EP_MAP_SMSC", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			EpMapSmscRel = #resource_rel{id = Id, name = EpMapSmscDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NgcState#ngc_state{
 					ep_map_smscs = [EpMapSmscRel | EpMapSmscRels]},

@@ -191,7 +191,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = SubNetworkId}} ->
 			FConnectivity = fun F([#resource_rel{id = LinkId, name = LinkDn,
-					href = LinkHref, referred_type = LinkRefType} | T3], Acc) ->
+					href = LinkHref, ref_type = LinkRefType} | T3], Acc) ->
 						LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
 								href = LinkHref, referred_type = LinkRefType},
 						case im:get_resource(LinkId) of
@@ -333,8 +333,8 @@ parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 			characteristic = LinkMmeSgwAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			LinkMmeSgwRel = #resource_rel{id = Id, name = LinkMmeSgwDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			LinkMmeSgwRel = #resource_rel{id = Id, name = LinkMmeSgwDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkMmeSgwRel | LinkRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -371,7 +371,7 @@ parse_link_mme_mme({endElement, _Uri, "Link_MME_MME", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkMmeMmeRel = #resource_rel{id = Id, name = LinkMmeMmeDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkMmeMmeRel | LinkRels]},
@@ -409,7 +409,7 @@ parse_link_mme_sgsn({endElement, _Uri, "Link_MME_SGSN", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkMmeSgsnRel = #resource_rel{id = Id, name = LinkMmeSgsnDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkMmeSgsnRel | LinkRels]},
@@ -447,7 +447,7 @@ parse_link_hss_mme({endElement, _Uri, "Link_HSS_MME", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkHssMmeRel = #resource_rel{id = Id, name = LinkHssMmeDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkHssMmeRel | LinkRels]},
@@ -485,7 +485,7 @@ parse_link_enb_mme({endElement, _Uri, "Link_ENB_MME", QName},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkEnbMmeRel = #resource_rel{id = Id, name = LinkEnbMmeDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkEnbMmeRel | LinkRels]},
@@ -1164,7 +1164,7 @@ parse_resource_rel(ResourceRel) ->
 	parse_resource_rel(ResourceRel, []).
 % @hidden
 parse_resource_rel([#resource_rel{id = Id, name = Dn, href = Href,
-		referred_type = RefType} | T], Acc) ->
+		ref_type = RefType} | T], Acc) ->
 	ConnectionPoint = #connection_point{id = Id, href = Href, name = Dn,
 			type = RefType},
 	parse_resource_rel(T, [ConnectionPoint | Acc]);

@@ -38,40 +38,40 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894653021",
 				"href": "/resourceInventoryManagement/v3/resource/7894653021",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1",
 				"@referredType": "MobileEdgePlatform"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894653022",
 				"href": "/resourceInventoryManagement/v3/resource/7894653022",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgeApplication=1",
 				"@referredType": "MobileEdgeApplication"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894653023",
 				"href": "/resourceInventoryManagement/v3/resource/7894653022",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,TrafficRule=1",
 				"@referredType": "TrafficRule"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7894653024",
 				"href": "/resourceInventoryManagement/v3/resource/7894653024",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,DNSRule=1",
 				"@referredType": "DNSRule"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"connectivity": []

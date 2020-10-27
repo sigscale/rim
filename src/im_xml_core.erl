@@ -189,8 +189,8 @@ parse_iucs({endElement, _Uri, "IucsLink", QName},
 			characteristic = IucsAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			IucsRel = #resource_rel{id = Id, name = IucsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IucsRel = #resource_rel{id = Id, name = IucsDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{iucs_links
 					= [IucsRel | IucsRels]}} | T1];
@@ -235,8 +235,8 @@ parse_alink({endElement, _Uri, "ALink", QName},
 			characteristic = ALinkAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			ALinkRel = #resource_rel{id = Id, name = ALinkDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			ALinkRel = #resource_rel{id = Id, name = ALinkDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{a_links
 					= [ALinkRel| ALinkRels]}} | T1];
@@ -565,8 +565,8 @@ parse_iups({endElement, _Uri, "IupsLink", QName},
 			characteristic = IupsAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			IupsRel = #resource_rel{id = Id, name = IupsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IupsRel = #resource_rel{id = Id, name = IupsDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{iups_links
 					= [IupsRel | IupsRels]}} | T1];
@@ -611,8 +611,8 @@ parse_gb_link({endElement, _Uri, "GbLink", QName},
 			characteristic = GbLinkAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			GbLinkRel = #resource_rel{id = Id, name = GbLinkDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			GbLinkRel = #resource_rel{id = Id, name = GbLinkDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{gb_links
 					= [GbLinkRel| GbLinkRels]}} | T1];
@@ -1119,8 +1119,8 @@ parse_iubc({endElement, _Uri, "IubcLink", QName},
 			characteristic = IubcAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			IubcRel = #resource_rel{id = Id, name = IubcDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IubcRel = #resource_rel{id = Id, name = IubcDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{iubc_links
 					= [IubcRel | IubcRels]}} | T1];

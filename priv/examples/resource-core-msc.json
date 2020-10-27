@@ -42,22 +42,22 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "6974362502",
 				"href": "/resourceInventoryManagement/v3/resource/6974362502",
 				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,IucsLink=1",
 				"@referredType": "IucsLink"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "6974362505",
 				"href": "/resourceInventoryManagement/v3/resource/6974362505",
 				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,ALink=1",
 				"@referredType": "ALink"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

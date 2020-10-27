@@ -24,40 +24,40 @@
 	},
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "ca546f3485c8",
 				"href": "/resourceInventoryManagement/v4/resource/ca546f3485c8",
 				"name": "Component Catalog",
 				"@referredType": "ResourceFunction"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "f65b562c0791",
 				"href": "/resourceInventoryManagement/v4/resource/f65b562c0791",
 				"name": "Component Inventory",
 				"@referredType": "ResourceFunction"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "7afe4da36289",
 				"href": "/resourceInventoryManagement/v4/resource/7afe4da36289",
 				"name": "Component Catalog API",
 				"@referredType": "API"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "243db7f6e71b",
 				"href": "/resourceInventoryManagement/v4/resource/243db7f6e71b",
 				"name": "Component Inventory API",
 				"@referredType": "API"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"resourceCharacteristic": []

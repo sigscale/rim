@@ -35,13 +35,13 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8794832001",
 				"href": "/resourceInventoryManagement/v3/resource/8794832001",
 				"name": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1",
 				"@referredType": "BtsSiteMgr"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

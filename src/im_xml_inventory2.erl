@@ -61,7 +61,8 @@ parse_ne({endElement, _Uri, "InventoryUnitNE", QName},
 			related = Nes},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			NERel = #resource_rel{id = Id, name = NEDn, type = "contains",
+			NERel = #resource_rel{id = Id, name = NEDn,
+					rel_type = "contains", ref_type = ClassType,
 					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_nes = [NERel | NERels]}} | T1];
@@ -186,7 +187,8 @@ parse_hw({endElement, _Uri, "InventoryUnitHw", QName},
 			related = Hws},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			HwRel = #resource_rel{id = Id, name = HwDn, type = "contains",
+			HwRel = #resource_rel{id = Id, name = HwDn,
+					rel_type = "contains", ref_type = ClassType,
 					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_hws = [HwRel | HwRels]}} | T1];
@@ -320,7 +322,8 @@ parse_sw({endElement, _Uri, "InventoryUnitSw", QName},
 			related = Sws},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			SwRel = #resource_rel{id = Id, name = SwDn, type = "contains",
+			SwRel = #resource_rel{id = Id, name = SwDn,
+					rel_type = "contains", ref_type = ClassType,
 					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_sws = [SwRel | SwRels]}} | T1];
@@ -448,7 +451,8 @@ parse_lic({endElement, _Uri, "InventoryUnitLic", QName},
 			related = Lics},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			LicRel = #resource_rel{id = Id, name = LicDn, type = "contains",
+			LicRel = #resource_rel{id = Id, name = LicDn,
+					rel_type = "contains", ref_type = ClassType,
 					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_lics = [LicRel | LicRels]}} | T1];

@@ -310,8 +310,8 @@ parse_fdd({endElement, _Uri, "EUtranCellFDD", QName},
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			FddRel = #resource_rel{id = Id, name = FddDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = EUtranState#eutran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -539,8 +539,8 @@ parse_tdd({endElement, _Uri, "EUtranCellTDD", QName},
 			characteristic = [PeeParam | TddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			TddRel = #resource_rel{id = Id, name = TddDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			TddRel = #resource_rel{id = Id, name = TddDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = EUtranState#eutran_state{tdds = [TddRel | TddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
