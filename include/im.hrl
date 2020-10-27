@@ -250,15 +250,13 @@
 -record(connectivity_spec,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		endpoint = [] :: [endpoint_spec()] | '_',
-		min_items :: pos_integer() | undefined | '_'}).
+		endpoint = [] :: [endpoint_spec()] | '_'}).
 -type connectivity_spec() :: #connectivity_spec{}.
 
 -record(connectivity,
 		{name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		endpoint = [] :: [endpoint()] | '_',
-		min_items :: pos_integer() | undefined | '_'}).
+		endpoint = [] :: [endpoint()] | '_'}).
 -type connectivity() :: #connectivity{}.
 
 -record(endpoint_spec,

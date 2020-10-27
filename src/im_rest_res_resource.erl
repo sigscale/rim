@@ -576,12 +576,6 @@ connectivity_spec([endpoint | T], #connectivity_spec{endpoint = Endpoints} = R, 
 connectivity_spec([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
 		when is_list(Endpoints) ->
 	connectivity_spec(T, M, Acc#connectivity_spec{endpoint = point_spec(Endpoints)});
-connectivity_spec([min_items | T], #connectivity_spec{min_items = MinItems} = R, Acc)
-		when is_integer(MinItems) ->
-	connectivity_spec(T, R, Acc#{"minItems" => MinItems});
-connectivity_spec([min_items | T], #{"minItems" := MinItems} = M, Acc)
-		when is_integer(MinItems) ->
-	connectivity_spec(T, M, Acc#connectivity_spec{min_items = MinItems});
 connectivity_spec([_ | T], R, Acc) ->
 	connectivity_spec(T, R, Acc);
 connectivity_spec([], _, Acc) ->
@@ -618,12 +612,6 @@ connectivity([endpoint | T], #connectivity{endpoint = Endpoints} = R, Acc)
 connectivity([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
 		when is_list(Endpoints) ->
 	connectivity(T, M, Acc#connectivity{endpoint = point(Endpoints)});
-connectivity([min_items | T], #connectivity{min_items = MinItems} = R, Acc)
-		when is_integer(MinItems) ->
-	connectivity(T, R, Acc#{"minItems" => MinItems});
-connectivity([min_items | T], #{"minItems" := MinItems} = M, Acc)
-		when is_integer(MinItems) ->
-	connectivity(T, M, Acc#connectivity{min_items = MinItems});
 connectivity([_ | T], R, Acc) ->
 	connectivity(T, R, Acc);
 connectivity([], _, Acc) ->
