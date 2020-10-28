@@ -689,12 +689,12 @@ point([name | T], #endpoint{name = Name} = R, Acc)
 point([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	point(T, M, Acc#endpoint{name = Name});
-point([referred_type | T], #endpoint{referred_type = RefType} = R, Acc)
+point([ref_type | T], #endpoint{ref_type = RefType} = R, Acc)
 		when is_list(RefType) ->
 	point(T, R, Acc#{"@referredType" => RefType});
 point([name | T], #{"@referredType" := RefType} = M, Acc)
 		when is_list(RefType) ->
-	point(T, M, Acc#endpoint{referred_type = RefType});
+	point(T, M, Acc#endpoint{ref_type = RefType});
 point([is_root | T], #endpoint{is_root = IsRoot} = R, Acc)
 		when is_boolean(IsRoot) ->
 	point(T, R, Acc#{"isRoot" => IsRoot});

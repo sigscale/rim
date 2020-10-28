@@ -271,7 +271,7 @@
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
-		referred_type :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_',
 		connection_point = [] :: [connection_point()] | '_'}).
 -type endpoint() :: #endpoint{}.
 

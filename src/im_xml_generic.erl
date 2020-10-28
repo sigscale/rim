@@ -194,7 +194,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 			FConnectivity = fun F([#resource_rel{id = LinkId, name = LinkDn,
 					href = LinkHref, ref_type = LinkRefType} | T3], Acc) ->
 						LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
-								href = LinkHref, referred_type = LinkRefType},
+								href = LinkHref, ref_type = LinkRefType},
 						case im:get_resource(LinkId) of
 							{ok, #resource{characteristic = LinkChars}} ->
 								FaEnd = fun (#resource_char{name = "aEnd"}) ->
@@ -252,7 +252,7 @@ build_function_endpoint(EndDn) ->
 		{ok, #resource{id = EndId, class_type = EndType,
 				connection_point = EndPoints}} ->
 			#endpoint{id = EndId, href = ?ResourcePath ++ EndId,
-					name = EndDn, referred_type = EndType,
+					name = EndDn, ref_type = EndType,
 					connection_point = parse_resource_rel(EndPoints)};
 		{error, Reason} ->
 			{error, Reason}
