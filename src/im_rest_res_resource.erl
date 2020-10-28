@@ -577,6 +577,12 @@ connectivity([#{} | _] = List) ->
 connectivity([]) ->
 	[].
 %% @hidden
+connectivity([id | T], #connectivity{id = Id} = R, Acc)
+		when is_list(Id) ->
+	connectivity(T, R, Acc#{"id" => Id});
+connectivity([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	connectivity(T, M, Acc#connectivity{id = Id});
 connectivity([name | T], #connectivity{name = Name} = R, Acc)
 		when is_list(Name) ->
 	connectivity(T, R, Acc#{"name" => Name});

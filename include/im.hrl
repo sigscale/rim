@@ -252,7 +252,8 @@
 -type connectivity_spec() :: #connectivity_spec{}.
 
 -record(connectivity,
-		{name :: string() | undefined | '_',
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
 		type :: string() | undefined | '_',
 		endpoint = [] :: [endpoint()] | '_'}).
 -type connectivity() :: #connectivity{}.
