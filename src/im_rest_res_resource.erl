@@ -462,8 +462,8 @@ attachment([description | T], #{"description" := Description} = M, Acc)
 	attachment(T, M, Acc#attachment{description = Description});
 attachment([type | T], #attachment{type = Type} = R, Acc)
 		when is_list(Type) ->
-	attachment(T, R, Acc#{"type" => Type});
-attachment([type | T], #{"type" := Type} = M, Acc)
+	attachment(T, R, Acc#{"attachmentType" => Type});
+attachment([type | T], #{"attachmentType" := Type} = M, Acc)
 		when is_list(Type) ->
 	attachment(T, M, Acc#attachment{type = Type});
 attachment([url | T], #attachment{url = Url} = R, Acc)
