@@ -829,36 +829,36 @@ spec_char_rel([#{} | _] = List) ->
 spec_char_rel([]) ->
 	[].
 %% @hidden
-spec_char_rel([id | T], #{"id" := Id} = M, Acc)
+spec_char_rel([char_id | T], #spec_char_rel{char_id = Id} = M, Acc)
 		when is_list(Id) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{id = Id});
-spec_char_rel([id | T], #{"id" := Id} = M, Acc)
+	spec_char_rel(T, M, Acc#{"characteristicSpecificationId" => Id});
+spec_char_rel([char_id | T], #{"characteristicSpecificationId" := Id} = M, Acc)
 		when is_list(Id) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{id = Id});
-spec_char_rel([href | T], #spec_char_rel{href = Href} = R, Acc)
-		when is_list(Href) ->
-	spec_char_rel(T, R, Acc#{"href" => Href});
-spec_char_rel([href | T], #{"href" := Href} = M, Acc)
-		when is_list(Href) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{href = Href});
+	spec_char_rel(T, M, Acc#spec_char_rel{char_id = Id});
 spec_char_rel([name | T], #spec_char_rel{name = Name} = R, Acc)
 		when is_list(Name) ->
 	spec_char_rel(T, R, Acc#{"name" => Name});
 spec_char_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{name = Name});
-spec_char_rel([type | T], #spec_char_rel{type = Type} = R, Acc)
-		when is_list(Type) ->
-	spec_char_rel(T, R, Acc#{"type" => Type});
-spec_char_rel([type | T], #{"type" := Type} = M, Acc)
-		when is_list(Type) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{type = Type});
 spec_char_rel([class_type | T], #spec_char_rel{class_type = Type} = R, Acc)
 		when is_list(Type) ->
 	spec_char_rel(T, R, Acc#{"@type" => Type});
 spec_char_rel([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{class_type = Type});
+spec_char_rel([base_type | T], #spec_char_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, R, Acc#{"@baseType" => Type});
+spec_char_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{class_type = Type});
+spec_char_rel([schema | T], #spec_char_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	spec_char_rel(T, R, Acc#{"@schemaLocation" => Schema});
+spec_char_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{schema = Schema});
 spec_char_rel([start_date | T], #spec_char_rel{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
@@ -879,6 +879,24 @@ spec_char_rel([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{end_date = im_rest:iso8601(End)});
+spec_char_rel([rel_type | T], #spec_char_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, R, Acc#{"relationshipType" => Type});
+spec_char_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{rel_type = Type});
+spec_char_rel([res_id | T], #spec_char_rel{res_id = Id} = R, Acc)
+		when is_list(Id) ->
+	spec_char_rel(T, R, Acc#{"resacteristicSpecificationId" => Id});
+spec_char_rel([res_id | T], #{"resacteristicSpecificationId" := Id} = M, Acc)
+		when is_list(Id) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{res_id = Id});
+spec_char_rel([res_href | T], #spec_char_rel{res_href = Href} = R, Acc)
+		when is_list(Href) ->
+	spec_char_rel(T, R, Acc#{"resourceSpecificationHref" => Href});
+spec_char_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
+		when is_list(Href) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{res_href = Href});
 spec_char_rel([_ | T], R, Acc) ->
 	spec_char_rel(T, R, Acc);
 spec_char_rel([], _, Acc) ->

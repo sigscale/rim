@@ -54,13 +54,16 @@
 -type specification_rel() :: #specification_rel{}.
 
 -record(spec_char_rel,
-		{id :: string() | undefined | '_',
-		href :: string() | undefined | '_',
+		{char_id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		type :: string() | undefined | '_',
 		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
-		end_date :: pos_integer() | undefined | '_'}).
+		end_date :: pos_integer() | undefined | '_',
+		rel_type :: string() | undefined | '_',
+		res_id :: string() | undefined | '_',
+		res_href :: string() | undefined | '_'}).
 -type spec_char_rel() :: #spec_char_rel{}.
 
 -record(resource_rel,
