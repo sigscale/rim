@@ -661,6 +661,12 @@ specification_char([#{} | _] = List) ->
 specification_char([]) ->
 	[].
 %% @hidden
+specification_char([id | T], #specification_char{id = Id} = R, Acc)
+		when is_list(Id) ->
+	specification_char(T, R, Acc#{"id" => Id});
+specification_char([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	specification_char(T, M, Acc#specification_char{id = Id});
 specification_char([name | T], #specification_char{name = Name} = R, Acc)
 		when is_list(Name) ->
 	specification_char(T, R, Acc#{"name" => Name});
@@ -673,18 +679,18 @@ specification_char([description | T], #specification_char{description = Descript
 specification_char([description | T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	specification_char(T, M, Acc#specification_char{description = Description});
-specification_char([value_type | T], #specification_char{value_type = Type} = R, Acc)
-		when is_list(Type) ->
-	specification_char(T, R, Acc#{"valueType" => Type});
-specification_char([value_type | T], #{"valueType" := Type} = M, Acc)
-		when is_list(Type) ->
-	specification_char(T, M, Acc#specification_char{value_type = Type});
 specification_char([class_type | T], #specification_char{class_type = Type} = R, Acc)
 		when is_list(Type) ->
 	specification_char(T, R, Acc#{"@type" => Type});
 specification_char([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification_char(T, M, Acc#specification_char{class_type = Type});
+specification_char([base_type | T], #specification_char{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_char(T, R, Acc#{"@baseType" => Type});
+specification_char([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_char(T, M, Acc#specification_char{base_type = Type});
 specification_char([schema | T], #specification_char{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	specification_char(T, R, Acc#{"@schemaLocation" => Schema});
@@ -754,16 +760,22 @@ specification_char([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	specification_char(T, M, Acc#specification_char{end_date = im_rest:iso8601(End)});
-specification_char([char_relation | T],
-		#specification_char{char_relation = CharRels} = R, Acc)
+specification_char([related | T],
+		#specification_char{related = CharRels} = R, Acc)
 		when is_list(CharRels) ->
 	specification_char(T, R,
 			Acc#{"resourceSpecCharRelationship" => spec_char_rel(CharRels)});
-specification_char([char_relation | T],
+specification_char([related | T],
 		#{"resourceSpecCharRelationship" := CharRels} = M, Acc)
 		when is_list(CharRels) ->
 	specification_char(T, M,
-			Acc#specification_char{char_relation = spec_char_rel(CharRels)});
+			Acc#specification_char{related = spec_char_rel(CharRels)});
+specification_char([value_type | T], #specification_char{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_char(T, R, Acc#{"valueType" => Type});
+specification_char([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_char(T, M, Acc#specification_char{value_type = Type});
 specification_char([char_value | T],
 		#specification_char{char_value = CharVals} = R, Acc)
 		when is_list(CharVals) ->

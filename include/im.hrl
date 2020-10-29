@@ -205,21 +205,23 @@
 -type spec_char_value() :: #spec_char_value{}.
 
 -record(specification_char,
-		{name :: string() | undefined | '_',
+		{id :: string() | undefined | '_' ,
+		name :: string() | undefined | '_',
 		description :: string() | undefined | '_',
-		value_type :: string() | undefined | '_',
 		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
-		value_schema :: string() | undefined | '_',
-		configurable :: boolean() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
 		end_date :: pos_integer() | undefined | '_',
+		configurable :: boolean() | undefined | '_',
+		extensible :: boolean() | undefined | '_',
+		unique :: boolean() | undefined | '_',
 		min :: non_neg_integer() | undefined | '_',
 		max :: non_neg_integer() | undefined | '_',
-		unique :: boolean() | undefined | '_',
 		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
-		extensible :: boolean() | undefined | '_',
-		char_relation = [] :: [spec_char_rel()] | '_',
+		value_type :: string() | undefined | '_',
+		value_schema :: string() | undefined | '_',
+		related = [] :: [spec_char_rel()] | '_',
 		char_value = [] :: [spec_char_value()] | '_'}).
 -type specification_char() :: #specification_char{}.
 
