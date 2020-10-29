@@ -42,11 +42,15 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		type :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
 		rel_type :: string() | undefined | '_',
 		role :: string() | undefined | '_',
-		start_date :: pos_integer() | undefined | '_',
-		end_date :: pos_integer() | undefined | '_'}).
+		min :: non_neg_integer() | undefined | '_',
+		max :: non_neg_integer() | undefined | '_'}).
 -type specification_rel() :: #specification_rel{}.
 
 -record(spec_char_rel,

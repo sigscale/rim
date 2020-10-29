@@ -428,24 +428,24 @@ specification_rel([name | T], #specification_rel{name = Name} = R, Acc)
 specification_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	specification_rel(T, M, Acc#specification_rel{name = Name});
-specification_rel([type | T], #specification_rel{type = Type} = R, Acc)
+specification_rel([class_type | T], #specification_rel{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification_rel(T, R, Acc#{"type" => Type});
-specification_rel([type | T], #{"type" := Type} = M, Acc)
+	specification_rel(T, R, Acc#{"@type" => Type});
+specification_rel([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
-	specification_rel(T, M, Acc#specification_rel{type = Type});
-specification_rel([rel_type | T], #specification_rel{rel_type = Type} = R, Acc)
+	specification_rel(T, M, Acc#specification_rel{class_type = Type});
+specification_rel([base_type | T], #specification_rel{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification_rel(T, R, Acc#{"relationshipType" => Type});
-specification_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+	specification_rel(T, R, Acc#{"@baseType" => Type});
+specification_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
-	specification_rel(T, M, Acc#specification_rel{rel_type = Type});
-specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
-		when is_list(Role) ->
-	specification_rel(T, R, Acc#{"role" => Role});
-specification_rel([role | T], #{"role" := Role} = M, Acc)
-		when is_list(Role) ->
-	specification_rel(T, M, Acc#specification_rel{role = Role});
+	specification_rel(T, M, Acc#specification_rel{base_type = Type});
+specification_rel([schema | T], #specification_rel{schema = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_rel(T, R, Acc#{"@schemaLocation" => Type});
+specification_rel([schema | T], #{"@schemaLocation" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_rel(T, M, Acc#specification_rel{schema = Type});
 specification_rel([start_date | T], #specification_rel{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
@@ -465,6 +465,30 @@ specification_rel([end_date | T], #specification_rel{end_date = End} = R, Acc)
 specification_rel([end_date | T], #{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	specification_rel(T, M, Acc#specification_rel{end_date = im_rest:iso8601(End)});
+specification_rel([rel_type | T], #specification_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_rel(T, R, Acc#{"relationshipType" => Type});
+specification_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_rel(T, M, Acc#specification_rel{rel_type = Type});
+specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
+		when is_list(Role) ->
+	specification_rel(T, R, Acc#{"role" => Role});
+specification_rel([role | T], #{"role" := Role} = M, Acc)
+		when is_list(Role) ->
+	specification_rel(T, M, Acc#specification_rel{role = Role});
+specification_rel([min | T], #specification_rel{min = Min} = R, Acc)
+		when is_integer(Min), Min >= 0 ->
+	specification_rel(T, R, Acc#{"minimumQuantity" => Min});
+specification_rel([min | T], #{"minimumQuantity" := Min} = M, Acc)
+		when is_integer(Min), Min >= 0 ->
+	specification_rel(T, M, Acc#specification_rel{min = Min});
+specification_rel([max | T], #specification_rel{max = Max} = R, Acc)
+		when is_integer(Max), Max >= 0 ->
+	specification_rel(T, R, Acc#{"maximumQuantity" => Max});
+specification_rel([max | T], #{"maximumQuantity" := Max} = M, Acc)
+		when is_integer(Max), Max >= 0 ->
+	specification_rel(T, M, Acc#specification_rel{max = Max});
 specification_rel([_ | T], R, Acc) ->
 	specification_rel(T, R, Acc);
 specification_rel([], _, Acc) ->

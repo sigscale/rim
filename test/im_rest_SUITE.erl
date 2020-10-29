@@ -1091,7 +1091,7 @@ get_specification(Config) ->
 					href = PartyHref,
 					role = "Supplier",
 					name = "ACME Inc.",
-					type = Type,
+					class_type = Type,
 					start_date = 1548720000000,
 					end_date = 1577836740000}]},
 	{ok, #specification{id = Id, href = Href}} = im:add_specification(SpecificationRecord),
@@ -1956,7 +1956,7 @@ fill_related_ref(N, Acc) ->
 	Type = random_string(5),
 	Href = ?PathParty ++ "organization/" ++ Id,
 	Related = #specification_rel{id = Id, href = Href,
-			role = "Supplier", name = "ACME Inc.", type = Type,
+			role = "Supplier", name = "ACME Inc.", class_type = Type,
 	start_date = 1548720000000, end_date = 1577836740000},
 	fill_related_ref(N - 1, [Related | Acc]).
 

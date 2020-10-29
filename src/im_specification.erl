@@ -2151,10 +2151,11 @@ network_slice_subnet() ->
 			"EP_N15", "EP_N22"],
 	Fspecrel = fun(Name, Acc) ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Sid,
-						href = Shref, name = Sname, class_type = Stype}} ->
-					[#specification_rel{id = Sid, href = Shref, name = Sname,
-							type = Stype, rel_type = "contains"} | Acc];
+				{ok, #specification{id = Sid, href = Shref,
+						name = Sname, class_type = Stype}} ->
+					[#specification_rel{id = Sid, href = Shref,
+							name = Sname, class_type = Stype,
+							rel_type = "contains"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
