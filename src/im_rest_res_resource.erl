@@ -704,7 +704,7 @@ point([name | T], #{"name" := Name} = M, Acc)
 point([ref_type | T], #endpoint{ref_type = RefType} = R, Acc)
 		when is_list(RefType) ->
 	point(T, R, Acc#{"@referredType" => RefType});
-point([name | T], #{"@referredType" := RefType} = M, Acc)
+point([ref_type | T], #{"@referredType" := RefType} = M, Acc)
 		when is_list(RefType) ->
 	point(T, M, Acc#endpoint{ref_type = RefType});
 point([is_root | T], #endpoint{is_root = IsRoot} = R, Acc)
