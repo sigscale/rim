@@ -450,12 +450,36 @@ specification_ref([name | T], #specification_ref{name = Name} = R, Acc)
 specification_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	specification_ref(T, M, Acc#specification_ref{name = Name});
+specification_ref([class_type | T], #specification_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@type" => Type});
+specification_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{class_type = Type});
+specification_ref([base_type | T], #specification_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@baseType" => Type});
+specification_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{base_type = Type});
+specification_ref([schema | T], #specification_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	specification_ref(T, R, Acc#{"@schemaLocation" => Schema});
+specification_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	specification_ref(T, M, Acc#specification_ref{schema = Schema});
 specification_ref([version | T], #specification_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
 	specification_ref(T, R, Acc#{"version" => Version});
 specification_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	specification_ref(T, M, Acc#specification_ref{version = Version});
+specification_ref([ref_type | T], #specification_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@referredType" => Type});
+specification_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{ref_type = Type});
 specification_ref([_ | T], R, Acc) ->
 	specification_ref(T, R, Acc);
 specification_ref([], _, Acc) ->

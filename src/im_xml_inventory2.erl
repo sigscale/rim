@@ -588,10 +588,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})
