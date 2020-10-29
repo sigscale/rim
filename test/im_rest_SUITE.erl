@@ -1250,7 +1250,7 @@ resource_to_map(_Config) ->
 					endpoint = [#endpoint{id = "123", name = "Point name",
 						href = "http://35.229.193.25:8088/eventManagement/v1/event",
 						is_root = true,
-						connection_point = [#connection_point{id = "321",
+						connection_point = [#resource_rel{id = "321",
 							name = "Connection point",
 							href = "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}],
 			specification = #specification_ref{id = ResourceId,

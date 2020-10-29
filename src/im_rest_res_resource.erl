@@ -511,6 +511,12 @@ resource_rel([name | T], #resource_rel{name = Name} = R, Acc)
 resource_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	resource_rel(T, M, Acc#resource_rel{name = Name});
+resource_rel([version | T], #resource_rel{version = Version} = R, Acc)
+		when is_list(Version) ->
+	resource_rel(T, R, Acc#{"version" => Version});
+resource_rel([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	resource_rel(T, M, Acc#resource_rel{version = Version});
 resource_rel([rel_type | T], #resource_rel{rel_type = RelType} = R, Acc)
 		when is_list(RelType) ->
 	resource_rel(T, R, Acc#{"relationshipType" => RelType});
@@ -709,10 +715,10 @@ point([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 	point(T, M, Acc#endpoint{is_root = IsRoot});
 point([connection_point | T], #endpoint{connection_point = ConnectionPoint} = R, Acc)
 		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
-	point(T, R, Acc#{"connectionPoint" => connection_point(ConnectionPoint)});
+	point(T, R, Acc#{"connectionPoint" => resource_rel(ConnectionPoint)});
 point([connection_point | T], #{"connectionPoint" := ConnectionPoint} = M, Acc)
 		when is_list(ConnectionPoint), length(ConnectionPoint) > 0 ->
-	point(T, M, Acc#endpoint{connection_point = connection_point(ConnectionPoint)});
+	point(T, M, Acc#endpoint{connection_point = resource_rel(ConnectionPoint)});
 point([_ | T], R, Acc) ->
 	point(T, R, Acc);
 point([], _, Acc) ->
@@ -758,48 +764,6 @@ connection_point_spec([type | T], #{"type" := Type} = M, Acc)
 connection_point_spec([_ | T], R, Acc) ->
 	connection_point_spec(T, R, Acc);
 connection_point_spec([], _, Acc) ->
-	Acc.
-
--spec connection_point(ConPoint) -> ConPoint
-	when
-		ConPoint :: [connection_point()] | [map()].
-%% @doc CODEC for `ConnectionPoint'.
-connection_point([#connection_point{} | _] = List) ->
-	Fields = record_info(fields, connection_point),
-	[connection_point(Fields, R, #{}) || R <- List];
-connection_point([#{} | _] = List) ->
-	Fields = record_info(fields, connection_point),
-	[connection_point(Fields, M, #connection_point{}) || M <- List];
-connection_point([]) ->
-	[].
-%% @hidden
-connection_point([href| T], #connection_point{href = Href} = R, Acc)
-		when is_list(Href) ->
-	connection_point(T, R, Acc#{"href" => Href});
-connection_point([href | T], #{"href" := Href} = M, Acc)
-		when is_list(Href) ->
-	connection_point(T, M, Acc#connection_point{href = Href});
-connection_point([id | T], #connection_point{id = Id} = R, Acc)
-		when is_list(Id) ->
-	connection_point(T, R, Acc#{"id" => Id});
-connection_point([id | T], #{"id" := Id} = M, Acc)
-		when is_list(Id) ->
-	connection_point(T, M, Acc#connection_point{id = Id});
-connection_point([name | T], #connection_point{name = Name} = R, Acc)
-		when is_list(Name) ->
-	connection_point(T, R, Acc#{"name" => Name});
-connection_point([name | T], #{"name" := Name} = M, Acc)
-		when is_list(Name) ->
-	connection_point(T, M, Acc#connection_point{name = Name});
-connection_point([type | T], #connection_point{type = Type} = R, Acc)
-		when is_list(Type) ->
-	connection_point(T, R, Acc#{"type" => Type});
-connection_point([type | T], #{"type" := Type} = M, Acc)
-		when is_list(Type) ->
-	connection_point(T, M, Acc#connection_point{type = Type});
-connection_point([_ | T], R, Acc) ->
-	connection_point(T, R, Acc);
-connection_point([], _, Acc) ->
 	Acc.
 
 -spec resource_char(ResourceCharacteristic) -> ResourceCharacteristic

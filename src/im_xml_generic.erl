@@ -253,7 +253,7 @@ build_function_endpoint(EndDn) ->
 				connection_point = EndPoints}} ->
 			#endpoint{id = EndId, href = ?ResourcePath ++ EndId,
 					name = EndDn, ref_type = EndType,
-					connection_point = parse_resource_rel(EndPoints)};
+					connection_point = EndPoints};
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -1156,18 +1156,3 @@ get_specification_ref(Name, Cache) ->
 			end
 	end.
 
--spec parse_resource_rel(ResourceRel) -> Result
-	when
-		ResourceRel :: [#resource_rel{}],
-		Result :: [#connection_point{}].
-% @hidden
-parse_resource_rel(ResourceRel) ->
-	parse_resource_rel(ResourceRel, []).
-% @hidden
-parse_resource_rel([#resource_rel{id = Id, name = Dn, href = Href,
-		ref_type = RefType} | T], Acc) ->
-	ConnectionPoint = #connection_point{id = Id, href = Href, name = Dn,
-			type = RefType},
-	parse_resource_rel(T, [ConnectionPoint | Acc]);
-parse_resource_rel([], Acc) ->
-	Acc.

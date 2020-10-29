@@ -58,6 +58,7 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
+		version :: string() | undefined | '_',
 		ref_type :: string() | undefined | '_',
 		rel_type :: string() | undefined | '_'}).
 -type resource_rel() :: #resource_rel{}.
@@ -273,7 +274,7 @@
 		name :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		ref_type :: string() | undefined | '_',
-		connection_point = [] :: [connection_point()] | '_'}).
+		connection_point = [] :: [resource_rel()] | '_'}).
 -type endpoint() :: #endpoint{}.
 
 -record(connection_point_spec,
@@ -282,13 +283,6 @@
 		name :: string() | undefined | '_',
 		type :: string() | undefined | '_'}).
 -type connection_point_spec() :: #connection_point_spec{}.
-
--record(connection_point,
-		{href :: string() | undefined | '_',
-		id :: string() | undefined | '_',
-		name :: string() | undefined | '_',
-		type :: string() | undefined | '_'}).
--type connection_point() :: #connection_point{}.
 
 -record(resource_char,
 		{name :: string() | undefined | '_',
