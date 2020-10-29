@@ -701,6 +701,24 @@ point([name | T], #endpoint{name = Name} = R, Acc)
 point([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	point(T, M, Acc#endpoint{name = Name});
+point([class_type | T], #endpoint{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	point(T, R, Acc#{"@type" => Type});
+point([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	point(T, M, Acc#endpoint{class_type = Type});
+point([base_type | T], #endpoint{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	point(T, R, Acc#{"@baseType" => Type});
+point([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	point(T, M, Acc#endpoint{base_type = Type});
+point([schema | T], #endpoint{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	point(T, R, Acc#{"@schemaLocation" => Schema});
+point([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	point(T, M, Acc#endpoint{schema = Schema});
 point([ref_type | T], #endpoint{ref_type = RefType} = R, Acc)
 		when is_list(RefType) ->
 	point(T, R, Acc#{"@referredType" => RefType});

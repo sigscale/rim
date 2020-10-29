@@ -270,6 +270,9 @@
 		{href :: string() | undefined | '_',
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		ref_type :: string() | undefined | '_',
 		connection_point = [] :: [resource_rel()] | '_'}).
