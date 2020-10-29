@@ -301,26 +301,6 @@ related_party_ref([role | T], #related_party_ref{role = Role} = R, Acc)
 related_party_ref([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
 	related_party_ref(T, M, Acc#related_party_ref{role = Role});
-related_party_ref([start_date | T], #related_party_ref{start_date = StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	related_party_ref(T, R, Acc#{"validFor" => ValidFor});
-related_party_ref([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
-		when is_list(Start) ->
-	related_party_ref(T, M, Acc#related_party_ref{start_date = im_rest:iso8601(Start)});
-related_party_ref([end_date | T], #related_party_ref{end_date = End} = R,
-		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
-	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	related_party_ref(T, R, Acc#{"validFor" := NewValidFor});
-related_party_ref([end_date | T], #related_party_ref{end_date = End} = R, Acc)
-		when is_integer(End) ->
-	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	related_party_ref(T, R, Acc#{"validFor" := ValidFor});
-related_party_ref([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
-		when is_list(End) ->
-	related_party_ref(T, M, Acc#related_party_ref{end_date = im_rest:iso8601(End)});
 related_party_ref([_ | T], R, Acc) ->
 	related_party_ref(T, R, Acc);
 related_party_ref([], _, Acc) ->

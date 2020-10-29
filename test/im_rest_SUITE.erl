@@ -228,9 +228,7 @@ catalog_to_map(_Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			category = [#category_ref{id = CategoryId,
 					href = CategoryHref,
 					name = CategoryName,
@@ -360,9 +358,7 @@ get_catalog(Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			category = [#category_ref{id = CategoryId,
 					href = CategoryHref,
 					name = CategoryName,
@@ -469,9 +465,7 @@ category_to_map(_Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			candidate = [#candidate_ref{id = CandidateId,
 					href = CandidateHref,
 					name = CandidateName,
@@ -609,9 +603,7 @@ get_category(Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			candidate = [#candidate_ref{id = CandidateId,
 					href = CandidateHref,
 					name = CandidateName,
@@ -953,9 +945,7 @@ specification_to_map(_Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			related = [#specification_rel{id = ResourceId,
 					href = ResouceHref,
 					role = "Supplier",
@@ -1096,9 +1086,7 @@ get_specification(Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			related = [#specification_rel{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
@@ -1258,9 +1246,7 @@ resource_to_map(_Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
@@ -1423,9 +1409,7 @@ get_resource(Config) ->
 			related_party = [#related_party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
@@ -1699,12 +1683,9 @@ auth_header() ->
 	{"authorization", basic_auth()}.
 
 is_related_party_ref(#{"id" := Id, "href" := Href,
-		"name" := Name, "role" := Role,
-		"validFor" := #{"startDateTime" := Start,
-		"endDateTime" := End}}) when is_list(Id),
-		is_list(Href), is_list(Name), is_list(Role),
-		is_list(Start), is_list(End) ->
-	im_rest:iso8601(End) > im_rest:iso8601(Start);
+		"name" := Name, "role" := Role}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Role) ->
+	true;
 is_related_party_ref(_RP) ->
 	false.
 
@@ -1941,8 +1922,7 @@ fill_related_party(N, Acc) ->
 	Id = random_string(10),
 	Href = ?PathParty ++ "organization/" ++ Id,
 	RelatedParty = #related_party_ref{id = Id, href = Href,
-			role = "Supplier", name = "ACME Inc.",
-			start_date = 1548720000000, end_date = 1577836740000},
+			role = "Supplier", name = "ACME Inc."},
 	fill_related_party(N - 1, [RelatedParty | Acc]).
 
 fill_category_ref(N) ->

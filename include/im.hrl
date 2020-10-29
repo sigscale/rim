@@ -21,9 +21,7 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		role :: string() | undefined | '_',
-		start_date :: pos_integer() | undefined | '_',
-		end_date :: pos_integer() | undefined | '_'}).
+		role :: string() | undefined | '_'}).
 -type related_party_ref() :: #related_party_ref{}.
 
 -record(specification_ref,
