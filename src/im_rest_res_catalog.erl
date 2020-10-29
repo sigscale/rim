@@ -346,12 +346,12 @@ catalog([status | T], #catalog{status = Status} = R, Acc)
 catalog([status | T], #{"lifecycleStatus" := Status} = M, Acc)
 		when is_list(Status) ->
 	catalog(T, M, Acc#catalog{status = im_rest:lifecycle_status(Status)});
-catalog([related_party | T], #catalog{related_party = RP} = R, Acc)
+catalog([party | T], #catalog{party = RP} = R, Acc)
 		when is_list(RP), length(RP) > 0 ->
-	catalog(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
-catalog([related_party | T], #{"relatedParty" := RP} = M, Acc)
+	catalog(T, R, Acc#{"relatedParty" => im_rest:party_ref(RP)});
+catalog([party | T], #{"relatedParty" := RP} = M, Acc)
 		when is_list(RP) ->
-	catalog(T, M, Acc#catalog{related_party = im_rest:related_party_ref(RP)});
+	catalog(T, M, Acc#catalog{party = im_rest:party_ref(RP)});
 catalog([category | T], #catalog{category = Category} = R, Acc)
 		when is_list(Category), length(Category) > 0 ->
 	catalog(T, R, Acc#{"category" => im_rest:category_ref(Category)});

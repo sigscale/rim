@@ -17,12 +17,15 @@
 		version :: string() | undefined | '_'}).
 -type candidate_ref() :: #candidate_ref{}.
 
--record(related_party_ref,
+-record(party_ref,
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
 		role :: string() | undefined | '_'}).
--type related_party_ref() :: #related_party_ref{}.
+-type party_ref() :: #party_ref{}.
 
 -record(specification_ref,
 		{id :: string() | undefined | '_',
@@ -112,7 +115,7 @@
 		end_date :: pos_integer() | undefined | '_' | '$10',
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
 		status :: catalog_status() | undefined | '_' | '$12',
-		related_party = [] :: [related_party_ref()] | '_' | '$13',
+		party = [] :: [party_ref()] | '_' | '$13',
 		category = [] :: [category_ref()] | '_' | '$14'}).
 -type catalog() :: #catalog{}.
 
@@ -131,7 +134,7 @@
 		status :: catalog_status() | undefined | '_' | '$12',
 		parent :: string() | undefined | '_' | '$13',
 		root = false :: boolean() | '_' | '$14',
-		related_party = [] :: [related_party_ref()] | '_' | '$15',
+		party = [] :: [party_ref()] | '_' | '$15',
 		category = [] :: [category_ref()] | '_' | '$16',
 		candidate = [] :: [candidate_ref()] | '_' | '$17'}).
 -type category() :: #category{}.
@@ -177,7 +180,7 @@
 		device_version :: string() | undefined | '_' | '$21',
 		feature = [] :: [feature()] | '_' | '$22',
 		attachment = [] :: [attachment()] | '_' | '$23',
-		related_party = [] :: [related_party_ref()] | '_' | '$24',
+		party = [] :: [party_ref()] | '_' | '$24',
 		characteristic = [] :: [specification_char()] | '_' | '$25',
 		related = [] :: [specification_rel()] | '_' | '$26'}).
 -type specification() :: #specification{}.
@@ -238,7 +241,7 @@
 		attachment = [] :: [attachment()] | '_' | '$18',
 		related = [] :: [resource_rel()] | '_' | '$19',
 		specification :: specification_ref() | undefined | '_' | '$20',
-		related_party = [] :: [related_party_ref()] | '_' | '$21',
+		party = [] :: [party_ref()] | '_' | '$21',
 		characteristic = [] :: [resource_char()] | '_' | '$22',
 		connectivity = [] :: [connectivity()] | '_' | '$23',
 		connection_point = [] :: [resource_rel()] | '_' | '$24'}).

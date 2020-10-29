@@ -358,12 +358,12 @@ category([root | T], #category{root = IsRoot} = R, Acc)
 category([root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
 	category(T, M, Acc#category{root = IsRoot});
-category([related_party | T], #category{related_party = RP} = R, Acc)
+category([party | T], #category{party = RP} = R, Acc)
 		when is_list(RP), length(RP) > 0 ->
-	category(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
-category([related_party | T], #{"relatedParty" := RP} = M, Acc)
+	category(T, R, Acc#{"relatedParty" => im_rest:party_ref(RP)});
+category([party | T], #{"relatedParty" := RP} = M, Acc)
 		when is_list(RP), length(RP) > 0 ->
-	category(T, M, Acc#category{related_party = im_rest:related_party_ref(RP)});
+	category(T, M, Acc#category{party = im_rest:party_ref(RP)});
 category([category | T], #category{category = CatRefs} = R, Acc)
 		when is_list(CatRefs), length(CatRefs) > 0 ->
 	category(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});

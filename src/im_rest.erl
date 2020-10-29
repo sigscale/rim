@@ -24,7 +24,7 @@
 -export([date/1, iso8601/1, geoaxis/1, etag/1]).
 -export([parse_query/1, range/1, pointer/1, patch/2]).
 -export([lifecycle_status/1]).
--export([related_party_ref/1, category_ref/1, candidate_ref/1,
+-export([party_ref/1, category_ref/1, candidate_ref/1,
 		specification_ref/1, target_schema_ref/1]).
 
 -include("im.hrl").
@@ -261,49 +261,67 @@ lifecycle_status("Retired") ->
 lifecycle_status("Obsolete") ->
 	obsolete.
 
--spec related_party_ref(RelatedPartyRef) -> RelatedPartyRef
+-spec party_ref(RelatedPartyRef) -> RelatedPartyRef
 	when
-		RelatedPartyRef :: [related_party_ref()] | [map()]
-				| related_party_ref() | map().
+		RelatedPartyRef :: [party_ref()] | [map()]
+				| party_ref() | map().
 %% @doc CODEC for `RelatedPartyRef'.
-related_party_ref(#related_party_ref{} = RelatedPartyRef) ->
-	related_party_ref(record_info(fields, related_party_ref), RelatedPartyRef, #{});
-related_party_ref(#{} = RelatedPartyRef) ->
-	related_party_ref(record_info(fields, related_party_ref), RelatedPartyRef, #related_party_ref{});
-related_party_ref([#related_party_ref{} | _] = List) ->
-	Fields = record_info(fields, related_party_ref),
-	[related_party_ref(Fields, RP, #{}) || RP <- List];
-related_party_ref([#{} | _] = List) ->
-	Fields = record_info(fields, related_party_ref),
-	[related_party_ref(Fields, RP, #related_party_ref{}) || RP <- List].
+party_ref(#party_ref{} = RelatedPartyRef) ->
+	party_ref(record_info(fields, party_ref), RelatedPartyRef, #{});
+party_ref(#{} = RelatedPartyRef) ->
+	party_ref(record_info(fields, party_ref), RelatedPartyRef, #party_ref{});
+party_ref([#party_ref{} | _] = List) ->
+	Fields = record_info(fields, party_ref),
+	[party_ref(Fields, RP, #{}) || RP <- List];
+party_ref([#{} | _] = List) ->
+	Fields = record_info(fields, party_ref),
+	[party_ref(Fields, RP, #party_ref{}) || RP <- List].
 %% @hidden
-related_party_ref([id | T], #related_party_ref{id = Id} = R, Acc)
+party_ref([id | T], #party_ref{id = Id} = R, Acc)
 		when is_list(Id) ->
-	related_party_ref(T, R, Acc#{"id" => Id});
-related_party_ref([id | T], #{"id" := Id} = M, Acc)
+	party_ref(T, R, Acc#{"id" => Id});
+party_ref([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
-	related_party_ref(T, M, Acc#related_party_ref{id = Id});
-related_party_ref([href | T], #related_party_ref{href = Href} = R, Acc)
+	party_ref(T, M, Acc#party_ref{id = Id});
+party_ref([href | T], #party_ref{href = Href} = R, Acc)
 		when is_list(Href) ->
-	related_party_ref(T, R, Acc#{"href" => Href});
-related_party_ref([href | T], #{"href" := Href} = M, Acc)
+	party_ref(T, R, Acc#{"href" => Href});
+party_ref([href | T], #{"href" := Href} = M, Acc)
 		when is_list(Href) ->
-	related_party_ref(T, M, Acc#related_party_ref{href = Href});
-related_party_ref([name | T], #related_party_ref{name = Name} = R, Acc)
+	party_ref(T, M, Acc#party_ref{href = Href});
+party_ref([name | T], #party_ref{name = Name} = R, Acc)
 		when is_list(Name) ->
-	related_party_ref(T, R, Acc#{"name" => Name});
-related_party_ref([name | T], #{"name" := Name} = M, Acc)
+	party_ref(T, R, Acc#{"name" => Name});
+party_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
-	related_party_ref(T, M, Acc#related_party_ref{name = Name});
-related_party_ref([role | T], #related_party_ref{role = Role} = R, Acc)
+	party_ref(T, M, Acc#party_ref{name = Name});
+party_ref([class_type | T], #party_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	party_ref(T, R, Acc#{"@type" => Type});
+party_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	party_ref(T, M, Acc#party_ref{class_type = Type});
+party_ref([base_type | T], #party_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	party_ref(T, R, Acc#{"@type" => Type});
+party_ref([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	party_ref(T, M, Acc#party_ref{base_type = Type});
+party_ref([schema | T], #party_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	party_ref(T, R, Acc#{"@schemaLocation" => Schema});
+party_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	party_ref(T, M, Acc#party_ref{schema = Schema});
+party_ref([role | T], #party_ref{role = Role} = R, Acc)
 		when is_list(Role) ->
-	related_party_ref(T, R, Acc#{"role" => Role});
-related_party_ref([role | T], #{"role" := Role} = M, Acc)
+	party_ref(T, R, Acc#{"role" => Role});
+party_ref([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
-	related_party_ref(T, M, Acc#related_party_ref{role = Role});
-related_party_ref([_ | T], R, Acc) ->
-	related_party_ref(T, R, Acc);
-related_party_ref([], _, Acc) ->
+	party_ref(T, M, Acc#party_ref{role = Role});
+party_ref([_ | T], R, Acc) ->
+	party_ref(T, R, Acc);
+party_ref([], _, Acc) ->
 	Acc.
 
 -spec category_ref(CategoryRef) -> CategoryRef

@@ -351,12 +351,12 @@ specification([bundle | T], #specification{bundle = Bundle} = R, Acc)
 specification([bundle | T], #{"isBundle" := Bundle} = M, Acc)
 		when is_boolean(Bundle) ->
 	specification(T, M, Acc#specification{bundle = Bundle});
-specification([related_party | T], #specification{related_party = PartyRefs} = R, Acc)
+specification([party | T], #specification{party = PartyRefs} = R, Acc)
 		when is_list(PartyRefs), length(PartyRefs) > 0 ->
-	specification(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
-specification([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
+	specification(T, R, Acc#{"relatedParty" => im_rest:party_ref(PartyRefs)});
+specification([party | T], #{"relatedParty" := PartyRefs} = M, Acc)
 		when is_list(PartyRefs) ->
-	specification(T, M, Acc#specification{related_party = im_rest:related_party_ref(PartyRefs)});
+	specification(T, M, Acc#specification{party = im_rest:party_ref(PartyRefs)});
 specification([category | T], #specification{category = Category} = R, Acc)
 		when is_list(Category) ->
 	specification(T, R, Acc#{"category" => Category});
