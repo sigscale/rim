@@ -285,7 +285,8 @@
 -type connection_point_spec() :: #connection_point_spec{}.
 
 -record(resource_char,
-		{name :: string() | undefined | '_',
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
 		class_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		value :: term() | undefined | '_'}).

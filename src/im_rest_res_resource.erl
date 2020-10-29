@@ -779,6 +779,12 @@ resource_char([#{} | _] = List) ->
 resource_char([]) ->
 	[].
 %% @hidden
+resource_char([id | T], #resource_char{id = Id} = R, Acc)
+		when is_list(Id) ->
+	resource_char(T, R, Acc#{"id" => Id});
+resource_char([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	resource_char(T, M, Acc#resource_char{id = Id});
 resource_char([name | T], #resource_char{name = Name} = R, Acc)
 		when is_list(Name) ->
 	resource_char(T, R, Acc#{"name" => Name});
