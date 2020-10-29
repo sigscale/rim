@@ -797,12 +797,24 @@ resource_char([class_type | T], #resource_char{class_type = Type} = R, Acc)
 resource_char([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	resource_char(T, M, Acc#resource_char{class_type = Type});
+resource_char([base_type | T], #resource_char{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_char(T, R, Acc#{"@baseType" => Type});
+resource_char([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	resource_char(T, M, Acc#resource_char{base_type = Type});
 resource_char([schema | T], #resource_char{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	resource_char(T, R, Acc#{"@schemaLocation" => Schema});
 resource_char([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 		when is_list(Schema) ->
 	resource_char(T, M, Acc#resource_char{schema = Schema});
+resource_char([value_type | T], #resource_char{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_char(T, R, Acc#{"valueType" => Type});
+resource_char([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	resource_char(T, M, Acc#resource_char{value_type = Type});
 resource_char([value | T], #resource_char{value = Value} = R, Acc) ->
 	resource_char(T, R, Acc#{"value" => Value});
 resource_char([value | T], #{"value" := Value} = M, Acc) ->

@@ -288,7 +288,9 @@
 		{id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
+		value_type :: string() | undefined | '_',
 		value :: term() | undefined | '_'}).
 -type resource_char() :: #resource_char{}.
 
