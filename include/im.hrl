@@ -7,7 +7,11 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		version :: string() | undefined | '_'}).
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
 -type category_ref() :: #category_ref{}.
 
 -record(candidate_ref,

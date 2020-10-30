@@ -358,12 +358,36 @@ category_ref([name | T], #category_ref{name = Name} = R, Acc)
 category_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	category_ref(T, M, Acc#category_ref{name = Name});
+category_ref([class_type | T], #category_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@type" => Type});
+category_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{class_type = Type});
+category_ref([base_type | T], #category_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@baseType" => Type});
+category_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{base_type = Type});
+category_ref([schema | T], #category_ref{schema = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@schemaLocation" => Type});
+category_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{schema = Schema});
 category_ref([version | T], #category_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
 	category_ref(T, R, Acc#{"version" => Version});
 category_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	category_ref(T, M, Acc#category_ref{version = Version});
+category_ref([ref_type | T], #category_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@referredType" => Type});
+category_ref([ref_type | T], #{"@referredTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{ref_type = Type});
 category_ref([_ | T], R, Acc) ->
 	category_ref(T, R, Acc);
 category_ref([], _, Acc) ->
