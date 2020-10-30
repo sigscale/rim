@@ -18,7 +18,11 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		version :: string() | undefined | '_'}).
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
 -type candidate_ref() :: #candidate_ref{}.
 
 -record(party_ref,

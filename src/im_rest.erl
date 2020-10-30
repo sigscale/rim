@@ -427,12 +427,36 @@ candidate_ref([name | T], #candidate_ref{name = Name} = R, Acc)
 candidate_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	candidate_ref(T, M, Acc#candidate_ref{name = Name});
+candidate_ref([class_type | T], #candidate_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@type" => Type});
+candidate_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{class_type = Type});
+candidate_ref([base_type | T], #candidate_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@baseType" => Type});
+candidate_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{base_type = Type});
+candidate_ref([schema | T], #candidate_ref{schema = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@schemaLocation" => Type});
+candidate_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{schema = Schema});
 candidate_ref([version | T], #candidate_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
 	candidate_ref(T, R, Acc#{"version" => Version});
 candidate_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	candidate_ref(T, M, Acc#candidate_ref{version = Version});
+candidate_ref([ref_type | T], #candidate_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@referredType" => Type});
+candidate_ref([ref_type | T], #{"@referredTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{ref_type = Type});
 candidate_ref([_ | T], R, Acc) ->
 	candidate_ref(T, R, Acc);
 candidate_ref([], _, Acc) ->
