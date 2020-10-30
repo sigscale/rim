@@ -887,8 +887,8 @@ spec_char_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
 	spec_char_rel(T, M, Acc#spec_char_rel{rel_type = Type});
 spec_char_rel([res_id | T], #spec_char_rel{res_id = Id} = R, Acc)
 		when is_list(Id) ->
-	spec_char_rel(T, R, Acc#{"resacteristicSpecificationId" => Id});
-spec_char_rel([res_id | T], #{"resacteristicSpecificationId" := Id} = M, Acc)
+	spec_char_rel(T, R, Acc#{"resourceSpecificationId" => Id});
+spec_char_rel([res_id | T], #{"resourceSpecificationId" := Id} = M, Acc)
 		when is_list(Id) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{res_id = Id});
 spec_char_rel([res_href | T], #spec_char_rel{res_href = Href} = R, Acc)
