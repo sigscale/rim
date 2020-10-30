@@ -381,12 +381,36 @@ place_ref([name | T], #place_ref{name = Name} = R, Acc)
 place_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	place_ref(T, M, Acc#place_ref{name = Name});
+place_ref([class_type | T], #place_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	place_ref(T, R, Acc#{"@type" => Type});
+place_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	place_ref(T, M, Acc#place_ref{class_type = Type});
+place_ref([base_type | T], #place_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	place_ref(T, R, Acc#{"@baseType" => Type});
+place_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	place_ref(T, M, Acc#place_ref{base_type = Type});
+place_ref([schema | T], #place_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	place_ref(T, R, Acc#{"@schemaLocation" => Schema});
+place_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	place_ref(T, M, Acc#place_ref{schema = Schema});
 place_ref([role | T], #place_ref{role = Role} = R, Acc)
 		when is_list(Role) ->
 	place_ref(T, R, Acc#{"role" => Role});
 place_ref([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
 	place_ref(T, M, Acc#place_ref{role = Role});
+place_ref([ref_type | T], #place_ref{ref_type = RefType} = R, Acc)
+		when is_list(RefType) ->
+	place_ref(T, R, Acc#{"@referredType" => RefType});
+place_ref([ref_type | T], #{"@referredType" := RefType} = M, Acc)
+		when is_list(RefType) ->
+	place_ref(T, M, Acc#place_ref{ref_type = RefType});
 place_ref([_ | T], R, Acc) ->
 	place_ref(T, R, Acc);
 place_ref([], _, Acc) ->

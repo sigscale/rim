@@ -88,7 +88,12 @@
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		role :: string() | undefined | '_'}).
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		role :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
 -type place_ref() :: #place_ref{}.
 
 -record(target_schema_ref,
