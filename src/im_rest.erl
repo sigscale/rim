@@ -319,6 +319,12 @@ party_ref([role | T], #party_ref{role = Role} = R, Acc)
 party_ref([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
 	party_ref(T, M, Acc#party_ref{role = Role});
+party_ref([ref_type | T], #party_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	party_ref(T, R, Acc#{"@referredType" => Type});
+party_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
+		when is_list(Type) ->
+	party_ref(T, M, Acc#party_ref{ref_type = Type});
 party_ref([_ | T], R, Acc) ->
 	party_ref(T, R, Acc);
 party_ref([], _, Acc) ->

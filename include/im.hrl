@@ -32,7 +32,8 @@
 		class_type :: string() | undefined | '_',
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
-		role :: string() | undefined | '_'}).
+		role :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
 -type party_ref() :: #party_ref{}.
 
 -record(specification_ref,
