@@ -98,6 +98,7 @@
 
 -record(target_schema_ref,
 		{class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_'}).
 -type target_schema_ref() :: #target_schema_ref{}.
 

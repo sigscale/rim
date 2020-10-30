@@ -563,6 +563,12 @@ target_schema_ref([class_type | T], #target_schema_ref{class_type = ClassType} =
 target_schema_ref([class_type | T], #{"@type" := ClassType} = M, Acc)
 		when is_list(ClassType) ->
 	target_schema_ref(T, M, Acc#target_schema_ref{class_type = ClassType});
+target_schema_ref([base_type | T], #target_schema_ref{base_type = ClassType} = R, Acc)
+		when is_list(ClassType) ->
+	target_schema_ref(T, R, Acc#{"@baseType" => ClassType});
+target_schema_ref([base_type | T], #{"@baseType" := ClassType} = M, Acc)
+		when is_list(ClassType) ->
+	target_schema_ref(T, M, Acc#target_schema_ref{base_type = ClassType});
 target_schema_ref([schema | T], #target_schema_ref{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	target_schema_ref(T, R, Acc#{"@schemaLocation" => Schema});
