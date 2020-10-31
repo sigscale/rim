@@ -520,6 +520,12 @@ spec_char_value([class_type | T], #spec_char_value{class_type = Type} = R, Acc)
 spec_char_value([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	spec_char_value(T, M, Acc#spec_char_value{class_type = Type});
+spec_char_value([base_type | T], #spec_char_value{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	spec_char_value(T, R, Acc#{"@type" => Type});
+spec_char_value([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	spec_char_value(T, M, Acc#spec_char_value{base_type = Type});
 spec_char_value([schema | T], #spec_char_value{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	spec_char_value(T, R, Acc#{"@schemaLocation" => Schema});

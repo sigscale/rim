@@ -215,6 +215,7 @@
 		{value_type :: string() | undefined | '_',
 		default = false :: boolean() | undefined | '_',
 		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		unit :: string() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
