@@ -25,7 +25,7 @@
 -export([parse_query/1, range/1, pointer/1, patch/2]).
 -export([lifecycle_status/1]).
 -export([party_ref/1, category_ref/1, candidate_ref/1,
-		specification_ref/1, target_schema_ref/1]).
+		specification_ref/1, target_schema_ref/1, constraint_ref/1]).
 
 -include("im.hrl").
 
@@ -376,11 +376,11 @@ category_ref([base_type | T], #category_ref{base_type = Type} = R, Acc)
 category_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
 		when is_list(Type) ->
 	category_ref(T, M, Acc#category_ref{base_type = Type});
-category_ref([schema | T], #category_ref{schema = Type} = R, Acc)
-		when is_list(Type) ->
-	category_ref(T, R, Acc#{"@schemaLocation" => Type});
-category_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
-		when is_list(Type) ->
+category_ref([schema | T], #category_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	category_ref(T, R, Acc#{"@schemaLocation" => Schema});
+category_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
 	category_ref(T, M, Acc#category_ref{schema = Schema});
 category_ref([version | T], #category_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
@@ -445,11 +445,11 @@ candidate_ref([base_type | T], #candidate_ref{base_type = Type} = R, Acc)
 candidate_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
 		when is_list(Type) ->
 	candidate_ref(T, M, Acc#candidate_ref{base_type = Type});
-candidate_ref([schema | T], #candidate_ref{schema = Type} = R, Acc)
-		when is_list(Type) ->
-	candidate_ref(T, R, Acc#{"@schemaLocation" => Type});
-candidate_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
-		when is_list(Type) ->
+candidate_ref([schema | T], #candidate_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	candidate_ref(T, R, Acc#{"@schemaLocation" => Schema});
+candidate_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
 	candidate_ref(T, M, Acc#candidate_ref{schema = Schema});
 candidate_ref([version | T], #candidate_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
@@ -578,6 +578,75 @@ target_schema_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 target_schema_ref([_ | T], R, Acc) ->
 	target_schema_ref(T, R, Acc);
 target_schema_ref([], _, Acc) ->
+	Acc.
+
+-spec constraint_ref(ConstraintRef) -> ConstraintRef
+	when
+		ConstraintRef :: [constraint_ref()] | [map()]
+				| constraint_ref() | map().
+%% @doc CODEC for `ConstraintRef'.
+constraint_ref(#constraint_ref{} = ConstraintRef) ->
+	constraint_ref(record_info(fields, constraint_ref), ConstraintRef, #{});
+constraint_ref(#{} = ConstraintRef) ->
+	constraint_ref(record_info(fields, constraint_ref), ConstraintRef, #constraint_ref{});
+constraint_ref([#constraint_ref{} | _] = List) ->
+	Fields = record_info(fields, constraint_ref),
+	[constraint_ref(Fields, R, #{}) || R <- List];
+constraint_ref([#{} | _] = List) ->
+	Fields = record_info(fields, constraint_ref),
+	[constraint_ref(Fields, R, #constraint_ref{}) || R <- List].
+%% @hidden
+constraint_ref([id | T], #constraint_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	constraint_ref(T, R, Acc#{"id" => Id});
+constraint_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	constraint_ref(T, M, Acc#constraint_ref{id = Id});
+constraint_ref([href | T], #constraint_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	constraint_ref(T, R, Acc#{"href" => Href});
+constraint_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	constraint_ref(T, M, Acc#constraint_ref{href = Href});
+constraint_ref([name | T], #constraint_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	constraint_ref(T, R, Acc#{"name" => Name});
+constraint_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	constraint_ref(T, M, Acc#constraint_ref{name = Name});
+constraint_ref([class_type | T], #constraint_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, R, Acc#{"@type" => Type});
+constraint_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, M, Acc#constraint_ref{class_type = Type});
+constraint_ref([base_type | T], #constraint_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, R, Acc#{"@baseType" => Type});
+constraint_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, M, Acc#constraint_ref{base_type = Type});
+constraint_ref([schema | T], #constraint_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	constraint_ref(T, R, Acc#{"@schemaLocation" => Schema});
+constraint_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	constraint_ref(T, M, Acc#constraint_ref{schema = Schema});
+constraint_ref([version | T], #constraint_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	constraint_ref(T, R, Acc#{"version" => Version});
+constraint_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	constraint_ref(T, M, Acc#constraint_ref{version = Version});
+constraint_ref([ref_type | T], #constraint_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, R, Acc#{"@referredType" => Type});
+constraint_ref([ref_type | T], #{"@referredTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, M, Acc#constraint_ref{ref_type = Type});
+constraint_ref([_ | T], R, Acc) ->
+	constraint_ref(T, R, Acc);
+constraint_ref([], _, Acc) ->
 	Acc.
 
 -spec geoaxis(Axis) -> Axis

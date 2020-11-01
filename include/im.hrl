@@ -84,6 +84,11 @@
 		rel_type :: string() | undefined | '_'}).
 -type resource_rel() :: #resource_rel{}.
 
+-record(res_char_rel,
+		{id :: string() | undefined | '_',
+		rel_type :: string() | undefined | '_'}).
+-type res_char_rel() :: #res_char_rel{}.
+
 -record(place_ref,
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
@@ -102,17 +107,126 @@
 		schema :: string() | undefined | '_'}).
 -type target_schema_ref() :: #target_schema_ref{}.
 
--record(feature,
+-record(constraint_ref,
 		{id :: string() | undefined | '_',
 		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		version :: string() | undefined | '_',
 		class_type :: string() | undefined | '_',
-		bundle = false :: boolean(),
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		version :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
+-type constraint_ref() :: #constraint_ref{}.
+
+-record(feature_spec,
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		bundle = false :: boolean() | '_',
+		version :: string() | undefined | '_',
+		enabled = true :: boolean() | '_',
 		start_date :: pos_integer() | undefined | '_',
 		end_date :: pos_integer() | undefined | '_',
-		enabled = false :: boolean()}).
+		constraint = [] :: [constraint_ref()] | '_',
+		characteristic = [] :: [feature_spec_char()] | '_',
+		related = [] :: [feature_spec_rel()] | '_'}).
+-type feature_spec() :: #feature_spec{}.
+
+-record(feat_char_rel,
+		{char_id :: string() | undefined | '_',
+		feat_id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		rel_type :: string() | undefined | '_',
+		res_id :: string() | undefined | '_',
+		res_href :: string() | undefined | '_'}).
+-type feat_char_rel() :: #feat_char_rel{}.
+
+-record(feature_spec_char,
+		{id :: string() | undefined | '_' ,
+		name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		configurable :: boolean() | undefined | '_',
+		extensible :: boolean() | undefined | '_',
+		unique :: boolean() | undefined | '_',
+		min :: non_neg_integer() | undefined | '_',
+		max :: non_neg_integer() | undefined | '_',
+		regex :: {CompiledRegEx :: re:mp(),
+				OriginalRegEx :: string()} | undefined | '_',
+		value_type :: string() | undefined | '_',
+		value_schema :: string() | undefined | '_',
+		related = [] :: [feat_char_rel()] | '_',
+		char_value = [] :: [feat_char_value()] | '_'}).
+-type feature_spec_char() :: #feature_spec_char{}.
+
+-record(feature_spec_rel,
+		{feat_id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		res_id :: string() | undefined | '_',
+		res_href :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		rel_type :: string() | undefined | '_'}).
+-type feature_spec_rel() :: #feature_spec_rel{}.
+
+-record(feature,
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		bundle = false :: boolean() | '_',
+		enabled = true :: boolean() | '_',
+		constraint = [] :: [constraint_ref()] | '_',
+		characteristic = [] :: [feature_char()] | '_',
+		related = [] :: [feature_rel()] | '_'}).
 -type feature() :: #feature{}.
+
+-record(feature_rel,
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		rel_type :: string() | undefined | '_'}).
+-type feature_rel() :: #feature_rel{}.
+
+-record(feat_char_value,
+		{default = false :: boolean() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		unit :: string() | undefined | '_',
+		start_date :: pos_integer() | undefined | '_',
+		end_date :: pos_integer() | undefined | '_',
+		value_type :: string() | undefined | '_',
+		from :: term() | undefined | '_',
+		to :: term() | undefined | '_',
+		interval :: open | closed | closed_bottom | closed_top | undefined | '_',
+		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
+		value :: term() | undefined | '_'}).
+-type feat_char_value() :: #feat_char_value{}.
+
+-record(feature_char,
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		value_type :: string() | undefined | '_',
+		value_schema :: string() | undefined | '_',
+		value :: term() | undefined | '_'}).
+-type feature_char() :: #feature_char{}.
 
 -record(attachment,
 		{id :: string() | undefined | '_',
@@ -204,7 +318,7 @@
 		vendor :: string() | undefined | '_' | '$19',
 		device_serial :: string() | undefined | '_' | '$20',
 		device_version :: string() | undefined | '_' | '$21',
-		feature = [] :: [feature()] | '_' | '$22',
+		feature = [] :: [feature_spec()] | '_' | '$22',
 		attachment = [] :: [attachment()] | '_' | '$23',
 		party = [] :: [party_ref()] | '_' | '$24',
 		characteristic = [] :: [specification_char()] | '_' | '$25',
@@ -241,7 +355,8 @@
 		unique :: boolean() | undefined | '_',
 		min :: non_neg_integer() | undefined | '_',
 		max :: non_neg_integer() | undefined | '_',
-		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
+		regex :: {CompiledRegEx :: re:mp(),
+				OriginalRegEx :: string()} | undefined | '_',
 		value_type :: string() | undefined | '_',
 		value_schema :: string() | undefined | '_',
 		related = [] :: [spec_char_rel()] | '_',
@@ -271,9 +386,10 @@
 		related = [] :: [resource_rel()] | '_' | '$19',
 		specification :: specification_ref() | undefined | '_' | '$20',
 		party = [] :: [party_ref()] | '_' | '$21',
-		characteristic = [] :: [resource_char()] | '_' | '$22',
-		connectivity = [] :: [connectivity()] | '_' | '$23',
-		connection_point = [] :: [resource_rel()] | '_' | '$24'}).
+		feature = [] :: [feature()] | '_' | '$22',
+		characteristic = [] :: [resource_char()] | '_' | '$23',
+		connectivity = [] :: [connectivity()] | '_' | '$24',
+		connection_point = [] :: [resource_rel()] | '_' | '$25'}).
 -type resource() :: #resource{}.
 
 -record(connectivity_spec,
@@ -324,7 +440,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		value_type :: string() | undefined | '_',
-		value :: term() | undefined | '_'}).
+		value :: term() | undefined | '_',
+		related = [] :: [res_char_rel()] | '_'}).
 -type resource_char() :: #resource_char{}.
 
 -type rule() :: fun((Input :: term()) -> ets:match_spec()).

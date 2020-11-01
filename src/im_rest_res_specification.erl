@@ -377,10 +377,10 @@ specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars}
 	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
 specification([feature | T], #specification{feature = SpecFeature} = R, Acc)
 		when is_list(SpecFeature) ->
-	specification(T, R, Acc#{"resourceSpecFeature" => feature(SpecFeature)});
+	specification(T, R, Acc#{"resourceSpecFeature" => feature_spec(SpecFeature)});
 specification([feature | T], #{"resourceSpecFeature" := SpecFeature} = M, Acc)
 		when is_list(SpecFeature) ->
-	specification(T, M, Acc#specification{feature = feature(SpecFeature)});
+	specification(T, M, Acc#specification{feature = feature_spec(SpecFeature)});
 specification([related | T], #specification{related = SpecRels} = R, Acc)
 		when is_list(SpecRels), length(SpecRels) > 0->
 	specification(T, R, Acc#{"resourceSpecRelationship" => specification_rel(SpecRels)});
@@ -604,77 +604,530 @@ spec_char_value([_ | T], R, Acc) ->
 spec_char_value([], _, Acc) ->
 	Acc.
 
--spec feature(ResourceSpecFeature) -> ResourceSpecFeature
+-spec feature_spec(ResourceSpecFeature) -> ResourceSpecFeature
 	when
-		ResourceSpecFeature :: [feature()] | [map()].
+		ResourceSpecFeature :: [feature_spec()] | [map()].
 %% @doc CODEC for `ResourceSpecFeature'.
 %% @private
-feature([#feature{} | _] = List) ->
-	Fields = record_info(fields, feature),
-	[feature(Fields, R, #{}) || R <- List];
-feature([#{} | _] = List) ->
-	Fields = record_info(fields, feature),
-	[feature(Fields, M, #feature{}) || M <- List];
-feature([]) ->
+feature_spec([#feature_spec{} | _] = List) ->
+	Fields = record_info(fields, feature_spec),
+	[feature_spec(Fields, R, #{}) || R <- List];
+feature_spec([#{} | _] = List) ->
+	Fields = record_info(fields, feature_spec),
+	[feature_spec(Fields, M, #feature_spec{}) || M <- List];
+feature_spec([]) ->
 	[].
 %% @hidden
-feature([name | T], #feature{name = Name} = R, Acc)
-		when is_list(Name) ->
-	feature(T, R, Acc#{"name" => Name});
-feature([name | T], #{"name" := Name} = R, Acc)
-		when is_list(Name) ->
-	feature(T, R, Acc#feature{name = Name});
-feature([id | T], #feature{id = Id} = R, Acc)
+feature_spec([id | T], #feature_spec{id = Id} = R, Acc)
 		when is_list(Id) ->
-	feature(T, R, Acc#{"id" => Id});
-feature([id | T], #{"id" := Id} = R, Acc)
+	feature_spec(T, R, Acc#{"id" => Id});
+feature_spec([id | T], #{"id" := Id} = R, Acc)
 		when is_list(Id) ->
-	feature(T, R, Acc#feature{id = Id});
-feature([href | T], #feature{href = Href} = R, Acc)
-		when is_list(Href) ->
-	feature(T, R, Acc#{"href" => Href});
-feature([href | T], #{"href" := Href} = R, Acc)
-		when is_list(Href) ->
-	feature(T, R, Acc#feature{href = Href});
-feature([version | T], #feature{version = Version} = R, Acc)
-		when is_list(Version) ->
-	feature(T, R, Acc#{"version" => Version});
-feature([version | T], #{"version" := Version} = R, Acc)
-		when is_list(Version) ->
-	feature(T, R, Acc#feature{version = Version});
-feature([class_type | T], #feature{class_type = Type} = R, Acc)
+	feature_spec(T, R, Acc#feature_spec{id = Id});
+feature_spec([name | T], #feature_spec{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec(T, R, Acc#{"name" => Name});
+feature_spec([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec(T, R, Acc#feature_spec{name = Name});
+feature_spec([class_type | T], #feature_spec{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	feature(T, R, Acc#{"class_type" => Type});
-feature([class_type | T], #{"class_type" := Type} = R, Acc)
+	feature_spec(T, R, Acc#{"class_type" => Type});
+feature_spec([class_type | T], #{"class_type" := Type} = R, Acc)
 		when is_list(Type) ->
-	feature(T, R, Acc#feature{class_type = Type});
-feature([bundle | T], #feature{bundle = Bundle} = R, Acc)
+	feature_spec(T, R, Acc#feature_spec{class_type = Type});
+feature_spec([base_type | T], #feature_spec{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec(T, R, Acc#{"@baseType" => Type});
+feature_spec([base_type | T], #{"@baseType" := Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec(T, R, Acc#feature_spec{base_type = Type});
+feature_spec([schema | T], #feature_spec{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec(T, R, Acc#{"@baseSchema" => Schema});
+feature_spec([schema | T], #{"@baseSchema" := Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec(T, R, Acc#feature_spec{schema = Schema});
+feature_spec([bundle | T], #feature_spec{bundle = Bundle} = R, Acc)
 		when is_boolean(Bundle) ->
-	feature(T, R, Acc#{"bundle" => Bundle});
-feature([bundle | T], #{"bundle" := Bundle} = R, Acc)
+	feature_spec(T, R, Acc#{"bundle" => Bundle});
+feature_spec([bundle | T], #{"bundle" := Bundle} = R, Acc)
 		when is_boolean(Bundle) ->
-	feature(T, R, Acc#feature{bundle = Bundle});
-feature([start_date | T], #feature{start_date = StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	feature(T, R, Acc#{"start_date" => StartDate});
-feature([start_date | T], #{"start_date" := StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	feature(T, R, Acc#feature{start_date = StartDate});
-feature([end_date | T], #feature{end_date = EndDate} = R, Acc)
-		when is_integer(EndDate) ->
-	feature(T, R, Acc#{"end_date" => EndDate});
-feature([end_date | T], #{"end_date" := EndDate} = R, Acc)
-		when is_integer(EndDate) ->
-	feature(T, R, Acc#feature{end_date = EndDate});
-feature([enabled | T], #feature{enabled = Enabled} = R, Acc)
+	feature_spec(T, R, Acc#feature_spec{bundle = Bundle});
+feature_spec([enabled | T], #feature_spec{enabled = Enabled} = R, Acc)
 		when is_boolean(Enabled) ->
-	feature(T, R, Acc#{"enabled" => Enabled});
-feature([enabled | T], #{"enabled" := Enabled} = R, Acc)
+	feature_spec(T, R, Acc#{"enabled" => Enabled});
+feature_spec([enabled | T], #{"enabled" := Enabled} = R, Acc)
 		when is_boolean(Enabled) ->
-	feature(T, R, Acc#feature{enabled = Enabled});
-feature([_ | T], R, Acc) ->
-	feature(T, R, Acc);
-feature([], _, Acc) ->
+	feature_spec(T, R, Acc#feature_spec{enabled = Enabled});
+feature_spec([version | T], #feature_spec{version = Version} = R, Acc)
+		when is_list(Version) ->
+	feature_spec(T, R, Acc#{"version" => Version});
+feature_spec([version | T], #{"version" := Version} = R, Acc)
+		when is_list(Version) ->
+	feature_spec(T, R, Acc#feature_spec{version = Version});
+feature_spec([start_date | T], #feature_spec{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	feature_spec(T, R, Acc#{"start_date" => StartDate});
+feature_spec([start_date | T], #{"start_date" := StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	feature_spec(T, R, Acc#feature_spec{start_date = StartDate});
+feature_spec([end_date | T], #feature_spec{end_date = EndDate} = R, Acc)
+		when is_integer(EndDate) ->
+	feature_spec(T, R, Acc#{"end_date" => EndDate});
+feature_spec([end_date | T], #{"end_date" := EndDate} = R, Acc)
+		when is_integer(EndDate) ->
+	feature_spec(T, R, Acc#feature_spec{end_date = EndDate});
+feature_spec([constraint | T], #feature_spec{constraint = Consts} = R, Acc)
+		when is_list(Consts), length(Consts) > 0->
+	feature_spec(T, R, Acc#{"constraint" => im_rest:constraint_ref(Consts)});
+feature_spec([constraint| T], #{"constraint" := Consts} = M, Acc)
+		when is_list(Consts) ->
+	feature_spec(T, M, Acc#feature_spec{constraint = im_rest:constraint_ref(Consts)});
+feature_spec([characteristic | T], #feature_spec{characteristic = Chars} = R, Acc)
+		when is_list(Chars), length(Chars) > 0->
+	feature_spec(T, R, Acc#{"featureSpecCharacteristic" => feature_spec_char(Chars)});
+feature_spec([characteristic | T], #{"resourceSpecCharacteristic" := Chars} = M, Acc)
+		when is_list(Chars) ->
+	feature_spec(T, M, Acc#feature_spec{characteristic = feature_spec_char(Chars)});
+feature_spec([related | T], #feature_spec{related = FeatureRels} = R, Acc)
+		when is_list(FeatureRels) ->
+	feature_spec(T, R,
+			Acc#{"featureSpecRelationship" => feature_spec_rel(FeatureRels)});
+feature_spec([related | T], #{"featureSpecCharRelationship" := FeatureRels} = M, Acc)
+		when is_list(FeatureRels) ->
+	feature_spec(T, M, Acc#feature_spec{related = feature_spec_rel(FeatureRels)});
+feature_spec([_ | T], R, Acc) ->
+	feature_spec(T, R, Acc);
+feature_spec([], _, Acc) ->
+	Acc.
+
+-spec feature_spec_char(FeatureSpecificationCharacteristic) -> FeatureSpecificationCharacteristic
+	when
+		FeatureSpecificationCharacteristic :: [feature_spec_char()] | [map()].
+%% @doc CODEC for `FeatureSpecificationCharacteristic'.
+%% @private
+feature_spec_char([#feature_spec_char{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_char),
+	[feature_spec_char(Fields, R, #{}) || R <- List];
+feature_spec_char([#{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_char),
+	[feature_spec_char(Fields, M, #feature_spec_char{}) || M <- List];
+feature_spec_char([]) ->
+	[].
+%% @hidden
+feature_spec_char([id | T], #feature_spec_char{id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature_spec_char(T, R, Acc#{"id" => Id});
+feature_spec_char([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{id = Id});
+feature_spec_char([name | T], #feature_spec_char{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec_char(T, R, Acc#{"name" => Name});
+feature_spec_char([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{name = Name});
+feature_spec_char([class_type | T], #feature_spec_char{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, R, Acc#{"@type" => Type});
+feature_spec_char([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{class_type = Type});
+feature_spec_char([base_type | T], #feature_spec_char{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, R, Acc#{"@baseType" => Type});
+feature_spec_char([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{base_type = Type});
+feature_spec_char([schema | T], #feature_spec_char{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, R, Acc#{"@schemaLocation" => Schema});
+feature_spec_char([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{schema = Schema});
+feature_spec_char([value_schema | T], #feature_spec_char{value_schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, R, Acc#{"@valueSchemaLocation" => Schema});
+feature_spec_char([value_schema | T], #{"@valueSchemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{value_schema = Schema});
+feature_spec_char([configurable | T], #feature_spec_char{configurable = Configurable} = R, Acc)
+		when is_boolean(Configurable) ->
+	feature_spec_char(T, R, Acc#{"configurable" => Configurable});
+feature_spec_char([configurable | T], #{"configurable" := Configurable} = M, Acc)
+		when is_boolean(Configurable) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{configurable = Configurable});
+feature_spec_char([min | T], #feature_spec_char{min = Min} = R, Acc)
+		when is_integer(Min) ->
+	feature_spec_char(T, R, Acc#{"minCardinality" => Min});
+feature_spec_char([min | T], #{"minCardinality" := Min} = M, Acc)
+		when is_integer(Min) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{min = Min});
+feature_spec_char([max | T], #feature_spec_char{max = Max} = R, Acc)
+		when is_integer(Max) ->
+	feature_spec_char(T, R, Acc#{"maxCardinality" => Max});
+feature_spec_char([max | T], #{"maxCardinality" := Max} = M, Acc)
+		when is_integer(Max) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{max = Max});
+feature_spec_char([unique | T], #feature_spec_char{unique = Unique} = R, Acc)
+		when is_boolean(Unique) ->
+	feature_spec_char(T, R, Acc#{"unique" => Unique});
+feature_spec_char([unique | T], #{"unique" := Unique} = M, Acc)
+		when is_boolean(Unique) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{unique = Unique});
+feature_spec_char([regex | T], #feature_spec_char{regex = {_, RegEx}} = R, Acc)
+		when is_list(RegEx) ->
+	feature_spec_char(T, R, Acc#{"regex" => RegEx});
+feature_spec_char([regex | T], #{"regex" := RegEx} = M, Acc)
+		when is_list(RegEx) ->
+	{ok, MP} = re:compile(RegEx),
+	feature_spec_char(T, M, Acc#feature_spec_char{regex = {MP, RegEx}});
+feature_spec_char([extensible | T], #feature_spec_char{extensible = Ext} = R, Acc)
+		when is_boolean(Ext) ->
+	feature_spec_char(T, R, Acc#{"extensible" => Ext});
+feature_spec_char([extensible | T], #{"extensible" := Ext} = M, Acc)
+		when is_boolean(Ext) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{extensible = Ext});
+feature_spec_char([start_date | T], #feature_spec_char{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feature_spec_char(T, R, Acc#{"validFor" => ValidFor});
+feature_spec_char([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{start_date = im_rest:iso8601(Start)});
+feature_spec_char([end_date | T], #feature_spec_char{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_char(T, R, Acc#{"validFor" := NewValidFor});
+feature_spec_char([end_date | T], #feature_spec_char{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_char(T, R, Acc#{"validFor" := ValidFor});
+feature_spec_char([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{end_date = im_rest:iso8601(End)});
+feature_spec_char([related | T],
+		#feature_spec_char{related = CharRels} = R, Acc)
+		when is_list(CharRels) ->
+	feature_spec_char(T, R,
+			Acc#{"featureSpecCharRelationship" => feat_char_rel(CharRels)});
+feature_spec_char([related | T],
+		#{"featureSpecCharRelationship" := CharRels} = M, Acc)
+		when is_list(CharRels) ->
+	feature_spec_char(T, M,
+			Acc#feature_spec_char{related = feat_char_rel(CharRels)});
+feature_spec_char([value_type | T], #feature_spec_char{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, R, Acc#{"valueType" => Type});
+feature_spec_char([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{value_type = Type});
+feature_spec_char([char_value | T],
+		#feature_spec_char{char_value = CharVals} = R, Acc)
+		when is_list(CharVals) ->
+	feature_spec_char(T, R,
+			Acc#{"featureSpecCharacteristicValue" => feat_char_value(CharVals)});
+feature_spec_char([char_value | T],
+		#{"featureSpecCharacteristicValue" := CharVals} = M, Acc)
+		when is_list(CharVals) ->
+	feature_spec_char(T, M,
+			Acc#feature_spec_char{char_value = feat_char_value(CharVals)});
+feature_spec_char([_ | T], R, Acc) ->
+	feature_spec_char(T, R, Acc);
+feature_spec_char([], _, Acc) ->
+	Acc.
+
+-spec feat_char_value(FeatureSpecificationCharacteristicValue) -> FeatureSpecificationCharacteristicValue
+	when
+		FeatureSpecificationCharacteristicValue :: [feat_char_value()] | [map()].
+%% @doc CODEC for `FeatureSpecificationCharacteristicValue'.
+%% @private
+feat_char_value([#feat_char_value{} | _] = List) ->
+	Fields = record_info(fields, feat_char_value),
+	[feat_char_value(Fields, R, #{}) || R <- List];
+feat_char_value([#{} | _] = List) ->
+	Fields = record_info(fields, feat_char_value),
+	[feat_char_value(Fields, M, #feat_char_value{}) || M <- List];
+feat_char_value([]) ->
+	[].
+%% @hidden
+feat_char_value([value_type | T], #feat_char_value{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, R, Acc#{"valueType" => Type});
+feat_char_value([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, M, Acc#feat_char_value{value_type = Type});
+feat_char_value([class_type | T], #feat_char_value{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, R, Acc#{"@type" => Type});
+feat_char_value([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, M, Acc#feat_char_value{class_type = Type});
+feat_char_value([base_type | T], #feat_char_value{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, R, Acc#{"@type" => Type});
+feat_char_value([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, M, Acc#feat_char_value{base_type = Type});
+feat_char_value([schema | T], #feat_char_value{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feat_char_value(T, R, Acc#{"@schemaLocation" => Schema});
+feat_char_value([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feat_char_value(T, M, Acc#feat_char_value{schema = Schema});
+feat_char_value([default | T], #feat_char_value{default = Default} = R, Acc)
+		when is_boolean(Default) ->
+	feat_char_value(T, R, Acc#{"isDefault" => Default});
+feat_char_value([default | T], #{"isDefault" := Default} = M, Acc)
+		when is_boolean(Default) ->
+	feat_char_value(T, M, Acc#feat_char_value{default = Default});
+feat_char_value([start_date | T], #feat_char_value{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feat_char_value(T, R, Acc#{"validFor" => ValidFor});
+feat_char_value([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feat_char_value(T, M, Acc#feat_char_value{start_date = im_rest:iso8601(Start)});
+feat_char_value([end_date | T], #feat_char_value{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_value(T, R, Acc#{"validFor" := NewValidFor});
+feat_char_value([end_date | T], #feat_char_value{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_value(T, R, Acc#{"validFor" := ValidFor});
+feat_char_value([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feat_char_value(T, M, Acc#feat_char_value{end_date = im_rest:iso8601(End)});
+feat_char_value([unit | T], #feat_char_value{unit = Unit} = R, Acc)
+		when is_list(Unit) ->
+	feat_char_value(T, R, Acc#{"unitOfMeasure" => Unit});
+feat_char_value([unit | T], #{"unitOfMeasure" := Unit} = M, Acc)
+		when is_list(Unit) ->
+	feat_char_value(T, M, Acc#feat_char_value{unit = Unit});
+feat_char_value([from | T], #feat_char_value{from = From} = R, Acc)
+		when is_integer(From) ->
+	feat_char_value(T, R, Acc#{"valueFrom" => From});
+feat_char_value([from | T], #{"valueFrom" := From} = M, Acc)
+		when is_integer(From) ->
+	feat_char_value(T, M, Acc#feat_char_value{from = From});
+feat_char_value([to | T], #feat_char_value{to = To} = R, Acc)
+		when is_integer(To) ->
+	feat_char_value(T, R, Acc#{"valueTo" => To});
+feat_char_value([to | T], #{"valueTo" := To} = M, Acc)
+		when is_integer(To) ->
+	feat_char_value(T, M, Acc#feat_char_value{to = To});
+feat_char_value([interval | T], #feat_char_value{interval = Interval} = R, Acc)
+		when Interval /= undefined ->
+	feat_char_value(T, R, Acc#{"interval" => atom_to_list(Interval)});
+feat_char_value([interval | T], #{"interval" := "closed"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = closed});
+feat_char_value([interval | T], #{"interval" := "closed_bottom"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = closed_bottom});
+feat_char_value([interval | T], #{"interval" := "closed_top"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = closed_top});
+feat_char_value([interval | T], #{"interval" := "open"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = open});
+feat_char_value([regex | T], #feat_char_value{regex = {_, RegEx}} = R, Acc)
+		when is_list(RegEx) ->
+	feat_char_value(T, R, Acc#{"regex" => RegEx});
+feat_char_value([regex | T], #{"regex" := RegEx} = M, Acc)
+		when is_list(RegEx) ->
+	{ok, MP} = re:compile(RegEx),
+	feat_char_value(T, M, Acc#feat_char_value{regex = {MP, RegEx}});
+feat_char_value([value | T], #feat_char_value{value = Value} = R, Acc)
+		when Value /= undefined ->
+	feat_char_value(T, R, Acc#{"value" => Value});
+feat_char_value([value | T], #{"value" := Value} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{value = Value});
+feat_char_value([_ | T], R, Acc) ->
+	feat_char_value(T, R, Acc);
+feat_char_value([], _, Acc) ->
+	Acc.
+
+-spec feature_spec_rel(FeatureSpecificationRelationship) -> FeatureSpecificationRelationship
+	when
+		FeatureSpecificationRelationship :: [feature_spec_rel()] | [map()].
+%% @doc CODEC for `FeatureSpecificationRelationship'.
+%% @private
+feature_spec_rel([#feature_spec_rel{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_rel),
+	[feature_spec_rel(Fields, R, #{}) || R <- List];
+feature_spec_rel([#{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_rel),
+	[feature_spec_rel(Fields, M, #feature_spec_rel{}) || M <- List];
+feature_spec_rel([]) ->
+	[].
+%% @hidden
+feature_spec_rel([feat_id | T], #feature_spec_rel{feat_id = Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, M, Acc#{"featureId" => Id});
+feature_spec_rel([feat_id | T], #{"featureId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{feat_id = Id});
+feature_spec_rel([name | T], #feature_spec_rel{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec_rel(T, R, Acc#{"name" => Name});
+feature_spec_rel([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{name = Name});
+feature_spec_rel([class_type | T], #feature_spec_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, R, Acc#{"@type" => Type});
+feature_spec_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{class_type = Type});
+feature_spec_rel([base_type | T], #feature_spec_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, R, Acc#{"@baseType" => Type});
+feature_spec_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{class_type = Type});
+feature_spec_rel([schema | T], #feature_spec_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec_rel(T, R, Acc#{"@schemaLocation" => Schema});
+feature_spec_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{schema = Schema});
+feature_spec_rel([start_date | T], #feature_spec_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feature_spec_rel(T, R, Acc#{"validFor" => ValidFor});
+feature_spec_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{start_date = im_rest:iso8601(Start)});
+feature_spec_rel([end_date | T], #feature_spec_rel{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_rel(T, R, Acc#{"validFor" := NewValidFor});
+feature_spec_rel([end_date | T], #feature_spec_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_rel(T, R, Acc#{"validFor" := ValidFor});
+feature_spec_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{end_date = im_rest:iso8601(End)});
+feature_spec_rel([rel_type | T], #feature_spec_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, R, Acc#{"relationshipType" => Type});
+feature_spec_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{rel_type = Type});
+feature_spec_rel([res_id | T], #feature_spec_rel{res_id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, R, Acc#{"resourceSpecificationId" => Id});
+feature_spec_rel([res_id | T], #{"resourceSpecificationId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{res_id = Id});
+feature_spec_rel([res_href | T], #feature_spec_rel{res_href = Href} = R, Acc)
+		when is_list(Href) ->
+	feature_spec_rel(T, R, Acc#{"resourceSpecificationHref" => Href});
+feature_spec_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
+		when is_list(Href) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{res_href = Href});
+feature_spec_rel([_ | T], R, Acc) ->
+	feature_spec_rel(T, R, Acc);
+feature_spec_rel([], _, Acc) ->
+	Acc.
+
+-spec feat_char_rel(FeatureSpecificationCharacteristicRelationship) -> FeatureSpecificationCharacteristicRelationship
+	when
+		FeatureSpecificationCharacteristicRelationship :: [feat_char_rel()] | [map()].
+%% @doc CODEC for `FeatureSpecificationCharacteristicRelationship'.
+%% @private
+feat_char_rel([#feat_char_rel{} | _] = List) ->
+	Fields = record_info(fields, feat_char_rel),
+	[feat_char_rel(Fields, R, #{}) || R <- List];
+feat_char_rel([#{} | _] = List) ->
+	Fields = record_info(fields, feat_char_rel),
+	[feat_char_rel(Fields, M, #feat_char_rel{}) || M <- List];
+feat_char_rel([]) ->
+	[].
+%% @hidden
+feat_char_rel([char_id | T], #feat_char_rel{char_id = Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#{"characteristicId" => Id});
+feat_char_rel([char_id | T], #{"characteristicId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{char_id = Id});
+feat_char_rel([feat_id | T], #feat_char_rel{feat_id = Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#{"featureId" => Id});
+feat_char_rel([feat_id | T], #{"featureId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{feat_id = Id});
+feat_char_rel([name | T], #feat_char_rel{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feat_char_rel(T, R, Acc#{"name" => Name});
+feat_char_rel([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{name = Name});
+feat_char_rel([class_type | T], #feat_char_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, R, Acc#{"@type" => Type});
+feat_char_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{class_type = Type});
+feat_char_rel([base_type | T], #feat_char_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, R, Acc#{"@baseType" => Type});
+feat_char_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{class_type = Type});
+feat_char_rel([schema | T], #feat_char_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feat_char_rel(T, R, Acc#{"@schemaLocation" => Schema});
+feat_char_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{schema = Schema});
+feat_char_rel([start_date | T], #feat_char_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feat_char_rel(T, R, Acc#{"validFor" => ValidFor});
+feat_char_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{start_date = im_rest:iso8601(Start)});
+feat_char_rel([end_date | T], #feat_char_rel{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_rel(T, R, Acc#{"validFor" := NewValidFor});
+feat_char_rel([end_date | T], #feat_char_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_rel(T, R, Acc#{"validFor" := ValidFor});
+feat_char_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{end_date = im_rest:iso8601(End)});
+feat_char_rel([rel_type | T], #feat_char_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, R, Acc#{"relationshipType" => Type});
+feat_char_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{rel_type = Type});
+feat_char_rel([res_id | T], #feat_char_rel{res_id = Id} = R, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, R, Acc#{"resourceSpecificationId" => Id});
+feat_char_rel([res_id | T], #{"resourceSpecificationId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{res_id = Id});
+feat_char_rel([res_href | T], #feat_char_rel{res_href = Href} = R, Acc)
+		when is_list(Href) ->
+	feat_char_rel(T, R, Acc#{"resourceSpecificationHref" => Href});
+feat_char_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
+		when is_list(Href) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{res_href = Href});
+feat_char_rel([_ | T], R, Acc) ->
+	feat_char_rel(T, R, Acc);
+feat_char_rel([], _, Acc) ->
 	Acc.
 
 -spec specification_char(ResourceSpecCharacteristic) -> ResourceSpecCharacteristic

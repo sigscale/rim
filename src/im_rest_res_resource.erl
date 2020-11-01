@@ -333,12 +333,18 @@ resource([party | T], #resource{party = PartyRefs} = R, Acc)
 resource([party | T], #{"relatedParty" := PartyRefs} = M, Acc)
 		when is_list(PartyRefs), length(PartyRefs) > 0 ->
 	resource(T, M, Acc#resource{party = im_rest:party_ref(PartyRefs)});
+resource([feature | T], #resource{feature = Feature} = R, Acc)
+		when is_list(Feature), length(Feature) > 0 ->
+	resource(T, R, Acc#{"activationFeature" => feature(Feature)});
+resource([feature | T], #{"activationFeature" := Feature} = M, Acc)
+		when is_list(Feature) ->
+	resource(T, M, Acc#resource{feature = feature(Feature)});
 resource([characteristic | T], #resource{characteristic = ResChar} = R, Acc)
 		when is_list(ResChar), length(ResChar) > 0 ->
-	resource(T, R, Acc#{"resourceCharacteristic" => resource_char(ResChar)});
+	resource(T, R, Acc#{"resourceCharacteristic" => characteristic(ResChar)});
 resource([characteristic | T], #{"resourceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->
-	resource(T, M, Acc#resource{characteristic = resource_char(ResChar)});
+	resource(T, M, Acc#resource{characteristic = characteristic(ResChar)});
 resource([connectivity | T], #resource{connectivity = Connectivity} = R, Acc)
 		when is_list(Connectivity) ->
 	resource(T, R, Acc#{"connectivity" => connectivity(Connectivity)});
@@ -808,62 +814,263 @@ connection_point_spec([_ | T], R, Acc) ->
 connection_point_spec([], _, Acc) ->
 	Acc.
 
--spec resource_char(ResourceCharacteristic) -> ResourceCharacteristic
+-spec characteristic(Characteristic) -> Characteristic
 	when
-		ResourceCharacteristic :: [resource_char()] | [map()].
-%% @doc CODEC for `ResourceCharacteristic'.
-resource_char([#resource_char{} | _] = List) ->
+		Characteristic :: [resource_char()] | [map()].
+%% @doc CODEC for `Characteristic'.
+characteristic([#resource_char{} | _] = List) ->
 	Fields = record_info(fields, resource_char),
-	[resource_char(Fields, R, #{}) || R <- List];
-resource_char([#{} | _] = List) ->
+	[characteristic(Fields, R, #{}) || R <- List];
+characteristic([#{} | _] = List) ->
 	Fields = record_info(fields, resource_char),
-	[resource_char(Fields, M, #resource_char{}) || M <- List];
-resource_char([]) ->
+	[characteristic(Fields, M, #resource_char{}) || M <- List];
+characteristic([]) ->
 	[].
 %% @hidden
-resource_char([id | T], #resource_char{id = Id} = R, Acc)
+characteristic([id | T], #resource_char{id = Id} = R, Acc)
 		when is_list(Id) ->
-	resource_char(T, R, Acc#{"id" => Id});
-resource_char([id | T], #{"id" := Id} = M, Acc)
+	characteristic(T, R, Acc#{"id" => Id});
+characteristic([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
-	resource_char(T, M, Acc#resource_char{id = Id});
-resource_char([name | T], #resource_char{name = Name} = R, Acc)
+	characteristic(T, M, Acc#resource_char{id = Id});
+characteristic([name | T], #resource_char{name = Name} = R, Acc)
 		when is_list(Name) ->
-	resource_char(T, R, Acc#{"name" => Name});
-resource_char([name | T], #{"name" := Name} = M, Acc)
+	characteristic(T, R, Acc#{"name" => Name});
+characteristic([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
-	resource_char(T, M, Acc#resource_char{name = Name});
-resource_char([class_type | T], #resource_char{class_type = Type} = R, Acc)
+	characteristic(T, M, Acc#resource_char{name = Name});
+characteristic([class_type | T], #resource_char{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource_char(T, R, Acc#{"@type" => Type});
-resource_char([class_type | T], #{"@type" := Type} = M, Acc)
+	characteristic(T, R, Acc#{"@type" => Type});
+characteristic([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
-	resource_char(T, M, Acc#resource_char{class_type = Type});
-resource_char([base_type | T], #resource_char{base_type = Type} = R, Acc)
+	characteristic(T, M, Acc#resource_char{class_type = Type});
+characteristic([base_type | T], #resource_char{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource_char(T, R, Acc#{"@baseType" => Type});
-resource_char([base_type | T], #{"@baseType" := Type} = M, Acc)
+	characteristic(T, R, Acc#{"@baseType" => Type});
+characteristic([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
-	resource_char(T, M, Acc#resource_char{base_type = Type});
-resource_char([schema | T], #resource_char{schema = Schema} = R, Acc)
+	characteristic(T, M, Acc#resource_char{base_type = Type});
+characteristic([schema | T], #resource_char{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
-	resource_char(T, R, Acc#{"@schemaLocation" => Schema});
-resource_char([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+	characteristic(T, R, Acc#{"@schemaLocation" => Schema});
+characteristic([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 		when is_list(Schema) ->
-	resource_char(T, M, Acc#resource_char{schema = Schema});
-resource_char([value_type | T], #resource_char{value_type = Type} = R, Acc)
+	characteristic(T, M, Acc#resource_char{schema = Schema});
+characteristic([value_type | T], #resource_char{value_type = Type} = R, Acc)
 		when is_list(Type) ->
-	resource_char(T, R, Acc#{"valueType" => Type});
-resource_char([value_type | T], #{"valueType" := Type} = M, Acc)
+	characteristic(T, R, Acc#{"valueType" => Type});
+characteristic([value_type | T], #{"valueType" := Type} = M, Acc)
 		when is_list(Type) ->
-	resource_char(T, M, Acc#resource_char{value_type = Type});
-resource_char([value | T], #resource_char{value = Value} = R, Acc) ->
-	resource_char(T, R, Acc#{"value" => Value});
-resource_char([value | T], #{"value" := Value} = M, Acc) ->
-	resource_char(T, M, Acc#resource_char{value = Value});
-resource_char([_ | T], R, Acc) ->
-	resource_char(T, R, Acc);
-resource_char([], _, Acc) ->
+	characteristic(T, M, Acc#resource_char{value_type = Type});
+characteristic([value | T], #resource_char{value = Value} = R, Acc) ->
+	characteristic(T, R, Acc#{"value" => Value});
+characteristic([value | T], #{"value" := Value} = M, Acc) ->
+	characteristic(T, M, Acc#resource_char{value = Value});
+characteristic([related | T], #resource_char{related = CharRels} = R, Acc)
+		when is_list(CharRels) ->
+	characteristic(T, R, Acc#{"characteristicRelationship" => res_char_rel(CharRels)});
+characteristic([related | T], #{"characteristicRelationship" := CharRels} = M, Acc)
+		when is_list(CharRels) ->
+	characteristic(T, M, Acc#resource_char{related = res_char_rel(CharRels)});
+characteristic([_ | T], R, Acc) ->
+	characteristic(T, R, Acc);
+characteristic([], _, Acc) ->
+	Acc.
+
+-spec constraint_ref(ConstraintRef) -> ConstraintRef
+	when
+		ConstraintRef :: [constraint_ref()] | [map()].
+%% @doc CODEC for `ConstraintRef'.
+constraint_ref([#constraint_ref{} | _] = List) ->
+	Fields = record_info(fields, constraint_ref),
+	[constraint_ref(Fields, R, #{}) || R <- List];
+constraint_ref([#{} | _] = List) ->
+	Fields = record_info(fields, constraint_ref),
+	[constraint_ref(Fields, M, #constraint_ref{}) || M <- List];
+constraint_ref([]) ->
+	[].
+%% @hidden
+constraint_ref([id | T], #constraint_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	constraint_ref(T, R, Acc#{"id" => Id});
+constraint_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	constraint_ref(T, M, Acc#constraint_ref{id = Id});
+constraint_ref([href | T], #constraint_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	constraint_ref(T, R, Acc#{"href" => Href});
+constraint_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	constraint_ref(T, M, Acc#constraint_ref{href = Href});
+constraint_ref([name | T], #constraint_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	constraint_ref(T, R, Acc#{"name" => Name});
+constraint_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	constraint_ref(T, M, Acc#constraint_ref{name = Name});
+constraint_ref([version | T], #constraint_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	constraint_ref(T, R, Acc#{"version" => Version});
+constraint_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	constraint_ref(T, M, Acc#constraint_ref{version = Version});
+constraint_ref([ref_type | T], #constraint_ref{ref_type = RefType} = R, Acc)
+		when is_list(RefType) ->
+	constraint_ref(T, R, Acc#{"@referredType" => RefType});
+constraint_ref([ref_type | T], #{"@referredType" := RefType} = M, Acc)
+		when is_list(RefType) ->
+	constraint_ref(T, M, Acc#constraint_ref{ref_type = RefType});
+constraint_ref([_ | T], R, Acc) ->
+	constraint_ref(T, R, Acc);
+constraint_ref([], _, Acc) ->
+	Acc.
+
+-spec res_char_rel(CharacteristicRelationship) -> CharacteristicRelationship
+	when
+		CharacteristicRelationship :: [res_char_rel()] | [map()].
+%% @doc CODEC for `CharacteristicRelationship'.
+%%
+res_char_rel([#res_char_rel{} | _] = List) ->
+	Fields = record_info(fields, res_char_rel),
+	[res_char_rel(Fields, R, #{}) || R <- List];
+res_char_rel([#{} | _] = List) ->
+	Fields = record_info(fields, res_char_rel),
+	[res_char_rel(Fields, M, #res_char_rel{}) || M <- List];
+res_char_rel([]) ->
+	[].
+%% @hidden
+res_char_rel([id | T], #res_char_rel{id = Id} = R, Acc)
+		when is_list(Id) ->
+	res_char_rel(T, R, Acc#{"id" => Id});
+res_char_rel([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	res_char_rel(T, M, Acc#res_char_rel{id = Id});
+res_char_rel([rel_type | T], #res_char_rel{rel_type = RelType} = R, Acc)
+		when is_list(RelType) ->
+	res_char_rel(T, R, Acc#{"relationshipType" => RelType});
+res_char_rel([rel_type | T], #{"relationshipType" := RelType} = M, Acc)
+		when is_list(RelType) ->
+	res_char_rel(T, M, Acc#res_char_rel{rel_type = RelType});
+res_char_rel([_ | T], R, Acc) ->
+	res_char_rel(T, R, Acc);
+res_char_rel([], _, Acc) ->
+	Acc.
+
+-spec feature(Feature) -> Feature
+	when
+		Feature :: [feature()] | [map()].
+%% @doc CODEC for `Feature'.
+feature([#feature{} | _] = List) ->
+	Fields = record_info(fields, feature),
+	[feature(Fields, R, #{}) || R <- List];
+feature([#{} | _] = List) ->
+	Fields = record_info(fields, feature),
+	[feature(Fields, M, #feature{}) || M <- List];
+feature([]) ->
+	[].
+%% @hidden
+feature([id | T], #feature{id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature(T, R, Acc#{"id" => Id});
+feature([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature(T, M, Acc#feature{id = Id});
+feature([name | T], #feature{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature(T, R, Acc#{"name" => Name});
+feature([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feature(T, M, Acc#feature{name = Name});
+feature([bundle | T], #feature{bundle = Bundle} = R, Acc)
+		when is_boolean(Bundle) ->
+	feature(T, R, Acc#{"bundle" => Bundle});
+feature([bundle | T], #{"bundle" := Bundle} = M, Acc)
+		when is_boolean(Bundle) ->
+	feature(T, M, Acc#feature{bundle = Bundle});
+feature([enabled | T], #feature{enabled = Enabled} = R, Acc)
+		when is_boolean(Enabled) ->
+	feature(T, R, Acc#{"enabled" => Enabled});
+feature([enabled | T], #{"enabled" := Enabled} = M, Acc)
+		when is_boolean(Enabled) ->
+	feature(T, M, Acc#feature{enabled = Enabled});
+feature([constraint | T], #feature{constraint = Consts} = R, Acc)
+		when is_list(Consts) ->
+	feature(T, R, Acc#{"constraint" => constraint_ref(Consts)});
+feature([constraint | T], #{"constraint" := Consts} = M, Acc)
+		when is_list(Consts) ->
+	feature(T, M, Acc#feature{constraint = constraint_ref(Consts)});
+feature([characteristic | T], #feature{characteristic = Chars} = R, Acc)
+		when is_list(Chars) ->
+	feature(T, R, Acc#{"featureCharacteristic" => characteristic(Chars)});
+feature([characteristic | T], #{"featureCharacteristic" := Chars} = M, Acc)
+		when is_list(Chars) ->
+	feature(T, M, Acc#feature{characteristic = characteristic(Chars)});
+feature([related | T], #feature{related = CharRels} = R, Acc)
+		when is_list(CharRels) ->
+	feature(T, R, Acc#{"featureRelationship" => feature_rel(CharRels)});
+feature([related | T], #{"featureRelationship" := CharRels} = M, Acc)
+		when is_list(CharRels) ->
+	feature(T, M, Acc#feature{related = feature_rel(CharRels)});
+feature([_ | T], R, Acc) ->
+	feature(T, R, Acc);
+feature([], _, Acc) ->
+	Acc.
+
+-spec feature_rel(FeatureRelationship) -> FeatureRelationship
+	when
+		FeatureRelationship :: [feature_rel()] | [map()].
+%% @doc CODEC for `FeatureRelationship'.
+feature_rel([#feature_rel{} | _] = List) ->
+	Fields = record_info(fields, feature_rel),
+	[feature_rel(Fields, R, #{}) || R <- List];
+feature_rel([#{} | _] = List) ->
+	Fields = record_info(fields, feature_rel),
+	[feature_rel(Fields, M, #feature_rel{}) || M <- List];
+feature_rel([]) ->
+	[].
+%% @hidden
+feature_rel([id | T], #feature_rel{id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature_rel(T, R, Acc#{"id" => Id});
+feature_rel([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_rel(T, M, Acc#feature_rel{id = Id});
+feature_rel([name | T], #feature_rel{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_rel(T, R, Acc#{"name" => Name});
+feature_rel([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feature_rel(T, M, Acc#feature_rel{name = Name});
+feature_rel([start_date | T], #feature_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feature_rel(T, R, Acc#{"validFor" => ValidFor});
+feature_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feature_rel(T, M, Acc#feature_rel{start_date = im_rest:iso8601(Start)});
+feature_rel([end_date | T], #feature_rel{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feature_rel(T, R, Acc#{"validFor" := NewValidFor});
+feature_rel([end_date | T], #feature_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feature_rel(T, R, Acc#{"validFor" := ValidFor});
+feature_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feature_rel(T, M, Acc#feature_rel{end_date = im_rest:iso8601(End)});
+feature_rel([rel_type | T], #feature_rel{rel_type = RelType} = R, Acc)
+		when is_list(RelType) ->
+	feature_rel(T, R, Acc#{"relationshipType" => RelType});
+feature_rel([rel_type | T], #{"relationshipType" := RelType} = M, Acc)
+		when is_list(RelType) ->
+	feature_rel(T, M, Acc#feature_rel{rel_type = RelType});
+feature_rel([_ | T], R, Acc) ->
+	feature_rel(T, R, Acc);
+feature_rel([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
