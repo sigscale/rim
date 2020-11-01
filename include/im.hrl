@@ -401,7 +401,7 @@
 -record(connectivity,
 		{id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		type :: string() | undefined | '_',
+		ass_type :: string() | undefined | '_',
 		endpoint = [] :: [endpoint()] | '_'}).
 -type connectivity() :: #connectivity{}.
 

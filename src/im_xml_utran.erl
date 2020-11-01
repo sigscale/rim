@@ -211,7 +211,7 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 								id = RncId, href = ?ResourcePath ++ RncId},
 						IubEndpoint = #endpoint{name = IubDn, id = IubId,
 								href = Href, ref_type = IubRefType},
-						RncIubConnectivity = #connectivity{type = "pointtoPoint",
+						RncIubConnectivity = #connectivity{ass_type = "pointtoPoint",
 								endpoint = [RncEndpoint, IubEndpoint]},
 						CellIubConnectivity = case im:get_resource(IubId) of
 							{ok, #resource{characteristic = Chars}} ->
@@ -259,7 +259,7 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 						href = IubHref, ref_type = IubRefType},
 				CellEndpoint = #endpoint{name = CellDn, id = CellId,
 						href = CellHref, ref_type = CellType},
-				Connectivity = #connectivity{type = "pointtoPoint",
+				Connectivity = #connectivity{ass_type = "pointtoPoint",
 						endpoint = [IubEndpoint, CellEndpoint]},
 				F(T2, [Connectivity | ConnectivityList]);
 			F([], ConnectivityList) ->
