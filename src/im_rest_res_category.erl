@@ -173,7 +173,7 @@ patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 			undefined ->
 				{undefined, zj:decode(ReqBody)};
 			Etag ->
-				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+				{im_rest:etag(Etag) , zj:decode(ReqBody)}
 		end
 	of
 		{EtagT, {ok, Patch}} ->
