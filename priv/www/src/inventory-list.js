@@ -441,19 +441,20 @@ class inventoryList extends PolymerElement {
 	showInlineGraph(event) {
 		var grid = this.$.inventoryGrid;
 		var connectivity = event.model.item.connectivity;
-		var gridGraph = grid.querySelector('#graph' + event.model.item.id);
-		var width = gridGraph.clientWidth;
-		var height = gridGraph.clientHeight;
-		// var height = Math.ceil(gridGraph.clientWidth * 0.5625);
-		// gridGraph.style.height = height + 'px';
-		var graph = select(this.$.inventoryGrid)
-				.select('#graph' + event.model.item.id);
-		_connectivityGraph(connectivity, graph, width, height);
+		if (connectivity.length > 0) {
+			var gridGraph = grid.querySelector('#graph' + event.model.item.id);
+			var width = gridGraph.clientWidth;
+			var height = gridGraph.clientHeight;
+			// var height = Math.ceil(gridGraph.clientWidth * 0.5625);
+			// gridGraph.style.height = height + 'px';
+			var graph = select(this.$.inventoryGrid)
+					.select('#graph' + event.model.item.id);
+			_connectivityGraph(connectivity.shift().connection, graph, width, height);
+		}
 	}
-
 }
 
-function _connectivityGraph(connectivity, graph, width, height) {
+function _connectivityGraph(connections, graph, width, height) {
 	var vertices = [];
 	function mapEdge(connection) {
 		let edge = {};
@@ -502,7 +503,7 @@ function _connectivityGraph(connectivity, graph, width, height) {
 		}
 		return edge;
 	}
-	var edges = connectivity.map(mapEdge);
+	var edges = connections.map(mapEdge);
 	var simulation = forceSimulation(vertices)
 			.force("center", forceCenter(Math.ceil(width/2), Math.ceil(height/2)))
 			.force("charge", forceManyBody().strength(-800))

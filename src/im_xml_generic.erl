@@ -193,7 +193,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 		{ok, #resource{id = SubNetworkId}} ->
 			FConnectivity = fun F([#resource_rel{id = LinkId, name = LinkDn,
 					href = LinkHref, ref_type = LinkRefType} | T3], Acc) ->
-						LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
+						LinkEndpoint = #endpoint_ref{id = LinkId, name = LinkDn,
 								href = LinkHref, ref_type = LinkRefType},
 						case im:get_resource(LinkId) of
 							{ok, #resource{characteristic = LinkChars}} ->
@@ -206,7 +206,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 										= lists:filter(FaEnd, LinkChars),
 								AEndPoint = build_function_endpoint(AEndDn),
 								AEndLinkConnectivity
-										= #connectivity{ass_type = "pointtoPoint",
+										= #connection{ass_type = "pointtoPoint",
 										endpoint = [AEndPoint, LinkEndpoint]},
 								FzEnd = fun (#resource_char{name = "zEnd"}) ->
 											true;
@@ -217,7 +217,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 										= lists:filter(FzEnd, LinkChars),
 								ZEndPoint = build_function_endpoint(ZEndDn),
 								LinkZEndConnectivity
-										= #connectivity{ass_type = "pointtoPoint",
+										= #connection{ass_type = "pointtoPoint",
 										endpoint = [LinkEndpoint, ZEndPoint]},
 								F(T3, [AEndLinkConnectivity,
 										LinkZEndConnectivity | Acc]);
@@ -227,7 +227,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 					F([], Acc) ->
 						Acc
 			end,
-			Connectivity = FConnectivity(LinkMmeSgwRels, []),
+			Connectivity = [#resource_graph{connection = FConnectivity(LinkMmeSgwRels, [])}],
 			Ftrans = fun() ->
 					[R] = mnesia:read(resource, SubNetworkId, write),
 					mnesia:write(resource,
@@ -251,7 +251,7 @@ build_function_endpoint(EndDn) ->
 	case im:get_resource_name(EndDn) of
 		{ok, #resource{id = EndId, class_type = EndType,
 				connection_point = EndPoints}} ->
-			#endpoint{id = EndId, href = ?ResourcePath ++ EndId,
+			#endpoint_ref{id = EndId, href = ?ResourcePath ++ EndId,
 					name = EndDn, ref_type = EndType,
 					connection_point = EndPoints};
 		{error, Reason} ->

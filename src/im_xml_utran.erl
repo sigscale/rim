@@ -207,11 +207,11 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 		{ok, #resource{id = RncId} = R} ->
 			F = fun F([#resource_rel{id = IubId, name = IubDn,
 					href = Href, ref_type = IubRefType} = ResourceRel | T], Acc) ->
-						RncEndpoint = #endpoint{name = RncDn, ref_type = ClassType,
+						RncEndpoint = #endpoint_ref{name = RncDn, ref_type = ClassType,
 								id = RncId, href = ?ResourcePath ++ RncId},
-						IubEndpoint = #endpoint{name = IubDn, id = IubId,
+						IubEndpoint = #endpoint_ref{name = IubDn, id = IubId,
 								href = Href, ref_type = IubRefType},
-						RncIubConnectivity = #connectivity{ass_type = "pointtoPoint",
+						RncIubConnectivity = #connection{ass_type = "pointtoPoint",
 								endpoint = [RncEndpoint, IubEndpoint]},
 						CellIubConnectivity = case im:get_resource(IubId) of
 							{ok, #resource{characteristic = Chars}} ->
@@ -223,7 +223,7 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 					F([], Acc) ->
 						Acc
 			end,
-			Connectivity = F(IubLinks, []),
+			Connectivity = [#resource_graph{connection = F(IubLinks, [])}],
 			Ftrans = fun() ->
 					[R] = mnesia:read(resource, RncId, write),
 					mnesia:write(resource,
@@ -255,11 +255,11 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 				end,
 				#resource{id = CellId, href = CellHref,
 					class_type = CellType} = CellResource,
-				IubEndpoint = #endpoint{name = IubDn, id = IubId,
+				IubEndpoint = #endpoint_ref{name = IubDn, id = IubId,
 						href = IubHref, ref_type = IubRefType},
-				CellEndpoint = #endpoint{name = CellDn, id = CellId,
+				CellEndpoint = #endpoint_ref{name = CellDn, id = CellId,
 						href = CellHref, ref_type = CellType},
-				Connectivity = #connectivity{ass_type = "pointtoPoint",
+				Connectivity = #connection{ass_type = "pointtoPoint",
 						endpoint = [IubEndpoint, CellEndpoint]},
 				F(T2, [Connectivity | ConnectivityList]);
 			F([], ConnectivityList) ->
