@@ -5,8 +5,8 @@
 ##
 ## Boilerplate:  standard boilerplate code
 ##
-AC_INIT([sigscale_im], [1.0.0], [issues@sigscale.org])
-AC_COPYRIGHT([Copyright (c) 2018-2019 SigScale Global Inc.])
+AC_INIT([sigscale_im], [2.0.0], [issues@sigscale.org])
+AC_COPYRIGHT([Copyright (c) 2018-2020 SigScale Global Inc.])
 AC_PREREQ(2.63)
 AC_CONFIG_SRCDIR([src/im_app.erl])
 AC_CONFIG_HEADERS([config.h])

@@ -1,0 +1,55 @@
+2020-10-05  Vance Shipley <vances@sigscale.org>
+
+	* connectivity and connection point in resource specifications
+	* polymorphic attributes in resource relationship
+	* polymorphic attributes in connection
+	* default quantity in specification relationship
+	* remove unwanted opening model
+	* resource function specification connection points
+	* make expanded row for specifcation view and add update feature in expanded row
+	* rename lifecyle status type
+	* Row details after refresh
+	* connectivity as array of resource graphs
+	* change field name for connection associaton type
+	* correct module name for etag/1 function
+	* feature codec
+	* polymorphic attribute in specification characteristic value
+	* base type attribute in target schema reference
+	* polymorphic attributes in place reference
+	* referred type in party reference
+	* polymorphic attributes in candidate reference
+	* polymorphic attributes in category reference
+	* polymorphic attributes in specification characteristic relationship
+	* missing attributes in specification characteristics
+	* polymorphic attributes in specification reference
+	* rename related party field in records
+	* add polymorphic attributes to endpoint
+	* correct referred type in endpoint codec
+	* remove misplaced validity period from related party
+	* base and value type attribites in characteristic
+	* id attribite in characteristic
+	* connection point as generic resource relationship
+	* connectivity has id attribute
+	* align referred type field name with other uses
+	* correct attachment type
+	* remove incorrect relationship type attribute
+	* correct connection point relationships
+	* correct connection point attribute name
+	* resource paths as v4
+	* update resource relationship for v4
+	* remove misplaced connectivity from specification reference
+	* remove attributes added in error
+	* add few more coloumns to add catalog
+	* fix label in add inventory
+	* show type and class in specification
+	* fix inventory name column
+	* fix catalog patch
+	* remove misplaced connectivity from specification reference
+	* related resource specifications in network slice subnet specification example
+	* add resource specification relationships attribute to record
+	* remove af function and n5 interface
+	* resource specification relations for connection points, external connection point refs
+	* add connectivity graph
+	* add connection point specifications
+	* add resource specification relationships
+

@@ -1,7 +1,7 @@
 %%% im_rest_res_resource.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2019 SigScale Global Inc.
+%%% @copyright 2018-2020 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 %%% 	Handle `Resource' collection.
 %%%
 -module(im_rest_res_resource).
--copyright('Copyright (c) 2019 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_resources/3, get_resource/2, post_resource/1, delete_resource/1]).

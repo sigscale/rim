@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
 -module(mod_im_rest_accepted_content).
--copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
 
 -export([do/1]).
 

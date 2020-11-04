@@ -1,7 +1,7 @@
 %%% im_rest.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018-2019 SigScale Global Inc.
+%%% @copyright 2018-2020 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 %%% 	for REST servers in the {@link //im. im} application.
 %%%
 -module(im_rest).
--copyright('Copyright (c) 2018-2019 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
 
 -export([date/1, iso8601/1, geoaxis/1, etag/1]).
 -export([parse_query/1, range/1, pointer/1, patch/2]).
