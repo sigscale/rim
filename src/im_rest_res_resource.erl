@@ -541,6 +541,24 @@ resource_rel([name | T], #resource_rel{name = Name} = R, Acc)
 resource_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	resource_rel(T, M, Acc#resource_rel{name = Name});
+resource_rel([class_type | T], #resource_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_rel(T, R, Acc#{"@type" => Type});
+resource_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	resource_rel(T, M, Acc#resource_rel{class_type = Type});
+resource_rel([base_type | T], #resource_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_rel(T, R, Acc#{"@baseType" => Type});
+resource_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	resource_rel(T, M, Acc#resource_rel{base_type = Type});
+resource_rel([schema | T], #resource_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	resource_rel(T, R, Acc#{"@schemaLocation" => Schema});
+resource_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	resource_rel(T, M, Acc#resource_rel{schema = Schema});
 resource_rel([version | T], #resource_rel{version = Version} = R, Acc)
 		when is_list(Version) ->
 	resource_rel(T, R, Acc#{"version" => Version});
