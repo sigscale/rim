@@ -1,6 +1,6 @@
 %% im.hrl
 
--type catalog_status() :: in_study | in_design | in_test
+-type lifecycle_status() :: in_study | in_design | in_test
 		| rejected | active | launched | retired | obsolete.
 
 -record(category_ref,
@@ -254,7 +254,7 @@
 		start_date :: pos_integer() | undefined | '_' | '$9',
 		end_date :: pos_integer() | undefined | '_' | '$10',
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
-		status :: catalog_status() | undefined | '_' | '$12',
+		status :: lifecycle_status() | undefined | '_' | '$12',
 		party = [] :: [party_ref()] | '_' | '$13',
 		category = [] :: [category_ref()] | '_' | '$14'}).
 -type catalog() :: #catalog{}.
@@ -271,7 +271,7 @@
 		start_date :: pos_integer() | undefined | '_' | '$9',
 		end_date :: pos_integer() | undefined | '_' | '$10',
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
-		status :: catalog_status() | undefined | '_' | '$12',
+		status :: lifecycle_status() | undefined | '_' | '$12',
 		parent :: string() | undefined | '_' | '$13',
 		root = false :: boolean() | '_' | '$14',
 		party = [] :: [party_ref()] | '_' | '$15',
@@ -291,7 +291,7 @@
 		start_date :: pos_integer() | undefined | '_' | '$9',
 		end_date :: pos_integer() | undefined | '_' | '$10',
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
-		status :: catalog_status() | undefined | '_' | '$12',
+		status :: lifecycle_status() | undefined | '_' | '$12',
 		category = [] :: [category_ref()]  | '_' | '$13',
 		specification :: specification_ref() | undefined | '_' | '$14'}).
 -type candidate() :: #candidate{}.
@@ -304,7 +304,7 @@
 		class_type :: string() | undefined | '_' | '$5',
 		base_type :: string() | undefined | '_' | '$6',
 		schema :: string() | undefined | '_' | '$7',
-		status :: catalog_status() | undefined | '_' | '$8',
+		status :: lifecycle_status() | undefined | '_' | '$8',
 		version :: string() | undefined | '_' | '$9',
 		start_date :: pos_integer() | undefined | '_' | '$10',
 		end_date :: pos_integer() | undefined | '_' | '$11',
