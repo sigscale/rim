@@ -1,6 +1,6 @@
 {
 	"id": "6974362516",
-	"href": "/resourceInventoryManagement/v3/resource/6974362516",
+	"href": "/resourceInventoryManagement/v4/resource/6974362516",
 	"name": "SubNetwork=2,ManagedElement=1,CgfFunction=1",
 	"description": "Core Charging Gateway Function (CGF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "CgfFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/CgfFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/CgfFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362574",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362574",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362574",
 		"@type": "CgfFunctionSpec"
 	},
 	"resourceCharacteristic": [

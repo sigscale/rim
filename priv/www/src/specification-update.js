@@ -277,7 +277,7 @@ class specificationUpdate extends PolymerElement {
 	_delete() {
 		var ajax = this.$.specificationDeleteAjax;
 		ajax.method = "DELETE";
-		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
+		ajax.url = "/resourceCatalogManagement/v4/resourceSpecification/" + this.$.addSpecId.value;
 		ajax.generateRequest();
 		this.$.specificationUpdateModal.close();
 	}
@@ -285,7 +285,7 @@ class specificationUpdate extends PolymerElement {
 	_update() {
 		var ajax = this.$.specificationUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceSpecification/" + this.$.addSpecId.value;
+		ajax.url = "/resourceCatalogManagement/v4/resourceSpecification/" + this.$.addSpecId.value;
 		var spec = new Object();
 		if(this.specificationId) {
 			specId = this.specificationId;

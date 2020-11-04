@@ -1,6 +1,6 @@
 {
 	"id": "3597461905",
-	"href": "/resourceInventoryManagement/v3/resource/3597461905",
+	"href": "/resourceInventoryManagement/v4/resource/3597461905",
 	"name": "SubNetwork=8,ManagedElement=1,GNBCUUPFunction=1,EP_X2U=1",
 	"description": "NR End Point of the logical link, supporting the X2 user plane (X2-U) interface",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_X2U",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_X2U",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_X2U",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "368125608",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125608",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/368125608",
 		"@type": "EP_X2USpec"
 	},
 	"resourceCharacteristic": [

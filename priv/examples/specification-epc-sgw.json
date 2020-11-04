@@ -14,7 +14,7 @@
 	"category": "EPC",
 	"targetResourceSchema": {
 		"@type": "ServingGWFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ServingGWFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/ServingGWFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,19 +44,19 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "pLMNIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PLMNIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/PLMNIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/epcNrm#/definitions/PLMNIdList"
 		},
 		{
 			"name": "tACList",
 			"description": "List of TAC of MMEPoolArea used for traffic handling (3GPP 36.413)",
 			"valueType": "TACList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/epcNrm#/definitions/TACList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/epcNrm#/definitions/TACList"
 		}
 	]
 }

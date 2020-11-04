@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "CsMgwFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/CsMgwFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/CsMgwFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,25 +44,25 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "csMgwFunctionMscServerFunction",
 			"description": "This holds the DN of an MscServerFunction",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "csMgwFunctionIucsLink",
 			"description": "This holds a set of DNs of IucsLink",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "csMgwFunctionALink",
 			"description": "This holds a set of DNs of ALink",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		}
 	]
 }

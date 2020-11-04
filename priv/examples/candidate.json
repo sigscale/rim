@@ -1,10 +1,10 @@
 {
 	"id": "154995553124366",
-	"href": "/resourceCatalogManagement/v3/candidate/154995553124366",
+	"href": "/resourceCatalogManagement/v4/candidate/154995553124366",
 	"name": "BSS",
 	"description": "GSM Base Station Subsystem (BSS)",
 	"@type": "ResourceCandidate",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/resourceCatalogManagement#/definitions/ResourceCandidate",
+	"@schemaLocation": "/resourceCatalogManagement/v4/schema/resourceCatalogManagement#/definitions/ResourceCandidate",
 	"@baseType": "Candidate",
 	"version": "0.1",
 	"validFor": {
@@ -15,14 +15,14 @@
 	"category": [
 		{
 			"id": "154995556287925",
-			"href": "/resourceCatalogManagement/v3/category/154995556287925",
+			"href": "/resourceCatalogManagement/v4/category/154995556287925",
 			"name": "RAN",
 			"version": "0.1"
 		}
 	],
 	"resourceSpecification": {
 		"id": "154995556288077",
-		"href": "/resourceCatalogManagement/v3/specification/154995556288077",
+		"href": "/resourceCatalogManagement/v4/specification/154995556288077",
 		"name": "BssFunctionSpec",
 		"version": "0.1"
 	}

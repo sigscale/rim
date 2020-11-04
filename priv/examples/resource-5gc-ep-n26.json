@@ -1,6 +1,6 @@
 {
 	"id": "3597468030",
-	"href": "/resourceInventoryManagement/v3/resource/3597468030",
+	"href": "/resourceInventoryManagement/v4/resource/3597468030",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N26=1",
 	"description": "5G Core End Point of N26 interface (between AMF and MME)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N26",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N26",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N26",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468011",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468011",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468011",
 		"@type": "EP_N26Spec"
 	},
 	"resourceCharacteristic": [

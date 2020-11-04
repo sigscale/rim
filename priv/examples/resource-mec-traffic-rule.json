@@ -1,6 +1,6 @@
 {
 	"id": "6798452936",
-	"href": "/resourceInventoryManagement/v3/resource/6798452936",
+	"href": "/resourceInventoryManagement/v4/resource/6798452936",
 	"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,TrafficRule=1",
 	"description": "MEC Traffic Rule",
 	"category": "MEC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "TrafficRule",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/TrafficRule",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/TrafficRule",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789215634",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/789215634",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/789215634",
 		"@type": "TrafficRuleSpec"
 	},
 	"resourceCharacteristic": [

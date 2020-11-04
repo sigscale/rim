@@ -187,7 +187,7 @@ class categoryUpdate extends PolymerElement {
 	_delete() {
 		var ajax = this.$.categoryDeleteAjax;
 		ajax.method = "DELETE";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categoryId.value;
+		ajax.url = "/resourceCatalogManagement/v4/resourceCategory/" + this.$.categoryId.value;
 		ajax.generateRequest();
 		var deleteObj =  document.body.querySelector('inventory-management').shadowRoot.querySelector('category-update').shadowRoot.getElementById('categoryUpdateModal');
 		deleteObj.close();
@@ -196,7 +196,7 @@ class categoryUpdate extends PolymerElement {
 	_update() {
 		var ajax = this.$.categoryUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/" + this.$.categoryId.value;
+		ajax.url = "/resourceCatalogManagement/v4/resourceCategory/" + this.$.categoryId.value;
 		var cat = new Object();
 		if(this.categoryId) {
 			cat.id = this.categoryId;

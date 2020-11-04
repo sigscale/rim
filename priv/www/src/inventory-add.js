@@ -131,7 +131,7 @@ class inventoryAdd extends PolymerElement {
 	_add() {
 		var ajax = this.$.inventoryAddAjax;
 		ajax.method = "POST";
-		ajax.url = "/resourceInventoryManagement/v3/resource/";
+		ajax.url = "/resourceInventoryManagement/v4/resource/";
 		var inv = new Object();
 		if(this.inventoryName) {
 			inv.name = this.inventoryName;

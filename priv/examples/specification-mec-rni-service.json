@@ -14,7 +14,7 @@
 	"category": "MEC",
 	"targetResourceSchema": {
 		"@type": "RNIService",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/RNIService"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/RNIService"
 	},
 	"relatedParty": [
 		{

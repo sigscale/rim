@@ -1,6 +1,6 @@
 {
 	"id": "3597468027",
-	"href": "/resourceInventoryManagement/v3/resource/3597468027",
+	"href": "/resourceInventoryManagement/v4/resource/3597468027",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N17=1",
 	"description": "5G Core End Point of N17 interface (between AMF and 5G-EIR)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N17",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N17",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N17",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468014",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468014",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468014",
 		"@type": "EP_N17Spec"
 	},
 	"resourceCharacteristic": [

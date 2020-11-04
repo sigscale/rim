@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "SgsnFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SgsnFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/SgsnFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,31 +44,31 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "mccList",
 			"description": "List of Mobile Country Codes (MCC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "mncList",
 			"description": "List of Mobile Network Codes (MNC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "lacList",
 			"description": "List of Location Area Codes (LAC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "sacList",
 			"description": "List of Service Area Codes (SAC) (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "sgsnId",
@@ -79,31 +79,31 @@
 			"name": "sgsnFunctionGsmCell",
 			"description": "This holds a set of DNs of GsmCell",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "sgsnFunctionExternalGsmCell",
 			"description": "This holds a set of DNs of ExternalGsmCell",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "sgsnFunctionSgsnPool",
 			"description": "This holds a set of DNs of SgsnPool",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "nriList",
 			"description": "NRI shall be part of the TMSI (3GPP 23.003)",
 			"valueType": "LongList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/coreNrm#/definitions/LongList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/LongList"
 		},
 		{
 			"name": "proceduralStatus",
 			"description": "Procedural status of the object instance (ITU-T X.731)",
 			"valueType": "ProceduralStatus",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/statemanagementIRP#/definitions/ProceduralStatus"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/statemanagementIRP#/definitions/ProceduralStatus"
 		}
 	]
 }

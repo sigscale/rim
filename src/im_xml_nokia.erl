@@ -31,8 +31,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -240,14 +240,14 @@ parse_me({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MeDn,
 			description = "",
 			category = "",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ManagedElement",
+			schema = ?PathInventorySchema ++ "/ManagedElement",
 			specification = Spec,
 			characteristic = [PeeParam | MeAttr]},
 	case im:add_resource(Resource) of
@@ -306,14 +306,14 @@ parse_bss({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = BscDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+			schema = ?PathInventorySchema ++ "/BssFunction",
 			specification = Spec,
 			characteristic = [PeeParam | BscAttr]},
 	case im:add_resource(Resource) of
@@ -369,14 +369,14 @@ parse_bts({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = BtsDn,
 			description = "GSM Base Transceiver Station (BTS)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			schema = ?PathInventorySchema ++ "/BtsSiteMgr",
 			specification = Spec,
 			characteristic = [PeeParam | GsmBtsAttr]},
 	case im:add_resource(Resource) of
@@ -432,14 +432,14 @@ parse_gsm_cell({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = CellDn,
 			description = "GSM Radio",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
+			schema = ?PathInventorySchema ++ "/GsmCell",
 			specification = Spec,
 			characteristic = [PeeParam | GsmCellAttr]},
 	case im:add_resource(Resource) of
@@ -495,14 +495,14 @@ parse_gsm_abis({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = AbisDn,
 			description = "",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/AbisLink",
+			schema = ?PathInventorySchema ++ "/AbisLink",
 			specification = Spec,
 			characteristic = [PeeParam | AbisAttr]},
 	case im:add_resource(Resource) of
@@ -546,7 +546,7 @@ parse_hw({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Fchars = fun(#resource_char{name = "supportedByUnit"}) ->
 				true;
@@ -564,7 +564,7 @@ parse_hw({endElement, _Uri, "managedObject", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnit",
+			schema = ?PathInventorySchema ++ "/InventoryUnit",
 			specification = Spec,
 			characteristic = [PeeParam | HwAttr]},
 	case im:add_resource(Resource) of
@@ -637,14 +637,14 @@ parse_rnc({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = RncDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			schema = ?PathInventorySchema ++ "/RncFunction",
 			specification = Spec,
 			characteristic = [PeeParam | RncAttr]},
 	case im:add_resource(Resource) of
@@ -700,14 +700,14 @@ parse_nodeb({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = NodebDn,
 			description = "UMTS NodeB",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			schema = ?PathInventorySchema ++ "/NodeBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | NodebAttr]},
 	case im:add_resource(Resource) of
@@ -754,7 +754,7 @@ parse_iub_link({endElement, _Uri, "managedObject", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+			schema = ?PathInventorySchema ++ "/IubLink",
 			specification = Spec,
 			characteristic = IubLinkAttr},
 	case im:add_resource(Resource) of
@@ -817,14 +817,14 @@ parse_ucell_fdd({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = UCellFddDn,
 			description = "UMTS radio",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+			schema = ?PathInventorySchema ++ "/UtranCellFDD",
 			specification = Spec,
 			characteristic = [PeeParam | UCellFddAttr]},
 	case im:add_resource(Resource) of
@@ -898,14 +898,14 @@ parse_enb({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = EnbDn,
 			description = "LTE Evolved Node B (ENB)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ENBFunction",
+			schema = ?PathInventorySchema ++ "/ENBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | EnbAttr]},
 	case im:add_resource(Resource) of
@@ -975,14 +975,14 @@ parse_ecell_fdd({endElement, _Uri, "managedObject", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = ECellFddDn,
 			description = "UMTS radio",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EUtranCellFDD",
+			schema = ?PathInventorySchema ++ "/EUtranCellFDD",
 			specification = Spec,
 			characteristic = [PeeParam | ECellFddAttr]},
 	case im:add_resource(Resource) of
@@ -1081,10 +1081,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

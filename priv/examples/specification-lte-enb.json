@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "ENB",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ENB"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/ENB"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
 			"valueType": "PeeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "intraANRSwitch",
@@ -66,25 +66,25 @@
 			"name": "eNBId",
 			"description": "Unambiguously identifies an eNodeB within a PLMN",
 			"valueType": "ENBId",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/ENBId"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/eutranNrm#/definitions/ENBId"
 		},
 		{
 			"name": "x2BlackList",
 			"description": "List of target nodes prohibited X2 connections",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "x2WhiteList",
 			"description": "List of target nodes allowed X2 connections",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "x2HOBlackList",
 			"description": "List of target nodes prohibited handover",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "x2IpAddressList",
@@ -95,19 +95,19 @@
 			"name": "tceIDMappingInfoList",
 			"description": "List of Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
 			"valueType": "TceIDMappingInfoList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/TceIDMappingInfoList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/eutranNrm#/definitions/TceIDMappingInfoList"
 		},
 		{
 			"name": "sharNetTceMappingInfoList",
 			"description": "List of shared PLMN ID, Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
 			"valueType": "SharNetTceMappingInfoList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/SharNetTceMappingInfoList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/eutranNrm#/definitions/SharNetTceMappingInfoList"
 		},
 		{
 			"name": "netListeningRSForRIBS",
 			"description": "RS for RIBS ('Radio Interface based Synchronization' in 3GPP 36.300)",
 			"valueType": "NetListeningRSForRIBS",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/eutranNrm#/definitions/NetListeningRSForRIBS"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/eutranNrm#/definitions/NetListeningRSForRIBS"
 		}
 	]
 }

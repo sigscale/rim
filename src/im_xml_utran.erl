@@ -23,9 +23,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 
 %%----------------------------------------------------------------------
@@ -45,7 +45,7 @@ parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	NodeBAttr = parse_nodeb_attr(T2, undefined, []),
 	ClassType = "NodeBFunction",
@@ -55,7 +55,7 @@ parse_nodeb({endElement, _Uri, "NodeBFunction", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NodeBFunction",
+			schema = ?PathInventorySchema ++ "/NodeBFunction",
 			specification = Spec,
 			characteristic = [PeeParam | NodeBAttr]},
 	case im:add_resource(Resource) of
@@ -192,26 +192,26 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 	RncAttr = parse_rnc_attr(T2, undefined, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = RncDn,
 			description = "UMTS Radio Network Controller (RNC)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/RncFunction",
+			schema = ?PathInventorySchema ++ "/RncFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | RncAttr]),
 			related = Fdds ++ Lcrs ++ Hcrs ++ IubLinks},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = RncId} = R} ->
 			F = fun F([#resource_rel{id = IubId, name = IubDn,
-					href = Href, referred_type = IubRefType} = ResourceRel | T], Acc) ->
-						RncEndpoint = #endpoint{name = RncDn, referred_type = ClassType,
+					href = Href, ref_type = IubRefType} = ResourceRel | T], Acc) ->
+						RncEndpoint = #endpoint_ref{name = RncDn, ref_type = ClassType,
 								id = RncId, href = ?ResourcePath ++ RncId},
-						IubEndpoint = #endpoint{name = IubDn, id = IubId,
-								href = Href, referred_type = IubRefType},
-						RncIubConnectivity = #connectivity{type = "pointtoPoint",
+						IubEndpoint = #endpoint_ref{name = IubDn, id = IubId,
+								href = Href, ref_type = IubRefType},
+						RncIubConnectivity = #connection{ass_type = "pointtoPoint",
 								endpoint = [RncEndpoint, IubEndpoint]},
 						CellIubConnectivity = case im:get_resource(IubId) of
 							{ok, #resource{characteristic = Chars}} ->
@@ -223,7 +223,7 @@ parse_rnc({endElement, _Uri, "RncFunction", QName},
 					F([], Acc) ->
 						Acc
 			end,
-			Connectivity = F(IubLinks, []),
+			Connectivity = [#resource_graph{connection = F(IubLinks, [])}],
 			Ftrans = fun() ->
 					[R] = mnesia:read(resource, RncId, write),
 					mnesia:write(resource,
@@ -245,7 +245,7 @@ parse_rnc({endElement, _Uri, _LocalName, QName},
 %% @hidden
 build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 		value = IubUtranCellDnList} | T1], #resource_rel{id = IubId, name = IubDn,
-		href = IubHref, referred_type = IubRefType} = IubRel, Acc) ->
+		href = IubHref, ref_type = IubRefType} = IubRel, Acc) ->
 	F = fun F([CellDn | T2], ConnectivityList) when is_list(CellDn) ->
 				CellResource = case im:get_resource_name(CellDn) of
 					{ok, Resource} ->
@@ -255,11 +255,11 @@ build_iub_cell_connectivity([#resource_char{name = "iubLinkUtranCell",
 				end,
 				#resource{id = CellId, href = CellHref,
 					class_type = CellType} = CellResource,
-				IubEndpoint = #endpoint{name = IubDn, id = IubId,
-						href = IubHref, referred_type = IubRefType},
-				CellEndpoint = #endpoint{name = CellDn, id = CellId,
-						href = CellHref, referred_type = CellType},
-				Connectivity = #connectivity{type = "pointtoPoint",
+				IubEndpoint = #endpoint_ref{name = IubDn, id = IubId,
+						href = IubHref, ref_type = IubRefType},
+				CellEndpoint = #endpoint_ref{name = CellDn, id = CellId,
+						href = CellHref, ref_type = CellType},
+				Connectivity = #connection{ass_type = "pointtoPoint",
 						endpoint = [IubEndpoint, CellEndpoint]},
 				F(T2, [Connectivity | ConnectivityList]);
 			F([], ConnectivityList) ->
@@ -375,20 +375,21 @@ parse_fdd({endElement, _Uri, "UtranCellFDD", QName},
 	FddAttr = parse_fdd_attr(T2, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = FddDn,
 			description = "UMTS radio",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "UtranGenericCell",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+			schema = ?PathInventorySchema ++ "/UtranCellFDD",
 			specification = Spec,
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			FddRel = #resource_rel{id = Id, name = FddDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = UtranState#utran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -696,13 +697,14 @@ parse_tdd_hcr({endElement, _Uri, "UtranCellTDDHcr", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "UtranCellTDD",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDHcr",
+			schema = ?PathInventorySchema ++ "/UtranCellTDDHcr",
 			specification = Spec,
 			characteristic = TddHcrAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			HcrRel = #resource_rel{id = Id, name = TddHcrDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			HcrRel = #resource_rel{id = Id, name = TddHcrDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{tdd_hcrs = [HcrRel | HcrRels]}} | T1];
 		{error, Reason} ->
@@ -958,13 +960,14 @@ parse_tdd_lcr({endElement, _Uri, "UtranCellTDDLcr", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "UtranCellTDD",
-			schema = "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
+			schema = ?PathInventorySchema ++ "/UtranCellTDDLcr",
 			specification = Spec,
 			characteristic = TddLcrAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			LcrRel = #resource_rel{id = Id, name = TddLcrDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			LcrRel = #resource_rel{id = Id, name = TddLcrDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{tdd_lcrs = [LcrRel | LcrRels]}} | T1];
 		{error, Reason} ->
@@ -1215,20 +1218,21 @@ parse_iub({endElement, _Uri, "IubLink", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = IubDn,
 			description = "UMTS IUB interface",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/IubLink",
+			schema = ?PathInventorySchema ++ "/IubLink",
 			specification = Spec,
 			characteristic = [PeeParam | IubAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id} = _R} ->
-			IubRel = #resource_rel{id = Id, name = IubDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IubRel = #resource_rel{id = Id, name = IubDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = UtranState#utran_state{iubs = [IubRel | IubRels]}} | T1];
 		{error, Reason} ->
@@ -1476,10 +1480,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

@@ -14,7 +14,7 @@
 	"category": "IM",
 	"targetResourceSchema": {
 		"@type": "InventoryUnitLic",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnitLic"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/InventoryUnitLic"
 	},
 	"relatedParty": [
 		{
@@ -85,25 +85,25 @@
 			"name": "nEList",
 			"description": "Carries the set of DN(s) of related InventoryUnitNE(s)",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "hWList",
 			"description": "Carries the set of DN(s) of related InventoryUnitHw(s)",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "sWList",
 			"description": "Carries the set of DN(s) of related InventoryUnitSw(s)",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "mFunction",
 			"description": "Carries the DN of related ManagedFunction",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
 	]
 }

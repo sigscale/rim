@@ -1,6 +1,6 @@
 {
 	"id": "6974362953",
-	"href": "/resourceInventoryManagement/v3/resource/6974362953",
+	"href": "/resourceInventoryManagement/v4/resource/6974362953",
 	"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,NRSectorCarrier=1",
 	"description": "NR Sector Carrier",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "NRSectorCarrier",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/NRSectorCarrier",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/NRSectorCarrier",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362020",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362020",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362020",
 		"@type": "NRSectorCarrierSpec"
 	},
 	"resourceCharacteristic": [
@@ -41,5 +41,5 @@
 		}
 	],
 	"resourceRelationship": [],
-	"sap": []
+	"connectionPoint": []
 }

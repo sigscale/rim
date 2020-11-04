@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "AucFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/AucFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/AucFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,7 +44,7 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		}
 	]
 }

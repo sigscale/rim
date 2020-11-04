@@ -1,6 +1,6 @@
 {
 	"id": "6974362504",
-	"href": "/resourceInventoryManagement/v3/resource/6974362504",
+	"href": "/resourceInventoryManagement/v4/resource/6974362504",
 	"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1,IubcLink=1",
 	"description": "Core Iu-bc interface link",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "IubcLink",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/IubcLink",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/IubcLink",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362586",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362586",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362586",
 		"@type": "IubcLinkSpec"
 	},
 	"resourceCharacteristic": [

@@ -1,6 +1,6 @@
 {
 	"id": "8593462918",
-	"href": "/resourceInventoryManagement/v3/resource/8593462918",
+	"href": "/resourceInventoryManagement/v4/resource/8593462918",
 	"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellFDD=1",
 	"description": "UMTS Frequency Division Duplex (FDD)",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "UtranCellFDD",
 	"@baseType": "UtranGenericCell",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UtranCellFDD",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/UtranCellFDD",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798125649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798125649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798125649",
 		"@type": "UtranCellFDDSpec"
 	},
 	"resourceCharacteristic": [

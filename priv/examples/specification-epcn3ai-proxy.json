@@ -2,7 +2,7 @@
 	"name": "3GPPAAAProxyFunction",
 	"description": "EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy (3GPP 23.402)",
 	"@type": "3GPPAAAProxyFunctionSpec",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/3GPPAAAProxyFunctionSpec",
+	"@schemaLocation": "/resourceCatalogManagement/v4/schema/3GPPAAAProxyFunctionSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",
 	"validFor": {
@@ -14,7 +14,7 @@
 	"category": "EPCN3AI",
 	"targetResourceSchema": {
 		"@type": "3GPPAAAProxyFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/3GPPAAAProxyFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/3GPPAAAProxyFunction"
 	},
 	"relatedParty": [
 		{
@@ -43,13 +43,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "vsDataContainer",
 			"description": "Container for vendor specific data",
 			"valueType": "VsDataContainerList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VsDataContainerList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VsDataContainerList"
 		}
 	]
 }

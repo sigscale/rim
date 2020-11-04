@@ -24,8 +24,8 @@
 -export([date/1, iso8601/1, geoaxis/1, etag/1]).
 -export([parse_query/1, range/1, pointer/1, patch/2]).
 -export([lifecycle_status/1]).
--export([related_party_ref/1, category_ref/1, candidate_ref/1,
-		specification_ref/1, target_schema_ref/1]).
+-export([party_ref/1, category_ref/1, candidate_ref/1,
+		specification_ref/1, target_schema_ref/1, constraint_ref/1]).
 
 -include("im.hrl").
 
@@ -261,69 +261,73 @@ lifecycle_status("Retired") ->
 lifecycle_status("Obsolete") ->
 	obsolete.
 
--spec related_party_ref(RelatedPartyRef) -> RelatedPartyRef
+-spec party_ref(RelatedPartyRef) -> RelatedPartyRef
 	when
-		RelatedPartyRef :: [related_party_ref()] | [map()]
-				| related_party_ref() | map().
+		RelatedPartyRef :: [party_ref()] | [map()]
+				| party_ref() | map().
 %% @doc CODEC for `RelatedPartyRef'.
-related_party_ref(#related_party_ref{} = RelatedPartyRef) ->
-	related_party_ref(record_info(fields, related_party_ref), RelatedPartyRef, #{});
-related_party_ref(#{} = RelatedPartyRef) ->
-	related_party_ref(record_info(fields, related_party_ref), RelatedPartyRef, #related_party_ref{});
-related_party_ref([#related_party_ref{} | _] = List) ->
-	Fields = record_info(fields, related_party_ref),
-	[related_party_ref(Fields, RP, #{}) || RP <- List];
-related_party_ref([#{} | _] = List) ->
-	Fields = record_info(fields, related_party_ref),
-	[related_party_ref(Fields, RP, #related_party_ref{}) || RP <- List].
+party_ref(#party_ref{} = RelatedPartyRef) ->
+	party_ref(record_info(fields, party_ref), RelatedPartyRef, #{});
+party_ref(#{} = RelatedPartyRef) ->
+	party_ref(record_info(fields, party_ref), RelatedPartyRef, #party_ref{});
+party_ref([#party_ref{} | _] = List) ->
+	Fields = record_info(fields, party_ref),
+	[party_ref(Fields, RP, #{}) || RP <- List];
+party_ref([#{} | _] = List) ->
+	Fields = record_info(fields, party_ref),
+	[party_ref(Fields, RP, #party_ref{}) || RP <- List].
 %% @hidden
-related_party_ref([id | T], #related_party_ref{id = Id} = R, Acc)
+party_ref([id | T], #party_ref{id = Id} = R, Acc)
 		when is_list(Id) ->
-	related_party_ref(T, R, Acc#{"id" => Id});
-related_party_ref([id | T], #{"id" := Id} = M, Acc)
+	party_ref(T, R, Acc#{"id" => Id});
+party_ref([id | T], #{"id" := Id} = M, Acc)
 		when is_list(Id) ->
-	related_party_ref(T, M, Acc#related_party_ref{id = Id});
-related_party_ref([href | T], #related_party_ref{href = Href} = R, Acc)
+	party_ref(T, M, Acc#party_ref{id = Id});
+party_ref([href | T], #party_ref{href = Href} = R, Acc)
 		when is_list(Href) ->
-	related_party_ref(T, R, Acc#{"href" => Href});
-related_party_ref([href | T], #{"href" := Href} = M, Acc)
+	party_ref(T, R, Acc#{"href" => Href});
+party_ref([href | T], #{"href" := Href} = M, Acc)
 		when is_list(Href) ->
-	related_party_ref(T, M, Acc#related_party_ref{href = Href});
-related_party_ref([name | T], #related_party_ref{name = Name} = R, Acc)
+	party_ref(T, M, Acc#party_ref{href = Href});
+party_ref([name | T], #party_ref{name = Name} = R, Acc)
 		when is_list(Name) ->
-	related_party_ref(T, R, Acc#{"name" => Name});
-related_party_ref([name | T], #{"name" := Name} = M, Acc)
+	party_ref(T, R, Acc#{"name" => Name});
+party_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
-	related_party_ref(T, M, Acc#related_party_ref{name = Name});
-related_party_ref([role | T], #related_party_ref{role = Role} = R, Acc)
+	party_ref(T, M, Acc#party_ref{name = Name});
+party_ref([class_type | T], #party_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	party_ref(T, R, Acc#{"@type" => Type});
+party_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	party_ref(T, M, Acc#party_ref{class_type = Type});
+party_ref([base_type | T], #party_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	party_ref(T, R, Acc#{"@type" => Type});
+party_ref([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	party_ref(T, M, Acc#party_ref{base_type = Type});
+party_ref([schema | T], #party_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	party_ref(T, R, Acc#{"@schemaLocation" => Schema});
+party_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	party_ref(T, M, Acc#party_ref{schema = Schema});
+party_ref([role | T], #party_ref{role = Role} = R, Acc)
 		when is_list(Role) ->
-	related_party_ref(T, R, Acc#{"role" => Role});
-related_party_ref([role | T], #{"role" := Role} = M, Acc)
+	party_ref(T, R, Acc#{"role" => Role});
+party_ref([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
-	related_party_ref(T, M, Acc#related_party_ref{role = Role});
-related_party_ref([start_date | T], #related_party_ref{start_date = StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
-	related_party_ref(T, R, Acc#{"validFor" => ValidFor});
-related_party_ref([start_date | T],
-		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
-		when is_list(Start) ->
-	related_party_ref(T, M, Acc#related_party_ref{start_date = im_rest:iso8601(Start)});
-related_party_ref([end_date | T], #related_party_ref{end_date = End} = R,
-		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
-	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
-	related_party_ref(T, R, Acc#{"validFor" := NewValidFor});
-related_party_ref([end_date | T], #related_party_ref{end_date = End} = R, Acc)
-		when is_integer(End) ->
-	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
-	related_party_ref(T, R, Acc#{"validFor" := ValidFor});
-related_party_ref([end_date | T],
-		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
-		when is_list(End) ->
-	related_party_ref(T, M, Acc#related_party_ref{end_date = im_rest:iso8601(End)});
-related_party_ref([_ | T], R, Acc) ->
-	related_party_ref(T, R, Acc);
-related_party_ref([], _, Acc) ->
+	party_ref(T, M, Acc#party_ref{role = Role});
+party_ref([ref_type | T], #party_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	party_ref(T, R, Acc#{"@referredType" => Type});
+party_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
+		when is_list(Type) ->
+	party_ref(T, M, Acc#party_ref{ref_type = Type});
+party_ref([_ | T], R, Acc) ->
+	party_ref(T, R, Acc);
+party_ref([], _, Acc) ->
 	Acc.
 
 -spec category_ref(CategoryRef) -> CategoryRef
@@ -360,12 +364,36 @@ category_ref([name | T], #category_ref{name = Name} = R, Acc)
 category_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	category_ref(T, M, Acc#category_ref{name = Name});
+category_ref([class_type | T], #category_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@type" => Type});
+category_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{class_type = Type});
+category_ref([base_type | T], #category_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@baseType" => Type});
+category_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{base_type = Type});
+category_ref([schema | T], #category_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	category_ref(T, R, Acc#{"@schemaLocation" => Schema});
+category_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	category_ref(T, M, Acc#category_ref{schema = Schema});
 category_ref([version | T], #category_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
 	category_ref(T, R, Acc#{"version" => Version});
 category_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	category_ref(T, M, Acc#category_ref{version = Version});
+category_ref([ref_type | T], #category_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	category_ref(T, R, Acc#{"@referredType" => Type});
+category_ref([ref_type | T], #{"@referredTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	category_ref(T, M, Acc#category_ref{ref_type = Type});
 category_ref([_ | T], R, Acc) ->
 	category_ref(T, R, Acc);
 category_ref([], _, Acc) ->
@@ -405,12 +433,36 @@ candidate_ref([name | T], #candidate_ref{name = Name} = R, Acc)
 candidate_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	candidate_ref(T, M, Acc#candidate_ref{name = Name});
+candidate_ref([class_type | T], #candidate_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@type" => Type});
+candidate_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{class_type = Type});
+candidate_ref([base_type | T], #candidate_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@baseType" => Type});
+candidate_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{base_type = Type});
+candidate_ref([schema | T], #candidate_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	candidate_ref(T, R, Acc#{"@schemaLocation" => Schema});
+candidate_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	candidate_ref(T, M, Acc#candidate_ref{schema = Schema});
 candidate_ref([version | T], #candidate_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
 	candidate_ref(T, R, Acc#{"version" => Version});
 candidate_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	candidate_ref(T, M, Acc#candidate_ref{version = Version});
+candidate_ref([ref_type | T], #candidate_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, R, Acc#{"@referredType" => Type});
+candidate_ref([ref_type | T], #{"@referredTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	candidate_ref(T, M, Acc#candidate_ref{ref_type = Type});
 candidate_ref([_ | T], R, Acc) ->
 	candidate_ref(T, R, Acc);
 candidate_ref([], _, Acc) ->
@@ -452,12 +504,36 @@ specification_ref([name | T], #specification_ref{name = Name} = R, Acc)
 specification_ref([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	specification_ref(T, M, Acc#specification_ref{name = Name});
+specification_ref([class_type | T], #specification_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@type" => Type});
+specification_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{class_type = Type});
+specification_ref([base_type | T], #specification_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@baseType" => Type});
+specification_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{base_type = Type});
+specification_ref([schema | T], #specification_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	specification_ref(T, R, Acc#{"@schemaLocation" => Schema});
+specification_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	specification_ref(T, M, Acc#specification_ref{schema = Schema});
 specification_ref([version | T], #specification_ref{version = Version} = R, Acc)
 		when is_list(Version) ->
 	specification_ref(T, R, Acc#{"version" => Version});
 specification_ref([version | T], #{"version" := Version} = M, Acc)
 		when is_list(Version) ->
 	specification_ref(T, M, Acc#specification_ref{version = Version});
+specification_ref([ref_type | T], #specification_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@referredType" => Type});
+specification_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{ref_type = Type});
 specification_ref([_ | T], R, Acc) ->
 	specification_ref(T, R, Acc);
 specification_ref([], _, Acc) ->
@@ -487,6 +563,12 @@ target_schema_ref([class_type | T], #target_schema_ref{class_type = ClassType} =
 target_schema_ref([class_type | T], #{"@type" := ClassType} = M, Acc)
 		when is_list(ClassType) ->
 	target_schema_ref(T, M, Acc#target_schema_ref{class_type = ClassType});
+target_schema_ref([base_type | T], #target_schema_ref{base_type = ClassType} = R, Acc)
+		when is_list(ClassType) ->
+	target_schema_ref(T, R, Acc#{"@baseType" => ClassType});
+target_schema_ref([base_type | T], #{"@baseType" := ClassType} = M, Acc)
+		when is_list(ClassType) ->
+	target_schema_ref(T, M, Acc#target_schema_ref{base_type = ClassType});
 target_schema_ref([schema | T], #target_schema_ref{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	target_schema_ref(T, R, Acc#{"@schemaLocation" => Schema});
@@ -496,6 +578,75 @@ target_schema_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 target_schema_ref([_ | T], R, Acc) ->
 	target_schema_ref(T, R, Acc);
 target_schema_ref([], _, Acc) ->
+	Acc.
+
+-spec constraint_ref(ConstraintRef) -> ConstraintRef
+	when
+		ConstraintRef :: [constraint_ref()] | [map()]
+				| constraint_ref() | map().
+%% @doc CODEC for `ConstraintRef'.
+constraint_ref(#constraint_ref{} = ConstraintRef) ->
+	constraint_ref(record_info(fields, constraint_ref), ConstraintRef, #{});
+constraint_ref(#{} = ConstraintRef) ->
+	constraint_ref(record_info(fields, constraint_ref), ConstraintRef, #constraint_ref{});
+constraint_ref([#constraint_ref{} | _] = List) ->
+	Fields = record_info(fields, constraint_ref),
+	[constraint_ref(Fields, R, #{}) || R <- List];
+constraint_ref([#{} | _] = List) ->
+	Fields = record_info(fields, constraint_ref),
+	[constraint_ref(Fields, R, #constraint_ref{}) || R <- List].
+%% @hidden
+constraint_ref([id | T], #constraint_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	constraint_ref(T, R, Acc#{"id" => Id});
+constraint_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	constraint_ref(T, M, Acc#constraint_ref{id = Id});
+constraint_ref([href | T], #constraint_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	constraint_ref(T, R, Acc#{"href" => Href});
+constraint_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	constraint_ref(T, M, Acc#constraint_ref{href = Href});
+constraint_ref([name | T], #constraint_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	constraint_ref(T, R, Acc#{"name" => Name});
+constraint_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	constraint_ref(T, M, Acc#constraint_ref{name = Name});
+constraint_ref([class_type | T], #constraint_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, R, Acc#{"@type" => Type});
+constraint_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, M, Acc#constraint_ref{class_type = Type});
+constraint_ref([base_type | T], #constraint_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, R, Acc#{"@baseType" => Type});
+constraint_ref([base_type | T], #{"@baseTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, M, Acc#constraint_ref{base_type = Type});
+constraint_ref([schema | T], #constraint_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	constraint_ref(T, R, Acc#{"@schemaLocation" => Schema});
+constraint_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	constraint_ref(T, M, Acc#constraint_ref{schema = Schema});
+constraint_ref([version | T], #constraint_ref{version = Version} = R, Acc)
+		when is_list(Version) ->
+	constraint_ref(T, R, Acc#{"version" => Version});
+constraint_ref([version | T], #{"version" := Version} = M, Acc)
+		when is_list(Version) ->
+	constraint_ref(T, M, Acc#constraint_ref{version = Version});
+constraint_ref([ref_type | T], #constraint_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, R, Acc#{"@referredType" => Type});
+constraint_ref([ref_type | T], #{"@referredTtype" := Type} = M, Acc)
+		when is_list(Type) ->
+	constraint_ref(T, M, Acc#constraint_ref{ref_type = Type});
+constraint_ref([_ | T], R, Acc) ->
+	constraint_ref(T, R, Acc);
+constraint_ref([], _, Acc) ->
 	Acc.
 
 -spec geoaxis(Axis) -> Axis

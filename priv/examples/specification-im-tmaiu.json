@@ -14,7 +14,7 @@
 	"category": "IM",
 	"targetResourceSchema": {
 		"@type": "TmaInventoryUnit",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/TmaInventoryUnit"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/TmaInventoryUnit"
 	},
 	"relatedParty": [
 		{
@@ -92,7 +92,7 @@
 			"name": "relatedFunction",
 			"description": "This attribute carries the DN of related (ManagedFunction)",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "tmaNumberOfNonLinearGainValues",
@@ -147,13 +147,13 @@
 			"name": "tmaBeamwidthForEachOpBandInBandOrder",
 			"description": "",
 			"valueType": "EightOctetsType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/EightOctetsType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/EightOctetsType"
 		},
 		{
 			"name": "tmaGainForEachOpBandInBandOrder",
 			"description": "",
 			"valueType": "FourOctetsType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/FourOctetsType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/FourOctetsType"
 		},
 		{
 			"name": "tmaInstallationDate",

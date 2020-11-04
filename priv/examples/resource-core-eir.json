@@ -1,6 +1,6 @@
 {
 	"id": "6974362514",
-	"href": "/resourceInventoryManagement/v3/resource/6974362514",
+	"href": "/resourceInventoryManagement/v4/resource/6974362514",
 	"name": "SubNetwork=2,ManagedElement=1,EirFunction=1",
 	"description": "Core Equipment Identity Register (EIR)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EirFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EirFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EirFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362576",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362576",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362576",
 		"@type": "EirFunctionSpec"
 	},
 	"resourceCharacteristic": [

@@ -14,7 +14,7 @@
 	"category": "PEE",
 	"targetResourceSchema": {
 		"@type": "PEEMonitoredEntity",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/PEEMonitoredEntity"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/PEEMonitoredEntity"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "peeMeDescription",
 			"description": "PEE monitored entity description",
 			"valueType": "PEEMEDescription",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/peeCmonNrm#/definitions/PEEMEDescription"
 		},
 		{
 			"name": "peeMeConfiguration",
 			"description": "PEE monitored entity configuration",
 			"valueType": "PEEMEConfiguration",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/peeCmonNrm#/definitions/PEEMEConfiguration"
 		}
 	]
 }

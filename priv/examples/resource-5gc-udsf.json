@@ -1,6 +1,6 @@
 {
 	"id": "3597468067",
-	"href": "/resourceInventoryManagement/v3/resource/3597468067",
+	"href": "/resourceInventoryManagement/v4/resource/3597468067",
 	"name": "SubNetwork=12,ManagedElement=1,UDSFFunction=1",
 	"description": "5G Core Unified Data Storage Function (UDSF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "UDSFFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UDSFFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/UDSFFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467987",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467987",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467987",
 		"@type": "UDSFFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -34,24 +34,24 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468068",
-				"href": "/resourceInventoryManagement/v3/resource/3597468068",
+				"href": "/resourceInventoryManagement/v4/resource/3597468068",
 				"name": "SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
-	"sap": [
+	"connectionPoint": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468068",
-				"href": "/resourceInventoryManagement/v3/resource/3597468068",
+				"href": "/resourceInventoryManagement/v4/resource/3597468068",
 				"name": "SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

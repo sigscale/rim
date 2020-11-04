@@ -31,6 +31,8 @@
 -include("im.hrl").
 -define(MILLISECOND, milli_seconds).
 
+-define(PathSpecification, "/resourceCatalogManagement/v4/resourceSpecification/").
+
 %%----------------------------------------------------------------------
 %%  The im public API
 %%----------------------------------------------------------------------
@@ -57,7 +59,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceSpecification'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resourceSpecification'
 %% 	requests.
 get_specifications(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
@@ -162,7 +164,7 @@ get_specification(_, _, _) ->
 			| {error, ErrorCode :: integer()} .
 %% @doc Update a existing `specification'.
 %%
-%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceSpecification/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v4/resourceSpecification/{Id}' request.
 %%
 patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try
@@ -170,7 +172,7 @@ patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
 			undefined ->
 				{undefined, zj:decode(ReqBody)};
 			Etag ->
-				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+				{im_rest:etag(Etag) , zj:decode(ReqBody)}
 		end
 	of
 		{EtagT, {ok, Patch}} ->
@@ -199,7 +201,7 @@ patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{atomic, #specification{last_modified = LM1} = NewSpecification} ->
 					Body = zj:encode(specification(NewSpecification)),
 					Headers = [{content_type, "application/json"},
-							{location, "/resourceCatalogManagement/v3/resourceSpecification/" ++ Id},
+							{location, ?PathSpecification ++ Id},
 							{etag, im_rest:etag(LM1)}],
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->
@@ -349,12 +351,12 @@ specification([bundle | T], #specification{bundle = Bundle} = R, Acc)
 specification([bundle | T], #{"isBundle" := Bundle} = M, Acc)
 		when is_boolean(Bundle) ->
 	specification(T, M, Acc#specification{bundle = Bundle});
-specification([related_party | T], #specification{related_party = PartyRefs} = R, Acc)
+specification([party | T], #specification{party = PartyRefs} = R, Acc)
 		when is_list(PartyRefs), length(PartyRefs) > 0 ->
-	specification(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(PartyRefs)});
-specification([related_party | T], #{"relatedParty" := PartyRefs} = M, Acc)
+	specification(T, R, Acc#{"relatedParty" => im_rest:party_ref(PartyRefs)});
+specification([party | T], #{"relatedParty" := PartyRefs} = M, Acc)
 		when is_list(PartyRefs) ->
-	specification(T, M, Acc#specification{related_party = im_rest:related_party_ref(PartyRefs)});
+	specification(T, M, Acc#specification{party = im_rest:party_ref(PartyRefs)});
 specification([category | T], #specification{category = Category} = R, Acc)
 		when is_list(Category) ->
 	specification(T, R, Acc#{"category" => Category});
@@ -375,16 +377,28 @@ specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars}
 	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
 specification([feature | T], #specification{feature = SpecFeature} = R, Acc)
 		when is_list(SpecFeature) ->
-	specification(T, R, Acc#{"resourceSpecFeature" => feature(SpecFeature)});
+	specification(T, R, Acc#{"resourceSpecFeature" => feature_spec(SpecFeature)});
 specification([feature | T], #{"resourceSpecFeature" := SpecFeature} = M, Acc)
 		when is_list(SpecFeature) ->
-	specification(T, M, Acc#specification{feature = feature(SpecFeature)});
+	specification(T, M, Acc#specification{feature = feature_spec(SpecFeature)});
 specification([related | T], #specification{related = SpecRels} = R, Acc)
 		when is_list(SpecRels), length(SpecRels) > 0->
 	specification(T, R, Acc#{"resourceSpecRelationship" => specification_rel(SpecRels)});
 specification([related | T], #{"resourceSpecRelationship" := SpecRels} = M, Acc)
 		when is_list(SpecRels) ->
 	specification(T, M, Acc#specification{related = specification_rel(SpecRels)});
+specification([connectivity | T], #specification{connectivity = Graphs} = R, Acc)
+		when is_list(Graphs), length(Graphs) > 0->
+	specification(T, R, Acc#{"connectivitySpecification" => resource_graph_spec(Graphs)});
+specification([connectivity | T], #{"connectivitySpecification" := Graphs} = M, Acc)
+		when is_list(Graphs), length(Graphs) > 0 ->
+	specification(T, M, Acc#specification{connectivity = resource_graph_spec(Graphs)});
+specification([connection_point | T], #specification{connection_point = SpecRefs} = R, Acc)
+		when is_list(SpecRefs), length(SpecRefs) > 0->
+	specification(T, R, Acc#{"connectionPointSpecification" => specification_refs(SpecRefs)});
+specification([connection_point | T], #{"connectionPointSpecification" := SpecRefs} = M, Acc)
+		when is_list(SpecRefs), length(SpecRefs) > 0 ->
+	specification(T, M, Acc#specification{connection_point = specification_refs(SpecRefs)});
 specification([_ | T], R, Acc) ->
 	specification(T, R, Acc);
 specification([], _, Acc) ->
@@ -393,6 +407,73 @@ specification([], _, Acc) ->
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
+
+-spec specification_refs(ResourceSpecificationRefs) -> ResourceSpecificationRefs
+	when
+		ResourceSpecificationRefs :: [specification_ref()] | [map()].
+%% @doc CODEC for list of `ResourceSpecificationRef'.
+%% @private
+specification_refs(ResourceSpecificationRefs) ->
+	[specification_ref(ResSpecRef) || ResSpecRef <- ResourceSpecificationRefs].
+
+-spec specification_ref(ResourceSpecificationRef) -> ResourceSpecificationRef
+	when
+		ResourceSpecificationRef :: specification_ref() | map().
+%% @doc CODEC for `ResourceSpecificationRef'.
+%% @private
+specification_ref(#specification_ref{} = R) ->
+	Fields = record_info(fields, specification_ref),
+	specification_ref(Fields, R, #{});
+specification_ref(#{} = M) ->
+	Fields = record_info(fields, specification_ref),
+	specification_ref(Fields, M, #specification_ref{}).
+%% @hidden
+specification_ref([id | T], #specification_ref{id = Id} = M, Acc)
+		when is_list(Id) ->
+	specification_ref(T, M, Acc#{"id" => Id});
+specification_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	specification_ref(T, M, Acc#specification_ref{id = Id});
+specification_ref([href | T], #specification_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	specification_ref(T, R, Acc#{"href" => Href});
+specification_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	specification_ref(T, M, Acc#specification_ref{href = Href});
+specification_ref([name | T], #specification_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	specification_ref(T, R, Acc#{"name" => Name});
+specification_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	specification_ref(T, M, Acc#specification_ref{name = Name});
+specification_ref([class_type | T], #specification_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@type" => Type});
+specification_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{class_type = Type});
+specification_ref([base_type | T], #specification_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@baseType" => Type});
+specification_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{base_type = Type});
+specification_ref([schema | T], #specification_ref{schema = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@schemaLocation" => Type});
+specification_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{schema = Type});
+specification_ref([ref_type | T], #specification_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"relationshipType" => Type});
+specification_ref([ref_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{ref_type = Type});
+specification_ref([_ | T], R, Acc) ->
+	specification_ref(T, R, Acc);
+specification_ref([], _, Acc) ->
+	Acc.
 
 -spec specification_rel(ResourceSpecRelationship) -> ResourceSpecRelationship
 	when
@@ -426,24 +507,24 @@ specification_rel([name | T], #specification_rel{name = Name} = R, Acc)
 specification_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	specification_rel(T, M, Acc#specification_rel{name = Name});
-specification_rel([type | T], #specification_rel{type = Type} = R, Acc)
+specification_rel([class_type | T], #specification_rel{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification_rel(T, R, Acc#{"type" => Type});
-specification_rel([type | T], #{"type" := Type} = M, Acc)
+	specification_rel(T, R, Acc#{"@type" => Type});
+specification_rel([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
-	specification_rel(T, M, Acc#specification_rel{type = Type});
-specification_rel([rel_type | T], #specification_rel{rel_type = Type} = R, Acc)
+	specification_rel(T, M, Acc#specification_rel{class_type = Type});
+specification_rel([base_type | T], #specification_rel{base_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification_rel(T, R, Acc#{"relationshipType" => Type});
-specification_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+	specification_rel(T, R, Acc#{"@baseType" => Type});
+specification_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
-	specification_rel(T, M, Acc#specification_rel{rel_type = Type});
-specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
-		when is_list(Role) ->
-	specification_rel(T, R, Acc#{"role" => Role});
-specification_rel([role | T], #{"role" := Role} = M, Acc)
-		when is_list(Role) ->
-	specification_rel(T, M, Acc#specification_rel{role = Role});
+	specification_rel(T, M, Acc#specification_rel{base_type = Type});
+specification_rel([schema | T], #specification_rel{schema = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_rel(T, R, Acc#{"@schemaLocation" => Type});
+specification_rel([schema | T], #{"@schemaLocation" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_rel(T, M, Acc#specification_rel{schema = Type});
 specification_rel([start_date | T], #specification_rel{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
@@ -463,6 +544,36 @@ specification_rel([end_date | T], #specification_rel{end_date = End} = R, Acc)
 specification_rel([end_date | T], #{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	specification_rel(T, M, Acc#specification_rel{end_date = im_rest:iso8601(End)});
+specification_rel([rel_type | T], #specification_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_rel(T, R, Acc#{"relationshipType" => Type});
+specification_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_rel(T, M, Acc#specification_rel{rel_type = Type});
+specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
+		when is_list(Role) ->
+	specification_rel(T, R, Acc#{"role" => Role});
+specification_rel([role | T], #{"role" := Role} = M, Acc)
+		when is_list(Role) ->
+	specification_rel(T, M, Acc#specification_rel{role = Role});
+specification_rel([default | T], #specification_rel{default = Def} = R, Acc)
+		when is_integer(Def), Def >= 0 ->
+	specification_rel(T, R, Acc#{"defaultimumQuantity" => Def});
+specification_rel([default | T], #{"defaultimumQuantity" := Def} = M, Acc)
+		when is_integer(Def), Def >= 0 ->
+	specification_rel(T, M, Acc#specification_rel{default = Def});
+specification_rel([min | T], #specification_rel{min = Min} = R, Acc)
+		when is_integer(Min), Min >= 0 ->
+	specification_rel(T, R, Acc#{"minimumQuantity" => Min});
+specification_rel([min | T], #{"minimumQuantity" := Min} = M, Acc)
+		when is_integer(Min), Min >= 0 ->
+	specification_rel(T, M, Acc#specification_rel{min = Min});
+specification_rel([max | T], #specification_rel{max = Max} = R, Acc)
+		when is_integer(Max), Max >= 0 ->
+	specification_rel(T, R, Acc#{"maximumQuantity" => Max});
+specification_rel([max | T], #{"maximumQuantity" := Max} = M, Acc)
+		when is_integer(Max), Max >= 0 ->
+	specification_rel(T, M, Acc#specification_rel{max = Max});
 specification_rel([_ | T], R, Acc) ->
 	specification_rel(T, R, Acc);
 specification_rel([], _, Acc) ->
@@ -494,6 +605,12 @@ spec_char_value([class_type | T], #spec_char_value{class_type = Type} = R, Acc)
 spec_char_value([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	spec_char_value(T, M, Acc#spec_char_value{class_type = Type});
+spec_char_value([base_type | T], #spec_char_value{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	spec_char_value(T, R, Acc#{"@type" => Type});
+spec_char_value([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	spec_char_value(T, M, Acc#spec_char_value{base_type = Type});
 spec_char_value([schema | T], #spec_char_value{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	spec_char_value(T, R, Acc#{"@schemaLocation" => Schema});
@@ -572,77 +689,530 @@ spec_char_value([_ | T], R, Acc) ->
 spec_char_value([], _, Acc) ->
 	Acc.
 
--spec feature(ResourceSpecFeature) -> ResourceSpecFeature
+-spec feature_spec(ResourceSpecFeature) -> ResourceSpecFeature
 	when
-		ResourceSpecFeature :: [feature()] | [map()].
+		ResourceSpecFeature :: [feature_spec()] | [map()].
 %% @doc CODEC for `ResourceSpecFeature'.
 %% @private
-feature([#feature{} | _] = List) ->
-	Fields = record_info(fields, feature),
-	[feature(Fields, R, #{}) || R <- List];
-feature([#{} | _] = List) ->
-	Fields = record_info(fields, feature),
-	[feature(Fields, M, #feature{}) || M <- List];
-feature([]) ->
+feature_spec([#feature_spec{} | _] = List) ->
+	Fields = record_info(fields, feature_spec),
+	[feature_spec(Fields, R, #{}) || R <- List];
+feature_spec([#{} | _] = List) ->
+	Fields = record_info(fields, feature_spec),
+	[feature_spec(Fields, M, #feature_spec{}) || M <- List];
+feature_spec([]) ->
 	[].
 %% @hidden
-feature([name | T], #feature{name = Name} = R, Acc)
-		when is_list(Name) ->
-	feature(T, R, Acc#{"name" => Name});
-feature([name | T], #{"name" := Name} = R, Acc)
-		when is_list(Name) ->
-	feature(T, R, Acc#feature{name = Name});
-feature([id | T], #feature{id = Id} = R, Acc)
+feature_spec([id | T], #feature_spec{id = Id} = R, Acc)
 		when is_list(Id) ->
-	feature(T, R, Acc#{"id" => Id});
-feature([id | T], #{"id" := Id} = R, Acc)
+	feature_spec(T, R, Acc#{"id" => Id});
+feature_spec([id | T], #{"id" := Id} = R, Acc)
 		when is_list(Id) ->
-	feature(T, R, Acc#feature{id = Id});
-feature([href | T], #feature{href = Href} = R, Acc)
-		when is_list(Href) ->
-	feature(T, R, Acc#{"href" => Href});
-feature([href | T], #{"href" := Href} = R, Acc)
-		when is_list(Href) ->
-	feature(T, R, Acc#feature{href = Href});
-feature([version | T], #feature{version = Version} = R, Acc)
-		when is_list(Version) ->
-	feature(T, R, Acc#{"version" => Version});
-feature([version | T], #{"version" := Version} = R, Acc)
-		when is_list(Version) ->
-	feature(T, R, Acc#feature{version = Version});
-feature([class_type | T], #feature{class_type = Type} = R, Acc)
+	feature_spec(T, R, Acc#feature_spec{id = Id});
+feature_spec([name | T], #feature_spec{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec(T, R, Acc#{"name" => Name});
+feature_spec([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec(T, R, Acc#feature_spec{name = Name});
+feature_spec([class_type | T], #feature_spec{class_type = Type} = R, Acc)
 		when is_list(Type) ->
-	feature(T, R, Acc#{"class_type" => Type});
-feature([class_type | T], #{"class_type" := Type} = R, Acc)
+	feature_spec(T, R, Acc#{"class_type" => Type});
+feature_spec([class_type | T], #{"class_type" := Type} = R, Acc)
 		when is_list(Type) ->
-	feature(T, R, Acc#feature{class_type = Type});
-feature([bundle | T], #feature{bundle = Bundle} = R, Acc)
+	feature_spec(T, R, Acc#feature_spec{class_type = Type});
+feature_spec([base_type | T], #feature_spec{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec(T, R, Acc#{"@baseType" => Type});
+feature_spec([base_type | T], #{"@baseType" := Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec(T, R, Acc#feature_spec{base_type = Type});
+feature_spec([schema | T], #feature_spec{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec(T, R, Acc#{"@baseSchema" => Schema});
+feature_spec([schema | T], #{"@baseSchema" := Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec(T, R, Acc#feature_spec{schema = Schema});
+feature_spec([bundle | T], #feature_spec{bundle = Bundle} = R, Acc)
 		when is_boolean(Bundle) ->
-	feature(T, R, Acc#{"bundle" => Bundle});
-feature([bundle | T], #{"bundle" := Bundle} = R, Acc)
+	feature_spec(T, R, Acc#{"bundle" => Bundle});
+feature_spec([bundle | T], #{"bundle" := Bundle} = R, Acc)
 		when is_boolean(Bundle) ->
-	feature(T, R, Acc#feature{bundle = Bundle});
-feature([start_date | T], #feature{start_date = StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	feature(T, R, Acc#{"start_date" => StartDate});
-feature([start_date | T], #{"start_date" := StartDate} = R, Acc)
-		when is_integer(StartDate) ->
-	feature(T, R, Acc#feature{start_date = StartDate});
-feature([end_date | T], #feature{end_date = EndDate} = R, Acc)
-		when is_integer(EndDate) ->
-	feature(T, R, Acc#{"end_date" => EndDate});
-feature([end_date | T], #{"end_date" := EndDate} = R, Acc)
-		when is_integer(EndDate) ->
-	feature(T, R, Acc#feature{end_date = EndDate});
-feature([enabled | T], #feature{enabled = Enabled} = R, Acc)
+	feature_spec(T, R, Acc#feature_spec{bundle = Bundle});
+feature_spec([enabled | T], #feature_spec{enabled = Enabled} = R, Acc)
 		when is_boolean(Enabled) ->
-	feature(T, R, Acc#{"enabled" => Enabled});
-feature([enabled | T], #{"enabled" := Enabled} = R, Acc)
+	feature_spec(T, R, Acc#{"enabled" => Enabled});
+feature_spec([enabled | T], #{"enabled" := Enabled} = R, Acc)
 		when is_boolean(Enabled) ->
-	feature(T, R, Acc#feature{enabled = Enabled});
-feature([_ | T], R, Acc) ->
-	feature(T, R, Acc);
-feature([], _, Acc) ->
+	feature_spec(T, R, Acc#feature_spec{enabled = Enabled});
+feature_spec([version | T], #feature_spec{version = Version} = R, Acc)
+		when is_list(Version) ->
+	feature_spec(T, R, Acc#{"version" => Version});
+feature_spec([version | T], #{"version" := Version} = R, Acc)
+		when is_list(Version) ->
+	feature_spec(T, R, Acc#feature_spec{version = Version});
+feature_spec([start_date | T], #feature_spec{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	feature_spec(T, R, Acc#{"start_date" => StartDate});
+feature_spec([start_date | T], #{"start_date" := StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	feature_spec(T, R, Acc#feature_spec{start_date = StartDate});
+feature_spec([end_date | T], #feature_spec{end_date = EndDate} = R, Acc)
+		when is_integer(EndDate) ->
+	feature_spec(T, R, Acc#{"end_date" => EndDate});
+feature_spec([end_date | T], #{"end_date" := EndDate} = R, Acc)
+		when is_integer(EndDate) ->
+	feature_spec(T, R, Acc#feature_spec{end_date = EndDate});
+feature_spec([constraint | T], #feature_spec{constraint = Consts} = R, Acc)
+		when is_list(Consts), length(Consts) > 0->
+	feature_spec(T, R, Acc#{"constraint" => im_rest:constraint_ref(Consts)});
+feature_spec([constraint| T], #{"constraint" := Consts} = M, Acc)
+		when is_list(Consts) ->
+	feature_spec(T, M, Acc#feature_spec{constraint = im_rest:constraint_ref(Consts)});
+feature_spec([characteristic | T], #feature_spec{characteristic = Chars} = R, Acc)
+		when is_list(Chars), length(Chars) > 0->
+	feature_spec(T, R, Acc#{"featureSpecCharacteristic" => feature_spec_char(Chars)});
+feature_spec([characteristic | T], #{"resourceSpecCharacteristic" := Chars} = M, Acc)
+		when is_list(Chars) ->
+	feature_spec(T, M, Acc#feature_spec{characteristic = feature_spec_char(Chars)});
+feature_spec([related | T], #feature_spec{related = FeatureRels} = R, Acc)
+		when is_list(FeatureRels) ->
+	feature_spec(T, R,
+			Acc#{"featureSpecRelationship" => feature_spec_rel(FeatureRels)});
+feature_spec([related | T], #{"featureSpecCharRelationship" := FeatureRels} = M, Acc)
+		when is_list(FeatureRels) ->
+	feature_spec(T, M, Acc#feature_spec{related = feature_spec_rel(FeatureRels)});
+feature_spec([_ | T], R, Acc) ->
+	feature_spec(T, R, Acc);
+feature_spec([], _, Acc) ->
+	Acc.
+
+-spec feature_spec_char(FeatureSpecificationCharacteristic) -> FeatureSpecificationCharacteristic
+	when
+		FeatureSpecificationCharacteristic :: [feature_spec_char()] | [map()].
+%% @doc CODEC for `FeatureSpecificationCharacteristic'.
+%% @private
+feature_spec_char([#feature_spec_char{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_char),
+	[feature_spec_char(Fields, R, #{}) || R <- List];
+feature_spec_char([#{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_char),
+	[feature_spec_char(Fields, M, #feature_spec_char{}) || M <- List];
+feature_spec_char([]) ->
+	[].
+%% @hidden
+feature_spec_char([id | T], #feature_spec_char{id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature_spec_char(T, R, Acc#{"id" => Id});
+feature_spec_char([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{id = Id});
+feature_spec_char([name | T], #feature_spec_char{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec_char(T, R, Acc#{"name" => Name});
+feature_spec_char([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{name = Name});
+feature_spec_char([class_type | T], #feature_spec_char{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, R, Acc#{"@type" => Type});
+feature_spec_char([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{class_type = Type});
+feature_spec_char([base_type | T], #feature_spec_char{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, R, Acc#{"@baseType" => Type});
+feature_spec_char([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{base_type = Type});
+feature_spec_char([schema | T], #feature_spec_char{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, R, Acc#{"@schemaLocation" => Schema});
+feature_spec_char([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{schema = Schema});
+feature_spec_char([value_schema | T], #feature_spec_char{value_schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, R, Acc#{"@valueSchemaLocation" => Schema});
+feature_spec_char([value_schema | T], #{"@valueSchemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{value_schema = Schema});
+feature_spec_char([configurable | T], #feature_spec_char{configurable = Configurable} = R, Acc)
+		when is_boolean(Configurable) ->
+	feature_spec_char(T, R, Acc#{"configurable" => Configurable});
+feature_spec_char([configurable | T], #{"configurable" := Configurable} = M, Acc)
+		when is_boolean(Configurable) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{configurable = Configurable});
+feature_spec_char([min | T], #feature_spec_char{min = Min} = R, Acc)
+		when is_integer(Min) ->
+	feature_spec_char(T, R, Acc#{"minCardinality" => Min});
+feature_spec_char([min | T], #{"minCardinality" := Min} = M, Acc)
+		when is_integer(Min) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{min = Min});
+feature_spec_char([max | T], #feature_spec_char{max = Max} = R, Acc)
+		when is_integer(Max) ->
+	feature_spec_char(T, R, Acc#{"maxCardinality" => Max});
+feature_spec_char([max | T], #{"maxCardinality" := Max} = M, Acc)
+		when is_integer(Max) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{max = Max});
+feature_spec_char([unique | T], #feature_spec_char{unique = Unique} = R, Acc)
+		when is_boolean(Unique) ->
+	feature_spec_char(T, R, Acc#{"unique" => Unique});
+feature_spec_char([unique | T], #{"unique" := Unique} = M, Acc)
+		when is_boolean(Unique) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{unique = Unique});
+feature_spec_char([regex | T], #feature_spec_char{regex = {_, RegEx}} = R, Acc)
+		when is_list(RegEx) ->
+	feature_spec_char(T, R, Acc#{"regex" => RegEx});
+feature_spec_char([regex | T], #{"regex" := RegEx} = M, Acc)
+		when is_list(RegEx) ->
+	{ok, MP} = re:compile(RegEx),
+	feature_spec_char(T, M, Acc#feature_spec_char{regex = {MP, RegEx}});
+feature_spec_char([extensible | T], #feature_spec_char{extensible = Ext} = R, Acc)
+		when is_boolean(Ext) ->
+	feature_spec_char(T, R, Acc#{"extensible" => Ext});
+feature_spec_char([extensible | T], #{"extensible" := Ext} = M, Acc)
+		when is_boolean(Ext) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{extensible = Ext});
+feature_spec_char([start_date | T], #feature_spec_char{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feature_spec_char(T, R, Acc#{"validFor" => ValidFor});
+feature_spec_char([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{start_date = im_rest:iso8601(Start)});
+feature_spec_char([end_date | T], #feature_spec_char{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_char(T, R, Acc#{"validFor" := NewValidFor});
+feature_spec_char([end_date | T], #feature_spec_char{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_char(T, R, Acc#{"validFor" := ValidFor});
+feature_spec_char([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{end_date = im_rest:iso8601(End)});
+feature_spec_char([related | T],
+		#feature_spec_char{related = CharRels} = R, Acc)
+		when is_list(CharRels) ->
+	feature_spec_char(T, R,
+			Acc#{"featureSpecCharRelationship" => feat_char_rel(CharRels)});
+feature_spec_char([related | T],
+		#{"featureSpecCharRelationship" := CharRels} = M, Acc)
+		when is_list(CharRels) ->
+	feature_spec_char(T, M,
+			Acc#feature_spec_char{related = feat_char_rel(CharRels)});
+feature_spec_char([value_type | T], #feature_spec_char{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, R, Acc#{"valueType" => Type});
+feature_spec_char([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_char(T, M, Acc#feature_spec_char{value_type = Type});
+feature_spec_char([char_value | T],
+		#feature_spec_char{char_value = CharVals} = R, Acc)
+		when is_list(CharVals) ->
+	feature_spec_char(T, R,
+			Acc#{"featureSpecCharacteristicValue" => feat_char_value(CharVals)});
+feature_spec_char([char_value | T],
+		#{"featureSpecCharacteristicValue" := CharVals} = M, Acc)
+		when is_list(CharVals) ->
+	feature_spec_char(T, M,
+			Acc#feature_spec_char{char_value = feat_char_value(CharVals)});
+feature_spec_char([_ | T], R, Acc) ->
+	feature_spec_char(T, R, Acc);
+feature_spec_char([], _, Acc) ->
+	Acc.
+
+-spec feat_char_value(FeatureSpecificationCharacteristicValue) -> FeatureSpecificationCharacteristicValue
+	when
+		FeatureSpecificationCharacteristicValue :: [feat_char_value()] | [map()].
+%% @doc CODEC for `FeatureSpecificationCharacteristicValue'.
+%% @private
+feat_char_value([#feat_char_value{} | _] = List) ->
+	Fields = record_info(fields, feat_char_value),
+	[feat_char_value(Fields, R, #{}) || R <- List];
+feat_char_value([#{} | _] = List) ->
+	Fields = record_info(fields, feat_char_value),
+	[feat_char_value(Fields, M, #feat_char_value{}) || M <- List];
+feat_char_value([]) ->
+	[].
+%% @hidden
+feat_char_value([value_type | T], #feat_char_value{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, R, Acc#{"valueType" => Type});
+feat_char_value([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, M, Acc#feat_char_value{value_type = Type});
+feat_char_value([class_type | T], #feat_char_value{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, R, Acc#{"@type" => Type});
+feat_char_value([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, M, Acc#feat_char_value{class_type = Type});
+feat_char_value([base_type | T], #feat_char_value{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, R, Acc#{"@type" => Type});
+feat_char_value([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_value(T, M, Acc#feat_char_value{base_type = Type});
+feat_char_value([schema | T], #feat_char_value{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feat_char_value(T, R, Acc#{"@schemaLocation" => Schema});
+feat_char_value([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feat_char_value(T, M, Acc#feat_char_value{schema = Schema});
+feat_char_value([default | T], #feat_char_value{default = Default} = R, Acc)
+		when is_boolean(Default) ->
+	feat_char_value(T, R, Acc#{"isDefault" => Default});
+feat_char_value([default | T], #{"isDefault" := Default} = M, Acc)
+		when is_boolean(Default) ->
+	feat_char_value(T, M, Acc#feat_char_value{default = Default});
+feat_char_value([start_date | T], #feat_char_value{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feat_char_value(T, R, Acc#{"validFor" => ValidFor});
+feat_char_value([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feat_char_value(T, M, Acc#feat_char_value{start_date = im_rest:iso8601(Start)});
+feat_char_value([end_date | T], #feat_char_value{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_value(T, R, Acc#{"validFor" := NewValidFor});
+feat_char_value([end_date | T], #feat_char_value{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_value(T, R, Acc#{"validFor" := ValidFor});
+feat_char_value([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feat_char_value(T, M, Acc#feat_char_value{end_date = im_rest:iso8601(End)});
+feat_char_value([unit | T], #feat_char_value{unit = Unit} = R, Acc)
+		when is_list(Unit) ->
+	feat_char_value(T, R, Acc#{"unitOfMeasure" => Unit});
+feat_char_value([unit | T], #{"unitOfMeasure" := Unit} = M, Acc)
+		when is_list(Unit) ->
+	feat_char_value(T, M, Acc#feat_char_value{unit = Unit});
+feat_char_value([from | T], #feat_char_value{from = From} = R, Acc)
+		when is_integer(From) ->
+	feat_char_value(T, R, Acc#{"valueFrom" => From});
+feat_char_value([from | T], #{"valueFrom" := From} = M, Acc)
+		when is_integer(From) ->
+	feat_char_value(T, M, Acc#feat_char_value{from = From});
+feat_char_value([to | T], #feat_char_value{to = To} = R, Acc)
+		when is_integer(To) ->
+	feat_char_value(T, R, Acc#{"valueTo" => To});
+feat_char_value([to | T], #{"valueTo" := To} = M, Acc)
+		when is_integer(To) ->
+	feat_char_value(T, M, Acc#feat_char_value{to = To});
+feat_char_value([interval | T], #feat_char_value{interval = Interval} = R, Acc)
+		when Interval /= undefined ->
+	feat_char_value(T, R, Acc#{"interval" => atom_to_list(Interval)});
+feat_char_value([interval | T], #{"interval" := "closed"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = closed});
+feat_char_value([interval | T], #{"interval" := "closed_bottom"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = closed_bottom});
+feat_char_value([interval | T], #{"interval" := "closed_top"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = closed_top});
+feat_char_value([interval | T], #{"interval" := "open"} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{interval = open});
+feat_char_value([regex | T], #feat_char_value{regex = {_, RegEx}} = R, Acc)
+		when is_list(RegEx) ->
+	feat_char_value(T, R, Acc#{"regex" => RegEx});
+feat_char_value([regex | T], #{"regex" := RegEx} = M, Acc)
+		when is_list(RegEx) ->
+	{ok, MP} = re:compile(RegEx),
+	feat_char_value(T, M, Acc#feat_char_value{regex = {MP, RegEx}});
+feat_char_value([value | T], #feat_char_value{value = Value} = R, Acc)
+		when Value /= undefined ->
+	feat_char_value(T, R, Acc#{"value" => Value});
+feat_char_value([value | T], #{"value" := Value} = M, Acc) ->
+	feat_char_value(T, M, Acc#feat_char_value{value = Value});
+feat_char_value([_ | T], R, Acc) ->
+	feat_char_value(T, R, Acc);
+feat_char_value([], _, Acc) ->
+	Acc.
+
+-spec feature_spec_rel(FeatureSpecificationRelationship) -> FeatureSpecificationRelationship
+	when
+		FeatureSpecificationRelationship :: [feature_spec_rel()] | [map()].
+%% @doc CODEC for `FeatureSpecificationRelationship'.
+%% @private
+feature_spec_rel([#feature_spec_rel{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_rel),
+	[feature_spec_rel(Fields, R, #{}) || R <- List];
+feature_spec_rel([#{} | _] = List) ->
+	Fields = record_info(fields, feature_spec_rel),
+	[feature_spec_rel(Fields, M, #feature_spec_rel{}) || M <- List];
+feature_spec_rel([]) ->
+	[].
+%% @hidden
+feature_spec_rel([feat_id | T], #feature_spec_rel{feat_id = Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, M, Acc#{"featureId" => Id});
+feature_spec_rel([feat_id | T], #{"featureId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{feat_id = Id});
+feature_spec_rel([name | T], #feature_spec_rel{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feature_spec_rel(T, R, Acc#{"name" => Name});
+feature_spec_rel([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{name = Name});
+feature_spec_rel([class_type | T], #feature_spec_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, R, Acc#{"@type" => Type});
+feature_spec_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{class_type = Type});
+feature_spec_rel([base_type | T], #feature_spec_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, R, Acc#{"@baseType" => Type});
+feature_spec_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{base_type = Type});
+feature_spec_rel([schema | T], #feature_spec_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feature_spec_rel(T, R, Acc#{"@schemaLocation" => Schema});
+feature_spec_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{schema = Schema});
+feature_spec_rel([start_date | T], #feature_spec_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feature_spec_rel(T, R, Acc#{"validFor" => ValidFor});
+feature_spec_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{start_date = im_rest:iso8601(Start)});
+feature_spec_rel([end_date | T], #feature_spec_rel{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_rel(T, R, Acc#{"validFor" := NewValidFor});
+feature_spec_rel([end_date | T], #feature_spec_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feature_spec_rel(T, R, Acc#{"validFor" := ValidFor});
+feature_spec_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{end_date = im_rest:iso8601(End)});
+feature_spec_rel([rel_type | T], #feature_spec_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, R, Acc#{"relationshipType" => Type});
+feature_spec_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{rel_type = Type});
+feature_spec_rel([res_id | T], #feature_spec_rel{res_id = Id} = R, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, R, Acc#{"resourceSpecificationId" => Id});
+feature_spec_rel([res_id | T], #{"resourceSpecificationId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{res_id = Id});
+feature_spec_rel([res_href | T], #feature_spec_rel{res_href = Href} = R, Acc)
+		when is_list(Href) ->
+	feature_spec_rel(T, R, Acc#{"resourceSpecificationHref" => Href});
+feature_spec_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
+		when is_list(Href) ->
+	feature_spec_rel(T, M, Acc#feature_spec_rel{res_href = Href});
+feature_spec_rel([_ | T], R, Acc) ->
+	feature_spec_rel(T, R, Acc);
+feature_spec_rel([], _, Acc) ->
+	Acc.
+
+-spec feat_char_rel(FeatureSpecificationCharacteristicRelationship) -> FeatureSpecificationCharacteristicRelationship
+	when
+		FeatureSpecificationCharacteristicRelationship :: [feat_char_rel()] | [map()].
+%% @doc CODEC for `FeatureSpecificationCharacteristicRelationship'.
+%% @private
+feat_char_rel([#feat_char_rel{} | _] = List) ->
+	Fields = record_info(fields, feat_char_rel),
+	[feat_char_rel(Fields, R, #{}) || R <- List];
+feat_char_rel([#{} | _] = List) ->
+	Fields = record_info(fields, feat_char_rel),
+	[feat_char_rel(Fields, M, #feat_char_rel{}) || M <- List];
+feat_char_rel([]) ->
+	[].
+%% @hidden
+feat_char_rel([char_id | T], #feat_char_rel{char_id = Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#{"characteristicId" => Id});
+feat_char_rel([char_id | T], #{"characteristicId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{char_id = Id});
+feat_char_rel([feat_id | T], #feat_char_rel{feat_id = Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#{"featureId" => Id});
+feat_char_rel([feat_id | T], #{"featureId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{feat_id = Id});
+feat_char_rel([name | T], #feat_char_rel{name = Name} = R, Acc)
+		when is_list(Name) ->
+	feat_char_rel(T, R, Acc#{"name" => Name});
+feat_char_rel([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{name = Name});
+feat_char_rel([class_type | T], #feat_char_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, R, Acc#{"@type" => Type});
+feat_char_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{class_type = Type});
+feat_char_rel([base_type | T], #feat_char_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, R, Acc#{"@baseType" => Type});
+feat_char_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{base_type = Type});
+feat_char_rel([schema | T], #feat_char_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	feat_char_rel(T, R, Acc#{"@schemaLocation" => Schema});
+feat_char_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{schema = Schema});
+feat_char_rel([start_date | T], #feat_char_rel{start_date = StartDate} = R, Acc)
+		when is_integer(StartDate) ->
+	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
+	feat_char_rel(T, R, Acc#{"validFor" => ValidFor});
+feat_char_rel([start_date | T],
+		#{"validFor" := #{"startDateTime" := Start}} = M, Acc)
+		when is_list(Start) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{start_date = im_rest:iso8601(Start)});
+feat_char_rel([end_date | T], #feat_char_rel{end_date = End} = R,
+		#{"validFor" := ValidFor} = Acc) when is_integer(End) ->
+	NewValidFor = ValidFor#{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_rel(T, R, Acc#{"validFor" := NewValidFor});
+feat_char_rel([end_date | T], #feat_char_rel{end_date = End} = R, Acc)
+		when is_integer(End) ->
+	ValidFor = #{"endDateTime" => im_rest:iso8601(End)},
+	feat_char_rel(T, R, Acc#{"validFor" := ValidFor});
+feat_char_rel([end_date | T],
+		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
+		when is_list(End) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{end_date = im_rest:iso8601(End)});
+feat_char_rel([rel_type | T], #feat_char_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, R, Acc#{"relationshipType" => Type});
+feat_char_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{rel_type = Type});
+feat_char_rel([res_id | T], #feat_char_rel{res_id = Id} = R, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, R, Acc#{"resourceSpecificationId" => Id});
+feat_char_rel([res_id | T], #{"resourceSpecificationId" := Id} = M, Acc)
+		when is_list(Id) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{res_id = Id});
+feat_char_rel([res_href | T], #feat_char_rel{res_href = Href} = R, Acc)
+		when is_list(Href) ->
+	feat_char_rel(T, R, Acc#{"resourceSpecificationHref" => Href});
+feat_char_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
+		when is_list(Href) ->
+	feat_char_rel(T, M, Acc#feat_char_rel{res_href = Href});
+feat_char_rel([_ | T], R, Acc) ->
+	feat_char_rel(T, R, Acc);
+feat_char_rel([], _, Acc) ->
 	Acc.
 
 -spec specification_char(ResourceSpecCharacteristic) -> ResourceSpecCharacteristic
@@ -659,6 +1229,12 @@ specification_char([#{} | _] = List) ->
 specification_char([]) ->
 	[].
 %% @hidden
+specification_char([id | T], #specification_char{id = Id} = R, Acc)
+		when is_list(Id) ->
+	specification_char(T, R, Acc#{"id" => Id});
+specification_char([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	specification_char(T, M, Acc#specification_char{id = Id});
 specification_char([name | T], #specification_char{name = Name} = R, Acc)
 		when is_list(Name) ->
 	specification_char(T, R, Acc#{"name" => Name});
@@ -671,18 +1247,18 @@ specification_char([description | T], #specification_char{description = Descript
 specification_char([description | T], #{"description" := Description} = M, Acc)
 		when is_list(Description) ->
 	specification_char(T, M, Acc#specification_char{description = Description});
-specification_char([value_type | T], #specification_char{value_type = Type} = R, Acc)
-		when is_list(Type) ->
-	specification_char(T, R, Acc#{"valueType" => Type});
-specification_char([value_type | T], #{"valueType" := Type} = M, Acc)
-		when is_list(Type) ->
-	specification_char(T, M, Acc#specification_char{value_type = Type});
 specification_char([class_type | T], #specification_char{class_type = Type} = R, Acc)
 		when is_list(Type) ->
 	specification_char(T, R, Acc#{"@type" => Type});
 specification_char([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification_char(T, M, Acc#specification_char{class_type = Type});
+specification_char([base_type | T], #specification_char{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_char(T, R, Acc#{"@baseType" => Type});
+specification_char([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_char(T, M, Acc#specification_char{base_type = Type});
 specification_char([schema | T], #specification_char{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	specification_char(T, R, Acc#{"@schemaLocation" => Schema});
@@ -752,16 +1328,22 @@ specification_char([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	specification_char(T, M, Acc#specification_char{end_date = im_rest:iso8601(End)});
-specification_char([char_relation | T],
-		#specification_char{char_relation = CharRels} = R, Acc)
+specification_char([related | T],
+		#specification_char{related = CharRels} = R, Acc)
 		when is_list(CharRels) ->
 	specification_char(T, R,
 			Acc#{"resourceSpecCharRelationship" => spec_char_rel(CharRels)});
-specification_char([char_relation | T],
+specification_char([related | T],
 		#{"resourceSpecCharRelationship" := CharRels} = M, Acc)
 		when is_list(CharRels) ->
 	specification_char(T, M,
-			Acc#specification_char{char_relation = spec_char_rel(CharRels)});
+			Acc#specification_char{related = spec_char_rel(CharRels)});
+specification_char([value_type | T], #specification_char{value_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_char(T, R, Acc#{"valueType" => Type});
+specification_char([value_type | T], #{"valueType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_char(T, M, Acc#specification_char{value_type = Type});
 specification_char([char_value | T],
 		#specification_char{char_value = CharVals} = R, Acc)
 		when is_list(CharVals) ->
@@ -791,36 +1373,36 @@ spec_char_rel([#{} | _] = List) ->
 spec_char_rel([]) ->
 	[].
 %% @hidden
-spec_char_rel([id | T], #{"id" := Id} = M, Acc)
+spec_char_rel([char_id | T], #spec_char_rel{char_id = Id} = M, Acc)
 		when is_list(Id) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{id = Id});
-spec_char_rel([id | T], #{"id" := Id} = M, Acc)
+	spec_char_rel(T, M, Acc#{"characteristicSpecificationId" => Id});
+spec_char_rel([char_id | T], #{"characteristicSpecificationId" := Id} = M, Acc)
 		when is_list(Id) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{id = Id});
-spec_char_rel([href | T], #spec_char_rel{href = Href} = R, Acc)
-		when is_list(Href) ->
-	spec_char_rel(T, R, Acc#{"href" => Href});
-spec_char_rel([href | T], #{"href" := Href} = M, Acc)
-		when is_list(Href) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{href = Href});
+	spec_char_rel(T, M, Acc#spec_char_rel{char_id = Id});
 spec_char_rel([name | T], #spec_char_rel{name = Name} = R, Acc)
 		when is_list(Name) ->
 	spec_char_rel(T, R, Acc#{"name" => Name});
 spec_char_rel([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{name = Name});
-spec_char_rel([type | T], #spec_char_rel{type = Type} = R, Acc)
-		when is_list(Type) ->
-	spec_char_rel(T, R, Acc#{"type" => Type});
-spec_char_rel([type | T], #{"type" := Type} = M, Acc)
-		when is_list(Type) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{type = Type});
 spec_char_rel([class_type | T], #spec_char_rel{class_type = Type} = R, Acc)
 		when is_list(Type) ->
 	spec_char_rel(T, R, Acc#{"@type" => Type});
 spec_char_rel([class_type | T], #{"@type" := Type} = M, Acc)
 		when is_list(Type) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{class_type = Type});
+spec_char_rel([base_type | T], #spec_char_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, R, Acc#{"@baseType" => Type});
+spec_char_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{base_type = Type});
+spec_char_rel([schema | T], #spec_char_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	spec_char_rel(T, R, Acc#{"@schemaLocation" => Schema});
+spec_char_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{schema = Schema});
 spec_char_rel([start_date | T], #spec_char_rel{start_date = StartDate} = R, Acc)
 		when is_integer(StartDate) ->
 	ValidFor = #{"startDateTime" => im_rest:iso8601(StartDate)},
@@ -841,9 +1423,302 @@ spec_char_rel([end_date | T],
 		#{"validFor" := #{"endDateTime" := End}} = M, Acc)
 		when is_list(End) ->
 	spec_char_rel(T, M, Acc#spec_char_rel{end_date = im_rest:iso8601(End)});
+spec_char_rel([rel_type | T], #spec_char_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, R, Acc#{"relationshipType" => Type});
+spec_char_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{rel_type = Type});
+spec_char_rel([res_id | T], #spec_char_rel{res_id = Id} = R, Acc)
+		when is_list(Id) ->
+	spec_char_rel(T, R, Acc#{"resourceSpecificationId" => Id});
+spec_char_rel([res_id | T], #{"resourceSpecificationId" := Id} = M, Acc)
+		when is_list(Id) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{res_id = Id});
+spec_char_rel([res_href | T], #spec_char_rel{res_href = Href} = R, Acc)
+		when is_list(Href) ->
+	spec_char_rel(T, R, Acc#{"resourceSpecificationHref" => Href});
+spec_char_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
+		when is_list(Href) ->
+	spec_char_rel(T, M, Acc#spec_char_rel{res_href = Href});
 spec_char_rel([_ | T], R, Acc) ->
 	spec_char_rel(T, R, Acc);
 spec_char_rel([], _, Acc) ->
+	Acc.
+
+-spec resource_graph_spec(ResourceGraphSpecification) -> ResourceGraphSpecification
+	when
+		ResourceGraphSpecification :: [resource_graph_spec()] | [map()].
+%% @doc CODEC for `ResourceGraphSpecification'.
+%% @private
+resource_graph_spec([#resource_graph_spec{} | _] = List) ->
+	Fields = record_info(fields, resource_graph_spec),
+	[resource_graph_spec(Fields, R, #{}) || R <- List];
+resource_graph_spec([#{} | _] = List) ->
+	Fields = record_info(fields, resource_graph_spec),
+	[resource_graph_spec(Fields, M, #resource_graph_spec{}) || M <- List];
+resource_graph_spec([]) ->
+	[].
+%% @hidden
+resource_graph_spec([id | T], #resource_graph_spec{id = Id} = R, Acc)
+		when is_list(Id) ->
+	resource_graph_spec(T, R, Acc#{"id" => Id});
+resource_graph_spec([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{id = Id});
+resource_graph_spec([name | T], #resource_graph_spec{name = Name} = R, Acc)
+		when is_list(Name) ->
+	resource_graph_spec(T, R, Acc#{"name" => Name});
+resource_graph_spec([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{name = Name});
+resource_graph_spec([class_type | T], #resource_graph_spec{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#{"class_type" => Type});
+resource_graph_spec([class_type | T], #{"class_type" := Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{class_type = Type});
+resource_graph_spec([base_type | T], #resource_graph_spec{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#{"@baseType" => Type});
+resource_graph_spec([base_type | T], #{"@baseType" := Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{base_type = Type});
+resource_graph_spec([schema | T], #resource_graph_spec{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	resource_graph_spec(T, R, Acc#{"@baseSchema" => Schema});
+resource_graph_spec([schema | T], #{"@baseSchema" := Schema} = R, Acc)
+		when is_list(Schema) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{schema = Schema});
+resource_graph_spec([related | T], #resource_graph_spec{related = GraphRels} = R, Acc)
+		when is_list(GraphRels) ->
+	resource_graph_spec(T, R, Acc#{"graphSpecificationRelationship" => res_graph_spec_rel(GraphRels)});
+resource_graph_spec([related | T], #{"graphSpecificationRelationship" := GraphRels} = M, Acc)
+		when is_list(GraphRels) ->
+	resource_graph_spec(T, M, Acc#resource_graph_spec{related = res_graph_spec_rel(GraphRels)});
+resource_graph_spec([connection | T], #resource_graph_spec{connection = Conns} = R, Acc)
+		when is_list(Conns) ->
+	resource_graph_spec(T, R, Acc#{"connectionSpecification" => connection_spec(Conns)});
+resource_graph_spec([connection | T], #{"connectionSpecification" := Conns} = M, Acc)
+		when is_list(Conns) ->
+	resource_graph_spec(T, M, Acc#resource_graph_spec{connection = connection_spec(Conns)});
+resource_graph_spec([_ | T], R, Acc) ->
+	resource_graph_spec(T, R, Acc);
+resource_graph_spec([], _, Acc) ->
+	Acc.
+
+-spec res_graph_spec_rel(ResourceGraphSpecificationRelationship) -> ResourceGraphSpecificationRelationship
+	when
+		ResourceGraphSpecificationRelationship :: [res_graph_spec_rel()] | [map()].
+%% @doc CODEC for `ResourceGraphSpecificationRelationship'.
+%% @private
+res_graph_spec_rel([#res_graph_spec_rel{} | _] = List) ->
+	Fields = record_info(fields, res_graph_spec_rel),
+	[res_graph_spec_rel(Fields, R, #{}) || R <- List];
+res_graph_spec_rel([#{} | _] = List) ->
+	Fields = record_info(fields, res_graph_spec_rel),
+	[res_graph_spec_rel(Fields, M, #res_graph_spec_rel{}) || M <- List];
+res_graph_spec_rel([]) ->
+	[].
+%% @hidden
+res_graph_spec_rel([class_type | T], #res_graph_spec_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, R, Acc#{"@type" => Type});
+res_graph_spec_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{class_type = Type});
+res_graph_spec_rel([base_type | T], #res_graph_spec_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, R, Acc#{"@baseType" => Type});
+res_graph_spec_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{base_type = Type});
+res_graph_spec_rel([schema | T], #res_graph_spec_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_rel(T, R, Acc#{"@schemaLocation" => Schema});
+res_graph_spec_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{schema = Schema});
+res_graph_spec_rel([rel_type | T], #res_graph_spec_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, R, Acc#{"relationshipType" => Type});
+res_graph_spec_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{rel_type = Type});
+res_graph_spec_rel([graph | T], #res_graph_spec_rel{graph = GraphRef} = R, Acc)
+		when is_record(GraphRef, res_graph_spec_ref) ->
+	res_graph_spec_rel(T, R, Acc#{"resourceGraph" => res_graph_spec_ref(GraphRef)});
+res_graph_spec_rel([graph | T], #{"resourceGraph" := GraphRef} = M, Acc)
+		when is_map(GraphRef) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{graph = res_graph_spec_ref(GraphRef)});
+res_graph_spec_rel([_ | T], R, Acc) ->
+	res_graph_spec_rel(T, R, Acc);
+res_graph_spec_rel([], _, Acc) ->
+	Acc.
+
+-spec res_graph_spec_ref(ResourceGraphSpecificationRef) -> ResourceGraphSpecificationRef
+	when
+		ResourceGraphSpecificationRef :: res_graph_spec_ref() | map().
+%% @doc CODEC for `ResourceGraphSpecificationRef'.
+%% @private
+res_graph_spec_ref(#res_graph_spec_ref{} = R) ->
+	Fields = record_info(fields, res_graph_spec_ref),
+	res_graph_spec_ref(Fields, R, #{});
+res_graph_spec_ref(#{} = M) ->
+	Fields = record_info(fields, res_graph_spec_ref),
+	res_graph_spec_ref(Fields, M, #res_graph_spec_ref{}).
+%% @hidden
+res_graph_spec_ref([id | T], #res_graph_spec_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	res_graph_spec_ref(T, R, Acc#{"id" => Id});
+res_graph_spec_ref([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	res_graph_spec_ref(T, R, Acc#res_graph_spec_ref{id = Id});
+res_graph_spec_ref([name | T], #res_graph_spec_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	res_graph_spec_ref(T, R, Acc#{"name" => Name});
+res_graph_spec_ref([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	res_graph_spec_ref(T, R, Acc#res_graph_spec_ref{name = Name});
+res_graph_spec_ref([class_type | T], #res_graph_spec_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, R, Acc#{"@type" => Type});
+res_graph_spec_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{class_type = Type});
+res_graph_spec_ref([base_type | T], #res_graph_spec_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, R, Acc#{"@baseType" => Type});
+res_graph_spec_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{base_type = Type});
+res_graph_spec_ref([schema | T], #res_graph_spec_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_ref(T, R, Acc#{"@schemaLocation" => Schema});
+res_graph_spec_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{schema = Schema});
+res_graph_spec_ref([ref_type | T], #res_graph_spec_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, R, Acc#{"@referredType" => Type});
+res_graph_spec_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{ref_type = Type});
+res_graph_spec_ref([_ | T], R, Acc) ->
+	res_graph_spec_ref(T, R, Acc);
+res_graph_spec_ref([], _, Acc) ->
+	Acc.
+
+-spec connection_spec(ConnectionSpecification) -> ConnectionSpecification
+	when
+		ConnectionSpecification :: [connection_spec()] | [map()].
+%% @doc CODEC for `ConnectionSpecification'.
+%% @private
+connection_spec([#connection_spec{} | _] = List) ->
+	Fields = record_info(fields, connection_spec),
+	[connection_spec(Fields, R, #{}) || R <- List];
+connection_spec([#{} | _] = List) ->
+	Fields = record_info(fields, connection_spec),
+	[connection_spec(Fields, M, #connection_spec{}) || M <- List];
+connection_spec([]) ->
+	[].
+%% @hidden
+connection_spec([id | T], #connection_spec{id = Id} = R, Acc)
+		when is_list(Id) ->
+	connection_spec(T, R, Acc#{"id" => Id});
+connection_spec([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	connection_spec(T, R, Acc#connection_spec{id = Id});
+connection_spec([name | T], #connection_spec{name = Name} = R, Acc)
+		when is_list(Name) ->
+	connection_spec(T, R, Acc#{"name" => Name});
+connection_spec([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	connection_spec(T, R, Acc#connection_spec{name = Name});
+connection_spec([class_type | T], #connection_spec{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection_spec(T, R, Acc#{"@type" => Type});
+connection_spec([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection_spec(T, M, Acc#connection_spec{class_type = Type});
+connection_spec([base_type | T], #connection_spec{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection_spec(T, R, Acc#{"@baseType" => Type});
+connection_spec([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection_spec(T, M, Acc#connection_spec{base_type = Type});
+connection_spec([schema | T], #connection_spec{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	connection_spec(T, R, Acc#{"@schemaLocation" => Schema});
+connection_spec([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	connection_spec(T, M, Acc#connection_spec{schema = Schema});
+connection_spec([endpoint | T], #connection_spec{endpoint = EpRefs} = R, Acc)
+		when is_list(EpRefs) ->
+	connection_spec(T, R, Acc#{"endpointSpecification" => endpoint_spec_ref(EpRefs)});
+connection_spec([endpoint | T], #{"endpointSpecification" := EpRefs} = M, Acc)
+		when is_list(EpRefs) ->
+	connection_spec(T, M, Acc#connection_spec{endpoint = endpoint_spec_ref(EpRefs)});
+connection_spec([_ | T], R, Acc) ->
+	connection_spec(T, R, Acc);
+connection_spec([], _, Acc) ->
+	Acc.
+
+-spec endpoint_spec_ref(EndpointSpecificationRef) -> EndpointSpecificationRef
+	when
+		EndpointSpecificationRef :: [endpoint_spec_ref()] | [map()].
+%% @doc CODEC for `EndpointSpecificationRef'.
+endpoint_spec_ref([#endpoint_spec_ref{} | _] = List) ->
+	Fields = record_info(fields, endpoint_spec_ref),
+	[endpoint_spec_ref(Fields, R, #{}) || R <- List];
+endpoint_spec_ref([#{} | _] = List) ->
+	Fields = record_info(fields, endpoint_spec_ref),
+	[endpoint_spec_ref(Fields, M, #endpoint_spec_ref{}) || M <- List];
+endpoint_spec_ref([]) ->
+	[].
+%% @hidden
+endpoint_spec_ref([id | T], #endpoint_spec_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	endpoint_spec_ref(T, R, Acc#{"id" => Id});
+endpoint_spec_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{id = Id});
+endpoint_spec_ref([href| T], #endpoint_spec_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	endpoint_spec_ref(T, R, Acc#{"href" => Href});
+endpoint_spec_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{href = Href});
+endpoint_spec_ref([name | T], #endpoint_spec_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	endpoint_spec_ref(T, R, Acc#{"name" => Name});
+endpoint_spec_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{name = Name});
+endpoint_spec_ref([role | T], #endpoint_spec_ref{role = Role} = R, Acc)
+		when is_list(Role) ->
+	endpoint_spec_ref(T, R, Acc#{"role" => Role});
+endpoint_spec_ref([role | T], #{"role" := Role} = M, Acc)
+		when is_list(Role) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{role = Role});
+endpoint_spec_ref([is_root | T], #endpoint_spec_ref{is_root = IsRoot} = R, Acc)
+		when is_boolean(IsRoot) ->
+	endpoint_spec_ref(T, R, Acc#{"isRoot" => IsRoot});
+endpoint_spec_ref([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
+		when is_boolean(IsRoot) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{is_root = IsRoot});
+endpoint_spec_ref([connection_point | T],
+		#endpoint_spec_ref{connection_point = CpSpecRefs} = R, Acc)
+		when is_list(CpSpecRefs) ->
+	endpoint_spec_ref(T, R, Acc#{"connectionPointSpecification" =>
+			specification_refs(CpSpecRefs)});
+endpoint_spec_ref([connection_point | T],
+		#{"connectionPointSpecification" := CpSpecRefs} = M, Acc)
+		when is_list(CpSpecRefs) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{connection_point = specification_refs(CpSpecRefs)});
+endpoint_spec_ref([_ | T], R, Acc) ->
+	endpoint_spec_ref(T, R, Acc);
+endpoint_spec_ref([], _, Acc) ->
 	Acc.
 
 %% @hidden

@@ -1,6 +1,6 @@
 {
 	"id": "6974362512",
-	"href": "/resourceInventoryManagement/v3/resource/6974362512",
+	"href": "/resourceInventoryManagement/v4/resource/6974362512",
 	"name": "SubNetwork=2,ManagedElement=1,AucFunction=1",
 	"description": "Core Authentication Center (AUC)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "AucFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/AucFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/AucFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362578",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362578",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362578",
 		"@type": "AucFunctionSpec"
 	},
 	"resourceCharacteristic": [

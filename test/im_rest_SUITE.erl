@@ -29,11 +29,9 @@
 -include("im.hrl").
 -include_lib("common_test/include/ct.hrl").
 
--define(PathCatalog, "/resourceCatalogManagement/v3/").
--define(PathInventory, "/resourceInventoryManagement/v3/").
--define(PathFunction, "/resourceFunctionActivationConfiguration/v2/").
+-define(PathCatalog, "/resourceCatalogManagement/v4/").
+-define(PathInventory, "/resourceInventoryManagement/v4/").
 -define(PathParty, "/partyManagement/v2/").
--define(PathInventoryRule, "/resourceInventoryManagement/v1/").
 
 %% support deprecated_time_unit()
 -define(SECOND, seconds).
@@ -192,11 +190,11 @@ map_to_catalog(_Config) ->
 			description = Description, class_type = ClassType,
 			schema = Schema, base_type = "Catalog", version = Version,
 			start_date = StartDate, end_date = EndDate,
-			status = active, related_party = [RP],
+			status = active, party = [RP],
 			category = [C]} = im_rest_res_catalog:catalog(Map),
 	true = is_integer(StartDate),
 	true = is_integer(EndDate),
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#category_ref{id = CategoryId, href = CategoryHref,
 			name = CategoryName, version = Version} = C.
 
@@ -227,12 +225,10 @@ catalog_to_map(_Config) ->
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			category = [#category_ref{id = CategoryId,
 					href = CategoryHref,
 					name = CategoryName,
@@ -311,9 +307,9 @@ post_catalog(Config) ->
 	{ok, #catalog{id = ID, name = CatalogName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Catalog",
-			schema = Schema, related_party = [RP],
+			schema = Schema, party = [RP],
 			category = [C]}} = im:get_catalog(ID),
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#category_ref{id = CategoryId, href = CategoryHref,
 			name = CategoryName, version = Version} = C.
 
@@ -359,12 +355,10 @@ get_catalog(Config) ->
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			category = [#category_ref{id = CategoryId,
 					href = CategoryHref,
 					name = CategoryName,
@@ -383,7 +377,7 @@ get_catalog(Config) ->
 			"@type" := ClassType, "@baseType" := "Catalog",
 			"@schemaLocation" := Schema, "relatedParty" := [RP],
 			"category" := [C]} = CatalogMap,
-	true = is_related_party_ref(RP),
+	true = is_party_ref(RP),
 	true = is_category_ref(C).
 
 map_to_category() ->
@@ -430,11 +424,11 @@ map_to_category(_Config) ->
 			description = Description, class_type = ClassType,
 			schema = Schema, base_type = "Category", version = Version,
 			start_date = StartDate, end_date = EndDate,
-			status = active, parent = Parent, root = false, related_party = [RP],
+			status = active, parent = Parent, root = false, party = [RP],
 			candidate = [C]} = im_rest_res_category:category(Map),
 	true = is_integer(StartDate),
 	true = is_integer(EndDate),
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#candidate_ref{id = CandidateId, href = CandidateHref,
 			name = CandidateName, version = Version} = C.
 
@@ -468,12 +462,10 @@ category_to_map(_Config) ->
 			status = active,
 			parent = Parent,
 			root = false,
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			candidate = [#candidate_ref{id = CandidateId,
 					href = CandidateHref,
 					name = CandidateName,
@@ -557,9 +549,9 @@ post_category(Config) ->
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "Category",
 			parent = Parent, root = true,
-			schema = Schema, related_party = [RP],
+			schema = Schema, party = [RP],
 			candidate = [C]}} = im:get_category(ID),
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#candidate_ref{id = CandidateId, href = CandidateHref,
 			name = CandidateName, version = Version} = C.
 
@@ -608,12 +600,10 @@ get_category(Config) ->
 			status = active,
 			parent = Parent,
 			root = true,
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			candidate = [#candidate_ref{id = CandidateId,
 					href = CandidateHref,
 					name = CandidateName,
@@ -632,7 +622,7 @@ get_category(Config) ->
 			"@type" := ClassType, "@baseType" := "Category", "parentId" := Parent,
 			"isRoot" := true, "@schemaLocation" := Schema, "relatedParty" := [RP],
 			"resourceCandidate" := [C]} = CategoryMap,
-	true = is_related_party_ref(RP),
+	true = is_party_ref(RP),
 	true = is_candidate_ref(C).
 
 map_to_candidate() ->
@@ -907,19 +897,18 @@ map_to_specification(_Config) ->
 					"href" => ResouceHref,
 					"role" => "Supplier",
 					"name" => ResourceName,
-					"type" => "substitution",
 					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 							"endDateTime" => "2019-12-31T23:59"}}]},
 	#specification{id = SpecificationId, href = SpecificationHref,
 			description = Description, class_type = ClassType,
 			schema = Schema, base_type = "Specification", version = Version,
 			start_date = StartDate, end_date = EndDate, status = active,
-			category = Category, target_schema = TS, related_party = [RP],
+			category = Category, target_schema = TS, party = [RP],
 			related = [R]} = im_rest_res_specification:specification(Map),
 	true = is_integer(StartDate),
 	true = is_integer(EndDate),
 	#target_schema_ref{class_type = ClassType, schema = Schema} = TS,
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#specification_rel{id = ResourceId, href = ResouceHref, role = "Supplier"} = R.
 
 specification_to_map() ->
@@ -953,12 +942,10 @@ specification_to_map(_Config) ->
 			category = Category,
 			target_schema = #target_schema_ref{class_type = ClassType,
 					schema = Schema},
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			related = [#specification_rel{id = ResourceId,
 					href = ResouceHref,
 					role = "Supplier",
@@ -1042,8 +1029,8 @@ post_specification(Config) ->
 	{ok, #specification{id = ID, name = SpecificationName,
 			description = Description, version = Version,
 			class_type = ClassType, base_type = "ResourceFunctionSpecification",
-			schema = ClassSchema, related_party = [RP]}} = im:get_specification(ID),
-	#related_party_ref{id = PartyId, href = PartyHref} = RP.
+			schema = ClassSchema, party = [RP]}} = im:get_specification(ID),
+	#party_ref{id = PartyId, href = PartyHref} = RP.
 
 get_specifications() ->
 	[{userdata, [{doc, "GET Specification collection"}]}].
@@ -1096,17 +1083,15 @@ get_specification(Config) ->
 			device_serial = DeviceSerial,
 			target_schema = #target_schema_ref{class_type = ClassType,
 					schema = TargetSchema},
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			related = [#specification_rel{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
 					name = "ACME Inc.",
-					type = Type,
+					class_type = Type,
 					start_date = 1548720000000,
 					end_date = 1577836740000}]},
 	{ok, #specification{id = Id, href = Href}} = im:add_specification(SpecificationRecord),
@@ -1125,7 +1110,7 @@ get_specification(Config) ->
 			"relatedParty" := [RP], "resourceSpecRelationship" := [R]}
 			= SpecificationMap,
 	true = is_target_ref(T),
-	true = is_related_party_ref(RP),
+	true = is_party_ref(RP),
 	true = is_related_ref(R).
 
 map_to_resource() ->
@@ -1164,16 +1149,16 @@ map_to_resource(_Config) ->
 			"@baseType" => "Resource",
 			"@schemaLocation" => Schema,
 			"version" => Version,
-			"connectivity" => [#{"name" => "Connectivity test",
-					"associationType" => "Connectivity type",
-					"endpoint" => [#{"id" => "123",
-					"href" => "http://35.229.193.25:8088/eventManagement/v1/event",
-					"name" => "Point name",
-					"isRoot" => true,
-					"connectionPoint" => [#{"id" => "321",
-						"name" => "Connection point",
-						"type" => "Connection point type",
-						"href" => "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}],
+			"connectivity" => [#{"name" => "Resource graph",
+					"connection" => [#{"name" => "Connectivity test",
+							"associationType" => "Connectivity type",
+							"endpoint" => [#{"id" => "123",
+									"href" => "http://35.229.193.25:8088/eventManagement/v1/event",
+									"name" => "Point name",
+									"isRoot" => true,
+									"connectionPoint" => [#{"id" => "321",
+											"name" => "Connection point",
+											"href" => "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}]}],
 			"resourceSpecification" => #{"id" => ResourceId,
 					"href" => ResouceHref,
 					"name" => ResourceName,
@@ -1188,12 +1173,10 @@ map_to_resource(_Config) ->
 							"isRoot" => true,
 							"connectionPointSpecification" => [#{"id" => "963",
 								"href" => "http://35.229.193.25:8088/eventManagement/v1/event",
-								"name" => "Connection point spec",
-								"type" => "Con pointType"}]}]}],
+								"name" => "Connection point spec"}]}]}],
 					"connectionPointSpecification" => [#{"id" => "963",
 						"href" => "http://35.229.193.25:8088/eventManagement/v1/event",
-						"name" => "Connection point spec",
-						"type" => "Con pointType"}]},
+						"name" => "Connection point spec"}]},
 			"relatedParty" => [#{"id" => PartyId,
 					"href" => PartyHref,
 					"role" => "Supplier",
@@ -1208,13 +1191,13 @@ map_to_resource(_Config) ->
 			description = Description, category = Category, class_type = ClassType,
 			schema = Schema, base_type = "Resource", state = "Active",
 			substate = "Reject", version = Version, start_date = StartDate,
-			end_date = EndDate, specification = S, related_party = [RP],
+			end_date = EndDate, specification = S, party = [RP],
 			characteristic = [C], connectivity = [End]} = im_rest_res_resource:resource(Map),
 	true = is_integer(StartDate),
 	true = is_integer(EndDate),
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
 			version = "1.1"} = S,
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
 			schema = CharSchema, value = CharValue} = C.
 	
@@ -1252,22 +1235,20 @@ resource_to_map(_Config) ->
 			end_date = 1577836740000,
 			state = "Active",
 			substate = "Reject",
-			connectivity = [#connectivity{name = "Connectivity test",
-					type = "Connectivity type",
-					endpoint = [#endpoint{id = "123", name = "Point name",
-						href = "http://35.229.193.25:8088/eventManagement/v1/event",
-						is_root = true,
-						connection_point = [#connection_point{id = "321",
-							name = "Connection point", type = "Connection point type",
-							href = "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}],
+			connectivity = [#resource_graph{name = "Resource graph",
+					connection = [#connection{name = "Connectivity test",
+							endpoint = [#endpoint_ref{id = "123", name = "Point name",
+							href = "http://35.229.193.25:8088/eventManagement/v1/event",
+							is_root = true,
+							connection_point = [#resource_rel{id = "321",
+									name = "Connection point",
+									href = "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}]}],
 			specification = #specification_ref{id = ResourceId,
 					href = ResouceHref, name = ResourceName, version = "1.1"},
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
@@ -1278,7 +1259,8 @@ resource_to_map(_Config) ->
 			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
 			"lifecycleState" := "Active", "lifecycleSubState" := "Reject",
 			"category" := Category, "resourceSpecification" := S, "relatedParty" := [RP],
-			"resourceCharacteristic" := [C], "connectivity" := [Con]}
+			"resourceCharacteristic" := [C],
+			"connectivity" := [#{"connection" := [Con]}]}
 			= im_rest_res_resource:resource(ResourceRecord),
 	true = is_list(Start),
 	true = is_list(End),
@@ -1287,14 +1269,13 @@ resource_to_map(_Config) ->
 	#{"id" := PartyId, "href" := PartyHref} = RP,
 	#{"name" := "BtsSiteMgr", "value" := CharValue, "@type" := "BtsSiteMgrList",
 			"@schemaLocation" := CharSchema} = C,
-	#{"name" := "Connectivity test", "associationType" := "Connectivity type",
+	#{"name" := "Connectivity test",
 			"endpoint" := [#{"id" := "123",
 				"href" := "http://35.229.193.25:8088/eventManagement/v1/event",
 				"name" := "Point name",
 				"isRoot" := true,
 				"connectionPoint" := [#{"id" := "321",
 						"name" := "Connection point",
-						"type" := "Connection point type",
 						"href" := "http://35.229.193.25:8088/eventManagement/v1/event"}]}]} = Con.
 
 post_resource() ->
@@ -1372,11 +1353,11 @@ post_resource(Config) ->
 	{ok, #resource{id = ID, name = Name, public_id = PublicId,
 			description = Description, version = Version, category = Category,
 			class_type = ClassType, base_type = "Resource",
-			schema = ClassSchema, specification = S, related_party = [RP],
+			schema = ClassSchema, specification = S, party = [RP],
 			characteristic = [C]}} = im:get_resource(ID),
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
 			version = Version} = S,
-	#related_party_ref{id = PartyId, href = PartyHref} = RP,
+	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
 			schema = CharSchema, value = CharValue} = C.
 
@@ -1428,12 +1409,10 @@ get_resource(Config) ->
 			state = "Active",
 			specification = #specification_ref{id = ResourceId,
 					href = ResouceHref, name = ResourceName, version = "1.1"},
-			related_party = [#related_party_ref{id = PartyId,
+			party = [#party_ref{id = PartyId,
 					href = PartyHref,
 					role = "Supplier",
-					name = "ACME Inc.",
-					start_date = 1548720000000,
-					end_date = 1577836740000}],
+					name = "ACME Inc."}],
 			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
@@ -1454,7 +1433,7 @@ get_resource(Config) ->
 			"relatedParty" := [RP], "resourceCharacteristic" := [C]}
 			= ResourceMap,
 	true = is_resource_spec(S),
-	true = is_related_party_ref(RP),
+	true = is_party_ref(RP),
 	true = is_resource_char(C).
 
 geoaxis() ->
@@ -1508,7 +1487,7 @@ query_category(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
 	Query = "name=" ++ Name,
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCategory?" ++ Query,
+	Request = {HostUrl ++ ?PathCatalog ++ "/resourceCategory?" ++ Query,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1541,7 +1520,7 @@ advanced_query_category(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
    Filter = "?filter=\"[{name=RAN}]\"",
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCategory" ++ Filter,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCategory" ++ Filter,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1570,7 +1549,7 @@ query_candidate(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
 	Query = "name=" ++ Name,
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCandidate?" ++ Query,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCandidate?" ++ Query,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1603,7 +1582,7 @@ advanced_query_candidate(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
    Filter = "?filter=\"[{name=EPC}]\"",
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCandidate" ++ Filter,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCandidate" ++ Filter,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1633,7 +1612,7 @@ query_catalog(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
 	Query = "name=" ++ Name,
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCatalog?" ++ Query,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCatalog?" ++ Query,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1666,7 +1645,7 @@ advanced_query_catalog(Config) ->
 	HostUrl = ?config(host_url, Config),
 	Accept = {"accept", "application/json"},
    Filter = "?filter=\"[{name=Core}]\"",
-	Request = {HostUrl ++ "/resourceCatalogManagement/v3/resourceCatalog" ++ Filter,
+	Request = {HostUrl ++ ?PathCatalog ++ "resourceCatalog" ++ Filter,
 			[Accept, auth_header()]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result,
@@ -1706,14 +1685,11 @@ basic_auth() ->
 auth_header() ->
 	{"authorization", basic_auth()}.
 
-is_related_party_ref(#{"id" := Id, "href" := Href,
-		"name" := Name, "role" := Role,
-		"validFor" := #{"startDateTime" := Start,
-		"endDateTime" := End}}) when is_list(Id),
-		is_list(Href), is_list(Name), is_list(Role),
-		is_list(Start), is_list(End) ->
-	im_rest:iso8601(End) > im_rest:iso8601(Start);
-is_related_party_ref(_RP) ->
+is_party_ref(#{"id" := Id, "href" := Href,
+		"name" := Name, "role" := Role}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Role) ->
+	true;
+is_party_ref(_RP) ->
 	false.
 
 is_category_ref(#{"id" := Id, "href" := Href,
@@ -1747,11 +1723,11 @@ is_target_ref(_) ->
 	false.
 
 is_related_ref(#{"id" := Id, "href" := Href,
-		"name" := Name, "role" := Role, "type" := Type,
+		"name" := Name, "role" := Role,
 		"validFor" := #{"startDateTime" := Start,
 		"endDateTime" := End}}) when is_list(Id),
 		is_list(Href), is_list(Name), is_list(Role),
-		is_list(Start), is_list(End), is_list(Type) ->
+		is_list(Start), is_list(End) ->
 	im_rest:iso8601(End) > im_rest:iso8601(Start);
 is_related_ref(_R) ->
 	false.
@@ -1780,7 +1756,7 @@ is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
 		is_list(Href), is_list(Name), is_list(Description),
 		is_list(Version), is_list(ClassType), is_list(Schema),
 		is_list(RelatedParty) ->
-	lists:all(fun is_related_party_ref/1, RelatedParty),
+	lists:all(fun is_party_ref/1, RelatedParty),
 	lists:all(fun is_category_ref/1, Category);
 is_catalog(_) ->
 	false.
@@ -1794,7 +1770,7 @@ is_category(#{"id" := Id, "href" := Href, "name" := Name,
 		is_list(Version), is_list(ClassType), is_list(Schema),
 		is_list(Parent), is_list(RelatedParty), is_list(Candidate),
 		is_boolean(Bool) ->
-	lists:all(fun is_related_party_ref/1, RelatedParty),
+	lists:all(fun is_party_ref/1, RelatedParty),
 	lists:all(fun is_candidate_ref/1, Candidate);
 is_category(_) ->
 	false.
@@ -1848,7 +1824,7 @@ fill_catalog(N) ->
 			start_date = 1548720000000,
 			end_date = 1577836740000,
 			status = active,
-			related_party = fill_related_party(3),
+			party = fill_party(3),
 			category = fill_category_ref(5)},
 	{ok, _} = im:add_catalog(Catalog),
 	fill_catalog(N - 1).
@@ -1868,7 +1844,7 @@ fill_category(N) ->
 			status = active,
 			parent = random_string(10),
 			root = true,
-			related_party = fill_related_party(3),
+			party = fill_party(3),
 			candidate = fill_candidate_ref(5)},
 	{ok, _} = im:add_category(Category),
 	fill_category(N - 1).
@@ -1913,7 +1889,7 @@ fill_specification(N) ->
 			device_serial = random_string(15),
 			target_schema = #target_schema_ref{class_type = "ResourceSpecification",
 					schema = Schema},
-			related_party = fill_related_party(3),
+			party = fill_party(3),
 			related = fill_related_ref(3)},
 	{ok, _} = im:add_specification(Specification),
 	fill_specification(N - 1).
@@ -1936,22 +1912,21 @@ fill_resource(N) ->
 			specification = #specification_ref{id = random_string(10),
 					href = random_string(25), name = random_string(10),
 					version = Version},
-			related_party = fill_related_party(3),
+			party = fill_party(3),
 			characteristic  = fill_resource_char(3)},
 	{ok, _} = im:add_resource(Resource),
 	fill_resource(N - 1).
 
-fill_related_party(N) ->
-	fill_related_party(N, []).
-fill_related_party(0, Acc) ->
+fill_party(N) ->
+	fill_party(N, []).
+fill_party(0, Acc) ->
 	Acc;
-fill_related_party(N, Acc) ->
+fill_party(N, Acc) ->
 	Id = random_string(10),
 	Href = ?PathParty ++ "organization/" ++ Id,
-	RelatedParty = #related_party_ref{id = Id, href = Href,
-			role = "Supplier", name = "ACME Inc.",
-			start_date = 1548720000000, end_date = 1577836740000},
-	fill_related_party(N - 1, [RelatedParty | Acc]).
+	RelatedParty = #party_ref{id = Id, href = Href,
+			role = "Supplier", name = "ACME Inc."},
+	fill_party(N - 1, [RelatedParty | Acc]).
 
 fill_category_ref(N) ->
 	fill_category_ref(N, []).
@@ -1984,7 +1959,7 @@ fill_related_ref(N, Acc) ->
 	Type = random_string(5),
 	Href = ?PathParty ++ "organization/" ++ Id,
 	Related = #specification_rel{id = Id, href = Href,
-			role = "Supplier", name = "ACME Inc.", type = Type,
+			role = "Supplier", name = "ACME Inc.", class_type = Type,
 	start_date = 1548720000000, end_date = 1577836740000},
 	fill_related_ref(N - 1, [Related | Acc]).
 

@@ -21,9 +21,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceInventoryManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -142,14 +142,14 @@ parse_enb({endElement, _Uri, "ENBFunction", QName},
 	EnbAttr = parse_enb_attr(T2, undefined, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = EnbDn,
 			description = "LTE Evolved Node B (ENB)",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ENBFunction",
+			schema = ?PathInventorySchema ++ "/ENBFunction",
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | EnbAttr]),
 			related = FddRels ++ TddRels,
@@ -298,20 +298,20 @@ parse_fdd({endElement, _Uri, "EUtranCellFDD", QName},
 	FddAttr = parse_fdd_attr(T2, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = FddDn,
 			description = "LTE",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "EUtranGenericCell",
-			schema = "/resourceInventoryManagement/v3/schema/EUtranCellFDD",
+			schema = ?PathInventorySchema ++ "/EUtranCellFDD",
 			specification = Spec,
 			characteristic = [PeeParam | FddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			FddRel = #resource_rel{id = Id, name = FddDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			FddRel = #resource_rel{id = Id, name = FddDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = EUtranState#eutran_state{fdds = [FddRel | FddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -527,20 +527,20 @@ parse_tdd({endElement, _Uri, "EUtranCellTDD", QName},
 	TddAttr = parse_tdd_attr(T2, []),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = TddDn,
 			description = "LTE",
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "EUtranGenericCell",
-			schema = "/resourceInventoryManagement/v3/schema/EUtranCellTDD",
+			schema = ?PathInventorySchema  ++ "/EUtranCellTDD",
 			specification = Spec,
 			characteristic = [PeeParam | TddAttr]},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			TddRel = #resource_rel{id = Id, name = TddDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			TddRel = #resource_rel{id = Id, name = TddDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = EUtranState#eutran_state{tdds = [TddRel | TddRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -849,10 +849,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

@@ -3,7 +3,7 @@
 	"name": "Network",
 	"description": "Network Resources",
 	"@type": "ResourceCatalog",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/resourceCatalogManagement#/definitions/ResourceCatalog",
+	"@schemaLocation": "/resourceCatalogManagement/v4/schema/resourceCatalogManagement#/definitions/ResourceCatalog",
 	"@baseType": "Catalog",
 	"version": "0.1",
 	"validFor": {
@@ -26,7 +26,7 @@
 	"category": [
 		{
 			"id": "154995556287925",
-			"href": "/resourceCatalogManagement/v3/category/154995556287925",
+			"href": "/resourceCatalogManagement/v4/category/154995556287925",
 			"name": "RAN",
 			"version": "0.1"
 		}

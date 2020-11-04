@@ -21,6 +21,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+
 %%----------------------------------------------------------------------
 %%  The im private API
 %%----------------------------------------------------------------------
@@ -72,7 +74,7 @@ parse_iu({endElement, _Uri, "InventoryUnit", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnit",
+			schema = ?PathInventorySchema ++ "/InventoryUnit",
 			specification = Spec,
 			characteristic = IuAttr,
 			related = Ius ++ TmaIus ++ Aius},
@@ -151,7 +153,7 @@ parse_tmaiu({endElement, _Uri, "TmaInventoryUnit", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "InventoryUnit",
-			schema = "/resourceInventoryManagement/v3/schema/TmaInventoryUnit",
+			schema = ?PathInventorySchema ++ "/TmaInventoryUnit",
 			specification = Spec,
 			characteristic = TmaIuAttr},
 	case im:add_resource(Resource) of
@@ -275,7 +277,7 @@ parse_aiu({endElement, _Uri, "AntennaInventoryUnit", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "InventoryUnit",
-			schema = "/resourceInventoryManagement/v3/schema/AntennaInventoryUnit",
+			schema = ?PathInventorySchema ++ "/AntennaInventoryUnit",
 			specification = Spec,
 			characteristic = AntennaIuAttr},
 	case im:add_resource(Resource) of
@@ -412,10 +414,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

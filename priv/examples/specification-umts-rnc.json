@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "RncFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/RncFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/RncFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
 			"valueType": "PeeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "mcc",
@@ -94,13 +94,13 @@
 			"name": "tceIDMappingInfoList",
 			"description": "List of Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
 			"valueType": "TceIDMappingInfoList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/TceIDMappingInfoList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/utranNrm#/definitions/TceIDMappingInfoList"
 		},
 		{
 			"name": "sharNetTceMappingInfoList",
 			"description": "List of shared PLMN ID, Trace Collection Entity (TCE) ID and IP Address (3GPP 32.422)",
 			"valueType": "SharNetTceMappingInfoList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
 		}
 	]
 }

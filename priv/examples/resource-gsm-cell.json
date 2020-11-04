@@ -1,6 +1,6 @@
 {
 	"id": "8994832012",
-	"href": "/resourceInventoryManagement/v3/resource/8994832012",
+	"href": "/resourceInventoryManagement/v4/resource/8994832012",
 	"name": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1,GsmCell=1",
 	"description": "GSM Radio",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "GsmCell",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/GsmCell",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/GsmCell",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115636",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115636",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798115636",
 		"@type": "GsmCellSpec",
 		"version": "1.0"
 	},

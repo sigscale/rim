@@ -1,6 +1,6 @@
 {
 	"id": "6597462918",
-	"href": "/resourceInventoryManagement/v3/resource/6597462918",
+	"href": "/resourceInventoryManagement/v4/resource/6597462918",
 	"name": "SubNetwork=10,ManagedElement=1,InventoryUnit=1",
 	"description": "Network Element Inventory Unit",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "InventoryUnitNE",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/InventoryUnitNE",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/InventoryUnitNE",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "752155649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/752155649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/752155649",
 		"@type": "InventoryUnitNESpec"
 	},
 	"resourceCharacteristic": [

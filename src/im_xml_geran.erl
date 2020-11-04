@@ -19,9 +19,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -82,11 +82,11 @@ parse_bss({endElement, _Uri, "BssFunction", QName},
 	end,
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = PeeParametersList,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	ClassType = "BssFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -95,7 +95,7 @@ parse_bss({endElement, _Uri, "BssFunction", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BssFunction",
+			schema = ?PathInventorySchema ++ "/BssFunction",
 			specification = Spec,
 			characteristic = lists:reverse([VsData, PeeParam | BssAttr]),
 			related = BtsRels},
@@ -179,11 +179,11 @@ parse_bts({endElement, _Uri, "BtsSiteManager", QName},
 	GsmCell = #resource_char{name = "GsmCell", value = Cells},
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -192,7 +192,7 @@ parse_bts({endElement, _Uri, "BtsSiteManager", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			schema = ?PathInventorySchema ++ "/BtsSiteMgr",
 			specification = Spec,
 			characteristic = lists:reverse([GsmCell, VsData, PeeParam | BtsAttr])},
 	case im:add_resource(Resource) of
@@ -212,11 +212,11 @@ parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 	BtsAttr = parse_bts_attr(T, undefined, []),
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	ClassType = "BtsSiteMgr",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -225,14 +225,14 @@ parse_bts({endElement, _Uri, "BtsSiteMgr", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/BtsSiteMgr",
+			schema = ?PathInventorySchema ++ "/BtsSiteMgr",
 			specification = Spec,
 			characteristic = lists:reverse([VsData, PeeParam | BtsAttr]),
 			related = CellRels},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			BtsRel = #resource_rel{id = Id, name = BtsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			BtsRel = #resource_rel{id = Id, name = BtsDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GeranState#geran_state{
 			btss = [BtsRel | BtsRels]}, spec_cache = [NewCache | PrevCache]} | T1];
 		{error, Reason} ->
@@ -331,11 +331,11 @@ parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 	#geran_state{cells = GsmCellRels} = GeranState,
 	VsData = #resource_char{name = "vsDataContainer",
 			class_type = "VsDataContainerList", value = NrmMap,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/VsDataContainerList"},
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	ClassType = "GsmCell",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
@@ -344,13 +344,13 @@ parse_gsm_cell({endElement, _Uri, "GsmCell", QName},
 			category = "RAN",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GsmCell",
+			schema = ?PathInventorySchema ++ "/GsmCell",
 			specification = Spec,
 			characteristic = lists:reverse([VsData, PeeParam | GsmCellAttr])},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			GsmCellRel = #resource_rel{id = Id, name = CellDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			GsmCellRel = #resource_rel{id = Id, name = CellDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = GeranState#geran_state{cells
 					= [GsmCellRel | GsmCellRels]}} | T1];
@@ -563,10 +563,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

@@ -14,7 +14,7 @@
 	"category": "Slice",
 	"targetResourceSchema": {
 		"@type": "NetworkSlice",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NetworkSlice"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/NetworkSlice"
 	},
 	"relatedParty": [
 		{
@@ -39,7 +39,7 @@
 			"name": "dnPrefix",
 			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "userLabel",
@@ -60,25 +60,25 @@
 			"name": "nSSIId",
 			"description": "Network Slice SubNetwork Instance (NSSI) identity",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "operationalState",
 			"description": "Operational state describes whether physically installed and working or not (ITU-T X.731)",
 			"valueType": "OperationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/OperationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRP#/definitions/OperationalStateType"
 		},
 		{
 			"name": "administrativeState",
 			"description": "Indicates the administrative state of the object instance (ITU-T X.731)",
 			"valueType": "AdministrativeStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRP#/definitions/AdministrativeStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRP#/definitions/AdministrativeStateType"
 		},
 		{
 			"name": "serviceProfileList",
 			"description": "Service Profiles (3GPP TS 28.541 clause 6.3.3)",
 			"valueType": "ServiceProfileList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/sliceNrm#/definitions/ServiceProfileList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/sliceNrm#/definitions/ServiceProfileList"
 		}
 	]
 }

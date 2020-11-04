@@ -150,7 +150,7 @@ class categoryList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="categoryGetAjax"
-				url="resourceCatalogManagement/v3/resourceCategory"
+				url="resourceCatalogManagement/v4/resourceCategory"
 				rejectWithRequest>
 			</iron-ajax>
 		`;

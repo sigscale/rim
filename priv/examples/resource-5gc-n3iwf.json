@@ -1,6 +1,6 @@
 {
 	"id": "3597468046",
-	"href": "/resourceInventoryManagement/v3/resource/3597468046",
+	"href": "/resourceInventoryManagement/v4/resource/3597468046",
 	"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1",
 	"description": "5G Core Non 3GPP Inter Working Function (N3IWF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "N3IWFFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/N3IWFFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/N3IWFFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467995",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467995",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467995",
 		"@type": "N3IWFFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -34,42 +34,42 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468047",
-				"href": "/resourceInventoryManagement/v3/resource/3597468047",
+				"href": "/resourceInventoryManagement/v4/resource/3597468047",
 				"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N2=1",
 				"@referredType": "EP_N2"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468048",
-				"href": "/resourceInventoryManagement/v3/resource/3597468048",
+				"href": "/resourceInventoryManagement/v4/resource/3597468048",
 				"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N3=1",
 				"@referredType": "EP_N3"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
-	"sap": [
+	"connectionPoint": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468047",
-				"href": "/resourceInventoryManagement/v3/resource/3597468047",
+				"href": "/resourceInventoryManagement/v4/resource/3597468047",
 				"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N2=1",
 				"@referredType": "EP_N2"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468048",
-				"href": "/resourceInventoryManagement/v3/resource/3597468048",
+				"href": "/resourceInventoryManagement/v4/resource/3597468048",
 				"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N3=1",
 				"@referredType": "EP_N3"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

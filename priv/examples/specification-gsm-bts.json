@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "BtsSiteMgr",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/BtsSiteMgr"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/BtsSiteMgr"
 	},
 	"relatedParty": [
 		{
@@ -44,25 +44,25 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "latitude",
 			"description": "Latitude of the site manager location based on (WGS 84) global reference frame",
 			"valueType": "Latitude",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Latitude"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Latitude"
 		},
 		{
 			"name": "longitude",
 			"description": "Longitude of the site manager location based on (WGS 84) global reference frame",
 			"valueType": "Longitude",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Longitude"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Longitude"
 		},
 		{
 			"name": "operationalState",
 			"description": "Indicates the operational state of the object instance (ITU-T X.731)",
 			"valueType": "OperationalStateType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
 		}
 	]
 }

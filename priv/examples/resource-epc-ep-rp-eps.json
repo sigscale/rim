@@ -1,6 +1,6 @@
 {
 	"id": "7594422906",
-	"href": "/resourceInventoryManagement/v3/resource/7594422906",
+	"href": "/resourceInventoryManagement/v4/resource/7594422906",
 	"name": "SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
 	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS)",
 	"category": "EPC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_RP_EPS",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_RP_EPS",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_RP_EPS",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115606",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115606",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798115606",
 		"@type": "EP_RP_EPSSpec"
 	},
 	"resourceCharacteristic": [

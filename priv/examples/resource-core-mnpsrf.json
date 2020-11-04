@@ -1,6 +1,6 @@
 {
 	"id": "6974362515",
-	"href": "/resourceInventoryManagement/v3/resource/6974362515",
+	"href": "/resourceInventoryManagement/v4/resource/6974362515",
 	"name": "SubNetwork=2,ManagedElement=1,MnpSrfFunction=1",
 	"description": "Core Mobile Number Portability-Signaling Relay Function (MNP-SRF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "MnpSrfFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/MnpSrfFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/MnpSrfFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362575",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362575",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362575",
 		"@type": "MnpSrfFunctionSpec"
 	},
 	"resourceCharacteristic": [

@@ -115,7 +115,7 @@ class candidateList extends PolymerElement {
 			</div>
 			<iron-ajax
 				id="candidateGetAjax"
-				url="resourceCatalogManagement/v3/resourceCandidate"
+				url="resourceCatalogManagement/v4/resourceCandidate"
 				rejectWithRequest>
 			</iron-ajax>
 		`;

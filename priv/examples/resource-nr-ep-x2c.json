@@ -1,6 +1,6 @@
 {
 	"id": "3597461904",
-	"href": "/resourceInventoryManagement/v3/resource/3597461904",
+	"href": "/resourceInventoryManagement/v4/resource/3597461904",
 	"name": "SubNetwork=8,ManagedElement=1,GNBCUCPFunction=1,EP_X2C=1",
 	"description": "NR End Point of the logical link, supporting X2-C application protocols",
 	"category": "NR",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_X2C",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_X2C",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_X2C",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "368125609",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/368125609",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/368125609",
 		"@type": "EP_X2CSpec"
 	},
 	"resourceCharacteristic": [

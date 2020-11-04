@@ -1,6 +1,6 @@
 {
 	"id": "3597468049",
-	"href": "/resourceInventoryManagement/v3/resource/3597468049",
+	"href": "/resourceInventoryManagement/v4/resource/3597468049",
 	"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N5=1",
 	"description": "5G Core End Point of N5 interface (between PCF and AF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N5",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N5",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N5",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467994",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467994",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467994",
 		"@type": "EP_N5Spec"
 	},
 	"resourceCharacteristic": [

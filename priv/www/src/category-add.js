@@ -131,7 +131,7 @@ class categoryAdd extends PolymerElement {
 	_add() {
 		var ajax = this.$.categoryAddAjax;
 		ajax.method = "POST";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCategory/";
+		ajax.url = "/resourceCatalogManagement/v4/resourceCategory/";
 		var cat = new Object();
 		if(this.categoryName) {
 			cat.name = this.categoryName;

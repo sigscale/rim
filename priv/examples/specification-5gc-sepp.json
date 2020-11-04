@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "SEPPFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SEPPFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/SEPPFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,13 +44,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		}
 	]
 }

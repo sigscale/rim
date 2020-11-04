@@ -14,7 +14,7 @@
 	"category": "IM",
 	"targetResourceSchema": {
 		"@type": "InventoryUnit",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/InventoryUnit"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/InventoryUnit"
 	},
 	"relatedParty": [
 		{
@@ -92,7 +92,7 @@
 			"name": "relatedFunction",
 			"description": "This attribute carries the DN of related (ManagedFunction)",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
 	]
 }

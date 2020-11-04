@@ -1,6 +1,6 @@
 {
 	"id": "3597468023",
-	"href": "/resourceInventoryManagement/v3/resource/3597468023",
+	"href": "/resourceInventoryManagement/v4/resource/3597468023",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N11=1",
 	"description": "5G Core End Point of N11 interface (between AMF and SMF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N11",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N11",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N11",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468018",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468018",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468018",
 		"@type": "EP_N11Spec"
 	},
 	"resourceCharacteristic": [

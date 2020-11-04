@@ -1,6 +1,6 @@
 {
 	"id": "8994462918",
-	"href": "/resourceInventoryManagement/v3/resource/8994462918",
+	"href": "/resourceInventoryManagement/v4/resource/8994462918",
 	"name": "SubNetwork=3,ManagedElement=1,RncFunction=1",
 	"description": "UMTS Radio Network Controller (RNC)",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "RncFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/RncFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/RncFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798115649",
 		"@type": "RncFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -42,58 +42,58 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8994643081",
-				"href": "/resourceInventoryManagement/v3/resource/8994643081",
+				"href": "/resourceInventoryManagement/v4/resource/8994643081",
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=1",
 				"@referredType": "UtranCellFDD"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8994630174",
-				"href": "/resourceInventoryManagement/v3/resource/8994630174",
+				"href": "/resourceInventoryManagement/v4/resource/8994630174",
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=2",
 				"@referredType": "UtranCellFDD"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8994631530",
-				"href": "/resourceInventoryManagement/v3/resource/8994631530",
+				"href": "/resourceInventoryManagement/v4/resource/8994631530",
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=3",
 				"@referredType": "UtranCellFDD"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8994635074",
-				"href": "/resourceInventoryManagement/v3/resource/8994635074",
+				"href": "/resourceInventoryManagement/v4/resource/8994635074",
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=1",
 				"@referredType": "IubLink"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8994648933",
-				"href": "/resourceInventoryManagement/v3/resource/8994648933",
+				"href": "/resourceInventoryManagement/v4/resource/8994648933",
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=2",
 				"@referredType": "IubLink"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "8994645445",
-				"href": "/resourceInventoryManagement/v3/resource/8994645445",
+				"href": "/resourceInventoryManagement/v4/resource/8994645445",
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=3",
 				"@referredType": "IubLink"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
 	"connectivity": [
@@ -102,13 +102,13 @@
 			"endpoint": [
 				{
 					"id": "8994462918",
-					"href": "/resourceInventoryManagement/v3/resource/8994462918",
+					"href": "/resourceInventoryManagement/v4/resource/8994462918",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1",
 					"@referredType": "RncFunction"
 				},
 				{
 					"id": "8994635074",
-					"href": "/resourceInventoryManagement/v3/resource/8994635074",
+					"href": "/resourceInventoryManagement/v4/resource/8994635074",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=1",
 					"@referredType": "IubLink"
 				}
@@ -119,13 +119,13 @@
 			"endpoint": [
 				{
 					"id": "8994635074",
-					"href": "/resourceInventoryManagement/v3/resource/8994635074",
+					"href": "/resourceInventoryManagement/v4/resource/8994635074",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=1",
 					"@referredType": "IubLink"
 				},
 				{
 					"id": "8994643081",
-					"href": "/resourceInventoryManagement/v3/resource/8994643081",
+					"href": "/resourceInventoryManagement/v4/resource/8994643081",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=1",
 					"@referredType": "UtranCellFDD"
 				}
@@ -136,13 +136,13 @@
 			"endpoint": [
 				{
 					"id": "8994462918",
-					"href": "/resourceInventoryManagement/v3/resource/8994462918",
+					"href": "/resourceInventoryManagement/v4/resource/8994462918",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1",
 					"@referredType": "RncFunction"
 				},
 				{
 					"id": "8994648933",
-					"href": "/resourceInventoryManagement/v3/resource/8994648933",
+					"href": "/resourceInventoryManagement/v4/resource/8994648933",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=2",
 					"@referredType": "IubLink"
 				}
@@ -153,13 +153,13 @@
 			"endpoint": [
 				{
 					"id": "8994648933",
-					"href": "/resourceInventoryManagement/v3/resource/8994648933",
+					"href": "/resourceInventoryManagement/v4/resource/8994648933",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=2",
 					"@referredType": "IubLink"
 				},
 				{
 					"id": "8994630174",
-					"href": "/resourceInventoryManagement/v3/resource/8994630174",
+					"href": "/resourceInventoryManagement/v4/resource/8994630174",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=2",
 					"@referredType": "UtranCellFDD"
 				}
@@ -170,13 +170,13 @@
 			"endpoint": [
 				{
 					"id": "8994462918",
-					"href": "/resourceInventoryManagement/v3/resource/8994462918",
+					"href": "/resourceInventoryManagement/v4/resource/8994462918",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1",
 					"@referredType": "RncFunction"
 				},
 				{
 					"id": "8994645445",
-					"href": "/resourceInventoryManagement/v3/resource/8994645445",
+					"href": "/resourceInventoryManagement/v4/resource/8994645445",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=3",
 					"@referredType": "IubLink"
 				}
@@ -187,13 +187,13 @@
 			"endpoint": [
 				{
 					"id": "8994645445",
-					"href": "/resourceInventoryManagement/v3/resource/8994645445",
+					"href": "/resourceInventoryManagement/v4/resource/8994645445",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=3",
 					"@referredType": "IubLink"
 				},
 				{
 					"id": "8994631530",
-					"href": "/resourceInventoryManagement/v3/resource/8994631530",
+					"href": "/resourceInventoryManagement/v4/resource/8994631530",
 					"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=3",
 					"@referredType": "UtranCellFDD"
 				}

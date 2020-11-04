@@ -1,10 +1,10 @@
 {
 	"id": "154995556287925",
-	"href": "/resourceCatalogManagement/v3/category/154995556287925",
+	"href": "/resourceCatalogManagement/v4/category/154995556287925",
 	"name": "RAN",
 	"description": "Radio Access Network",
 	"@type": "ResourceCategory",
-	"@schemaLocation": "/resourceCatalogManagement/v3/schema/resourceCatalogManagement#/definitions/ResourceCategory",
+	"@schemaLocation": "/resourceCatalogManagement/v4/schema/resourceCatalogManagement#/definitions/ResourceCategory",
 	"@baseType": "Category",
 	"version": "0.1",
 	"validFor": {
@@ -16,7 +16,7 @@
 	"resourceCandidate": [
 		{
 			"id": "154995568726012",
-			"href": "/resourceCatalogManagement/v3/candidate/1486272309768482",
+			"href": "/resourceCatalogManagement/v4/candidate/1486272309768482",
 			"name": "GSM",
 			"version": "0.1"
 		}

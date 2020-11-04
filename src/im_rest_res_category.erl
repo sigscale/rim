@@ -30,6 +30,8 @@
 
 -include("im.hrl").
 -define(MILLISECOND, milli_seconds).
+  
+-define(PathCategory, "/resourceCatalogManagement/v4/resourceCategory/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -58,7 +60,7 @@ content_types_provided() ->
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
 %% @doc Body producing function for
-%% 	`GET|HEAD /resourceCatalogManagement/v3/resourceCategory'
+%% 	`GET|HEAD /resourceCatalogManagement/v4/resourceCategory'
 %% 	requests.
 get_categories(Method, Query, Headers) ->
 	case lists:keytake("fields", 1, Query) of
@@ -163,7 +165,7 @@ get_category(_, _, _) ->
 			| {error, ErrorCode :: integer()} .
 %% @doc Update a existing `category'.
 %%
-%% 	Respond to `PATCH /resourceCatalogManagement/v3/resourceCategory/{Id}' request.
+%% 	Respond to `PATCH /resourceCatalogManagement/v4/resourceCategory/{Id}' request.
 %%
 patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 	try
@@ -171,7 +173,7 @@ patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 			undefined ->
 				{undefined, zj:decode(ReqBody)};
 			Etag ->
-				{fm_rest:etag(Etag) , zj:decode(ReqBody)}
+				{im_rest:etag(Etag) , zj:decode(ReqBody)}
 		end
 	of
 		{EtagT, {ok, Patch}} ->
@@ -200,7 +202,7 @@ patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 				{atomic, #category{last_modified = LM1} = NewCategory} ->
 					Body = zj:encode(category(NewCategory)),
 					Headers = [{content_type, "application/json"},
-							{location, "/resourceCatalogManagement/v3/resourceCategory/" ++ Id},
+							{location, ?PathCategory ++ Id},
 							{etag, im_rest:etag(LM1)}],
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->
@@ -356,12 +358,12 @@ category([root | T], #category{root = IsRoot} = R, Acc)
 category([root | T], #{"isRoot" := IsRoot} = M, Acc)
 		when is_boolean(IsRoot) ->
 	category(T, M, Acc#category{root = IsRoot});
-category([related_party | T], #category{related_party = RP} = R, Acc)
+category([party | T], #category{party = RP} = R, Acc)
 		when is_list(RP), length(RP) > 0 ->
-	category(T, R, Acc#{"relatedParty" => im_rest:related_party_ref(RP)});
-category([related_party | T], #{"relatedParty" := RP} = M, Acc)
+	category(T, R, Acc#{"relatedParty" => im_rest:party_ref(RP)});
+category([party | T], #{"relatedParty" := RP} = M, Acc)
 		when is_list(RP), length(RP) > 0 ->
-	category(T, M, Acc#category{related_party = im_rest:related_party_ref(RP)});
+	category(T, M, Acc#category{party = im_rest:party_ref(RP)});
 category([category | T], #category{category = CatRefs} = R, Acc)
 		when is_list(CatRefs), length(CatRefs) > 0 ->
 	category(T, R, Acc#{"category" => im_rest:category_ref(CatRefs)});

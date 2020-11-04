@@ -24,9 +24,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -88,7 +88,7 @@ parse_gnbdu({endElement, _Uri, "GNBDUFunction", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GNBDUFunction",
+			schema = ?PathCatalogSchema ++ "/GNBDUFunction",
 			specification = Spec,
 			characteristic = GnbDUAttr,
 			related = NrCellDuRels ++ NrSCRels ++ EpF1cRels ++ EpF1uRels,
@@ -157,13 +157,14 @@ parse_nr_cell_du({endElement, _Uri, "NRCellDU", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NRCellDU",
+			schema = ?PathInventorySchema ++ "/NRCellDU",
 			specification = Spec,
 			characteristic = NrCellDUAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			NrCellDuRel = #resource_rel{id = Id, name = NrCellDuDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			NrCellDuRel = #resource_rel{id = Id, name = NrCellDuDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = NrState#nr_state{nr_cell_dus = [NrCellDuRel | NrCellDuRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -257,13 +258,14 @@ parse_nr_sector_carrier({endElement, _Uri, "NRSectorCarrier", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NRSectorCarrier",
+			schema = ?PathInventorySchema ++ "/NRSectorCarrier",
 			specification = Spec,
 			characteristic = NrSCAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			NrSCRel = #resource_rel{id = Id, name = NrSCDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			NrSCRel = #resource_rel{id = Id, name = NrSCDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = NrState#nr_state{nr_sector_carriers
 					= [NrSCRel | NrSCRels]},
@@ -335,13 +337,14 @@ parse_ep_f1c({endElement, _Uri, "EP_F1C", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_F1C",
+			schema = ?PathInventorySchema ++ "/EP_F1C",
 			specification = Spec,
 			characteristic = EpF1cAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpF1cRel = #resource_rel{id = Id, name = EpF1cDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpF1cRel = #resource_rel{id = Id, name = EpF1cDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NrState#nr_state{
 					ep_f1cs = [EpF1cRel | EpF1cRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -371,13 +374,14 @@ parse_ep_f1u({endElement, _Uri, "EP_F1U", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_F1U",
+			schema = ?PathInventorySchema ++ "/EP_F1U",
 			specification = Spec,
 			characteristic = EpF1uAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpF1uRel = #resource_rel{id = Id, name = EpF1uDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpF1uRel = #resource_rel{id = Id, name = EpF1uDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NrState#nr_state{
 					ep_f1us = [EpF1uRel | EpF1uRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -463,7 +467,7 @@ parse_gnbcucp({endElement, _Uri, "GNBCUCPFunction", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GNBCUCPFunction",
+			schema = ?PathInventorySchema ++ "/GNBCUCPFunction",
 			specification = Spec,
 			characteristic = GnbcucpAttr,
 			related = NrCellCuRels ++ EpF1cRels ++ EpE1Rels ++ EpXncRels ++
@@ -539,13 +543,14 @@ parse_nr_cell_cu({endElement, _Uri, "NRCellCU", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/NRCellCU",
+			schema = ?PathInventorySchema ++ "/NRCellCU",
 			specification = Spec,
 			characteristic = NrCellCUAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			NrCellCuRel = #resource_rel{id = Id, name = NrCellCuDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			NrCellCuRel = #resource_rel{id = Id, name = NrCellCuDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{
 					parse_state = NrState#nr_state{nr_cell_cus = [NrCellCuRel | NrCellCuRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -620,13 +625,14 @@ parse_ep_e1({endElement, _Uri, "EP_E1", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_E1",
+			schema = ?PathInventorySchema ++ "/EP_E1",
 			specification = Spec,
 			characteristic = EpE1Attr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpE1Rel = #resource_rel{id = Id, name = EpE1Dn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpE1Rel = #resource_rel{id = Id, name = EpE1Dn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NrState#nr_state{
 					ep_e1s = [EpE1Rel | EpE1Rels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -657,13 +663,14 @@ parse_ep_xnc({endElement, _Uri, "EP_XnC", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_XnC",
+			schema = ?PathInventorySchema ++ "/EP_XnC",
 			specification = Spec,
 			characteristic = EpXncAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpXncRel = #resource_rel{id = Id, name = EpXncDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpXncRel = #resource_rel{id = Id, name = EpXncDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#nr_state{ep_xncs = EpXncRels} ->
 					[PrevState#state{parse_state = PrevParseState#nr_state{
@@ -701,13 +708,14 @@ parse_ep_x2c({endElement, _Uri, "EP_X2C", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_X2C",
+			schema = ?PathInventorySchema ++ "/EP_X2C",
 			specification = Spec,
 			characteristic = EpX2cAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpX2cRel = #resource_rel{id = Id, name = EpX2cDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpX2cRel = #resource_rel{id = Id, name = EpX2cDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#nr_state{ep_x2cs = EpX2cRels} ->
 					[PrevState#state{parse_state = PrevParseState#nr_state{
@@ -745,13 +753,14 @@ parse_ep_ngc({endElement, _Uri, "EP_NgC", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_NgC",
+			schema = ?PathInventorySchema ++ "/EP_NgC",
 			specification = Spec,
 			characteristic = EpNgcAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpNgcRel = #resource_rel{id = Id, name = EpNgcDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpNgcRel = #resource_rel{id = Id, name = EpNgcDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#nr_state{ep_ngcs = EpNgcRels} ->
 					[PrevState#state{parse_state = PrevParseState#nr_state{
@@ -870,7 +879,7 @@ parse_gnbcuup({endElement, _Uri, "GNBCUUPFunction", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GNBCUUPFunction",
+			schema = ?PathInventorySchema ++ "/GNBCUUPFunction",
 			specification = Spec,
 			characteristic = GnbcuupAttr,
 			related = EpE1Rels ++ EpF1uRels ++ EpXnuRels ++ EpNguRels ++
@@ -944,13 +953,14 @@ parse_ep_xnu({endElement, _Uri, "EP_XnU", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_XnU",
+			schema = ?PathInventorySchema ++ "/EP_XnU",
 			specification = Spec,
 			characteristic = EpXnuAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpXnuRel = #resource_rel{id = Id, name = EpXnuDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpXnuRel = #resource_rel{id = Id, name = EpXnuDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#nr_state{ep_xnus = EpXnuRels} ->
 					[PrevState#state{parse_state = PrevParseState#nr_state{
@@ -988,13 +998,14 @@ parse_ep_ngu({endElement, _Uri, "EP_NgU", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_NgU",
+			schema = ?PathInventorySchema ++ "/EP_NgU",
 			specification = Spec,
 			characteristic = EpNguAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpNguRel = #resource_rel{id = Id, name = EpNguDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpNguRel = #resource_rel{id = Id, name = EpNguDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#nr_state{ep_ngus = EpNguRels} ->
 					[PrevState#state{parse_state = PrevParseState#nr_state{
@@ -1032,13 +1043,14 @@ parse_ep_x2u({endElement, _Uri, "EP_X2U", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_X2U",
+			schema = ?PathInventorySchema ++ "/EP_X2U",
 			specification = Spec,
 			characteristic = EpX2uAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpX2uRel = #resource_rel{id = Id, name = EpX2uDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpX2uRel = #resource_rel{id = Id, name = EpX2uDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			case PrevParseState of
 				#nr_state{ep_x2us = EpX2uRels} ->
 					[PrevState#state{parse_state = PrevParseState#nr_state{
@@ -1076,13 +1088,14 @@ parse_ep_s1u({endElement, _Uri, "EP_S1U", QName},
 			category = "NR",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EP_S1U",
+			schema = ?PathInventorySchema ++ "/EP_S1U",
 			specification = Spec,
 			characteristic = EpS1uAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			EpS1uRel = #resource_rel{id = Id, name = EpS1uDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			EpS1uRel = #resource_rel{id = Id, name = EpS1uDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = NrState#nr_state{
 					ep_s1us = [EpS1uRel | EpS1uRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -1137,10 +1150,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

@@ -1,6 +1,6 @@
 {
 	"id": "6974362503",
-	"href": "/resourceInventoryManagement/v3/resource/6974362503",
+	"href": "/resourceInventoryManagement/v4/resource/6974362503",
 	"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,IupsLink=1",
 	"description": "Core Iu-ps interface link",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "IupsLink",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/IupsLink",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/IupsLink",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362587",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362587",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362587",
 		"@type": "IupsLinkSpec"
 	},
 	"resourceCharacteristic": [

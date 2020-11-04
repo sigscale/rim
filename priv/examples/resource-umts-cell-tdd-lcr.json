@@ -1,6 +1,6 @@
 {
 	"id": "5493862311",
-	"href": "/resourceInventoryManagement/v3/resource/5493862311",
+	"href": "/resourceInventoryManagement/v4/resource/5493862311",
 	"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCellTDDLcr=1",
 	"description": "UTRAN UMTS Time Division Duplex (TDD) low chip rate (LCR)",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "UtranCellTDDLcr",
 	"@baseType": "UtranCellTDD",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/UtranCellTDDLcr",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/UtranCellTDDLcr",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "718023649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/718023649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/718023649",
 		"@type": "UtranCellTDDLcrSpec"
 	},
 	"resourceCharacteristic": [

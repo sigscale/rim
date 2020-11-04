@@ -14,7 +14,7 @@
 	"category": "",
 	"targetResourceSchema": {
 		"@type": "ManagedElement",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/ManagedElement"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/ManagedElement"
 	},
 	"relatedParty": [
 		{
@@ -39,13 +39,13 @@
 			"name": "dnPrefix",
 			"description": "Distinguished Name (DN) prefix (3GPP 32.300 Annex C)",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "managedElementTypeList",
 			"description": "",
 			"valueType": "ManagedElementTypeListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/ManagedElementTypeListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/ManagedElementTypeListType"
 		},
 		{
 			"name": "userLabel",
@@ -61,7 +61,7 @@
 			"name": "managedBy",
 			"description": "",
 			"valueType": "DnList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/DnList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/DnList"
 		},
 		{
 			"name": "vendorName",

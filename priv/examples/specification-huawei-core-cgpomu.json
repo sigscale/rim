@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "CGPOMUFunctionSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/CGPOMUFunctionSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/CGPOMUFunctionSpec"
 	},
 	"relatedParty": [
 		{

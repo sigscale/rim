@@ -22,7 +22,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im public API
@@ -184,16 +185,16 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 			category = "",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/SubNetwork",
+			schema = ?PathInventorySchema ++ "/SubNetwork",
 			specification = Spec,
 			related = LinkMmeSgwRels,
 			characteristic = SubNetworkAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = SubNetworkId}} ->
 			FConnectivity = fun F([#resource_rel{id = LinkId, name = LinkDn,
-					href = LinkHref, referred_type = LinkRefType} | T3], Acc) ->
-						LinkEndpoint = #endpoint{id = LinkId, name = LinkDn,
-								href = LinkHref, referred_type = LinkRefType},
+					href = LinkHref, ref_type = LinkRefType} | T3], Acc) ->
+						LinkEndpoint = #endpoint_ref{id = LinkId, name = LinkDn,
+								href = LinkHref, ref_type = LinkRefType},
 						case im:get_resource(LinkId) of
 							{ok, #resource{characteristic = LinkChars}} ->
 								FaEnd = fun (#resource_char{name = "aEnd"}) ->
@@ -205,7 +206,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 										= lists:filter(FaEnd, LinkChars),
 								AEndPoint = build_function_endpoint(AEndDn),
 								AEndLinkConnectivity
-										= #connectivity{type = "pointtoPoint",
+										= #connection{ass_type = "pointtoPoint",
 										endpoint = [AEndPoint, LinkEndpoint]},
 								FzEnd = fun (#resource_char{name = "zEnd"}) ->
 											true;
@@ -216,7 +217,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 										= lists:filter(FzEnd, LinkChars),
 								ZEndPoint = build_function_endpoint(ZEndDn),
 								LinkZEndConnectivity
-										= #connectivity{type = "pointtoPoint",
+										= #connection{ass_type = "pointtoPoint",
 										endpoint = [LinkEndpoint, ZEndPoint]},
 								F(T3, [AEndLinkConnectivity,
 										LinkZEndConnectivity | Acc]);
@@ -226,7 +227,7 @@ parse_subnetwork({endElement, _Uri, "SubNetwork", QName},
 					F([], Acc) ->
 						Acc
 			end,
-			Connectivity = FConnectivity(LinkMmeSgwRels, []),
+			Connectivity = [#resource_graph{connection = FConnectivity(LinkMmeSgwRels, [])}],
 			Ftrans = fun() ->
 					[R] = mnesia:read(resource, SubNetworkId, write),
 					mnesia:write(resource,
@@ -250,9 +251,9 @@ build_function_endpoint(EndDn) ->
 	case im:get_resource_name(EndDn) of
 		{ok, #resource{id = EndId, class_type = EndType,
 				connection_point = EndPoints}} ->
-			#endpoint{id = EndId, href = ?ResourcePath ++ EndId,
-					name = EndDn, referred_type = EndType,
-					connection_point = parse_resource_rel(EndPoints)};
+			#endpoint_ref{id = EndId, href = ?ResourcePath ++ EndId,
+					name = EndDn, ref_type = EndType,
+					connection_point = EndPoints};
 		{error, Reason} ->
 			{error, Reason}
 	end.
@@ -328,13 +329,13 @@ parse_link_mme_sgw({endElement, _Uri, "Link_MME_ServingGW", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_MME_ServingGW",
+			schema = ?PathInventorySchema ++ "/Link_MME_ServingGW",
 			specification = Spec,
 			characteristic = LinkMmeSgwAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			LinkMmeSgwRel = #resource_rel{id = Id, name = LinkMmeSgwDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			LinkMmeSgwRel = #resource_rel{id = Id, name = LinkMmeSgwDn, rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkMmeSgwRel | LinkRels]},
 					spec_cache = [NewCache | PrevCache]} | T1];
@@ -365,13 +366,13 @@ parse_link_mme_mme({endElement, _Uri, "Link_MME_MME", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_MME_MME",
+			schema = ?PathInventorySchema ++ "/Link_MME_MME",
 			specification = Spec,
 			characteristic = LinkMmeMmeAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkMmeMmeRel = #resource_rel{id = Id, name = LinkMmeMmeDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkMmeMmeRel | LinkRels]},
@@ -403,13 +404,13 @@ parse_link_mme_sgsn({endElement, _Uri, "Link_MME_SGSN", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_MME_SGSN",
+			schema = ?PathInventorySchema ++ "/Link_MME_SGSN",
 			specification = Spec,
 			characteristic = LinkMmeSgsnAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkMmeSgsnRel = #resource_rel{id = Id, name = LinkMmeSgsnDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkMmeSgsnRel | LinkRels]},
@@ -441,13 +442,13 @@ parse_link_hss_mme({endElement, _Uri, "Link_HSS_MME", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_HSS_MME",
+			schema = ?PathInventorySchema ++ "/Link_HSS_MME",
 			specification = Spec,
 			characteristic = LinkHssMmeAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkHssMmeRel = #resource_rel{id = Id, name = LinkHssMmeDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkHssMmeRel | LinkRels]},
@@ -479,13 +480,13 @@ parse_link_enb_mme({endElement, _Uri, "Link_ENB_MME", QName},
 			category = "EPC",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/Link_ENB_MME",
+			schema = ?PathInventorySchema ++ "/Link_ENB_MME",
 			specification = Spec,
 			characteristic = LinkEnbMmeAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
 			LinkEnbMmeRel = #resource_rel{id = Id, name = LinkEnbMmeDn,
-					type = "contains", referred_type = ClassType,
+					rel_type = "contains", ref_type = ClassType,
 					href = ?ResourcePath ++ Id},
 			[PrevState#state{parse_state = GenericState#generic_state{
 					links = [LinkEnbMmeRel | LinkRels]},
@@ -1145,28 +1146,13 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})
 			end
 	end.
 
--spec parse_resource_rel(ResourceRel) -> Result
-	when
-		ResourceRel :: [#resource_rel{}],
-		Result :: [#connection_point{}].
-% @hidden
-parse_resource_rel(ResourceRel) ->
-	parse_resource_rel(ResourceRel, []).
-% @hidden
-parse_resource_rel([#resource_rel{id = Id, name = Dn, href = Href,
-		referred_type = RefType} | T], Acc) ->
-	ConnectionPoint = #connection_point{id = Id, href = Href, name = Dn,
-			type = RefType},
-	parse_resource_rel(T, [ConnectionPoint | Acc]);
-parse_resource_rel([], Acc) ->
-	Acc.

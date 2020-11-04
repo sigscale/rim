@@ -1,6 +1,6 @@
 {
 	"id": "3597468044",
-	"href": "/resourceInventoryManagement/v3/resource/3597468044",
+	"href": "/resourceInventoryManagement/v4/resource/3597468044",
 	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_S5U=1",
 	"description": "5G Core End Point of S5-U interface",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_S5U",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_S5U",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_S5U",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467997",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467997",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467997",
 		"@type": "EP_S5USpec"
 	},
 	"resourceCharacteristic": [

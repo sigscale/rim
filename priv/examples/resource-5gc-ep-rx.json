@@ -1,6 +1,6 @@
 {
 	"id": "3597468050",
-	"href": "/resourceInventoryManagement/v3/resource/3597468050",
+	"href": "/resourceInventoryManagement/v4/resource/3597468050",
 	"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_Rx=1",
 	"description": "5G Core End Point of Rx interface (between PCF and AF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_Rx",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_Rx",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_Rx",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597467993",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597467993",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597467993",
 		"@type": "EP_RxSpec"
 	},
 	"resourceCharacteristic": [

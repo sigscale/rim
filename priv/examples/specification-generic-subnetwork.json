@@ -14,7 +14,7 @@
 	"category": "",
 	"targetResourceSchema": {
 		"@type": "SubNetwork",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/SubNetwork"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/SubNetwork"
 	},
 	"relatedParty": [
 		{

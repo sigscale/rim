@@ -14,7 +14,7 @@
 	"category": "IM",
 	"targetResourceSchema": {
 		"@type": "AntennaInventoryUnit",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/AntennaInventoryUnit"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/AntennaInventoryUnit"
 	},
 	"relatedParty": [
 		{
@@ -92,25 +92,25 @@
 			"name": "relatedFunction",
 			"description": "This attribute carries the DN of related (ManagedFunction)",
 			"valueType": "Dn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/Dn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		},
 		{
 			"name": "maxTiltValue",
 			"description": "The maximum amount of tilt the RET system can support",
 			"valueType": "AngleValueType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/inventoryNrm#/definitions/AngleValueType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/inventoryNrm#/definitions/AngleValueType"
 		},
 		{
 			"name": "minTiltValue",
 			"description": "The minimum amount of tilt the RET system can support",
 			"valueType": "AngleValueType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/inventoryNrm#/definitions/AngleValueType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/inventoryNrm#/definitions/AngleValueType"
 		},
 		{
 			"name": "mechanicalOffset",
 			"description": "Represent a non-adjustable tilt value, which is imparted to physical installation of antenna",
 			"valueType": "AngleValueType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/inventoryNrm#/definitions/AngleValueType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/inventoryNrm#/definitions/AngleValueType"
 		},
 		{
 			"name": "baseElevation",

@@ -161,14 +161,14 @@ class candidateUpdate extends PolymerElement {
 	_delete() {
 		var ajax = this.$.candidateDeleteAjax;
 		ajax.method = "DELETE";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
+		ajax.url = "/resourceCatalogManagement/v4/resourceCandidate/" + this.$.addCandId.value;
 		ajax.generateRequest();
 	}
 
 	_update() {
 		var ajax = this.$.candidateUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/" + this.$.addCandId.value;
+		ajax.url = "/resourceCatalogManagement/v4/resourceCandidate/" + this.$.addCandId.value;
 		var cand = new Object();
 		if(this.candidateId) {
 			cand.id = this.candidateId;

@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "GNBCUUPFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/GNBCUUPFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/GNBCUUPFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,31 +44,31 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "peeParametersList",
 			"description": "Parameter list for the control and monitoring of power, energy and environment",
 			"valueType": "PeeParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/PeeParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/PeeParametersListType"
 		},
 		{
 			"name": "gnbId",
 			"description": "Identifies a gNB within a PLMN (3GPP 38.300)",
 			"valueType": "GnbId",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbId"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/GnbId"
 		},
 		{
 			"name": "gnbIdLength",
 			"description": "Indicates number of bits encoding Global gNB ID  (3GPP TS 38.413 clause 9.3.1.6)",
 			"valueType": "GnbIdLength",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/GnbIdLength"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/GnbIdLength"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		}
 	]
 }

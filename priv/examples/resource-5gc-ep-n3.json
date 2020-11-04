@@ -1,6 +1,6 @@
 {
 	"id": "3597468041",
-	"href": "/resourceInventoryManagement/v3/resource/3597468041",
+	"href": "/resourceInventoryManagement/v4/resource/3597468041",
 	"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N3=1",
 	"description": "5G Core End Point of N3 interface (between (R)AN and UPF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_N3",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_N3",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_N3",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468000",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468000",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468000",
 		"@type": "EP_N3Spec"
 	},
 	"resourceCharacteristic": [

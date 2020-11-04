@@ -21,6 +21,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
+
 %%----------------------------------------------------------------------
 %%  The im private API
 %%----------------------------------------------------------------------
@@ -55,14 +58,15 @@ parse_ne({endElement, _Uri, "InventoryUnitNE", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitNE",
+			schema = ?PathInventorySchema ++ "/InventoryUnitNE",
 			specification = Spec,
 			characteristic = NEAttr,
 			related = Nes},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			NERel = #resource_rel{id = Id, name = NEDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
+			NERel = #resource_rel{id = Id, name = NEDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_nes = [NERel | NERels]}} | T1];
 		{error, Reason} ->
@@ -81,7 +85,7 @@ parse_ne({endElement, _Uri, "InventoryUnitNE", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitNE",
+			schema = ?PathInventorySchema ++ "/InventoryUnitNE",
 			specification = Spec,
 			characteristic = NEAttr,
 			related = NEs},
@@ -180,14 +184,15 @@ parse_hw({endElement, _Uri, "InventoryUnitHw", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitHw",
+			schema = ?PathInventorySchema ++ "/InventoryUnitHw",
 			specification = Spec,
 			characteristic = HwAttr,
 			related = Hws},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			HwRel = #resource_rel{id = Id, name = HwDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
+			HwRel = #resource_rel{id = Id, name = HwDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_hws = [HwRel | HwRels]}} | T1];
 		{error, Reason} ->
@@ -206,7 +211,7 @@ parse_hw({endElement, _Uri, "InventoryUnitHw", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitHw",
+			schema = ?PathInventorySchema ++ "/InventoryUnitHw",
 			specification = Spec,
 			characteristic = HwAttr,
 			related = Hws},
@@ -314,14 +319,15 @@ parse_sw({endElement, _Uri, "InventoryUnitSw", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitSw",
+			schema = ?PathInventorySchema ++ "/InventoryUnitSw",
 			specification = Spec,
 			characteristic = SwAttr,
 			related = Sws},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			SwRel = #resource_rel{id = Id, name = SwDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
+			SwRel = #resource_rel{id = Id, name = SwDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_sws = [SwRel | SwRels]}} | T1];
 		{error, Reason} ->
@@ -340,7 +346,7 @@ parse_sw({endElement, _Uri, "InventoryUnitSw", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitSw",
+			schema = ?PathInventorySchema ++ "/InventoryUnitSw",
 			specification = Spec,
 			characteristic = SwAttr,
 			related = Sws},
@@ -442,14 +448,15 @@ parse_lic({endElement, _Uri, "InventoryUnitLic", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitLic",
+			schema = ?PathInventorySchema ++ "/InventoryUnitLic",
 			specification = Spec,
 			characteristic = LicAttr,
 			related = Lics},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = ResourceId}} ->
-			LicRel = #resource_rel{id = Id, name = LicDn, type = "contains",
-					href = "/resourceInventoryManagement/v3/resource/" ++ ResourceId},
+			LicRel = #resource_rel{id = Id, name = LicDn,
+					rel_type = "contains", ref_type = ClassType,
+					href = ?ResourcePath ++ ResourceId},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = IMState#im2_state{iu_lics = [LicRel | LicRels]}} | T1];
 		{error, Reason} ->
@@ -468,7 +475,7 @@ parse_lic({endElement, _Uri, "InventoryUnitLic", QName},
 			category = "IM",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/InventoryUnitLic",
+			schema = ?PathInventorySchema ++ "/InventoryUnitLic",
 			specification = Spec,
 			characteristic = LicAttr,
 			related = Lics},
@@ -581,10 +588,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

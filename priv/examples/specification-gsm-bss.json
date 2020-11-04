@@ -14,7 +14,7 @@
 	"category": "RAN",
 	"targetResourceSchema": {
 		"@type": "BssFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/BssFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/BssFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,7 +44,7 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		}
 	]
 }

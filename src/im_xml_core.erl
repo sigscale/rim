@@ -22,9 +22,9 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
--define(ResourcePath, "/resourceInventoryManagement/v3/resource/").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(ResourcePath, "/resourceInventoryManagement/v4/resource/").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -67,7 +67,7 @@ parse_msc({endElement, _Uri, "MscServerFunction", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MscServerFunction",
+			schema = ?PathInventorySchema ++ "/MscServerFunction",
 			specification = Spec,
 			characteristic = MscAttr,
 			related = IucsLinks ++ ALinks},
@@ -184,13 +184,13 @@ parse_iucs({endElement, _Uri, "IucsLink", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/IucsLink",
+			schema = ?PathInventorySchema ++ "/IucsLink",
 			specification = Spec,
 			characteristic = IucsAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			IucsRel = #resource_rel{id = Id, name = IucsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IucsRel = #resource_rel{id = Id, name = IucsDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{iucs_links
 					= [IucsRel | IucsRels]}} | T1];
@@ -230,13 +230,13 @@ parse_alink({endElement, _Uri, "ALink", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/ALink",
+			schema = ?PathInventorySchema ++ "/ALink",
 			specification = Spec,
 			characteristic = ALinkAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			ALinkRel = #resource_rel{id = Id, name = ALinkDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			ALinkRel = #resource_rel{id = Id, name = ALinkDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{a_links
 					= [ALinkRel| ALinkRels]}} | T1];
@@ -274,7 +274,7 @@ parse_mgw({endElement, _Uri, "CsMgwFunction", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CsMgwFunction",
+			schema = ?PathInventorySchema ++ "/CsMgwFunction",
 			specification = Spec,
 			characteristic = MgwAttr},
 	case im:add_resource(Resource) of
@@ -349,7 +349,7 @@ parse_ggsn({endElement, _Uri, "GgsnFunction", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GgsnFunction",
+			schema = ?PathInventorySchema ++ "/CgsnFunction",
 			specification = Spec,
 			characteristic = GgsnAttr},
 	case im:add_resource(Resource) of
@@ -436,14 +436,14 @@ parse_sgsn({endElement, _Uri, "SgsnFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = SgsnDn,
 			description = "Serving GPRS Support Node (SGSN)",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/SgsnFunction",
+			schema = ?PathInventorySchema ++ "/SgsnFunction",
 			specification = Spec,
 			characteristic = [PeeParam | SgsnAttr],
 			related = IupsLinks ++ GbLinks},
@@ -560,13 +560,13 @@ parse_iups({endElement, _Uri, "IupsLink", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/IupsLink",
+			schema = ?PathInventorySchema ++ "/IupsLink",
 			specification = Spec,
 			characteristic = IupsAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			IupsRel = #resource_rel{id = Id, name = IupsDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IupsRel = #resource_rel{id = Id, name = IupsDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{iups_links
 					= [IupsRel | IupsRels]}} | T1];
@@ -606,13 +606,13 @@ parse_gb_link({endElement, _Uri, "GbLink", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/GbLink",
+			schema = ?PathInventorySchema ++ "/GbLink",
 			specification = Spec,
 			characteristic = GbLinkAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			GbLinkRel = #resource_rel{id = Id, name = GbLinkDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			GbLinkRel = #resource_rel{id = Id, name = GbLinkDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{gb_links
 					= [GbLinkRel| GbLinkRels]}} | T1];
@@ -647,14 +647,14 @@ parse_auc({endElement, _Uri, "AucFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = AucDn,
 			description = "Authentication Center (AUC)",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/AucFunction",
+			schema = ?PathInventorySchema ++ "/AucFunction",
 			specification = Spec,
 			characteristic = [PeeParam | AucAttr]},
 	case im:add_resource(Resource) of
@@ -714,14 +714,14 @@ parse_hlr({endElement, _Uri, "HlrFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = HlrDn,
 			description = "Home Location Register (HLR)",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/HlrFunction",
+			schema = ?PathInventorySchema ++ "/AucFunction",
 			specification = Spec,
 			characteristic = [PeeParam | HlrAttr]},
 	case im:add_resource(Resource) of
@@ -785,14 +785,14 @@ parse_eir({endElement, _Uri, "EirFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = EirDn,
 			description = "Equipment Identity Register (EIR)",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/EirFunction",
+			schema = ?PathInventorySchema ++ "/EirFunction",
 			specification = Spec,
 			characteristic = [PeeParam | EirAttr]},
 	case im:add_resource(Resource) of
@@ -852,14 +852,14 @@ parse_mnp_srf({endElement, _Uri, "MnpSrfFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = MnpSrfDn,
 			description = "Mobile Number Portability-Signaling Relay Function (MNP-SRF)",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/MnpSrfFunction",
+			schema = ?PathInventorySchema ++ "/MnpSrFunction",
 			specification = Spec,
 			characteristic = [PeeParam | MnpSrfAttr]},
 	case im:add_resource(Resource) of
@@ -919,14 +919,14 @@ parse_cgf({endElement, _Uri, "CgfFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	PeeParam = #resource_char{name = "peeParametersList",
 			class_type = "PeeParametersListType", value = Location,
-			schema = "/resourceCatalogManagement/v3/schema/genericNrm#/"
+			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
 	Resource = #resource{name = CgfDn,
 			description = "Charging Gateway Function (CGF)",
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CgfFunction",
+			schema = ?PathInventorySchema ++ "/CgfFunction",
 			specification = Spec,
 			characteristic = [PeeParam | CgfAttr]},
 	case im:add_resource(Resource) of
@@ -989,7 +989,7 @@ parse_sgw({endElement, _Uri, "SgwFunction", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/SgwFunction",
+			schema = ?PathInventorySchema ++ "/SgwFunction",
 			specification = Spec,
 			characteristic = SgwAttr},
 	case im:add_resource(Resource) of
@@ -1051,7 +1051,7 @@ parse_cbc({endElement, _Uri, "CbcFunction", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/CbcFunction",
+			schema = ?PathInventorySchema ++ "/CbcFunction",
 			specification = Spec,
 			characteristic = CbcAttr,
 			related = IubcLinks},
@@ -1114,13 +1114,13 @@ parse_iubc({endElement, _Uri, "IubcLink", QName},
 			category = "Core",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/IubcLink",
+			schema = ?PathInventorySchema ++ "/IubcLink",
 			specification = Spec,
 			characteristic = IubcAttr},
 	case im:add_resource(Resource) of
 		{ok, #resource{id = Id}} ->
-			IubcRel = #resource_rel{id = Id, name = IubcDn, type = "contains",
-					referred_type = ClassType, href = ?ResourcePath ++ Id},
+			IubcRel = #resource_rel{id = Id, name = IubcDn,rel_type = "contains",
+					ref_type = ClassType, href = ?ResourcePath ++ Id},
 			[PrevState#state{spec_cache = [NewCache | PrevCache],
 					parse_state = CoreState#core_state{iubc_links
 					= [IubcRel | IubcRels]}} | T1];
@@ -1196,10 +1196,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

@@ -13,7 +13,7 @@
 	"category": "EPC",
 	"targetResourceSchema": {
 		"@type": "EPDGFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/EPDGFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/EPDGFunction"
 	},
 	"relatedParty": [
 		{
@@ -43,13 +43,13 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "linkList",
 			"description": "",
 			"valueType": "LinkListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/LinkListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/LinkListType"
 		}
 	]
 }

@@ -19,8 +19,8 @@
 -include_lib("inets/include/mod_auth.hrl").
 -include("im_xml.hrl").
 
--define(PathCatalogSchema, "/resourceCatalogManagement/v3/resourceCatalogManagement").
--define(PathInventorySchema, "/resourceInventoryManagement/v3/resourceInventoryManagement").
+-define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
+-define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
 
 %%----------------------------------------------------------------------
 %%  The im private API
@@ -53,16 +53,16 @@ parse_pee_me({endElement, _Uri, "PEEMonitoredEntity", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	MeDResourceChar = #resource_char{name = "peeMeDescription",
 		class_type = "PEEMEDescription", value = MeDescription,
-		schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEDescription"},
+		schema = ?PathCatalogSchema ++ "/PEEMEDescription"},
 	MeCResourceChar = #resource_char{name = "peeMeConfiguration",
 		class_type = "PEEMEConfiguration", value = MeConfig,
-		schema = "/resourceCatalogManagement/v3/schema/peeCmonNrm#/definitions/PEEMEConfiguration"},
+		schema = ?PathCatalogSchema ++ "/PEEMEConfiguration"},
 	Resource = #resource{name = MeDn ++ "mEId=" ++ MeId,
 			description = "PEE Monitored Entity (ME)",
 			category = "PEE",
 			class_type = ClassType,
 			base_type = "ResourceFunction",
-			schema = "/resourceInventoryManagement/v3/schema/PEEMonitoredEntity",
+			schema = ?PathInventorySchema ++ "/PEEMonitoredEntity",
 			specification = Spec,
 			characteristic = [MeAttr, MeDResourceChar, MeCResourceChar]},
 	case im:add_resource(Resource) of
@@ -243,10 +243,10 @@ get_specification_ref(Name, Cache) ->
 			{SpecRef, Cache};
 		false ->
 			case im:get_specification_name(Name) of
-				{ok, #specification{id = Id, href = Href, name = Name,
-						version = Version}} ->
-					SpecRef = #specification_ref{id = Id, href = Href, name = Name,
-							version = Version},
+				{ok, #specification{id = Id, href = Href,
+						name = Name, class_type = Type, version = Version}} ->
+					SpecRef = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version},
 					{SpecRef, [SpecRef | Cache]};
 				{error, Reason} ->
 					throw({get_specification_name, Reason})

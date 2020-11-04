@@ -115,7 +115,7 @@ class candidateAdd extends PolymerElement {
 	_add() {
 		var ajax = this.$.candidateAddAjax;
 		ajax.method = "POST";
-		ajax.url = "/resourceCatalogManagement/v3/resourceCandidate/";
+		ajax.url = "/resourceCatalogManagement/v4/resourceCandidate/";
 		var cand = new Object();
 		if(this.candidateName) {
 			cand.name = this.candidateName;

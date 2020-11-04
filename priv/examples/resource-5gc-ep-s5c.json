@@ -1,6 +1,6 @@
 {
 	"id": "3597468039",
-	"href": "/resourceInventoryManagement/v3/resource/3597468039",
+	"href": "/resourceInventoryManagement/v4/resource/3597468039",
 	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_S5C=1",
 	"description": "5G Core End Point of S5-C interface",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_S5C",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_S5C",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_S5C",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468002",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468002",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468002",
 		"@type": "EP_S5CSpec"
 	},
 	"resourceCharacteristic": [

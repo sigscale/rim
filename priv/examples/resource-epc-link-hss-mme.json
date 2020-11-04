@@ -1,6 +1,6 @@
 {
 	"id": "7594422902",
-	"href": "/resourceInventoryManagement/v3/resource/7594422902",
+	"href": "/resourceInventoryManagement/v4/resource/7594422902",
 	"name": "SubNetwork=4,Link_HSS_MME=1",
 	"description": "EPC HSSFunction and MMEFunction Link",
 	"category": "EPC",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "Link_HSS_MME",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/Link_HSS_MME",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/Link_HSS_MME",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115602",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/798115602",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/798115602",
 		"@type": "Link_HSS_MMESpec"
 	},
 	"resourceCharacteristic": [

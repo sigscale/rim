@@ -1,6 +1,6 @@
 {
 	"id": "3597468032",
-	"href": "/resourceInventoryManagement/v3/resource/3597468032",
+	"href": "/resourceInventoryManagement/v4/resource/3597468032",
 	"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLG=1",
 	"description": "5G Core End Point of NLg interface (between AMF and GMLC)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "EP_NLG",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/EP_NLG",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/EP_NLG",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468009",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468009",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468009",
 		"@type": "EP_NLGSpec"
 	},
 	"resourceCharacteristic": [

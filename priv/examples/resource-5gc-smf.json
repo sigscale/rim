@@ -1,6 +1,6 @@
 {
 	"id": "3597468040",
-	"href": "/resourceInventoryManagement/v3/resource/3597468040",
+	"href": "/resourceInventoryManagement/v4/resource/3597468040",
 	"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1",
 	"description": "5G Core Session Management Function (SMF)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "SMFFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SMFFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/SMFFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468001",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/3597468001",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468001",
 		"@type": "SMFFunctionSpec"
 	},
 	"resourceCharacteristic": [
@@ -38,132 +38,132 @@
 	],
 	"resourceRelationship": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468035",
-				"href": "/resourceInventoryManagement/v3/resource/3597468035",
+				"href": "/resourceInventoryManagement/v4/resource/3597468035",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N4=1",
 				"@referredType": "EP_N4"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468036",
-				"href": "/resourceInventoryManagement/v3/resource/3597468036",
+				"href": "/resourceInventoryManagement/v4/resource/3597468036",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N7=1",
 				"@referredType": "EP_N7"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468037",
-				"href": "/resourceInventoryManagement/v3/resource/3597468037",
+				"href": "/resourceInventoryManagement/v4/resource/3597468037",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N10=1",
 				"@referredType": "EP_N10"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "35974680231",
-				"href": "/resourceInventoryManagement/v3/resource/35974680231",
+				"href": "/resourceInventoryManagement/v4/resource/35974680231",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N11=1",
 				"@referredType": "EP_N11"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468038",
-				"href": "/resourceInventoryManagement/v3/resource/3597468038",
+				"href": "/resourceInventoryManagement/v4/resource/3597468038",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N16=1",
 				"@referredType": "EP_N16"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468039",
-				"href": "/resourceInventoryManagement/v3/resource/3597468039",
+				"href": "/resourceInventoryManagement/v4/resource/3597468039",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_S5C=1",
 				"@referredType": "EP_S5C"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "35974680331",
-				"href": "/resourceInventoryManagement/v3/resource/35974680331",
+				"href": "/resourceInventoryManagement/v4/resource/35974680331",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	],
-	"sap": [
+	"connectionPoint": [
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468035",
-				"href": "/resourceInventoryManagement/v3/resource/3597468035",
+				"href": "/resourceInventoryManagement/v4/resource/3597468035",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N4=1",
 				"@referredType": "EP_N4"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468036",
-				"href": "/resourceInventoryManagement/v3/resource/3597468036",
+				"href": "/resourceInventoryManagement/v4/resource/3597468036",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N7=1",
 				"@referredType": "EP_N7"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468037",
-				"href": "/resourceInventoryManagement/v3/resource/3597468037",
+				"href": "/resourceInventoryManagement/v4/resource/3597468037",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N10=1",
 				"@referredType": "EP_N10"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "35974680231",
-				"href": "/resourceInventoryManagement/v3/resource/35974680231",
+				"href": "/resourceInventoryManagement/v4/resource/35974680231",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N11=1",
 				"@referredType": "EP_N11"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468038",
-				"href": "/resourceInventoryManagement/v3/resource/3597468038",
+				"href": "/resourceInventoryManagement/v4/resource/3597468038",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N16=1",
 				"@referredType": "EP_N16"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "3597468039",
-				"href": "/resourceInventoryManagement/v3/resource/3597468039",
+				"href": "/resourceInventoryManagement/v4/resource/3597468039",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_S5C=1",
 				"@referredType": "EP_S5C"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		},
 		{
-			"resourceRef": {
+			"resource": {
 				"id": "35974680331",
-				"href": "/resourceInventoryManagement/v3/resource/35974680331",
+				"href": "/resourceInventoryManagement/v4/resource/35974680331",
 				"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"type": "contains"
+			"relationshipType": "contains"
 		}
 	]
 }

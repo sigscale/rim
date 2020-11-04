@@ -1,6 +1,6 @@
 {
 	"id": "6974362501",
-	"href": "/resourceInventoryManagement/v3/resource/6974362501",
+	"href": "/resourceInventoryManagement/v4/resource/6974362501",
 	"name": "SubNetwork=2,ManagedElement=1,SgwFunction=1",
 	"description": "Core Signalling Gateway (Sgw)",
 	"category": "Core",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "SgwFunction",
 	"@baseType": "ManagedFunction",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/SgwFunction",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/SgwFunction",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "6974362589",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/6974362589",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/6974362589",
 		"@type": "SgwFunctionSpec"
 	},
 	"resourceCharacteristic": [

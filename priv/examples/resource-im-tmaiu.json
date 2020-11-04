@@ -1,6 +1,6 @@
 {
 	"id": "8597462917",
-	"href": "/resourceInventoryManagement/v3/resource/8597462917",
+	"href": "/resourceInventoryManagement/v4/resource/8597462917",
 	"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
 	"description": "Tower Mounted Amplifier (TMA) Inventory Unit",
 	"category": "RAN",
@@ -12,11 +12,11 @@
 	"lifecycleSubState": "working",
 	"@type": "TmaInventoryUnit",
 	"@baseType": "InventoryUnit",
-	"@schemaLocation": "/resourceInventoryManagement/v3/schema/TmaInventoryUnit",
+	"@schemaLocation": "/resourceInventoryManagement/v4/schema/TmaInventoryUnit",
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "721155649",
-		"href": "/resourceInventoryManagement/v3/resourceSpecification/721155649",
+		"href": "/resourceInventoryManagement/v4/resourceSpecification/721155649",
 		"@type": "TmaInventoryUnitSpec"
 	},
 	"resourceCharacteristic": [

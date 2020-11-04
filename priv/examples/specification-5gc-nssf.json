@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "NSSFFunction",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/NSSFFunction"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/NSSFFunction"
 	},
 	"relatedParty": [
 		{
@@ -44,37 +44,37 @@
 			"name": "vnfParametersList",
 			"description": "Parameter set of the VNF instance(s)",
 			"valueType": "VnfParametersListType",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/genericNrm#/definitions/VnfParametersListType"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		},
 		{
 			"name": "plmnIdList",
 			"description": "List of PLMN-Id: Mobile Country Codes (MCC) or Mobile Network Codes(MNC) (3GPP 23.003)",
 			"valueType": "PlmnIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/PlmnIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		},
 		{
 			"name": "sBIFqdn",
 			"description": "FQDN of the registered NF instance in service-based interface",
 			"valueType": "SBIFqdn",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/SBIFqdn"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/SBIFqdn"
 		},
 		{
 			"name": "nSIIdList",
 			"description": "Set of Network Slice Instance (NSI) dentities (3GPP TS 29.531 clause 6.1.6.2.8)",
 			"valueType": "NSIIdList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/NSIIdList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/NSIIdList"
 		},
 		{
 			"name": "nFProfileList",
 			"description": "Set of Network Function (NF) Profiles to be registered (3GPP TS 29.510)",
 			"valueType": "NFProfileList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/ngcNrm#/definitions/NFProfileList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/ngcNrm#/definitions/NFProfileList"
 		},
 		{
 			"name": "snssaiList",
 			"description": "Single Network Slice Selection Assistance Information (S-NSSAI) (3GPP TS 23.003)",
 			"valueType": "SnssaiList",
-			"@valueSchemaLocation": "/resourceCatalogManagement/v3/schema/nrNrm#/definitions/SnssaiList"
+			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		}
 	]
 }

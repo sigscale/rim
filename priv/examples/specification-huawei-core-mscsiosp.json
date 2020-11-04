@@ -14,7 +14,7 @@
 	"category": "Core",
 	"targetResourceSchema": {
 		"@type": "MSCServerIntraOfiSigPointSpec",
-		"@schemaLocation": "/resourceCatalogManagement/v3/schema/MSCServerIntraOfiSigPointSpec"
+		"@schemaLocation": "/resourceCatalogManagement/v4/schema/MSCServerIntraOfiSigPointSpec"
 	},
 	"relatedParty": [
 		{
