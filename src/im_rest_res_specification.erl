@@ -544,6 +544,12 @@ specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
 specification_rel([role | T], #{"role" := Role} = M, Acc)
 		when is_list(Role) ->
 	specification_rel(T, M, Acc#specification_rel{role = Role});
+specification_rel([default | T], #specification_rel{default = Def} = R, Acc)
+		when is_integer(Def), Def >= 0 ->
+	specification_rel(T, R, Acc#{"defaultimumQuantity" => Def});
+specification_rel([default | T], #{"defaultimumQuantity" := Def} = M, Acc)
+		when is_integer(Def), Def >= 0 ->
+	specification_rel(T, M, Acc#specification_rel{default = Def});
 specification_rel([min | T], #specification_rel{min = Min} = R, Acc)
 		when is_integer(Min), Min >= 0 ->
 	specification_rel(T, R, Acc#{"minimumQuantity" => Min});

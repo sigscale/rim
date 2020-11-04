@@ -58,6 +58,7 @@
 		end_date :: pos_integer() | undefined | '_',
 		rel_type :: string() | undefined | '_',
 		role :: string() | undefined | '_',
+		default :: non_neg_integer() | undefined | '_',
 		min :: non_neg_integer() | undefined | '_',
 		max :: non_neg_integer() | undefined | '_'}).
 -type specification_rel() :: #specification_rel{}.
