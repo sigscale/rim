@@ -88,6 +88,16 @@
 		rel_type :: string() | undefined | '_'}).
 -type resource_rel() :: #resource_rel{}.
 
+-record(resource_ref,
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
+-type resource_ref() :: #resource_ref{}.
+
 -record(res_char_rel,
 		{id :: string() | undefined | '_',
 		rel_type :: string() | undefined | '_'}).
@@ -327,7 +337,8 @@
 		party = [] :: [party_ref()] | '_' | '$24',
 		characteristic = [] :: [specification_char()] | '_' | '$25',
 		related = [] :: [specification_rel()] | '_' | '$26',
-		connection_point = [] :: [specification_ref()] | '_' | '$27'}).
+		connectivity = [] :: [resource_graph_spec()] | '_' | '$27',
+		connection_point = [] :: [specification_ref()] | '_' | '$28'}).
 -type specification() :: #specification{}.
 
 -record(spec_char_value,
@@ -394,13 +405,17 @@
 		feature = [] :: [feature()] | '_' | '$22',
 		characteristic = [] :: [resource_char()] | '_' | '$23',
 		connectivity = [] :: [resource_graph()] | '_' | '$24',
-		connection_point = [] :: [resource_rel()] | '_' | '$25'}).
+		connection_point = [] :: [resource_ref()] | '_' | '$25'}).
 -type resource() :: #resource{}.
 
 -record(connection_spec,
-		{name :: string() | undefined | '_',
+		{id :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
 		ass_type :: string() | undefined | '_',
-		endpoint = [] :: [endpoint_spec()] | '_'}).
+		endpoint = [] :: [endpoint_spec_ref()] | '_'}).
 -type connection_spec() :: #connection_spec{}.
 
 -record(connection,
@@ -413,14 +428,14 @@
 		endpoint = [] :: [endpoint_ref()] | '_'}).
 -type connection() :: #connection{}.
 
--record(endpoint_spec,
+-record(endpoint_spec_ref,
 		{href :: string() | undefined | '_',
 		id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
 		role :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
-		connection_point_specification = [] :: [connection_point_spec()] | '_'}).
--type endpoint_spec() :: #endpoint_spec{}.
+		connection_point = [] :: [specification_ref()] | '_'}).
+-type endpoint_spec_ref() :: #endpoint_spec_ref{}.
 
 -record(endpoint_ref,
 		{href :: string() | undefined | '_',
@@ -434,23 +449,46 @@
 		connection_point = [] :: [resource_rel()] | '_'}).
 -type endpoint_ref() :: #endpoint_ref{}.
 
--record(connection_point_spec,
-		{href :: string() | undefined | '_',
-		id :: string() | undefined | '_',
+-record(resource_graph_spec,
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		type :: string() | undefined | '_'}).
--type connection_point_spec() :: #connection_point_spec{}.
+		description :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		related = [] :: [res_graph_spec_rel()] | '_',
+		connection = [] :: [connection_spec()] | '_'}).
+-type resource_graph_spec() :: #resource_graph_spec{}.
 
 -record(resource_graph,
 		{id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
-		description :: string() | undefined,
+		description :: string() | undefined | '_',
 		class_type :: string() | undefined | '_',
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		connection = [] :: [connection()] | undefined | '_',
 		related = [] :: [resource_graph_rel()] | undefined | '_'}).
 -type resource_graph() :: #resource_graph{}.
+
+-record(res_graph_spec_rel,
+		{class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		rel_type :: string() | undefined | '_',
+		graph :: res_graph_spec_ref() | undefined | '_'}).
+-type res_graph_spec_rel() :: #res_graph_spec_rel{}.
+
+-record(res_graph_spec_ref,
+		{id :: string() | undefined | '_',
+		href :: string() | undefined | '_',
+		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
+		ref_type :: string() | undefined | '_'}).
+-type res_graph_spec_ref() :: #res_graph_spec_ref{}.
 
 -record(resource_graph_rel,
 		{class_type :: string() | undefined | '_',

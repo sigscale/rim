@@ -387,12 +387,18 @@ specification([related | T], #specification{related = SpecRels} = R, Acc)
 specification([related | T], #{"resourceSpecRelationship" := SpecRels} = M, Acc)
 		when is_list(SpecRels) ->
 	specification(T, M, Acc#specification{related = specification_rel(SpecRels)});
+specification([connectivity | T], #specification{connectivity = Graphs} = R, Acc)
+		when is_list(Graphs), length(Graphs) > 0->
+	specification(T, R, Acc#{"connectivitySpecification" => resource_graph_spec(Graphs)});
+specification([connectivity | T], #{"connectivitySpecification" := Graphs} = M, Acc)
+		when is_list(Graphs), length(Graphs) > 0 ->
+	specification(T, M, Acc#specification{connectivity = resource_graph_spec(Graphs)});
 specification([connection_point | T], #specification{connection_point = SpecRefs} = R, Acc)
 		when is_list(SpecRefs), length(SpecRefs) > 0->
-	specification(T, R, Acc#{"connectionPointSpecification" => specification_ref(SpecRefs)});
+	specification(T, R, Acc#{"connectionPointSpecification" => specification_refs(SpecRefs)});
 specification([connection_point | T], #{"connectionPointSpecification" := SpecRefs} = M, Acc)
 		when is_list(SpecRefs), length(SpecRefs) > 0 ->
-	specification(T, M, Acc#specification{connection_point = specification_ref(SpecRefs)});
+	specification(T, M, Acc#specification{connection_point = specification_refs(SpecRefs)});
 specification([_ | T], R, Acc) ->
 	specification(T, R, Acc);
 specification([], _, Acc) ->
@@ -402,19 +408,25 @@ specification([], _, Acc) ->
 %%  internal functions
 %%----------------------------------------------------------------------
 
+-spec specification_refs(ResourceSpecificationRefs) -> ResourceSpecificationRefs
+	when
+		ResourceSpecificationRefs :: [specification_ref()] | [map()].
+%% @doc CODEC for list of `ResourceSpecificationRef'.
+%% @private
+specification_refs(ResourceSpecificationRefs) ->
+	[specification_ref(ResSpecRef) || ResSpecRef <- ResourceSpecificationRefs].
+
 -spec specification_ref(ResourceSpecificationRef) -> ResourceSpecificationRef
 	when
-		ResourceSpecificationRef :: [specification_ref()] | [map()].
+		ResourceSpecificationRef :: specification_ref() | map().
 %% @doc CODEC for `ResourceSpecificationRef'.
 %% @private
-specification_ref([#specification_ref{} | _] = List) ->
+specification_ref(#specification_ref{} = R) ->
 	Fields = record_info(fields, specification_ref),
-	[specification_ref(Fields, R, #{}) || R <- List];
-specification_ref([#{} | _] = List) ->
+	specification_ref(Fields, R, #{});
+specification_ref(#{} = M) ->
 	Fields = record_info(fields, specification_ref),
-	[specification_ref(Fields, M, #specification_ref{}) || M <- List];
-specification_ref([]) ->
-	[].
+	specification_ref(Fields, M, #specification_ref{}).
 %% @hidden
 specification_ref([id | T], #specification_ref{id = Id} = M, Acc)
 		when is_list(Id) ->
@@ -1060,7 +1072,7 @@ feature_spec_rel([base_type | T], #feature_spec_rel{base_type = Type} = R, Acc)
 	feature_spec_rel(T, R, Acc#{"@baseType" => Type});
 feature_spec_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
-	feature_spec_rel(T, M, Acc#feature_spec_rel{class_type = Type});
+	feature_spec_rel(T, M, Acc#feature_spec_rel{base_type = Type});
 feature_spec_rel([schema | T], #feature_spec_rel{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	feature_spec_rel(T, R, Acc#{"@schemaLocation" => Schema});
@@ -1153,7 +1165,7 @@ feat_char_rel([base_type | T], #feat_char_rel{base_type = Type} = R, Acc)
 	feat_char_rel(T, R, Acc#{"@baseType" => Type});
 feat_char_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
-	feat_char_rel(T, M, Acc#feat_char_rel{class_type = Type});
+	feat_char_rel(T, M, Acc#feat_char_rel{base_type = Type});
 feat_char_rel([schema | T], #feat_char_rel{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	feat_char_rel(T, R, Acc#{"@schemaLocation" => Schema});
@@ -1384,7 +1396,7 @@ spec_char_rel([base_type | T], #spec_char_rel{base_type = Type} = R, Acc)
 	spec_char_rel(T, R, Acc#{"@baseType" => Type});
 spec_char_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
 		when is_list(Type) ->
-	spec_char_rel(T, M, Acc#spec_char_rel{class_type = Type});
+	spec_char_rel(T, M, Acc#spec_char_rel{base_type = Type});
 spec_char_rel([schema | T], #spec_char_rel{schema = Schema} = R, Acc)
 		when is_list(Schema) ->
 	spec_char_rel(T, R, Acc#{"@schemaLocation" => Schema});
@@ -1432,6 +1444,281 @@ spec_char_rel([res_href | T], #{"resourceSpecificationHref" := Href} = M, Acc)
 spec_char_rel([_ | T], R, Acc) ->
 	spec_char_rel(T, R, Acc);
 spec_char_rel([], _, Acc) ->
+	Acc.
+
+-spec resource_graph_spec(ResourceGraphSpecification) -> ResourceGraphSpecification
+	when
+		ResourceGraphSpecification :: [resource_graph_spec()] | [map()].
+%% @doc CODEC for `ResourceGraphSpecification'.
+%% @private
+resource_graph_spec([#resource_graph_spec{} | _] = List) ->
+	Fields = record_info(fields, resource_graph_spec),
+	[resource_graph_spec(Fields, R, #{}) || R <- List];
+resource_graph_spec([#{} | _] = List) ->
+	Fields = record_info(fields, resource_graph_spec),
+	[resource_graph_spec(Fields, M, #resource_graph_spec{}) || M <- List];
+resource_graph_spec([]) ->
+	[].
+%% @hidden
+resource_graph_spec([id | T], #resource_graph_spec{id = Id} = R, Acc)
+		when is_list(Id) ->
+	resource_graph_spec(T, R, Acc#{"id" => Id});
+resource_graph_spec([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{id = Id});
+resource_graph_spec([name | T], #resource_graph_spec{name = Name} = R, Acc)
+		when is_list(Name) ->
+	resource_graph_spec(T, R, Acc#{"name" => Name});
+resource_graph_spec([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{name = Name});
+resource_graph_spec([class_type | T], #resource_graph_spec{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#{"class_type" => Type});
+resource_graph_spec([class_type | T], #{"class_type" := Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{class_type = Type});
+resource_graph_spec([base_type | T], #resource_graph_spec{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#{"@baseType" => Type});
+resource_graph_spec([base_type | T], #{"@baseType" := Type} = R, Acc)
+		when is_list(Type) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{base_type = Type});
+resource_graph_spec([schema | T], #resource_graph_spec{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	resource_graph_spec(T, R, Acc#{"@baseSchema" => Schema});
+resource_graph_spec([schema | T], #{"@baseSchema" := Schema} = R, Acc)
+		when is_list(Schema) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{schema = Schema});
+resource_graph_spec([related | T], #resource_graph_spec{related = GraphRels} = R, Acc)
+		when is_list(GraphRels) ->
+	resource_graph_spec(T, R, Acc#{"graphSpecificationRelationship" => res_graph_spec_rel(GraphRels)});
+resource_graph_spec([related | T], #{"graphSpecificationRelationship" := GraphRels} = M, Acc)
+		when is_list(GraphRels) ->
+	resource_graph_spec(T, M, Acc#resource_graph_spec{related = res_graph_spec_rel(GraphRels)});
+resource_graph_spec([connection | T], #resource_graph_spec{connection = Conns} = R, Acc)
+		when is_list(Conns) ->
+	resource_graph_spec(T, R, Acc#{"connectionSpecification" => connection_spec(Conns)});
+resource_graph_spec([connection | T], #{"connectionSpecification" := Conns} = M, Acc)
+		when is_list(Conns) ->
+	resource_graph_spec(T, M, Acc#resource_graph_spec{connection = connection_spec(Conns)});
+resource_graph_spec([_ | T], R, Acc) ->
+	resource_graph_spec(T, R, Acc);
+resource_graph_spec([], _, Acc) ->
+	Acc.
+
+-spec res_graph_spec_rel(ResourceGraphSpecificationRelationship) -> ResourceGraphSpecificationRelationship
+	when
+		ResourceGraphSpecificationRelationship :: [res_graph_spec_rel()] | [map()].
+%% @doc CODEC for `ResourceGraphSpecificationRelationship'.
+%% @private
+res_graph_spec_rel([#res_graph_spec_rel{} | _] = List) ->
+	Fields = record_info(fields, res_graph_spec_rel),
+	[res_graph_spec_rel(Fields, R, #{}) || R <- List];
+res_graph_spec_rel([#{} | _] = List) ->
+	Fields = record_info(fields, res_graph_spec_rel),
+	[res_graph_spec_rel(Fields, M, #res_graph_spec_rel{}) || M <- List];
+res_graph_spec_rel([]) ->
+	[].
+%% @hidden
+res_graph_spec_rel([class_type | T], #res_graph_spec_rel{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, R, Acc#{"@type" => Type});
+res_graph_spec_rel([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{class_type = Type});
+res_graph_spec_rel([base_type | T], #res_graph_spec_rel{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, R, Acc#{"@baseType" => Type});
+res_graph_spec_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{base_type = Type});
+res_graph_spec_rel([schema | T], #res_graph_spec_rel{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_rel(T, R, Acc#{"@schemaLocation" => Schema});
+res_graph_spec_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{schema = Schema});
+res_graph_spec_rel([rel_type | T], #res_graph_spec_rel{rel_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, R, Acc#{"relationshipType" => Type});
+res_graph_spec_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{rel_type = Type});
+res_graph_spec_rel([graph | T], #res_graph_spec_rel{graph = GraphRef} = R, Acc)
+		when is_record(GraphRef, res_graph_spec_ref) ->
+	res_graph_spec_rel(T, R, Acc#{"resourceGraph" => res_graph_spec_ref(GraphRef)});
+res_graph_spec_rel([graph | T], #{"resourceGraph" := GraphRef} = M, Acc)
+		when is_map(GraphRef) ->
+	res_graph_spec_rel(T, M, Acc#res_graph_spec_rel{graph = res_graph_spec_ref(GraphRef)});
+res_graph_spec_rel([_ | T], R, Acc) ->
+	res_graph_spec_rel(T, R, Acc);
+res_graph_spec_rel([], _, Acc) ->
+	Acc.
+
+-spec res_graph_spec_ref(ResourceGraphSpecificationRef) -> ResourceGraphSpecificationRef
+	when
+		ResourceGraphSpecificationRef :: res_graph_spec_ref() | map().
+%% @doc CODEC for `ResourceGraphSpecificationRef'.
+%% @private
+res_graph_spec_ref(#res_graph_spec_ref{} = R) ->
+	Fields = record_info(fields, res_graph_spec_ref),
+	res_graph_spec_ref(Fields, R, #{});
+res_graph_spec_ref(#{} = M) ->
+	Fields = record_info(fields, res_graph_spec_ref),
+	res_graph_spec_ref(Fields, M, #res_graph_spec_ref{}).
+%% @hidden
+res_graph_spec_ref([id | T], #res_graph_spec_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	res_graph_spec_ref(T, R, Acc#{"id" => Id});
+res_graph_spec_ref([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	res_graph_spec_ref(T, R, Acc#res_graph_spec_ref{id = Id});
+res_graph_spec_ref([name | T], #res_graph_spec_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	res_graph_spec_ref(T, R, Acc#{"name" => Name});
+res_graph_spec_ref([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	res_graph_spec_ref(T, R, Acc#res_graph_spec_ref{name = Name});
+res_graph_spec_ref([class_type | T], #res_graph_spec_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, R, Acc#{"@type" => Type});
+res_graph_spec_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{class_type = Type});
+res_graph_spec_ref([base_type | T], #res_graph_spec_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, R, Acc#{"@baseType" => Type});
+res_graph_spec_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{base_type = Type});
+res_graph_spec_ref([schema | T], #res_graph_spec_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_ref(T, R, Acc#{"@schemaLocation" => Schema});
+res_graph_spec_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{schema = Schema});
+res_graph_spec_ref([ref_type | T], #res_graph_spec_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, R, Acc#{"@referredType" => Type});
+res_graph_spec_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
+		when is_list(Type) ->
+	res_graph_spec_ref(T, M, Acc#res_graph_spec_ref{ref_type = Type});
+res_graph_spec_ref([_ | T], R, Acc) ->
+	res_graph_spec_ref(T, R, Acc);
+res_graph_spec_ref([], _, Acc) ->
+	Acc.
+
+-spec connection_spec(ConnectionSpecification) -> ConnectionSpecification
+	when
+		ConnectionSpecification :: [connection_spec()] | [map()].
+%% @doc CODEC for `ConnectionSpecification'.
+%% @private
+connection_spec([#connection_spec{} | _] = List) ->
+	Fields = record_info(fields, connection_spec),
+	[connection_spec(Fields, R, #{}) || R <- List];
+connection_spec([#{} | _] = List) ->
+	Fields = record_info(fields, connection_spec),
+	[connection_spec(Fields, M, #connection_spec{}) || M <- List];
+connection_spec([]) ->
+	[].
+%% @hidden
+connection_spec([id | T], #connection_spec{id = Id} = R, Acc)
+		when is_list(Id) ->
+	connection_spec(T, R, Acc#{"id" => Id});
+connection_spec([id | T], #{"id" := Id} = R, Acc)
+		when is_list(Id) ->
+	connection_spec(T, R, Acc#connection_spec{id = Id});
+connection_spec([name | T], #connection_spec{name = Name} = R, Acc)
+		when is_list(Name) ->
+	connection_spec(T, R, Acc#{"name" => Name});
+connection_spec([name | T], #{"name" := Name} = R, Acc)
+		when is_list(Name) ->
+	connection_spec(T, R, Acc#connection_spec{name = Name});
+connection_spec([class_type | T], #connection_spec{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection_spec(T, R, Acc#{"@type" => Type});
+connection_spec([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection_spec(T, M, Acc#connection_spec{class_type = Type});
+connection_spec([base_type | T], #connection_spec{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection_spec(T, R, Acc#{"@baseType" => Type});
+connection_spec([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection_spec(T, M, Acc#connection_spec{base_type = Type});
+connection_spec([schema | T], #connection_spec{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	connection_spec(T, R, Acc#{"@schemaLocation" => Schema});
+connection_spec([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	connection_spec(T, M, Acc#connection_spec{schema = Schema});
+connection_spec([endpoint | T], #connection_spec{endpoint = EpRefs} = R, Acc)
+		when is_list(EpRefs) ->
+	connection_spec(T, R, Acc#{"endpointSpecification" => endpoint_spec_ref(EpRefs)});
+connection_spec([endpoint | T], #{"endpointSpecification" := EpRefs} = M, Acc)
+		when is_list(EpRefs) ->
+	connection_spec(T, M, Acc#connection_spec{endpoint = endpoint_spec_ref(EpRefs)});
+connection_spec([_ | T], R, Acc) ->
+	connection_spec(T, R, Acc);
+connection_spec([], _, Acc) ->
+	Acc.
+
+-spec endpoint_spec_ref(EndpointSpecificationRef) -> EndpointSpecificationRef
+	when
+		EndpointSpecificationRef :: [endpoint_spec_ref()] | [map()].
+%% @doc CODEC for `EndpointSpecificationRef'.
+endpoint_spec_ref([#endpoint_spec_ref{} | _] = List) ->
+	Fields = record_info(fields, endpoint_spec_ref),
+	[endpoint_spec_ref(Fields, R, #{}) || R <- List];
+endpoint_spec_ref([#{} | _] = List) ->
+	Fields = record_info(fields, endpoint_spec_ref),
+	[endpoint_spec_ref(Fields, M, #endpoint_spec_ref{}) || M <- List];
+endpoint_spec_ref([]) ->
+	[].
+%% @hidden
+endpoint_spec_ref([id | T], #endpoint_spec_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	endpoint_spec_ref(T, R, Acc#{"id" => Id});
+endpoint_spec_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{id = Id});
+endpoint_spec_ref([href| T], #endpoint_spec_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	endpoint_spec_ref(T, R, Acc#{"href" => Href});
+endpoint_spec_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{href = Href});
+endpoint_spec_ref([name | T], #endpoint_spec_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	endpoint_spec_ref(T, R, Acc#{"name" => Name});
+endpoint_spec_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{name = Name});
+endpoint_spec_ref([role | T], #endpoint_spec_ref{role = Role} = R, Acc)
+		when is_list(Role) ->
+	endpoint_spec_ref(T, R, Acc#{"role" => Role});
+endpoint_spec_ref([role | T], #{"role" := Role} = M, Acc)
+		when is_list(Role) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{role = Role});
+endpoint_spec_ref([is_root | T], #endpoint_spec_ref{is_root = IsRoot} = R, Acc)
+		when is_boolean(IsRoot) ->
+	endpoint_spec_ref(T, R, Acc#{"isRoot" => IsRoot});
+endpoint_spec_ref([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
+		when is_boolean(IsRoot) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{is_root = IsRoot});
+endpoint_spec_ref([connection_point | T],
+		#endpoint_spec_ref{connection_point = CpSpecRefs} = R, Acc)
+		when is_list(CpSpecRefs) ->
+	endpoint_spec_ref(T, R, Acc#{"connectionPointSpecification" =>
+			specification_refs(CpSpecRefs)});
+endpoint_spec_ref([connection_point | T],
+		#{"connectionPointSpecification" := CpSpecRefs} = M, Acc)
+		when is_list(CpSpecRefs) ->
+	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{connection_point = specification_refs(CpSpecRefs)});
+endpoint_spec_ref([_ | T], R, Acc) ->
+	endpoint_spec_ref(T, R, Acc);
+endpoint_spec_ref([], _, Acc) ->
 	Acc.
 
 %% @hidden

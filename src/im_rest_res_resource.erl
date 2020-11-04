@@ -25,7 +25,7 @@
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_resources/3, get_resource/2, post_resource/1, delete_resource/1]).
--export([resource/1, connection_spec/1, connection_point_spec/1]).
+-export([resource/1]).
 
 -include("im.hrl").
 
@@ -351,6 +351,12 @@ resource([connectivity | T], #resource{connectivity = Graphs} = R, Acc)
 resource([connectivity | T], #{"connectivity" := Graphs} = M, Acc)
 		when is_list(Graphs) ->
 	resource(T, M, Acc#resource{connectivity = resource_graph(Graphs)});
+resource([connection_point | T], #resource{connection_point = Conns} = R, Acc)
+		when is_list(Conns), length(Conns) > 0 ->
+	resource(T, R, Acc#{"connectionPoint" => resource_ref(Conns)});
+resource([connection_point | T], #{"connectionPoint" := Conns} = M, Acc)
+		when is_list(Conns) ->
+	resource(T, M, Acc#resource{connection_point = resource_ref(Conns)});
 resource([_ | T], R, Acc) ->
 	resource(T, R, Acc);
 resource([], _, Acc) ->
@@ -582,6 +588,66 @@ resource_rel([_ | T], R, Acc) ->
 resource_rel([], _, Acc) ->
 	Acc.
 
+-spec resource_ref(ResourceRef) -> ResourceRef
+	when
+		ResourceRef :: [resource_ref()] | [map()].
+%% @doc CODEC for `ResourceRef'.
+resource_ref([#resource_ref{} | _] = List) ->
+	Fields = record_info(fields, resource_ref),
+	[resource_ref(Fields, R, #{}) || R <- List];
+resource_ref([#{} | _] = List) ->
+	Fields = record_info(fields, resource_ref),
+	[resource_ref(Fields, M, #resource_ref{}) || M <- List];
+resource_ref([]) ->
+	[].
+%% @hidden
+resource_ref([id | T], #resource_ref{id = Id} = R, Acc)
+		when is_list(Id) ->
+	resource_ref(T, R, Acc#{"id" => Id});
+resource_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	resource_ref(T, M, Acc#resource_ref{id = Id});
+resource_ref([href | T], #resource_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	resource_ref(T, R, Acc#{"href" => Href});
+resource_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	resource_ref(T, M, Acc#resource_ref{href = Href});
+resource_ref([name | T], #resource_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	resource_ref(T, R, Acc#{"name" => Name});
+resource_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	resource_ref(T, M, Acc#resource_ref{name = Name});
+resource_ref([class_type | T], #resource_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_ref(T, R, Acc#{"@type" => Type});
+resource_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	resource_ref(T, M, Acc#resource_ref{class_type = Type});
+resource_ref([base_type | T], #resource_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	resource_ref(T, R, Acc#{"@baseType" => Type});
+resource_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	resource_ref(T, M, Acc#resource_ref{base_type = Type});
+resource_ref([schema | T], #resource_ref{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	resource_ref(T, R, Acc#{"@schemaLocation" => Schema});
+resource_ref([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	resource_ref(T, M, Acc#resource_ref{schema = Schema});
+resource_ref([ref_type | T],
+		#resource_ref{ref_type = RefType} = R, Acc) when is_list(RefType) ->
+	resource_ref(T, R, Acc#{"@referredType" => RefType});
+resource_ref([ref_type | T], #{"@referredType" := RefType} = M, Acc)
+		when is_list(RefType) ->
+	resource_ref(T, M, Acc#resource_ref{ref_type = RefType});
+resource_ref([_ | T], R, Acc) ->
+	resource_ref(T, R, Acc);
+resource_ref([], _, Acc) ->
+	Acc.
+
 -spec resource_graph(ResourceGraph) -> ResourceGraph
 	when
 		ResourceGraph :: [resource_graph()] | [map()].
@@ -748,42 +814,6 @@ resource_graph_ref([_ | T], R, Acc) ->
 resource_graph_ref([], _, Acc) ->
 	Acc.
 
--spec connection_spec(ConnectionSpecification) -> ConnectionSpecification
-	when
-		ConnectionSpecification :: [connection_spec()] | [map()].
-%% @doc CODEC for `ConnectivitySpecification'.
-connection_spec([#connection_spec{} | _] = List) ->
-	Fields = record_info(fields, connection_spec),
-	[connection_spec(Fields, R, #{}) || R <- List];
-connection_spec([#{} | _] = List) ->
-	Fields = record_info(fields, connection_spec),
-	[connection_spec(Fields, M, #connection_spec{}) || M <- List];
-connection_spec([]) ->
-	[].
-%% @hidden
-connection_spec([name | T], #connection_spec{name = Name} = R, Acc)
-		when is_list(Name) ->
-	connection_spec(T, R, Acc#{"name" => Name});
-connection_spec([name | T], #{"name" := Name} = M, Acc)
-		when is_list(Name) ->
-	connection_spec(T, M, Acc#connection_spec{name = Name});
-connection_spec([ass_type | T], #connection_spec{ass_type = Type} = R, Acc)
-		when is_list(Type) ->
-	connection_spec(T, R, Acc#{"associationType" => Type});
-connection_spec([ass_type | T], #{"associationType" := Type} = M, Acc)
-		when is_list(Type) ->
-	connection_spec(T, M, Acc#connection_spec{ass_type = Type});
-connection_spec([endpoint | T], #connection_spec{endpoint = Endpoints} = R, Acc)
-		when is_list(Endpoints) ->
-	connection_spec(T, R, Acc#{"endpoint" => point_spec(Endpoints)});
-connection_spec([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
-		when is_list(Endpoints) ->
-	connection_spec(T, M, Acc#connection_spec{endpoint = point_spec(Endpoints)});
-connection_spec([_ | T], R, Acc) ->
-	connection_spec(T, R, Acc);
-connection_spec([], _, Acc) ->
-	Acc.
-
 -spec connection(Connection) -> Connection
 	when
 		Connection :: [connection()] | [map()].
@@ -842,64 +872,6 @@ connection([endpoint | T], #{"endpoint" := Endpoints} = M, Acc)
 connection([_ | T], R, Acc) ->
 	connection(T, R, Acc);
 connection([], _, Acc) ->
-	Acc.
-
--spec point_spec(PointSpec) -> PointSpec
-	when
-		PointSpec :: [endpoint_spec()] | [map()].
-%% @doc CODEC for `Point spec'.
-point_spec([#endpoint_spec{} | _] = List) ->
-	Fields = record_info(fields, endpoint_spec),
-	[point_spec(Fields, R, #{}) || R <- List];
-point_spec([#{} | _] = List) ->
-	Fields = record_info(fields, endpoint_spec),
-	[point_spec(Fields, M, #endpoint_spec{}) || M <- List];
-point_spec([]) ->
-	[].
-%% @hidden
-point_spec([href| T], #endpoint_spec{href = Href} = R, Acc)
-		when is_list(Href) ->
-	point_spec(T, R, Acc#{"href" => Href});
-point_spec([href | T], #{"href" := Href} = M, Acc)
-		when is_list(Href) ->
-	point_spec(T, M, Acc#endpoint_spec{href = Href});
-point_spec([id | T], #endpoint_spec{id = Id} = R, Acc)
-		when is_list(Id) ->
-	point_spec(T, R, Acc#{"id" => Id});
-point_spec([id | T], #{"id" := Id} = M, Acc)
-		when is_list(Id) ->
-	point_spec(T, M, Acc#endpoint_spec{id = Id});
-point_spec([name | T], #endpoint_spec{name = Name} = R, Acc)
-		when is_list(Name) ->
-	point_spec(T, R, Acc#{"name" => Name});
-point_spec([name | T], #{"name" := Name} = M, Acc)
-		when is_list(Name) ->
-	point_spec(T, M, Acc#endpoint_spec{name = Name});
-point_spec([role | T], #endpoint_spec{role = Role} = R, Acc)
-		when is_list(Role) ->
-	point_spec(T, R, Acc#{"role" => Role});
-point_spec([role | T], #{"role" := Role} = M, Acc)
-		when is_list(Role) ->
-	point_spec(T, M, Acc#endpoint_spec{role = Role});
-point_spec([is_root | T], #endpoint_spec{is_root = IsRoot} = R, Acc)
-		when is_boolean(IsRoot) ->
-	point_spec(T, R, Acc#{"isRoot" => IsRoot});
-point_spec([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
-		when is_boolean(IsRoot) ->
-	point_spec(T, M, Acc#endpoint_spec{is_root = IsRoot});
-point_spec([connection_point_specification | T],
-	#endpoint_spec{connection_point_specification = ConnectPointSpec} = R, Acc)
-		when is_list(ConnectPointSpec) ->
-	point_spec(T, R, Acc#{"connectionPointSpecification" =>
-		connection_point_spec(ConnectPointSpec)});
-point_spec([connection_point_specification | T],
-	#{"connectionPointSpecification" := ConnectPointSpec} = M, Acc)
-		when is_list(ConnectPointSpec) ->
-	point_spec(T, M, Acc#endpoint_spec{connection_point_specification =
-		connection_point_spec(ConnectPointSpec)});
-point_spec([_ | T], R, Acc) ->
-	point_spec(T, R, Acc);
-point_spec([], _, Acc) ->
 	Acc.
 
 -spec endpoint_ref(EndpointRef) -> EndpointRef
@@ -972,48 +944,6 @@ endpoint_ref([connection_point | T], #{"connectionPoint" := CP} = M, Acc)
 endpoint_ref([_ | T], R, Acc) ->
 	endpoint_ref(T, R, Acc);
 endpoint_ref([], _, Acc) ->
-	Acc.
-
--spec connection_point_spec(ConPointSpec) -> ConPointSpec
-	when
-		ConPointSpec :: [connection_point_spec()] | [map()].
-%% @doc CODEC for `ConnectionPointSpec'.
-connection_point_spec([#connection_point_spec{} | _] = List) ->
-	Fields = record_info(fields, connection_point_spec),
-	[connection_point_spec(Fields, R, #{}) || R <- List];
-connection_point_spec([#{} | _] = List) ->
-	Fields = record_info(fields, connection_point_spec),
-	[connection_point_spec(Fields, M, #connection_point_spec{}) || M <- List];
-connection_point_spec([]) ->
-	[].
-%% @hidden
-connection_point_spec([href| T], #connection_point_spec{href = Href} = R, Acc)
-		when is_list(Href) ->
-	connection_point_spec(T, R, Acc#{"href" => Href});
-connection_point_spec([href | T], #{"href" := Href} = M, Acc)
-		when is_list(Href) ->
-	connection_point_spec(T, M, Acc#connection_point_spec{href = Href});
-connection_point_spec([id | T], #connection_point_spec{id = Id} = R, Acc)
-		when is_list(Id) ->
-	connection_point_spec(T, R, Acc#{"id" => Id});
-connection_point_spec([id | T], #{"id" := Id} = M, Acc)
-		when is_list(Id) ->
-	connection_point_spec(T, M, Acc#connection_point_spec{id = Id});
-connection_point_spec([name | T], #connection_point_spec{name = Name} = R, Acc)
-		when is_list(Name) ->
-	connection_point_spec(T, R, Acc#{"name" => Name});
-connection_point_spec([name | T], #{"name" := Name} = M, Acc)
-		when is_list(Name) ->
-	connection_point_spec(T, M, Acc#connection_point_spec{name = Name});
-connection_point_spec([type | T], #connection_point_spec{type = Type} = R, Acc)
-		when is_list(Type) ->
-	connection_point_spec(T, R, Acc#{"type" => Type});
-connection_point_spec([type | T], #{"type" := Type} = M, Acc)
-		when is_list(Type) ->
-	connection_point_spec(T, M, Acc#connection_point_spec{type = Type});
-connection_point_spec([_ | T], R, Acc) ->
-	connection_point_spec(T, R, Acc);
-connection_point_spec([], _, Acc) ->
 	Acc.
 
 -spec characteristic(Characteristic) -> Characteristic
