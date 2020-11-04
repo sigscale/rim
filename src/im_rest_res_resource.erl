@@ -791,6 +791,24 @@ connection([name | T], #connection{name = Name} = R, Acc)
 connection([name | T], #{"name" := Name} = M, Acc)
 		when is_list(Name) ->
 	connection(T, M, Acc#connection{name = Name});
+connection([class_type | T], #connection{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection(T, R, Acc#{"@type" => Type});
+connection([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection(T, M, Acc#connection{class_type = Type});
+connection([base_type | T], #connection{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	connection(T, R, Acc#{"@type" => Type});
+connection([base_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	connection(T, M, Acc#connection{base_type = Type});
+connection([schema | T], #connection{schema = Schema} = R, Acc)
+		when is_list(Schema) ->
+	connection(T, R, Acc#{"@schemaLocation" => Schema});
+connection([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
+		when is_list(Schema) ->
+	connection(T, M, Acc#connection{schema = Schema});
 connection([ass_type | T], #connection{ass_type = Type} = R, Acc)
 		when is_list(Type) ->
 	connection(T, R, Acc#{"associationType" => Type});

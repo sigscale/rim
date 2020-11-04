@@ -403,6 +403,9 @@
 -record(connection,
 		{id :: string() | undefined | '_',
 		name :: string() | undefined | '_',
+		class_type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema :: string() | undefined | '_',
 		ass_type :: string() | undefined | '_',
 		endpoint = [] :: [endpoint_ref()] | '_'}).
 -type connection() :: #connection{}.
