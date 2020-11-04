@@ -250,7 +250,6 @@ class specificationUpdate extends PolymerElement {
 			if(this.charSpecOpened == true) {
 				this.$.charSpecCollapse.hide();
 			}
-			this.$.specificationUpdateModal.open();
 		} else {
 			this.specificationId = null;
 			this.specificationName = null;
