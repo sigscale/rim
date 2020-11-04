@@ -322,7 +322,8 @@
 		attachment = [] :: [attachment()] | '_' | '$23',
 		party = [] :: [party_ref()] | '_' | '$24',
 		characteristic = [] :: [specification_char()] | '_' | '$25',
-		related = [] :: [specification_rel()] | '_' | '$26'}).
+		related = [] :: [specification_rel()] | '_' | '$26',
+		connection_point = [] :: [specification_ref()] | '_' | '$27'}).
 -type specification() :: #specification{}.
 
 -record(spec_char_value,

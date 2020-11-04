@@ -387,6 +387,12 @@ specification([related | T], #specification{related = SpecRels} = R, Acc)
 specification([related | T], #{"resourceSpecRelationship" := SpecRels} = M, Acc)
 		when is_list(SpecRels) ->
 	specification(T, M, Acc#specification{related = specification_rel(SpecRels)});
+specification([connection_point | T], #specification{connection_point = SpecRefs} = R, Acc)
+		when is_list(SpecRefs), length(SpecRefs) > 0->
+	specification(T, R, Acc#{"connectionPointSpecification" => specification_ref(SpecRefs)});
+specification([connection_point | T], #{"connectionPointSpecification" := SpecRefs} = M, Acc)
+		when is_list(SpecRefs), length(SpecRefs) > 0 ->
+	specification(T, M, Acc#specification{connection_point = specification_ref(SpecRefs)});
 specification([_ | T], R, Acc) ->
 	specification(T, R, Acc);
 specification([], _, Acc) ->
@@ -395,6 +401,67 @@ specification([], _, Acc) ->
 %%----------------------------------------------------------------------
 %%  internal functions
 %%----------------------------------------------------------------------
+
+-spec specification_ref(ResourceSpecificationRef) -> ResourceSpecificationRef
+	when
+		ResourceSpecificationRef :: [specification_ref()] | [map()].
+%% @doc CODEC for `ResourceSpecificationRef'.
+%% @private
+specification_ref([#specification_ref{} | _] = List) ->
+	Fields = record_info(fields, specification_ref),
+	[specification_ref(Fields, R, #{}) || R <- List];
+specification_ref([#{} | _] = List) ->
+	Fields = record_info(fields, specification_ref),
+	[specification_ref(Fields, M, #specification_ref{}) || M <- List];
+specification_ref([]) ->
+	[].
+%% @hidden
+specification_ref([id | T], #specification_ref{id = Id} = M, Acc)
+		when is_list(Id) ->
+	specification_ref(T, M, Acc#{"id" => Id});
+specification_ref([id | T], #{"id" := Id} = M, Acc)
+		when is_list(Id) ->
+	specification_ref(T, M, Acc#specification_ref{id = Id});
+specification_ref([href | T], #specification_ref{href = Href} = R, Acc)
+		when is_list(Href) ->
+	specification_ref(T, R, Acc#{"href" => Href});
+specification_ref([href | T], #{"href" := Href} = M, Acc)
+		when is_list(Href) ->
+	specification_ref(T, M, Acc#specification_ref{href = Href});
+specification_ref([name | T], #specification_ref{name = Name} = R, Acc)
+		when is_list(Name) ->
+	specification_ref(T, R, Acc#{"name" => Name});
+specification_ref([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	specification_ref(T, M, Acc#specification_ref{name = Name});
+specification_ref([class_type | T], #specification_ref{class_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@type" => Type});
+specification_ref([class_type | T], #{"@type" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{class_type = Type});
+specification_ref([base_type | T], #specification_ref{base_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@baseType" => Type});
+specification_ref([base_type | T], #{"@baseType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{base_type = Type});
+specification_ref([schema | T], #specification_ref{schema = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"@schemaLocation" => Type});
+specification_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{schema = Type});
+specification_ref([ref_type | T], #specification_ref{ref_type = Type} = R, Acc)
+		when is_list(Type) ->
+	specification_ref(T, R, Acc#{"relationshipType" => Type});
+specification_ref([ref_type | T], #{"relationshipType" := Type} = M, Acc)
+		when is_list(Type) ->
+	specification_ref(T, M, Acc#specification_ref{ref_type = Type});
+specification_ref([_ | T], R, Acc) ->
+	specification_ref(T, R, Acc);
+specification_ref([], _, Acc) ->
+	Acc.
 
 -spec specification_rel(ResourceSpecRelationship) -> ResourceSpecRelationship
 	when
