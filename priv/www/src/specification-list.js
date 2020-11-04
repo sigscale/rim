@@ -9,11 +9,14 @@
  */
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import {} from '@polymer/polymer/lib/elements/dom-if.js';
+import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
+import '@polymer/paper-button/paper-button.js';
 import './style-element.js';
 
 class specificationList extends PolymerElement {
@@ -24,6 +27,68 @@ class specificationList extends PolymerElement {
 					id="specificationGrid"
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
+				<template class="row-details">
+					<dl class="details">
+						<template is="dom-if" if="{{item.id}}">
+							<dt><b>Id</b></dt>
+							<dd>{{item.id}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.name}}">
+							<dt><b>Name</b></dt>
+							<dd>{{item.name}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.description}}">
+							<dt><b>Description</b></dt>
+							<dd>{{item.description}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.category}}">
+							<dt><b>Category</b></dt>
+							<dd>{{item.category}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.isBundle}}">
+							<dt><b>Isbundle</b></dt>
+							<dd>{{item.isBundle}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.lifecycleStatus}}">
+							<dt><b>Status</b></dt>
+							<dd>{{item.lifecycleStatus}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.lifecycleStatus}}">
+							<dt><b>Status</b></dt>
+							<dd>{{item.lifecycleStatus}}</dd>
+						</template>
+						<template is="dom-if" if="{{item.version}}">
+                     <dt><b>Version</b></dt>
+                     <dd>{{item.version}}</dd>
+                  </template>
+					</dl>
+               <h3 class="specificationDetail">Resource Specification Characteristics:</h3>
+               <dl>
+                  <template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
+                     <template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
+								<dt>description</dt>
+								<dd>{{detail.description}}</dd>
+								<dt>name</dt>
+                        <dd>{{detail.name}}</dd>
+								<dt>valueType</dt>
+                        <dd>{{detail.valueType}}</dd>
+                     </template>
+                  </template>
+               </dl>
+               <template is="dom-if" if="{{item.connectivitySpecification}}"
+                  on-dom-change="showInlineGraphSpec">
+                  <h3 class="inventoryDetail">Connectivity Specification:</h3>
+                  <svg id$="graphSpec[[item.id]]" width="100%" />
+               </template>
+					<div class="buttons">
+						<paper-button
+								raised
+								class="submit-button"
+								on-tap="_showupdateSpecificationModal">
+							Update	
+						</paper-button>
+					</div>
+				</template>
 				<vaadin-grid-column width="8ex" flex-grow="2">
 					<template class="header">
 						<vaadin-grid-sorter
@@ -203,13 +268,34 @@ class specificationList extends PolymerElement {
 		}
 	}
 
-	_activeItemChanged(item) {
-		if(item) {
-			this.$.specificationGrid.selectedItems = item ? [item] : [];
-      } else {
-			this.$.specificationGrid.selectedItems = [];
-		}
-	}
+   _activeItemChanged(item, last) {
+      if(item || last) {
+         var grid = this.$.specificationGrid;
+         var current;
+         if(item == null) {
+            current = last;
+				this.$.specificationGrid.selectedItems = item ? [item] : [];
+         } else {
+            current = item;
+				this.$.specificationGrid.selectedItems = [];
+         }
+         function checkExist(specification) {
+            return specification.id == current.id;
+         }
+         if(grid.detailsOpenedItems && grid.detailsOpenedItems.some(checkExist)) {
+            grid.closeItemDetails(current);
+         } else {
+            grid.openItemDetails(current);
+         }
+      }
+   }
+//	_activeItemChanged(item) {
+//		if(item) {
+//			this.$.specificationGrid.selectedItems = item ? [item] : [];
+  //    } else {
+//			this.$.specificationGrid.selectedItems = [];
+//		}
+//	}
 
 	ready() {
 		super.ready();
@@ -351,8 +437,8 @@ class specificationList extends PolymerElement {
 					newRecord.status = request.response[index].lifecycleStatus;
 					newRecord.category = request.response[index].category;
 					newRecord.bundle = request.response[index].isBundle;
-					newRecord.chars = request.response[index].resourceSpecCharacteristic;
 					newRecord.feature = request.response[index].resourceSpecFeature;
+					newRecord.resourceSpecCharacteristic = request.response[index].resourceSpecCharacteristic;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
@@ -397,9 +483,145 @@ class specificationList extends PolymerElement {
 		grid.size = 0;
 	}
 
+	_showupdateSpecificationModal(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-update').shadowRoot.getElementById('specificationUpdateModal').open();
+	}
+
 	_showAddSpecificationModal(event) {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 }
+/*   showInlineGraphSpec(event) {
+      var grid = this.$.inventoryGrid;
+      var connectivitySpec = event.model.item.connectivitySpecification;
+      var gridGraph = grid.querySelector('#graphSpec' + event.model.item.id);
+      var width = gridGraph.clientWidth;
+      var height = gridGraph.clientHeight;
+      var graph = select(this.$.inventoryGrid)
+            .select('#graphSpec' + event.model.item.id);
+      _connectivitySpecGraph(connectivitySpec, graph, width, height);
+   }
+}
+
+function _connectivitySpecGraph(connectivitySpec, graph, width, height) {
+   var vertices = [];
+   function mapEdge(connectivitySpecification) {
+      let edge = {};
+      if(connectivitySpecification.id) {
+         edge.id = connectivitySpecification.id;
+      }
+      if(connectivitySpecification.name) {
+         edge.name = connectivitySpecification.name;
+      }
+      if(connectivitySpecification.description) {
+         edge.description = connectivitySpecification.description;
+      }
+      if(connectivitySpecification.connectionSpecification) {
+         let index = vertices.findIndex(function (vertex) {
+            return vertex.id == connectivitySpecification.connectionSpecification[0].id;
+         });
+         if(index == -1) {
+            let v0 = {};
+            v0.id = connectivitySpecification.connectionSpecification[0].id;
+            if(connectivitySpecification.connectionSpecification[0].name) {
+               v0.name = connectivitySpecification.connectionSpecification[0].name;
+            }
+            if(connectivitySpecification.connectionSpecification[0].description) {
+               v0.description = connectivitySpecification.connectionSpecification[0].description;
+            }
+            if(connectivitySpecification.connectionSpecification[0].associationType) {
+               v0.associationType = connectivitySpecification.connectionSpecification[0].associationType;
+            }
+            if(connectivitySpecification.connectionSpecification[0].endpointSpecification) {
+               var endPoint = connectivitySpecification.connectionSpecification[0];
+               let index1 = vertices.findIndex(function (vertex1) {
+                  return vertex1.id == endPoint.endpointSpecification[0].id;
+               });
+               if(index1 == -1) {
+                  let v1 = {};
+                  v1.id = endPoint.endpointSpecification[0].id;
+                  if(endPoint.endpointSpecification[0].href) {
+                     v1.href = endPoint.endpointSpecification[0].href;
+                  }
+                  if(endPoint.endpointSpecification[0]["@referredType"]) {
+                     v1.type = endPoint.endpointSpecification[0]["@referredType"];
+                  }
+                  if(endPoint.endpointSpecification[0].name) {
+                     v1.name = endPoint.endpointSpecification[0].name;
+                  }
+                  edge.source = vertices.push(v1) - 1;
+               } else {
+                  edge.source = index1;
+               }
+               index1 = vertices.findIndex(function (vertex1) {
+                  return vertex1.id == endPoint.endpointSpecification[1].id;
+               });
+               if(index1 == -1) {
+                  let v2 = {};
+                  v2.id = endPoint.endpointSpecification[1].id;
+                  if(endPoint.endpointSpecification[1].href) {
+                     v2.href = endPoint.endpointSpecification[1].href;
+                  }
+                  if(endPoint.endpointSpecification[1]["@referredType"]) {
+                     v2.type = endPoint.endpointSpecification[1]["@referredType"];
+                  }
+                  if(endPoint.endpointSpecification[1].name) {
+                     v2.name = endPoint.endpointSpecification[1].name;
+                  }
+                  if(endPoint.endpointSpecification[1].connectionPointSpecification.id) {
+                     v2.pointId = endPoint.endpointSpecification[1].connectionPointSpecification.id;
+                  }
+                  if(endPoint.endpointSpecification[1].connectionPointSpecification.href) {
+                     v2.pointHref = endPoint.endpointSpecification[1].connectionPointSpecification.href;
+                  }
+                  if(endPoint.endpointSpecification[1].connectionPointSpecification["@referredType"]) {
+                     v2.pointType = endPoint.endpointSpecification[1].connectionPointSpecification["@referredType"];
+                  }
+                  if(endPoint.endpointSpecification[1].connectionPointSpecification.name) {
+                     v2.pointName = endPoint.endpointSpecification[1].connectionPointSpecification.name;
+                  }
+                  edge.target = vertices.push(v2) - 1;
+               } else {
+                  edge.target = index1;
+               }
+            }
+         }
+      }
+      return edge;
+   }
+   var edges = connectivitySpec.map(mapEdge);
+   var simulation = forceSimulation(vertices)
+         .force("center", forceCenter(Math.ceil(width/2), Math.ceil(height/2)))
+         .force("charge", forceManyBody().strength(-800))
+         .force("link", forceLink(edges).distance(100))
+         .force('y', forceY());
+   var edge = graph.selectAll('.edge')
+         .data(edges)
+         .enter()
+         .append('line')
+               .attr('class', 'edge');
+   var vertex1 = graph.selectAll('g.vertex1')
+         .data(vertices);
+   var vgroup = vertex1.enter()
+         .append('g')
+   var circle = vgroup.append('circle')
+         .attr('r', Math.ceil(width / 100))
+         .attr('class', 'vertex1')
+         .append('title')
+         .text(function(d) { return d.name});
+   vgroup.append('text')
+         .text(function(d) { return d.type })
+         .attr('y', - Math.ceil(width / 100) - 8 )
+         .attr('text-anchor', 'middle');
+   simulation.on('tick', function() {
+      vgroup.attr('transform', function(d) {
+            return 'translate(' + Math.ceil(d.x) + ',' + Math.ceil(d.y) + ')';
+      });
+      edge.attr('x1', function(d) { return Math.ceil(d.source.x) })
+            .attr('y1', function(d) { return Math.ceil(d.source.y) })
+            .attr('x2', function(d) { return Math.ceil(d.target.x) })
+            .attr('y2', function(d) { return Math.ceil(d.target.y) });
+   });
+}*/
 
 window.customElements.define('specification-list', specificationList);
