@@ -1,5 +1,6 @@
 2020-10-05  Vance Shipley <vances@sigscale.org>
 
+	* version the service worker cache
 	* connectivity and connection point in resource specifications
 	* polymorphic attributes in resource relationship
 	* polymorphic attributes in connection
