@@ -1,3 +1,11 @@
+2020-10-08  Vance Shipley <vances@sigscale.org>
+
+	* connection points and connectivity in example network slice subnet specification
+	* referred type in endpoint specification reference
+	* display selected topology graph in large dialog modal
+	* remove generation, use static sw-precache configuration file
+	* correct iso8601 conversion, support utc
+
 2020-10-05  Vance Shipley <vances@sigscale.org>
 
 	* version the service worker cache
