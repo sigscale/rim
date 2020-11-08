@@ -434,7 +434,8 @@
 		name :: string() | undefined | '_',
 		role :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
-		connection_point = [] :: [specification_ref()] | '_'}).
+		connection_point = [] :: [specification_ref()] | '_',
+		ref_type :: string() | undefined | '_'}).
 -type endpoint_spec_ref() :: #endpoint_spec_ref{}.
 
 -record(endpoint_ref,
