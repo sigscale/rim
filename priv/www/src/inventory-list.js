@@ -101,7 +101,7 @@ class inventoryList extends PolymerElement {
 					<template is="dom-if" if="{{item.connectivity}}"
 							on-dom-change="showInlineGraph">
 						<h3 class="inventoryDetail">Connectivity:</h3>
-						<svg id$="graph[[item.id]]" width="100%" />
+						<svg id$="graph[[item.id]]" width="100%" on-click="showFullGraph"/>
 					</template>
 				</template>
 				<vaadin-grid-column width="13ex" flex-grow="2">
@@ -245,6 +245,13 @@ class inventoryList extends PolymerElement {
 			_filterType: {
 				type: Boolean,
 				observer: '_filterChanged'
+			},
+			_connections: {
+				type: Array
+			},
+			graphSize: {
+				type: Object,
+				observer: '_graphSize'
 			}
 		}
 	}
@@ -439,19 +446,31 @@ class inventoryList extends PolymerElement {
 	}
 
 	showInlineGraph(event) {
-		var grid = this.$.inventoryGrid;
-		var connectivity = event.model.item.connectivity;
-		if (connectivity.length > 0) {
-			var gridGraph = grid.querySelector('#graph' + event.model.item.id);
+		this._connections = event.model.item.connectivity.shift().connection;
+		if (this._connections.length > 0) {
+			var gridGraph = this.$.inventoryGrid.querySelector('#graph' + event.model.item.id);
 			var width = gridGraph.clientWidth;
 			var height = gridGraph.clientHeight;
-			// var height = Math.ceil(gridGraph.clientWidth * 0.5625);
-			// gridGraph.style.height = height + 'px';
 			var graph = select(this.$.inventoryGrid)
 					.select('#graph' + event.model.item.id);
-			_connectivityGraph(connectivity.shift().connection, graph, width, height);
+			_connectivityGraph(this._connections, graph, width, height);
 		}
 	}
+
+	showFullGraph(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-topology').shadowRoot.getElementById('topologyGraph').open();
+	}
+
+	_graphSize() {
+		var topologyGraph = document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-topology').shadowRoot.getElementById('topologyGraph');
+		var graph = select(topologyGraph).select('#graph');
+		graph.selectAll('*').remove();
+		if ((this.graphSize.width > 0) && (this.graphSize.height > 0)) {
+			var svg = topologyGraph.querySelector('#graph');
+			_connectivityGraph(this._connections, graph, svg.clientWidth, svg.clientHeight);
+		}
+	}
+
 }
 
 function _connectivityGraph(connections, graph, width, height) {

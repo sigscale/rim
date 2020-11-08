@@ -9,6 +9,7 @@ LINKS = index.html manifest.json images src
 
 MODULES = inventory-management.js \
 		inventory-list.js \
+		inventory-topology.js \
 		catalog-list.js \
 		catalog-add.js \
 		catalog-update.js \

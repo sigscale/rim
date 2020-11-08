@@ -78,9 +78,6 @@ styleElement.innerHTML = `<template>
 			paper-dialog iron-collapse > div:first-child {
 				padding-top: 0px
 			}
-			.cancel-button {
-				color: black;
-			}
 			paper-progress {
 				display: block;
 				width: 100%;
@@ -177,6 +174,34 @@ styleElement.innerHTML = `<template>
 			.edge {
 				stroke: #616161;
 				stroke-width: 2px;
+			}
+			div#close-dialog {
+				width: 48px;
+				height: 48px;
+				position: absolute;
+				top: -18px;
+				left: -18px;
+				padding: 0;
+				margin: 0;
+				border: 1px solid grey;
+				border-radius: 50%;
+				background: white;
+				align-items: center;
+				justify-content: center;
+				display: flex;
+			}
+			paper-dialog#topologyGraph.dialog {
+				overflow: visible;
+				max-width: 90%;
+				width: 90%;
+				height: 80%;
+				margin: 0;
+				padding: 0;
+			}
+			svg#graph {
+				width: 100%;
+				height: 100%;
+				padding: 0
 			}
 		</style>
 	</template>`;
