@@ -70,8 +70,7 @@ clean-local:
 			rm $$i; \
 		fi; \
 	done
-	-rm $(srcdir)/src/inventory-help.js
-	-rm $(srcdir)/sw-precache-config.js
+	-rm $(abs_builddir)/src/inventory-help.js
 
 $(abs_builddir)/src/inventory-help.js: $(srcdir)/src/inventory-help.js-in
 	sed -e 's!%VERSION%!$(VERSION)!' \
