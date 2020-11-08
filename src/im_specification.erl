@@ -2163,6 +2163,59 @@ network_slice_subnet() ->
 			end
 	end,
 	ResourceSpecRelationship = lists:foldl(Fspecrel, [], SpecificationNames),
+	ConnectionPointNames = ["EP_N2", "EP_N3", "EP_N6"],
+	Fcp = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = CPid, href = CPhref,
+						name = CPname, class_type = CPtype}} ->
+					[#specification_ref{id = CPid, href = CPhref,
+							name = CPname, ref_type = CPtype} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ConnectionPoint = lists:foldl(Fcp, [], ConnectionPointNames),
+	ConnectionNames = [{"N2", "EP_N2", "AMFFunction"},
+			{"N3", "EP_N3", "UPFFunction"},
+			{"N4", "SMFFunction", "UPFFunction"},
+			{"N6", "UPFFunction", "EP_N6"},
+			{"N7", "SMFFunction", "PCFFunction"},
+			{"N8", "AMFFunction", "UDMFunction"},
+			{"N9", "UPFFunction", "UPFFunction"},
+			{"N10", "SMFFunction", "UDMFunction"},
+			{"N11", "AMFFunction", "SMFFunction"},
+			{"N12", "AMFFunction", "AUSFFunction"},
+			{"N13", "AUSFFunction", "UDMFunction"},
+			{"N14", "AMFFunction", "AMFFunction"},
+			{"N15", "AMFFunction", "PCFFunction"},
+			{"N22", "AMFFunction", "NSSFFunction"}],
+	Fcon = fun({ConName, EpName1, EpName2}, Acc) ->
+			case im:get_specification_name(EpName1) of
+				{ok, #specification{id = EP1id, href = EP1href,
+						name = EP1name, class_type = EP1type}} ->
+					EP1 = #endpoint_spec_ref{id = EP1id, href = EP1href,
+							name = EP1name, ref_type = EP1type},
+					case im:get_specification_name(EpName2) of
+						{ok, #specification{id = EP2id, href = EP2href,
+								name = EP2name, class_type = EP2type}} ->
+							EP2 = #endpoint_spec_ref{id = EP2id, href = EP2href,
+									name = EP2name, ref_type = EP2type},
+							[#connection_spec{name = ConName,
+									endpoint = [EP1, EP2]} | Acc];
+						{error, Reason} ->
+							error_logger:warning_report(["Error reading resource specification",
+									{specification, EpName2}, {error, Reason}]),
+							Acc
+					end;
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, EpName1}, {error, Reason}]),
+					Acc
+			end
+	end,
+	Connections = lists:foldl(Fcon, [], ConnectionNames),
 	#specification{name = "NetworkSliceSubnet",
 			description = "Network Slice Subnet",
 			class_type = "NetworkSliceSubnetSpec",
@@ -2174,7 +2227,11 @@ network_slice_subnet() ->
 			target_schema = #target_schema_ref{class_type = "NetworkSliceSubnet",
 					schema = ?PathInventorySchema ++ "NetworkSliceSubnet"},
 			characteristic = Chars,
-			related = ResourceSpecRelationship}.
+			related = lists:reverse(ResourceSpecRelationship),
+			connection_point = lists:reverse(ConnectionPoint),
+			connectivity = [#resource_graph_spec{
+             name = "Adjacency Graph",
+             connection = lists:reverse(Connections)}]}.
 
 -spec ngc_amf() -> specification().
 %% @doc 5GC Access and Mobility Management Function (AMF) resource function specification.
