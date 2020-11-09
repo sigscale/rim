@@ -96,14 +96,14 @@ class specificationList extends PolymerElement {
 						</dl>
 						<dl class="details">
 						</dl>
-						<dl>
-						</dl>
 						<dl class="details">
+						</dl>
+						<div class="details">
 							<template name="connectivity" is="dom-if" if="{{item.connectivitySpecification}}"
 									on-dom-change="showInlineGraphSpec">
 								<svg id$="graphSpec[[item.id]]" width="100%" />
 							</template>
-						</dl>
+						</div>
 					</iron-pages>
 				</template>
 				<vaadin-grid-column width="8ex" flex-grow="2">
