@@ -38,6 +38,9 @@ class specificationList extends PolymerElement {
 							Characteristics
 						</paper-tab>
 						<paper-tab>
+							Features
+						</paper-tab>
+						<paper-tab>
 							Relationships
 						</paper-tab>
 						<paper-tab>
@@ -48,57 +51,207 @@ class specificationList extends PolymerElement {
 						</paper-tab>
 					</paper-tabs>
 					<iron-pages selected="{{selected}}">
-						<dl class="details">
-							<template is="dom-if" if="{{item.id}}">
-								<dt><b>Id</b></dt>
-								<dd>{{item.id}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.name}}">
-								<dt><b>Name</b></dt>
-								<dd>{{item.name}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.description}}">
-								<dt><b>Description</b></dt>
-								<dd>{{item.description}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.category}}">
-								<dt><b>Category</b></dt>
-								<dd>{{item.category}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.isBundle}}">
-								<dt><b>Isbundle</b></dt>
-								<dd>{{item.isBundle}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.lifecycleStatus}}">
-								<dt><b>Status</b></dt>
-								<dd>{{item.lifecycleStatus}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.lifecycleStatus}}">
-								<dt><b>Status</b></dt>
-								<dd>{{item.lifecycleStatus}}</dd>
-							</template>
-							<template is="dom-if" if="{{item.version}}">
-								<dt><b>Version</b></dt>
-								<dd>{{item.version}}</dd>
-							</template>
-						</dl>
-						<dl class="details">
-							<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
-								<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
-									<dt>description</dt>
-									<dd>{{detail.description}}</dd>
-									<dt>name</dt>
-									<dd>{{detail.name}}</dd>
-									<dt>valueType</dt>
-									<dd>{{detail.valueType}}</dd>
+						<div>
+							<dl class="details">
+								<template is="dom-if" if="{{item.id}}">
+									<dt><b>Id</b></dt>
+									<dd>{{item.id}}</dd>
 								</template>
+								<template is="dom-if" if="{{item.name}}">
+									<dt><b>Name</b></dt>
+									<dd>{{item.name}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.description}}">
+									<dt><b>Description</b></dt>
+									<dd>{{item.description}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.category}}">
+									<dt><b>Category</b></dt>
+									<dd>{{item.category}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.isBundle}}">
+									<dt><b>Isbundle</b></dt>
+									<dd>{{item.isBundle}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.lifecycleStatus}}">
+									<dt><b>Status</b></dt>
+									<dd>{{item.lifecycleStatus}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.lastUpdate}}">
+									<dt><b>Last Update</b></dt>
+									<dd>{{item.lastUpdate}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.version}}">
+									<dt><b>Version</b></dt>
+									<dd>{{item.version}}</dd>
+								</template>
+							</dl>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
+								<dl class="details">
+									<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="char">
+										<template is="dom-if" if="{{char.id}}">
+											<dt>id</dt>
+											<dd>{{char.id}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.name}}">
+											<dt>name</dt>
+											<dd>{{char.name}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.description}}">
+											<dt>description</dt>
+											<dd>{{char.description}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.configurable}}">
+											<dt>configurable</dt>
+											<dd>{{char.configurable}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.extensible}}">
+											<dt>extensible</dt>
+											<dd>{{char.extensible}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.isUnique}}">
+											<dt>isUnique</dt>
+											<dd>{{char.isUnique}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.maxCardinality}}">
+											<dt>maxCardinality</dt>
+											<dd>{{char.maxCardinality}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.minCardinality}}">
+											<dt>minCardinality</dt>
+											<dd>{{char.minCardinality}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.regex}}">
+											<dt>regex</dt>
+											<dd>{{char.regex}}</dd>
+										</template>
+										<template is="dom-if" if="{{char.valueType}}">
+											<dt>valueType</dt>
+											<dd>{{char.valueType}}</dd>
+										</template>
+									</template>
+								</dl>
 							</template>
-						</dl>
-						<dl class="details">
-						</dl>
-						<dl class="details">
-						</dl>
-						<div class="details">
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.featureSpecCharacteristic}}">
+								<dl class="details">
+									<template is="dom-repeat" items="{{item.featureSpecCharacteristic}}" as="feat">
+										<template is="dom-if" if="{{feat.name}}">
+											<dt>name</dt>
+											<dd>{{feat.name}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.description}}">
+											<dt>description</dt>
+											<dd>{{feat.description}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.configurable}}">
+											<dt>configurable</dt>
+											<dd>{{feat.configurable}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.extensible}}">
+											<dt>extensible</dt>
+											<dd>{{feat.extensible}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.isUnique}}">
+											<dt>isUnique</dt>
+											<dd>{{feat.isUnique}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.maxCardinality}}">
+											<dt>maxCardinality</dt>
+											<dd>{{feat.maxCardinality}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.minCardinality}}">
+											<dt>minCardinality</dt>
+											<dd>{{feat.minCardinality}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.regex}}">
+											<dt>regex</dt>
+											<dd>{{feat.regex}}</dd>
+										</template>
+										<template is="dom-if" if="{{feat.valueType}}">
+											<dt>valueType</dt>
+											<dd>{{feat.valueType}}</dd>
+										</template>
+									</template>
+								</dl>
+							</template>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.resourceSpecRelationship}}">
+								<dl class="details">
+									<template is="dom-repeat" items="{{item.resourceSpecRelationship}}" as="rel">
+										<template is="dom-if" if="{{rel.id}}">
+											<dt>id</dt>
+											<dd>{{rel.id}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.href}}">
+											<dt>href</dt>
+											<dd>{{rel.href}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.name}}">
+											<dt>name</dt>
+											<dd>{{rel.name}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.description}}">
+											<dt>description</dt>
+											<dd>{{rel.description}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.defaultQuantity}}">
+											<dt>defaultQuantity</dt>
+											<dd>{{rel.defaultQuantity}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.maxCardinality}}">
+											<dt>maxCardinality</dt>
+											<dd>{{rel.maxCardinality}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.minCardinality}}">
+											<dt>minCardinality</dt>
+											<dd>{{rel.minCardinality}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.role}}">
+											<dt>role</dt>
+											<dd>{{rel.role}}</dd>
+										</template>
+										<template is="dom-if" if="{{rel.relationshipType}}">
+											<dt>relationshipType</dt>
+											<dd>{{rel.relationshipType}}</dd>
+										</template>
+									</template>
+								</dl>
+							</template>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.connectionPointSpecification}}">
+								<dl class="details">
+									<template is="dom-repeat" items="{{item.connectionPointSpecification}}" as="cp">
+										<template is="dom-if" if="{{cp.id}}">
+											<dt>id</dt>
+											<dd>{{cp.id}}</dd>
+										</template>
+										<template is="dom-if" if="{{cp.href}}">
+											<dt>href</dt>
+											<dd>{{cp.href}}</dd>
+										</template>
+										<template is="dom-if" if="{{cp.name}}">
+											<dt>name</dt>
+											<dd>{{cp.name}}</dd>
+										</template>
+										<template is="dom-if" if="{{cp.version}}">
+											<dt>version</dt>
+											<dd>{{cp.version}}</dd>
+										</template>
+										<template is="dom-if" if="{{_formatName(cp, '@referredType')}}">
+											<dt>@referredType</dt>
+											<dd>{{_formatName(cp, '@referredType')}}</dd>
+										</template>
+									</template>
+								</dl>
+							</template>
+						</div>
+						<div>
 							<template name="connectivity" is="dom-if" if="{{item.connectivitySpecification}}"
 									on-dom-change="showInlineGraphSpec">
 								<svg id$="graphSpec[[item.id]]" width="100%" />
@@ -320,6 +473,10 @@ class specificationList extends PolymerElement {
 		grid.dataProvider = this._getSpecification;
 	}
 
+	_formatName(obj, prop) {
+		return obj[prop];
+	}
+
 	_getSpecification(params, callback) {
 		var grid = this;
 		if(!grid.size) {
@@ -454,8 +611,13 @@ class specificationList extends PolymerElement {
 					newRecord.status = request.response[index].lifecycleStatus;
 					newRecord.category = request.response[index].category;
 					newRecord.bundle = request.response[index].isBundle;
+					newRecord.lastUpdate = request.response[index].lastUpdate;
+					newRecord.version = request.response[index].version;
 					newRecord.feature = request.response[index].resourceSpecFeature;
 					newRecord.resourceSpecCharacteristic = request.response[index].resourceSpecCharacteristic;
+					newRecord.resourceSpecRelationship= request.response[index].resourceSpecRelationship;
+					newRecord.connectionPointSpecification = request.response[index].connectionPointSpecification;
+					newRecord.connectivitySpecification = request.response[index].connectivitySpecification;
 					vaadinItems[index] = newRecord;
 				}
 				callback(vaadinItems);
