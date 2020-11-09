@@ -13,6 +13,8 @@ import {} from '@polymer/polymer/lib/elements/dom-if.js';
 import {} from '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/paper-tabs/paper-tabs.js';
+import '@polymer/iron-pages/iron-pages.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
@@ -28,66 +30,81 @@ class specificationList extends PolymerElement {
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<template class="row-details">
-					<dl class="details">
-						<template is="dom-if" if="{{item.id}}">
-							<dt><b>Id</b></dt>
-							<dd>{{item.id}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.name}}">
-							<dt><b>Name</b></dt>
-							<dd>{{item.name}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.description}}">
-							<dt><b>Description</b></dt>
-							<dd>{{item.description}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.category}}">
-							<dt><b>Category</b></dt>
-							<dd>{{item.category}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.isBundle}}">
-							<dt><b>Isbundle</b></dt>
-							<dd>{{item.isBundle}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.lifecycleStatus}}">
-							<dt><b>Status</b></dt>
-							<dd>{{item.lifecycleStatus}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.lifecycleStatus}}">
-							<dt><b>Status</b></dt>
-							<dd>{{item.lifecycleStatus}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.version}}">
-							<dt><b>Version</b></dt>
-							<dd>{{item.version}}</dd>
-						</template>
-					</dl>
-					<h3 class="specificationDetail">Resource Specification Characteristics:</h3>
-					<dl>
-						<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
-							<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
-								<dt>description</dt>
-								<dd>{{detail.description}}</dd>
-								<dt>name</dt>
-								<dd>{{detail.name}}</dd>
-								<dt>valueType</dt>
-								<dd>{{detail.valueType}}</dd>
+					<paper-tabs selected="{{selected-[[item.id]]}}">
+						<paper-tab>
+							Attributes
+						</paper-tab>
+						<paper-tab>
+							Characteristics
+						</paper-tab>
+						<paper-tab>
+							Specification Relationships
+						</paper-tab>
+						<paper-tab link>
+							Connection Points
+						</paper-tab>
+						<paper-tab>
+							Internal Topology
+						</paper-tab>
+					</paper-tabs>
+					<iron-pages selected="{{selected-[[item.id]]}}">
+						<dl class="details">
+							<template is="dom-if" if="{{item.id}}">
+								<dt><b>Id</b></dt>
+								<dd>{{item.id}}</dd>
 							</template>
-						</template>
-					</dl>
-					<template is="dom-if" if="{{item.connectivitySpecification}}"
-							on-dom-change="showInlineGraphSpec">
-						<h3 class="inventoryDetail">Connectivity Specification:</h3>
-						<svg id$="graphSpec[[item.id]]" width="100%" />
-					</template>
-					<div class="buttons">
-						<paper-button
-								raised
-								class="submit-button"
-								on-tap="_showupdateSpecificationModal">
-							Update
-						</paper-button>
-					</div>
+							<template is="dom-if" if="{{item.name}}">
+								<dt><b>Name</b></dt>
+								<dd>{{item.name}}</dd>
+							</template>
+							<template is="dom-if" if="{{item.description}}">
+								<dt><b>Description</b></dt>
+								<dd>{{item.description}}</dd>
+							</template>
+							<template is="dom-if" if="{{item.category}}">
+								<dt><b>Category</b></dt>
+								<dd>{{item.category}}</dd>
+							</template>
+							<template is="dom-if" if="{{item.isBundle}}">
+								<dt><b>Isbundle</b></dt>
+								<dd>{{item.isBundle}}</dd>
+							</template>
+							<template is="dom-if" if="{{item.lifecycleStatus}}">
+								<dt><b>Status</b></dt>
+								<dd>{{item.lifecycleStatus}}</dd>
+							</template>
+							<template is="dom-if" if="{{item.lifecycleStatus}}">
+								<dt><b>Status</b></dt>
+								<dd>{{item.lifecycleStatus}}</dd>
+							</template>
+							<template is="dom-if" if="{{item.version}}">
+								<dt><b>Version</b></dt>
+								<dd>{{item.version}}</dd>
+							</template>
+						</dl>
+						<dl>
+							<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
+								<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
+									<dt>description</dt>
+									<dd>{{detail.description}}</dd>
+									<dt>name</dt>
+									<dd>{{detail.name}}</dd>
+									<dt>valueType</dt>
+									<dd>{{detail.valueType}}</dd>
+								</template>
+							</template>
+						</dl>
+						<dl>
+						</dl>
+						<dl>
+						</dl>
+						<dl>
+							<template name="connectivity" is="dom-if" if="{{item.connectivitySpecification}}"
+									on-dom-change="showInlineGraphSpec">
+								<svg id$="graphSpec[[item.id]]" width="100%" />
+							</template>
+						</dl>
+					</iron-pages">
 				</template>
 				<vaadin-grid-column width="8ex" flex-grow="2">
 					<template class="header">
