@@ -32,19 +32,19 @@ class specificationList extends PolymerElement {
 				<template class="row-details">
 					<paper-tabs selected="{{selected-[[item.id]]}}">
 						<paper-tab>
-							Attributes
+							General
 						</paper-tab>
 						<paper-tab>
 							Characteristics
 						</paper-tab>
 						<paper-tab>
-							Specification Relationships
+							Relationships
 						</paper-tab>
 						<paper-tab link>
-							Connection Points
+							Connections
 						</paper-tab>
 						<paper-tab>
-							Internal Topology
+							Topology
 						</paper-tab>
 					</paper-tabs>
 					<iron-pages selected="{{selected-[[item.id]]}}">
@@ -82,7 +82,7 @@ class specificationList extends PolymerElement {
 								<dd>{{item.version}}</dd>
 							</template>
 						</dl>
-						<dl>
+						<dl class="details">
 							<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
 								<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
 									<dt>description</dt>
@@ -94,17 +94,17 @@ class specificationList extends PolymerElement {
 								</template>
 							</template>
 						</dl>
-						<dl>
+						<dl class="details">
 						</dl>
 						<dl>
 						</dl>
-						<dl>
+						<dl class="details">
 							<template name="connectivity" is="dom-if" if="{{item.connectivitySpecification}}"
 									on-dom-change="showInlineGraphSpec">
 								<svg id$="graphSpec[[item.id]]" width="100%" />
 							</template>
 						</dl>
-					</iron-pages">
+					</iron-pages>
 				</template>
 				<vaadin-grid-column width="8ex" flex-grow="2">
 					<template class="header">
