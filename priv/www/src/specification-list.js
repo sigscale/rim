@@ -40,7 +40,7 @@ class specificationList extends PolymerElement {
 						<paper-tab>
 							Relationships
 						</paper-tab>
-						<paper-tab link>
+						<paper-tab>
 							Connections
 						</paper-tab>
 						<paper-tab>
