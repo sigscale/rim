@@ -466,8 +466,8 @@ specification_ref([schema | T], #{"@schemaLocation" := Type} = M, Acc)
 	specification_ref(T, M, Acc#specification_ref{schema = Type});
 specification_ref([ref_type | T], #specification_ref{ref_type = Type} = R, Acc)
 		when is_list(Type) ->
-	specification_ref(T, R, Acc#{"relationshipType" => Type});
-specification_ref([ref_type | T], #{"relationshipType" := Type} = M, Acc)
+	specification_ref(T, R, Acc#{"@referredType" => Type});
+specification_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification_ref(T, M, Acc#specification_ref{ref_type = Type});
 specification_ref([_ | T], R, Acc) ->
