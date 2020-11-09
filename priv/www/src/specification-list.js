@@ -58,34 +58,34 @@ class specificationList extends PolymerElement {
 							<dd>{{item.lifecycleStatus}}</dd>
 						</template>
 						<template is="dom-if" if="{{item.version}}">
-                     <dt><b>Version</b></dt>
-                     <dd>{{item.version}}</dd>
-                  </template>
+							<dt><b>Version</b></dt>
+							<dd>{{item.version}}</dd>
+						</template>
 					</dl>
-               <h3 class="specificationDetail">Resource Specification Characteristics:</h3>
-               <dl>
-                  <template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
-                     <template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
+					<h3 class="specificationDetail">Resource Specification Characteristics:</h3>
+					<dl>
+						<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
+							<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="detail">
 								<dt>description</dt>
 								<dd>{{detail.description}}</dd>
 								<dt>name</dt>
-                        <dd>{{detail.name}}</dd>
+								<dd>{{detail.name}}</dd>
 								<dt>valueType</dt>
-                        <dd>{{detail.valueType}}</dd>
-                     </template>
-                  </template>
-               </dl>
-               <template is="dom-if" if="{{item.connectivitySpecification}}"
-                  on-dom-change="showInlineGraphSpec">
-                  <h3 class="inventoryDetail">Connectivity Specification:</h3>
-                  <svg id$="graphSpec[[item.id]]" width="100%" />
-               </template>
+								<dd>{{detail.valueType}}</dd>
+							</template>
+						</template>
+					</dl>
+					<template is="dom-if" if="{{item.connectivitySpecification}}"
+							on-dom-change="showInlineGraphSpec">
+						<h3 class="inventoryDetail">Connectivity Specification:</h3>
+						<svg id$="graphSpec[[item.id]]" width="100%" />
+					</template>
 					<div class="buttons">
 						<paper-button
 								raised
 								class="submit-button"
 								on-tap="_showupdateSpecificationModal">
-							Update	
+							Update
 						</paper-button>
 					</div>
 				</template>
@@ -365,7 +365,7 @@ class specificationList extends PolymerElement {
 						} else {
 							query = "[{lifecycleStatus.in=[Rejected,Retired]";
 						}
-					}	else if("Rejected".startsWith(filter.value)) {
+					} else if("Rejected".startsWith(filter.value)) {
 						if (query) {
 							query = query + ",lifecycleStatus=Rejected";
 						} else {
