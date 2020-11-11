@@ -1717,10 +1717,10 @@ endpoint_spec_ref([connection_point | T],
 		when is_list(CpSpecRefs) ->
 	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{connection_point = specification_refs(CpSpecRefs)});
 endpoint_spec_ref([ref_type | T], #endpoint_spec_ref{ref_type = Type} = R, Acc)
-		when is_boolean(Type) ->
+		when is_list(Type) ->
 	endpoint_spec_ref(T, R, Acc#{"@referredType" => Type});
 endpoint_spec_ref([ref_type | T], #{"@referredType" := Type} = M, Acc)
-		when is_boolean(Type) ->
+		when is_list(Type) ->
 	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{ref_type = Type});
 endpoint_spec_ref([_ | T], R, Acc) ->
 	endpoint_spec_ref(T, R, Acc);
