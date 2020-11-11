@@ -276,6 +276,9 @@ class InventoryManagement extends PolymerElement {
 				var specification = this.shadowRoot.getElementById('specificationList');
 				if (!specification.loading) {
 					grid = specification.shadowRoot.getElementById('specificationGrid');
+					for(var index in grid.detailsOpenedItems) {
+						grid.closeItemDetails(grid.detailsOpenedItems[index]);
+					}
 					grid.size = undefined;
 					grid.clearCache();
 				} else {
