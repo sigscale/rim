@@ -770,7 +770,7 @@ function _connectivitySpecGraph(connectivitySpec, graph, width, height) {
 		.append('g')
 	var circle = vgroup.append('circle')
 			.attr('r', Math.ceil(width / 100))
-			.attr('class', 'vertex1')
+			.attr('class', 'vertex')
 			.append('title')
 			.text(function(d) { return d.name});
 	vgroup.append('text')
