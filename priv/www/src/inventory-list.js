@@ -101,7 +101,7 @@ class inventoryList extends PolymerElement {
 					<template is="dom-if" if="{{item.connectivity}}"
 							on-dom-change="showInlineGraph">
 						<h3 class="inventoryDetail">Connectivity:</h3>
-						<svg id$="graph[[item.id]]" width="100%" on-click="showFullGraph"/>
+						<svg id$="graph[[item.id]]" on-click="showFullGraph"/>
 					</template>
 				</template>
 				<vaadin-grid-column width="13ex" flex-grow="2">

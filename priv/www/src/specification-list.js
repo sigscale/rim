@@ -256,7 +256,7 @@ class specificationList extends PolymerElement {
 						<div>
 							<template is="dom-if" if="{{item.connectivitySpecification}}"
 									on-dom-change="showInlineGraphSpec">
-								<svg viewBox="{{inlineViewBox}}" id$="graphSpec[[item.id]]" width="100%" height="400%"/>
+								<svg viewBox="{{inlineViewBox}}" id$="graphSpec[[item.id]]" />
 							</template>
 						</div>
 					</iron-pages>
