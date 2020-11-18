@@ -393,6 +393,12 @@ class specificationList extends PolymerElement {
 		}
 	}
 
+	ready() {
+		super.ready();
+		var grid = this.shadowRoot.getElementById('specificationGrid');
+		grid.dataProvider = this._getSpecification;
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 		this.addEventListener('iron-resize', this.onIronResize);
@@ -439,12 +445,6 @@ class specificationList extends PolymerElement {
 				grid.openItemDetails(current);
 			}
 		}
-	}
-
-	ready() {
-		super.ready();
-		var grid = this.shadowRoot.getElementById('specificationGrid');
-		grid.dataProvider = this._getSpecification;
 	}
 
 	_formatName(obj, prop) {
