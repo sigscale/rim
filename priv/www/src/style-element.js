@@ -168,6 +168,11 @@ styleElement.innerHTML = `<template>
 				margin-left: 40px;
 				margin-right: 40px;
 			}
+			svg#graph {
+				width: 100%;
+				height: 100%;
+				padding: 0
+			}
 			circle.vertex {
 				fill: #79b700;
 			}
@@ -198,16 +203,6 @@ styleElement.innerHTML = `<template>
 				margin: 0;
 				padding: 0;
 			}
-			svg#graph {
-				width: 100%;
-				height: 100%;
-				padding: 0
-			}
-         svg#graphSpec {
-            width: 100%;
-            height: 100%;
-            padding: 0
-         }
 		</style>
 	</template>`;
 

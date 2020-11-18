@@ -52,7 +52,9 @@ class specificationList extends PolymerElement {
 							Topology
 						</paper-tab>
 					</paper-tabs>
-					<iron-pages selected="{{selectedTab}}">
+					<iron-pages
+							id$="tab-[[item.id]]"
+							selected="{{selectedTab}}">
 						<div>
 							<dl class="details">
 								<template is="dom-if" if="{{item.id}}">
@@ -254,9 +256,8 @@ class specificationList extends PolymerElement {
 							</template>
 						</div>
 						<div>
-							<template is="dom-if" if="{{item.connectivitySpecification}}"
-									on-dom-change="showInlineGraph">
-								<svg viewBox="{{inlineViewBox}}" id$="graph-[[item.id]]" />
+							<template is="dom-if" if="{{item.connectivitySpecification}}">
+								<svg id$="graph-[[item.id]]" />
 							</template>
 						</div>
 					</iron-pages>
@@ -413,15 +414,6 @@ class specificationList extends PolymerElement {
 				notify: true,
 				observer: '_activeItemChanged'
 			},
-			connectivity: {
-				type: Array
-			},
-			inlineViewBox: {
-				type: String,
-				value: function() { 
-					return "0 0 400 200"
-				}
-			},
 			_filterSpecName: {
 				type: Boolean,
 				observer: '_filterChanged'
@@ -446,6 +438,32 @@ class specificationList extends PolymerElement {
 				type: Boolean,
 				observer: '_filterChanged'
 			}
+		}
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('iron-resize', this.onIronResize);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('iron-resize', this.onIronResize);
+	}
+
+	onIronResize(event) {
+		if (this.activeItem
+				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 5)
+				&& this.activeItem.connectivitySpecification
+				&& (this.activeItem.connectivitySpecification.length > 0)) {
+			var connectivity = this.activeItem.connectivitySpecification.shift().connectionSpecification;
+			var width = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientWidth;
+			var height = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientHeight;
+			var svg = event.target.shadowRoot.getElementById('graph-' + this.activeItem.id);
+			svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+			var graph = select(svg);
+			graph.selectAll('*').remove();
+			_connectivityGraph(connectivity, graph, width, height);
 		}
 	}
 
@@ -676,18 +694,6 @@ class specificationList extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 
-	showInlineGraph(event) {
-		this.connectivity = event.model.item.connectivitySpecification.shift().connectionSpecification;
-		if (this.connectivity.length > 0) {
-			var gridGraph = this.$.specificationGrid.querySelector('#graph-' + event.model.item.id);
-			var width = gridGraph.clientWidth;
-			var height = gridGraph.clientHeight;
-//			this.inlineViewBox = "0 0 " + width + " " + height;
-			var graph = select(this.$.specificationGrid)
-						.select('#graph-' + event.model.item.id);
-			_connectivityGraph(this.connectivity, graph, width, height);
-		}
-	}
 }
 
 function _connectivityGraph(connectivity, graph, width, height) {
