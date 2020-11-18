@@ -32,7 +32,7 @@ class specificationList extends PolymerElement {
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<template class="row-details">
-					<paper-tabs selected="{{selected}}">
+					<paper-tabs selected="{{selectedTab}}">
 						<paper-tab>
 							General
 						</paper-tab>
@@ -52,7 +52,7 @@ class specificationList extends PolymerElement {
 							Topology
 						</paper-tab>
 					</paper-tabs>
-					<iron-pages selected="{{selected}}">
+					<iron-pages selected="{{selectedTab}}">
 						<div>
 							<dl class="details">
 								<template is="dom-if" if="{{item.id}}">
