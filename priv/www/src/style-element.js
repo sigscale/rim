@@ -9,22 +9,6 @@ styleElement.innerHTML = `<template>
 				--app-secondary-color: #aeea00;
 				display: block;
 			}
-			dt {
-				float: left;
-				clear: left;
-				width: 20ch;
-				text-align: right;
-				font-weight: bold;
-			}
-			dt::after {
-				content: ":";
-			}
-			dd {
-				margin: 0 0 0 22ch;
-			}
-			h3.inventoryDetail {
-				clear: left;
-			}
 			app-header {
 				position: fixed;
 				top: 0;
@@ -167,6 +151,22 @@ styleElement.innerHTML = `<template>
 			paper-dialog-scrollable p {
 				margin-left: 40px;
 				margin-right: 40px;
+			}
+			dt {
+				float: left;
+				clear: left;
+				width: 20ch;
+				text-align: right;
+				font-weight: bold;
+			}
+			dt::after {
+				content: ":";
+			}
+			dd {
+				margin: 0 0 0 22ch;
+			}
+			h3.inventoryDetail {
+				clear: left;
 			}
 			svg#graph {
 				width: 100%;
