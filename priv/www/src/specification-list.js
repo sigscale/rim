@@ -255,8 +255,8 @@ class specificationList extends PolymerElement {
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.connectivitySpecification}}"
-									on-dom-change="showInlineGraphSpec">
-								<svg viewBox="{{inlineViewBox}}" id$="graphSpec[[item.id]]" />
+									on-dom-change="showInlineGraph">
+								<svg viewBox="{{inlineViewBox}}" id$="graph-[[item.id]]" />
 							</template>
 						</div>
 					</iron-pages>
@@ -413,7 +413,7 @@ class specificationList extends PolymerElement {
 				notify: true,
 				observer: '_activeItemChanged'
 			},
-			connectivitySpec: {
+			connectivity: {
 				type: Array
 			},
 			inlineViewBox: {
@@ -676,21 +676,21 @@ class specificationList extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 
-	showInlineGraphSpec(event) {
-		this.connectivitySpec = event.model.item.connectivitySpecification.shift().connectionSpecification;
-		if (this.connectivitySpec.length > 0) {
-			var gridGraph = this.$.specificationGrid.querySelector('#graphSpec' + event.model.item.id); 
+	showInlineGraph(event) {
+		this.connectivity = event.model.item.connectivitySpecification.shift().connectionSpecification;
+		if (this.connectivity.length > 0) {
+			var gridGraph = this.$.specificationGrid.querySelector('#graph-' + event.model.item.id);
 			var width = gridGraph.clientWidth;
 			var height = gridGraph.clientHeight;
 //			this.inlineViewBox = "0 0 " + width + " " + height;
 			var graph = select(this.$.specificationGrid)
-						.select('#graphSpec' + event.model.item.id);
-			_connectivitySpecGraph(this.connectivitySpec, graph, width, height);
+						.select('#graph-' + event.model.item.id);
+			_connectivityGraph(this.connectivity, graph, width, height);
 		}
 	}
 }
 
-function _connectivitySpecGraph(connectivitySpec, graph, width, height) {
+function _connectivityGraph(connectivity, graph, width, height) {
 	var vertices = [];
 	function mapEdge(connectivitySpecification) {
 		let edge = {};
@@ -753,7 +753,7 @@ function _connectivitySpecGraph(connectivitySpec, graph, width, height) {
 		}
 		return edge;
 	}
-	var edges = connectivitySpec.map(mapEdge);
+	var edges = connectivity.map(mapEdge);
 	var simulation = forceSimulation(vertices)
 			.force("center", forceCenter(Math.ceil(width/2), Math.ceil(height/2)))
 			.force("charge", forceManyBody().strength(-800))
