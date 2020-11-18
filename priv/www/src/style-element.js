@@ -165,6 +165,10 @@ styleElement.innerHTML = `<template>
 			dd {
 				margin: 0 0 0 22ch;
 			}
+			table, th, td .details {
+				border: 1px solid lightgrey;
+				border-collapse: collapse;
+			}
 			h3.inventoryDetail {
 				clear: left;
 			}

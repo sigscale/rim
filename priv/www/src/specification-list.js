@@ -93,166 +93,118 @@ class specificationList extends PolymerElement {
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
-								<dl class="details">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Configurable</th>
+										<th>Extensible</th>
+										<th>Is Unique</th>
+										<th>Max Cardinality</th>
+										<th>Min Cardinality</th>
+										<th>Regex</th>
+										<th>Value Type</th>
+									</tr>
 									<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="char">
-										<template is="dom-if" if="{{char.id}}">
-											<dt>id</dt>
-											<dd>{{char.id}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.name}}">
-											<dt>name</dt>
-											<dd>{{char.name}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.description}}">
-											<dt>description</dt>
-											<dd>{{char.description}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.configurable}}">
-											<dt>configurable</dt>
-											<dd>{{char.configurable}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.extensible}}">
-											<dt>extensible</dt>
-											<dd>{{char.extensible}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.isUnique}}">
-											<dt>isUnique</dt>
-											<dd>{{char.isUnique}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.maxCardinality}}">
-											<dt>maxCardinality</dt>
-											<dd>{{char.maxCardinality}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.minCardinality}}">
-											<dt>minCardinality</dt>
-											<dd>{{char.minCardinality}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.regex}}">
-											<dt>regex</dt>
-											<dd>{{char.regex}}</dd>
-										</template>
-										<template is="dom-if" if="{{char.valueType}}">
-											<dt>valueType</dt>
-											<dd>{{char.valueType}}</dd>
-										</template>
+										<tr>
+											<td>{{char.id}}</td>
+											<td>{{char.name}}</td>
+											<td>{{char.description}}</td>
+											<td>{{char.configurable}}</td>
+											<td>{{char.extensible}}</td>
+											<td>{{char.isUnique}}</td>
+											<td>{{char.maxCardinality}}</td>
+											<td>{{char.minCardinality}}</td>
+											<td>{{char.regex}}</td>
+											<td>{{char.valueType}}</td>
+										</tr>
 									</template>
-								</dl>
+								</table>
 							</template>
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.featureSpecCharacteristic}}">
-								<dl class="details">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Configurable</th>
+										<th>Extensible</th>
+										<th>Is Unique</th>
+										<th>Max Cardinality</th>
+										<th>Min Cardinality</th>
+										<th>Regex</th>
+										<th>Value Type</th>
+									</tr>
 									<template is="dom-repeat" items="{{item.featureSpecCharacteristic}}" as="feat">
-										<template is="dom-if" if="{{feat.name}}">
-											<dt>name</dt>
-											<dd>{{feat.name}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.description}}">
-											<dt>description</dt>
-											<dd>{{feat.description}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.configurable}}">
-											<dt>configurable</dt>
-											<dd>{{feat.configurable}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.extensible}}">
-											<dt>extensible</dt>
-											<dd>{{feat.extensible}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.isUnique}}">
-											<dt>isUnique</dt>
-											<dd>{{feat.isUnique}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.maxCardinality}}">
-											<dt>maxCardinality</dt>
-											<dd>{{feat.maxCardinality}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.minCardinality}}">
-											<dt>minCardinality</dt>
-											<dd>{{feat.minCardinality}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.regex}}">
-											<dt>regex</dt>
-											<dd>{{feat.regex}}</dd>
-										</template>
-										<template is="dom-if" if="{{feat.valueType}}">
-											<dt>valueType</dt>
-											<dd>{{feat.valueType}}</dd>
-										</template>
+										<tr>
+											<td>{{feat.id}}</td>
+											<td>{{feat.name}}</td>
+											<td>{{feat.description}}</td>
+											<td>{{feat.configurable}}</td>
+											<td>{{feat.extensible}}</td>
+											<td>{{feat.isUnique}}</td>
+											<td>{{feat.maxCardinality}}</td>
+											<td>{{feat.minCardinality}}</td>
+											<td>{{feat.regex}}</td>
+											<td>{{feat.valueType}}</td>
+										</tr>
 									</template>
-								</dl>
+								</table>
 							</template>
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.resourceSpecRelationship}}">
-								<dl class="details">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Href</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Default Quantity</th>
+										<th>Max Cardinality</th>
+										<th>Min Cardinality</th>
+										<th>Role</th>
+										<th>Relationship Type</th>
+									</tr>
 									<template is="dom-repeat" items="{{item.resourceSpecRelationship}}" as="rel">
-										<template is="dom-if" if="{{rel.id}}">
-											<dt>id</dt>
-											<dd>{{rel.id}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.href}}">
-											<dt>href</dt>
-											<dd>{{rel.href}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.name}}">
-											<dt>name</dt>
-											<dd>{{rel.name}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.description}}">
-											<dt>description</dt>
-											<dd>{{rel.description}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.defaultQuantity}}">
-											<dt>defaultQuantity</dt>
-											<dd>{{rel.defaultQuantity}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.maxCardinality}}">
-											<dt>maxCardinality</dt>
-											<dd>{{rel.maxCardinality}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.minCardinality}}">
-											<dt>minCardinality</dt>
-											<dd>{{rel.minCardinality}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.role}}">
-											<dt>role</dt>
-											<dd>{{rel.role}}</dd>
-										</template>
-										<template is="dom-if" if="{{rel.relationshipType}}">
-											<dt>relationshipType</dt>
-											<dd>{{rel.relationshipType}}</dd>
-										</template>
+										<tr>
+											<td>{{rel.id}}</td>
+											<td>{{rel.href}}</td>
+											<td>{{rel.name}}</td>
+											<td>{{rel.description}}</td>
+											<td>{{rel.defaultQuantity}}</td>
+											<td>{{rel.maxCardinality}}</td>
+											<td>{{rel.minCardinality}}</td>
+											<td>{{rel.role}}</td>
+											<td>{{rel.relationshipType}}</td>
+										</tr>
 									</template>
-								</dl>
+								</table>
 							</template>
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.connectionPointSpecification}}">
-								<dl class="details">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Href</th>
+										<th>Name</th>
+										<th>Version</th>
+										<th>Referred Type</th>
+									</tr>
 									<template is="dom-repeat" items="{{item.connectionPointSpecification}}" as="cp">
-										<template is="dom-if" if="{{cp.id}}">
-											<dt>id</dt>
-											<dd>{{cp.id}}</dd>
-										</template>
-										<template is="dom-if" if="{{cp.href}}">
-											<dt>href</dt>
-											<dd>{{cp.href}}</dd>
-										</template>
-										<template is="dom-if" if="{{cp.name}}">
-											<dt>name</dt>
-											<dd>{{cp.name}}</dd>
-										</template>
-										<template is="dom-if" if="{{cp.version}}">
-											<dt>version</dt>
-											<dd>{{cp.version}}</dd>
-										</template>
-										<template is="dom-if" if="{{_formatName(cp, '@referredType')}}">
-											<dt>@referredType</dt>
-											<dd>{{_formatName(cp, '@referredType')}}</dd>
-										</template>
+										<tr>
+											<td>{{cp.id}}</td>
+											<td>{{cp.href}}</td>
+											<td>{{cp.name}}</td>
+											<td>{{cp.version}}</td>
+											<td>{{_formatName(cp, '@referredType')}}</td>
+										</tr>
 									</template>
-								</dl>
+								</table>
 							</template>
 						</div>
 						<div>
