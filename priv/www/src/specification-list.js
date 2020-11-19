@@ -410,9 +410,7 @@ class specificationList extends PolymerElement {
 	}
 
 	onIronResize(event) {
-		if (event.path[0].localName == 'iron-pages') {
-			this.shadowRoot.getElementById('specificationGrid').notifyResize();
-		} else if (this.activeItem
+		if (this.activeItem
 				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 5)
 				&& this.activeItem.connectivitySpecification
 				&& (this.activeItem.connectivitySpecification.length > 0)) {
@@ -424,6 +422,9 @@ class specificationList extends PolymerElement {
 			var graph = select(svg);
 			graph.selectAll('*').remove();
 			_connectivityGraph(connectivity, graph, width, height);
+		}
+		if (event.path[0].localName == 'iron-pages') {
+			this.shadowRoot.getElementById('specificationGrid').notifyResize();
 		}
 	}
 
