@@ -410,7 +410,9 @@ class specificationList extends PolymerElement {
 	}
 
 	onIronResize(event) {
-		if (this.activeItem
+		if (event.path[0].localName == 'iron-pages') {
+			this.shadowRoot.getElementById('specificationGrid').notifyResize();
+		} else if (this.activeItem
 				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 5)
 				&& this.activeItem.connectivitySpecification
 				&& (this.activeItem.connectivitySpecification.length > 0)) {
