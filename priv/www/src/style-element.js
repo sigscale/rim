@@ -165,7 +165,15 @@ styleElement.innerHTML = `<template>
 			dd {
 				margin: 0 0 0 22ch;
 			}
-			table, th, td .details {
+			table.details {
+				border: 1px solid lightgrey;
+				border-collapse: collapse;
+			}
+			th.details {
+				border: 1px solid lightgrey;
+				border-collapse: collapse;
+			}
+			tr.details {
 				border: 1px solid lightgrey;
 				border-collapse: collapse;
 			}
