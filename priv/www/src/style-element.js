@@ -152,6 +152,9 @@ styleElement.innerHTML = `<template>
 				margin-left: 40px;
 				margin-right: 40px;
 			}
+			paper-tabs.details {
+				--paper-tabs-selection-bar-color: var(--app-primary-color);
+			}
 			dt {
 				float: left;
 				clear: left;
@@ -169,13 +172,17 @@ styleElement.innerHTML = `<template>
 				border: 1px solid lightgrey;
 				border-collapse: collapse;
 			}
-			th.details {
+			table.details th {
 				border: 1px solid lightgrey;
 				border-collapse: collapse;
+				padding-left: 1em;
+				padding-right: 1em;
 			}
-			tr.details {
+			table.details td {
 				border: 1px solid lightgrey;
 				border-collapse: collapse;
+				padding-left: 1em;
+				padding-right: 1em;
 			}
 			h3.inventoryDetail {
 				clear: left;
