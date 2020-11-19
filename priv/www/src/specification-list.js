@@ -32,9 +32,7 @@ class specificationList extends PolymerElement {
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<template class="row-details">
-					<paper-tabs
-							class="details"
-							selected="{{selectedTab}}">
+					<paper-tabs selected="{{selectedTab}}">
 						<paper-tab>
 							General
 						</paper-tab>
@@ -413,20 +411,19 @@ class specificationList extends PolymerElement {
 
 	onIronResize(event) {
 		if (event.path[0].localName == 'iron-pages') {
-			if (this.activeItem
-					&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 5)
-					&& this.activeItem.connectivitySpecification
-					&& (this.activeItem.connectivitySpecification.length > 0)) {
-				var connectivity = this.activeItem.connectivitySpecification.shift().connectionSpecification;
-				var width = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientWidth;
-				var height = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientHeight;
-				var svg = event.target.shadowRoot.getElementById('graph-' + this.activeItem.id);
-				svg.setAttribute("viewBox", "0 0 " + width + " " + height);
-				var graph = select(svg);
-				graph.selectAll('*').remove();
-				_connectivityGraph(connectivity, graph, width, height);
-			}
 			this.shadowRoot.getElementById('specificationGrid').notifyResize();
+		} else if (this.activeItem
+				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 5)
+				&& this.activeItem.connectivitySpecification
+				&& (this.activeItem.connectivitySpecification.length > 0)) {
+			var connectivity = this.activeItem.connectivitySpecification.shift().connectionSpecification;
+			var width = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientWidth;
+			var height = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientHeight;
+			var svg = event.target.shadowRoot.getElementById('graph-' + this.activeItem.id);
+			svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+			var graph = select(svg);
+			graph.selectAll('*').remove();
+			_connectivityGraph(connectivity, graph, width, height);
 		}
 	}
 
