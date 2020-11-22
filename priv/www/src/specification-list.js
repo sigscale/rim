@@ -98,28 +98,56 @@ class specificationList extends PolymerElement {
 							<template is="dom-if" if="{{item.resourceSpecCharacteristic}}">
 								<table class="details">
 									<tr>
-										<th>Id</th>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'id')}}">
+											<th>Id</th>
+										</template>
 										<th>Name</th>
 										<th>Description</th>
-										<th>Configurable</th>
-										<th>Extensible</th>
-										<th>Is Unique</th>
-										<th>Max Cardinality</th>
-										<th>Min Cardinality</th>
-										<th>Regex</th>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'configurable')}}">
+											<th>Configurable</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'extensible')}}">
+											<th>Extensible</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'isUnique')}}">
+											<th>Is Unique</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'minCardinality')}}">
+											<th>Min Cardinality</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'maxCardinality')}}">
+											<th>Max Cardinality</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'regex')}}">
+											<th>Regex</th>
+										</template>
 										<th>Value Type</th>
 									</tr>
 									<template is="dom-repeat" items="{{item.resourceSpecCharacteristic}}" as="char">
 										<tr>
-											<td>{{char.id}}</td>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'id')}}">
+												<td>{{char.id}}</td>
+											</template>
 											<td>{{char.name}}</td>
 											<td>{{char.description}}</td>
-											<td>{{char.configurable}}</td>
-											<td>{{char.extensible}}</td>
-											<td>{{char.isUnique}}</td>
-											<td>{{char.maxCardinality}}</td>
-											<td>{{char.minCardinality}}</td>
-											<td>{{char.regex}}</td>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'configurable')}}">
+												<td>{{char.configurable}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'extensible')}}">
+												<td>{{char.extensible}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'isUnique')}}">
+												<td>{{char.isUnique}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'minCardinality')}}">
+												<td>{{char.minCardinality}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'maxCardinality')}}">
+												<td>{{char.maxCardinality}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecCharacteristic, 'regex')}}">
+												<td>{{char.regex}}</td>
+											</template>
 											<td>{{char.valueType}}</td>
 										</tr>
 									</template>
@@ -130,28 +158,56 @@ class specificationList extends PolymerElement {
 							<template is="dom-if" if="{{item.featureSpecCharacteristic}}">
 								<table class="details">
 									<tr>
-										<th>Id</th>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'id')}}">
+											<th>Id</th>
+										</template>
 										<th>Name</th>
 										<th>Description</th>
-										<th>Configurable</th>
-										<th>Extensible</th>
-										<th>Is Unique</th>
-										<th>Max Cardinality</th>
-										<th>Min Cardinality</th>
-										<th>Regex</th>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'configurable')}}">
+											<th>Configurable</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'extensible')}}">
+											<th>Extensible</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'isUnique')}}">
+											<th>Is Unique</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'minCardinality')}}">
+											<th>Min Cardinality</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'maxCardinality')}}">
+											<th>Max Cardinality</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'regex')}}">
+											<th>Regex</th>
+										</template>
 										<th>Value Type</th>
 									</tr>
 									<template is="dom-repeat" items="{{item.featureSpecCharacteristic}}" as="feat">
 										<tr>
-											<td>{{feat.id}}</td>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'id')}}">
+												<td>{{feat.id}}</td>
+											</template>
 											<td>{{feat.name}}</td>
-											<td>{{feat.description}}</td>
-											<td>{{feat.configurable}}</td>
-											<td>{{feat.extensible}}</td>
-											<td>{{feat.isUnique}}</td>
-											<td>{{feat.maxCardinality}}</td>
-											<td>{{feat.minCardinality}}</td>
-											<td>{{feat.regex}}</td>
+												<td>{{feat.description}}</td>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'configurable')}}">
+												<td>{{feat.configurable}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'extensible')}}">
+												<td>{{feat.extensible}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'isUnique')}}">
+												<td>{{feat.isUnique}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'minCardinality')}}">
+												<td>{{feat.minCardinality}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'maxCardinality')}}">
+												<td>{{feat.maxCardinality}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.featureSpecCharacteristic, 'regex')}}">
+												<td>{{feat.regex}}</td>
+											</template>
 											<td>{{feat.valueType}}</td>
 										</tr>
 									</template>
@@ -165,11 +221,18 @@ class specificationList extends PolymerElement {
 										<th>Id</th>
 										<th>Href</th>
 										<th>Name</th>
-										<th>Description</th>
-										<th>Default Quantity</th>
-										<th>Max Cardinality</th>
-										<th>Min Cardinality</th>
-										<th>Role</th>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'defaultQuantity')}}">
+											<th>Default Quantity</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'minCardinality')}}">
+											<th>Min Cardinality</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'maxCardinality')}}">
+											<th>Max Cardinality</th>
+										</template>
+										<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'role')}}">
+											<th>Role</th>
+										</template>
 										<th>Relationship Type</th>
 									</tr>
 									<template is="dom-repeat" items="{{item.resourceSpecRelationship}}" as="rel">
@@ -177,11 +240,18 @@ class specificationList extends PolymerElement {
 											<td>{{rel.id}}</td>
 											<td>{{rel.href}}</td>
 											<td>{{rel.name}}</td>
-											<td>{{rel.description}}</td>
-											<td>{{rel.defaultQuantity}}</td>
-											<td>{{rel.maxCardinality}}</td>
-											<td>{{rel.minCardinality}}</td>
-											<td>{{rel.role}}</td>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'defaultQuantity')}}">
+												<td>{{rel.defaultQuantity}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'minCardinality')}}">
+												<td>{{rel.minCardinality}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'maxCardinality')}}">
+												<td>{{rel.maxCardinality}}</td>
+											</template>
+											<template is="dom-if" if="{{_someExist(item.resourceSpecRelationship, 'role')}}">
+												<td>{{rel.role}}</td>
+											</template>
 											<td>{{rel.relationshipType}}</td>
 										</tr>
 									</template>
@@ -195,7 +265,9 @@ class specificationList extends PolymerElement {
 										<th>Id</th>
 										<th>Href</th>
 										<th>Name</th>
-										<th>Version</th>
+										<template is="dom-if" if="{{_someExist(item.connectionPointSpecification, 'version')}}">
+											<th>Version</th>
+										</template>
 										<th>Referred Type</th>
 									</tr>
 									<template is="dom-repeat" items="{{item.connectionPointSpecification}}" as="cp">
@@ -203,7 +275,9 @@ class specificationList extends PolymerElement {
 											<td>{{cp.id}}</td>
 											<td>{{cp.href}}</td>
 											<td>{{cp.name}}</td>
-											<td>{{cp.version}}</td>
+											<template is="dom-if" if="{{_someExist(item.connectionPointSpecification, 'version')}}">
+												<td>{{cp.version}}</td>
+											</template>
 											<td>{{_formatName(cp, '@referredType')}}</td>
 										</tr>
 									</template>
@@ -456,6 +530,17 @@ class specificationList extends PolymerElement {
 
 	_formatName(obj, prop) {
 		return obj[prop];
+	}
+
+	_someExist(array, property) {
+		function exists(obj) {
+			if (obj[property]) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		array.some(exists);
 	}
 
 	_getSpecification(params, callback) {
