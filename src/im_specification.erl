@@ -2153,9 +2153,42 @@ network_slice_subnet() ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = Sid, href = Shref,
 						name = Sname, class_type = Stype}} ->
-					[#specification_rel{id = Sid, href = Shref,
-							name = Sname, class_type = Stype,
-							rel_type = "contains"} | Acc];
+					case Name of
+						"AMFFunction" ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									default = 1, min = 1, max = 6,
+									rel_type = "contains"} | Acc];
+						"SMFFunction" ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									default = 1, min = 1, max = 6,
+									rel_type = "contains"} | Acc];
+						"UPFFunction" ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									default = 1, min = 1, max = 6,
+									rel_type = "contains"} | Acc];
+						"EP_N2" ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									default = 1, min = 1, max = 6,
+									rel_type = "contains"} | Acc];
+						"EP_N3" ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									default = 1, min = 1, max = 6,
+									rel_type = "contains"} | Acc];
+						"EP_N6" ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									default = 1, min = 1, max = 6,
+									rel_type = "contains"} | Acc];
+						_ ->
+							[#specification_rel{id = Sid, href = Shref,
+									name = Sname, class_type = Stype,
+									rel_type = "contains"} | Acc]
+					end;
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
