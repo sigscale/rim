@@ -187,10 +187,11 @@ styleElement.innerHTML = `<template>
 			h3.inventoryDetail {
 				clear: left;
 			}
-			svg#graph {
+			svg {
 				width: 100%;
 				height: 100%;
-				padding: 0
+				padding: 8px;
+				overflow: visible;
 			}
 			circle.vertex {
 				fill: #79b700;

@@ -32,7 +32,9 @@ class specificationList extends PolymerElement {
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<template class="row-details">
-					<paper-tabs selected="{{selectedTab}}">
+					<paper-tabs
+							class="details"
+							selected="{{selectedTab}}">
 						<paper-tab>
 							General
 						</paper-tab>
@@ -54,7 +56,8 @@ class specificationList extends PolymerElement {
 					</paper-tabs>
 					<iron-pages
 							id$="tab-[[item.id]]"
-							selected="{{selectedTab}}">
+							selected="{{selectedTab}}"
+								<svg id$="graph-[[item.id]]" />
 						<div>
 							<dl class="details">
 								<template is="dom-if" if="{{item.id}}">
@@ -410,21 +413,22 @@ class specificationList extends PolymerElement {
 	}
 
 	onIronResize(event) {
+		var grid = this.shadowRoot.getElementById('specificationGrid');
 		if (this.activeItem
 				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 5)
 				&& this.activeItem.connectivitySpecification
 				&& (this.activeItem.connectivitySpecification.length > 0)) {
-			var connectivity = this.activeItem.connectivitySpecification.shift().connectionSpecification;
+			var connectivity = this.activeItem.connectivitySpecification[0].connectionSpecification;
 			var width = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientWidth;
-			var height = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientHeight;
+			var height = Math.ceil(grid.clientHeight / 3);
 			var svg = event.target.shadowRoot.getElementById('graph-' + this.activeItem.id);
-			svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+			svg.setAttribute("height", height);
 			var graph = select(svg);
 			graph.selectAll('*').remove();
 			_connectivityGraph(connectivity, graph, width, height);
 		}
 		if (event.path[0].localName == 'iron-pages') {
-			this.shadowRoot.getElementById('specificationGrid').notifyResize();
+			grid.notifyResize();
 		}
 	}
 
