@@ -110,6 +110,7 @@ class InventoryManagement extends PolymerElement {
 								id="specificationList"
 								loading="{{specificationLoading}}"
 								name="specificationView"
+								graph-size="[[graphSize]]"
 								active-item="{{activeSpecificationItem}}">
 						</specification-list>
 						<rule-list
@@ -223,6 +224,7 @@ class InventoryManagement extends PolymerElement {
 			<inventory-add id="inventoryAdd"></inventory-add>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
 			<inventory-topology id="topologyGraph" graph-size={{graphSize}}></inventory-topology>
+			<specification-topology id="topologyGraph" graph-size={{graphSize}}></specification-topology>
 		`;
 	}
 
@@ -451,6 +453,7 @@ class InventoryManagement extends PolymerElement {
 				import('./specification-update.js');
 				import('./specification-add.js');
 				import('./specification-list.js');
+				import('./specification-topology.js');
 				break;
 			case 'inventoryView':
 				import('./inventory-add.js');

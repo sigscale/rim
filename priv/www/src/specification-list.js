@@ -290,7 +290,7 @@ class specificationList extends PolymerElement {
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.connectivitySpecification}}">
-								<svg id$="graph-[[item.id]]" />
+								<svg id$="graph-[[item.id]]" on-click="showFullGraph"/>
 							</template>
 						</div>
 					</iron-pages>
@@ -470,6 +470,10 @@ class specificationList extends PolymerElement {
 			_filterSpecBundle: {
 				type: Boolean,
 				observer: '_filterChanged'
+			},
+			graphSize: {
+				type: Object,
+				observer: '_graphSize'
 			}
 		}
 	}
@@ -742,6 +746,20 @@ class specificationList extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-add').shadowRoot.getElementById('specificationAddModal').open();
 	}
 
+	showFullGraph(event) {
+		document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-topology').shadowRoot.getElementById('topologyGraph').open();
+	}
+
+	_graphSize() {
+		var topologyGraph = document.body.querySelector('inventory-management').shadowRoot.querySelector('specification-topology').shadowRoot.getElementById('topologyGraph');
+		var graph = select(topologyGraph).select('#graph');
+		graph.selectAll('*').remove();
+		if ((this.graphSize.width > 0) && (this.graphSize.height > 0)) {
+			var svg = topologyGraph.querySelector('#graph');
+			var connectivity = this.activeItem.connectivitySpecification[0].connectionSpecification;
+			_connectivityGraph(connectivity, graph, svg.clientWidth, svg.clientHeight);
+		}
+	}
 }
 
 function _connectivityGraph(connectivity, graph, width, height) {
