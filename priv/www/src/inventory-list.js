@@ -15,9 +15,12 @@ import { select } from 'd3-selection';
 import { forceSimulation, forceManyBody, forceCenter, forceLink, forceY } from 'd3-force';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-fab/paper-fab.js';
+import '@polymer/paper-tabs/paper-tabs.js';
+import '@polymer/iron-pages/iron-pages.js';
 import '@vaadin/vaadin-grid/vaadin-grid.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
+import '@polymer/paper-button/paper-button.js';
 import './style-element.js';
 
 class inventoryList extends PolymerElement {
@@ -29,80 +32,107 @@ class inventoryList extends PolymerElement {
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
 				<template class="row-details">
-					<dl class="details">
-						<template is="dom-if" if="{{item.id}}">
-							<dt><b>Id</b></dt>
-							<dd>{{item.id}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.href}}">
-							<dt><b>Href</b></dt>
-							<dd>{{item.href}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.publicIdentifier}}">
-							<dt><b>Public Id</b></dt>
-							<dd>{{item.publicIdentifier}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.name}}">
-							<dt><b>Name</b></dt>
-							<dd>{{item.name}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.description}}">
-							<dt><b>Description</b></dt>
-							<dd>{{item.description}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.category}}">
-							<dt><b>Category</b></dt>
-							<dd>{{item.category}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.type}}">
-							<dt><b>Class</b></dt>
-							<dd>{{item.type}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.type}}">
-							<dt><b>Type</b></dt>
-							<dd>{{item.type}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.schema}}">
-							<dt><b>Schema</b></dt>
-							<dd>{{item.schema}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.status}}">
-							<dt><b>Status</b></dt>
-							<dd>{{item.status}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.version}}">
-							<dt><b>Version</b></dt>
-							<dd>{{item.version}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.start}}">
-							<dt><b>Start date</b></dt>
-							<dd>{{item.start}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.end}}">
-							<dt><b>End date</b></dt>
-							<dd>{{item.end}}</dd>
-						</template>
-						<template is="dom-if" if="{{item.lastModified}}">
-							<dt><b>Last modified</b></dt>
-							<dd>{{item.lastModified}}</dd>
-						</template>
-					</dl>
-					<h3 class="inventoryDetail">Resource Characteristics:</h3>
-					<dl class="details">
-						<template is="dom-if" if="{{item.resourceChar}}">
-							<template is="dom-repeat" items="{{item.resourceChar}}" as="detail">
-								<template is="dom-if" if="{{detail.value}}">
-									<dt>{{detail.name}}</dt>
-									<dd>{{detail.value}}</dd>
+					<paper-tabs
+							class="details"
+							selected="{{selectedTab}}">
+						<paper-tab>
+							General
+						</paper-tab>
+						<paper-tab>
+							Characteristics
+						</paper-tab>
+						<paper-tab>
+							Topology
+						</paper-tab>
+					</paper-tabs>
+					<iron-pages
+							id$="tab-[[item.id]]"
+							selected="{{selectedTab}}"
+						<svg id$="graph-[[item.id]]" />
+					<div>
+							<dl class="details">
+								<template is="dom-if" if="{{item.id}}">
+									<dt><b>Id</b></dt>
+									<dd>{{item.id}}</dd>
 								</template>
+								<template is="dom-if" if="{{item.href}}">
+									<dt><b>Href</b></dt>
+									<dd>{{item.href}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.publicIdentifier}}">
+									<dt><b>Public Id</b></dt>
+									<dd>{{item.publicIdentifier}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.name}}">
+									<dt><b>Name</b></dt>
+									<dd>{{item.name}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.description}}">
+									<dt><b>Description</b></dt>
+									<dd>{{item.description}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.category}}">
+									<dt><b>Category</b></dt>
+									<dd>{{item.category}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.type}}">
+									<dt><b>Class</b></dt>
+									<dd>{{item.type}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.type}}">
+									<dt><b>Type</b></dt>
+									<dd>{{item.type}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.schema}}">
+									<dt><b>Schema</b></dt>
+									<dd>{{item.schema}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.status}}">
+									<dt><b>Status</b></dt>
+									<dd>{{item.status}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.version}}">
+									<dt><b>Version</b></dt>
+									<dd>{{item.version}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.start}}">
+									<dt><b>Start date</b></dt>
+									<dd>{{item.start}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.end}}">
+									<dt><b>End date</b></dt>
+									<dd>{{item.end}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.lastModified}}">
+									<dt><b>Last modified</b></dt>
+									<dd>{{item.lastModified}}</dd>
+								</template>
+							</dl>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.resourceChar}}">
+								<table class="details">
+									<tr>
+										<th>Name</th>
+										<th>Value</th>
+									</tr>
+									<template is="dom-repeat" items="{{item.resourceChar}}" as="detail">
+										<tr>
+											<template is="dom-if" if="{{detail.value}}">
+												<td>{{detail.name}}</td>
+												<td>{{detail.value}}</td>
+											</template>
+										</tr>
+									</template>
+								</table>
 							</template>
-						</template>
-					</dl>
-					<template is="dom-if" if="{{item.connectivity}}"
-							on-dom-change="showInlineGraph">
-						<h3 class="inventoryDetail">Connectivity:</h3>
-						<svg id$="graph[[item.id]]" on-click="showFullGraph"/>
-					</template>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.connectivity}}">
+								<svg id$="graph-[[item.id]]" on-click="showFullGraph"/>
+							</template>
+						</div>
+					</iron-pages>
 				</template>
 				<vaadin-grid-column width="13ex" flex-grow="2">
 					<template class="header">
@@ -256,14 +286,52 @@ class inventoryList extends PolymerElement {
 		}
 	}
 
+	ready() {
+		super.ready();
+		var grid = this.shadowRoot.getElementById('inventoryGrid');
+		grid.dataProvider = this._getInventory;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('iron-resize', this.onIronResize);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('iron-resize', this.onIronResize);
+	}
+
+	onIronResize(event) {
+		var grid = this.shadowRoot.getElementById('inventoryGrid');
+		if (this.activeItem
+				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 2)
+				&& this.activeItem.connectivity
+				&& (this.activeItem.connectivity.length > 0)) {
+			var connections = this.activeItem.connectivity[0].connection;
+			var width = event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).clientWidth;
+			var height = Math.ceil(grid.clientHeight / 3);
+			var svg = event.target.shadowRoot.getElementById('graph-' + this.activeItem.id);
+			svg.setAttribute("height", height);
+			var graph = select(svg);
+			graph.selectAll('*').remove();
+			_connectivityGraph(connections, graph, width, height);
+		}
+		if (event.path[0].localName == 'iron-pages') {
+			grid.notifyResize();
+		}
+	}
+
 	_activeItemChanged(item, last) {
 		if(item || last) {
 			var grid = this.$.inventoryGrid;
 			var current;
 			if(item == null) {
 				current = last;
+				this.$.inventoryGrid.selectedItems = item ? [item] : [];
 			} else {
-				current = item
+				current = item;
+				this.$.inventoryGrid.selectedItems = [];
 			}
 			function checkExist(inventory) {
 				return inventory.id == current.id;
@@ -274,12 +342,6 @@ class inventoryList extends PolymerElement {
 				grid.openItemDetails(current);
 			}
 		}
-	}
-
-	ready() {
-		super.ready();
-		var grid = this.shadowRoot.getElementById('inventoryGrid');
-		grid.dataProvider = this._getInventory;
 	}
 
 	_getInventory(params, callback) {
@@ -445,18 +507,6 @@ class inventoryList extends PolymerElement {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-add').shadowRoot.getElementById('inventoryAddModal').open();
 	}
 
-	showInlineGraph(event) {
-		this._connections = event.model.item.connectivity.shift().connection;
-		if (this._connections.length > 0) {
-			var gridGraph = this.$.inventoryGrid.querySelector('#graph' + event.model.item.id);
-			var width = gridGraph.clientWidth;
-			var height = gridGraph.clientHeight;
-			var graph = select(this.$.inventoryGrid)
-					.select('#graph' + event.model.item.id);
-			_connectivityGraph(this._connections, graph, width, height);
-		}
-	}
-
 	showFullGraph(event) {
 		document.body.querySelector('inventory-management').shadowRoot.querySelector('inventory-topology').shadowRoot.getElementById('topologyGraph').open();
 	}
@@ -467,10 +517,10 @@ class inventoryList extends PolymerElement {
 		graph.selectAll('*').remove();
 		if ((this.graphSize.width > 0) && (this.graphSize.height > 0)) {
 			var svg = topologyGraph.querySelector('#graph');
-			_connectivityGraph(this._connections, graph, svg.clientWidth, svg.clientHeight);
+			var connections = this.activeItem.connectivity[0].connection;
+			_connectivityGraph(connections, graph, svg.clientWidth, svg.clientHeight);
 		}
 	}
-
 }
 
 function _connectivityGraph(connections, graph, width, height) {
