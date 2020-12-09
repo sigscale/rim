@@ -42,6 +42,12 @@ class inventoryList extends PolymerElement {
 							Characteristics
 						</paper-tab>
 						<paper-tab>
+							Relationship	
+						</paper-tab>
+						<paper-tab>
+							Specification
+						</paper-tab>
+						<paper-tab>
 							Topology
 						</paper-tab>
 					</paper-tabs>
@@ -124,6 +130,44 @@ class inventoryList extends PolymerElement {
 											</template>
 										</tr>
 									</template>
+								</table>
+							</template>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.resourceRelationship}}">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Href</th>
+										<th>Name</th>
+										<th>Relationship Type</th>
+									</tr>
+									<template is="dom-repeat" items="{{item.resourceRelationship}}" as="rel">
+										<tr>
+											<td>{{rel.id}}</td>
+											<td>{{rel.href}}</td>
+											<td>{{rel.name}}</td>
+											<td>{{rel.relationshipType}}</td>
+										</tr>
+									</template>
+								</table>
+							</template>
+						</div>
+						<div>
+							<template is="dom-if" if="{{item.resourceSpecification}}">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Href</th>
+										<th>Name</th>
+										<th>Version</th>
+									</tr>
+									<tr>
+										<td>{{item.resourceSpecification.id}}</td>
+										<td>{{item.resourceSpecification.href}}</td>
+										<td>{{item.resourceSpecification.name}}</td>
+										<td>{{item.resourceSpecification.version}}</td>
+									</tr>
 								</table>
 							</template>
 						</div>
@@ -305,7 +349,7 @@ class inventoryList extends PolymerElement {
 	onIronResize(event) {
 		var grid = this.shadowRoot.getElementById('inventoryGrid');
 		if (this.activeItem
-				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 2)
+				&& (event.target.shadowRoot.getElementById('tab-' + this.activeItem.id).selected == 4)
 				&& this.activeItem.connectivity
 				&& (this.activeItem.connectivity.length > 0)) {
 			var connections = this.activeItem.connectivity[0].connection;
@@ -457,6 +501,12 @@ class inventoryList extends PolymerElement {
 						} else {
 							newRecord.resourceChar = resChar;
 						}
+					}
+					if(request.response[index].resourceRelationship) {
+						newRecord.resourceRelationship = request.response[index].resourceRelationship;
+					}
+					if(request.response[index].resourceSpecification) {
+						newRecord.resourceSpecification = request.response[index].resourceSpecification;
 					}
 					vaadinItems[index] = newRecord;
 				}
