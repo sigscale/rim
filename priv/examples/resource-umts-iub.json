@@ -16,7 +16,7 @@
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798115649",
-		"href": "/resourceInventoryManagement/v4/resourceSpecification/798215749",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/798215749",
 		"@type": "IubLinkSpec"
 	},
 	"resourceCharacteristic": [

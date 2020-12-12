@@ -16,7 +16,7 @@
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "3597468000",
-		"href": "/resourceInventoryManagement/v4/resourceSpecification/3597468000",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/3597468000",
 		"@type": "EP_N3Spec"
 	},
 	"resourceCharacteristic": [

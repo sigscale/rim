@@ -16,7 +16,7 @@
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "731255649",
-		"href": "/resourceInventoryManagement/v4/resourceSpecification/731255649",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/731255649",
 		"@type": "TmaInventoryUnitSpec"
 	},
 	"resourceCharacteristic": [

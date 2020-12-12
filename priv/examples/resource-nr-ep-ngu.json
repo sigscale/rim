@@ -16,7 +16,7 @@
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "368125606",
-		"href": "/resourceInventoryManagement/v4/resourceSpecification/368125606",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/368125606",
 		"@type": "EP_NgUSpec"
 	},
 	"resourceCharacteristic": [

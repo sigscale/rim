@@ -1,0 +1,83 @@
+{
+	"name": "ExampleFunction",
+	"description": "Example resource function specification",
+	"@type": "ResourceFunction",
+	"category": "Slice",
+	"lifecycleState": "operating",
+	"lifecycleSubState": "working",
+	"version": "0.1",
+	"resourceSpecification": {
+		"id": "16029108611535083",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535083",
+		"@type": "ResourceFunctionSpecification"
+	},
+	"resourceCharacteristic": [
+		{
+			"name": "dnPrefix",
+			"value" : "DC=example.net"
+		},
+		{
+			"name": "userLabel",
+			"value" : "network-slice-subnet-1"
+		}
+	],
+	"resourceRelationship": [
+		{
+			"id": "16029108611535601",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
+			"@type": "ConnectionPoint",
+			"relationshipType": "contains",
+			"name": "SAP"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "16029108611535601",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
+			"@referredType": "ConnectionPointSpecification",
+			"name": "SAP"
+		}
+	],
+	"connectivitySpecification": [
+		{
+			"id": "16029108611640331",
+			"@type": "ResourceGraphSpecification",
+			"name": "Adjacency Graph",
+			"description": "Topology of internal adjacency.",
+			"connectionSpecification": [
+				{
+					"id": "16029108611684067",
+					"name": "N2",
+					"description": "N2 interface between (R)AN and AMF.",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "16029108611684309",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684309",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "Contained Example 1",
+							"connectionPointSpecification": {
+								"id": "16029108611542281",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542281",
+								"@referredType": "ConnectionPointSpecification",
+								"name": "EP_1"
+							}
+						},
+						{
+							"id": "16029108611535601",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "Contained Example 2",
+							"connectionPointSpecification": {
+								"id": "16029108611542275",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542275",
+								"@referredType": "ConnectionPointSpecification",
+								"name": "EP_2"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

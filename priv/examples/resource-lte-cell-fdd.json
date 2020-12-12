@@ -16,7 +16,7 @@
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "798225649",
-		"href": "/resourceInventoryManagement/v4/resourceSpecification/798225649",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/798225649",
 		"@type": "EUtranCellFDDSpec"
 	},
 	"resourceCharacteristic": [

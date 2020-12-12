@@ -16,7 +16,7 @@
 	"version": "0.1",
 	"resourceSpecification": {
 		"id": "789215633",
-		"href": "/resourceInventoryManagement/v4/resourceSpecification/789215633",
+		"href": "/resourceCatalogManagement/v4/resourceSpecification/789215633",
 		"@type": "DNSRuleSpec"
 	},
 	"resourceCharacteristic": [
