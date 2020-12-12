@@ -13,66 +13,80 @@
 	},
 	"resourceCharacteristic": [
 		{
-			"name": "dnPrefix",
-			"value" : "DC=example.net"
+			"name": "id",
+			"value" : "SubNetwork=3,ManagedElement=123,ExampleFunction=11"
 		},
 		{
 			"name": "userLabel",
-			"value" : "network-slice-subnet-1"
+			"value" : "example-function-11"
 		}
 	],
 	"resourceRelationship": [
 		{
-			"id": "16029108611535601",
-			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
+			"id": "16029108611645382",
+			"href": "/resourceInventoryManagement/v4/resource/16029108611645382",
 			"@type": "ConnectionPoint",
 			"relationshipType": "contains",
 			"name": "SAP"
+		},
+		{
+			"id": "16029108611699870",
+			"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
+			"@type": "ResourceFunction",
+			"relationshipType": "contains",
+			"name": "ContainedExample1"
+		},
+		{
+			"id": "16029108611699875",
+			"href": "/resourceInventoryManagement/v4/resource/16029108611699875",
+			"@type": "ResourceFunction",
+			"relationshipType": "contains",
+			"name": "ContainedExample2"
 		}
 	],
-	"connectionPointSpecification": [
+	"connectionPoint": [
 		{
-			"id": "16029108611535601",
-			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
-			"@referredType": "ConnectionPointSpecification",
+			"id": "16029108611645382",
+			"href": "/resourceInventoryManagement/v4/resource/16029108611645382",
+			"@referredType": "ConnectionPoint",
 			"name": "SAP"
 		}
 	],
-	"connectivitySpecification": [
+	"connectivity": [
 		{
-			"id": "16029108611640331",
-			"@type": "ResourceGraphSpecification",
+			"id": "16029108611650032",
+			"@type": "ResourceGraph",
 			"name": "Adjacency Graph",
-			"description": "Topology of internal adjacency.",
-			"connectionSpecification": [
+			"description": "Topology of internal adjacency",
+			"connection": [
 				{
-					"id": "16029108611684067",
-					"name": "N2",
-					"description": "N2 interface between (R)AN and AMF.",
+					"id": "16029108611650033",
+					"name": "ExampleLink1",
+					"description": "Edge between contained RFs",
 					"associationType": "pointtoPoint",
-					"endpointSpecification": [
+					"endpoint": [
 						{
-							"id": "16029108611684309",
-							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684309",
-							"@referredType": "ResourceFunctionSpecification",
-							"name": "Contained Example 1",
-							"connectionPointSpecification": {
-								"id": "16029108611542281",
-								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542281",
-								"@referredType": "ConnectionPointSpecification",
-								"name": "EP_1"
+							"id": "16029108611699870",
+							"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
+							"@referredType": "ResourceFunction",
+							"name": "ContainedExample1",
+							"connectionPoint": {
+								"id": "16029108611690135",
+								"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
+								"@referredType": "ConnectionPoint",
+								"name": "ExampleConnectionPoint1"
 							}
 						},
 						{
-							"id": "16029108611535601",
-							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
-							"@referredType": "ResourceFunctionSpecification",
-							"name": "Contained Example 2",
-							"connectionPointSpecification": {
-								"id": "16029108611542275",
-								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542275",
-								"@referredType": "ConnectionPointSpecification",
-								"name": "EP_2"
+							"id": "16029108611699875",
+							"href": "/resourceInventoryManagement/v4/resource/16029108611699875",
+							"@referredType": "ResourceFunction",
+							"name": "ContainedExample2",
+							"connectionPoint": {
+								"id": "16029108611690136",
+								"href": "/resourceInventoryManagement/v4/resource/16029108611699876",
+								"@referredType": "ConnectionPoint",
+								"name": "ExampleConnectionPoint2"
 							}
 						}
 					]
