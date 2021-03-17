@@ -46,7 +46,7 @@
 				"id": "8994643080",
 				"href": "/resourceInventoryManagement/v4/resource/8994643080",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellFDD=1",
-				"@referredType": "EUtranCellFDD"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		},
@@ -55,7 +55,7 @@
 				"id": "8794531620",
 				"href": "/resourceInventoryManagement/v4/resource/8994631533",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EUtranCellTDD=1",
-				"@referredType": "EUtranCellTDD"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		},
@@ -64,7 +64,7 @@
 				"id": "8794531622",
 				"href": "/resourceInventoryManagement/v4/resource/8794531622",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1",
-				"@referredType": "EP_X2C"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -73,7 +73,7 @@
 				"id": "8794531623",
 				"href": "/resourceInventoryManagement/v4/resource/8794531623",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2U=1",
-				"@referredType": "EP_X2U"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -82,7 +82,7 @@
 				"id": "8794531624",
 				"href": "/resourceInventoryManagement/v4/resource/8794531624",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgC=1",
-				"@referredType": "EP_NgC"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -91,7 +91,7 @@
 				"id": "8794531625",
 				"href": "/resourceInventoryManagement/v4/resource/8794531625",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgU=1",
-				"@referredType": "EP_NgU"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -100,7 +100,7 @@
 				"id": "8794531626",
 				"href": "/resourceInventoryManagement/v4/resource/8794531626",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnC=1",
-				"@referredType": "EP_XnC"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -109,7 +109,7 @@
 				"id": "8794531627",
 				"href": "/resourceInventoryManagement/v4/resource/8794531627",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnU=1",
-				"@referredType": "EP_XnU"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		}
@@ -120,7 +120,7 @@
 				"id": "8794531622",
 				"href": "/resourceInventoryManagement/v4/resource/8794531622",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1",
-				"@referredType": "EP_X2C"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -129,7 +129,7 @@
 				"id": "8794531623",
 				"href": "/resourceInventoryManagement/v4/resource/8794531623",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2U=1",
-				"@referredType": "EP_X2U"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -138,7 +138,7 @@
 				"id": "8794531624",
 				"href": "/resourceInventoryManagement/v4/resource/8794531624",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgC=1",
-				"@referredType": "EP_NgC"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -147,7 +147,7 @@
 				"id": "8794531625",
 				"href": "/resourceInventoryManagement/v4/resource/8794531625",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_NgU=1",
-				"@referredType": "EP_NgU"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -156,7 +156,7 @@
 				"id": "8794531626",
 				"href": "/resourceInventoryManagement/v4/resource/8794531626",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnC=1",
-				"@referredType": "EP_XnC"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		},
@@ -165,7 +165,7 @@
 				"id": "8794531627",
 				"href": "/resourceInventoryManagement/v4/resource/8794531627",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_XnU=1",
-				"@referredType": "EP_XnU"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		}

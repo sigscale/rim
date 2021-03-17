@@ -46,7 +46,7 @@
 				"id": "6974362506",
 				"href": "/resourceInventoryManagement/v4/resource/6974362506",
 				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,GbLink=1",
-				"@referredType": "GbLink"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		},
@@ -55,7 +55,7 @@
 				"id": "6974362503",
 				"href": "/resourceInventoryManagement/v4/resource/6974362503",
 				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,IupsLink=1",
-				"@referredType": "IupsLink"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		}

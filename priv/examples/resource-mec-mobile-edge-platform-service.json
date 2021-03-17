@@ -46,7 +46,7 @@
 				"id": "7894653027",
 				"href": "/resourceInventoryManagement/v4/resource/7894653027",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,RNIService=1",
-				"@referredType": "RNIService"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		},
@@ -55,7 +55,7 @@
 				"id": "7894653028",
 				"href": "/resourceInventoryManagement/v4/resource/7894653028",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1,MobileEdgePlatformService=1,LocationService=1",
-				"@referredType": "LocationService"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		}

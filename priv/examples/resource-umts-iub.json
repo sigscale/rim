@@ -22,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "Embarcadero"
+			"value" : "umts-iub-1"
 		},
 		{
 			"name": "iubLinkNodeBFunction",

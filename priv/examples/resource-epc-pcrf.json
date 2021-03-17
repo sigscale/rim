@@ -38,7 +38,7 @@
 				"id": "6974362834",
 				"href": "/resourceInventoryManagement/v4/resource/6974362834",
 				"name": "SubNetwork=4,ManagedElement=1,PCRFFunction=1,EP_RP_EPS=1",
-				"@referredType": "EP_RP_EPS"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		}
@@ -49,7 +49,7 @@
 				"id": "6974362834",
 				"href": "/resourceInventoryManagement/v4/resource/6974362834",
 				"name": "SubNetwork=4,ManagedElement=1,PCRFFunction=1,EP_RP_EPS=1",
-				"@referredType": "EP_RP_EPS"
+				"@referredType": "ConnectionPoint"
 			},
 			"relationshipType": "contains"
 		}

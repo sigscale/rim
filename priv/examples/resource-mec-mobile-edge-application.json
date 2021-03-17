@@ -46,7 +46,7 @@
 				"id": "7894653026",
 				"href": "/resourceInventoryManagement/v4/resource/7894653026",
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgeApplication=1,MobileEdgeApplicationService=1",
-				"@referredType": "MobileEdgeApplicationService"
+				"@referredType": "ResourceFunction"
 			},
 			"relationshipType": "contains"
 		}
