@@ -25,21 +25,21 @@
 		{
 			"id": "16029108611645382",
 			"href": "/resourceInventoryManagement/v4/resource/16029108611645382",
-			"@type": "ConnectionPoint",
+			"@referredType": "ConnectionPoint",
 			"relationshipType": "contains",
 			"name": "SAP"
 		},
 		{
 			"id": "16029108611699870",
 			"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
-			"@type": "ResourceFunction",
+			"@referredType": "ResourceFunction",
 			"relationshipType": "contains",
 			"name": "ContainedExample1"
 		},
 		{
 			"id": "16029108611699875",
 			"href": "/resourceInventoryManagement/v4/resource/16029108611699875",
-			"@type": "ResourceFunction",
+			"@referredType": "ResourceFunction",
 			"relationshipType": "contains",
 			"name": "ContainedExample2"
 		}
