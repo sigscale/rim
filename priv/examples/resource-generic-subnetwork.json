@@ -22,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "Embarcadero"
+			"value" : "generic-subnetwork-2"
 		},
 		{
 			"name": "dnPrefix",

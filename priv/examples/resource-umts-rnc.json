@@ -22,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "Embarcadero"
+			"value" : "umts-rnc-1"
 		},
 		{
 			"name": "mcc",
