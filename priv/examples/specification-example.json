@@ -25,21 +25,21 @@
 		{
 			"id": "16029108611535601",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
-			"@type": "ConnectionPointSpecification",
+			"@referredType": "ConnectionPointSpecification",
 			"relationshipType": "contains",
 			"name": "SAP"
 		},
 		{
 			"id": "16029108611684309",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684309",
-			"@type": "ResourceFunctionSpecification",
+			"@referredType": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"name": "ContainedExample1"
 		},
 		{
 			"id": "16029108611535601",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
-			"@type": "ResourceFunctionSpecification",
+			"@referredType": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"name": "ContainedExample2"
 		}
