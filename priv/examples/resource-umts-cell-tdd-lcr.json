@@ -22,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "umts-cell-tdd-lcr-1"
+			"value" : "Embarcadero"
 		},
 		{
 			"name": "relatedSectorEquipment",

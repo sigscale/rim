@@ -22,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "umts-cell-fdd-1"
+			"value" : "Embarcadero"
 		},
 		{
 			"name": "cId",

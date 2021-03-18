@@ -38,7 +38,7 @@
 				"id": "6974362504",
 				"href": "/resourceInventoryManagement/v4/resource/6974362504",
 				"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1,IubcLink=1",
-				"@referredType": "ResourceFunction"
+				"@referredType": "IubcLink"
 			},
 			"relationshipType": "contains"
 		}

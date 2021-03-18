@@ -22,7 +22,7 @@
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "umts-cell-tdd-hcr-1"
+			"value" : "Embarcadero"
 		},
 		{
 			"name": "schTimeSlot",

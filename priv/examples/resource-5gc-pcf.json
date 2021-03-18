@@ -38,7 +38,7 @@
 				"id": "3597468049",
 				"href": "/resourceInventoryManagement/v4/resource/3597468049",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N5=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N5"
 			},
 			"relationshipType": "contains"
 		},
@@ -47,7 +47,7 @@
 				"id": "3597468052",
 				"href": "/resourceInventoryManagement/v4/resource/3597468052",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N7=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N7"
 			},
 			"relationshipType": "contains"
 		},
@@ -56,7 +56,7 @@
 				"id": "3597468053",
 				"href": "/resourceInventoryManagement/v4/resource/3597468053",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N15=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N15"
 			},
 			"relationshipType": "contains"
 		},
@@ -65,7 +65,7 @@
 				"id": "3597468054",
 				"href": "/resourceInventoryManagement/v4/resource/3597468054",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N16=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N16"
 			},
 			"relationshipType": "contains"
 		},
@@ -74,7 +74,7 @@
 				"id": "3597468050",
 				"href": "/resourceInventoryManagement/v4/resource/3597468050",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_Rx=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_Rx"
 			},
 			"relationshipType": "contains"
 		},
@@ -83,7 +83,7 @@
 				"id": "3597468055",
 				"href": "/resourceInventoryManagement/v4/resource/3597468055",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_SBI_X=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_SBI_X"
 			},
 			"relationshipType": "contains"
 		}
@@ -94,7 +94,7 @@
 				"id": "3597468049",
 				"href": "/resourceInventoryManagement/v4/resource/3597468049",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N5=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N5"
 			},
 			"relationshipType": "contains"
 		},
@@ -103,7 +103,7 @@
 				"id": "3597468052",
 				"href": "/resourceInventoryManagement/v4/resource/3597468052",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N7=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N7"
 			},
 			"relationshipType": "contains"
 		},
@@ -112,7 +112,7 @@
 				"id": "3597468053",
 				"href": "/resourceInventoryManagement/v4/resource/3597468053",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N15=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N15"
 			},
 			"relationshipType": "contains"
 		},
@@ -121,7 +121,7 @@
 				"id": "3597468054",
 				"href": "/resourceInventoryManagement/v4/resource/3597468054",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N16=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_N16"
 			},
 			"relationshipType": "contains"
 		},
@@ -130,7 +130,7 @@
 				"id": "3597468050",
 				"href": "/resourceInventoryManagement/v4/resource/3597468050",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_Rx=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_Rx"
 			},
 			"relationshipType": "contains"
 		},
@@ -139,7 +139,7 @@
 				"id": "3597468055",
 				"href": "/resourceInventoryManagement/v4/resource/3597468055",
 				"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_SBI_X=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_SBI_X"
 			},
 			"relationshipType": "contains"
 		}

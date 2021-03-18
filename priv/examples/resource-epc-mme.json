@@ -46,7 +46,7 @@
 				"id": "7894623152",
 				"href": "/resourceInventoryManagement/v4/resource/7894623152",
 				"name": "SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_RP_EPS"
 			},
 			"relationshipType": "contains"
 		}
@@ -57,7 +57,7 @@
 				"id": "7894623152",
 				"href": "/resourceInventoryManagement/v4/resource/7894623152",
 				"name": "SubNetwork=4,ManagedElement=1,MMEFunction=1,EP_RP_EPS=1",
-				"@referredType": "ConnectionPoint"
+				"@referredType": "EP_RP_EPS"
 			},
 			"relationshipType": "contains"
 		}
