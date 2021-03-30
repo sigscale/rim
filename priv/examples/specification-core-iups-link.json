@@ -1,9 +1,7 @@
 {
 	"name": "IupsLink",
 	"description": "Core Iu-ps interface link (connecting a SGSN to the RNC, BSC and HNB GW) resource function specification",
-	"@type": "IupsLinkSpec",
-	"@schemaLocation": "http://sigscale.org/schema/IupsLinkSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-29T00:00:00Z",

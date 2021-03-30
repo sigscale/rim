@@ -1,9 +1,7 @@
 {
 	"name": "CsMgwFunction",
 	"description": "Core Circuit Switched (CS) Media Gateway (MGW) (3GPP 23.002)",
-	"@type": "CsMgwFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/CsMgwFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

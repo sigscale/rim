@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "6974362589",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/6974362589",
-		"@type": "SgwFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

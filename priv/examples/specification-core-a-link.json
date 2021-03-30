@@ -1,9 +1,7 @@
 {
 	"name": "ALink",
 	"description": "Core A interface link (connecting a MSC to the GERAN) resource function specification",
-	"@type": "ALinkSpec",
-	"@schemaLocation": "http://sigscale.org/schema/ALinkSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

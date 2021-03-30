@@ -1,9 +1,7 @@
 {
 	"name": "IubcLink",
 	"description": "Core Iu-bc interface link (connecting a CBC to the RNC and HNB GW) resource function specification",
-	"@type": "IubcLinkSpec",
-	"@schemaLocation": "http://sigscale.org/schema/IubcLinkSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-29T00:00:00Z",

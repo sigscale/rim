@@ -1,9 +1,7 @@
 {
 	"name": "CgfFunction",
 	"description": "Core Charging Gateway Function (CGF) (3GPP 23.060)",
-	"@type": "CgfFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/CgfFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

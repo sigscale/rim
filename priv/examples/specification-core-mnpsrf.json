@@ -1,9 +1,7 @@
 {
 	"name": "MnpSrfFunction",
 	"description": "Core Mobile Number Portability-Signaling Relay Function (MNP-SRF) (3GPP 23.002)",
-	"@type": "MnpSrfFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/MnpSrfFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

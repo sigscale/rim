@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "6974362578",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/6974362578",
-		"@type": "AucFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

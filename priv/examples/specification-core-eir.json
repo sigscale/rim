@@ -1,9 +1,7 @@
 {
 	"name": "EirFunction",
 	"description": "Core Equipment Identity Register (EIR) (3GPP 23.002)",
-	"@type": "EirFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EirFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
