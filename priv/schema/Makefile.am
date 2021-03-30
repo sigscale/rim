@@ -45,11 +45,8 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/inventoryNrm.json \
 		$(abs_builddir)/inventoryNrmAlt2.json \
 		$(abs_builddir)/ManagedFunction.json \
-		$(abs_builddir)/BssFunctionSpec.json \
 		$(abs_builddir)/BssFunction.json \
-		$(abs_builddir)/BtsSiteMgrSpec.json \
 		$(abs_builddir)/BtsSiteMgr.json \
-		$(abs_builddir)/GsmCellSpec.json \
 		$(abs_builddir)/GsmCell.json \
 		$(abs_builddir)/RncFunction.json \
 		$(abs_builddir)/NodeBFunction.json \
@@ -411,11 +408,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s BssFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s BssFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -424,11 +416,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s BtsSiteMgrSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s BtsSiteMgr.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -436,11 +423,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s GsmCellSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GsmCell.json \
 			-r ManagedFunction.json \

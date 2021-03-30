@@ -318,20 +318,17 @@ check_DATA = .validation_ok
 				-d category.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d candidate.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/BssFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-bss.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/BtsSiteMgrSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-bts.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GsmCellSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-cell.json; then exit 1; fi; \
 		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
