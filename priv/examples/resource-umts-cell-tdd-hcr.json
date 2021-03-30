@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "728123649",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/728123649",
-		"@type": "UtranCellTDDHcrSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

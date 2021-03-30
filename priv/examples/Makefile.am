@@ -333,35 +333,29 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-gsm-cell.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/RncFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-rnc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NodeBFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-nodeb.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellFDDSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-fdd.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDLcrSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-tdd-lcr.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UtranCellTDDHcrSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-cell-tdd-hcr.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/IubLinkSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-iublink.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpec.json \
 				--unknown-formats="base64" \

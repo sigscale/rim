@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "798115649",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/798215749",
-		"@type": "IubLinkSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

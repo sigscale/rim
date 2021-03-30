@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "798115649",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/798115649",
-		"@type": "RncFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

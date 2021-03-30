@@ -1,9 +1,7 @@
 {
 	"name": "UtranCellTDDHcr",
 	"description": "UMTS Time Division Duplex (TDD) high chip rate (HCR) radio cell resource function specification",
-	"@type": "UtranCellTDDHcrSpec",
-	"@schemaLocation": "http://sigscale.org/schema/UtranCellTDDHcrSpec",
-	"@baseType": "UtranCellTDDSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
