@@ -1,9 +1,7 @@
 {
 	"name": "ENBFunction",
 	"description": "LTE eNB resource function specification",
-	"@type": "ENBFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/ENBFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

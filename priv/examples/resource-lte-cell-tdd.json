@@ -17,12 +17,12 @@
 	"resourceSpecification": {
 		"id": "798295649",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/798295649",
-		"@type": "EUtranCellTDDSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "Embarcadero"
+			"value" : "lte-cell-tdd-1"
 		},
 		{
 			"name": "tac",

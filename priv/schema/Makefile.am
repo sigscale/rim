@@ -58,12 +58,9 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/UtranCellTDDLcr.json \
 		$(abs_builddir)/UtranCellTDDHcr.json \
 		$(abs_builddir)/IubLink.json \
-		$(abs_builddir)/ENBFunctionSpec.json \
 		$(abs_builddir)/ENBFunction.json \
 		$(abs_builddir)/EUtranGenericCellSpec.json \
-		$(abs_builddir)/EUtranCellFDDSpec.json \
 		$(abs_builddir)/EUtranCellFDD.json \
-		$(abs_builddir)/EUtranCellTDDSpec.json \
 		$(abs_builddir)/EUtranCellTDD.json \
 		$(abs_builddir)/ServingGWFunctionSpec.json \
 		$(abs_builddir)/ServingGWFunction.json \
@@ -513,11 +510,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s ENBFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s ENBFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -531,11 +523,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EUtranCellFDDSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellFDD.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -543,11 +530,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EUtranCellTDDSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellTDD.json \
 			-r ManagedFunction.json \

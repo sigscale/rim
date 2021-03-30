@@ -1,9 +1,7 @@
 {
 	"name": "EUtranCellTDD",
 	"description": "LTE Time Division Duplex (TDD) Cell resource function specification",
-	"@type": "EUtranCellTDDSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EUtranCellTDDSpec",
-	"@baseType": "EUtranGenericCell",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

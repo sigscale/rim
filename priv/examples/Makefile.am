@@ -354,20 +354,17 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-umts-iublink.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ENBFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-enb.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellFDDSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-cell-fdd.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EUtranCellTDDSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-lte-cell-tdd.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ServingGWFunctionSpec.json \
 				--unknown-formats="base64" \
