@@ -1,9 +1,7 @@
 {
 	"name": "SCSCFFunction",
 	"description": "IMS Serving Call Session Control Function (CSCF)",
-	"@type": "SCSCFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/SCSCFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

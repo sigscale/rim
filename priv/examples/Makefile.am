@@ -474,30 +474,25 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-core-gb-link.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ASFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-as.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/HSSFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-hss.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/PCSCFFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-pcscf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/SCSCFFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-scscf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ICSCFFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-icscf.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/GNBDUFunctionSpec.json \
 				--unknown-formats="base64" \

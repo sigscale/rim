@@ -1,9 +1,7 @@
 {
 	"name": "HSSFunction",
 	"description": "IMS Home Subscriber Server (HSS)",
-	"@type": "HSSFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/HSSFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

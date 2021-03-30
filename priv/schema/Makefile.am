@@ -83,11 +83,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/IubcLink.json \
 		$(abs_builddir)/ALink.json \
 		$(abs_builddir)/GbLink.json \
-		$(abs_builddir)/ASFunctionSpec.json \
-		$(abs_builddir)/HSSFunctionSpec.json \
-		$(abs_builddir)/PCSCFFunctionSpec.json \
-		$(abs_builddir)/SCSCFFunctionSpec.json \
-		$(abs_builddir)/ICSCFFunctionSpec.json \
 		$(abs_builddir)/GNBDUFunctionSpec.json \
 		$(abs_builddir)/GNBCUCPFunctionSpec.json \
 		$(abs_builddir)/GNBCUUPFunctionSpec.json \
@@ -679,31 +674,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ASFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s HSSFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s PCSCFFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s SCSCFFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ICSCFFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s GNBDUFunctionSpec.json \
 			--unknown-formats="base64" \
