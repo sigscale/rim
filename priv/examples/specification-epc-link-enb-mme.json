@@ -1,9 +1,7 @@
 {
 	"name": "Link_ENB_MME",
 	"description": "EPC ENBFunction and MMEFunction Link resource specification",
-	"@type": "Link_ENB_MMESpec",
-	"@schemaLocation": "http://sigscale.org/schema/Link_ENB_MMESpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-03-18T00:00:00Z",

@@ -1,9 +1,7 @@
 {
 	"name": "EP_RP_EPS",
 	"description": "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS) resource specification",
-	"@type": "EP_RP_EPSSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_RP_EPSSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-03-19T00:00:00Z",

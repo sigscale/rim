@@ -1,8 +1,7 @@
-{ "name": "EPDGFunction",
+{
+	"name": "EPDGFunction",
 	"description": "EPC evolved Packet Data Gateway (ePDG) (3GPP 23.402)",
-	"@type": "EPDGFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EPDGFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

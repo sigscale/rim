@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "708215349",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/708215349",
-		"@type": "MMEFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

@@ -62,15 +62,10 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EUtranGenericCellSpec.json \
 		$(abs_builddir)/EUtranCellFDD.json \
 		$(abs_builddir)/EUtranCellTDD.json \
-		$(abs_builddir)/ServingGWFunctionSpec.json \
 		$(abs_builddir)/ServingGWFunction.json \
-		$(abs_builddir)/PGWFunctionSpec.json \
 		$(abs_builddir)/PGWFunction.json \
-		$(abs_builddir)/EPDGFunctionSpec.json\
 		$(abs_builddir)/EPDGFunction.json\
-		$(abs_builddir)/MMEFunctionSpec.json \
 		$(abs_builddir)/MMEFunction.json \
-		$(abs_builddir)/PCRFFunctionSpec.json \
 		$(abs_builddir)/PCRFFunction.json \
 		$(abs_builddir)/MscServerFunction.json \
 		$(abs_builddir)/CsMgwFunction.json \
@@ -230,19 +225,13 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/MSCServerIntraOfiSigPoint.json \
 		$(abs_builddir)/MSCServerOfficeSpec.json \
 		$(abs_builddir)/MSCServerOffice.json \
-		$(abs_builddir)/Link_MME_MMESpec.json \
 		$(abs_builddir)/Link_MME_MME.json \
-		$(abs_builddir)/Link_HSS_MMESpec.json \
 		$(abs_builddir)/Link_HSS_MME.json \
-		$(abs_builddir)/Link_MME_SGSNSpec.json \
 		$(abs_builddir)/Link_MME_SGSN.json \
-		$(abs_builddir)/Link_MME_ServingGWSpec.json \
 		$(abs_builddir)/Link_MME_ServingGW.json \
-		$(abs_builddir)/Link_ENB_MMESpec.json \
 		$(abs_builddir)/Link_ENB_MME.json \
 		$(abs_builddir)/EP_RPSpec.json \
 		$(abs_builddir)/EP_RP.json \
-		$(abs_builddir)/EP_RP_EPSSpec.json \
 		$(abs_builddir)/EP_RP_EPS.json \
 		$(abs_builddir)/SubNetworkSpec.json \
 		$(abs_builddir)/SubNetwork.json \
@@ -523,11 +512,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s ServingGWFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s ServingGWFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -535,11 +519,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s PGWFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PGWFunction.json \
 			-r ManagedFunction.json \
@@ -549,11 +528,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EPDGFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EPDGFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -562,11 +536,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s MMEFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s MMEFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -574,11 +543,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s PCRFFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s PCRFFunction.json \
 			-r ManagedFunction.json \
@@ -1656,11 +1620,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s Link_MME_MMESpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_MME.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1668,11 +1627,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s Link_HSS_MMESpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_HSS_MME.json \
 			-r ManagedFunction.json \
@@ -1682,11 +1636,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s Link_MME_SGSNSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_SGSN.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1695,11 +1644,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s Link_MME_ServingGWSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s Link_MME_ServingGW.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1707,11 +1651,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s Link_ENB_MMESpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s Link_ENB_MME.json \
 			-r ManagedFunction.json \
@@ -1733,11 +1672,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_RP_EPSSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RP_EPS.json \
 			-r EP_RP.json \

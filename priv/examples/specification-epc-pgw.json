@@ -1,8 +1,7 @@
-{ "name": "PGWFunction",
+{
+	"name": "PGWFunction",
 	"description": "EPC PDN Gateway (PGW) (3GPP 23.401)",
-	"@type": "PGWFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/PGWFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
