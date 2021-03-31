@@ -1,7 +1,7 @@
 {
 	"name": "EP_XnC",
 	"description": "NR End Point of the logical link, supporting Xn Application protocols, to a neighbour gNB node",
-	"@type": "EP_XnCSpec",
+	"@type": "ResourceFunctionSpecification",
 	"@schemaLocation": "http://sigscale.org/schema/EP_XnCSpec",
 	"@baseType": "EP_RPSpec",
 	"version": "0.1",

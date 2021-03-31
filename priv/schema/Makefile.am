@@ -83,12 +83,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/IubcLink.json \
 		$(abs_builddir)/ALink.json \
 		$(abs_builddir)/GbLink.json \
-		$(abs_builddir)/GNBDUFunctionSpec.json \
-		$(abs_builddir)/GNBCUCPFunctionSpec.json \
-		$(abs_builddir)/GNBCUUPFunctionSpec.json \
-		$(abs_builddir)/NRCellDUSpec.json \
-		$(abs_builddir)/NRCellCUSpec.json \
-		$(abs_builddir)/NRSectorCarrierSpec.json \
 		$(abs_builddir)/NetworkSliceSpec.json \
 		$(abs_builddir)/NetworkSlice.json \
 		$(abs_builddir)/NetworkSliceSubnetSpec.json \
@@ -247,26 +241,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/RNIService.json \
 		$(abs_builddir)/TrafficRuleSpec.json \
 		$(abs_builddir)/TrafficRule.json \
-		$(abs_builddir)/EP_X2CSpec.json \
-		$(abs_builddir)/EP_X2C.json \
-		$(abs_builddir)/EP_X2USpec.json \
-		$(abs_builddir)/EP_X2U.json \
-		$(abs_builddir)/EP_NgCSpec.json \
-		$(abs_builddir)/EP_NgC.json \
-		$(abs_builddir)/EP_NgUSpec.json \
-		$(abs_builddir)/EP_NgU.json \
-		$(abs_builddir)/EP_XnCSpec.json \
-		$(abs_builddir)/EP_XnC.json \
-		$(abs_builddir)/EP_XnUSpec.json \
-		$(abs_builddir)/EP_XnU.json \
-		$(abs_builddir)/EP_F1CSpec.json \
-		$(abs_builddir)/EP_F1C.json \
-		$(abs_builddir)/EP_F1USpec.json \
-		$(abs_builddir)/EP_F1U.json \
-		$(abs_builddir)/EP_E1Spec.json \
-		$(abs_builddir)/EP_E1.json \
-		$(abs_builddir)/EP_S1USpec.json \
-		$(abs_builddir)/EP_S1U.json \
 		$(abs_builddir)/3GPPAAAProxyFunctionSpec.json \
 		$(abs_builddir)/3GPPAAAServerFunctionSpec.json \
 		$(abs_builddir)/API.json \
@@ -673,36 +647,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s GNBDUFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s GNBCUCPFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s GNBCUUPFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s NRCellDUSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s NRCellCUSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s NRSectorCarrierSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSpec.json \
 			--unknown-formats="base64" \
@@ -1776,11 +1720,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EP_X2CSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EP_X2C.json \
 			-r EP_RP.json \
 			-r ManagedFunction.json \
@@ -1789,11 +1728,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_X2USpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_X2U.json \
 			-r EP_RP.json \
@@ -1804,11 +1738,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EP_NgCSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EP_NgC.json \
 			-r EP_RP.json \
 			-r ManagedFunction.json \
@@ -1817,11 +1746,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_NgUSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_NgU.json \
 			-r EP_RP.json \
@@ -1832,11 +1756,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EP_XnCSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EP_XnC.json \
 			-r EP_RP.json \
 			-r ManagedFunction.json \
@@ -1845,11 +1764,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_XnUSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_XnU.json \
 			-r EP_RP.json \
@@ -1860,11 +1774,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EP_F1CSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EP_F1C.json \
 			-r EP_RP.json \
 			-r ManagedFunction.json \
@@ -1873,11 +1782,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_F1USpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_F1U.json \
 			-r EP_RP.json \
@@ -1888,11 +1792,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s EP_E1Spec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s EP_E1.json \
 			-r EP_RP.json \
 			-r ManagedFunction.json \
@@ -1901,11 +1800,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_S1USpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_S1U.json \
 			-r EP_RP.json \

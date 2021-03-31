@@ -1,9 +1,7 @@
 {
 	"name": "EP_S1U",
 	"description": "NR End Point of the logical link, supporting S1-U interface towards a S-GW node",
-	"@type": "EP_S1USpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_S1USpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-05-11T00:00:00Z",

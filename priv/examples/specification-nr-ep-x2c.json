@@ -1,9 +1,7 @@
 {
 	"name": "EP_X2C",
 	"description": "NR End Point of the logical link, supporting X2-C application protocols",
-	"@type": "EP_X2CSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_X2CSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-04-23T00:00:00Z",

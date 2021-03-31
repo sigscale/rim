@@ -17,12 +17,12 @@
 	"resourceSpecification": {
 		"id": "368125607",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/368125607",
-		"@type": "EP_NgCSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{
 			"name": "userLabel",
-			"value" : "Embarcadero"
+			"value" : "nr-ep-ngc"
 		},
 		{
 			"name": "farEndEntity",

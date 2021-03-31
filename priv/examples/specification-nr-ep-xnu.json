@@ -1,9 +1,7 @@
 {
 	"name": "EP_XnU",
 	"description": "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
-	"@type": "EP_XnUSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_XnUSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-04-24T00:00:00Z",

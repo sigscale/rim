@@ -1,9 +1,7 @@
 {
 	"name": "EP_NgU",
 	"description": "NR End Point of the NG user plane (NG-U) interface between the gNB and the UPGW",
-	"@type": "EP_NgUSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_NgUSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-04-24T00:00:00Z",

@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "6974362016",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/6974362016",
-		"@type": "GNBCUCPFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

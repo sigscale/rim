@@ -1,9 +1,7 @@
 {
 	"name": "EP_F1C",
 	"description": "NR End Point of the control plane interface (F1-C) between the DU and CU or CUUP",
-	"@type": "EP_F1CSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_F1CSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-05-11T00:00:00Z",

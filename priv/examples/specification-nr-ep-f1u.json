@@ -1,9 +1,7 @@
 {
 	"name": "EP_F1U",
 	"description": "NR End Point of the user plane interface (F1-U) between the DU and CU or CUUP",
-	"@type": "EP_F1USpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_F1USpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-05-11T00:00:00Z",

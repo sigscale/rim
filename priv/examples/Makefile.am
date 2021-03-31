@@ -494,85 +494,69 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-ims-icscf.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GNBDUFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-gnb-du.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUCPFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-gnb-cu-cp.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/GNBCUUPFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-gnb-cu-up.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellCUSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-cell-cu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NRCellDUSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-cell-du.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NRSectorCarrierSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-sector-carrier.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2CSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-x2c.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_X2USpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-x2u.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgCSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-ngc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_NgUSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-ngu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnCSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-xnc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_XnUSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-xnu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_F1CSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-f1c.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_F1USpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-f1u.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_E1Spec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-e1.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/EP_S1USpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-s1u.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSpec.json \
 				--unknown-formats="base64" \

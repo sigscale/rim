@@ -1,9 +1,7 @@
 {
 	"name": "EP_X2U",
 	"description": "NR End Point of the logical link, supporting the X2 user plane (X2-U) interface",
-	"@type": "EP_X2USpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_X2USpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-04-23T00:00:00Z",

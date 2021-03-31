@@ -1,9 +1,7 @@
 {
 	"name": "EP_E1",
 	"description": "NR End Point of the logical link, supporting E1 interface between gNB-CU-CP and gNB-CUUP",
-	"@type": "EP_E1Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_E1Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-05-11T00:00:00Z",
