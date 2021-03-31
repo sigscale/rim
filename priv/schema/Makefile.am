@@ -241,8 +241,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/RNIService.json \
 		$(abs_builddir)/TrafficRuleSpec.json \
 		$(abs_builddir)/TrafficRule.json \
-		$(abs_builddir)/3GPPAAAProxyFunctionSpec.json \
-		$(abs_builddir)/3GPPAAAServerFunctionSpec.json \
 		$(abs_builddir)/API.json \
 		$(abs_builddir)/ApiSpecification.json \
 		$(abs_builddir)/HostingPlatformRequirement.json \
@@ -1809,16 +1807,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s 3GPPAAAProxyFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s 3GPPAAAServerFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON Schema"; \
