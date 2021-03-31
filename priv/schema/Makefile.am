@@ -187,7 +187,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_Rx.json \
 		$(abs_builddir)/EP_MAP_SMSCSpec.json \
 		$(abs_builddir)/EP_MAP_SMSC.json \
-		$(abs_builddir)/PEEMonitoredEntitySpec.json \
 		$(abs_builddir)/InventoryUnitSpec.json \
 		$(abs_builddir)/InventoryUnit.json \
 		$(abs_builddir)/TmaInventoryUnitSpec.json \
@@ -1374,11 +1373,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s PEEMonitoredEntitySpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitSpec.json \
 			--unknown-formats="base64" \

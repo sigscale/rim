@@ -819,10 +819,9 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-5gc-ep-map-smsc.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/PEEMonitoredEntitySpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-pee-me.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitSpec.json \
 				--unknown-formats="base64" \

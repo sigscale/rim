@@ -1,9 +1,7 @@
 {
 	"name": "PEEMonitoredEntity",
 	"description": "Power, Energy and Environmental (PEE) Monitored Entity resource function specification",
-	"@type": "PEEMonitoredEntitySpec",
-	"@schemaLocation": "http://sigscale.org/schema/PEEMonitoredEntitySpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
