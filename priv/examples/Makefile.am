@@ -807,40 +807,33 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-pee-me.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-iu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/TmaInventoryUnitSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-tmaiu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/AntennaInventoryUnitSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-aiu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitNESpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-iu-ne.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitHwSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-iu-hw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitSwSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-iu-sw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/InventoryUnitLicSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-iu-lic.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ManagedElementSpec.json \
 				--unknown-formats="base64" \

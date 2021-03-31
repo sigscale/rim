@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "0112153649",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/0112153649",
-		"@type": "InventoryUnitSwSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

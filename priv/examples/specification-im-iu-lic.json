@@ -1,9 +1,7 @@
 {
 	"name": "InventoryUnitLic",
 	"description": "IM Inventory Unit License resource function specification",
-	"@type": "InventoryUnitLicSpec",
-	"@schemaLocation": "http://sigscale.org/schema/InventoryUnitLicSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

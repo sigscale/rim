@@ -181,19 +181,12 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_Rx.json \
 		$(abs_builddir)/EP_MAP_SMSCSpec.json \
 		$(abs_builddir)/EP_MAP_SMSC.json \
-		$(abs_builddir)/InventoryUnitSpec.json \
 		$(abs_builddir)/InventoryUnit.json \
-		$(abs_builddir)/TmaInventoryUnitSpec.json \
 		$(abs_builddir)/TmaInventoryUnit.json \
-		$(abs_builddir)/AntennaInventoryUnitSpec.json \
 		$(abs_builddir)/AntennaInventoryUnit.json \
-		$(abs_builddir)/InventoryUnitNESpec.json \
 		$(abs_builddir)/InventoryUnitNE.json \
-		$(abs_builddir)/InventoryUnitHwSpec.json \
 		$(abs_builddir)/InventoryUnitHw.json \
-		$(abs_builddir)/InventoryUnitSwSpec.json \
 		$(abs_builddir)/InventoryUnitSw.json \
-		$(abs_builddir)/InventoryUnitLicSpec.json \
 		$(abs_builddir)/InventoryUnitLic.json \
 		$(abs_builddir)/ManagedElementSpec.json \
 		$(abs_builddir)/ManagedElement.json \
@@ -1316,11 +1309,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s InventoryUnitSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnit.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1328,11 +1316,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s TmaInventoryUnitSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TmaInventoryUnit.json \
 			-r InventoryUnit.json \
@@ -1343,11 +1326,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s AntennaInventoryUnitSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s AntennaInventoryUnit.json \
 			-r InventoryUnit.json \
 			-r ManagedFunction.json \
@@ -1357,11 +1335,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s InventoryUnitNESpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitNE.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1369,11 +1342,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s InventoryUnitHwSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitHw.json \
 			-r ManagedFunction.json \
@@ -1383,11 +1351,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s InventoryUnitSwSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitSw.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1395,11 +1358,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s InventoryUnitLicSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s InventoryUnitLic.json \
 			-r ManagedFunction.json \

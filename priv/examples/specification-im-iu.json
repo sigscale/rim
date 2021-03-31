@@ -1,9 +1,7 @@
 {
 	"name": "InventoryUnit",
 	"description": "IM Inventory Unit resource function specification",
-	"@type": "InventoryUnitSpec",
-	"@schemaLocation": "http://sigscale.org/schema/InventoryUnitSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",

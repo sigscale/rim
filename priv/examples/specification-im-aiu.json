@@ -1,9 +1,7 @@
 {
 	"name": "AntennaInventoryUnit",
 	"description": "IM Antenna Inventory Unit resource function specification",
-	"@type": "AntennaInventoryUnitSpec",
-	"@schemaLocation": "http://sigscale.org/schema/AntennaInventoryUnitSpec",
-	"@baseType": "InventoryUnitSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2019-01-29T00:00:00Z",
