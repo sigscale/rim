@@ -1,9 +1,7 @@
 {
 	"name": "SMSFFunction",
 	"description": "5G Core Short Message Service Function (SMSF) resource function specification",
-	"@type": "SMSFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/SMSFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

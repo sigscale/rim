@@ -1,9 +1,7 @@
 {
 	"name": "EP_N12",
 	"description": "5G Core End Point of N12 interface (between AMF and AUSF) resource specification",
-	"@type": "EP_N12Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N12Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

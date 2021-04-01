@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "3597467995",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/3597467995",
-		"@type": "N3IWFFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

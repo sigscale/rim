@@ -1,9 +1,7 @@
 {
 	"name": "SEPPFunction",
 	"description": "5G Core Security Edge Protection Proxy (SEPP) resource function specification",
-	"@type": "SEPPFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/SEPPFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

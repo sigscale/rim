@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "3597467992",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/3597467994",
-		"@type": "PCFFunctionSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

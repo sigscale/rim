@@ -1,9 +1,7 @@
 {
 	"name": "EP_N2",
 	"description": "5G Core End Point of N2 interface between (R)AN and AMF resource specification",
-	"@type": "EP_N2Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N2Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

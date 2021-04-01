@@ -1,9 +1,7 @@
 {
 	"name": "EP_N14",
 	"description": "5G Core End Point of N14 interface (between two AMFs) resource specification",
-	"@type": "EP_N14Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N14Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

@@ -1,9 +1,7 @@
 {
 	"name": "LMFFunction",
 	"description": "5G Core Location Management Function (LMF) resource function specification",
-	"@type": "LMFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/LMFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

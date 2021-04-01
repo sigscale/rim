@@ -1,9 +1,7 @@
 {
 	"name": "EP_N5",
 	"description": "5G Core End Point of N5 interface (between PCF and AF) resource specification",
-	"@type": "EP_N5Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N5Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

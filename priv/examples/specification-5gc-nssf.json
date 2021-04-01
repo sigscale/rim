@@ -1,9 +1,7 @@
 {
 	"name": "NSSFFunction",
 	"description": "5G Core Network Slice Selection Function (NSSF) resource function specification",
-	"@type": "NSSFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/NSSFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

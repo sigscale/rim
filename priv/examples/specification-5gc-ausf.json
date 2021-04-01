@@ -1,9 +1,7 @@
 {
 	"name": "AUSFFunction",
 	"description": "5G Core Authentication Server Function (AUSF) resource function specification",
-	"@type": "AUSFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/AUSFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

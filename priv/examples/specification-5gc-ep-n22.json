@@ -1,9 +1,7 @@
 {
 	"name": "EP_N22",
 	"description": "5G Core End Point of N22 interface (between AMF and NSSF) resource specification",
-	"@type": "EP_N22Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N22Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

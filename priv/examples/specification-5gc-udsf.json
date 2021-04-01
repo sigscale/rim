@@ -1,9 +1,7 @@
 {
 	"name": "UDSFFunction",
 	"description": "5G Core Unified Data Storage Function (UDSF) resource function specification",
-	"@type": "UDSFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/UDSFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

@@ -1,9 +1,7 @@
 {
 	"name": "EP_MAP_SMSC",
 	"description": "5G Core End Point of MAP interface resource specification",
-	"@type": "EP_MAP_SMSCSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_MAP_SMSCSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

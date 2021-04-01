@@ -1,9 +1,7 @@
 {
 	"name": "EP_SBI_IPX",
 	"description": "5G Core End Point (EP) of Service Based Interface (SBI) IPX resource specification",
-	"@type": "EP_SBI_IPXSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_SBI_IPXSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

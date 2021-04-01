@@ -1,9 +1,7 @@
 {
 	"name": "UPFFunction",
 	"description": "5G Core User Plane Function (UPF) resource function specification",
-	"@type": "UPFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/UPFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

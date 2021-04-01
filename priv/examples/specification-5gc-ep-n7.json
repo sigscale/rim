@@ -1,9 +1,7 @@
 {
 	"name": "EP_N7",
 	"description": "5G Core End Point of N7 interface (between SMF and PCF) resource specification",
-	"@type": "EP_N7Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N7Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

@@ -1,9 +1,7 @@
 {
 	"name": "EP_N13",
 	"description": "5G Core End Point of N13 interface (between AUSF and UDM) resource specification",
-	"@type": "EP_N13Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N13Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "3597467977",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/3597467977",
-		"@type": "EP_N32Spec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

@@ -1,9 +1,7 @@
 {
 	"name": "EP_N6",
 	"description": "5G Core End Point of N6 interface (between UPF and DN) resource specification",
-	"@type": "EP_N6Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N6Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

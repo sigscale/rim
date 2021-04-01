@@ -1,9 +1,7 @@
 {
 	"name": "PCFFunction",
 	"description": "5G Core Policy Control Function (PCF) resource function specification",
-	"@type": "PCFFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/PCFFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

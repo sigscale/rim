@@ -1,9 +1,7 @@
 {
 	"name": "EP_N32",
 	"description": "5G Core End Point of N32 interface resource specification",
-	"@type": "EP_N32Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N32Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

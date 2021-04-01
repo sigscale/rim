@@ -1,9 +1,7 @@
 {
 	"name": "EP_N9",
 	"description": "5G Core End Point of N9 interface (between two UPFs) resource specification",
-	"@type": "EP_N9Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N9Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

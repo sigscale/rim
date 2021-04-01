@@ -1,9 +1,7 @@
 {
 	"name": "EP_N16",
 	"description": "5G Core End Point of N16 interface (between two SMFs) resource specification",
-	"@type": "EP_N16Spec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_N16Spec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

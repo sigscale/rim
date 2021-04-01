@@ -1,9 +1,7 @@
 {
 	"name": "EP_NLG",
 	"description": "5G Core End Point of NLg interface (between AMF and GMLC) resource specification",
-	"@type": "EP_NLGSpec",
-	"@schemaLocation": "http://sigscale.org/schema/EP_NLGSpec",
-	"@baseType": "EP_RPSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

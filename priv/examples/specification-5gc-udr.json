@@ -1,9 +1,7 @@
 {
 	"name": "UDRFunction",
 	"description": "5G Core Unified Data Repository (UDR) resource function specification",
-	"@type": "UDRFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/UDRFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",
