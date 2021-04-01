@@ -875,50 +875,41 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-spsv3.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeHostFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-mobile-edge-host-function.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgePlatformSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-mobile-edge-platform.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeApplicationSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-mobile-edge-application.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgePlatformServiceSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-mobile-edge-platform-service.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/MobileEdgeApplicationServiceSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-mobile-edge-application-service.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/RNIServiceSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-rni-service.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/LocationServiceSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-location-service.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/TrafficRuleSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-traffic-rule.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/DNSRuleSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-mec-dns-rule.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/resourceInventoryManagement.json \
 				-d resource-gsm-bss.json; then exit 1; fi; \

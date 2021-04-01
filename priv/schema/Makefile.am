@@ -216,23 +216,14 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/EP_RP_EPS.json \
 		$(abs_builddir)/SubNetworkSpec.json \
 		$(abs_builddir)/SubNetwork.json \
-		$(abs_builddir)/MobileEdgeHostFunctionSpec.json \
 		$(abs_builddir)/MobileEdgeHostFunction.json \
-		$(abs_builddir)/DNSRuleSpec.json \
 		$(abs_builddir)/DNSRule.json \
-		$(abs_builddir)/LocationServiceSpec.json \
 		$(abs_builddir)/LocationService.json \
-		$(abs_builddir)/MobileEdgeApplicationServiceSpec.json \
 		$(abs_builddir)/MobileEdgeApplicationService.json \
-		$(abs_builddir)/MobileEdgeApplicationSpec.json \
 		$(abs_builddir)/MobileEdgeApplication.json \
-		$(abs_builddir)/MobileEdgePlatformServiceSpec.json \
 		$(abs_builddir)/MobileEdgePlatformService.json \
-		$(abs_builddir)/MobileEdgePlatformSpec.json \
 		$(abs_builddir)/MobileEdgePlatform.json \
-		$(abs_builddir)/RNIServiceSpec.json \
 		$(abs_builddir)/RNIService.json \
-		$(abs_builddir)/TrafficRuleSpec.json \
 		$(abs_builddir)/TrafficRule.json \
 		$(abs_builddir)/API.json \
 		$(abs_builddir)/ApiSpecification.json \
@@ -1559,11 +1550,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s MobileEdgeHostFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeHostFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1571,11 +1557,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s DNSRuleSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s DNSRule.json \
 			-r ManagedFunction.json \
@@ -1585,11 +1566,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s LocationServiceSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s LocationService.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1597,11 +1573,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s MobileEdgeApplicationServiceSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeApplicationService.json \
 			-r ManagedFunction.json \
@@ -1611,11 +1582,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s MobileEdgeApplicationSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgeApplication.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1623,11 +1589,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s MobileEdgePlatformServiceSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgePlatformService.json \
 			-r ManagedFunction.json \
@@ -1637,11 +1598,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s MobileEdgePlatformSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s MobileEdgePlatform.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1650,11 +1606,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s RNIServiceSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s RNIService.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1662,11 +1613,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s TrafficRuleSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s TrafficRule.json \
 			-r ManagedFunction.json \

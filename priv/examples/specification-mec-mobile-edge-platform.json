@@ -1,7 +1,7 @@
 {
 	"name": "MobileEdgePlatform",
 	"description": "MEC Mobile Edge Platform resource function specification",
-	"@type": "MobileEdgePlatformSpec",
+	"@type": "ResourceFunctionSpecification",
 	"@schemaLocation": "http://sigscale.org/schema/MobileEdgePlatformSpec",
 	"@baseType": "ResourceFunctionSpec",
 	"version": "0.1",

@@ -1,9 +1,7 @@
 {
 	"name": "RNIService",
 	"description": "MEC Radio Network Information (RNI) Service resource specification",
-	"@type": "RNIServiceSpec",
-	"@schemaLocation": "http://sigscale.org/schema/RNIServiceSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-04-08T00:00:00Z",

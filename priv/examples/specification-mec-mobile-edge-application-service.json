@@ -1,9 +1,7 @@
 {
 	"name": "MobileEdgeApplicationService",
 	"description": "MEC Mobile Edge Application Service resource function specification",
-	"@type": "MobileEdgeApplicationServiceSpec",
-	"@schemaLocation": "http://sigscale.org/schema/MobileEdgeApplicationServiceSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-04-06T00:00:00Z",

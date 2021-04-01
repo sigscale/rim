@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "789215638",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/789215638",
-		"@type": "MobileEdgePlatformSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{
