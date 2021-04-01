@@ -1,9 +1,7 @@
 {
 	"name": "NetworkSliceSubnet",
 	"description": "Network Slice Subnet resource function specification",
-	"@type": "NetworkSliceSubnetSpec",
-	"@schemaLocation": "http://sigscale.org/schema/NetworkSliceSubnetSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-01-01T00:00:00Z",

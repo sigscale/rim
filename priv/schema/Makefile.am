@@ -83,9 +83,7 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/IubcLink.json \
 		$(abs_builddir)/ALink.json \
 		$(abs_builddir)/GbLink.json \
-		$(abs_builddir)/NetworkSliceSpec.json \
 		$(abs_builddir)/NetworkSlice.json \
-		$(abs_builddir)/NetworkSliceSubnetSpec.json \
 		$(abs_builddir)/NetworkSliceSubnet.json \
 		$(abs_builddir)/AMFFunction.json \
 		$(abs_builddir)/SMFFunction.json \
@@ -583,11 +581,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s NetworkSliceSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s NetworkSlice.json \
 			-r SubNetwork.json \
 			-r ManagedFunction.json \
@@ -596,11 +589,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s NetworkSliceSubnetSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s NetworkSliceSubnet.json \
 			-r SubNetwork.json \

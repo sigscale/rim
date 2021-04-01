@@ -558,15 +558,13 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-nr-ep-s1u.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-network-slice.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/NetworkSliceSubnetSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-network-slice-subnet.json; then exit 1; fi; \
 		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
