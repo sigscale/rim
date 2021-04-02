@@ -796,35 +796,29 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-generic-subnetwork.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/USNFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-usn.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/UGWFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-ugw.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/CGPOMUFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-cgpomu.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/iGWBFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-igwb.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/USCDBFunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-uscdb.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/SPSV3FunctionSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-huawei-core-spsv3.json; then exit 1; fi; \
 		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \

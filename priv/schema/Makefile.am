@@ -141,21 +141,13 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/InventoryUnitLic.json \
 		$(abs_builddir)/ManagedElementSpec.json \
 		$(abs_builddir)/ManagedElement.json \
-		$(abs_builddir)/USNFunctionSpec.json \
 		$(abs_builddir)/USNFunction.json \
-		$(abs_builddir)/UGWFunctionSpec.json \
 		$(abs_builddir)/UGWFunction.json \
-		$(abs_builddir)/CGPOMUFunctionSpec.json \
 		$(abs_builddir)/CGPOMUFunction.json \
-		$(abs_builddir)/iGWBFunctionSpec.json \
 		$(abs_builddir)/iGWBFunction.json \
-		$(abs_builddir)/USCDBFunctionSpec.json \
 		$(abs_builddir)/USCDBFunction.json \
-		$(abs_builddir)/SPSV3FunctionSpec.json \
 		$(abs_builddir)/SPSV3Function.json \
-		$(abs_builddir)/MSCServerIntraOfiSigPointSpec.json \
 		$(abs_builddir)/MSCServerIntraOfiSigPoint.json \
-		$(abs_builddir)/MSCServerOfficeSpec.json \
 		$(abs_builddir)/MSCServerOffice.json \
 		$(abs_builddir)/Link_MME_MME.json \
 		$(abs_builddir)/Link_HSS_MME.json \
@@ -1077,11 +1069,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s USNFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s USNFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1089,11 +1076,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s UGWFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UGWFunction.json \
 			-r ManagedFunction.json \
@@ -1103,11 +1085,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s CGPOMUFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s CGPOMUFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1115,11 +1092,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s iGWBFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s iGWBFunction.json \
 			-r ManagedFunction.json \
@@ -1129,11 +1101,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s USCDBFunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s USCDBFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1141,11 +1108,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s SPSV3FunctionSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s SPSV3Function.json \
 			-r ManagedFunction.json \
@@ -1155,11 +1117,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s MSCServerIntraOfiSigPointSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s MSCServerIntraOfiSigPoint.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1167,11 +1124,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s MSCServerOfficeSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s MSCServerOffice.json \
 			-r ManagedFunction.json \

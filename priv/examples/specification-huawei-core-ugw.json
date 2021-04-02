@@ -1,9 +1,7 @@
 {
 	"name": "UGWFunction",
 	"description": "Huawei Core Universal Gateway (UGW) resource function specification",
-	"@type": "UGWFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/UGWFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-02-06T00:00:00Z",

@@ -1,9 +1,7 @@
 {
 	"name": "CGPOMUFunction",
 	"description": "Huawei Core Carrier Grade Platform Operation and Management Unit (CGPOMU) resource function specification",
-	"@type": "CGPOMUFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/CGPOMUFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-02-06T00:00:00Z",

@@ -1,9 +1,7 @@
 {
 	"name": "USCDBFunction",
 	"description": "",
-	"@type": "USCDBFunctionSpec",
-	"@schemaLocation": "http://sigscale.org/schema/USCDBFunctionSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-02-13T00:00:00Z",
