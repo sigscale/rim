@@ -154,7 +154,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/Link_MME_SGSN.json \
 		$(abs_builddir)/Link_MME_ServingGW.json \
 		$(abs_builddir)/Link_ENB_MME.json \
-		$(abs_builddir)/EP_RPSpec.json \
 		$(abs_builddir)/EP_RP.json \
 		$(abs_builddir)/EP_RP_EPS.json \
 		$(abs_builddir)/SubNetworkSpec.json \
@@ -1172,11 +1171,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EP_RPSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EP_RP.json \
 			-r ManagedFunction.json \
