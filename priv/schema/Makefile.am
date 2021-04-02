@@ -136,8 +136,6 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/InventoryUnitHw.json \
 		$(abs_builddir)/InventoryUnitSw.json \
 		$(abs_builddir)/InventoryUnitLic.json \
-		$(abs_builddir)/ManagedElementSpec.json \
-		$(abs_builddir)/ManagedElement.json \
 		$(abs_builddir)/USNFunction.json \
 		$(abs_builddir)/UGWFunction.json \
 		$(abs_builddir)/CGPOMUFunction.json \
@@ -153,8 +151,8 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/Link_ENB_MME.json \
 		$(abs_builddir)/EP_RP.json \
 		$(abs_builddir)/EP_RP_EPS.json \
-		$(abs_builddir)/SubNetworkSpec.json \
 		$(abs_builddir)/SubNetwork.json \
+		$(abs_builddir)/ManagedElement.json \
 		$(abs_builddir)/MobileEdgeHostFunction.json \
 		$(abs_builddir)/DNSRule.json \
 		$(abs_builddir)/LocationService.json \
@@ -1036,19 +1034,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s ManagedElementSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s ManagedElement.json \
-			-r ManagedFunction.json \
-			-r genericNrm.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceFunctionActivation.json \
-			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s USNFunction.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -1170,12 +1155,15 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s SubNetworkSpec.json \
+		if ! ajv compile -s SubNetwork.json \
+			-r ManagedFunction.json \
+			-r genericNrm.json \
 			--unknown-formats="base64" \
 			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
+			-r resourceFunctionActivation.json \
+			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s SubNetwork.json \
+		if ! ajv compile -s ManagedElement.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
 			--unknown-formats="base64" \

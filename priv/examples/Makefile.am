@@ -786,15 +786,13 @@ check_DATA = .validation_ok
 				--unknown-formats="float" \
 				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-im-iu-lic.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/ManagedElementSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-generic-me.json; then exit 1; fi; \
-		if ! ajv validate -s $(top_builddir)/priv/schema/SubNetworkSpec.json \
-				--unknown-formats="base64" \
+		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \
-				-r $(top_builddir)/priv/schema/resourceCatalogManagement.json \
+				-s $(top_builddir)/priv/schema/resourceCatalogManagement.json \
 				-d specification-generic-subnetwork.json; then exit 1; fi; \
 		if ! ajv validate --unknown-formats="base64" \
 				--unknown-formats="float" \

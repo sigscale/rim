@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "789125649",
 		"href": "/resourceCatalogManagement/v4/resourceSpecification/789125649",
-		"@type": "SubNetworkSpec"
+		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceCharacteristic": [
 		{

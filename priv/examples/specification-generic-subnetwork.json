@@ -1,9 +1,7 @@
 {
 	"name": "SubNetwork",
 	"description": "",
-	"@type": "SubNetworkSpec",
-	"@schemaLocation": "http://sigscale.org/schema/SubNetworkSpec",
-	"@baseType": "ResourceFunctionSpec",
+	"@type": "ResourceFunctionSpecification",
 	"version": "0.1",
 	"validFor": {
 		"startDateTime": "2020-03-30T00:00:00Z",
