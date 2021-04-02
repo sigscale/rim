@@ -50,16 +50,13 @@ schema_DATA = $(abs_builddir)/configData.xsd \
 		$(abs_builddir)/GsmCell.json \
 		$(abs_builddir)/RncFunction.json \
 		$(abs_builddir)/NodeBFunction.json \
-		$(abs_builddir)/UtranGenericCellSpec.json \
 		$(abs_builddir)/UtranGenericCell.json \
 		$(abs_builddir)/UtranCellFDD.json \
-		$(abs_builddir)/UtranCellTDDSpec.json \
 		$(abs_builddir)/UtranCellTDD.json \
 		$(abs_builddir)/UtranCellTDDLcr.json \
 		$(abs_builddir)/UtranCellTDDHcr.json \
 		$(abs_builddir)/IubLink.json \
 		$(abs_builddir)/ENBFunction.json \
-		$(abs_builddir)/EUtranGenericCellSpec.json \
 		$(abs_builddir)/EUtranCellFDD.json \
 		$(abs_builddir)/EUtranCellTDD.json \
 		$(abs_builddir)/ServingGWFunction.json \
@@ -310,11 +307,6 @@ check_DATA = .validation_ok
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
 			then exit 1; fi; \
-		if ! ajv compile -s UtranGenericCellSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
-			then exit 1; fi; \
 		if ! ajv compile -s UtranGenericCell.json \
 			-r ManagedFunction.json \
 			-r genericNrm.json \
@@ -331,12 +323,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s UtranCellTDDSpec.json \
-			-r UtranGenericCellSpec \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s UtranCellTDD.json \
 			-r UtranGenericCell.json \
@@ -382,11 +368,6 @@ check_DATA = .validation_ok
 			--unknown-formats="float" \
 			-r resourceFunctionActivation.json \
 			-r resourceInventoryManagement.json; \
-			then exit 1; fi; \
-		if ! ajv compile -s EUtranGenericCellSpec.json \
-			--unknown-formats="base64" \
-			--unknown-formats="float" \
-			-r resourceCatalogManagement.json; \
 			then exit 1; fi; \
 		if ! ajv compile -s EUtranCellFDD.json \
 			-r ManagedFunction.json \
