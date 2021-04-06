@@ -84,14 +84,12 @@ gsm_bss() ->
 	Chars = [Id, UserLabel, VnfParametersList],
 	#specification{name = "BssFunction",
 			description = "GSM Base Station Subsystem (BSS)",
-			class_type = "BssFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/BssFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BssFunction",
-					schema = ?PathInventorySchema ++ "BssFunction"},
+					schema = ?PathCatalogSchema ++ "BssFunction"},
 			characteristic = Chars}.
 
 -spec gsm_bts() -> specification().
@@ -123,14 +121,12 @@ gsm_bts() ->
 			OperationalState],
 	#specification{name = "BtsSiteMgr",
 			description = "GSM Base Transceiver Station (BTS)",
-			class_type = "BtsSiteMgrSpecification",
-			schema = ?PathCatalogSchema ++ "/BtsSiteMgrSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BtsSiteManager",
-					schema = ?PathInventorySchema ++ "BtsSiteManager"},
+					schema = ?PathCatalogSchema ++ "BtsSiteManager"},
 			characteristic = Chars}.
 
 -spec gsm_cell() -> specification().
@@ -209,14 +205,12 @@ gsm_cell() ->
 			RfHoppingEnabled, HoppingSequenceList, PlmnPermitted],
 	#specification{name = "GsmCell",
 			description = "GSM Radio Cell",
-			class_type = "GsmCellSpecification",
-			schema = ?PathCatalogSchema ++ "/GsmCellSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GsmCell",
-					schema = ?PathInventorySchema ++ "GsmCell"},
+					schema = ?PathCatalogSchema ++ "GsmCell"},
 			characteristic = Chars}.
 
 -spec umts_rnc() -> specification().
@@ -263,14 +257,12 @@ umts_rnc() ->
 			SiptoSupported, TceIDMappingInfoList, SharNetTceMappingInfoList],
 	#specification{name = "RncFunction",
 			description = "UMTS Radio Network Controller (RNC)",
-			class_type = "RncFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/RncFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "RncFunction",
-					schema = ?PathInventorySchema ++ "RncFunction"},
+					schema = ?PathCatalogSchema ++ "RncFunction"},
 			characteristic = Chars}.
 
 -spec umts_nodeb() -> specification().
@@ -298,14 +290,12 @@ umts_nodeb() ->
 			NodeBFunctionIubLink],
 	#specification{name = "NodeBFunction",
 			description = "UMTS NodeB",
-			class_type = "NodeBFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/NodeBFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NodeBFunction",
-					schema = ?PathInventorySchema ++ "NodeBFunction"},
+					schema = ?PathCatalogSchema ++ "NodeBFunction"},
 			characteristic = Chars}.
 
 -spec umts_cell_fdd() -> specification().
@@ -534,14 +524,12 @@ umts_cell_fdd() ->
 			ClosedLoopModelSupportIndicator],
 	#specification{name = "UtranCellFDD",
 			description = "UMTS Frequency Division Duplex (FDD) radio cell",
-			class_type = "UtranCellFDDSpecification",
-			schema = ?PathCatalogSchema ++ "/UtranCellFDDSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellFDD",
-					schema = ?PathInventorySchema ++ "UtranCellFDD"},
+					schema = ?PathCatalogSchema ++ "UtranCellFDD"},
 			characteristic = Chars}.
 
 -spec umts_cell_tdd_lcr() -> specification().
@@ -752,14 +740,12 @@ umts_cell_tdd_lcr() ->
 			TstdIndicator, TimeSlotLCRList],
 	#specification{name = "UtranCellTDDLcr",
 			description = "UMTS Time Division Duplex (TDD) low chip rate (LCR) radio cell",
-			class_type = "UtranCellTDDLcrSpecification",
-			schema = ?PathCatalogSchema ++ "/UtranCellTDDLcrSpecification",
-			base_type = "UtranCellTDDSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellTDDLcr",
-					schema = ?PathInventorySchema ++ "UtranCellTDDLcr"},
+					schema = ?PathCatalogSchema ++ "UtranCellTDDLcr"},
 			characteristic = Chars}.
 
 -spec umts_cell_tdd_hcr() -> specification().
@@ -970,14 +956,12 @@ umts_cell_tdd_hcr() ->
 			SchTimeSlot, TimeSlotHCRList],
 	#specification{name = "UtranCellTDDHcr",
 			description = "UMTS Time Division Duplex (TDD) high chip rate (HCR) radio cell",
-			class_type = "UtranCellTDDHcrSpecification",
-			schema = ?PathCatalogSchema ++ "/UtranCellTDDHcrSpecification",
-			base_type = "UtranCellTDDSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "UtranCellTDDHcr",
-					schema = ?PathInventorySchema ++ "UtranCellTDDHcr"},
+					schema = ?PathCatalogSchema ++ "UtranCellTDDHcr"},
 			characteristic = Chars}.
 
 -spec umts_iub_link() -> specification().
@@ -1027,14 +1011,12 @@ umts_iub_link() ->
 			ProtocolVersion],
 	#specification{name = "IubLink",
 			description = "UMTS Iub Link",
-			class_type = "IubLinkSpecification",
-			schema = ?PathCatalogSchema ++ "/IubLinkSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "IubLink",
-					schema = ?PathInventorySchema ++ "IubLink"},
+					schema = ?PathCatalogSchema ++ "IubLink"},
 			characteristic = Chars}.
 
 -spec lte_enb() -> specification().
@@ -1097,14 +1079,12 @@ lte_enb() ->
 			NetListeningRSForRIBS],
 	#specification{name = "ENBFunction",
 			description = "LTE eNodeB",
-			class_type = "ENBFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/ENBFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "ENBFunction",
-					schema = ?PathInventorySchema ++ "ENBFunction"},
+					schema = ?PathCatalogSchema ++ "ENBFunction"},
 			characteristic = Chars}.
 
 -spec lte_cell_fdd() -> specification().
@@ -1238,14 +1218,12 @@ lte_cell_fdd() ->
 			NSSAI, EarfcnDl, EarfcnUl],
 	#specification{name = "EUtranCellFDD",
 			description = "LTE Frequency Division Duplex (FDD) radio cell",
-			class_type = "EUtranCellFDDSpecification",
-			schema = ?PathCatalogSchema ++ "/EUtranCellFDDSpecification",
-			base_type = "EUtranGenericCell",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "EUtranCellFDD",
-					schema = ?PathInventorySchema ++ "EUtranCellFDD"},
+					schema = ?PathCatalogSchema ++ "EUtranCellFDD"},
 			characteristic = Chars}.
 
 -spec lte_cell_tdd() -> specification().
@@ -1383,14 +1361,12 @@ lte_cell_tdd() ->
 			NSSAI, Earfcn, SfAssignment, SpecialSfPatterns],
 	#specification{name = "EUtranCellTDD",
 			description = "LTE Time Division Duplex (TDD) radio cell",
-			class_type = "EUtranCellTDDSpecification",
-			schema = ?PathCatalogSchema ++ "/EUtranCellTDDSpecification",
-			base_type = "EUtranGenericCell",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "EUtranCellTDD",
-					schema = ?PathInventorySchema ++ "EUtranCellTDD"},
+					schema = ?PathCatalogSchema ++ "EUtranCellTDD"},
 			characteristic = Chars}.
 
 -spec nr_gnb_du() -> specification().
@@ -1430,14 +1406,12 @@ nr_gnb_du() ->
 				GnbId, GnbIdLength, GnbDUId, GnbDuName],
 	#specification{name = "GNBDUFunction",
 			description = "5G NR gNB Distributed Unit (DU)",
-			class_type = "GNBDUFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/GNBDUFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GNBDUFunction",
-					schema = ?PathInventorySchema ++ "GNBDUFunction"},
+					schema = ?PathCatalogSchema ++ "GNBDUFunction"},
 			characteristic = Chars}.
 
 -spec nr_gnb_cu_cp() -> specification().
@@ -1477,14 +1451,12 @@ nr_gnb_cu_cp() ->
 			GnbId, GnbIdLength, GnbCuName, PLMNIdList],
 	#specification{name = "GNBCUCPFunction",
 			description = "5G NR gNB Central Unit (CU) Control Plane (CP)",
-			class_type = "GNBCUCPFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/GNBCUCPFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GNBCUCPFunction",
-					schema = ?PathInventorySchema ++ "GNBCUCPFunction"},
+					schema = ?PathCatalogSchema ++ "GNBCUCPFunction"},
 			characteristic = Chars}.
 
 -spec nr_gnb_cu_up() -> specification().
@@ -1520,14 +1492,12 @@ nr_gnb_cu_up() ->
 			GnbId, GnbIdLength, PLMNIdList],
 	#specification{name = "GNBCUUPFunction",
 			description = "5G NR gNB Central Unit (CU) User Plane (UP)",
-			class_type = "GNBCUUPFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/GNBCUUPFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GNBCUUPFunction",
-					schema = ?PathInventorySchema ++ "GNBCUUPFunction"},
+					schema = ?PathCatalogSchema ++ "GNBCUUPFunction"},
 			characteristic = Chars}.
 
 -spec nr_cell_cu() -> specification().
@@ -1582,14 +1552,12 @@ nr_cell_cu() ->
 			RRMPolicy, RRMPolicyNSSIId, RRMPolicyRatio, RRMPolicyRatio2],
 	#specification{name = "NRCellCU",
 			description = "5G NR Cell Central Unit (CU)",
-			class_type = "NRCellCUSpecification",
-			schema = ?PathCatalogSchema ++ "/NRCellCUSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NRCellCU",
-					schema = ?PathInventorySchema ++ "NRCellCU"},
+					schema = ?PathCatalogSchema ++ "NRCellCU"},
 			characteristic = Chars}.
 
 -spec nr_cell_du() -> specification().
@@ -1661,14 +1629,12 @@ nr_cell_du() ->
 			BSChannelBwUL, BSChannelBwDL, BSChannelBwSUL],
 	#specification{name = "NRCellDU",
 			description = "5G NR Cell Distributed Unit (DU)",
-			class_type = "NRCellDUSpecification",
-			schema = ?PathCatalogSchema ++ "/NRCellDUSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NRCellDU",
-					schema = ?PathInventorySchema ++ "NRCellDU"},
+					schema = ?PathCatalogSchema ++ "NRCellDU"},
 			characteristic = Chars}.
 
 -spec nr_sector_carrier() -> specification().
@@ -1707,14 +1673,12 @@ nr_sector_carrier() ->
 			ConfiguredMaxTxPower, ARFCNUL, ARFCNDL, BSChannelBwUL, BSChannelBwDL],
 	#specification{name = "NRSectorCarrier",
 			description = "5G NR Sector Carrier",
-			class_type = "NRSectorCarrierSpec",
-			schema = ?PathCatalogSchema ++ "/NRSectorCarrierSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "NRSectorCarrier",
-					schema = ?PathInventorySchema ++ "NRSectorCarrier"},
+					schema = ?PathCatalogSchema ++ "NRSectorCarrier"},
 			characteristic = Chars}.
 
 -spec nr_ep_x2c() -> specification().
@@ -1740,14 +1704,12 @@ nr_ep_x2c() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_X2C",
 			description = "NR End Point of the logical link, supporting X2-C application protocols",
-			class_type = "EP_X2CSpec",
-			schema = ?PathCatalogSchema ++ "/EP_X2CSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_X2C",
-					schema = ?PathInventorySchema ++ "EP_X2C"},
+					schema = ?PathCatalogSchema ++ "EP_X2C"},
 			characteristic = Chars}.
 
 -spec nr_ep_x2u() -> specification().
@@ -1773,14 +1735,12 @@ nr_ep_x2u() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_X2U",
 			description = "NR End Point of the logical link, supporting the X2 user plane (X2-U) interface",
-			class_type = "EP_X2USpec",
-			schema = ?PathCatalogSchema ++ "/EP_X2USpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_X2U",
-					schema = ?PathInventorySchema ++ "EP_X2U"},
+					schema = ?PathCatalogSchema ++ "EP_X2U"},
 			characteristic = Chars}.
 
 -spec nr_ep_ngc() -> specification().
@@ -1806,14 +1766,12 @@ nr_ep_ngc() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_NgC",
 			description = "NR End Point of the control plane interface (NG-C) between the gNB and NG-Core entity",
-			class_type = "EP_NgCSpec",
-			schema = ?PathCatalogSchema ++ "/EP_NgCSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_NgC",
-					schema = ?PathInventorySchema ++ "EP_NgC"},
+					schema = ?PathCatalogSchema ++ "EP_NgC"},
 			characteristic = Chars}.
 
 -spec nr_ep_ngu() -> specification().
@@ -1839,14 +1797,12 @@ nr_ep_ngu() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_NgU",
 			description = "NR End Point of the NG user plane (NG-U) interface between the gNB and the UPGW",
-			class_type = "EP_NgUSpec",
-			schema = ?PathCatalogSchema ++ "/EP_NgUSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_NgU",
-					schema = ?PathInventorySchema ++ "EP_NgU"},
+					schema = ?PathCatalogSchema ++ "EP_NgU"},
 			characteristic = Chars}.
 
 -spec nr_ep_xnc() -> specification().
@@ -1872,14 +1828,12 @@ nr_ep_xnc() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_XnC",
 			description = "NR End Point of the logical link, supporting Xn Application protocols, to a neighbour gNB node",
-			class_type = "EP_XnCSpec",
-			schema = ?PathCatalogSchema ++ "/EP_XnCSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_XnC",
-					schema = ?PathInventorySchema ++ "EP_XnC"},
+					schema = ?PathCatalogSchema ++ "EP_XnC"},
 			characteristic = Chars}.
 
 -spec nr_ep_xnu() -> specification().
@@ -1905,14 +1859,12 @@ nr_ep_xnu() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_XnU",
 			description = "NR End Point of a logical link supporting the Xn user plane (Xn-U) interface",
-			class_type = "EP_XnUSpec",
-			schema = ?PathCatalogSchema ++ "/EP_XnUSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_XnU",
-					schema = ?PathInventorySchema ++ "EP_XnU"},
+					schema = ?PathCatalogSchema ++ "EP_XnU"},
 			characteristic = Chars}.
 
 -spec nr_ep_f1c() -> specification().
@@ -1938,14 +1890,12 @@ nr_ep_f1c() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_F1C",
 			description = "NR End Point of the control plane interface (F1-C) between the DU and CU or CUUP",
-			class_type = "EP_F1CSpec",
-			schema = ?PathCatalogSchema ++ "/EP_F1CSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_F1C",
-					schema = ?PathInventorySchema ++ "EP_F1C"},
+					schema = ?PathCatalogSchema ++ "EP_F1C"},
 			characteristic = Chars}.
 
 -spec nr_ep_f1u() -> specification().
@@ -1971,14 +1921,12 @@ nr_ep_f1u() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_F1U",
 			description = "NR End Point of the user plane interface (F1-U) between the DU and CU or CUUP",
-			class_type = "EP_F1USpec",
-			schema = ?PathCatalogSchema ++ "/EP_F1USpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_F1U",
-					schema = ?PathInventorySchema ++ "EP_F1U"},
+					schema = ?PathCatalogSchema ++ "EP_F1U"},
 			characteristic = Chars}.
 
 -spec nr_ep_e1() -> specification().
@@ -2004,14 +1952,12 @@ nr_ep_e1() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_E1",
 			description = "NR End Point of the logical link, supporting E1 interface between gNB-CU-CP and gNB-CUUP",
-			class_type = "EP_E1Spec",
-			schema = ?PathCatalogSchema ++ "/EP_E1Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_E1",
-					schema = ?PathInventorySchema ++ "EP_E1"},
+					schema = ?PathCatalogSchema ++ "EP_E1"},
 			characteristic = Chars}.
 
 -spec nr_ep_s1u() -> specification().
@@ -2037,14 +1983,12 @@ nr_ep_s1u() ->
 	Chars = [ID, UserLabel, FarEndEntity, LocalAddress, RemoteAddress],
 	#specification{name = "EP_S1U",
 			description = "NR End Point of the logical link, supporting S1-U interface towards a S-GW node",
-			class_type = "EP_S1USpec",
-			schema = ?PathCatalogSchema ++ "/EP_S1USpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "NR",
 			target_schema = #target_schema_ref{class_type = "EP_S1U",
-					schema = ?PathInventorySchema ++ "EP_S1U"},
+					schema = ?PathCatalogSchema ++ "EP_S1U"},
 			characteristic = Chars}.
 
 -spec network_slice() -> specification().
@@ -2087,14 +2031,12 @@ network_slice() ->
 			OperationalState, AdministrativeState, ServiceProfileList, ServiceProfileList],
 	#specification{name = "NetworkSlice",
 			description = "Network Slice",
-			class_type = "NetworkSliceSpec",
-			schema = ?PathCatalogSchema ++ "/NetworkSliceSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Slice",
 			target_schema = #target_schema_ref{class_type = "NetworkSlice",
-					schema = ?PathInventorySchema ++ "NetworkSlice"},
+					schema = ?PathCatalogSchema ++ "NetworkSlice"},
 			characteristic = Chars}.
 
 -spec network_slice_subnet() -> specification().
@@ -2251,14 +2193,12 @@ network_slice_subnet() ->
 	Connections = lists:foldl(Fcon, [], ConnectionNames),
 	#specification{name = "NetworkSliceSubnet",
 			description = "Network Slice Subnet",
-			class_type = "NetworkSliceSubnetSpec",
-			schema = ?PathCatalogSchema ++ "/NetworkSliceSubnetSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Slice",
 			target_schema = #target_schema_ref{class_type = "NetworkSliceSubnet",
-					schema = ?PathInventorySchema ++ "NetworkSliceSubnet"},
+					schema = ?PathCatalogSchema ++ "NetworkSliceSubnet"},
 			characteristic = Chars,
 			related = lists:reverse(ResourceSpecRelationship),
 			connection_point = lists:reverse(ConnectionPoint),
@@ -2311,14 +2251,12 @@ ngc_amf() ->
 			SBIFqdn, SBIServiceList, WeightFactor, SNSSAIList, AmfSet],
 	#specification{name = "AMFFunction",
 			description = "5G Core Access and Mobility Management Function (AMF)",
-			class_type = "AMFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/AMFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "AMFFunction",
-					schema = ?PathInventorySchema ++ "AMFFunction"},
+					schema = ?PathCatalogSchema ++ "AMFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_smf() -> specification().
@@ -2359,14 +2297,12 @@ ngc_smf() ->
 	#specification{name = "SMFFunction",
 			description = "5G Core Session Management Function (SMF)"
 					"resource function specification",
-			class_type = "SMFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/SMFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SMFFunction",
-					schema = ?PathInventorySchema ++ "SMFFunction"},
+					schema = ?PathCatalogSchema ++ "SMFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_upf() -> specification().
@@ -2397,14 +2333,12 @@ ngc_upf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TacList, SNSSAIList],
 	#specification{name = "UPFFunction",
 			description = "5G Core User Plane Function (UPF)",
-			class_type = "UPFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/UPFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "UPFFunction",
-					schema = ?PathInventorySchema ++ "UPFFunction"},
+					schema = ?PathCatalogSchema ++ "UPFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_n3iwf() -> specification().
@@ -2427,14 +2361,12 @@ ngc_n3iwf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
 	#specification{name = "N3IWFFunction",
 			description = "5G Core Non 3GPP Inter Working Function (N3IWF)",
-			class_type = "N3IWFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/N3IWFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "N3IWFFunction",
-					schema = ?PathInventorySchema ++ "N3IWFFunction"},
+					schema = ?PathCatalogSchema ++ "N3IWFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_pcf() -> specification().
@@ -2470,14 +2402,12 @@ ngc_pcf() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "PCFFunction",
 			description = "5G Policy Control Function (PCF)",
-			class_type = "PCFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/PCFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "PCFFunction",
-					schema = ?PathInventorySchema ++ "PCFFunction"},
+					schema = ?PathCatalogSchema ++ "PCFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_ausf() -> specification().
@@ -2513,14 +2443,12 @@ ngc_ausf() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "AUSFFunction",
 			description = "5G Core Authentication Server Function (AUSF)",
-			class_type = "AUSFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/AUSFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "AUSFFunction",
-					schema = ?PathInventorySchema ++ "AUSFFunction"},
+					schema = ?PathCatalogSchema ++ "AUSFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_udm() -> specification().
@@ -2556,14 +2484,12 @@ ngc_udm() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "UDMFunction",
 			description = "5G Core Unified Data Management (UDM)",
-			class_type = "UDMFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/UDMFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "UDMFunction",
-					schema = ?PathInventorySchema ++ "UDMFunction"},
+					schema = ?PathCatalogSchema ++ "UDMFunction"},
 			characteristic = Chars}.
 
 -spec ngc_udr() -> specification().
@@ -2599,14 +2525,12 @@ ngc_udr() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "UDRFunction",
 			description = "5G Core Unified Data Repository (UDR)",
-			class_type = "UDRFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/UDRFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "UDRFunction",
-					schema = ?PathInventorySchema ++ "UDRFunction"},
+					schema = ?PathCatalogSchema ++ "UDRFunction"},
 			characteristic = Chars}.
 
 -spec ngc_udsf() -> specification().
@@ -2642,14 +2566,12 @@ ngc_udsf() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "UDSFFunction",
 			description = "5G Core Unified Data Storage Function (UDSF)",
-			class_type = "UDSFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/UDSFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "UDSFFunction",
-					schema = ?PathInventorySchema ++ "UDSFFunction"},
+					schema = ?PathCatalogSchema ++ "UDSFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_nrf() -> specification().
@@ -2689,14 +2611,12 @@ ngc_nrf() ->
 			NSIIdList, NFProfileList, SNSSAIList],
 	#specification{name = "NRFFunction",
 			description = "5G Core Network Repository Function (NRF)",
-			class_type = "NRFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/NRFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "NRFFunction",
-					schema = ?PathInventorySchema ++ "NRFFunction"},
+					schema = ?PathCatalogSchema ++ "NRFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_nssf() -> specification().
@@ -2736,14 +2656,12 @@ ngc_nssf() ->
 			NSIIdList, NFProfileList, SNSSAIList],
 	#specification{name = "NSSFFunction",
 			description = "5G Core Network Slice Selection Function (NSSF)",
-			class_type = "NSSFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/NSSFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "NSSFFunction",
-					schema = ?PathInventorySchema ++ "NSSFFunction"},
+					schema = ?PathCatalogSchema ++ "NSSFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_smsf() -> specification().
@@ -2775,14 +2693,12 @@ ngc_smsf() ->
 			SBIServiceList],
 	#specification{name = "SMSFFunction",
 			description = "5G Core Short Message Service Function (SMSF)",
-			class_type = "SMSFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/SMSFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SMSFFunction",
-					schema = ?PathInventorySchema ++ "SMSFFunction"},
+					schema = ?PathCatalogSchema ++ "SMSFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_lmf() -> specification().
@@ -2805,14 +2721,12 @@ ngc_lmf() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
 	#specification{name = "LMFFunction",
 			description = "5G Core Location Management Function (LMF)",
-			class_type = "LMFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/LMFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "LMFFunction",
-					schema = ?PathInventorySchema ++ "LMFFunction"},
+					schema = ?PathCatalogSchema ++ "LMFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_ngeir() -> specification().
@@ -2848,14 +2762,12 @@ ngc_ngeir() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "NGEIRFunction",
 			description = "5G Core NG Equipment Identity Register (ngEIR)",
-			class_type = "NGEIRFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/NGEIRFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "NGEIRFunction",
-					schema = ?PathInventorySchema ++ "NGEIRFunction"},
+					schema = ?PathCatalogSchema ++ "NGEIRFunction"},
 			characteristic = Chars}.
 
 -spec ngc_sepp() -> specification().
@@ -2878,14 +2790,12 @@ ngc_sepp() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
 	#specification{name = "SEPPFunction",
 			description = "5G Core Security Edge Protection Proxy (SEPP)",
-			class_type = "SEPPFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/SEPPFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SEPPFunction",
-					schema = ?PathInventorySchema ++ "SEPPFunction"},
+					schema = ?PathCatalogSchema ++ "SEPPFunction"},
 			characteristic = Chars}.
 
 -spec ngc_nwdaf() -> specification().
@@ -2921,14 +2831,12 @@ ngc_nwdaf() ->
 			SBIServiceList, SNSSAIList],
 	#specification{name = "NWDAFFunction",
 			description = "5G Core Network Data Analytics Function (NWDAF)",
-			class_type = "NWDAFFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/NWDAFFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "NWDAFFunction",
-					schema = ?PathInventorySchema ++ "NWDAFFunction"},
+					schema = ?PathCatalogSchema ++ "NWDAFFunction"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n2() -> specification().
@@ -2955,14 +2863,12 @@ ngc_ep_n2() ->
 	#specification{name = "EP_N2",
 			description = "5G Core End Point of N2 interface (between (R)AN and AMF)"
 					"resource specification",
-			class_type = "EP_N2Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N2Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N2",
-					schema = ?PathInventorySchema ++ "EP_N2"},
+					schema = ?PathCatalogSchema ++ "EP_N2"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n3() -> specification().
@@ -2985,14 +2891,12 @@ ngc_ep_n3() ->
 	#specification{name = "EP_N3",
 			description = "5G Core End Point of N3 interface (between (R)AN and UPF)"
 					"resource specification",
-			class_type = "EP_N3Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N3Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N3",
-					schema = ?PathInventorySchema ++ "EP_N3"},
+					schema = ?PathCatalogSchema ++ "EP_N3"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n4() -> specification().
@@ -3019,14 +2923,12 @@ ngc_ep_n4() ->
 	#specification{name = "EP_N4",
 			description = "5G Core End Point of N4 interface (between SMF and UPF)"
 					"resource specification",
-			class_type = "EP_N4Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N4Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N4",
-					schema = ?PathInventorySchema ++ "EP_N4"},
+					schema = ?PathCatalogSchema ++ "EP_N4"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n5() -> specification().
@@ -3053,14 +2955,12 @@ ngc_ep_n5() ->
 	#specification{name = "EP_N5",
 			description = "5G Core End Point of N5 interface (between PCF and AF)"
 					"resource specification",
-			class_type = "EP_N5Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N5Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N5",
-					schema = ?PathInventorySchema ++ "EP_N5"},
+					schema = ?PathCatalogSchema ++ "EP_N5"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n6() -> specification().
@@ -3087,14 +2987,12 @@ ngc_ep_n6() ->
 	#specification{name = "EP_N6",
 			description = "5G Core End Point of N6 interface (between UPF and DN)"
 					"resource specification",
-			class_type = "EP_N6Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N6Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N6",
-					schema = ?PathInventorySchema ++ "EP_N6"},
+					schema = ?PathCatalogSchema ++ "EP_N6"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n7() -> specification().
@@ -3121,14 +3019,12 @@ ngc_ep_n7() ->
 	#specification{name = "EP_N7",
 			description = "5G Core End Point of N7 interface (between SMF and PCF)"
 					"resource specification",
-			class_type = "EP_N7Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N7Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N7",
-					schema = ?PathInventorySchema ++ "EP_N7"},
+					schema = ?PathCatalogSchema ++ "EP_N7"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n8() -> specification().
@@ -3155,14 +3051,12 @@ ngc_ep_n8() ->
 	#specification{name = "EP_N8",
 			description = "5G Core End Point of N8 interface (between AMF and UDM)"
 					"resource specification",
-			class_type = "EP_N8Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N8Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N8",
-					schema = ?PathInventorySchema ++ "EP_N8"},
+					schema = ?PathCatalogSchema ++ "EP_N8"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n9() -> specification().
@@ -3185,14 +3079,12 @@ ngc_ep_n9() ->
 	#specification{name = "EP_N9",
 			description = "5G Core End Point of N9 interface (between two UPFs)"
 					"resource specification",
-			class_type = "EP_N9Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N9Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N9",
-					schema = ?PathInventorySchema ++ "EP_N9"},
+					schema = ?PathCatalogSchema ++ "EP_N9"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n10() -> specification().
@@ -3219,14 +3111,12 @@ ngc_ep_n10() ->
 	#specification{name = "EP_N10",
 			description = "5G Core End Point of N10 interface (between SMF and UDM)"
 					"resource specification",
-			class_type = "EP_N10Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N10Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N10",
-					schema = ?PathInventorySchema ++ "EP_N10"},
+					schema = ?PathCatalogSchema ++ "EP_N10"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n11() -> specification().
@@ -3253,14 +3143,12 @@ ngc_ep_n11() ->
 	#specification{name = "EP_N11",
 			description = "5G Core End Point of N11 interface (between AMF and SMF)"
 					"resource specification",
-			class_type = "EP_N11Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N11Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N11",
-					schema = ?PathInventorySchema ++ "EP_N11"},
+					schema = ?PathCatalogSchema ++ "EP_N11"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n12() -> specification().
@@ -3287,14 +3175,12 @@ ngc_ep_n12() ->
 	#specification{name = "EP_N12",
 			description = "5G Core End Point of N12 interface (between AMF and AUSF)"
 					"resource specification",
-			class_type = "EP_N12Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N12Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N12",
-					schema = ?PathInventorySchema ++ "EP_N12"},
+					schema = ?PathCatalogSchema ++ "EP_N12"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n13() -> specification().
@@ -3321,14 +3207,12 @@ ngc_ep_n13() ->
 	#specification{name = "EP_N13",
 			description = "5G Core End Point of N13 interface (between AUSF and UDM)"
 					"resource specification",
-			class_type = "EP_N13Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N13Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N13",
-					schema = ?PathInventorySchema ++ "EP_N13"},
+					schema = ?PathCatalogSchema ++ "EP_N13"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n14() -> specification().
@@ -3355,14 +3239,12 @@ ngc_ep_n14() ->
 	#specification{name = "EP_N14",
 			description = "5G Core End Point of N14 interface (between two AMFs)"
 					"resource specification",
-			class_type = "EP_N14Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N14Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N14",
-					schema = ?PathInventorySchema ++ "EP_N14"},
+					schema = ?PathCatalogSchema ++ "EP_N14"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n15() -> specification().
@@ -3389,14 +3271,12 @@ ngc_ep_n15() ->
 	#specification{name = "EP_N15",
 			description = "5G Core End Point of N15 interface (between AMF and PCF)"
 					"resource specification",
-			class_type = "EP_N15Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N15Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N15",
-					schema = ?PathInventorySchema ++ "EP_N15"},
+					schema = ?PathCatalogSchema ++ "EP_N15"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n16() -> specification().
@@ -3423,14 +3303,12 @@ ngc_ep_n16() ->
 	#specification{name = "EP_N16",
 			description = "5G Core End Point of N16 interface (between two SMFs)"
 					"resource specification",
-			class_type = "EP_N16Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N16Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N16",
-					schema = ?PathInventorySchema ++ "EP_N16"},
+					schema = ?PathCatalogSchema ++ "EP_N16"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n17() -> specification().
@@ -3457,14 +3335,12 @@ ngc_ep_n17() ->
 	#specification{name = "EP_N17",
 			description = "5G Core End Point of N17 interface (between AMF and 5G-EIR)"
 					"resource specification",
-			class_type = "EP_N17Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N17Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N17",
-					schema = ?PathInventorySchema ++ "EP_N17"},
+					schema = ?PathCatalogSchema ++ "EP_N17"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n20() -> specification().
@@ -3491,14 +3367,12 @@ ngc_ep_n20() ->
 	#specification{name = "EP_N20",
 			description = "5G Core End Point of N20 interface (between AMF and SMSF)"
 					"resource specification",
-			class_type = "EP_N20Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N20Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N20",
-					schema = ?PathInventorySchema ++ "EP_N20"},
+					schema = ?PathCatalogSchema ++ "EP_N20"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n21() -> specification().
@@ -3525,14 +3399,12 @@ ngc_ep_n21() ->
 	#specification{name = "EP_N21",
 			description = "5G Core End Point of N21 interface (between SMSF and UDM)"
 					"resource specification",
-			class_type = "EP_N21Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N21Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N21",
-					schema = ?PathInventorySchema ++ "EP_N21"},
+					schema = ?PathCatalogSchema ++ "EP_N21"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n22() -> specification().
@@ -3559,14 +3431,12 @@ ngc_ep_n22() ->
 	#specification{name = "EP_N22",
 			description = "5G Core End Point of N22 interface (between AMF and NSSF)"
 					"resource specification",
-			class_type = "EP_N22Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N22Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N22",
-					schema = ?PathInventorySchema ++ "EP_N22"},
+					schema = ?PathCatalogSchema ++ "EP_N22"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n26() -> specification().
@@ -3593,14 +3463,12 @@ ngc_ep_n26() ->
 	#specification{name = "EP_N26",
 			description = "5G Core End Point of N26 interface (between AMF and MME)"
 					"resource specification",
-			class_type = "EP_N26Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N26Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N26",
-					schema = ?PathInventorySchema ++ "EP_N26"},
+					schema = ?PathCatalogSchema ++ "EP_N26"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n27() -> specification().
@@ -3627,14 +3495,12 @@ ngc_ep_n27() ->
 	#specification{name = "EP_N27",
 			description = "5G Core End Point of N27 interface"
 					"resource specification",
-			class_type = "EP_N27Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N27Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N27",
-					schema = ?PathInventorySchema ++ "EP_N27"},
+					schema = ?PathCatalogSchema ++ "EP_N27"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n31() -> specification().
@@ -3661,14 +3527,12 @@ ngc_ep_n31() ->
 	#specification{name = "EP_N31",
 			description = "5G Core End Point of N31 interface"
 					"resource specification",
-			class_type = "EP_N31Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N31Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N31",
-					schema = ?PathInventorySchema ++ "EP_N31"},
+					schema = ?PathCatalogSchema ++ "EP_N31"},
 			characteristic = Chars}.
 
 -spec ngc_ep_n32() -> specification().
@@ -3695,14 +3559,12 @@ ngc_ep_n32() ->
 	#specification{name = "EP_N32",
 			description = "5G Core End Point of N32 interface"
 					"resource specification",
-			class_type = "EP_N32Spec",
-			schema = ?PathCatalogSchema ++ "/EP_N32Spec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_N32",
-					schema = ?PathInventorySchema ++ "EP_N32"},
+					schema = ?PathCatalogSchema ++ "EP_N32"},
 			characteristic = Chars}.
 
 -spec ngc_ep_nls() -> specification().
@@ -3729,14 +3591,12 @@ ngc_ep_nls() ->
 	#specification{name = "EP_NLS",
 			description = "5G Core End Point of NLs interface (between AMF and LMF)"
 					"resource specification",
-			class_type = "EP_NLSSpec",
-			schema = ?PathCatalogSchema ++ "/EP_NLSSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_NLS",
-					schema = ?PathInventorySchema ++ "EP_NLS"},
+					schema = ?PathCatalogSchema ++ "EP_NLS"},
 			characteristic = Chars}.
 
 -spec ngc_ep_nlg() -> specification().
@@ -3763,14 +3623,12 @@ ngc_ep_nlg() ->
 	#specification{name = "EP_NLG",
 			description = "5G Core End Point of NLg interface (between AMF and GMLC)"
 					"resource specification",
-			class_type = "EP_NLGSpec",
-			schema = ?PathCatalogSchema ++ "/EP_NLGSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_NLG",
-					schema = ?PathInventorySchema ++ "EP_NLG"},
+					schema = ?PathCatalogSchema ++ "EP_NLG"},
 			characteristic = Chars}.
 
 -spec ngc_ep_sbi_x() -> specification().
@@ -3797,14 +3655,12 @@ ngc_ep_sbi_x() ->
 	#specification{name = "EP_SBI_X",
 			description = "5G Core End Point (EP) of Service Based Interface (SBI) X"
 					"resource specification",
-			class_type = "EP_SBI_XSpec",
-			schema = ?PathCatalogSchema ++ "/EP_SBI_XSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_SBI_X",
-					schema = ?PathInventorySchema ++ "EP_SBI_X"},
+					schema = ?PathCatalogSchema ++ "EP_SBI_X"},
 			characteristic = Chars}.
 
 -spec ngc_ep_sbi_ipx() -> specification().
@@ -3831,14 +3687,12 @@ ngc_ep_sbi_ipx() ->
 	#specification{name = "EP_SBI_IPX",
 			description = "5G Core End Point (EP) of Service Based Interface (SBI) IPX"
 					"resource specification",
-			class_type = "EP_SBI_IPXSpec",
-			schema = ?PathCatalogSchema ++ "/EP_SBI_IPXSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_SBI_IPX",
-					schema = ?PathInventorySchema ++ "EP_SBI_IPX"},
+					schema = ?PathCatalogSchema ++ "EP_SBI_IPX"},
 			characteristic = Chars}.
 
 -spec ngc_ep_s5c() -> specification().
@@ -3865,14 +3719,12 @@ ngc_ep_s5c() ->
 	#specification{name = "EP_S5C",
 			description = "5G Core End Point (EP) of S5-C interface"
 					"resource specification",
-			class_type = "EP_S5CSpec",
-			schema = ?PathCatalogSchema ++ "/EP_S5CSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_S5C",
-					schema = ?PathInventorySchema ++ "EP_S5C"},
+					schema = ?PathCatalogSchema ++ "EP_S5C"},
 			characteristic = Chars}.
 
 -spec ngc_ep_s5u() -> specification().
@@ -3895,14 +3747,12 @@ ngc_ep_s5u() ->
 	#specification{name = "EP_S5U",
 			description = "5G Core End Point (EP) of S5-U interface"
 					"resource specification",
-			class_type = "EP_S5USpec",
-			schema = ?PathCatalogSchema ++ "/EP_S5USpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_S5U",
-					schema = ?PathInventorySchema ++ "EP_S5U"},
+					schema = ?PathCatalogSchema ++ "EP_S5U"},
 			characteristic = Chars}.
 
 -spec ngc_ep_rx() -> specification().
@@ -3929,14 +3779,12 @@ ngc_ep_rx() ->
 	#specification{name = "EP_Rx",
 			description = "5G Core End Point of Rx interface (between PCF and AF)"
 					"resource specification",
-			class_type = "EP_RxSpec",
-			schema = ?PathCatalogSchema ++ "/EP_RxSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_Rx",
-					schema = ?PathInventorySchema ++ "EP_Rx"},
+					schema = ?PathCatalogSchema ++ "EP_Rx"},
 			characteristic = Chars}.
 
 -spec ngc_ep_map_smsc() -> specification().
@@ -3963,14 +3811,12 @@ ngc_ep_map_smsc() ->
 	#specification{name = "EP_MAP_SMSC",
 			description = "5G Core End Point of MAP interface"
 					"resource specification",
-			class_type = "EP_MAP_SMSCSpec",
-			schema = ?PathCatalogSchema ++ "/EP_MAP_SMSCSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EP_MAP_SMSC",
-					schema = ?PathInventorySchema ++ "EP_MAP_SMSC"},
+					schema = ?PathCatalogSchema ++ "EP_MAP_SMSC"},
 			characteristic = Chars}.
 
 -spec epc_sgw() -> specification().
@@ -3997,14 +3843,12 @@ epc_sgw() ->
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TACList],
 	#specification{name = "ServingGWFunction",
 			description = "EPC Serving Gateway (SGW)",
-			class_type = "ServingGWFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/ServingGWFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "ServingGWFunction",
-					schema = ?PathInventorySchema ++ "ServingGWFunction"},
+					schema = ?PathCatalogSchema ++ "ServingGWFunction"},
 			characteristic = Chars}.
 
 -spec epc_pgw() -> specification().
@@ -4023,14 +3867,12 @@ epc_pgw() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "PGWFunction",
 			description = "EPC PDN Gateway (PGW)",
-			class_type = "PGWFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/PGWFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "PGWFunction",
-					schema = ?PathInventorySchema ++ "PGWFunction"},
+					schema = ?PathCatalogSchema ++ "PGWFunction"},
 			characteristic = Chars}.
 
 -spec epc_epdg() -> specification().
@@ -4053,14 +3895,12 @@ epc_epdg() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList],
 	#specification{name = "EPDGFunction",
 			description = "EPC evolved Packet Data Gateway (ePDG)",
-			class_type = "EPDGFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/EPDGFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "EPDGFunction",
-					schema = ?PathInventorySchema ++ "EPDGFunction"},
+					schema = ?PathCatalogSchema ++ "EPDGFunction"},
 			characteristic = Chars}.
 
 -spec epc_mme() -> specification().
@@ -4087,14 +3927,12 @@ epc_mme() ->
 	Chars = [ID, UserLabel, VnfParametersList, MMEC, MMEPool],
 	#specification{name = "MMEFunction",
 			description = "EPC Mobility Management Entity (MME)",
-			class_type = "MMEFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/MMEFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "MMEFunction",
-					schema = ?PathInventorySchema ++ "MMEFunction"},
+					schema = ?PathCatalogSchema ++ "MMEFunction"},
 			characteristic = Chars}.
 
 -spec epc_pcrf() -> specification().
@@ -4117,14 +3955,12 @@ epc_pcrf() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList],
 	#specification{name = "PCRFFunction",
 			description = "EPC Policy Control Rules Function (PCRF)",
-			class_type = "PCRFFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/PCRFFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "PCRFFunction",
-					schema = ?PathInventorySchema ++ "PCRFFunction"},
+					schema = ?PathCatalogSchema ++ "PCRFFunction"},
 			characteristic = Chars}.
 
 -spec epc_link_mme_mme() -> specification().
@@ -4155,14 +3991,12 @@ epc_link_mme_mme() ->
 	Chars = [ID, UserLabel, AEnd, ZEnd, LinkType, ProtocolName, ProtocolVersion],
 	#specification{name = "Link_MME_MME",
 			description = "EPC MMEFunction and MMEFunction Link",
-			class_type = "Link_MME_MMESpec",
-			schema = ?PathCatalogSchema ++ "/Link_MME_MMESpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_MME_MME",
-					schema = ?PathInventorySchema ++ "Link_MME_MME"},
+					schema = ?PathCatalogSchema ++ "Link_MME_MME"},
 			characteristic = Chars}.
 
 -spec epc_link_hss_mme() -> specification().
@@ -4193,14 +4027,12 @@ epc_link_hss_mme() ->
 	Chars = [ID, UserLabel, AEnd, ZEnd, LinkType, ProtocolName, ProtocolVersion],
 	#specification{name = "Link_HSS_MME",
 			description = "EPC HSSFunction and MMEFunction Link",
-			class_type = "Link_HSS_MMESpec",
-			schema = ?PathCatalogSchema ++ "/Link_HSS_MMESpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_HSS_MME",
-					schema = ?PathInventorySchema ++ "Link_HSS_MME"},
+					schema = ?PathCatalogSchema ++ "Link_HSS_MME"},
 			characteristic = Chars}.
 
 -spec epc_link_mme_sgsn() -> specification().
@@ -4231,14 +4063,12 @@ epc_link_mme_sgsn() ->
 	Chars = [ID, UserLabel, AEnd, ZEnd, LinkType, ProtocolName, ProtocolVersion],
 	#specification{name = "Link_MME_SGSN",
 			description = "EPC MMEFunction and SgsnFunction Link",
-			class_type = "Link_MME_SGSNSpec",
-			schema = ?PathCatalogSchema ++ "/Link_MME_SGSNSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_MME_SGSN",
-					schema = ?PathInventorySchema ++ "Link_MME_SGSN"},
+					schema = ?PathCatalogSchema ++ "Link_MME_SGSN"},
 			characteristic = Chars}.
 
 -spec epc_link_mme_servinggw() -> specification().
@@ -4269,14 +4099,12 @@ epc_link_mme_servinggw() ->
 	Chars = [ID, UserLabel, AEnd, ZEnd, LinkType, ProtocolName, ProtocolVersion],
 	#specification{name = "Link_MME_ServingGW",
 			description = "EPC MMEFunction and ServingGWFunction Link",
-			class_type = "Link_MME_ServingGWSpec",
-			schema = ?PathCatalogSchema ++ "/Link_MME_ServingGWSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_MME_ServingGW",
-					schema = ?PathInventorySchema ++ "Link_MME_ServingGW"},
+					schema = ?PathCatalogSchema ++ "Link_MME_ServingGW"},
 			characteristic = Chars}.
 
 -spec epc_link_enb_mme() -> specification().
@@ -4307,14 +4135,12 @@ epc_link_enb_mme() ->
 	Chars = [ID, UserLabel, AEnd, ZEnd, LinkType, ProtocolName, ProtocolVersion],
 	#specification{name = "Link_ENB_MME",
 			description = "EPC MMEFunction and ENBFunction Link",
-			class_type = "Link_ENB_MMESpec",
-			schema = ?PathCatalogSchema ++ "/Link_ENB_MMESpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "Link_ENB_MME",
-					schema = ?PathInventorySchema ++ "Link_ENB_MME"},
+					schema = ?PathCatalogSchema ++ "Link_ENB_MME"},
 			characteristic = Chars}.
 
 -spec epc_ep_rp_eps() -> specification().
@@ -4335,14 +4161,12 @@ epc_ep_rp_eps() ->
 	Chars = [ID, UserLabel, FarEndEntity, FarEndNeIpAddr],
 	#specification{name = "EP_RP_EPS",
 			description = "EPC End Point (EP) of Reference Point (RP) in Evolved Packet System (EPS)",
-			class_type = "EP_RP_EPSSpec",
-			schema = ?PathCatalogSchema ++ "/EP_RP_EPSSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "EP_RP_EPS",
-					schema = ?PathInventorySchema ++ "EP_RP_EPS"},
+					schema = ?PathCatalogSchema ++ "EP_RP_EPS"},
 			characteristic = Chars}.
 
 -spec core_msc() -> specification().
@@ -4411,14 +4235,12 @@ core_msc() ->
 			NriList, MscServerFunctionMscPool, DefaultMsc],
 	#specification{name = "MscServerFunction",
 			description = "Core Mobile Switching Center (MSC) Server",
-			class_type = "MscServerFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/MscServerFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MscServerFunction",
-					schema = ?PathInventorySchema ++ "MscServerFunction"},
+					schema = ?PathCatalogSchema ++ "MscServerFunction"},
 			characteristic = Chars}.
 
 -spec core_mgw() -> specification().
@@ -4450,14 +4272,12 @@ core_mgw() ->
 			CsMgwFunctionIucsLink, CsMgwFunctionALink],
 	#specification{name = "CsMgwFunction",
 			description = "Core Circuit Switched (CS) Media Gateway (MGW)",
-			class_type = "CsMgwFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/CsMgwFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "CsMgwFunction",
-					schema = ?PathInventorySchema ++ "CsMgwFunction"},
+					schema = ?PathCatalogSchema ++ "CsMgwFunction"},
 			characteristic = Chars}.
 
 -spec core_sgsn() -> specification().
@@ -4517,14 +4337,12 @@ core_sgsn() ->
 			SgsnFunctionMscPool, NriList, ProceduralStatus],
 	#specification{name = "SgsnFunction",
 			description = "Core Serving GPRS Support Node (SGSN)",
-			class_type = "SgsnFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/SgsnFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SgsnFunction",
-					schema = ?PathInventorySchema ++ "SgsnFunction"},
+					schema = ?PathCatalogSchema ++ "SgsnFunction"},
 			characteristic = Chars}.
 
 -spec core_ggsn() -> specification().
@@ -4547,14 +4365,12 @@ core_ggsn() ->
 	Chars = [ID, UserLabel, VnfParametersList, ProceduralStatus],
 	#specification{name = "GgsnFunction",
 			description = "Core Gateway GPRS Support Node (GGSN)",
-			class_type = "GgsnFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/GgsnFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "GgsnFunction",
-					schema = ?PathInventorySchema ++ "GgsnFunction"},
+					schema = ?PathCatalogSchema ++ "GgsnFunction"},
 			characteristic = Chars}.
 
 -spec core_auc() -> specification().
@@ -4573,14 +4389,12 @@ core_auc() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "AucFunction",
 			description = "Core Authentication Center (AUC)",
-			class_type = "AucFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/AucFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "AucFunction",
-					schema = ?PathInventorySchema ++ "AucFunction"},
+					schema = ?PathCatalogSchema ++ "AucFunction"},
 			characteristic = Chars}.
 
 -spec core_hlr() -> specification().
@@ -4599,14 +4413,12 @@ core_hlr() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "HlrFunction",
 			description = "Core Home Location Register (HLR)",
-			class_type = "HlrFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/HlrFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "HlrFunction",
-					schema = ?PathInventorySchema ++ "HlrFunction"},
+					schema = ?PathCatalogSchema ++ "HlrFunction"},
 			characteristic = Chars}.
 
 -spec core_eir() -> specification().
@@ -4625,14 +4437,12 @@ core_eir() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "EirFunction",
 			description = "Core Equipment Identity Register (EIR)",
-			class_type = "EirFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/EirFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "EirFunction",
-					schema = ?PathInventorySchema ++ "EirFunction"},
+					schema = ?PathCatalogSchema ++ "EirFunction"},
 			characteristic = Chars}.
 
 -spec core_mnpsrf() -> specification().
@@ -4651,14 +4461,12 @@ core_mnpsrf() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "MnpSrfFunction",
 			description = "Core Mobile Number Portability-Signaling Relay Function (MNP-SRF)",
-			class_type = "MnpSrfFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/MnpSrfFunction",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MnpSrfFunction",
-					schema = ?PathInventorySchema ++ "MnpSrfFunction"},
+					schema = ?PathCatalogSchema ++ "MnpSrfFunction"},
 			characteristic = Chars}.
 
 -spec core_cgf() -> specification().
@@ -4677,14 +4485,12 @@ core_cgf() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "CgfFunction",
 			description = "Core Charging Gateway Function (CGF)",
-			class_type = "CgfFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/CgfFunction",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "CgfFunction",
-					schema = ?PathInventorySchema ++ "CgfFunction"},
+					schema = ?PathCatalogSchema ++ "CgfFunction"},
 			characteristic = Chars}.
 
 -spec core_sgw() -> specification().
@@ -4703,14 +4509,12 @@ core_sgw() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "SgwFunction",
 			description = "Core Signalling Gateway (Sgw)",
-			class_type = "SgwFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/SgwFunction",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SgwFunction",
-					schema = ?PathInventorySchema ++ "SgwFunction"},
+					schema = ?PathCatalogSchema ++ "SgwFunction"},
 			characteristic = Chars}.
 
 -spec core_cbc() -> specification().
@@ -4729,14 +4533,12 @@ core_cbc() ->
 	Chars = [ID, UserLabel, VnfParametersList],
 	#specification{name = "CbcFunction",
 			description = "Core Cell Broadcast Centre (CBC)",
-			class_type = "CbcFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/CbcFunction",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "CbcFunction",
-					schema = ?PathInventorySchema ++ "CbcFunction"},
+					schema = ?PathCatalogSchema ++ "CbcFunction"},
 			characteristic = Chars}.
 
 -spec core_iucs() -> specification().
@@ -4768,14 +4570,12 @@ core_iucs() ->
 			ConnectedBss, ConnectedHNBGW],
 	#specification{name = "IucsLink",
 			description = "Core Iu-cs interface link",
-			class_type = "IucsLinkSpec",
-			schema = ?PathCatalogSchema ++ "/IucsLink",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "IucsLink",
-					schema = ?PathInventorySchema ++ "IucsLink"},
+					schema = ?PathCatalogSchema ++ "IucsLink"},
 			characteristic = Chars}.
 
 -spec core_iups() -> specification().
@@ -4807,14 +4607,12 @@ core_iups() ->
 			ConnectedBss, ConnectedHNBGW],
 	#specification{name = "IupsLink",
 			description = "Core Iu-ps interface link",
-			class_type = "IupsLinkSpec",
-			schema = ?PathCatalogSchema ++ "/IupsLink",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "IupsLink",
-					schema = ?PathInventorySchema ++ "IupsLink"},
+					schema = ?PathCatalogSchema ++ "IupsLink"},
 			characteristic = Chars}.
 
 -spec core_iubc() -> specification().
@@ -4841,14 +4639,12 @@ core_iubc() ->
 	Chars = [ID, UserLabel, VnfParametersList, ConnectedRnc, ConnectedHNBGW],
 	#specification{name = "IubcLink",
 			description = "Core Iu-bc interface link",
-			class_type = "IubcLinkSpec",
-			schema = ?PathCatalogSchema ++ "/IubcLink",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "IubcLink",
-					schema = ?PathInventorySchema ++ "IubcLink"},
+					schema = ?PathCatalogSchema ++ "IubcLink"},
 			characteristic = Chars}.
 
 -spec core_alink() -> specification().
@@ -4871,14 +4667,12 @@ core_alink() ->
 	Chars = [ID, UserLabel, VnfParametersList, ConnectedBss],
 	#specification{name = "ALink",
 			description = "Core A interface link",
-			class_type = "ALinkSpec",
-			schema = ?PathCatalogSchema ++ "/ALink",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "ALink",
-					schema = ?PathInventorySchema ++ "ALink"},
+					schema = ?PathCatalogSchema ++ "ALink"},
 			characteristic = Chars}.
 
 -spec core_gb_link() -> specification().
@@ -4901,14 +4695,12 @@ core_gb_link() ->
 	Chars = [ID, UserLabel, VnfParametersList, ConnectedBss],
 	#specification{name = "GbLink",
 			description = "Core Gb interface link",
-			class_type = "GbLinkSpec",
-			schema = ?PathCatalogSchema ++ "/GbLink",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "GbLink",
-					schema = ?PathInventorySchema ++ "GbLink"},
+					schema = ?PathCatalogSchema ++ "GbLink"},
 			characteristic = Chars}.
 
 -spec ims_as() -> specification().
@@ -4939,14 +4731,12 @@ ims_as() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "ASFunction",
 			description = "IMS Application Server (AS)",
-			class_type = "ASFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/ASFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IMS",
 			target_schema = #target_schema_ref{class_type = "ASFunction",
-					schema = ?PathInventorySchema ++ "ASFunction"},
+					schema = ?PathCatalogSchema ++ "ASFunction"},
 			characteristic = Chars}.
 
 -spec ims_hss() -> specification().
@@ -4977,14 +4767,12 @@ ims_hss() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "HSSFunction",
 			description = "IMS Home Subscriber Server (HSS)",
-			class_type = "HSSFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/HSSFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IMS",
 			target_schema = #target_schema_ref{class_type = "HSSFunction",
-					schema = ?PathInventorySchema ++ "HSSFunction"},
+					schema = ?PathCatalogSchema ++ "HSSFunction"},
 			characteristic = Chars}.
 
 -spec ims_pcscf() -> specification().
@@ -5015,14 +4803,12 @@ ims_pcscf() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "PCSCFFunction",
 			description = "IMS Proxy Call Session Control Function (P-CSCF)",
-			class_type = "PCSCFFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/PCSCFFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IMS",
 			target_schema = #target_schema_ref{class_type = "PCSCFFunction",
-					schema = ?PathInventorySchema ++ "PCSCFFunction"},
+					schema = ?PathCatalogSchema ++ "PCSCFFunction"},
 			characteristic = Chars}.
 
 -spec ims_scscf() -> specification().
@@ -5053,14 +4839,12 @@ ims_scscf() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "SCSCFFunction",
 			description = "IMS Serving Call Session Control Function (S-CSCF)",
-			class_type = "SCSCFFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/SCSCFFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IMS",
 			target_schema = #target_schema_ref{class_type = "SCSCFFunction",
-					schema = ?PathInventorySchema ++ "SCSCFFunction"},
+					schema = ?PathCatalogSchema ++ "SCSCFFunction"},
 			characteristic = Chars}.
 
 -spec ims_icscf() -> specification().
@@ -5091,14 +4875,12 @@ ims_icscf() ->
 	Chars = [ID, UserLabel, VnfParametersList, LinkList, ContainedNrmClass, VsDataContainer],
 	#specification{name = "ICSCFFunction",
 			description = "IMS Interrogating Call Session Control Function (I-CSCF)",
-			class_type = "ICSCFFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/ICSCFFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IMS",
 			target_schema = #target_schema_ref{class_type = "ICSCFFunction",
-					schema = ?PathInventorySchema ++ "ICSCFFunction"},
+					schema = ?PathCatalogSchema ++ "ICSCFFunction"},
 			characteristic = Chars}.
 
 -spec pee_me() -> specification().
@@ -5121,14 +4903,12 @@ pee_me() ->
 	Chars = [ID, MeId, PeeMeDescription, PeeMeConfiguration],
 	#specification{name = "PEEMonitoredEntity",
 			description = "Power, Energy and Environmental (PEE) Monitored Entity",
-			class_type = "PEEMonitoredEntitySpec",
-			schema = ?PathCatalogSchema ++ "/PEEMonitoredEntitySpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "PEE",
 			target_schema = #target_schema_ref{class_type = "PEEMonitoredEntity",
-					schema = ?PathInventorySchema ++ "PEEMonitoredEntity"},
+					schema = ?PathCatalogSchema ++ "PEEMonitoredEntity"},
 			characteristic = Chars}.
 
 -spec epcn3ai_proxy() -> specification().
@@ -5151,14 +4931,12 @@ epcn3ai_proxy() ->
 	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "3GPPAAAProxyFunction",
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Proxy",
-			class_type = "3GPPAAAProxyFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/3GPPAAAProxyFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPCN3AI",
 			target_schema = #target_schema_ref{class_type = "3GPPAAAProxyFunction",
-					schema = ?PathInventorySchema ++ "3GPPAAAProxyFunction"},
+					schema = ?PathCatalogSchema ++ "3GPPAAAProxyFunction"},
 			characteristic = Chars}.
 
 -spec epcn3ai_server() -> specification().
@@ -5181,14 +4959,12 @@ epcn3ai_server() ->
 	Chars = [ID, UserLabel, VnfParametersList, VsDataContainer],
 	#specification{name = "3GPPAAAServerFunction",
 			description = "EPCN3AI 3GPP Authentication, Authorization and Accounting Server",
-			class_type = "3GPPAAAServerFunctionSpecification",
-			schema = ?PathCatalogSchema ++ "/3GPPAAAServerFunctionSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "EPCN3AI",
 			target_schema = #target_schema_ref{class_type = "3GPPAAAServerFunction",
-					schema = ?PathInventorySchema ++ "3GPPAAAServerFunction"},
+					schema = ?PathCatalogSchema ++ "3GPPAAAServerFunction"},
 			characteristic = Chars}.
 
 -spec im_iu() -> specification().
@@ -5235,14 +5011,12 @@ im_iu() ->
 			DateOfManufacture, DateOfLastService, UnitPosition, ManufacturerData, VersionNumber, RelatedFunction],
 	#specification{name = "InventoryUnit",
 			description = "IM Inventory Unit",
-			class_type = "InventoryUnitSpecification",
-			schema = ?PathCatalogSchema ++ "/InventoryUnitSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnit",
-					schema = ?PathInventorySchema ++ "InventoryUnit"},
+					schema = ?PathCatalogSchema ++ "InventoryUnit"},
 			characteristic = Chars}.
 
 -spec im_tmaiu() -> specification().
@@ -5333,14 +5107,12 @@ im_tmaiu() ->
 			TMAInstallationDate, TMAInstallersId, TMAMaxSupportedGain, TMAMinSupportedGain],
 	#specification{name = "TmaInventoryUnit",
 			description = "IM Tower Mounted Amplifier (TMA) Inventory Unit",
-			class_type = "TmaInventoryUnitSpecification",
-			schema = ?PathCatalogSchema ++ "/TmaInventoryUnitSpecification",
-			base_type = "InventoryUnitSpec",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "TmaInventoryUnit",
-					schema = ?PathInventorySchema ++ "TmaInventoryUnit"},
+					schema = ?PathCatalogSchema ++ "TmaInventoryUnit"},
 			characteristic = Chars}.
 
 -spec im_aiu() -> specification().
@@ -5412,14 +5184,12 @@ im_aiu() ->
 			MaxTiltValue, MinTiltValue, MechanicalOffset, BaseElevation, Latitude, Longitude, PatternLabel],
 	#specification{name = "AntennaInventoryUnit",
 			description = "IM Antenna Inventory Unit",
-			class_type = "AntennaInventoryUnitSpecification",
-			schema = ?PathCatalogSchema ++ "/AntennaInventoryUnitSpecification",
-			base_type = "InventoryUnitSpec",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "AntennaInventoryUnit",
-					schema = ?PathInventorySchema ++ "AntennaInventoryUnit"},
+					schema = ?PathCatalogSchema ++ "AntennaInventoryUnit"},
 			characteristic = Chars}.
 
 -spec im_iu_ne() -> specification().
@@ -5475,14 +5245,12 @@ im_iu_ne() ->
 			SiteId, AdditionalInformation, HWList, SWList, LICList, MFunction],
 	#specification{name = "InventoryUnitNE",
 			description = "IM Inventory Unit Network Element",
-			class_type = "InventoryUnitNESpecification",
-			schema = ?PathCatalogSchema ++ "/InventoryUnitNESpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitNE",
-					schema = ?PathInventorySchema ++ "InventoryUnitNE"},
+					schema = ?PathCatalogSchema ++ "InventoryUnitNE"},
 			characteristic = Chars}.
 
 -spec im_iu_hw() -> specification().
@@ -5548,14 +5316,12 @@ im_iu_hw() ->
 			LICList, MFunction],
 	#specification{name = "InventoryUnitHw",
 			description = "IM Inventory Unit Hardware",
-			class_type = "InventoryUnitHwSpecification",
-			schema = ?PathCatalogSchema ++ "/InventoryUnitHwSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitHw",
-					schema = ?PathInventorySchema ++ "InventoryUnitHw"},
+					schema = ?PathCatalogSchema ++ "InventoryUnitHw"},
 			characteristic = Chars}.
 
 -spec im_iu_sw() -> specification().
@@ -5614,14 +5380,12 @@ im_iu_sw() ->
 			SwActivationTime, SwStatus, AdditionalInformation, NEList, HWList, LICList, MFunction],
 	#specification{name = "InventoryUnitSw",
 			description = "IM Inventory Unit Software",
-			class_type = "InventoryUnitSwSpecification",
-			schema = ?PathCatalogSchema ++ "/InventoryUnitSwSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitSw",
-					schema = ?PathInventorySchema ++ "InventoryUnitSw"},
+					schema = ?PathCatalogSchema ++ "InventoryUnitSw"},
 			characteristic = Chars}.
 
 -spec im_iu_lic() -> specification().
@@ -5677,14 +5441,12 @@ im_iu_lic() ->
 			SalesUniqueId, AdditionalInformation, NEList, HWList, SWList, MFunction],
 	#specification{name = "InventoryUnitLic",
 			description = "IM Inventory Unit License",
-			class_type = "InventoryUnitLicSpecification",
-			schema = ?PathCatalogSchema ++ "/InventoryUnitLicSpecification",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitLic",
-					schema = ?PathInventorySchema ++ "InventoryUnitLic"},
+					schema = ?PathCatalogSchema ++ "InventoryUnitLic"},
 			characteristic = Chars}.
 
 -spec generic_me() -> specification().
@@ -5727,14 +5489,12 @@ generic_me() ->
 			UserDefinedState, SwVersion, PriorityLabel],
 	#specification{name = "ManagedElement",
 			description = "Generic Managed Element (ME)",
-			class_type = "ManagedElementSpec",
-			schema = ?PathCatalogSchema ++ "/ManagedElementSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "",
 			target_schema = #target_schema_ref{class_type = "ManagedElement",
-					schema = ?PathInventorySchema ++ "ManagedElement"},
+					schema = ?PathCatalogSchema ++ "ManagedElement"},
 			characteristic = Chars}.
 
 -spec generic_subnetwork() -> specification().
@@ -5759,14 +5519,12 @@ generic_subnetwork() ->
 	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType, SetOfMcc],
 	#specification{name = "SubNetwork",
 			description = "",
-			class_type = "SubNetworkSpec",
-			schema = ?PathCatalogSchema ++ "/SubNetworkSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "",
 			target_schema = #target_schema_ref{class_type = "SubNetwork",
-					schema = ?PathInventorySchema ++ "SubNetwork"},
+					schema = ?PathCatalogSchema ++ "SubNetwork"},
 			characteristic = Chars}.
 
 -spec gsm_abis_link() -> specification().
@@ -5793,14 +5551,12 @@ gsm_abis_link() ->
 	Chars = [AssociationName, LogicalBCSUAddress, Name, Sapi, StreamId, Tei],
 	#specification{name = "AbisLink",
 			description = "GSM Abis Link",
-			class_type = "",
-			schema = "",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "AbisLink",
-					schema = ?PathInventorySchema ++ "AbisLink"},
+					schema = ?PathCatalogSchema ++ "AbisLink"},
 			characteristic = Chars}.
 
 -spec huawei_usn() -> specification().
@@ -5827,9 +5583,7 @@ huawei_usn() ->
 	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
 	#specification{name = "USNFunction",
 			description = "Unified Serving Node",
-			class_type = "USNFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/USNFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
@@ -5861,9 +5615,7 @@ huawei_ugw() ->
 	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
 	#specification{name = "UGWFunction",
 			description = "Universal Gateway",
-			class_type = "UGWFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/UGWFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
@@ -5895,9 +5647,7 @@ huawei_cgpomu() ->
 	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
 	#specification{name = "CGPOMUFunction",
 			description = "Carrier Grade Platform Operation and Management Unit",
-			class_type = "CGPOMUFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/CGPOMUFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
@@ -5929,9 +5679,7 @@ huawei_igwb() ->
 	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
 	#specification{name = "iGWBFunction",
 			description = "Charging Gateway",
-			class_type = "iGWBFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/iGWBFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
@@ -5963,14 +5711,12 @@ huawei_uscdb() ->
 	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
 	#specification{name = "USCDBFunction",
 			description = "",
-			class_type = "USCDBFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/USCDBFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "USCDBFunction",
-					schema = ?PathInventorySchema ++ "USCDBFunction"},
+					schema = ?PathCatalogSchema ++ "USCDBFunction"},
 			characteristic = Chars}.
 
 -spec huawei_spsv3() -> specification().
@@ -5997,14 +5743,12 @@ huawei_spsv3() ->
 	Chars = [Fdn, ClassName, CLASSNAME, MoIndex, Name, NeID],
 	#specification{name = "SPSV3Function",
 			description = "",
-			class_type = "SPSV3FunctionSpec",
-			schema = ?PathCatalogSchema ++ "/SPSV3FunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SPSV3Function",
-					schema = ?PathInventorySchema ++ "SPSV3Function"},
+					schema = ?PathCatalogSchema ++ "SPSV3Function"},
 			characteristic = Chars}.
 
 -spec huawei_mscsiosp() -> specification().
@@ -6084,14 +5828,12 @@ huawei_mscsiosp() ->
 			Index, Name, NeID],
 	#specification{name = "MSCServerIntraOfiSigPoint",
 			description = "",
-			class_type = "MSCServerIntraOfiSigPointSpec",
-			schema = ?PathCatalogSchema ++ "/MSCServerIntraOfiSigPointSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MSCServerIntraOfiSigPointSpec",
-					schema = ?PathInventorySchema ++ "MSCServerIntraOfiSigPointSpec"},
+					schema = ?PathCatalogSchema ++ "MSCServerIntraOfiSigPointSpec"},
 			characteristic = Chars}.
 
 -spec huawei_mscso() -> specification().
@@ -6186,14 +5928,12 @@ huawei_mscso() ->
 			OFCTYPE, OfficeName, SIG, DestinationOfficeType, Name, NeID, OfficeNo],
 	#specification{name = "MSCServerOffice",
 			description = "",
-			class_type = "MSCServerOfficeSpec",
-			schema = ?PathCatalogSchema ++ "/MSCServerOfficeSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MSCServerOfficeSpec",
-					schema = ?PathInventorySchema ++ "MSCServerOfficeSpec"},
+					schema = ?PathCatalogSchema ++ "MSCServerOfficeSpec"},
 			characteristic = Chars}.
 
 -spec mec_mehf() -> specification().
@@ -6211,14 +5951,12 @@ mec_mehf() ->
 	Chars = [Id, SupportedFeatures, Version],
 	#specification{name = "MobileEdgeHostFunction",
 			description = "MEC Mobile Edge Host Function",
-			class_type = "MobileEdgeHostFunctionSpec",
-			schema = ?PathCatalogSchema ++ "/MobileEdgeHostFunctionSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeHostFunction",
-					schema = ?PathInventorySchema ++ "MobileEdgeHostFunction"},
+					schema = ?PathCatalogSchema ++ "MobileEdgeHostFunction"},
 			characteristic = Chars}.
 
 -spec mec_mep() -> specification().
@@ -6230,14 +5968,12 @@ mec_mep() ->
 	Chars = [Id],
 	#specification{name = "MobileEdgePlatform",
 			description = "MEC Mobile Edge Platform",
-			class_type = "MobileEdgePlatformSpec",
-			schema = ?PathCatalogSchema ++ "/MobileEdgePlatformSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgePlatform",
-					schema = ?PathInventorySchema ++ "MobileEdgePlatform"},
+					schema = ?PathCatalogSchema ++ "MobileEdgePlatform"},
 			characteristic = Chars}.
 
 -spec mec_mea() -> specification().
@@ -6285,14 +6021,12 @@ mec_mea() ->
 			OperationalState, AppInstanceId],
 	#specification{name = "MobileEdgeApplication",
 			description = "MEC Mobile Edge Application",
-			class_type = "MobileEdgeApplicationSpec",
-			schema = ?PathCatalogSchema ++ "/MobileEdgeApplicationSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeApplication",
-					schema = ?PathInventorySchema ++ "MobileEdgeApplication"},
+					schema = ?PathCatalogSchema ++ "MobileEdgeApplication"},
 			characteristic = Chars}.
 
 -spec mec_meps() -> specification().
@@ -6324,14 +6058,12 @@ mec_meps() ->
 			SerDataFormat],
 	#specification{name = "MobileEdgePlatformService",
 			description = "MEC Mobile Edge Platform Service",
-			class_type = "MobileEdgePlatformServiceSpec",
-			schema = ?PathCatalogSchema ++ "/MobileEdgePlatformServiceSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgePlatformService",
-					schema = ?PathInventorySchema ++ "MobileEdgePlatformService"},
+					schema = ?PathCatalogSchema ++ "MobileEdgePlatformService"},
 			characteristic = Chars}.
 
 -spec mec_meas() -> specification().
@@ -6363,14 +6095,12 @@ mec_meas() ->
 			TransportsSupported],
 	#specification{name = "MobileEdgeApplicationService",
 			description = "MEC Mobile Edge Application Service",
-			class_type = "MobileEdgeApplicationServiceSpec",
-			schema = ?PathCatalogSchema ++ "/MobileEdgeApplicationServiceSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeApplicationService",
-					schema = ?PathInventorySchema ++ "MobileEdgeApplicationService"},
+					schema = ?PathCatalogSchema ++ "MobileEdgeApplicationService"},
 			characteristic = Chars}.
 
 -spec mec_rnis() -> specification().
@@ -6382,14 +6112,12 @@ mec_rnis() ->
 	Chars = [Id],
 	#specification{name = "RNIService",
 			description = "MEC Radio Network Information (RNI) Service",
-			class_type = "RNIServiceSpec",
-			schema = ?PathCatalogSchema ++ "/RNIServiceSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "RNIService",
-					schema = ?PathInventorySchema ++ "RNIService"},
+					schema = ?PathCatalogSchema ++ "RNIService"},
 			characteristic = Chars}.
 
 -spec mec_ls() -> specification().
@@ -6401,14 +6129,12 @@ mec_ls() ->
 	Chars = [Id],
 	#specification{name = "LocationService",
 			description = "MEC Location Service",
-			class_type = "LocationServiceSpec",
-			schema = ?PathCatalogSchema ++ "/LocationServiceSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "LocationService",
-					schema = ?PathInventorySchema ++ "LocationService"},
+					schema = ?PathCatalogSchema ++ "LocationService"},
 			characteristic = Chars}.
 
 -spec mec_tr() -> specification().
@@ -6441,14 +6167,12 @@ mec_tr() ->
 			Action, DstInterface],
 	#specification{name = "TrafficRule",
 			description = "MEC Traffic Rule",
-			class_type = "TrafficRuleSpec",
-			schema = ?PathCatalogSchema ++ "/TrafficRuleSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "TrafficRule",
-					schema = ?PathInventorySchema ++ "TrafficRule"},
+					schema = ?PathCatalogSchema ++ "TrafficRule"},
 			characteristic = Chars}.
 
 -spec mec_dnsr() -> specification().
@@ -6476,14 +6200,12 @@ mec_dnsr() ->
 	Chars = [Id, DnsRuleId, DomainName, IPAddressType, IPAddress, TimeToLive],
 	#specification{name = "DNSRule",
 			description = [],
-			class_type = "DNSRuleSpec",
-			schema = ?PathCatalogSchema ++ "/DNSRuleSpec",
-			base_type = "ResourceFunctionSpecification",
+			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "DNSRule",
-					schema = ?PathInventorySchema ++ "DNSRule"},
+					schema = ?PathCatalogSchema ++ "DNSRule"},
 			characteristic = Chars}.
 
 %%----------------------------------------------------------------------
