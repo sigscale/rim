@@ -100,5 +100,121 @@
 			"valueType": "SharNetTceMappingInfoList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/utranNrm#/definitions/SharNetTceMappingInfoList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735601",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735601",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "UtranCellFDD"
+		},
+		{
+			"id": "894623081735602",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735602",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "UtranCellTDDLcr"
+		},
+		{
+			"id": "894623081735603",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735603",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "UtranCellTDDHcr"
+		},
+		{
+			"id": "894623081735604",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735604",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "IubLink"
+		}
+	],
+	"connectivitySpecification": [
+		{
+			"id": "894623081735605",
+			"@type": "ResourceGraphSpecification",
+			"name": "Adjacency Graph",
+			"description": "Topology of internal adjacency",
+			"connectionSpecification": [
+				{
+					"id": "894623081735606",
+					"name": "IubLink",
+					"description": "Edge between contained RFs",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "894623081735601",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735601",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "UtranCellFDD"
+						},
+						{
+							"id": "16029108611535607",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535607",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "RncFunction"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "894623081735608",
+			"@type": "ResourceGraphSpecification",
+			"name": "Adjacency Graph",
+			"description": "Topology of internal adjacency",
+			"connectionSpecification": [
+				{
+					"id": "894623081735609",
+					"name": "IubLink",
+					"description": "Edge between contained RFs",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "894623081735602",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735602",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "UtranCellTDDLcr"
+						},
+						{
+							"id": "16029108611535607",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535607",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "RncFunction"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "894623081735609",
+			"@type": "ResourceGraphSpecification",
+			"name": "Adjacency Graph",
+			"description": "Topology of internal adjacency",
+			"connectionSpecification": [
+				{
+					"id": "894623081735610",
+					"name": "IubLink",
+					"description": "Edge between contained RFs",
+					"associationType": "pointtoPoint",
+					"endpointSpecification": [
+						{
+							"id": "894623081735603",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735603",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "UtranCellTDDHcr"
+						},
+						{
+							"id": "16029108611535607",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535607",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "RncFunction"
+						}
+					]
+				}
+			]
+		}
 	]
 }
