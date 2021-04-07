@@ -62,5 +62,14 @@
 			"valueType": "OperationalStateType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/stateManagementIRPNrm#/definitions/OperationalStateType"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735702",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735702",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "GsmCell"
+		}
 	]
 }
