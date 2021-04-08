@@ -50,5 +50,23 @@
 			"valueType": "LinkListType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/LinkListType"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735808",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735808",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_RP_EPS"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735808",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735808",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_RP_EPS"
+		}
 	]
 }

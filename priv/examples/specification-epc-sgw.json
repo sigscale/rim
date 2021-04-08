@@ -56,5 +56,23 @@
 			"valueType": "TACList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/epcNrm#/definitions/TACList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735812",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735812",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_RP_EPS"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735812",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735812",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_RP_EPS"
+		}
 	]
 }

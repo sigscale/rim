@@ -63,5 +63,23 @@
 			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735809",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735809",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_RP_EPS"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735809",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735809",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_RP_EPS"
+		}
 	]
 }
