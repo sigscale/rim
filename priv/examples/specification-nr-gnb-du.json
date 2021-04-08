@@ -74,5 +74,51 @@
 			"valueType": "GnbName",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/GnbName"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735825",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735825",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "NRCellDU"
+		},
+		{
+			"id": "894623081735826",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735826",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "NRSectorCarrier"
+		},
+		{
+			"id": "894623081735827",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735827",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_F1C"
+		},
+		{
+			"id": "894623081735828",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735828",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_F1U"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735827",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735827",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_F1C"
+		},
+		{
+			"id": "894623081735828",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735828",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_F1U"
+		}
 	]
 }
