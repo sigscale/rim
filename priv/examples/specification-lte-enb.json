@@ -107,5 +107,21 @@
 			"valueType": "NetListeningRSForRIBS",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/eutranNrm#/definitions/NetListeningRSForRIBS"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735801",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735801",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EUtranCellFDD"
+		},
+		{
+			"id": "894623081735802",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735802",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EUtranCellTDD"
+		}
 	]
 }
