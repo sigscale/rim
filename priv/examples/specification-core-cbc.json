@@ -44,5 +44,14 @@
 			"valueType": "VnfParametersListType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/VnfParametersListType"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735803",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735803",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "IubcLink"
+		}
 	]
 }

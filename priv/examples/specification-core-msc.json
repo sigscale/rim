@@ -115,6 +115,21 @@
 			"valueType": "DefaultMscType",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/coreNrm#/definitions/DefaultMscType"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735804",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735804",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "IucsLink"
+		},
+		{
+			"id": "894623081735805",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735805",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "ALink"
+		}
 	]
 }
-

@@ -103,5 +103,21 @@
 			"valueType": "ProceduralStatus",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/statemanagementIRP#/definitions/ProceduralStatus"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735806",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735806",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "GbLink"
+		},
+		{
+			"id": "894623081735807",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735807",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "IupsLink"
+		}
 	]
 }
