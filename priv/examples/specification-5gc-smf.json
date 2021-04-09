@@ -74,5 +74,107 @@
 			"valueType": "SnssaiList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735881",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735881",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N4"
+		},
+		{
+			"id": "894623081735882",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735882",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N7"
+		},
+		{
+			"id": "894623081735883",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735883",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N10"
+		},
+		{
+			"id": "894623081735884",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735884",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N11"
+		},
+		{
+			"id": "894623081735885",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735885",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N16"
+		},
+		{
+			"id": "894623081735886",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735886",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_S5C"
+		},
+		{
+			"id": "894623081735887",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735887",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_SBI_X"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735881",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735881",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N4"
+		},
+		{
+			"id": "894623081735882",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735882",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N7"
+		},
+		{
+			"id": "894623081735883",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735883",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N10"
+		},
+		{
+			"id": "894623081735884",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735884",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N11"
+		},
+		{
+			"id": "894623081735885",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735885",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N16"
+		},
+		{
+			"id": "894623081735886",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735886",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_S5C"
+		},
+		{
+			"id": "894623081735887",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735887",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_SBI_X"
+		}
 	]
 }

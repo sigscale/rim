@@ -68,5 +68,23 @@
 			"valueType": "SnssaiList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735896",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735896",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_SBI_X"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735896",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735896",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_SBI_X"
+		}
 	]
 }

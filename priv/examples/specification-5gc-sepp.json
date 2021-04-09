@@ -50,5 +50,37 @@
 			"valueType": "PlmnIdList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735879",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735879",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N32"
+		},
+		{
+			"id": "894623081735880",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735880",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_SBI_IPX"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735879",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735879",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N32"
+		},
+		{
+			"id": "894623081735880",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735880",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_SBI_IPX"
+		}
 	]
 }

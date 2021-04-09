@@ -74,5 +74,65 @@
 			"valueType": "SnssaiList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/SnssaiList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735868",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735868",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N22"
+		},
+		{
+			"id": "894623081735869",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735869",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N27"
+		},
+		{
+			"id": "894623081735870",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735870",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N31"
+		},
+		{
+			"id": "894623081735871",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735871",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_SBI_X"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735868",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735868",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N22"
+		},
+		{
+			"id": "894623081735869",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735869",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N27"
+		},
+		{
+			"id": "894623081735870",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735870",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N31"
+		},
+		{
+			"id": "894623081735871",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735871",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_SBI_X"
+		}
 	]
 }

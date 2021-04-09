@@ -86,5 +86,191 @@
 			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735846",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735846",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N2"
+		},
+		{
+			"id": "894623081735847",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735847",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N8"
+		},
+		{
+			"id": "894623081735848",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735848",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N11"
+		},
+		{
+			"id": "894623081735849",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735849",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N12"
+		},
+		{
+			"id": "894623081735850",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735850",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N14"
+		},
+		{
+			"id": "894623081735851",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735851",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N15"
+		},
+		{
+			"id": "894623081735852",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735852",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N17"
+		},
+		{
+			"id": "894623081735853",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735853",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N20"
+		},
+		{
+			"id": "894623081735854",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735854",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N22"
+		},
+		{
+			"id": "894623081735855",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735855",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_N26"
+		},
+		{
+			"id": "894623081735856",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735856",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_NLS"
+		},
+		{
+			"id": "894623081735857",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735857",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_NLG"
+		},
+		{
+			"id": "894623081735858",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735858",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_SBI_X"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735846",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735846",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N2"
+		},
+		{
+			"id": "894623081735847",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735847",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N8"
+		},
+		{
+			"id": "894623081735848",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735848",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N11"
+		},
+		{
+			"id": "894623081735849",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735849",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N12"
+		},
+		{
+			"id": "894623081735850",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735850",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N14"
+		},
+		{
+			"id": "894623081735851",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735851",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N15"
+		},
+		{
+			"id": "894623081735852",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735852",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N17"
+		},
+		{
+			"id": "894623081735853",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735853",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N20"
+		},
+		{
+			"id": "894623081735854",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735854",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N22"
+		},
+		{
+			"id": "894623081735855",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735855",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_N26"
+		},
+		{
+			"id": "894623081735856",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735856",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_NLS"
+		},
+		{
+			"id": "894623081735857",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735857",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_NLG"
+		},
+		{
+			"id": "894623081735858",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735858",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_SBI_X"
+		}
 	]
 }

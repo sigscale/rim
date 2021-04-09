@@ -50,5 +50,23 @@
 			"valueType": "PlmnIdList",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/nrNrm#/definitions/PlmnIdList"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735862",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735862",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_NLS"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "894623081735862",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735862",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_NLS"
+		}
 	]
 }
