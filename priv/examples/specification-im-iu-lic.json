@@ -103,5 +103,14 @@
 			"valueType": "Dn",
 			"@valueSchemaLocation": "/resourceCatalogManagement/v4/schema/genericNrm#/definitions/Dn"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735834",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735834",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "InventoryUnitLic"
+		}
 	]
 }

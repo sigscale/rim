@@ -185,5 +185,14 @@
 				}
 			]
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735837",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735837",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "InventoryUnit"
+		}
 	]
 }

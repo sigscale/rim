@@ -130,5 +130,14 @@
 			"description": "Textual, alpha-numeric string, allow identification of antenna pattern along with the its vendor information such as model number, etc",
 			"valueType": "string"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735829",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735829",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "InventoryUnit"
+		}
 	]
 }
