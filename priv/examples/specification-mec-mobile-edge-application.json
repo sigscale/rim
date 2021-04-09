@@ -89,5 +89,14 @@
 			"description": "Application instance identifier",
 			"valueType": "string"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735838",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735838",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "MobileEdgeApplicationService"
+		}
 	]
 }

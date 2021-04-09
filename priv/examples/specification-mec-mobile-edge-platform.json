@@ -35,5 +35,14 @@
 			"description": "Used as an RDN when naming an instance of the object class.",
 			"valueType": "string"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081735843",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735843",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "MobileEdgePlatformService"
+		}
 	]
 }
