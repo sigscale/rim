@@ -531,58 +531,58 @@ resource_rel([]) ->
 %% @hidden
 resource_rel([id | T], #resource_rel{id = Id} = R, Acc)
 		when is_list(Id) ->
-	resource_rel(T, R, Acc#{"id" => Id});
-resource_rel([id | T], #{"id" := Id} = M, Acc)
+	resource_rel(T, R, Acc#{"resource" => #{"id" => Id}});
+resource_rel([id | T], #{"resource" := #{"id" := Id}} = M, Acc)
 		when is_list(Id) ->
 	resource_rel(T, M, Acc#resource_rel{id = Id});
-resource_rel([href | T], #resource_rel{href = Href} = R, Acc)
-		when is_list(Href) ->
-	resource_rel(T, R, Acc#{"href" => Href});
-resource_rel([href | T], #{"href" := Href} = M, Acc)
+resource_rel([href | T], #resource_rel{href = Href} = R,
+		#{"resource" := Res} = Acc) when is_list(Href) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"href" => Href}});
+resource_rel([href | T], #{"resource" := #{"href" := Href}} = M, Acc)
 		when is_list(Href) ->
 	resource_rel(T, M, Acc#resource_rel{href = Href});
-resource_rel([name | T], #resource_rel{name = Name} = R, Acc)
-		when is_list(Name) ->
-	resource_rel(T, R, Acc#{"name" => Name});
-resource_rel([name | T], #{"name" := Name} = M, Acc)
+resource_rel([name | T], #resource_rel{name = Name} = R,
+		#{"resource" := Res} = Acc) when is_list(Name) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"name" => Name}});
+resource_rel([name | T], #{"resource" := #{"name" := Name}} = M, Acc)
 		when is_list(Name) ->
 	resource_rel(T, M, Acc#resource_rel{name = Name});
-resource_rel([class_type | T], #resource_rel{class_type = Type} = R, Acc)
-		when is_list(Type) ->
-	resource_rel(T, R, Acc#{"@type" => Type});
-resource_rel([class_type | T], #{"@type" := Type} = M, Acc)
+resource_rel([class_type | T], #resource_rel{class_type = Type} = R,
+		#{"resource" := Res} = Acc) when is_list(Type) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"@type" => Type}});
+resource_rel([class_type | T], #{"resource" := #{"@type" := Type}} = M, Acc)
 		when is_list(Type) ->
 	resource_rel(T, M, Acc#resource_rel{class_type = Type});
-resource_rel([base_type | T], #resource_rel{base_type = Type} = R, Acc)
-		when is_list(Type) ->
-	resource_rel(T, R, Acc#{"@baseType" => Type});
-resource_rel([base_type | T], #{"@baseType" := Type} = M, Acc)
+resource_rel([base_type | T], #resource_rel{base_type = Type} = R,
+		#{"resource" := Res} = Acc) when is_list(Type) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"@baseType" => Type}});
+resource_rel([base_type | T], #{"resource" := #{"@baseType" := Type}} = M, Acc)
 		when is_list(Type) ->
 	resource_rel(T, M, Acc#resource_rel{base_type = Type});
-resource_rel([schema | T], #resource_rel{schema = Schema} = R, Acc)
-		when is_list(Schema) ->
-	resource_rel(T, R, Acc#{"@schemaLocation" => Schema});
-resource_rel([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
-		when is_list(Schema) ->
+resource_rel([schema | T], #resource_rel{schema = Schema} = R,
+		#{"resource" := Res} = Acc) when is_list(Schema) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"@schemaLocation" => Schema}});
+resource_rel([schema | T], #{"resource" := #{"@schemaLocation" := Schema}} = M,
+		Acc) when is_list(Schema) ->
 	resource_rel(T, M, Acc#resource_rel{schema = Schema});
-resource_rel([version | T], #resource_rel{version = Version} = R, Acc)
-		when is_list(Version) ->
-	resource_rel(T, R, Acc#{"version" => Version});
-resource_rel([version | T], #{"version" := Version} = M, Acc)
+resource_rel([version | T], #resource_rel{version = Version} = R,
+		#{"resource" := Res} = Acc) when is_list(Version) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"version" => Version}});
+resource_rel([version | T], #{"resource" := #{"version" := Version}} = M, Acc)
 		when is_list(Version) ->
 	resource_rel(T, M, Acc#resource_rel{version = Version});
+resource_rel([ref_type | T], #resource_rel{ref_type = RefType} = R,
+		#{"resource" := Res} = Acc) when is_list(RefType) ->
+	resource_rel(T, R, Acc#{"resource" => Res#{"@referredType" => RefType}});
+resource_rel([ref_type | T], #{"resource" := #{"@referredType" := RefType}} = M,
+		Acc) when is_list(RefType) ->
+	resource_rel(T, M, Acc#resource_rel{ref_type = RefType});
 resource_rel([rel_type | T], #resource_rel{rel_type = RelType} = R, Acc)
 		when is_list(RelType) ->
 	resource_rel(T, R, Acc#{"relationshipType" => RelType});
 resource_rel([rel_type | T], #{"relationshipType" := RelType} = M, Acc)
 		when is_list(RelType) ->
 	resource_rel(T, M, Acc#resource_rel{rel_type = RelType});
-resource_rel([ref_type | T],
-		#resource_rel{ref_type = RefType} = R, Acc) when is_list(RefType) ->
-	resource_rel(T, R, Acc#{"@referredType" => RefType});
-resource_rel([ref_type | T], #{"@referredType" := RefType} = M, Acc)
-		when is_list(RefType) ->
-	resource_rel(T, M, Acc#resource_rel{ref_type = RefType});
 resource_rel([_ | T], R, Acc) ->
 	resource_rel(T, R, Acc);
 resource_rel([], _, Acc) ->

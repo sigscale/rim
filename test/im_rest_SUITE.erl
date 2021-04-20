@@ -1296,6 +1296,9 @@ post_resource(Config) ->
 	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	ResourceRelId = random_string(10),
+	ResourceRelHref = ?PathInventory ++ "resource/" ++ ResourceRelId,
+	ResourceRelName = random_string(20),
 	CharValue = random_string(10),
 	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/definitions/BtsSiteMgrList",
 	RequestBody = "{\n"
@@ -1331,6 +1334,17 @@ post_resource(Config) ->
 			++ "\t\t\t}\n"
 			++ "\t\t}\n"
 			++ "\t],\n"
+			++ "\t\"resourceRelationship\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"resource\": {\n"
+			++ "\t\t\t\t\"id\": \"" ++ ResourceRelId ++ "\",\n"
+			++ "\t\t\t\t\"href\": \"" ++ ResourceRelHref ++ "\",\n"
+			++ "\t\t\t\t\"@referredType\": \"ResourceFunction\",\n"
+			++ "\t\t\t\t\"name\": \"" ++ ResourceRelName ++ "\"\n"
+			++ "\t\t\t},\n"
+			++ "\t\t\t\"relationshipType\": \"contains\"\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
 			++ "\t\"resourceCharacteristic\": [\n"
 			++ "\t\t{\n"
 			++ "\t\t\t\"name\": \"BtsSiteMgr\",\n"
@@ -1354,12 +1368,15 @@ post_resource(Config) ->
 			description = Description, version = Version, category = Category,
 			class_type = ClassType, base_type = "Resource",
 			schema = ClassSchema, specification = S, party = [RP],
-			characteristic = [C]}} = im:get_resource(ID),
+			related = [Rel], characteristic = [C]}} = im:get_resource(ID),
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
 			version = Version} = S,
 	#party_ref{id = PartyId, href = PartyHref} = RP,
 	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
-			schema = CharSchema, value = CharValue} = C.
+			schema = CharSchema, value = CharValue} = C,
+	#resource_rel{id = ResourceRelId, href = ?PathInventory ++ "resource/"
+			++ ResourceRelId, name = ResourceRelName,
+			ref_type = "ResourceFunction", rel_type = "contains"} = Rel.
 
 get_resources() ->
 	[{userdata, [{doc, "GET Resource collection"}]}].
@@ -1395,6 +1412,9 @@ get_resource(Config) ->
 	ResourceId = random_string(10),
 	ResourceName = random_string(7),
 	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
+	ResourceRelId = random_string(10),
+	ResourceRelHref = ?PathInventory ++ "resource/" ++ ResourceRelId,
+	ResourceRelName = random_string(15),
 	CharValue = random_string(10),
 	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/definitions/BtsSiteMgrList",
 	ResourceRecord = #resource{name = Name,
@@ -1413,6 +1433,9 @@ get_resource(Config) ->
 					href = PartyHref,
 					role = "Supplier",
 					name = "ACME Inc."}],
+			related = [#resource_rel{id = ResourceRelId, href = ResourceRelHref,
+					name = ResourceRelName, ref_type = "ResourceFunction",
+					rel_type = "contains"}],
 			characteristic = [#resource_char{name = "BtsSiteMgr",
 					class_type = "BtsSiteMgrList",
 					value = CharValue,
@@ -1430,8 +1453,12 @@ get_resource(Config) ->
 			"description" := Description, "version" := Version,
 			"@type" := ClassType, "@baseType" := "Resource",
 			"@schemaLocation" := Schema, "resourceSpecification" := S,
-			"relatedParty" := [RP], "resourceCharacteristic" := [C]}
-			= ResourceMap,
+			"relatedParty" := [RP], "resourceRelationship" :=
+					[#{"resource" := #{"id" := ResourceRelId,
+							"href" := ResourceRelHref, "name" := ResourceRelName,
+							"@referredType" := "ResourceFunction"},
+					"relationshipType" := "contains"}],
+			"resourceCharacteristic" := [C]} = ResourceMap,
 	true = is_resource_spec(S),
 	true = is_party_ref(RP),
 	true = is_resource_char(C).
