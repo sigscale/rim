@@ -376,10 +376,10 @@ specification([characteristic | T], #{"resourceSpecCharacteristic" := SpecChars}
 		when is_list(SpecChars) ->
 	specification(T, M, Acc#specification{characteristic = specification_char(SpecChars)});
 specification([feature | T], #specification{feature = SpecFeature} = R, Acc)
-		when is_list(SpecFeature) ->
+		when is_list(SpecFeature), length(SpecFeature) > 0 ->
 	specification(T, R, Acc#{"resourceSpecFeature" => feature_spec(SpecFeature)});
 specification([feature | T], #{"resourceSpecFeature" := SpecFeature} = M, Acc)
-		when is_list(SpecFeature) ->
+		when is_list(SpecFeature), length(SpecFeature) > 0 ->
 	specification(T, M, Acc#specification{feature = feature_spec(SpecFeature)});
 specification([related | T], #specification{related = SpecRels} = R, Acc)
 		when is_list(SpecRels), length(SpecRels) > 0->
@@ -1330,12 +1330,12 @@ specification_char([end_date | T],
 	specification_char(T, M, Acc#specification_char{end_date = im_rest:iso8601(End)});
 specification_char([related | T],
 		#specification_char{related = CharRels} = R, Acc)
-		when is_list(CharRels) ->
+		when is_list(CharRels), length(CharRels) > 0 ->
 	specification_char(T, R,
 			Acc#{"resourceSpecCharRelationship" => spec_char_rel(CharRels)});
 specification_char([related | T],
 		#{"resourceSpecCharRelationship" := CharRels} = M, Acc)
-		when is_list(CharRels) ->
+		when is_list(CharRels), length(CharRels) > 0 ->
 	specification_char(T, M,
 			Acc#specification_char{related = spec_char_rel(CharRels)});
 specification_char([value_type | T], #specification_char{value_type = Type} = R, Acc)
@@ -1346,12 +1346,12 @@ specification_char([value_type | T], #{"valueType" := Type} = M, Acc)
 	specification_char(T, M, Acc#specification_char{value_type = Type});
 specification_char([char_value | T],
 		#specification_char{char_value = CharVals} = R, Acc)
-		when is_list(CharVals) ->
+		when is_list(CharVals), length(CharVals) > 0 ->
 	specification_char(T, R,
 			Acc#{"resourceSpecCharacteristicValue" => spec_char_value(CharVals)});
 specification_char([char_value | T],
 		#{"resourceSpecCharacteristicValue" := CharVals} = M, Acc)
-		when is_list(CharVals) ->
+		when is_list(CharVals), length(CharVals) > 0 ->
 	specification_char(T, M,
 			Acc#specification_char{char_value = spec_char_value(CharVals)});
 specification_char([_ | T], R, Acc) ->
@@ -1472,8 +1472,8 @@ resource_graph_spec([name | T], #resource_graph_spec{name = Name} = R, Acc)
 resource_graph_spec([name | T], #{"name" := Name} = R, Acc)
 		when is_list(Name) ->
 	resource_graph_spec(T, R, Acc#resource_graph_spec{name = Name});
-resource_graph_spec([class_type | T], #resource_graph_spec{class_type = Type} = R, Acc)
-		when is_list(Type) ->
+resource_graph_spec([class_type | T], #resource_graph_spec{class_type = Type}
+		= R, Acc) when is_list(Type) ->
 	resource_graph_spec(T, R, Acc#{"class_type" => Type});
 resource_graph_spec([class_type | T], #{"class_type" := Type} = R, Acc)
 		when is_list(Type) ->
@@ -1497,10 +1497,10 @@ resource_graph_spec([related | T], #{"graphSpecificationRelationship" := GraphRe
 		when is_list(GraphRels) ->
 	resource_graph_spec(T, M, Acc#resource_graph_spec{related = res_graph_spec_rel(GraphRels)});
 resource_graph_spec([connection | T], #resource_graph_spec{connection = Conns} = R, Acc)
-		when is_list(Conns) ->
+		when is_list(Conns), length(Conns) > 0 ->
 	resource_graph_spec(T, R, Acc#{"connectionSpecification" => connection_spec(Conns)});
 resource_graph_spec([connection | T], #{"connectionSpecification" := Conns} = M, Acc)
-		when is_list(Conns) ->
+		when is_list(Conns), length(Conns) > 0 ->
 	resource_graph_spec(T, M, Acc#resource_graph_spec{connection = connection_spec(Conns)});
 resource_graph_spec([_ | T], R, Acc) ->
 	resource_graph_spec(T, R, Acc);
@@ -1709,12 +1709,12 @@ endpoint_spec_ref([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{is_root = IsRoot});
 endpoint_spec_ref([connection_point | T],
 		#endpoint_spec_ref{connection_point = CpSpecRefs} = R, Acc)
-		when is_list(CpSpecRefs) ->
+		when is_list(CpSpecRefs), length(CpSpecRefs) > 0 ->
 	endpoint_spec_ref(T, R, Acc#{"connectionPointSpecification" =>
 			specification_refs(CpSpecRefs)});
 endpoint_spec_ref([connection_point | T],
 		#{"connectionPointSpecification" := CpSpecRefs} = M, Acc)
-		when is_list(CpSpecRefs) ->
+		when is_list(CpSpecRefs), length(CpSpecRefs) > 0 ->
 	endpoint_spec_ref(T, M, Acc#endpoint_spec_ref{connection_point = specification_refs(CpSpecRefs)});
 endpoint_spec_ref([ref_type | T], #endpoint_spec_ref{ref_type = Type} = R, Acc)
 		when is_list(Type) ->
