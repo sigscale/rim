@@ -63,6 +63,7 @@
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
 -define(PathInventorySchema, "/resourceInventoryManagement/v4/schema").
+-define(PathCatalogSpec, "/resourceCatalogManagement/v4/resourceSpecification").
 
 %%----------------------------------------------------------------------
 %% the im_specification public api
@@ -255,6 +256,53 @@ umts_rnc() ->
 			value_schema = ?PathCatalogSchema ++ "/utranNrm#/definitions/SharNetTceMappingInfoList"},
 	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList, Mcc, Mnc, RncId,
 			SiptoSupported, TceIDMappingInfoList, SharNetTceMappingInfoList],
+	CellFddRel = #specification_rel{id = "894623081735601",
+			href = ?PathCatalogSpec ++ "894623081735601", name = "UtranCellFDD",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	CellTddLcrRel = #specification_rel{id = "894623081735602",
+			href = ?PathCatalogSpec ++ "894623081735602", name = "UtranCellTDDLcr",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	CellTddHcrRel = #specification_rel{id = "894623081735603",
+			href = ?PathCatalogSpec ++ "894623081735603", name = "UtranCellTDDHcr",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	IubLinkRel = #specification_rel{id = "894623081735604",
+			href = ?PathCatalogSpec ++ "894623081735604", name = "IubLink",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	Related = [CellFddRel, CellTddLcrRel, CellTddHcrRel, IubLinkRel],
+	CellFddEndSpec = #endpoint_spec_ref{id = "894623081735601",
+			href = ?PathCatalogSpec ++ "894623081735601", name = "UtranCellFDD",
+			ref_type = "ResourceFunctionSpecification"},
+	RncEndSpec = #endpoint_spec_ref{id = "894623081735607",
+			href = ?PathCatalogSpec ++ "894623081735607", name = "RncFunction",
+			ref_type = "ResourceFunctionSpecification"},
+	FddRncConSpec = #connection_spec{id = "894623081735606", name = "IubLink",
+			description = "Edge between contained RFs", ass_type = "pointtoPoint",
+			endpoint = [CellFddEndSpec, RncEndSpec]},
+	FddRnc = #resource_graph_spec{id = "894623081735605",
+			class_type = "ResourceGraphSpecification", name = "Adjacency Graph",
+			description = "Topology of internal adjacency",
+			connection = [FddRncConSpec]},
+	CellTddLcrEndSpec = #endpoint_spec_ref{id = "894623081735602",
+			href = ?PathCatalogSpec ++ "894623081735602", name = "UtranCellTDDLcr",
+			ref_type = "ResourceFunctionSpecification"},
+	TddLcrRncConSpec = #connection_spec{id = "894623081735608", name = "IubLink",
+			description = "Edge between contained RFs", ass_type = "pointtoPoint",
+			endpoint = [CellTddLcrEndSpec, RncEndSpec]},
+	TddLcrRnc = #resource_graph_spec{id = "894623081735608",
+			class_type = "ResourceGraphSpecification", name = "Adjacency Graph",
+			description = "Topology of internal adjacency",
+			connection = [TddLcrRncConSpec]},
+	CellTddHcrEndSpec = #endpoint_spec_ref{id = "894623081735603",
+			href = ?PathCatalogSpec ++ "894623081735603", name = "UtranCellTDDHcr",
+			ref_type = "ResourceFunctionSpecification"},
+	TddHcrRncConSpec = #connection_spec{id = "894623081735610", name = "IubLink",
+			description = "Edge between contained RFs", ass_type = "pointtoPoint",
+			endpoint = [CellTddHcrEndSpec, RncEndSpec]},
+	TddHcrRnc = #resource_graph_spec{id = "894623081735609",
+			class_type = "ResourceGraphSpecification", name = "Adjacency Graph",
+			description = "Topology of internal adjacency",
+			connection = [TddHcrRncConSpec]},
+	Connectivity = [FddRnc, TddLcrRnc, TddHcrRnc],
 	#specification{name = "RncFunction",
 			description = "UMTS Radio Network Controller (RNC)",
 			class_type = "ResourceFunctionSpecification",
@@ -263,7 +311,9 @@ umts_rnc() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "RncFunction",
 					schema = ?PathCatalogSchema ++ "RncFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = Related,
+			connectivity = Connectivity}.
 
 -spec umts_nodeb() -> specification().
 %% @doc UMTS NodeB resource specification.
