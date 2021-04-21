@@ -30,18 +30,22 @@
 			"name": "SAP"
 		},
 		{
-			"id": "16029108611699870",
-			"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
-			"@referredType": "ResourceFunction",
-			"relationshipType": "contains",
-			"name": "ContainedExample1"
+			"resource": {
+				"id": "16029108611699870",
+				"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
+				"@referredType": "ResourceFunction",
+				"name": "ContainedExample1"
+			},
+			"relationshipType": "contains"
 		},
 		{
-			"id": "16029108611699875",
-			"href": "/resourceInventoryManagement/v4/resource/16029108611699875",
-			"@referredType": "ResourceFunction",
-			"relationshipType": "contains",
-			"name": "ContainedExample2"
+			"resource": {
+				"id": "16029108611699875",
+				"href": "/resourceInventoryManagement/v4/resource/16029108611699875",
+				"@referredType": "ResourceFunction",
+				"name": "ContainedExample2"
+			},
+			"relationshipType": "contains"
 		}
 	],
 	"connectionPoint": [
