@@ -550,6 +550,12 @@ specification_rel([rel_type | T], #specification_rel{rel_type = Type} = R, Acc)
 specification_rel([rel_type | T], #{"relationshipType" := Type} = M, Acc)
 		when is_list(Type) ->
 	specification_rel(T, M, Acc#specification_rel{rel_type = Type});
+specification_rel([ref_type | T], #specification_rel{ref_type = RefType} = R,
+		Acc) when is_list(RefType) ->
+	specification_rel(T, R, Acc#{"@referredType" => RefType});
+specification_rel([ref_type | T], #{"@referredType" := RefType} = M, Acc)
+		when is_list(RefType) ->
+	specification_rel(T, M, Acc#specification_rel{ref_type = RefType});
 specification_rel([role | T], #specification_rel{role = Role} = R, Acc)
 		when is_list(Role) ->
 	specification_rel(T, R, Acc#{"role" => Role});
@@ -1472,6 +1478,13 @@ resource_graph_spec([name | T], #resource_graph_spec{name = Name} = R, Acc)
 resource_graph_spec([name | T], #{"name" := Name} = R, Acc)
 		when is_list(Name) ->
 	resource_graph_spec(T, R, Acc#resource_graph_spec{name = Name});
+resource_graph_spec([description | T],
+		#resource_graph_spec{description = Description} = R, Acc)
+		when is_list(Description) ->
+	resource_graph_spec(T, R, Acc#{"description" => Description});
+resource_graph_spec([description | T], #{"description" := Description} = R, Acc)
+		when is_list(Description) ->
+	resource_graph_spec(T, R, Acc#resource_graph_spec{description = Description});
 resource_graph_spec([class_type | T], #resource_graph_spec{class_type = Type}
 		= R, Acc) when is_list(Type) ->
 	resource_graph_spec(T, R, Acc#{"class_type" => Type});
@@ -1635,6 +1648,12 @@ connection_spec([name | T], #connection_spec{name = Name} = R, Acc)
 connection_spec([name | T], #{"name" := Name} = R, Acc)
 		when is_list(Name) ->
 	connection_spec(T, R, Acc#connection_spec{name = Name});
+connection_spec([description | T], #connection_spec{description = Description}
+		= R, Acc) when is_list(Description) ->
+	connection_spec(T, R, Acc#{"description" => Description});
+connection_spec([description | T], #{"description" := Description} = R, Acc)
+		when is_list(Description) ->
+	connection_spec(T, R, Acc#connection_spec{description = Description});
 connection_spec([class_type | T], #connection_spec{class_type = Type} = R, Acc)
 		when is_list(Type) ->
 	connection_spec(T, R, Acc#{"@type" => Type});
@@ -1653,6 +1672,12 @@ connection_spec([schema | T], #connection_spec{schema = Schema} = R, Acc)
 connection_spec([schema | T], #{"@schemaLocation" := Schema} = M, Acc)
 		when is_list(Schema) ->
 	connection_spec(T, M, Acc#connection_spec{schema = Schema});
+connection_spec([ass_type | T], #connection_spec{ass_type = AssociationType}
+		= R, Acc) when is_list(AssociationType) ->
+	connection_spec(T, R, Acc#{"associationType" => AssociationType});
+connection_spec([ass_type | T], #{"associationType" := AssociationType} = M,
+		Acc) when is_list(AssociationType) ->
+	connection_spec(T, M, Acc#connection_spec{ass_type = AssociationType});
 connection_spec([endpoint | T], #connection_spec{endpoint = EpRefs} = R, Acc)
 		when is_list(EpRefs) ->
 	connection_spec(T, R, Acc#{"endpointSpecification" => endpoint_spec_ref(EpRefs)});
