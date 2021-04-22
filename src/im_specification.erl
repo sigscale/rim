@@ -1167,6 +1167,12 @@ lte_enb() ->
 			IRATANRSwitch, ENBId, X2BlackList, X2WhiteList, X2HOBlackList,
 			X2IpAddressList, TceIDMappingInfoList, SharNetTceMappingInfoList,
 			NetListeningRSForRIBS],
+	EUtranCellFDDRel = #specification_rel{id = "894623081735801",
+			href = ?PathCatalogSpec ++ "894623081735801", name = "EUtranCellFDD",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	EUtranCellTDDRel = #specification_rel{id = "894623081735802",
+			href = ?PathCatalogSpec ++ "894623081735802", name = "EUtranCellTDD",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "ENBFunction",
 			description = "LTE eNodeB",
 			class_type = "ResourceFunctionSpecification",
@@ -1175,7 +1181,8 @@ lte_enb() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "ENBFunction",
 					schema = ?PathCatalogSchema ++ "ENBFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [EUtranCellFDDRel, EUtranCellTDDRel]}.
 
 -spec lte_cell_fdd() -> specification().
 %% @doc LTE Frequency Division Duplex (FDD) radio cell resource specification.
