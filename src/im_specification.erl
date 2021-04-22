@@ -83,6 +83,9 @@ gsm_bss() ->
 			value_type = "VnfParametersListType",
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
 	Chars = [Id, UserLabel, VnfParametersList],
+	BtsSiteMgrRel = #specification_rel{id = "894623081735701",
+			href = ?PathCatalogSpec ++ "894623081735701", name = "BtsSiteMgr",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "BssFunction",
 			description = "GSM Base Station Subsystem (BSS)",
 			class_type = "ResourceFunctionSpecification",
@@ -91,7 +94,8 @@ gsm_bss() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BssFunction",
 					schema = ?PathCatalogSchema ++ "BssFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [BtsSiteMgrRel]}.
 
 -spec gsm_bts() -> specification().
 %% @doc GSM Base Transceive Station (BTS) resource specification.
@@ -120,6 +124,9 @@ gsm_bts() ->
 			value_schema = ?PathCatalogSchema ++ "/stateManagementIRPNrm#/definitions/operationalStateType"},
 	Chars = [Id, UserLabel, VnfParametersList, Latitude, Longitude,
 			OperationalState],
+	GsmCellRel = #specification_rel{id = "894623081735702",
+			href = ?PathCatalogSpec ++ "894623081735702", name = "BtsSiteMgr",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "BtsSiteMgr",
 			description = "GSM Base Transceiver Station (BTS)",
 			class_type = "ResourceFunctionSpecification",
@@ -128,7 +135,8 @@ gsm_bts() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "BtsSiteManager",
 					schema = ?PathCatalogSchema ++ "BtsSiteManager"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [GsmCellRel]}.
 
 -spec gsm_cell() -> specification().
 %% @doc GSM radio cell resource specification.
@@ -212,6 +220,38 @@ gsm_cell() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "GsmCell",
 					schema = ?PathCatalogSchema ++ "GsmCell"},
+			characteristic = Chars}.
+
+-spec gsm_abis_link() -> specification().
+%% @doc Generic Managed Element resource specification.
+gsm_abis_link() ->
+	AssociationName = #specification_char{name = "associationName",
+			description = "",
+			value_type = "string"},
+	LogicalBCSUAddress = #specification_char{name = "logicalBCSUAddress",
+			description = "",
+			value_type = "string"},
+	Name = #specification_char{name = "name",
+			description = "",
+			value_type = "string"},
+	Sapi = #specification_char{name = "sapi",
+			description = "",
+			value_type = "string"},
+	StreamId = #specification_char{name = "streamId",
+			description = "",
+			value_type = "string"},
+	Tei = #specification_char{name = "tei",
+			description = "",
+			value_type = "string"},
+	Chars = [AssociationName, LogicalBCSUAddress, Name, Sapi, StreamId, Tei],
+	#specification{name = "AbisLink",
+			description = "GSM Abis Link",
+			class_type = "ResourceFunctionSpecification",
+			status = active,
+			version = "1.0",
+			category = "RAN",
+			target_schema = #target_schema_ref{class_type = "AbisLink",
+					schema = ?PathCatalogSchema ++ "AbisLink"},
 			characteristic = Chars}.
 
 -spec umts_rnc() -> specification().
@@ -5575,38 +5615,6 @@ generic_subnetwork() ->
 			category = "",
 			target_schema = #target_schema_ref{class_type = "SubNetwork",
 					schema = ?PathCatalogSchema ++ "SubNetwork"},
-			characteristic = Chars}.
-
--spec gsm_abis_link() -> specification().
-%% @doc Generic Managed Element resource specification.
-gsm_abis_link() ->
-	AssociationName = #specification_char{name = "associationName",
-			description = "",
-			value_type = "string"},
-	LogicalBCSUAddress = #specification_char{name = "logicalBCSUAddress",
-			description = "",
-			value_type = "string"},
-	Name = #specification_char{name = "name",
-			description = "",
-			value_type = "string"},
-	Sapi = #specification_char{name = "sapi",
-			description = "",
-			value_type = "string"},
-	StreamId = #specification_char{name = "streamId",
-			description = "",
-			value_type = "string"},
-	Tei = #specification_char{name = "tei",
-			description = "",
-			value_type = "string"},
-	Chars = [AssociationName, LogicalBCSUAddress, Name, Sapi, StreamId, Tei],
-	#specification{name = "AbisLink",
-			description = "GSM Abis Link",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "RAN",
-			target_schema = #target_schema_ref{class_type = "AbisLink",
-					schema = ?PathCatalogSchema ++ "AbisLink"},
 			characteristic = Chars}.
 
 -spec huawei_usn() -> specification().
