@@ -4487,6 +4487,13 @@ epc_sgw() ->
 			value_type = "TACList",
 			value_schema = ?PathCatalogSchema ++ "/epcNrm#/definitions/TACList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TACList],
+	EpRpEpsRel = #specification_rel{id = "894623081735812",
+			href = ?PathCatalogSpec ++ "894623081735812", name = "EP_RP_EPS",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	EpRpEpsCP = #specification_ref{id = "894623081735812",
+			href = ?PathCatalogSpec ++ "894623081735812", name = "EP_RP_EPS",
+			class_type = "ConnectionPointRef",
+			ref_type = "ResourceFunctionSpecification"},
 	#specification{name = "ServingGWFunction",
 			description = "EPC Serving Gateway (SGW)",
 			class_type = "ResourceFunctionSpecification",
@@ -4495,7 +4502,9 @@ epc_sgw() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "ServingGWFunction",
 					schema = ?PathCatalogSchema ++ "ServingGWFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [EpRpEpsRel],
+			connection_point = [EpRpEpsCP]}.
 
 -spec epc_pgw() -> specification().
 %% @doc EPC PDN Gateway (PGW) resource specification.
@@ -4511,6 +4520,13 @@ epc_pgw() ->
 			value_type = "VnfParametersListType",
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
 	Chars = [ID, UserLabel, VnfParametersList],
+	EpRpEpsRel = #specification_rel{id = "894623081735811",
+			href = ?PathCatalogSpec ++ "894623081735811", name = "EP_RP_EPS",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	EpRpEpsCP = #specification_ref{id = "894623081735811",
+			href = ?PathCatalogSpec ++ "894623081735811", name = "EP_RP_EPS",
+			class_type = "ConnectionPointRef",
+			ref_type = "ResourceFunctionSpecification"},
 	#specification{name = "PGWFunction",
 			description = "EPC PDN Gateway (PGW)",
 			class_type = "ResourceFunctionSpecification",
@@ -4519,7 +4535,9 @@ epc_pgw() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "PGWFunction",
 					schema = ?PathCatalogSchema ++ "PGWFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [EpRpEpsRel],
+			connection_point = [EpRpEpsCP]}.
 
 -spec epc_epdg() -> specification().
 %% @doc EPC evolved Packet Data Gateway (ePDG) resource specification.
@@ -4539,6 +4557,13 @@ epc_epdg() ->
 			value_type = "LinkListType",
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/LinkListType"},
 	Chars = [ID, UserLabel, VnfParametersList, LinkList],
+	EpRpEpsRel = #specification_rel{id = "894623081735808",
+			href = ?PathCatalogSpec ++ "894623081735808", name = "EP_RP_EPS",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	EpRpEpsCP = #specification_ref{id = "894623081735808",
+			href = ?PathCatalogSpec ++ "894623081735808", name = "EP_RP_EPS",
+			class_type = "ConnectionPointRef",
+			ref_type = "ResourceFunctionSpecification"},
 	#specification{name = "EPDGFunction",
 			description = "EPC evolved Packet Data Gateway (ePDG)",
 			class_type = "ResourceFunctionSpecification",
@@ -4547,7 +4572,9 @@ epc_epdg() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "EPDGFunction",
 					schema = ?PathCatalogSchema ++ "EPDGFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [EpRpEpsRel],
+			connection_point = [EpRpEpsCP]}.
 
 -spec epc_mme() -> specification().
 %% @doc EPC Mobility Management Entity (MME) resource specification.
@@ -4571,6 +4598,13 @@ epc_mme() ->
 			value_type = "dn",
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/dn"},
 	Chars = [ID, UserLabel, VnfParametersList, MMEC, MMEPool],
+	EpRpEpsRel = #specification_rel{id = "894623081735809",
+			href = ?PathCatalogSpec ++ "894623081735809", name = "EP_RP_EPS",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	EpRpEpsCP = #specification_ref{id = "894623081735809",
+			href = ?PathCatalogSpec ++ "894623081735809", name = "EP_RP_EPS",
+			class_type = "ConnectionPointRef",
+			ref_type = "ResourceFunctionSpecification"},
 	#specification{name = "MMEFunction",
 			description = "EPC Mobility Management Entity (MME)",
 			class_type = "ResourceFunctionSpecification",
@@ -4579,7 +4613,9 @@ epc_mme() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "MMEFunction",
 					schema = ?PathCatalogSchema ++ "MMEFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [EpRpEpsRel],
+			connection_point = [EpRpEpsCP]}.
 
 -spec epc_pcrf() -> specification().
 %% @doc EPC Policy Control Rules Function (PCRF) resource specification.
@@ -4599,6 +4635,13 @@ epc_pcrf() ->
 			value_type = "linkListType",
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/linkListType"},
 	Chars = [ID, UserLabel, VnfParametersList, LinkList],
+	EpRpEpsRel = #specification_rel{id = "894623081735810",
+			href = ?PathCatalogSpec ++ "894623081735810", name = "EP_RP_EPS",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	EpRpEpsCP = #specification_ref{id = "894623081735810",
+			href = ?PathCatalogSpec ++ "894623081735810", name = "EP_RP_EPS",
+			class_type = "ConnectionPointRef",
+			ref_type = "ResourceFunctionSpecification"},
 	#specification{name = "PCRFFunction",
 			description = "EPC Policy Control Rules Function (PCRF)",
 			class_type = "ResourceFunctionSpecification",
@@ -4607,7 +4650,9 @@ epc_pcrf() ->
 			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "PCRFFunction",
 					schema = ?PathCatalogSchema ++ "PCRFFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [EpRpEpsRel],
+			connection_point = [EpRpEpsCP]}.
 
 -spec epc_link_mme_mme() -> specification().
 %% @doc EPC MMEFunction and MMEFunction Link resource specification.
