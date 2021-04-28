@@ -5718,6 +5718,17 @@ im_iu() ->
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/Dn"},
 	Chars = [ID, InventoryUnitType, VendorUnitFamilyType, VendorUnitTypeNumber, VendorName, SerialNumber,
 			DateOfManufacture, DateOfLastService, UnitPosition, ManufacturerData, VersionNumber, RelatedFunction],
+	InventoryUnitRel = #specification_rel{id = "894623081735831",
+			href = ?PathCatalogSpec ++ "894623081735831", name = "InventoryUnit",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	TmaIURel = #specification_rel{id = "894623081735832",
+			href = ?PathCatalogSpec ++ "894623081735832",
+			name = "TmaInventoryUnit",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	AntennaIURel = #specification_rel{id = "894623081735833",
+			href = ?PathCatalogSpec ++ "894623081735833",
+			name = "AntennaInventoryUnit",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "InventoryUnit",
 			description = "IM Inventory Unit",
 			class_type = "ResourceFunctionSpecification",
@@ -5726,7 +5737,8 @@ im_iu() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnit",
 					schema = ?PathCatalogSchema ++ "InventoryUnit"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [InventoryUnitRel, TmaIURel, AntennaIURel]}.
 
 -spec im_tmaiu() -> specification().
 %% @doc IM Tower Mounted Amplifier (TMA) Inventory Unit resource specification.
@@ -5814,6 +5826,9 @@ im_tmaiu() ->
 			TMANumberOfNonLinearGainValues, TMANonLinearGainValue, TMAAdditionalDataFieldNumber, TMAAntennaModelNumber,
 			TMAAntennaOperatingBands, TMABeamwidthForEachOpBandInBandOrder, TMAGainForEachOpBandInBandOrder,
 			TMAInstallationDate, TMAInstallersId, TMAMaxSupportedGain, TMAMinSupportedGain],
+	InventoryUnitRel = #specification_rel{id = "894623081735837",
+			href = ?PathCatalogSpec ++ "894623081735837", name = "InventoryUnit",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "TmaInventoryUnit",
 			description = "IM Tower Mounted Amplifier (TMA) Inventory Unit",
 			class_type = "ResourceFunctionSpecification",
@@ -5822,7 +5837,8 @@ im_tmaiu() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "TmaInventoryUnit",
 					schema = ?PathCatalogSchema ++ "TmaInventoryUnit"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [InventoryUnitRel]}.
 
 -spec im_aiu() -> specification().
 %% @doc IM Antenna Inventory Unit resource specification.
@@ -5891,6 +5907,9 @@ im_aiu() ->
 	Chars = [ID, InventoryUnitType, VendorUnitFamilyType, VendorUnitTypeNumber, VendorName, SerialNumber,
 			DateOfManufacture, DateOfLastService, UnitPosition, ManufacturerData, VersionNumber, RelatedFunction,
 			MaxTiltValue, MinTiltValue, MechanicalOffset, BaseElevation, Latitude, Longitude, PatternLabel],
+	InventoryUnitRel = #specification_rel{id = "894623081735829",
+			href = ?PathCatalogSpec ++ "894623081735829", name = "InventoryUnit",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "AntennaInventoryUnit",
 			description = "IM Antenna Inventory Unit",
 			class_type = "ResourceFunctionSpecification",
@@ -5899,7 +5918,8 @@ im_aiu() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "AntennaInventoryUnit",
 					schema = ?PathCatalogSchema ++ "AntennaInventoryUnit"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [InventoryUnitRel]}.
 
 -spec im_iu_ne() -> specification().
 %% @doc IM Inventory Unit Network Element resource specification.
@@ -5952,6 +5972,9 @@ im_iu_ne() ->
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/Dn"},
 	Chars = [ID, NeId, CustomerIdentifier, ProductName, VendorName, ProductType, SalesUniqueId, OperatorUniqueName,
 			SiteId, AdditionalInformation, HWList, SWList, LICList, MFunction],
+	IUNERel = #specification_rel{id = "894623081735835",
+			href = ?PathCatalogSpec ++ "894623081735835", name = "InventoryUnitNE",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "InventoryUnitNE",
 			description = "IM Inventory Unit Network Element",
 			class_type = "ResourceFunctionSpecification",
@@ -5960,7 +5983,8 @@ im_iu_ne() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitNE",
 					schema = ?PathCatalogSchema ++ "InventoryUnitNE"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [IUNERel]}.
 
 -spec im_iu_hw() -> specification().
 %% @doc IM Inventory Unit Hardware resource specification.
@@ -6023,6 +6047,9 @@ im_iu_hw() ->
 	Chars = [ID, HwId, HwType, HwName, VendorName, HwVersion, SalesUniqueId, HwUnitLocation, Model,
 			HwCapability, ModificationDate, ManualDataEntry, AdditionalInformation, NEList, SWList,
 			LICList, MFunction],
+	IUHwRel = #specification_rel{id = "894623081735830",
+			href = ?PathCatalogSpec ++ "894623081735830", name = "InventoryUnitHw",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "InventoryUnitHw",
 			description = "IM Inventory Unit Hardware",
 			class_type = "ResourceFunctionSpecification",
@@ -6031,7 +6058,8 @@ im_iu_hw() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitHw",
 					schema = ?PathCatalogSchema ++ "InventoryUnitHw"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [IUHwRel]}.
 
 -spec im_iu_sw() -> specification().
 %% @doc IM Inventory Unit Software resource specification.
@@ -6087,6 +6115,9 @@ im_iu_sw() ->
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/Dn"},
 	Chars = [ID, SwId, SwName, VendorName, SwVersion, SalesUniqueId, Classification, SwInstallationTime,
 			SwActivationTime, SwStatus, AdditionalInformation, NEList, HWList, LICList, MFunction],
+	IUSwRel = #specification_rel{id = "894623081735836",
+			href = ?PathCatalogSpec ++ "894623081735836", name = "InventoryUnitSw",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "InventoryUnitSw",
 			description = "IM Inventory Unit Software",
 			class_type = "ResourceFunctionSpecification",
@@ -6095,7 +6126,8 @@ im_iu_sw() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitSw",
 					schema = ?PathCatalogSchema ++ "InventoryUnitSw"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [IUSwRel]}.
 
 -spec im_iu_lic() -> specification().
 %% @doc IM Inventory Unit License resource specification.
@@ -6148,6 +6180,9 @@ im_iu_lic() ->
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/Dn"},
 	Chars = [ID, LicId, LicType, VendorName, Validity, Key, LicActivationTime, LicStatus,
 			SalesUniqueId, AdditionalInformation, NEList, HWList, SWList, MFunction],
+	IULicRel = #specification_rel{id = "894623081735834",
+			href = ?PathCatalogSpec ++ "894623081735834", name = "InventoryUnitLic",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "InventoryUnitLic",
 			description = "IM Inventory Unit License",
 			class_type = "ResourceFunctionSpecification",
@@ -6156,7 +6191,8 @@ im_iu_lic() ->
 			category = "IM",
 			target_schema = #target_schema_ref{class_type = "InventoryUnitLic",
 					schema = ?PathCatalogSchema ++ "InventoryUnitLic"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [IULicRel]}.
 
 -spec generic_me() -> specification().
 %% @doc Generic Managed Element resource specification.
