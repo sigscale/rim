@@ -53,5 +53,21 @@
 			"description": "All Mobile Country Codes (MCC) included",
 			"valueType": "array"
 		}
+	],
+	"resourceSpecRelationship": [
+		{
+			"id": "894623081385201",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081385201",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "SubNetwork"
+		},
+		{
+			"id": "894623081385202",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081385202",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "ManagedElement"
+		}
 	]
 }

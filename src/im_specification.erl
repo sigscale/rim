@@ -6262,6 +6262,12 @@ generic_subnetwork() ->
 			description = "All Mobile Country Codes (MCC) included",
 			value_type = "string"},
 	Chars = [Id, DnPrefix, UserLabel, UserDefinedNetworkType, SetOfMcc],
+	SubNetworkRel = #specification_rel{id = "894623081385201",
+			href = ?PathCatalogSpec ++ "894623081385201", name = "SubNetwork",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	MERel = #specification_rel{id = "894623081385202",
+			href = ?PathCatalogSpec ++ "894623081385202", name = "ManagedElement",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "SubNetwork",
 			description = "",
 			class_type = "ResourceFunctionSpecification",
@@ -6270,7 +6276,8 @@ generic_subnetwork() ->
 			category = "",
 			target_schema = #target_schema_ref{class_type = "SubNetwork",
 					schema = ?PathCatalogSchema ++ "SubNetwork"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [SubNetworkRel, MERel]}.
 
 -spec huawei_usn() -> specification().
 %% @doc Huawei Unified Serving Node (USN) resource specification.
