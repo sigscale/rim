@@ -4924,6 +4924,12 @@ core_msc() ->
 			SacList, GcaList, MscId, MscServerFunctionGsmCell,
 			MscServerFunctionExternalGsmCell, MscServerFunctionCsMgwFunction,
 			NriList, MscServerFunctionMscPool, DefaultMsc],
+	IucsLinkRel = #specification_rel{id = "894623081735804",
+			href = ?PathCatalogSpec ++ "894623081735804", name = "IucsLink",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	ALinkRel = #specification_rel{id = "894623081735805",
+			href = ?PathCatalogSpec ++ "894623081735805", name = "ALink",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "MscServerFunction",
 			description = "Core Mobile Switching Center (MSC) Server",
 			class_type = "ResourceFunctionSpecification",
@@ -4932,7 +4938,8 @@ core_msc() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "MscServerFunction",
 					schema = ?PathCatalogSchema ++ "MscServerFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [IucsLinkRel, ALinkRel]}.
 
 -spec core_mgw() -> specification().
 %% @doc Core Circuit Switched (CS) Media Gateway (MGW) resource specification.
@@ -5026,6 +5033,12 @@ core_sgsn() ->
 	Chars = [ID, UserLabel, VnfParametersList, MccList, MncList, LacList,
 			SacList, SgsnId, SgsnFunctionGsmCell, SgsnFunctionExternalGsmCell,
 			SgsnFunctionMscPool, NriList, ProceduralStatus],
+	GbLinkRel = #specification_rel{id = "894623081735806",
+			href = ?PathCatalogSpec ++ "894623081735806", name = "GbLink",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	IupsLinkRel = #specification_rel{id = "894623081735807",
+			href = ?PathCatalogSpec ++ "894623081735807", name = "IupsLink",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "SgsnFunction",
 			description = "Core Serving GPRS Support Node (SGSN)",
 			class_type = "ResourceFunctionSpecification",
@@ -5034,7 +5047,8 @@ core_sgsn() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "SgsnFunction",
 					schema = ?PathCatalogSchema ++ "SgsnFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [GbLinkRel, IupsLinkRel]}.
 
 -spec core_ggsn() -> specification().
 %% @doc Core Gateway GPRS Support Node (GGSN) resource specification.
@@ -5222,6 +5236,9 @@ core_cbc() ->
 			value_type = "VnfParametersListType",
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
 	Chars = [ID, UserLabel, VnfParametersList],
+	IubcLinkRel = #specification_rel{id = "894623081735803",
+			href = ?PathCatalogSpec ++ "894623081735803", name = "IubcLink",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "CbcFunction",
 			description = "Core Cell Broadcast Centre (CBC)",
 			class_type = "ResourceFunctionSpecification",
@@ -5230,7 +5247,8 @@ core_cbc() ->
 			category = "Core",
 			target_schema = #target_schema_ref{class_type = "CbcFunction",
 					schema = ?PathCatalogSchema ++ "CbcFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [IubcLinkRel]}.
 
 -spec core_iucs() -> specification().
 %% @doc Core Iu-cs Interface Link resource specification.
