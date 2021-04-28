@@ -6669,6 +6669,20 @@ mec_mehf() ->
 			description = "Version of the MEC system",
 			value_type = "string"},
 	Chars = [Id, SupportedFeatures, Version],
+	MEPRel = #specification_rel{id = "894623081735839",
+			href = ?PathCatalogSpec ++ "894623081735839", name = "MobileEdgePlatform",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	MEARel = #specification_rel{id = "894623081735840",
+			href = ?PathCatalogSpec ++ "894623081735840",
+			name = "MobileEdgeApplication",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	TrafficRuleRel = #specification_rel{id = "894623081735841",
+			href = ?PathCatalogSpec ++ "894623081735841",
+			name = "TrafficRule",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	DNSRuleRel = #specification_rel{id = "894623081735842",
+			href = ?PathCatalogSpec ++ "894623081735842", name = "DNSRule",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "MobileEdgeHostFunction",
 			description = "MEC Mobile Edge Host Function",
 			class_type = "ResourceFunctionSpecification",
@@ -6677,7 +6691,8 @@ mec_mehf() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeHostFunction",
 					schema = ?PathCatalogSchema ++ "MobileEdgeHostFunction"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [MEPRel, MEARel, TrafficRuleRel, DNSRuleRel]}.
 
 -spec mec_mep() -> specification().
 %% @doc MEC Mobile Edge Platform resource specification.
@@ -6686,6 +6701,10 @@ mec_mep() ->
 			description = "Used as an RDN when naming an instance of the object class.",
 			value_type = "string"},
 	Chars = [Id],
+	MEPSRel = #specification_rel{id = "894623081735843",
+			href = ?PathCatalogSpec ++ "894623081735843",
+			name = "MobileEdgePlatformService",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "MobileEdgePlatform",
 			description = "MEC Mobile Edge Platform",
 			class_type = "ResourceFunctionSpecification",
@@ -6694,7 +6713,8 @@ mec_mep() ->
 			category = "MEC",
 			target_schema = #target_schema_ref{class_type = "MobileEdgePlatform",
 					schema = ?PathCatalogSchema ++ "MobileEdgePlatform"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [MEPSRel]}.
 
 -spec mec_mea() -> specification().
 %% @doc MEC Mobile Edge Application resource function specification.
@@ -6731,14 +6751,18 @@ mec_mea() ->
 			value_type = "string"},
 	OperationalState = #specification_char{name = "operationalState",
 			description = "It indicates the operational state of the object instance",
-			value_type = "OperationalStateType",
-			value_schema = ?PathCatalogSchema ++ "/stateManagementIRPNrm#/definitions/OperationalStateType"},
+			value_type = "OperationalStateType", value_schema = ?PathCatalogSchema
+			++ "/stateManagementIRPNrm#/definitions/OperationalStateType"},
 	AppInstanceId = #specification_char{name = "appInstanceId",
 			description = "Application instance identifier",
 			value_type = "string"},
 	Chars = [Id, AppDId, AppName, AppProvider, AppSoftVersion, AppDVersion,
 			AppInfoName, AppDescription, AppState, InstantiationState,
 			OperationalState, AppInstanceId],
+	MEASRel = #specification_rel{id = "894623081735838",
+			href = ?PathCatalogSpec ++ "894623081735838",
+			name = "MobileEdgeApplicationService",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "MobileEdgeApplication",
 			description = "MEC Mobile Edge Application",
 			class_type = "ResourceFunctionSpecification",
@@ -6747,7 +6771,8 @@ mec_mea() ->
 			category = "RAN",
 			target_schema = #target_schema_ref{class_type = "MobileEdgeApplication",
 					schema = ?PathCatalogSchema ++ "MobileEdgeApplication"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [MEASRel]}.
 
 -spec mec_meps() -> specification().
 %% @doc MEC Mobile Edge Platform Service resource specification.
@@ -6776,15 +6801,23 @@ mec_meps() ->
 			value_type = []},
 	Chars = [Id, Address, OperationalState, SerName, SerCategory, SerVersion,
 			SerDataFormat],
+	RNIServiceRel = #specification_rel{id = "894623081735844",
+			href = ?PathCatalogSpec ++ "894623081735844", name = "RNIService",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
+	LocationServiceRel = #specification_rel{id = "894623081735845",
+			href = ?PathCatalogSpec ++ "894623081735845", name = "LocationService",
+			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
 	#specification{name = "MobileEdgePlatformService",
 			description = "MEC Mobile Edge Platform Service",
 			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
 			category = "MEC",
-			target_schema = #target_schema_ref{class_type = "MobileEdgePlatformService",
+			target_schema = #target_schema_ref{
+					class_type = "MobileEdgePlatformService",
 					schema = ?PathCatalogSchema ++ "MobileEdgePlatformService"},
-			characteristic = Chars}.
+			characteristic = Chars,
+			related = [RNIServiceRel, LocationServiceRel]}.
 
 -spec mec_meas() -> specification().
 %% @doc MEC Mobile Edge Application Service resource specification.
