@@ -126,7 +126,7 @@ class ruleUpdate extends PolymerElement {
 	_update() {
 		var ajax = this.$.ruleUpdateAjax;
 		ajax.method = "PATCH";
-		ajax.url = "/resourceInventoryManagement/v4/logicalResource/" + this.$.addRuleId.value;
+		ajax.url = "/resourceInventoryManagement/v4/resource/" + this.$.addRuleId.value;
 		var ruleArr = new Array()
 		var peeRule = new Object();
 		if(this.rule.description) {

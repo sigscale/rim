@@ -89,7 +89,7 @@ class ruleList extends PolymerElement {
 			</vaadin-grid>
 			<iron-ajax
 				id="rulesGetAjax"
-				url="resourceInventoryManagement/v4/logicalResource"
+				url="resourceInventoryManagement/v4/resource"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
