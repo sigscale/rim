@@ -24,7 +24,9 @@ class candidateList extends PolymerElement {
 					id="candidateGrid"
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="20ex"
+						flex-grow="5">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="name">
@@ -43,7 +45,9 @@ class candidateList extends PolymerElement {
 					</template>
 					<template>[[item.name]]</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="40ex"
+						flex-grow="5">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="description">
@@ -64,7 +68,9 @@ class candidateList extends PolymerElement {
 						[[item.description]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="11ex"
+						flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="@type">
@@ -85,7 +91,9 @@ class candidateList extends PolymerElement {
 						[[item.type]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="11ex"
+						flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="lifecycleStatus">

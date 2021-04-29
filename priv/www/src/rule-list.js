@@ -23,7 +23,9 @@ class ruleList extends PolymerElement {
 					id="ruleGrid"
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="20ex"
+						flex-grow="1">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="ruleId">
@@ -44,7 +46,9 @@ class ruleList extends PolymerElement {
 						[[item.id]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="40ex"
+						flex-grow="5">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="ruleDescription">
@@ -65,7 +69,9 @@ class ruleList extends PolymerElement {
 						[[item.description]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="40ex"
+						flex-grow="5">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="rules">
