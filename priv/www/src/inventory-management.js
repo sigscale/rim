@@ -14,7 +14,6 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/paper-progress/paper-progress.js';
 import '@polymer/app-route/app-location.js';
@@ -52,13 +51,9 @@ class InventoryManagement extends PolymerElement {
 			<app-drawer-layout
 					force-narrow
 					fullbleed>
-				<app-header-layout
-						has-scrolling-region>
+				<app-header-layout>
 					<app-header
-							slot="header"
-							condenses
-							reveals
-							effects="waterfall">
+							slot="header">
 						<app-toolbar
 								class="toolbar-top">
 							<paper-icon-button
