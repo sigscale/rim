@@ -66,12 +66,12 @@ install-data-local:
 
 clean-local:
 	-rm -rf yarn.lock build
+	-rm $(abs_builddir)/src/inventory-help.js
 	for i in $(LINKS); do \
 		if [ -L $$i ]; then \
 			rm $$i; \
 		fi; \
 	done
-	-rm $(abs_builddir)/src/inventory-help.js
 
 $(abs_builddir)/src/inventory-help.js: $(srcdir)/src/inventory-help.js-in
 	sed -e 's!%VERSION%!$(VERSION)!' \
