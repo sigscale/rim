@@ -1250,8 +1250,8 @@ query_start(Method, Query, Filters, RangeStart, RangeEnd) ->
 				{error, 500}
 		end
 	catch
-		_:_ ->
-			{error, 400}
+		_:_Reason1 ->
+			{error, 500}
 	end.
 
 %% @hidden
