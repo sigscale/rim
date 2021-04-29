@@ -213,6 +213,7 @@ class ruleList extends PolymerElement {
 	_filterChanged(filter) {
 		this.etag = null;
 		var grid = this.shadowRoot.getElementById('ruleGrid');
+		grid.size = 0;
    }
 }
 
