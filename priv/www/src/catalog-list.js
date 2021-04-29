@@ -27,7 +27,8 @@ class catalogList extends PolymerElement {
 					active-item="{{activeItem}}">
 				<vaadin-grid-column
 						width="20ex"
-						flex-grow="2">
+						flex-grow="2"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="name">
@@ -48,7 +49,8 @@ class catalogList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="40ex"
-						flex-grow="5">
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="description">
@@ -69,7 +71,8 @@ class catalogList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="@type">
@@ -90,7 +93,8 @@ class catalogList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="lifecycleStatus">

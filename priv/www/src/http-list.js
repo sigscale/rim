@@ -23,7 +23,8 @@ class httpList extends PolymerElement {
 					loading="{{loading}}">
 				<vaadin-grid-column
 								width="16ex"
-								flex-grow="2">
+								flex-grow="2"
+								resizable="true">
 					<template class="header">
 						<vaadin-grid-filter
 									aria-label="dateTime"
@@ -44,7 +45,8 @@ class httpList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="15ex"
-						flex-grow="2">
+						flex-grow="2"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-filter
 								aria-label="host"
@@ -63,7 +65,8 @@ class httpList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="8ex"
-						flex-grow="3">
+						flex-grow="3"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-filter
 								aria-label="user"
@@ -101,7 +104,8 @@ class httpList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="40ex"
-						flex-grow="5">
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-filter
 								aria-label="resource"
@@ -120,7 +124,8 @@ class httpList extends PolymerElement {
 			</vaadin-grid-column>
 			<vaadin-grid-column
 					width="8ex"
-					flex-grow="1">
+					flex-grow="1"
+					resizable="true">
 				<template class="header">
 					<vaadin-grid-filter
 							aria-label="status"

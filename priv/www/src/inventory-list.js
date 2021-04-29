@@ -180,7 +180,8 @@ class inventoryList extends PolymerElement {
 				</template>
 				<vaadin-grid-column
 						width="40ex"
-						flex-grow="5">
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="name">
@@ -205,7 +206,8 @@ class inventoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="category">
@@ -230,7 +232,8 @@ class inventoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="40ex"
-						flex-grow="5">
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="description">
@@ -255,7 +258,8 @@ class inventoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="@type">

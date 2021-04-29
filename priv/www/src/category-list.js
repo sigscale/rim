@@ -27,7 +27,8 @@ class categoryList extends PolymerElement {
 					active-item="{{activeItem}}">
 				<vaadin-grid-column
 						width="20ex"
-						flex-grow="5">
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="name">
@@ -50,7 +51,8 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="40ex"
-						flex-grow="5">
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="description">
@@ -71,7 +73,8 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="@type">
@@ -92,7 +95,8 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="lifecycleStatus">
@@ -113,7 +117,8 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="parentId">
@@ -134,7 +139,8 @@ class categoryList extends PolymerElement {
 				</vaadin-grid-column>
 				<vaadin-grid-column
 						width="11ex"
-						flex-grow="1">
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="isRoot">
