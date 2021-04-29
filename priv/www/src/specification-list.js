@@ -846,7 +846,7 @@ function _connectivityGraph(connectivity, graph, width, height) {
 			.append('title')
 			.text(function(d) { return d.name});
 	vgroup.append('text')
-			.text(function(d) { return d.type })
+			.text(function(d) { return d.name })
 			.attr('y', - Math.ceil(width / 100) - 8 )
 			.attr('text-anchor', 'middle');
 	simulation.on('tick', function() {
