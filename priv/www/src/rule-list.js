@@ -23,7 +23,10 @@ class ruleList extends PolymerElement {
 					id="ruleGrid"
 					loading="{{loading}}"
 					active-item="{{activeItem}}">
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="20ex"
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="ruleId">
@@ -44,7 +47,10 @@ class ruleList extends PolymerElement {
 						[[item.id]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="40ex"
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="ruleDescription">
@@ -65,7 +71,10 @@ class ruleList extends PolymerElement {
 						[[item.description]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="40ex"
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="rules">
@@ -89,7 +98,7 @@ class ruleList extends PolymerElement {
 			</vaadin-grid>
 			<iron-ajax
 				id="rulesGetAjax"
-				url="resourceInventoryManagement/v4/resource"
+				url="resourceInventoryManagement/v4/logicalResource"
 				rejectWithRequest>
 			</iron-ajax>
 		`;
@@ -203,7 +212,8 @@ class ruleList extends PolymerElement {
 
 	_filterChanged(filter) {
 		this.etag = null;
-		var grid = this.shadowRoot.getElementById('candidateGrid');
+		var grid = this.shadowRoot.getElementById('ruleGrid');
+		grid.size = 0;
    }
 }
 

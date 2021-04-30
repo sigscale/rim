@@ -51,13 +51,9 @@ class InventoryManagement extends PolymerElement {
 			<app-drawer-layout
 					force-narrow
 					fullbleed>
-				<app-header-layout
-						has-scrolling-region>
+				<app-header-layout>
 					<app-header
-							slot="header"
-							condenses
-							reveals
-							effects="waterfall">
+							slot="header">
 						<app-toolbar
 								class="toolbar-top">
 							<paper-icon-button

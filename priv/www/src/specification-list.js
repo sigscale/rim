@@ -295,7 +295,10 @@ class specificationList extends PolymerElement {
 						</div>
 					</iron-pages>
 				</template>
-				<vaadin-grid-column width="8ex" flex-grow="2">
+				<vaadin-grid-column
+						width="11ex"
+						flex-grow="2"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="name">
@@ -314,7 +317,10 @@ class specificationList extends PolymerElement {
 					</template>
 					<template>[[item.name]]</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column width="20ex" flex-grow="5">
+				<vaadin-grid-column
+						width="20ex"
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="decription">
@@ -333,7 +339,10 @@ class specificationList extends PolymerElement {
 					</template>
 					<template>[[item.description]]</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column width="12ex" flex-grow="1">
+				<vaadin-grid-column
+						width="12ex"
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="@type">
@@ -354,7 +363,10 @@ class specificationList extends PolymerElement {
 						[[item.type]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column width="8ex" flex-grow="1">
+				<vaadin-grid-column
+						width="8ex"
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="lifecycleStatus">
@@ -375,7 +387,10 @@ class specificationList extends PolymerElement {
 						[[item.status]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column width="8ex" flex-grow="1">
+				<vaadin-grid-column
+						width="8ex"
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="category">
@@ -396,7 +411,10 @@ class specificationList extends PolymerElement {
 						[[item.category]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column width="6ex" flex-grow="1">
+				<vaadin-grid-column
+						width="6ex"
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						<vaadin-grid-sorter
 								path="isBundle">

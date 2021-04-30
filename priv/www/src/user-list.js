@@ -22,7 +22,10 @@ class userList extends PolymerElement {
 			<vaadin-grid
 					id="userGrid"
 					loading="{{loading}}">
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="28ex"
+						flex-grow="5"
+						resizable="true">
 					<template class="header">
 						User name
 					</template>
@@ -30,7 +33,10 @@ class userList extends PolymerElement {
 						[[item.id]]
 					</template>
 				</vaadin-grid-column>
-				<vaadin-grid-column>
+				<vaadin-grid-column
+						width="6ex"
+						flex-grow="1"
+						resizable="true">
 					<template class="header">
 						Language
 					</template>

@@ -18,7 +18,7 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
-%%% 	Handle `ResourceCandidate' collection.
+%%% 	Handle `Rules' collection.
 %%%
 -module(im_rest_res_rules).
 -copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
