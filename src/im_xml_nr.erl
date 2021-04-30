@@ -83,6 +83,10 @@ parse_gnbdu({endElement, _Uri, "GNBDUFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GnbDUAttr = parse_gnbdu_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = GnbduDn,
 			description = "NR gNB Distributed Unit (DU)",
 			category = "NR",
@@ -92,7 +96,7 @@ parse_gnbdu({endElement, _Uri, "GNBDUFunction", QName},
 			specification = Spec,
 			characteristic = GnbDUAttr,
 			related = NrCellDuRels ++ NrSCRels ++ EpF1cRels ++ EpF1uRels,
-			connection_point = EpF1cRels ++ EpF1uRels},
+			connection_point = lists:map(F, EpF1cRels ++ EpF1uRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -462,6 +466,10 @@ parse_gnbcucp({endElement, _Uri, "GNBCUCPFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GnbcucpAttr = parse_gnbcucp_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = GnbcucpDn,
 			description = "NR gNB Central Unit (CU) Control Plane (CP)",
 			category = "NR",
@@ -472,8 +480,8 @@ parse_gnbcucp({endElement, _Uri, "GNBCUCPFunction", QName},
 			characteristic = GnbcucpAttr,
 			related = NrCellCuRels ++ EpF1cRels ++ EpE1Rels ++ EpXncRels ++
 					EpX2cRels ++ EpNgcRels,
-			connection_point = EpF1cRels ++ EpE1Rels ++ EpXncRels ++
-					EpX2cRels ++ EpNgcRels},
+			connection_point = lists:map(F, EpF1cRels ++ EpE1Rels ++ EpXncRels
+					++ EpX2cRels ++ EpNgcRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -874,6 +882,10 @@ parse_gnbcuup({endElement, _Uri, "GNBCUUPFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	GnbcuupAttr = parse_gnbcuup_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = GnbcuupDn,
 			description = "NR gNB Central Unit (CU) User Plane (UP)",
 			category = "NR",
@@ -884,8 +896,8 @@ parse_gnbcuup({endElement, _Uri, "GNBCUUPFunction", QName},
 			characteristic = GnbcuupAttr,
 			related = EpE1Rels ++ EpF1uRels ++ EpXnuRels ++ EpNguRels ++
 					EpX2uRels ++ EpS1uRels,
-			connection_point = EpE1Rels ++ EpF1uRels ++ EpXnuRels ++ EpNguRels ++
-					EpX2uRels ++ EpS1uRels},
+			connection_point = lists:map(F, EpE1Rels ++ EpF1uRels ++ EpXnuRels
+					++ EpNguRels ++ EpX2uRels ++ EpS1uRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];

@@ -80,22 +80,16 @@
 	],
 	"connectionPoint": [
 		{
-			"resource": {
-				"id": "6974362954",
-				"href": "/resourceInventoryManagement/v4/resource/6974362954",
-				"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1C=1",
-				"@referredType": "EP_F1C"
-			},
-			"relationshipType": "contains"
+			"id": "6974362954",
+			"href": "/resourceInventoryManagement/v4/resource/6974362954",
+			"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1C=1",
+			"@referredType": "EP_F1C"
 		},
 		{
-			"resource": {
-				"id": "6974362955",
-				"href": "/resourceInventoryManagement/v4/resource/6974362955",
-				"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1U=1",
-				"@referredType": "EP_F1U"
-			},
-			"relationshipType": "contains"
+			"id": "6974362955",
+			"href": "/resourceInventoryManagement/v4/resource/6974362955",
+			"name": "SubNetwork=8,ManagedElement=1,GNBDUFunction=1,EP_F1U=1",
+			"@referredType": "EP_F1U"
 		}
 	]
 }
