@@ -144,6 +144,10 @@ parse_enb({endElement, _Uri, "ENBFunction", QName},
 			class_type = "PeeParametersListType", value = Location,
 			schema = ?PathCatalogSchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = EnbDn,
 			description = "LTE Evolved Node B (ENB)",
 			category = "RAN",
@@ -153,8 +157,8 @@ parse_enb({endElement, _Uri, "ENBFunction", QName},
 			specification = Spec,
 			characteristic = lists:reverse([PeeParam | EnbAttr]),
 			related = FddRels ++ TddRels,
-			connection_point = EpRpEpsRels ++ EpX2cRels ++ EpX2uRels ++ EpNgcRels
-					++ EpNguRels ++ EpXncRels ++ EpXnuRels},
+			connection_point = lists:map(F, EpRpEpsRels ++ EpX2cRels ++ EpX2uRels
+					++ EpNgcRels ++ EpNguRels ++ EpXncRels ++ EpXnuRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
