@@ -171,6 +171,10 @@ parse_amf({endElement, _Uri, "AMFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	AmfAttr = parse_amf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = AmfDn,
 			description = "5G Core Access and Mobility Management Function (AMF)",
 			category = "Core",
@@ -182,9 +186,9 @@ parse_amf({endElement, _Uri, "AMFFunction", QName},
 			related = EpN2Rels ++ EpN8Rels ++ EpN11Rels ++ EpN12Rels ++ EpN14Rels
 					++ EpN15Rels ++ EpN17Rels ++ EpN20Rels ++ EpN22Rels ++ EpN26Rels
 					++ EpNlsRels ++EpNlgRels ++EpSbiXRels,
-			connection_point = EpN2Rels ++ EpN8Rels ++ EpN11Rels ++ EpN12Rels
-					++ EpN14Rels ++ EpN15Rels ++ EpN17Rels ++ EpN20Rels ++ EpN22Rels
-					++ EpN26Rels ++ EpNlsRels ++EpNlgRels ++EpSbiXRels},
+			connection_point = lists:map(F, EpN2Rels ++ EpN8Rels ++ EpN11Rels ++
+					EpN12Rels ++ EpN14Rels ++ EpN15Rels ++ EpN17Rels ++ EpN20Rels ++
+					EpN22Rels ++ EpN26Rels ++ EpNlsRels ++ EpNlgRels ++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -320,6 +324,10 @@ parse_smf({endElement, _Uri, "SMFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	SmfAttr = parse_smf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = SmfDn,
 			description = "5G Core Session Management Function (SMF)",
 			category = "Core",
@@ -330,8 +338,8 @@ parse_smf({endElement, _Uri, "SMFFunction", QName},
 			characteristic = SmfAttr,
 			related = EpN4Rels ++ EpN7Rels ++ EpN10Rels ++ EpN11Rels ++ EpN16Rels
 					++ EpS5cRels ++ EpSbiXRels,
-			connection_point = EpN4Rels ++ EpN7Rels ++ EpN10Rels ++ EpN11Rels
-					++ EpN16Rels ++ EpS5cRels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN4Rels ++ EpN7Rels ++ EpN10Rels
+					++ EpN11Rels ++ EpN16Rels ++ EpS5cRels ++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -453,6 +461,10 @@ parse_upf({endElement, _Uri, "UPFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UpfAttr = parse_upf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = UpfDn,
 			description = "5G Core User Plane Function (UPF)",
 			category = "Core",
@@ -463,8 +475,8 @@ parse_upf({endElement, _Uri, "UPFFunction", QName},
 			characteristic = UpfAttr,
 			related = EpN3Rels ++ EpN4Rels ++ EpN6Rels ++ EpN9Rels
 					++ EpS5uRels ++ EpSbiXRels,
-			connection_point = EpN3Rels ++ EpN4Rels ++ EpN6Rels ++ EpN9Rels
-					++ EpS5uRels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN3Rels ++ EpN4Rels ++ EpN6Rels
+					++ EpN9Rels ++ EpS5uRels ++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -542,6 +554,10 @@ parse_n3iwf({endElement, _Uri, "N3IWFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	N3iwfAttr = parse_n3iwf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = N3iwfDn,
 			description = "5G Core Non 3GPP Inter Working Function (N3IWF)",
 			category = "Core",
@@ -551,7 +567,7 @@ parse_n3iwf({endElement, _Uri, "N3IWFFunction", QName},
 			specification = Spec,
 			characteristic = N3iwfAttr,
 			related = EpN2Rels ++ EpN3Rels,
-			connection_point = EpN2Rels ++ EpN3Rels},
+			connection_point = lists:map(F, EpN2Rels ++ EpN3Rels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -657,6 +673,10 @@ parse_pcf({endElement, _Uri, "PCFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	PcfAttr = parse_pcf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = PcfDn,
 			description = "5G Core Policy Control Function (PCF)",
 			category = "Core",
@@ -667,8 +687,8 @@ parse_pcf({endElement, _Uri, "PCFFunction", QName},
 			characteristic = PcfAttr,
 			related = EpN5Rels ++ EpN7Rels ++ EpN15Rels ++ EpN16Rels
 					++ EpRxRels ++ EpSbiXRels,
-			connection_point = EpN5Rels ++ EpN7Rels ++ EpN15Rels ++ EpN16Rels
-					++ EpRxRels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN5Rels ++ EpN7Rels ++ EpN15Rels
+					++ EpN16Rels ++ EpRxRels ++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -756,6 +776,10 @@ parse_ausf({endElement, _Uri, "AUSFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	AusfAttr = parse_ausf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = AusfDn,
 			description = "5G Core Authentication Server Function (AUSF)",
 			category = "Core",
@@ -765,7 +789,7 @@ parse_ausf({endElement, _Uri, "AUSFFunction", QName},
 			specification = Spec,
 			characteristic = AusfAttr,
 			related = EpN12Rels ++ EpN13Rels ++ EpSbiXRels,
-			connection_point = EpN12Rels ++ EpN13Rels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN12Rels ++ EpN13Rels ++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -862,6 +886,10 @@ parse_udm({endElement, _Uri, "UDMFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UdmAttr = parse_udm_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = UdmDn,
 			description = "5G Core Unified Data Management (UDM)",
 			category = "Core",
@@ -871,7 +899,8 @@ parse_udm({endElement, _Uri, "UDMFunction", QName},
 			specification = Spec,
 			characteristic = UdmAttr,
 			related = EpN8Rels ++ EpN10Rels ++ EpN13Rels ++ EpSbiXRels,
-			connection_point = EpN8Rels ++ EpN10Rels ++ EpN13Rels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN8Rels ++ EpN10Rels ++ EpN13Rels
+					++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -940,6 +969,10 @@ parse_udr({endElement, _Uri, "UDRFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UdrAttr = parse_udr_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = UdrDn,
 			description = "5G Core Unified Data Repository (UDR)",
 			category = "Core",
@@ -949,7 +982,7 @@ parse_udr({endElement, _Uri, "UDRFunction", QName},
 			specification = Spec,
 			characteristic = UdrAttr,
 			related = EpSbiXRels,
-			connection_point = EpSbiXRels},
+			connection_point = lists:map(F, EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1018,6 +1051,10 @@ parse_udsf({endElement, _Uri, "UDSFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	UdsfAttr = parse_udsf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = UdsfDn,
 			description = "5G Core Unified Data Storage Function (UDSF)",
 			category = "Core",
@@ -1027,7 +1064,7 @@ parse_udsf({endElement, _Uri, "UDSFFunction", QName},
 			specification = Spec,
 			characteristic = UdsfAttr,
 			related = EpSbiXRels,
-			connection_point = EpSbiXRels},
+			connection_point = lists:map(F, EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1106,6 +1143,10 @@ parse_nrf({endElement, _Uri, "NRFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NrfAttr = parse_nrf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = NrfDn,
 			description = "5G Core Network Repository Function (NRF)",
 			category = "Core",
@@ -1115,7 +1156,7 @@ parse_nrf({endElement, _Uri, "NRFFunction", QName},
 			specification = Spec,
 			characteristic = NrfAttr,
 			related = EpN27Rels ++ EpSbiXRels,
-			connection_point = EpN27Rels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN27Rels ++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1212,6 +1253,10 @@ parse_nssf({endElement, _Uri, "NSSFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NssfAttr = parse_nssf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = NssfDn,
 			description = "5G Core Network Slice Selection Function (NSSF)",
 			category = "Core",
@@ -1221,7 +1266,8 @@ parse_nssf({endElement, _Uri, "NSSFFunction", QName},
 			specification = Spec,
 			characteristic = NssfAttr,
 			related = EpN22Rels ++ EpN27Rels ++ EpN31Rels ++ EpSbiXRels,
-			connection_point = EpN22Rels ++ EpN27Rels ++ EpN31Rels ++ EpSbiXRels},
+			connection_point = lists:map(F, EpN22Rels ++ EpN27Rels ++ EpN31Rels
+					++ EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1309,6 +1355,10 @@ parse_sms({endElement, _Uri, "SMSFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	SmsAttr = parse_sms_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = SmsDn,
 			description = "5G Core Short Message Service Function (SMSF)",
 			category = "Core",
@@ -1318,7 +1368,8 @@ parse_sms({endElement, _Uri, "SMSFunction", QName},
 			specification = Spec,
 			characteristic = SmsAttr,
 			related = EpN20Rels ++ EpN21Rels ++ EpMapSmscRels,
-			connection_point = EpN20Rels ++ EpN21Rels ++ EpMapSmscRels},
+			connection_point = lists:map(F, EpN20Rels ++ EpN21Rels
+					++ EpMapSmscRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1382,6 +1433,10 @@ parse_lmf({endElement, _Uri, "LMFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	LmfAttr = parse_lmf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = LmfDn,
 			description = "5G Core Location Management Function (LMF)",
 			category = "Core",
@@ -1391,7 +1446,7 @@ parse_lmf({endElement, _Uri, "LMFFunction", QName},
 			specification = Spec,
 			characteristic = LmfAttr,
 			related = EpNlsRels,
-			connection_point = EpNlsRels},
+			connection_point = lists:map(F, EpNlsRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1451,6 +1506,10 @@ parse_ngeir({endElement, _Uri, "NGEIRFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NgeirAttr = parse_ngeir_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = NgeirDn,
 			description = "5G Core NG Equipment Identity Register (NGEIR)",
 			category = "Core",
@@ -1460,7 +1519,7 @@ parse_ngeir({endElement, _Uri, "NGEIRFunction", QName},
 			specification = Spec,
 			characteristic = NgeirAttr,
 			related = EpN17Rels,
-			connection_point = EpN17Rels},
+			connection_point = lists:map(F, EpN17Rels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1538,6 +1597,10 @@ parse_sepp({endElement, _Uri, "SEPPFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	SeppAttr = parse_sepp_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = SeppDn,
 			description = "5G Core Security Edge Protection Proxy (SEPP)",
 			category = "Core",
@@ -1547,7 +1610,7 @@ parse_sepp({endElement, _Uri, "SEPPFunction", QName},
 			specification = Spec,
 			characteristic = SeppAttr,
 			related = EpN32Rels ++ EpSbiIpxRels,
-			connection_point = EpN32Rels ++ EpSbiIpxRels},
+			connection_point = lists:map(F, EpN32Rels ++ EpSbiIpxRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -1607,6 +1670,10 @@ parse_nwdaf({endElement, _Uri, "NWDAFFunction", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NwdafAttr = parse_nwdaf_attr(T2, undefined, []),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = NwdafDn,
 			description = "5G Core Network Data Analytics Function (NWDAF)",
 			category = "Core",
@@ -1616,7 +1683,7 @@ parse_nwdaf({endElement, _Uri, "NWDAFFunction", QName},
 			specification = Spec,
 			characteristic = NwdafAttr,
 			related = EpSbiXRels,
-			connection_point = EpSbiXRels},
+			connection_point = lists:map(F, EpSbiXRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
