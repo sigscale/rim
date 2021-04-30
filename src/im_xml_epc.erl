@@ -50,6 +50,10 @@ parse_epdg({endElement, _Uri, "EPDGFunction", QName},
 	EpdgAttr = parse_epdg_attr(T2, undefined, []),
 	ClassType = "EPDGFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = EpdgDn,
 			description = "GSM Base Station Subsystem (BSS)",
 			category = "EPC",
@@ -59,7 +63,7 @@ parse_epdg({endElement, _Uri, "EPDGFunction", QName},
 			specification = Spec,
 			characteristic = EpdgAttr,
 			related = EpResRels,
-			connection_point = EpResRels},
+			connection_point = lists:map(F, EpResRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -132,6 +136,10 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			class_type = "PeeParametersListType", value = Location,
 			schema = ?PathInventorySchema ++ "/genericNrm#/"
 					"definitions/PeeParametersListType"},
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = MmeDn,
 			description = "Mobility Management Entity(MME)",
 			category = "EPC",
@@ -141,7 +149,7 @@ parse_mme({endElement, _Uri, "MMEFunction", QName},
 			specification = Spec,
 			characteristic = [PeeParam | MmeAttr],
 			related = EpRpEps ++ EpN26s,
-			connection_point = EpRpEps ++ EpN26s},
+			connection_point = lists:map(F, EpRpEps ++ EpN26s)},
 	case im:add_resource(Resource) of
 		{ok, #resource{}} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -214,6 +222,10 @@ parse_pcrf({endElement, _Uri, "PCRFFunction", QName},
 	PcrfAttr = parse_pcrf_attr(T2, undefined, []),
 	ClassType = "PCRFFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = PcrfDn,
 			description = "Policy and Charging Rules (PCRF)",
 			category = "EPC",
@@ -223,7 +235,7 @@ parse_pcrf({endElement, _Uri, "PCRFFunction", QName},
 			specification = Spec,
 			characteristic = PcrfAttr,
 			related = EpResRels,
-			connection_point = EpResRels},
+			connection_point = lists:map(F, EpResRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -285,6 +297,10 @@ parse_pgw({endElement, _Uri, "PGWFunction", QName},
 	PgwAttr = parse_pgw_attr(T2, undefined, []),
 	ClassType = "PGWFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = PgwDn,
 			description = "Cisco Packet Data Network Gateway (PGW)",
 			category = "EPC",
@@ -294,7 +310,7 @@ parse_pgw({endElement, _Uri, "PGWFunction", QName},
 			specification = Spec,
 			characteristic = PgwAttr,
 			related = EpResRels,
-			connection_point = EpResRels},
+			connection_point = lists:map(F, EpResRels)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
@@ -352,6 +368,10 @@ parse_sgw({endElement, _Uri, "ServingGWFunction", QName},
 	SgwAttr = parse_sgw_attr(T2, undefined, []),
 	ClassType = "ServingGWFunction",
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
+	F = fun(#resource_rel{id = Id, name = EpDn, ref_type = RefType}) ->
+		#resource_ref{id = Id, href = ?ResourcePath ++Id, name = EpDn,
+				ref_type = RefType}
+	end,
 	Resource = #resource{name = SgwDn,
 			description = "Service Gateway(SGW)",
 			category = "EPC",
@@ -361,7 +381,7 @@ parse_sgw({endElement, _Uri, "ServingGWFunction", QName},
 			specification = Spec,
 			characteristic = SgwAttr,
 			related = EpRpEps,
-			connection_point = EpRpEps},
+			connection_point = lists:map(F, EpRpEps)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];

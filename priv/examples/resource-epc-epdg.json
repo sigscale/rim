@@ -45,13 +45,10 @@
 	],
 	"connectionPoint": [
 		{
-			"resource": {
-				"id": "6974362832",
-				"href": "/resourceInventoryManagement/v4/resource/6974362832",
-				"name": "SubNetwork=4,ManagedElement=1,EPDGFunction=1,EP_RP_EPS=1",
-				"@referredType": "EP_RP_EPS"
-			},
-			"relationshipType": "contains"
+			"id": "6974362832",
+			"href": "/resourceInventoryManagement/v4/resource/6974362832",
+			"name": "SubNetwork=4,ManagedElement=1,EPDGFunction=1,EP_RP_EPS=1",
+			"@referredType": "EP_RP_EPS"
 		}
 	],
 	"connectivity": []
