@@ -122,6 +122,106 @@
 			"@referredType": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"name": "EUtranCellTDD"
+		},
+		{
+			"id": "984623185739841",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739841",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_RP_EPS"
+		},
+		{
+			"id": "984623185739842",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739842",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_X2C"
+		},
+		{
+			"id": "984623185739843",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739843",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_X2U"
+		},
+		{
+			"id": "984623185739844",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739844",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_NgC"
+		},
+		{
+			"id": "984623185739845",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739845",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_NgU"
+		},
+		{
+			"id": "984623185739846",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739846",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_XnC"
+		},
+		{
+			"id": "984623185739847",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739847",
+			"@referredType": "ResourceFunctionSpecification",
+			"relationshipType": "contains",
+			"name": "EP_XnU"
+		}
+	],
+	"connectionPointSpecification": [
+		{
+			"id": "984623185739841",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739841",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_RP_EPS"
+		},
+		{
+			"id": "984623185739842",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739842",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_X2C"
+		},
+		{
+			"id": "984623185739843",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739843",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_X2U"
+		},
+		{
+			"id": "984623185739844",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739844",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_NgC"
+		},
+		{
+			"id": "984623185739845",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739845",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_NgU"
+		},
+		{
+			"id": "984623185739846",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739846",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_XnC"
+		},
+		{
+			"id": "984623185739847",
+			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739847",
+			"@type": "ConnectionPointRef",
+			"@referredType": "ResourceFunctionSpecification",
+			"name": "EP_XnU"
 		}
 	]
 }
