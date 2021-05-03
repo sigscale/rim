@@ -61,6 +61,15 @@
 		},
 		{
 			"resource": {
+				"id": "9846231571",
+				"href": "/resourceInventoryManagement/v4/resource/9846231571",
+				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_RP_EPS=1",
+				"@referredType": "EP_RP_EPS"
+			},
+			"relationshipType": "contains"
+		},
+		{
+			"resource": {
 				"id": "8794531622",
 				"href": "/resourceInventoryManagement/v4/resource/8794531622",
 				"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_X2C=1",
@@ -115,6 +124,12 @@
 		}
 	],
 	"connectionPoint": [
+		{
+			"id": "9846231571",
+			"href": "/resourceInventoryManagement/v4/resource/9846231571",
+			"name": "SubNetwork=6,ManagedElement=1,ENBFunction=1,EP_RP_EPS=1",
+			"@referredType": "EP_RP_EPS"
+		},
 		{
 			"id": "8794531622",
 			"href": "/resourceInventoryManagement/v4/resource/8794531622",
