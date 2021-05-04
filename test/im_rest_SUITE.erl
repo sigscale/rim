@@ -865,7 +865,7 @@ map_to_specification(_Config) ->
 	SpecificationName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
-	ClassType = "ResourceSpecification",
+	ClassType = "ResourceFunctionSpecification",
 	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceSpecification",
 	Category = random_string(5),
 	PartyId = random_string(10),
@@ -878,8 +878,6 @@ map_to_specification(_Config) ->
 			"name" => SpecificationName,
 			"description" => Description,
 			"@type" => ClassType,
-			"@schemaLocation" => Schema,
-			"@baseType" => "Specification",
 			"version" => Version,
 			"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 					"endDateTime" => "2019-12-31T23:59"},
@@ -900,8 +898,7 @@ map_to_specification(_Config) ->
 					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 							"endDateTime" => "2019-12-31T23:59"}}]},
 	#specification{id = SpecificationId, href = SpecificationHref,
-			description = Description, class_type = ClassType,
-			schema = Schema, base_type = "Specification", version = Version,
+			description = Description, class_type = ClassType, version = Version,
 			start_date = StartDate, end_date = EndDate, status = active,
 			category = Category, target_schema = TS, party = [RP],
 			related = [R]} = im_rest_res_specification:specification(Map),
@@ -933,8 +930,6 @@ specification_to_map(_Config) ->
 			name = SpecificationName,
 			description = Description,
 			class_type = ClassType,
-			schema = Schema,
-			base_type = "Specification",
 			version = Version,
 			start_date = 1548720000000,
 			end_date = 1577836740000,
@@ -954,11 +949,10 @@ specification_to_map(_Config) ->
 					end_date = 1577836740000}]},
 	#{"id" := SpecificationId, "href" := SpecificationHref,
 			"description" := Description, "@type" := ClassType,
-			"@schemaLocation" := Schema, "@baseType" := "Specification", "version" := Version,
-			"validFor" := #{"startDateTime" := Start, "endDateTime" := End},
-			"lifecycleStatus" := "Active", "category" := Category,
-			"targetResourceSchema" := TS, "relatedParty" := [RP],
-			"resourceSpecRelationship" := [R]}
+			"version" := Version, "validFor" := #{"startDateTime" := Start,
+			"endDateTime" := End}, "lifecycleStatus" := "Active",
+			"category" := Category, "targetResourceSchema" := TS,
+			"relatedParty" := [RP], "resourceSpecRelationship" := [R]}
 			= im_rest_res_specification:specification(SpecificationRecord),
 	true = is_list(Start),
 	true = is_list(End),
@@ -975,8 +969,7 @@ post_specification(Config) ->
 	SpecificationName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
-	ClassType = "BssFunctionSpecification",
-	ClassSchema = ?PathCatalog ++ "schema/BssFunctionSpecification",
+	ClassType = "ResourceFunctionSpecification",
 	TargetSchema = ?PathCatalog ++ "schema/BssFunction",
 	Category = random_string(6),
 	PartyId = random_string(10),
@@ -987,8 +980,6 @@ post_specification(Config) ->
 			++ "\t\"name\": \"" ++ SpecificationName ++ "\",\n"
 			++ "\t\"description\": \"" ++ Description ++ "\",\n"
 			++ "\t\"@type\": \"" ++ ClassType ++ "\",\n"
-			++ "\t\"@schemaLocation\": \"" ++ ClassSchema ++ "\",\n"
-			++ "\t\"@baseType\": \"ResourceFunctionSpecification\",\n"
 			++ "\t\"version\": \"" ++ Version ++ "\",\n"
 			++ "\t\"validFor\": {\n"
 			++ "\t\t\"startDateTime\": \"2019-01-29T00:00\",\n"
@@ -1040,10 +1031,15 @@ post_specification(Config) ->
 	{_, URI} = lists:keyfind("location", 1, Headers),
 	{?PathCatalog ++ "resourceSpecification/" ++ ID, _} = httpd_util:split_path(URI),
 	{ok, #specification{id = ID, name = SpecificationName,
-			description = Description, version = Version,
-			class_type = ClassType, base_type = "ResourceFunctionSpecification",
-			schema = ClassSchema, party = [RP]}} = im:get_specification(ID),
-	#party_ref{id = PartyId, href = PartyHref} = RP.
+			description = Description, version = Version, class_type = ClassType,
+			party = [RP], characteristic = Chars}} = im:get_specification(ID),
+	#party_ref{id = PartyId, href = PartyHref} = RP,
+	#specification_char{name = "id", description = CharDes1,
+			value_type = "string"}
+			= lists:keyfind("id", #specification_char.name, Chars),
+	#specification_char{name = "userLabel", description = CharDes2,
+			value_type = "string"}
+			= lists:keyfind("userLabel", #specification_char.name, Chars).
 
 get_specifications() ->
 	[{userdata, [{doc, "GET Specification collection"}]}].
@@ -1071,8 +1067,7 @@ get_specification(Config) ->
 	SpecificationName = random_string(10),
 	Description = random_string(25),
 	Version = random_string(3),
-	ClassType = "ResourceSpecification",
-	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceSpecification",
+	ClassType = "ResourceFunctionSpecification",
 	TargetSchema = ?PathCatalog ++ "schema/BssFunction",
 	Model = random_string(5),
 	Part = random_string(5),
@@ -1084,8 +1079,6 @@ get_specification(Config) ->
 	SpecificationRecord = #specification{name = SpecificationName,
 			description = Description,
 			class_type = ClassType,
-			schema = Schema,
-			base_type = "Specification",
 			version = Version,
 			start_date = 1548720000000,
 			end_date = 1577836740000,
@@ -1118,8 +1111,7 @@ get_specification(Config) ->
 	{ok, SpecificationMap} = zj:decode(ResponseBody),
 	#{"id" := Id, "href" := Href, "name" := SpecificationName,
 			"description" := Description, "version" := Version,
-			"@type" := ClassType, "@baseType" := "Specification",
-			"@schemaLocation" := Schema, "targetResourceSchema" := T,
+			"@type" := ClassType, "targetResourceSchema" := T,
 			"relatedParty" := [RP], "resourceSpecRelationship" := [R]}
 			= SpecificationMap,
 	true = is_target_ref(T),
