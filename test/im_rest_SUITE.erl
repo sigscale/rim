@@ -981,6 +981,8 @@ post_specification(Config) ->
 	Category = random_string(6),
 	PartyId = random_string(10),
 	PartyHref = ?PathParty ++ "organization/" ++ PartyId,
+	CharDes1 = "Used as an RDN when naming an instance of the object class",
+	CharDes2 = "A user-friendly (and user assignable) name of this object",
 	RequestBody = "{\n"
 			++ "\t\"name\": \"" ++ SpecificationName ++ "\",\n"
 			++ "\t\"description\": \"" ++ Description ++ "\",\n"
@@ -1013,7 +1015,18 @@ post_specification(Config) ->
 			++ "\t\t\t}\n"
 			++ "\t\t}\n"
 			++ "\t],\n"
-			++ "\t\"resourceSpecCharacteristic\": [],\n"
+			++ "\t\"resourceSpecCharacteristic\": [\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"id\",\n"
+			++ "\t\t\t\"description\": \"" ++ CharDes1 ++ "\",\n"
+			++ "\t\t\t\"valueType\": \"string\"\n"
+			++ "\t\t},\n"
+			++ "\t\t{\n"
+			++ "\t\t\t\"name\": \"userLabel\",\n"
+			++ "\t\t\t\"description\": \"" ++ CharDes2 ++ "\",\n"
+			++ "\t\t\t\"valueType\": \"string\"\n"
+			++ "\t\t}\n"
+			++ "\t],\n"
 			++ "\t\"resourceSpecRelationship\": []\n"
 			++ "}\n",
 	ContentType = "application/json",
@@ -1749,6 +1762,12 @@ is_target_ref(#{"@type" := Type, "@schemaLocation" := Schema})
 is_target_ref(_) ->
 	false.
 
+is_spec_char(#{"name" := Name, "description" := Des, "valueType" := ValType})
+		when is_list(Name), is_list(Des), is_list(ValType) ->
+	true;
+is_spec_char(_C) ->
+	false.
+
 is_related_ref(#{"id" := Id, "href" := Href,
 		"name" := Name, "role" := Role,
 		"validFor" := #{"startDateTime" := Start,
@@ -1816,13 +1835,12 @@ is_candidate(_) ->
 	false.
 
 is_specification(#{"id" := Id, "href" := Href, "name" := Name,
-		"description" := Description, "version" := Version,
-		"@type" := ClassType, "@baseType" := BaseType,
-		"@schemaLocation" := Schema, "targetResourceSchema" := T})
+		"description" := Description, "version" := Version, "@type" := ClassType,
+		"targetResourceSchema" := T, "resourceSpecCharacteristic" := Chars})
 		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
-		is_list(Version), is_list(ClassType), is_list(Schema),
-		is_list(BaseType) ->
-	true = is_target_ref(T);
+		is_list(Version), is_list(ClassType), is_list(Chars) ->
+	true = is_target_ref(T),
+	lists:all(fun is_spec_char/1, Chars);
 is_specification(_S) ->
 	false.
 
@@ -1903,9 +1921,7 @@ fill_specification(N) ->
 	Schema = ?PathCatalog ++ "schema/resourceCatalogManagement#/definitions/ResourceSpecification",
 	Specification = #specification{name = random_string(10),
 			description = random_string(25),
-			class_type = "ResourceSpecification",
-			base_type = "Specification",
-			schema = Schema,
+			class_type = "ResourceFunctionSpecification",
 			version = random_string(3),
 			start_date = 1548720000000,
 			end_date = 1577836740000,
@@ -1917,7 +1933,8 @@ fill_specification(N) ->
 			target_schema = #target_schema_ref{class_type = "ResourceSpecification",
 					schema = Schema},
 			party = fill_party(3),
-			related = fill_related_ref(3)},
+			related = fill_related_ref(3),
+			characteristic = fill_spec_char(4)},
 	{ok, _} = im:add_specification(Specification),
 	fill_specification(N - 1).
 
@@ -1989,6 +2006,15 @@ fill_related_ref(N, Acc) ->
 			role = "Supplier", name = "ACME Inc.", class_type = Type,
 	start_date = 1548720000000, end_date = 1577836740000},
 	fill_related_ref(N - 1, [Related | Acc]).
+
+fill_spec_char(N) ->
+	fill_spec_char(N, []).
+fill_spec_char(0, Acc) ->
+	Acc;
+fill_spec_char(N, Acc) ->
+	SpecChar = #specification_char{name = random_string(10),
+			description = random_string(20), value_type = random_string(5)},
+	fill_spec_char(N - 1, [SpecChar | Acc]).
 
 fill_resource_char(N) ->
 	fill_resource_char(N, []).
