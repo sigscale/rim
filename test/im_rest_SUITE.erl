@@ -1137,9 +1137,7 @@ map_to_resource(_Config) ->
 	ResourceName = random_string(7),
 	ResourceType = random_string(5),
 	ResouceHref = ?PathInventory ++ "resource/" ++ ResourceId,
-	CharValue = random_string(10),
-	CharSchema = ?PathInventory ++ "schema/resourceInventoryManagement#/definitions/v3/schema/geranNrm#/
-			definitions/BtsSiteMgrList",
+	CharValue = "gsm-bssfunction",
 	Map = #{"id" => Id,
 			"href" => Href,
 			"name" => Name,
@@ -1188,10 +1186,8 @@ map_to_resource(_Config) ->
 					"name" => "ACME Inc.",
 					"validFor" => #{"startDateTime" => "2019-01-29T00:00",
 							"endDateTime" => "2019-12-31T23:59"}}],
-			"resourceCharacteristic" => [#{"name" => "BtsSiteMgr",
-					"value" => CharValue,
-					"@type" => "BtsSiteMgrList",
-					"@schemaLocation" => CharSchema}]},
+			"resourceCharacteristic" => [#{"name" => "userLabel",
+					"value" => CharValue}]},
 	#resource{id = Id, href = Href, name = Name, public_id = PublicIdentifier,
 			description = Description, category = Category, class_type = ClassType,
 			schema = Schema, base_type = "Resource", state = "Active",
@@ -1203,8 +1199,15 @@ map_to_resource(_Config) ->
 	#specification_ref{id = ResourceId, href = ResouceHref, name = ResourceName,
 			version = "1.1"} = S,
 	#party_ref{id = PartyId, href = PartyHref} = RP,
-	#resource_char{name = "BtsSiteMgr", class_type = "BtsSiteMgrList",
-			schema = CharSchema, value = CharValue} = C.
+	#resource_char{name = "userLabel", value = CharValue} = C,
+	#resource_graph{name = "Resource graph",
+			connection = [#connection{name = "Connectivity test",
+					endpoint = [#endpoint_ref{id = "123", name = "Point name",
+					href = "http://35.229.193.25:8088/eventManagement/v1/event",
+					is_root = true,
+					connection_point = [#resource_ref{id = "321",
+							name = "Connection point",
+							href = "http://35.229.193.25:8088/eventManagement/v1/event"}]}]}]} = End.
 	
 resource_to_map() ->
 	[{userdata, [{doc, "Encode Resource map()"}]}].
