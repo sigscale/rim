@@ -106,7 +106,7 @@ class InventoryManagement extends PolymerElement {
 								id="specificationList"
 								loading="{{specificationLoading}}"
 								name="specificationView"
-								graph-size="[[graphSize]]"
+								graph-size="[[specificationGraphSize]]"
 								active-item="{{activeSpecificationItem}}">
 						</specification-list>
 						<rule-list
@@ -119,7 +119,7 @@ class InventoryManagement extends PolymerElement {
 								id="inventoryList"
 								loading="{{inventoryLoading}}"
 								name="inventoryView"
-								graph-size="[[graphSize]]"
+								graph-size="[[inventoryGraphSize]]"
 								active-item="{{activeInventoryItem}}">
 						</inventory-list>
 						<user-list
@@ -219,8 +219,8 @@ class InventoryManagement extends PolymerElement {
 			<rule-update id="ruleUpdate" active-item="[[activeRuleItem]]"></rule-update>
 			<inventory-add id="inventoryAdd"></inventory-add>
 			<inventory-help id="inventoryGetHelp" active="[[overFlowActive]]"></inventory-help>
-			<inventory-topology id="topologyGraph" graph-size={{graphSize}}></inventory-topology>
-			<specification-topology id="topologyGraph" graph-size={{graphSize}}></specification-topology>
+			<inventory-topology id="topologyGraph" graph-size={{inventoryGraphSize}}></inventory-topology>
+			<specification-topology id="topologyGraph" graph-size={{specificationGraphSize}}></specification-topology>
 		`;
 	}
 
