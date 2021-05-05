@@ -74,24 +74,28 @@
 							"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
 							"@referredType": "ResourceFunction",
 							"name": "ContainedExample1",
-							"connectionPoint": {
-								"id": "16029108611690135",
-								"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
-								"@referredType": "ConnectionPoint",
-								"name": "ExampleConnectionPoint1"
-							}
+							"connectionPoint": [
+								{
+									"id": "16029108611690135",
+									"href": "/resourceInventoryManagement/v4/resource/16029108611699870",
+									"@referredType": "ConnectionPoint",
+									"name": "ExampleConnectionPoint1"
+								}
+							]
 						},
 						{
 							"id": "16029108611699875",
 							"href": "/resourceInventoryManagement/v4/resource/16029108611699875",
 							"@referredType": "ResourceFunction",
 							"name": "ContainedExample2",
-							"connectionPoint": {
-								"id": "16029108611690136",
-								"href": "/resourceInventoryManagement/v4/resource/16029108611699876",
-								"@referredType": "ConnectionPoint",
-								"name": "ExampleConnectionPoint2"
-							}
+							"connectionPoint": [
+								{
+									"id": "16029108611690136",
+									"href": "/resourceInventoryManagement/v4/resource/16029108611699876",
+									"@referredType": "ConnectionPoint",
+									"name": "ExampleConnectionPoint2"
+								}
+							]
 						}
 					]
 				}

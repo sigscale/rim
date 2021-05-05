@@ -70,24 +70,28 @@
 							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684309",
 							"@referredType": "ResourceFunctionSpecification",
 							"name": "ContainedExample1",
-							"connectionPointSpecification": {
-								"id": "16029108611542281",
-								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542281",
-								"@referredType": "ConnectionPointSpecification",
-								"name": "ExampleConnectionPoint1"
-							}
+							"connectionPointSpecification": [
+								{
+									"id": "16029108611542281",
+									"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542281",
+									"@referredType": "ConnectionPointSpecification",
+									"name": "ExampleConnectionPoint1"
+								}
+							]
 						},
 						{
 							"id": "16029108611535601",
 							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611535601",
 							"@referredType": "ResourceFunctionSpecification",
 							"name": "ContainedExample2",
-							"connectionPointSpecification": {
-								"id": "16029108611542275",
-								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542275",
-								"@referredType": "ConnectionPointSpecification",
-								"name": "ExampleConnectionPoint2"
-							}
+							"connectionPointSpecification": [
+								{
+									"id": "16029108611542275",
+									"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611542275",
+									"@referredType": "ConnectionPointSpecification",
+									"name": "ExampleConnectionPoint2"
+								}
+							]
 						}
 					]
 				}
