@@ -937,10 +937,10 @@ endpoint_ref([is_root | T], #{"isRoot" := IsRoot} = M, Acc)
 	endpoint_ref(T, M, Acc#endpoint_ref{is_root = IsRoot});
 endpoint_ref([connection_point | T], #endpoint_ref{connection_point = CP} = R, Acc)
 		when is_list(CP), length(CP) > 0 ->
-	endpoint_ref(T, R, Acc#{"connectionPoint" => resource_rel(CP)});
+	endpoint_ref(T, R, Acc#{"connectionPoint" => resource_ref(CP)});
 endpoint_ref([connection_point | T], #{"connectionPoint" := CP} = M, Acc)
 		when is_list(CP), length(CP) > 0 ->
-	endpoint_ref(T, M, Acc#endpoint_ref{connection_point = resource_rel(CP)});
+	endpoint_ref(T, M, Acc#endpoint_ref{connection_point = resource_ref(CP)});
 endpoint_ref([_ | T], R, Acc) ->
 	endpoint_ref(T, R, Acc);
 endpoint_ref([], _, Acc) ->

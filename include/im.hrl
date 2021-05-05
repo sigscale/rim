@@ -449,7 +449,7 @@
 		schema :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		ref_type :: string() | undefined | '_',
-		connection_point = [] :: [resource_rel()] | '_'}).
+		connection_point = [] :: [resource_ref()] | '_'}).
 -type endpoint_ref() :: #endpoint_ref{}.
 
 -record(resource_graph_spec,
