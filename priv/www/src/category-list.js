@@ -60,11 +60,11 @@ class categoryList extends PolymerElement {
 									id="filterCategoryDescription"
 									aria-label="Description"
 									path="description"
-									value="{{_filterCategoryDescription}}">
+									value="{{_filterCategoryDesc}}">
 								<input
 										slot="filter"
 										placeholder="Description"
-										value="{{_filterCategoryDescription::input}}"
+										value="{{_filterCategoryDesc::input}}"
 										focus-target>
 							</vaadin-grid-filter>
 						</vaadin-grid-sorter>
