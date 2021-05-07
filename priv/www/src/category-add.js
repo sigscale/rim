@@ -47,10 +47,23 @@ class categoryAdd extends PolymerElement {
 						label="Class"
 						value="{{categoryType}}">
 				</paper-input>
-				<paper-input
+				<paper-dropdown-menu
+						class="drop"
 						label="Status"
-						value="{{categoryStatus}}">
-				</paper-input>
+						value="{{categoryStatus}}"
+						no-animations="true">
+					<paper-listbox
+							slot="dropdown-content">
+						<paper-item>In Study</paper-item>
+						<paper-item>In Design</paper-item>
+						<paper-item>In Test</paper-item>
+						<paper-item>Rejected</paper-item>
+						<paper-item>Active</paper-item>
+						<paper-item>Launched</paper-item>
+						<paper-item>Retired</paper-item>
+						<paper-item>Obsolete</paper-item>
+					</paper-listbox>
+				</paper-dropdown-menu>
 				<paper-input
 						label="Parent"
 						value="{{categoryParent}}">
