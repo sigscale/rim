@@ -69,75 +69,6 @@
 %% the im_specification public api
 %%----------------------------------------------------------------------
 
--spec gsm_bss() -> specification().
-%% @doc GSM Base Station Subsystem (BSS) resource specification.
-gsm_bss() ->
-	Id = #specification_char{name = "id",
-			description = "Used as an RDN when naming an instance of the object class.",
-			value_type = "string"},
-	UserLabel = #specification_char{name = "userLabel",
-			description = "A user-friendly (and user assignable) name of this object",
-			value_type = "string"},
-	VnfParametersList = #specification_char{name = "vnfParametersList",
-			description = "Parameter set of the VNF instance(s)",
-			value_type = "VnfParametersListType",
-			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
-	Chars = [Id, UserLabel, VnfParametersList],
-	BtsSiteMgrRel = #specification_rel{id = "894623081735701",
-			href = ?PathCatalogSpec ++ "894623081735701", name = "BtsSiteMgr",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	#specification{name = "BssFunction",
-			description = "GSM Base Station Subsystem (BSS)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "RAN",
-			target_schema = #target_schema_ref{class_type = "BssFunction",
-					schema = ?PathCatalogSchema ++ "BssFunction"},
-			characteristic = Chars,
-			related = [BtsSiteMgrRel]}.
-
--spec gsm_bts() -> specification().
-%% @doc GSM Base Transceive Station (BTS) resource specification.
-gsm_bts() ->
-	Id = #specification_char{name = "id",
-			description = "Used as an RDN when naming an instance of the object class.",
-			value_type = "string"},
-	UserLabel = #specification_char{name = "userLabel",
-			description = "A user-friendly (and user assignable) name of this object",
-			value_type = "string"},
-	VnfParametersList = #specification_char{name = "vnfParametersList",
-			description = "Parameter set of the VNF instance(s)",
-			value_type = "VnfParametersListType",
-			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
-	Latitude = #specification_char{name = "latitude",
-			description = "Latitude of the site manager location based on (WGS 84) global reference frame",
-			value_type = "latitude",
-			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/latitude"},
-	Longitude = #specification_char{name = "longitude",
-			description = "Longitude of the site manager location based on (WGS 84) global reference frame",
-			value_type = "longitude",
-			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/longitude"},
-	OperationalState = #specification_char{name = "operationalState",
-			description = "Indicates the operational state of the object instance",
-			value_type = "operationalStateType",
-			value_schema = ?PathCatalogSchema ++ "/stateManagementIRPNrm#/definitions/operationalStateType"},
-	Chars = [Id, UserLabel, VnfParametersList, Latitude, Longitude,
-			OperationalState],
-	GsmCellRel = #specification_rel{id = "894623081735702",
-			href = ?PathCatalogSpec ++ "894623081735702", name = "BtsSiteMgr",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	#specification{name = "BtsSiteMgr",
-			description = "GSM Base Transceiver Station (BTS)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "RAN",
-			target_schema = #target_schema_ref{class_type = "BtsSiteManager",
-					schema = ?PathCatalogSchema ++ "BtsSiteManager"},
-			characteristic = Chars,
-			related = [GsmCellRel]}.
-
 -spec gsm_cell() -> specification().
 %% @doc GSM radio cell resource specification.
 gsm_cell() ->
@@ -221,6 +152,89 @@ gsm_cell() ->
 			target_schema = #target_schema_ref{class_type = "GsmCell",
 					schema = ?PathCatalogSchema ++ "GsmCell"},
 			characteristic = Chars}.
+
+-spec gsm_bts() -> specification().
+%% @doc GSM Base Transceive Station (BTS) resource specification.
+gsm_bts() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersListType",
+			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
+	Latitude = #specification_char{name = "latitude",
+			description = "Latitude of the site manager location based on (WGS 84) global reference frame",
+			value_type = "latitude",
+			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/latitude"},
+	Longitude = #specification_char{name = "longitude",
+			description = "Longitude of the site manager location based on (WGS 84) global reference frame",
+			value_type = "longitude",
+			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/longitude"},
+	OperationalState = #specification_char{name = "operationalState",
+			description = "Indicates the operational state of the object instance",
+			value_type = "operationalStateType",
+			value_schema = ?PathCatalogSchema ++ "/stateManagementIRPNrm#/definitions/operationalStateType"},
+	Chars = [Id, UserLabel, VnfParametersList, Latitude, Longitude,
+			OperationalState],
+	SRelName = "GsmCell",
+	case im:get_specification_name(SRelName) of
+		{ok, #specification{id = Sid, href = Shref,
+				name = SRelName, class_type = Stype}} ->
+			GsmCellRel = #specification_rel{id = Sid, href = Shref,
+					name = SRelName, ref_type = Stype, rel_type = "contains"},
+			#specification{name = "BtsSiteMgr",
+					description = "GSM Base Transceiver Station (BTS)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "RAN",
+					target_schema = #target_schema_ref{class_type = "BtsSiteManager",
+							schema = ?PathCatalogSchema ++ "BtsSiteManager"},
+					characteristic = Chars,
+					related = [GsmCellRel]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, SRelName}, {error, Reason}])
+	end.
+
+-spec gsm_bss() -> specification().
+%% @doc GSM Base Station Subsystem (BSS) resource specification.
+gsm_bss() ->
+	Id = #specification_char{name = "id",
+			description = "Used as an RDN when naming an instance of the object class.",
+			value_type = "string"},
+	UserLabel = #specification_char{name = "userLabel",
+			description = "A user-friendly (and user assignable) name of this object",
+			value_type = "string"},
+	VnfParametersList = #specification_char{name = "vnfParametersList",
+			description = "Parameter set of the VNF instance(s)",
+			value_type = "VnfParametersListType",
+			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/VnfParametersListType"},
+	Chars = [Id, UserLabel, VnfParametersList],
+	SRelName = "BtsSiteMgr",
+	case im:get_specification_name(SRelName) of
+		{ok, #specification{id = Sid, href = Shref,
+				name = SRelName, class_type = Stype}} ->
+			BtsSiteMgrRel = #specification_rel{id = Sid, href = Shref,
+					name = SRelName, ref_type = Stype, rel_type = "contains"},
+			#specification{name = "BssFunction",
+					description = "GSM Base Station Subsystem (BSS)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "RAN",
+					target_schema = #target_schema_ref{class_type = "BssFunction",
+							schema = ?PathCatalogSchema ++ "BssFunction"},
+					characteristic = Chars,
+					related = [BtsSiteMgrRel]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, SRelName}, {error, Reason}])
+	end.
 
 -spec gsm_abis_link() -> specification().
 %% @doc Generic Managed Element resource specification.
