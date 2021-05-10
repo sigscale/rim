@@ -157,15 +157,7 @@
 							"name": "RncFunction"
 						}
 					]
-				}
-			]
-		},
-		{
-			"id": "894623081735608",
-			"@type": "ResourceGraphSpecification",
-			"name": "Adjacency Graph",
-			"description": "Topology of internal adjacency",
-			"connectionSpecification": [
+				},
 				{
 					"id": "894623081735609",
 					"name": "IubLink",
@@ -185,15 +177,7 @@
 							"name": "RncFunction"
 						}
 					]
-				}
-			]
-		},
-		{
-			"id": "894623081735609",
-			"@type": "ResourceGraphSpecification",
-			"name": "Adjacency Graph",
-			"description": "Topology of internal adjacency",
-			"connectionSpecification": [
+				},
 				{
 					"id": "894623081735610",
 					"name": "IubLink",
