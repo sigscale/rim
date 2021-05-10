@@ -267,9 +267,9 @@ install7(Nodes, Acc) ->
 %% @hidden
 install8(Nodes, Acc) ->
 	SpecFuns = [generic_me, generic_subnetwork,
-		gsm_bss, gsm_bts, gsm_cell, gsm_abis_link,
-		umts_rnc, umts_nodeb, umts_cell_fdd,
-		umts_cell_tdd_lcr, umts_cell_tdd_hcr, umts_iub_link,
+		gsm_cell, gsm_bts, gsm_bss, gsm_abis_link,
+		umts_nodeb, umts_cell_fdd, umts_cell_tdd_lcr, umts_cell_tdd_hcr,
+		umts_iub_link, umts_rnc,
 		lte_enb, lte_cell_fdd, lte_cell_tdd,
 		nr_gnb_du, nr_gnb_cu_cp, nr_gnb_cu_up, nr_sector_carrier,
 		nr_cell_cu, nr_cell_du, nr_ep_x2c, nr_ep_x2u, nr_ep_ngc, nr_ep_ngu,
@@ -297,6 +297,26 @@ install8(Nodes, Acc) ->
 		mec_tr, mec_dnsr, network_slice, network_slice_subnet],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
+install8([umts_rnc | T], Nodes, Acc) ->
+	case im:add_specification(im_specification:umts_rnc()) of
+		{ok, #specification{id = RncSpecId} = RncSpec} ->
+			Connectivity = rnc_connectivity(RncSpec),
+			Ftrans = fun() ->
+					[S] = mnesia:read(specification, RncSpecId, write),
+					mnesia:write(specification,
+							S#specification{connectivity = [Connectivity]}, write)
+			end,
+			case mnesia:transaction(Ftrans) of
+				{aborted, Reason} ->
+					{error, Reason};
+				{atomic, ok} ->
+					install8(T, Nodes, Acc)
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
 install8([F | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{}} ->
@@ -530,3 +550,28 @@ force([H | T]) ->
 force([]) ->
 	ok.
 
+%% @hidden
+rnc_connectivity(#specification{id = RncId, href = RncHref,
+		name = RncName, class_type = Classtype}) ->
+	RncEndPointSpec = #endpoint_spec_ref{id = RncId, href = RncHref,
+			name = RncName, ref_type = Classtype},
+	EndPointSpecNames = ["UtranCellFDD", "UtranCellTDDLcr", "UtranCellTDDHcr"],
+	Fcon = fun(EndPointSpecName, Acc) ->
+			case im:get_specification_name(EndPointSpecName) of
+				{ok, #specification{id = SpecId, href = Spechref,
+						name = EndPointSpecName, class_type = Spectype}} ->
+					EndPointSpec = #endpoint_spec_ref{id = SpecId, href = Spechref,
+							name = EndPointSpecName, ref_type = Spectype},
+							[#connection_spec{name = "IubLink", ass_type = "pointtoPoint",
+									description = "Edge between contained RFs",
+									endpoint = [RncEndPointSpec, EndPointSpec]} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, EndPointSpecName}, {error, Reason}]),
+					Acc
+			end
+	end,
+	#resource_graph_spec{name = "Adjacency Graph",
+			class_type = "ResourceGraphSpecification",
+			description = "Topology of internal adjacency",
+			connection = lists:reverse(lists:foldl(Fcon, [], EndPointSpecNames))}.
