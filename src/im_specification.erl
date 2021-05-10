@@ -1148,65 +1148,36 @@ lte_enb() ->
 			IRATANRSwitch, ENBId, X2BlackList, X2WhiteList, X2HOBlackList,
 			X2IpAddressList, TceIDMappingInfoList, SharNetTceMappingInfoList,
 			NetListeningRSForRIBS],
-	EUtranCellFDDRel = #specification_rel{id = "894623081735801",
-			href = ?PathCatalogSpec ++ "894623081735801", name = "EUtranCellFDD",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EUtranCellTDDRel = #specification_rel{id = "894623081735802",
-			href = ?PathCatalogSpec ++ "894623081735802", name = "EUtranCellTDD",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpRpEpsRel = #specification_rel{id = "984623185739841",
-			href = ?PathCatalogSpec ++ "984623185739841", name = "EP_RP_EPS",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpX2cRel = #specification_rel{id = "984623185739842",
-			href = ?PathCatalogSpec ++ "984623185739842", name = "EP_X2C",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpX2uRel = #specification_rel{id = "984623185739843",
-			href = ?PathCatalogSpec ++ "984623185739843", name = "EP_X2U",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNgcRel = #specification_rel{id = "984623185739844",
-			href = ?PathCatalogSpec ++ "984623185739844", name = "EP_NgC",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNguRel = #specification_rel{id = "984623185739845",
-			href = ?PathCatalogSpec ++ "984623185739845", name = "EP_NgU",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpXncRel = #specification_rel{id = "984623185739846",
-			href = ?PathCatalogSpec ++ "984623185739846", name = "EP_XnC",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpXnuRel = #specification_rel{id = "984623185739847",
-			href = ?PathCatalogSpec ++ "984623185739847", name = "EP_XnU",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	Related = [EUtranCellFDDRel, EUtranCellTDDRel, EpRpEpsRel, EpX2cRel,
-			EpX2uRel, EpNgcRel, EpNguRel, EpXncRel, EpXnuRel],
-	EpRpEpsCP = #specification_ref{id = "984623185739841",
-			href = ?PathCatalogSpec ++ "984623185739841", name = "EP_RP_EPS",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpX2cCP = #specification_ref{id = "984623185739842",
-			href = ?PathCatalogSpec ++ "984623185739842", name = "EP_X2C",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpX2uCP = #specification_ref{id = "984623185739843",
-			href = ?PathCatalogSpec ++ "984623185739843", name = "EP_X2U",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpNgcCP = #specification_ref{id = "984623185739844",
-			href = ?PathCatalogSpec ++ "984623185739844", name = "EP_NgC",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpNguCP = #specification_ref{id = "984623185739845",
-			href = ?PathCatalogSpec ++ "984623185739845", name = "EP_NgU",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpXncCP = #specification_ref{id = "984623185739846",
-			href = ?PathCatalogSpec ++ "984623185739846", name = "EP_XnC",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpXnuCP = #specification_ref{id = "984623185739847",
-			href = ?PathCatalogSpec ++ "984623185739847", name = "EP_XnU",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	ConPoint = [EpRpEpsCP, EpX2cCP, EpX2uCP, EpNgcCP, EpNguCP,
-			EpXncCP, EpXnuCP],
+	SRelNames = ["EUtranCellFDD", "EUtranCellTDD", "EP_RP_EPS", "EP_X2C",
+			"EP_X2U", "EP_NgC", "EP_NgU", "EP_XnC", "EP_XnU"],
+	Fspecrel = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Sid, href = Shref,
+						name = Name, class_type = Stype}} ->
+					[#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecRels = lists:foldl(Fspecrel, [], SRelNames),
+	ConPointNames = ["EP_RP_EPS", "EP_X2C", "EP_X2U", "EP_NgC", "EP_NgU",
+			"EP_XnC", "EP_XnU"],
+	Fcp = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = CPid, href = CPhref,
+						name = CPname, class_type = CPtype}} ->
+					[#specification_ref{id = CPid, href = CPhref,
+							name = CPname, ref_type = CPtype} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ConnectionPoint = lists:foldl(Fcp, [], ConPointNames),
 	#specification{name = "ENBFunction",
 			description = "LTE eNodeB",
 			class_type = "ResourceFunctionSpecification",
@@ -1216,8 +1187,8 @@ lte_enb() ->
 			target_schema = #target_schema_ref{class_type = "ENBFunction",
 					schema = ?PathCatalogSchema ++ "ENBFunction"},
 			characteristic = Chars,
-			related = Related,
-			connection_point = ConPoint}.
+			related = ResSpecRels,
+			connection_point = ConnectionPoint}.
 
 -spec lte_cell_fdd() -> specification().
 %% @doc LTE Frequency Division Duplex (FDD) radio cell resource specification.
