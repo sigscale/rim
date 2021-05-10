@@ -1507,26 +1507,34 @@ nr_gnb_du() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/GnbName"},
 	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 				GnbId, GnbIdLength, GnbDUId, GnbDuName],
-	NRCellDURel = #specification_rel{id = "894623081735825",
-			href = ?PathCatalogSpec ++ "894623081735825", name = "NRCellDU",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	NRSectorCarrierRel = #specification_rel{id = "894623081735826",
-			href = ?PathCatalogSpec ++ "894623081735826", name = "NRSectorCarrier",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpF1cRel = #specification_rel{id = "894623081735827",
-			href = ?PathCatalogSpec ++ "894623081735827", name = "EP_F1C",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpF1uRel = #specification_rel{id = "894623081735828",
-			href = ?PathCatalogSpec ++ "894623081735828", name = "EP_F1U",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpF1cCP = #specification_ref{id = "894623081735827",
-			href = ?PathCatalogSpec ++ "894623081735827", name = "EP_F1C",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpF1uCP = #specification_ref{id = "894623081735828",
-			href = ?PathCatalogSpec ++ "894623081735828", name = "EP_F1U",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SRelNames = ["NRCellDU", "NRSectorCarrier", "EP_F1C", "EP_F1U"],
+	Fspecrel = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Sid, href = Shref,
+						name = Name, class_type = Stype}} ->
+					[#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecRels = lists:foldl(Fspecrel, [], SRelNames),
+	ConPointNames = ["EP_F1C", "EP_F1U"],
+	Fcp = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = CPid, href = CPhref,
+						name = CPname, class_type = CPtype}} ->
+					[#specification_ref{id = CPid, href = CPhref,
+							name = CPname, ref_type = CPtype} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ConnectionPoint = lists:foldl(Fcp, [], ConPointNames),
 	#specification{name = "GNBDUFunction",
 			description = "5G NR gNB Distributed Unit (DU)",
 			class_type = "ResourceFunctionSpecification",
@@ -1536,8 +1544,8 @@ nr_gnb_du() ->
 			target_schema = #target_schema_ref{class_type = "GNBDUFunction",
 					schema = ?PathCatalogSchema ++ "GNBDUFunction"},
 			characteristic = Chars,
-			related = [NRCellDURel, NRSectorCarrierRel, EpF1cRel, EpF1uRel],
-			connection_point = [EpF1cCP, EpF1uCP]}.
+			related = ResSpecRels,
+			connection_point = ConnectionPoint}.
 
 -spec nr_gnb_cu_cp() -> specification().
 %% @doc NR gNB Central Unit (CU) Control Plane (CP) resource specification.
@@ -1574,45 +1582,34 @@ nr_gnb_cu_cp() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/PlmnIdList"},
 	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 			GnbId, GnbIdLength, GnbCuName, PLMNIdList],
-	NRCellCURel = #specification_rel{id = "894623081735813",
-			href = ?PathCatalogSpec ++ "894623081735813", name = "NRCellCU",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpF1cRel = #specification_rel{id = "894623081735814",
-			href = ?PathCatalogSpec ++ "894623081735814", name = "EP_F1C",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpE1Rel = #specification_rel{id = "894623081735815",
-			href = ?PathCatalogSpec ++ "894623081735815", name = "EP_E1",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpXncRel = #specification_rel{id = "894623081735816",
-			href = ?PathCatalogSpec ++ "894623081735816", name = "EP_XnC",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpX2cRel = #specification_rel{id = "894623081735817",
-			href = ?PathCatalogSpec ++ "894623081735817", name = "EP_X2C",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNgcRel = #specification_rel{id = "894623081735818",
-			href = ?PathCatalogSpec ++ "894623081735818", name = "EP_NgC",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	Related = [NRCellCURel, EpF1cRel, EpE1Rel, EpXncRel, EpX2cRel, EpNgcRel],
-	EpF1cCP = #specification_ref{id = "894623081735814",
-			href = ?PathCatalogSpec ++ "894623081735814", name = "EP_F1C",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpE1CP = #specification_ref{id = "894623081735815",
-			href = ?PathCatalogSpec ++ "894623081735815", name = "EP_E1",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpXncCP = #specification_ref{id = "894623081735816",
-			href = ?PathCatalogSpec ++ "894623081735816", name = "EP_XnC",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpX2cCP = #specification_ref{id = "894623081735817",
-			href = ?PathCatalogSpec ++ "894623081735817", name = "EP_X2C",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpNgcCP = #specification_ref{id = "894623081735818",
-			href = ?PathCatalogSpec ++ "894623081735818", name = "EP_NgC",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SRelNames = ["NRCellCU", "EP_F1C", "EP_E1", "EP_XnC", "EP_X2C", "EP_NgC"],
+	Fspecrel = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Sid, href = Shref,
+						name = Name, class_type = Stype}} ->
+					[#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecRels = lists:foldl(Fspecrel, [], SRelNames),
+	ConPointNames = ["EP_F1C", "EP_E1", "EP_XnC", "EP_X2C", "EP_NgC"],
+	Fcp = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = CPid, href = CPhref,
+						name = CPname, class_type = CPtype}} ->
+					[#specification_ref{id = CPid, href = CPhref,
+							name = CPname, ref_type = CPtype} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ConnectionPoint = lists:foldl(Fcp, [], ConPointNames),
 	#specification{name = "GNBCUCPFunction",
 			description = "5G NR gNB Central Unit (CU) Control Plane (CP)",
 			class_type = "ResourceFunctionSpecification",
@@ -1622,8 +1619,8 @@ nr_gnb_cu_cp() ->
 			target_schema = #target_schema_ref{class_type = "GNBCUCPFunction",
 					schema = ?PathCatalogSchema ++ "GNBCUCPFunction"},
 			characteristic = Chars,
-			related = Related,
-			connection_point = [EpF1cCP, EpE1CP, EpXncCP, EpX2cCP, EpNgcCP]}.
+			related = ResSpecRels,
+			connection_point = ConnectionPoint}.
 
 -spec nr_gnb_cu_up() -> specification().
 %% @doc NR gNB Central Unit (CU) User Plane (UP) resource specification.
@@ -1656,50 +1653,34 @@ nr_gnb_cu_up() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/PlmnIdList"},
 	Chars = [Id, UserLabel, VnfParametersList, PeeParametersList,
 			GnbId, GnbIdLength, PLMNIdList],
-	EpE1Rel = #specification_rel{id = "894623081735819",
-			href = ?PathCatalogSpec ++ "894623081735819", name = "EP_E1",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpF1uRel = #specification_rel{id = "894623081735820",
-			href = ?PathCatalogSpec ++ "894623081735820", name = "EP_F1U",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpXnuRel = #specification_rel{id = "894623081735821",
-			href = ?PathCatalogSpec ++ "894623081735821", name = "EP_XnU",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNguRel = #specification_rel{id = "894623081735822",
-			href = ?PathCatalogSpec ++ "894623081735822", name = "EP_NgU",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpX2uRel = #specification_rel{id = "894623081735823",
-			href = ?PathCatalogSpec ++ "894623081735823", name = "EP_X2U",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpS1uRel = #specification_rel{id = "894623081735824",
-			href = ?PathCatalogSpec ++ "894623081735824", name = "EP_S1U",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	Related = [EpE1Rel, EpF1uRel, EpXnuRel, EpNguRel, EpX2uRel, EpS1uRel],
-	EpE1CP = #specification_ref{id = "894623081735819",
-			href = ?PathCatalogSpec ++ "894623081735819", name = "EP_E1",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpF1uCP = #specification_ref{id = "894623081735820",
-			href = ?PathCatalogSpec ++ "894623081735820", name = "EP_F1U",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpXnuCP = #specification_ref{id = "894623081735821",
-			href = ?PathCatalogSpec ++ "894623081735821", name = "EP_XnU",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpNguCP = #specification_ref{id = "894623081735822",
-			href = ?PathCatalogSpec ++ "894623081735822", name = "EP_NgU",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpX2uCP = #specification_ref{id = "894623081735823",
-			href = ?PathCatalogSpec ++ "894623081735823", name = "EP_X2U",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpS1uCP = #specification_ref{id = "894623081735824",
-			href = ?PathCatalogSpec ++ "894623081735824", name = "EP_S1U",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	ConPoint = [EpE1CP, EpF1uCP, EpXnuCP, EpNguCP, EpX2uCP, EpS1uCP],
+	SRelNames = ["EP_E1", "EP_F1U", "EP_XnU", "EP_NgU", "EP_X2U", "EP_S1U"],
+	Fspecrel = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Sid, href = Shref,
+						name = Name, class_type = Stype}} ->
+					[#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecRels = lists:foldl(Fspecrel, [], SRelNames),
+	ConPointNames = ["EP_E1", "EP_F1U", "EP_XnU", "EP_NgU", "EP_X2U", "EP_S1U"],
+	Fcp = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = CPid, href = CPhref,
+						name = CPname, class_type = CPtype}} ->
+					[#specification_ref{id = CPid, href = CPhref,
+							name = CPname, ref_type = CPtype} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ConnectionPoint = lists:foldl(Fcp, [], ConPointNames),
 	#specification{name = "GNBCUUPFunction",
 			description = "5G NR gNB Central Unit (CU) User Plane (UP)",
 			class_type = "ResourceFunctionSpecification",
@@ -1709,8 +1690,8 @@ nr_gnb_cu_up() ->
 			target_schema = #target_schema_ref{class_type = "GNBCUUPFunction",
 					schema = ?PathCatalogSchema ++ "GNBCUUPFunction"},
 			characteristic = Chars,
-			related = Related,
-			connection_point = ConPoint}.
+			related = ResSpecRels,
+			connection_point = ConnectionPoint}.
 
 -spec nr_cell_cu() -> specification().
 %% @doc NR Cell Central Unit (CU) resource function specification.
