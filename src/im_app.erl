@@ -291,12 +291,64 @@ install8(Nodes, Acc) ->
 		core_mnpsrf, core_cgf, core_sgw, core_cbc,
 		ims_as, ims_hss, ims_pcscf, ims_scscf, ims_icscf,
 		pee_me, epcn3ai_proxy, epcn3ai_server,
-		im_iu, im_tmaiu, im_aiu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic,
+		im_tmaiu, im_aiu, im_iu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic,
 		huawei_usn, huawei_ugw, huawei_cgpomu, huawei_igwb,
 		huawei_uscdb, huawei_spsv3, huawei_mscsiosp, huawei_mscso,
 		mec_mehf, mec_mep, mec_mea, mec_meps, mec_meas, mec_rnis, mec_ls,
 		mec_tr, mec_dnsr, network_slice, network_slice_subnet],
 	install8(SpecFuns, Nodes, Acc).
+%% @hidden
+install8([F | T], Nodes, Acc)
+		when F == im_iu_ne; F == im_iu_hw; F == im_iu_sw; F == im_iu_lic ->
+	case im:add_specification(im_specification:F()) of
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype} = IUSpec} ->
+			IUResRel = #specification_rel{id = Sid, href = Shref, name = Sname,
+					ref_type = Stype, rel_type = "contains"},
+			Ftrans = fun() ->
+					mnesia:write(specification,
+							IUSpec#specification{related = [IUResRel]}, write)
+			end,
+			case mnesia:transaction(Ftrans) of
+				{aborted, Reason} ->
+					{error, Reason};
+				{atomic, ok} ->
+					install8(T, Nodes, Acc)
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+%% @hidden
+install8([im_iu | T], Nodes, Acc) ->
+	case im:add_specification(im_specification:im_iu()) of
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype, related = ResRels} = IUSpec} ->
+			IUResRel = #specification_rel{id = Sid, href = Shref, name = Sname,
+					ref_type = Stype, rel_type = "contains"},
+			{#specification{} = TmaSpec, #specification{} = AntennaSpec}
+					= tma_antenna_spec(),
+			Ftrans = fun() ->
+					ok = mnesia:write(specification,
+							IUSpec#specification{related = [IUResRel] ++ ResRels},
+							write),
+					ok = mnesia:write(specification,
+							TmaSpec#specification{related = [IUResRel]}, write),
+					mnesia:write(specification,
+							AntennaSpec#specification{related = [IUResRel]}, write)
+			end,
+			case mnesia:transaction(Ftrans) of
+				{aborted, Reason} ->
+					{error, Reason};
+				{atomic, ok} ->
+					install8(T, Nodes, Acc)
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
 %% @hidden
 install8([umts_rnc | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:umts_rnc()) of
@@ -550,6 +602,19 @@ force([H | T]) ->
 	end;
 force([]) ->
 	ok.
+
+%% @hidden
+tma_antenna_spec() ->
+	F = fun(SpecName) ->
+			case im:get_specification_name(SpecName) of
+				{ok, #specification{} = Spec} ->
+					Spec;
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, SpecName}, {error, Reason}])
+			end
+	end,
+	{F("TmaInventoryUnit"), F("AntennaInventoryUnit")}.
 
 %% @hidden
 rnc_connectivity(#specification{id = RncId, href = RncHref,
