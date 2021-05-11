@@ -1169,8 +1169,8 @@ lte_enb() ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = CPid, href = CPhref,
 						name = CPname, class_type = CPtype}} ->
-					[#specification_ref{id = CPid, href = CPhref,
-							name = CPname, ref_type = CPtype} | Acc];
+					[#specification_ref{id = CPid, href = CPhref, name = CPname,
+							class_type = "ConnectionPointRef", ref_type = CPtype} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1526,8 +1526,8 @@ nr_gnb_du() ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = CPid, href = CPhref,
 						name = CPname, class_type = CPtype}} ->
-					[#specification_ref{id = CPid, href = CPhref,
-							name = CPname, ref_type = CPtype} | Acc];
+					[#specification_ref{id = CPid, href = CPhref, name = CPname,
+							class_type = "ConnectionPointRef", ref_type = CPtype} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1601,8 +1601,8 @@ nr_gnb_cu_cp() ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = CPid, href = CPhref,
 						name = CPname, class_type = CPtype}} ->
-					[#specification_ref{id = CPid, href = CPhref,
-							name = CPname, ref_type = CPtype} | Acc];
+					[#specification_ref{id = CPid, href = CPhref, name = CPname,
+							class_type = "ConnectionPointRef", ref_type = CPtype} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1672,8 +1672,8 @@ nr_gnb_cu_up() ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = CPid, href = CPhref,
 						name = CPname, class_type = CPtype}} ->
-					[#specification_ref{id = CPid, href = CPhref,
-							name = CPname, ref_type = CPtype} | Acc];
+					[#specification_ref{id = CPid, href = CPhref, name = CPname,
+							class_type = "ConnectionPointRef", ref_type = CPtype} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -2336,8 +2336,8 @@ network_slice_subnet() ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = CPid, href = CPhref,
 						name = CPname, class_type = CPtype}} ->
-					[#specification_ref{id = CPid, href = CPhref,
-							name = CPname, ref_type = CPtype} | Acc];
+					[#specification_ref{id = CPid, href = CPhref, name = CPname,
+							class_type = "ConnectionPointRef", ref_type = CPtype} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
