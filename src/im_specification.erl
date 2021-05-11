@@ -2442,101 +2442,31 @@ ngc_amf() ->
 			value_schema = ?PathCatalogSchema ++ "/genericNrm#/definitions/Dn"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, AmfIdentifier,
 			SBIFqdn, SBIServiceList, WeightFactor, SNSSAIList, AmfSet],
-	EpN2Rel = #specification_rel{id = "894623081735846",
-			href = ?PathCatalogSpec ++ "894623081735846", name = "EP_N2",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN8Rel = #specification_rel{id = "894623081735847",
-			href = ?PathCatalogSpec ++ "894623081735847", name = "EP_N8",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN11Rel = #specification_rel{id = "894623081735848",
-			href = ?PathCatalogSpec ++ "894623081735848", name = "EP_N11",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN12Rel = #specification_rel{id = "894623081735849",
-			href = ?PathCatalogSpec ++ "894623081735849", name = "EP_N12",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN14Rel = #specification_rel{id = "894623081735850",
-			href = ?PathCatalogSpec ++ "894623081735850", name = "EP_N14",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN15Rel = #specification_rel{id = "894623081735851",
-			href = ?PathCatalogSpec ++ "894623081735851", name = "EP_N15",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN17Rel = #specification_rel{id = "894623081735852",
-			href = ?PathCatalogSpec ++ "894623081735852", name = "EP_N17",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN20Rel = #specification_rel{id = "894623081735853",
-			href = ?PathCatalogSpec ++ "894623081735853", name = "EP_N20",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN22Rel = #specification_rel{id = "894623081735854",
-			href = ?PathCatalogSpec ++ "894623081735854", name = "EP_N22",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN26Rel = #specification_rel{id = "894623081735855",
-			href = ?PathCatalogSpec ++ "894623081735855", name = "EP_N26",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNlsRel = #specification_rel{id = "894623081735856",
-			href = ?PathCatalogSpec ++ "894623081735856", name = "EP_NLS",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNlgRel = #specification_rel{id = "894623081735857",
-			href = ?PathCatalogSpec ++ "894623081735857", name = "EP_NLG",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735858",
-			href = ?PathCatalogSpec ++ "894623081735858", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	Related = [EpN2Rel, EpN8Rel, EpN11Rel, EpN12Rel, EpN14Rel, EpN15Rel,
-			EpN17Rel, EpN20Rel, EpN22Rel, EpN26Rel, EpNlsRel, EpNlgRel, EpSbiXRel],
-	EpN2CP = #specification_ref{id = "894623081735846",
-			href = ?PathCatalogSpec ++ "894623081735846", name = "EP_N2",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN8CP = #specification_ref{id = "894623081735847",
-			href = ?PathCatalogSpec ++ "894623081735847", name = "EP_N8",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN11CP = #specification_ref{id = "894623081735848",
-			href = ?PathCatalogSpec ++ "894623081735848", name = "EP_N11",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN12CP = #specification_ref{id = "894623081735849",
-			href = ?PathCatalogSpec ++ "894623081735849", name = "EP_N12",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN14CP = #specification_ref{id = "894623081735850",
-			href = ?PathCatalogSpec ++ "894623081735850", name = "EP_N14",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN15CP = #specification_ref{id = "894623081735851",
-			href = ?PathCatalogSpec ++ "894623081735851", name = "EP_N15",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN17CP = #specification_ref{id = "894623081735852",
-			href = ?PathCatalogSpec ++ "894623081735852", name = "EP_N17",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN20CP = #specification_ref{id = "894623081735853",
-			href = ?PathCatalogSpec ++ "894623081735853", name = "EP_N20",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN22CP = #specification_ref{id = "894623081735854",
-			href = ?PathCatalogSpec ++ "894623081735854", name = "EP_N22",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN26CP = #specification_ref{id = "894623081735855",
-			href = ?PathCatalogSpec ++ "894623081735855", name = "EP_N26",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpNlsCP = #specification_ref{id = "894623081735856",
-			href = ?PathCatalogSpec ++ "894623081735856", name = "EP_NLS",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpNlgCP = #specification_ref{id = "894623081735857",
-			href = ?PathCatalogSpec ++ "894623081735857", name = "EP_NLG",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735858",
-			href = ?PathCatalogSpec ++ "894623081735858", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	ConPoint = [EpN2CP, EpN8CP, EpN11CP, EpN12CP, EpN14CP, EpN15CP, EpN17CP,
-			EpN20CP, EpN22CP, EpN26CP, EpNlsCP, EpNlgCP, EpSbiXCP],
+	SpecNames = ["EP_N2", "EP_N8", "EP_N11", "EP_N12", "EP_N14", "EP_N15",
+			"EP_N17", "EP_N20", "EP_N22", "EP_N26", "EP_NLS", "EP_NLG", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "AMFFunction",
 			description = "5G Core Access and Mobility Management Function (AMF)",
 			class_type = "ResourceFunctionSpecification",
@@ -2546,8 +2476,8 @@ ngc_amf() ->
 			target_schema = #target_schema_ref{class_type = "AMFFunction",
 					schema = ?PathCatalogSchema ++ "AMFFunction"},
 			characteristic = Chars,
-			related = Related,
-			connection_point = ConPoint}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_smf() -> specification().
 %% @doc 5GC Session Management Function (SMF) resource function specification.
@@ -2584,58 +2514,31 @@ ngc_smf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TacList,
 			SBIFqdn, SBIServiceList, SNSSAIList],
-	EpN4Rel = #specification_rel{id = "894623081735881",
-			href = ?PathCatalogSpec ++ "894623081735881", name = "EP_N4",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN7Rel = #specification_rel{id = "894623081735882",
-			href = ?PathCatalogSpec ++ "894623081735882", name = "EP_N7",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN10Rel = #specification_rel{id = "894623081735883",
-			href = ?PathCatalogSpec ++ "894623081735883", name = "EP_N10",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN11Rel = #specification_rel{id = "894623081735884",
-			href = ?PathCatalogSpec ++ "894623081735884", name = "EP_N11",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN16Rel = #specification_rel{id = "894623081735885",
-			href = ?PathCatalogSpec ++ "894623081735885", name = "EP_N16",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpS5CRel = #specification_rel{id = "894623081735886",
-			href = ?PathCatalogSpec ++ "894623081735886", name = "EP_S5C",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735887",
-			href = ?PathCatalogSpec ++ "894623081735887", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	Related = [EpN4Rel, EpN7Rel, EpN10Rel, EpN11Rel, EpN16Rel, EpS5CRel,
-			EpSbiXRel],
-	EpN4CP = #specification_ref{id = "894623081735881",
-			href = ?PathCatalogSpec ++ "894623081735881", name = "EP_N4",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN7CP = #specification_ref{id = "894623081735882",
-			href = ?PathCatalogSpec ++ "894623081735882", name = "EP_N7",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN10CP = #specification_ref{id = "894623081735883",
-			href = ?PathCatalogSpec ++ "894623081735883", name = "EP_N10",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN11CP = #specification_ref{id = "894623081735884",
-			href = ?PathCatalogSpec ++ "894623081735884", name = "EP_N11",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN16CP = #specification_ref{id = "894623081735885",
-			href = ?PathCatalogSpec ++ "894623081735885", name = "EP_N16",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpS5cCP = #specification_ref{id = "894623081735886",
-			href = ?PathCatalogSpec ++ "894623081735886", name = "EP_S5C",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735887",
-			href = ?PathCatalogSpec ++ "894623081735887", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	ConPoint = [EpN4CP, EpN7CP, EpN10CP, EpN11CP, EpN16CP, EpS5cCP, EpSbiXCP],
+	SpecNames = ["EP_N4", "EP_N7", "EP_N10", "EP_N11", "EP_N16", "EP_S5C",
+			"EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "SMFFunction",
 			description = "5G Core Session Management Function (SMF)"
 					"resource function specification",
@@ -2646,8 +2549,8 @@ ngc_smf() ->
 			target_schema = #target_schema_ref{class_type = "SMFFunction",
 					schema = ?PathCatalogSchema ++ "SMFFunction"},
 			characteristic = Chars,
-			related = Related,
-			connection_point = ConPoint}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_upf() -> specification().
 %% @doc 5GC User Plane Function (UPF) resource function specification.
@@ -2675,50 +2578,30 @@ ngc_upf() ->
 			value_type = "SnssaiList",
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, TacList, SNSSAIList],
-	EpN3Rel = #specification_rel{id = "894623081735897",
-			href = ?PathCatalogSpec ++ "894623081735897", name = "EP_N3",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN4Rel = #specification_rel{id = "894623081735898",
-			href = ?PathCatalogSpec ++ "894623081735898", name = "EP_N4",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN6Rel = #specification_rel{id = "894623081735899",
-			href = ?PathCatalogSpec ++ "894623081735899", name = "EP_N6",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN9Rel = #specification_rel{id = "894623081735900",
-			href = ?PathCatalogSpec ++ "894623081735900", name = "EP_N9",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpS5URel = #specification_rel{id = "894623081735901",
-			href = ?PathCatalogSpec ++ "894623081735901", name = "EP_S5U",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735902",
-			href = ?PathCatalogSpec ++ "894623081735902", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	Related = [EpN3Rel, EpN4Rel, EpN6Rel, EpN9Rel, EpS5URel, EpSbiXRel],
-	EpN3CP = #specification_ref{id = "894623081735897",
-			href = ?PathCatalogSpec ++ "894623081735897", name = "EP_N3",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN4CP = #specification_ref{id = "894623081735898",
-			href = ?PathCatalogSpec ++ "894623081735898", name = "EP_N4",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN6CP = #specification_ref{id = "894623081735899",
-			href = ?PathCatalogSpec ++ "894623081735899", name = "EP_N6",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN9CP = #specification_ref{id = "894623081735900",
-			href = ?PathCatalogSpec ++ "894623081735900", name = "EP_N9",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpS5uCP = #specification_ref{id = "894623081735901",
-			href = ?PathCatalogSpec ++ "894623081735901", name = "EP_S5U",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735902",
-			href = ?PathCatalogSpec ++ "894623081735902", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	ConPoint = [EpN3CP, EpN4CP, EpN6CP, EpN9CP, EpS5uCP, EpSbiXCP],
+	SpecNames = ["EP_N3", "EP_N4", "EP_N6", "EP_N9", "EP_S5U", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "UPFFunction",
 			description = "5G Core User Plane Function (UPF)",
 			class_type = "ResourceFunctionSpecification",
@@ -2728,8 +2611,8 @@ ngc_upf() ->
 			target_schema = #target_schema_ref{class_type = "UPFFunction",
 					schema = ?PathCatalogSchema ++ "UPFFunction"},
 			characteristic = Chars,
-			related = Related,
-			connection_point = ConPoint}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_n3iwf() -> specification().
 %% @doc 5GC Non 3GPP Inter Working Function (N3IWF) resource function specification.
@@ -2749,20 +2632,30 @@ ngc_n3iwf() ->
 			value_type = "PlmnIdList",
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/PlmnIdList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
-	EpN2Rel = #specification_rel{id = "894623081735863",
-			href = ?PathCatalogSpec ++ "894623081735863", name = "EP_N2",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN3Rel = #specification_rel{id = "894623081735864",
-			href = ?PathCatalogSpec ++ "894623081735864", name = "EP_N3",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN2CP = #specification_ref{id = "894623081735863",
-			href = ?PathCatalogSpec ++ "894623081735863", name = "EP_N2",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN3CP = #specification_ref{id = "894623081735864",
-			href = ?PathCatalogSpec ++ "894623081735864", name = "EP_N3",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N2", "EP_N3"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "N3IWFFunction",
 			description = "5G Core Non 3GPP Inter Working Function (N3IWF)",
 			class_type = "ResourceFunctionSpecification",
@@ -2772,8 +2665,8 @@ ngc_n3iwf() ->
 			target_schema = #target_schema_ref{class_type = "N3IWFFunction",
 					schema = ?PathCatalogSchema ++ "N3IWFFunction"},
 			characteristic = Chars,
-			related = [EpN2Rel, EpN3Rel],
-			connection_point = [EpN2CP, EpN3CP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_pcf() -> specification().
 %% @doc 5G Policy Control Function (PCF) resource function specification.
@@ -2806,48 +2699,30 @@ ngc_pcf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpN5Rel = #specification_rel{id = "894623081735873",
-			href = ?PathCatalogSpec ++ "894623081735873", name = "EP_N5",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN7Rel = #specification_rel{id = "894623081735874",
-			href = ?PathCatalogSpec ++ "894623081735874", name = "EP_N7",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN15Rel = #specification_rel{id = "894623081735875",
-			href = ?PathCatalogSpec ++ "894623081735875", name = "EP_N15",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN16Rel = #specification_rel{id = "894623081735876",
-			href = ?PathCatalogSpec ++ "894623081735876", name = "EP_N16",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpRxRel = #specification_rel{id = "894623081735877",
-			href = ?PathCatalogSpec ++ "894623081735877", name = "EP_Rx",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735878",
-			href = ?PathCatalogSpec ++ "894623081735878", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN5CP = #specification_ref{id = "894623081735873",
-			href = ?PathCatalogSpec ++ "894623081735873", name = "EP_N5",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN7CP = #specification_ref{id = "894623081735874",
-			href = ?PathCatalogSpec ++ "894623081735874", name = "EP_N7",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN15CP = #specification_ref{id = "894623081735875",
-			href = ?PathCatalogSpec ++ "894623081735875", name = "EP_N15",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN16CP = #specification_ref{id = "894623081735876",
-			href = ?PathCatalogSpec ++ "894623081735876", name = "EP_N16",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpRxCP = #specification_ref{id = "894623081735877",
-			href = ?PathCatalogSpec ++ "894623081735877", name = "EP_Rx",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735878",
-			href = ?PathCatalogSpec ++ "894623081735878", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N5", "EP_N7", "EP_N15", "EP_N16", "EP_Rx", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "PCFFunction",
 			description = "5G Policy Control Function (PCF)",
 			class_type = "ResourceFunctionSpecification",
@@ -2857,8 +2732,8 @@ ngc_pcf() ->
 			target_schema = #target_schema_ref{class_type = "PCFFunction",
 					schema = ?PathCatalogSchema ++ "PCFFunction"},
 			characteristic = Chars,
-			related = [EpN5Rel, EpN7Rel, EpN15Rel, EpN16Rel, EpRxRel, EpSbiXRel],
-			connection_point = [EpN5CP, EpN7CP, EpN15CP, EpN16CP, EpRxCP, EpSbiXCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_ausf() -> specification().
 %% @doc 5GC Authentication Server Function (AUSF) resource function specification.
@@ -2891,27 +2766,30 @@ ngc_ausf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpN12Rel = #specification_rel{id = "894623081735859",
-			href = ?PathCatalogSpec ++ "894623081735859", name = "EP_N12",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN13Rel = #specification_rel{id = "894623081735860",
-			href = ?PathCatalogSpec ++ "894623081735860", name = "EP_N13",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735861",
-			href = ?PathCatalogSpec ++ "894623081735861", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN12CP = #specification_ref{id = "894623081735859",
-			href = ?PathCatalogSpec ++ "894623081735859", name = "EP_N12",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN13CP = #specification_ref{id = "894623081735860",
-			href = ?PathCatalogSpec ++ "894623081735860", name = "EP_N13",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735861",
-			href = ?PathCatalogSpec ++ "894623081735861", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N12", "EP_N13", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "AUSFFunction",
 			description = "5G Core Authentication Server Function (AUSF)",
 			class_type = "ResourceFunctionSpecification",
@@ -2921,8 +2799,8 @@ ngc_ausf() ->
 			target_schema = #target_schema_ref{class_type = "AUSFFunction",
 					schema = ?PathCatalogSchema ++ "AUSFFunction"},
 			characteristic = Chars,
-			related = [EpN12Rel, EpN13Rel, EpSbiXRel],
-			connection_point = [EpN12CP, EpN13CP, EpSbiXCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_udm() -> specification().
 %% @doc 5GC Unified Data Management (UDM) resource function specification.
@@ -2955,34 +2833,30 @@ ngc_udm() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpN8Rel = #specification_rel{id = "894623081735891",
-			href = ?PathCatalogSpec ++ "894623081735891", name = "EP_N8",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN10Rel = #specification_rel{id = "894623081735892",
-			href = ?PathCatalogSpec ++ "894623081735892", name = "EP_N10",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN13Rel = #specification_rel{id = "894623081735893",
-			href = ?PathCatalogSpec ++ "894623081735893", name = "EP_N13",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735894",
-			href = ?PathCatalogSpec ++ "894623081735894", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN8CP = #specification_ref{id = "894623081735891",
-			href = ?PathCatalogSpec ++ "894623081735891", name = "EP_N8",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN10CP = #specification_ref{id = "894623081735892",
-			href = ?PathCatalogSpec ++ "894623081735892", name = "EP_N10",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN13CP = #specification_ref{id = "894623081735893",
-			href = ?PathCatalogSpec ++ "894623081735893", name = "EP_N13",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735894",
-			href = ?PathCatalogSpec ++ "894623081735894", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N8", "EP_N10", "EP_N13", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "UDMFunction",
 			description = "5G Core Unified Data Management (UDM)",
 			class_type = "ResourceFunctionSpecification",
@@ -2992,8 +2866,8 @@ ngc_udm() ->
 			target_schema = #target_schema_ref{class_type = "UDMFunction",
 					schema = ?PathCatalogSchema ++ "UDMFunction"},
 			characteristic = Chars,
-			related = [EpN8Rel, EpN10Rel, EpN13Rel, EpSbiXRel],
-			connection_point = [EpN8CP, EpN10CP, EpN13CP, EpSbiXCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_udr() -> specification().
 %% @doc 5GC Unified Data Repository (UDR) resource function specification.
@@ -3026,24 +2900,29 @@ ngc_udr() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpSbiXRel = #specification_rel{id = "894623081735895",
-			href = ?PathCatalogSpec ++ "894623081735895", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXCP = #specification_ref{id = "894623081735895",
-			href = ?PathCatalogSpec ++ "894623081735895", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	#specification{name = "UDRFunction",
-			description = "5G Core Unified Data Repository (UDR)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "Core",
-			target_schema = #target_schema_ref{class_type = "UDRFunction",
-					schema = ?PathCatalogSchema ++ "UDRFunction"},
-			characteristic = Chars,
-			related = [EpSbiXRel],
-			connection_point = [EpSbiXCP]}.
+	Name = "EP_SBI_X",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Sid, href = Shref, name = Name,
+				class_type = Stype}} ->
+			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
+					ref_type = Stype, rel_type = "contains"},
+			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
+					class_type = "ConnectionPointRef", ref_type = Stype},
+			#specification{name = "UDRFunction",
+					description = "5G Core Unified Data Repository (UDR)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "Core",
+					target_schema = #target_schema_ref{class_type = "UDRFunction",
+							schema = ?PathCatalogSchema ++ "UDRFunction"},
+					characteristic = Chars,
+					related = [EpSbiXRel],
+					connection_point = [EpSbiXCP]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}])
+	end.
 
 -spec ngc_udsf() -> specification().
 %% @doc 5GC Unified Data Storage Function (UDSF) resource function specification.
@@ -3076,24 +2955,29 @@ ngc_udsf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpSbiXRel = #specification_rel{id = "894623081735896",
-			href = ?PathCatalogSpec ++ "894623081735896", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXCP = #specification_ref{id = "894623081735896",
-			href = ?PathCatalogSpec ++ "894623081735896", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	#specification{name = "UDSFFunction",
-			description = "5G Core Unified Data Storage Function (UDSF)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "Core",
-			target_schema = #target_schema_ref{class_type = "UDSFFunction",
-					schema = ?PathCatalogSchema ++ "UDSFFunction"},
-			characteristic = Chars,
-			related = [EpSbiXRel],
-			connection_point = [EpSbiXCP]}.
+	Name = "EP_SBI_X",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Sid, href = Shref, name = Name,
+				class_type = Stype}} ->
+			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
+					ref_type = Stype, rel_type = "contains"},
+			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
+					class_type = "ConnectionPointRef", ref_type = Stype},
+			#specification{name = "UDSFFunction",
+					description = "5G Core Unified Data Storage Function (UDSF)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "Core",
+					target_schema = #target_schema_ref{class_type = "UDSFFunction",
+							schema = ?PathCatalogSchema ++ "UDSFFunction"},
+					characteristic = Chars,
+					related = [EpSbiXRel],
+					connection_point = [EpSbiXCP]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}])
+	end.
 
 -spec ngc_nrf() -> specification().
 %% @doc 5GC Network Repository Function (NRF) resource function specification.
@@ -3130,20 +3014,30 @@ ngc_nrf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			NSIIdList, NFProfileList, SNSSAIList],
-	EpN27Rel = #specification_rel{id = "894623081735866",
-			href = ?PathCatalogSpec ++ "894623081735866", name = "EP_N27",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735867",
-			href = ?PathCatalogSpec ++ "894623081735867", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN27CP = #specification_ref{id = "894623081735866",
-			href = ?PathCatalogSpec ++ "894623081735866", name = "EP_N27",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735867",
-			href = ?PathCatalogSpec ++ "894623081735867", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N27", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "NRFFunction",
 			description = "5G Core Network Repository Function (NRF)",
 			class_type = "ResourceFunctionSpecification",
@@ -3153,8 +3047,8 @@ ngc_nrf() ->
 			target_schema = #target_schema_ref{class_type = "NRFFunction",
 					schema = ?PathCatalogSchema ++ "NRFFunction"},
 			characteristic = Chars,
-			related = [EpN27Rel, EpSbiXRel],
-			connection_point = [EpN27CP, EpSbiXCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_nssf() -> specification().
 %% @doc 5GC Network Slice Selection Function (NSSF) resource function specification.
@@ -3191,34 +3085,30 @@ ngc_nssf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			NSIIdList, NFProfileList, SNSSAIList],
-	EpN22Rel = #specification_rel{id = "894623081735868",
-			href = ?PathCatalogSpec ++ "894623081735868", name = "EP_N22",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN27Rel = #specification_rel{id = "894623081735869",
-			href = ?PathCatalogSpec ++ "894623081735869", name = "EP_N27",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN31Rel = #specification_rel{id = "894623081735870",
-			href = ?PathCatalogSpec ++ "894623081735870", name = "EP_N31",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXRel = #specification_rel{id = "894623081735871",
-			href = ?PathCatalogSpec ++ "894623081735871", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN22CP = #specification_ref{id = "894623081735868",
-			href = ?PathCatalogSpec ++ "894623081735868", name = "EP_N22",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN27CP = #specification_ref{id = "894623081735869",
-			href = ?PathCatalogSpec ++ "894623081735869", name = "EP_N27",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN31CP = #specification_ref{id = "894623081735870",
-			href = ?PathCatalogSpec ++ "894623081735870", name = "EP_N31",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiXCP = #specification_ref{id = "894623081735871",
-			href = ?PathCatalogSpec ++ "894623081735871", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N22", "EP_N27", "EP_N31", "EP_SBI_X"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "NSSFFunction",
 			description = "5G Core Network Slice Selection Function (NSSF)",
 			class_type = "ResourceFunctionSpecification",
@@ -3228,8 +3118,8 @@ ngc_nssf() ->
 			target_schema = #target_schema_ref{class_type = "NSSFFunction",
 					schema = ?PathCatalogSchema ++ "NSSFFunction"},
 			characteristic = Chars,
-			related = [EpN22Rel, EpN27Rel, EpN31Rel, EpSbiXRel],
-			connection_point = [EpN22CP, EpN27CP, EpN31CP, EpSbiXCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_smsf() -> specification().
 %% @doc 5GC Short Message Service Function (SMSF) resource function specification.
@@ -3258,27 +3148,30 @@ ngc_smsf() ->
 			value_schema = ?PathCatalogSchema ++ "/ngcNrm#/definitions/SBIServiceList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList],
-	EpN20Rel = #specification_rel{id = "894623081735888",
-			href = ?PathCatalogSpec ++ "894623081735888", name = "EP_N20",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN21Rel = #specification_rel{id = "894623081735889",
-			href = ?PathCatalogSpec ++ "894623081735889", name = "EP_N21",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpMapSmscRel = #specification_rel{id = "894623081735890",
-			href = ?PathCatalogSpec ++ "894623081735890", name = "EP_MAP_SMSC",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN20CP = #specification_ref{id = "894623081735888",
-			href = ?PathCatalogSpec ++ "894623081735888", name = "EP_N20",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpN21CP = #specification_ref{id = "894623081735889",
-			href = ?PathCatalogSpec ++ "894623081735889", name = "EP_N21",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpMapSmscCP = #specification_ref{id = "894623081735890",
-			href = ?PathCatalogSpec ++ "894623081735890", name = "EP_MAP_SMSC",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N20", "EP_N21", "EP_MAP_SMSC"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "SMSFFunction",
 			description = "5G Core Short Message Service Function (SMSF)",
 			class_type = "ResourceFunctionSpecification",
@@ -3288,8 +3181,8 @@ ngc_smsf() ->
 			target_schema = #target_schema_ref{class_type = "SMSFFunction",
 					schema = ?PathCatalogSchema ++ "SMSFFunction"},
 			characteristic = Chars,
-			related = [EpN20Rel, EpN21Rel, EpMapSmscRel],
-			connection_point = [EpN20CP, EpN21CP, EpMapSmscCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_lmf() -> specification().
 %% @doc 5GC Location Management Function (LMF) resource function specification.
@@ -3309,24 +3202,29 @@ ngc_lmf() ->
 			value_type = "PlmnIdList",
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/PlmnIdList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
-	EpNlsRel = #specification_rel{id = "894623081735862",
-			href = ?PathCatalogSpec ++ "894623081735862", name = "EP_NLS",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpNlsCP = #specification_ref{id = "894623081735862",
-			href = ?PathCatalogSpec ++ "894623081735862", name = "EP_NLS",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	#specification{name = "LMFFunction",
-			description = "5G Core Location Management Function (LMF)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "Core",
-			target_schema = #target_schema_ref{class_type = "LMFFunction",
-					schema = ?PathCatalogSchema ++ "LMFFunction"},
-			characteristic = Chars,
-			related = [EpNlsRel],
-			connection_point = [EpNlsCP]}.
+	Name = "EP_NLS",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Sid, href = Shref, name = Name,
+				class_type = Stype}} ->
+			EpNlsRel = #specification_rel{id = Sid, href = Shref, name = Name,
+					ref_type = Stype, rel_type = "contains"},
+			EpNlsCP = #specification_ref{id = Sid, href = Shref, name = Name,
+					class_type = "ConnectionPointRef", ref_type = Stype},
+			#specification{name = "LMFFunction",
+					description = "5G Core Location Management Function (LMF)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "Core",
+					target_schema = #target_schema_ref{class_type = "LMFFunction",
+							schema = ?PathCatalogSchema ++ "LMFFunction"},
+					characteristic = Chars,
+					related = [EpNlsRel],
+					connection_point = [EpNlsCP]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}])
+	end.
 
 -spec ngc_ngeir() -> specification().
 %% @doc 5GC NG Equipment Identity Register (ngEIR) resource function specification.
@@ -3359,24 +3257,29 @@ ngc_ngeir() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpN17Rel = #specification_rel{id = "894623081735865",
-			href = ?PathCatalogSpec ++ "894623081735865", name = "EP_N17",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN17CP = #specification_ref{id = "894623081735865",
-			href = ?PathCatalogSpec ++ "894623081735865", name = "EP_N17",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	#specification{name = "NGEIRFunction",
-			description = "5G Core NG Equipment Identity Register (ngEIR)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "Core",
-			target_schema = #target_schema_ref{class_type = "NGEIRFunction",
-					schema = ?PathCatalogSchema ++ "NGEIRFunction"},
-			characteristic = Chars,
-			related = [EpN17Rel],
-			connection_point = [EpN17CP]}.
+	Name = "EP_N17",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Sid, href = Shref, name = Name,
+				class_type = Stype}} ->
+			EpN17Rel = #specification_rel{id = Sid, href = Shref, name = Name,
+					ref_type = Stype, rel_type = "contains"},
+			EpN17CP = #specification_ref{id = Sid, href = Shref, name = Name,
+					class_type = "ConnectionPointRef", ref_type = Stype},
+			#specification{name = "NGEIRFunction",
+					description = "5G Core NG Equipment Identity Register (ngEIR)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "Core",
+					target_schema = #target_schema_ref{class_type = "NGEIRFunction",
+							schema = ?PathCatalogSchema ++ "NGEIRFunction"},
+					characteristic = Chars,
+					related = [EpN17Rel],
+					connection_point = [EpN17CP]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}])
+	end.
 
 -spec ngc_sepp() -> specification().
 %% @doc 5GC Security Edge Protection Proxy (SEPP) resource function specification.
@@ -3396,20 +3299,30 @@ ngc_sepp() ->
 			value_type = "PlmnIdList",
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/PlmnIdList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList],
-	EpN32Rel = #specification_rel{id = "894623081735879",
-			href = ?PathCatalogSpec ++ "894623081735879", name = "EP_N32",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiIpxRel = #specification_rel{id = "894623081735880",
-			href = ?PathCatalogSpec ++ "894623081735880", name = "EP_SBI_IPX",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpN32CP = #specification_ref{id = "894623081735879",
-			href = ?PathCatalogSpec ++ "894623081735879", name = "EP_N32",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	EpSbiIpxCP = #specification_ref{id = "894623081735880",
-			href = ?PathCatalogSpec ++ "894623081735880", name = "EP_SBI_IPX",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
+	SpecNames = ["EP_N32", "EP_SBI_IPX"],
+	Fspecs = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{} = Spec} ->
+					[Spec | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	ResSpecs = lists:foldl(Fspecs, [], SpecNames),
+	Fspecrels = fun(#specification{id = Sid, href = Shref,
+				name = Name, class_type = Stype}) ->
+			#specification_rel{id = Sid, href = Shref, name = Name,
+							ref_type = Stype, rel_type = "contains"}
+	end,
+	ResSpecRels = lists:map(Fspecrels, ResSpecs),
+	Fspeccps = fun(#specification{id = CPid, href = CPhref,
+				name = CPname, class_type = CPtype}) ->
+			#specification_ref{id = CPid, href = CPhref, name = CPname,
+					class_type = "ConnectionPointRef", ref_type = CPtype}
+	end,
+	ResSpecCPs = lists:map(Fspeccps, ResSpecs),
 	#specification{name = "SEPPFunction",
 			description = "5G Core Security Edge Protection Proxy (SEPP)",
 			class_type = "ResourceFunctionSpecification",
@@ -3419,8 +3332,8 @@ ngc_sepp() ->
 			target_schema = #target_schema_ref{class_type = "SEPPFunction",
 					schema = ?PathCatalogSchema ++ "SEPPFunction"},
 			characteristic = Chars,
-			related = [EpN32Rel, EpSbiIpxRel],
-			connection_point = [EpN32CP, EpSbiIpxCP]}.
+			related = ResSpecRels,
+			connection_point = ResSpecCPs}.
 
 -spec ngc_nwdaf() -> specification().
 %% @doc 5GC Network Data Analytics Function (NWDAF) resource function specification.
@@ -3453,24 +3366,29 @@ ngc_nwdaf() ->
 			value_schema = ?PathCatalogSchema ++ "/nrNrm#/definitions/SnssaiList"},
 	Chars = [ID, UserLabel, VnfParametersList, PLMNIdList, SBIFqdn,
 			SBIServiceList, SNSSAIList],
-	EpSbiXRel = #specification_rel{id = "894623081735872",
-			href = ?PathCatalogSpec ++ "894623081735872", name = "EP_SBI_X",
-			ref_type = "ResourceFunctionSpecification", rel_type = "contains"},
-	EpSbiXCP = #specification_ref{id = "894623081735872",
-			href = ?PathCatalogSpec ++ "894623081735872", name = "EP_SBI_X",
-			class_type = "ConnectionPointRef",
-			ref_type = "ResourceFunctionSpecification"},
-	#specification{name = "NWDAFFunction",
-			description = "5G Core Network Data Analytics Function (NWDAF)",
-			class_type = "ResourceFunctionSpecification",
-			status = active,
-			version = "1.0",
-			category = "Core",
-			target_schema = #target_schema_ref{class_type = "NWDAFFunction",
-					schema = ?PathCatalogSchema ++ "NWDAFFunction"},
-			characteristic = Chars,
-			related = [EpSbiXRel],
-			connection_point = [EpSbiXCP]}.
+	Name = "EP_SBI_X",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Sid, href = Shref, name = Name,
+				class_type = Stype}} ->
+			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
+					ref_type = Stype, rel_type = "contains"},
+			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
+					class_type = "ConnectionPointRef", ref_type = Stype},
+			#specification{name = "NWDAFFunction",
+					description = "5G Core Network Data Analytics Function (NWDAF)",
+					class_type = "ResourceFunctionSpecification",
+					status = active,
+					version = "1.0",
+					category = "Core",
+					target_schema = #target_schema_ref{class_type = "NWDAFFunction",
+							schema = ?PathCatalogSchema ++ "NWDAFFunction"},
+					characteristic = Chars,
+					related = [EpSbiXRel],
+					connection_point = [EpSbiXCP]};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}])
+	end.
 
 -spec ngc_ep_n2() -> specification().
 %% @doc 5GC End Point N2 resource specification.
