@@ -4813,7 +4813,7 @@ core_msc() ->
 			target_schema = #target_schema_ref{class_type = "MscServerFunction",
 					schema = ?PathCatalogSchema ++ "MscServerFunction"},
 			characteristic = Chars,
-			related = resource_rel(["IucsLink", "ALink"])}.
+			related = specification_rel(["IucsLink", "ALink"])}.
 
 -spec core_mgw() -> specification().
 %% @doc Core Circuit Switched (CS) Media Gateway (MGW) resource specification.
@@ -4916,7 +4916,7 @@ core_sgsn() ->
 			target_schema = #target_schema_ref{class_type = "SgsnFunction",
 					schema = ?PathCatalogSchema ++ "SgsnFunction"},
 			characteristic = Chars,
-			related = resource_rel(["GbLink", "IupsLink"])}.
+			related = specification_rel(["GbLink", "IupsLink"])}.
 
 -spec core_ggsn() -> specification().
 %% @doc Core Gateway GPRS Support Node (GGSN) resource specification.
@@ -5113,7 +5113,7 @@ core_cbc() ->
 			target_schema = #target_schema_ref{class_type = "CbcFunction",
 					schema = ?PathCatalogSchema ++ "CbcFunction"},
 			characteristic = Chars,
-			related = resource_rel(["IubcLink"])}.
+			related = specification_rel(["IubcLink"])}.
 
 -spec core_iucs() -> specification().
 %% @doc Core Iu-cs Interface Link resource specification.
@@ -5592,7 +5592,7 @@ im_iu() ->
 			target_schema = #target_schema_ref{class_type = "InventoryUnit",
 					schema = ?PathCatalogSchema ++ "InventoryUnit"},
 			characteristic = Chars,
-			related = resource_rel(["TmaInventoryUnit", "AntennaInventoryUnit"])}.
+			related = specification_rel(["TmaInventoryUnit", "AntennaInventoryUnit"])}.
 
 -spec im_tmaiu() -> specification().
 %% @doc IM Tower Mounted Amplifier (TMA) Inventory Unit resource specification.
@@ -6101,7 +6101,7 @@ generic_subnetwork() ->
 			target_schema = #target_schema_ref{class_type = "SubNetwork",
 					schema = ?PathCatalogSchema ++ "SubNetwork"},
 			characteristic = Chars,
-			related = resource_rel(["ManagedElement"])}.
+			related = specification_rel(["ManagedElement"])}.
 
 -spec huawei_usn() -> specification().
 %% @doc Huawei Unified Serving Node (USN) resource specification.
@@ -6502,7 +6502,7 @@ mec_mehf() ->
 			target_schema = #target_schema_ref{class_type = "MobileEdgeHostFunction",
 					schema = ?PathCatalogSchema ++ "MobileEdgeHostFunction"},
 			characteristic = Chars,
-			related = resource_rel(["MobileEdgePlatform", "MobileEdgeApplication",
+			related = specification_rel(["MobileEdgePlatform", "MobileEdgeApplication",
 					"TrafficRule", "DNSRule"])}.
 
 -spec mec_mep() -> specification().
@@ -6521,7 +6521,7 @@ mec_mep() ->
 			target_schema = #target_schema_ref{class_type = "MobileEdgePlatform",
 					schema = ?PathCatalogSchema ++ "MobileEdgePlatform"},
 			characteristic = Chars,
-			related = resource_rel(["MobileEdgePlatformService"])}.
+			related = specification_rel(["MobileEdgePlatformService"])}.
 
 -spec mec_mea() -> specification().
 %% @doc MEC Mobile Edge Application resource function specification.
@@ -6575,7 +6575,7 @@ mec_mea() ->
 			target_schema = #target_schema_ref{class_type = "MobileEdgeApplication",
 					schema = ?PathCatalogSchema ++ "MobileEdgeApplication"},
 			characteristic = Chars,
-			related = resource_rel(["MobileEdgeApplicationService"])}.
+			related = specification_rel(["MobileEdgeApplicationService"])}.
 
 -spec mec_meps() -> specification().
 %% @doc MEC Mobile Edge Platform Service resource specification.
@@ -6614,7 +6614,7 @@ mec_meps() ->
 					class_type = "MobileEdgePlatformService",
 					schema = ?PathCatalogSchema ++ "MobileEdgePlatformService"},
 			characteristic = Chars,
-			related = resource_rel(["RNIService", "LocationService"])}.
+			related = specification_rel(["RNIService", "LocationService"])}.
 
 -spec mec_meas() -> specification().
 %% @doc MEC Mobile Edge Application Service resource specification.
@@ -6779,7 +6779,7 @@ eprpeps_refs() ->
 	end.
 
 %% @hidden
-resource_rel(SpecificationNames) ->
+specification_rel(SpecificationNames) ->
 	Fspecrel = fun(Name, Acc) ->
 			case im:get_specification_name(Name) of
 				{ok, #specification{id = Sid, href = Shref,
