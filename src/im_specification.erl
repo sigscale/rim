@@ -5508,7 +5508,7 @@ epcn3ai_proxy() ->
 			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "EPCN3AI",
+			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "3GPPAAAProxyFunction",
 					schema = ?PathCatalogSchema ++ "3GPPAAAProxyFunction"},
 			characteristic = Chars}.
@@ -5536,7 +5536,7 @@ epcn3ai_server() ->
 			class_type = "ResourceFunctionSpecification",
 			status = active,
 			version = "1.0",
-			category = "EPCN3AI",
+			category = "EPC",
 			target_schema = #target_schema_ref{class_type = "3GPPAAAServerFunction",
 					schema = ?PathCatalogSchema ++ "3GPPAAAServerFunction"},
 			characteristic = Chars}.
