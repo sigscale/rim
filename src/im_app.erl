@@ -294,8 +294,9 @@ install8(Nodes, Acc) ->
 		im_tmaiu, im_aiu, im_iu, im_iu_ne, im_iu_hw, im_iu_sw, im_iu_lic,
 		huawei_usn, huawei_ugw, huawei_cgpomu, huawei_igwb,
 		huawei_uscdb, huawei_spsv3, huawei_mscsiosp, huawei_mscso,
-		mec_mehf, mec_mep, mec_mea, mec_meps, mec_meas, mec_rnis, mec_ls,
-		mec_tr, mec_dnsr, network_slice, network_slice_subnet],
+		mec_rnis, mec_ls, mec_tr, mec_dnsr,
+		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
+		network_slice, network_slice_subnet],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
 install8([generic_subnetwork | T], Nodes, Acc) ->
