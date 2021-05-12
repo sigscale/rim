@@ -298,6 +298,28 @@ install8(Nodes, Acc) ->
 		mec_tr, mec_dnsr, network_slice, network_slice_subnet],
 	install8(SpecFuns, Nodes, Acc).
 %% @hidden
+install8([generic_subnetwork | T], Nodes, Acc) ->
+	case im:add_specification(im_specification:generic_subnetwork()) of
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype, related = Srels} = IUSpec} ->
+			MESpecRel = #specification_rel{id = Sid, href = Shref, name = Sname,
+					ref_type = Stype, rel_type = "contains"},
+			Ftrans = fun() ->
+					mnesia:write(specification, IUSpec#specification{
+							related = [MESpecRel] ++ Srels}, write)
+			end,
+			case mnesia:transaction(Ftrans) of
+				{aborted, Reason} ->
+					{error, Reason};
+				{atomic, ok} ->
+					install8(T, Nodes, Acc)
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+%% @hidden
 install8([F | T], Nodes, Acc)
 		when F == im_iu_ne; F == im_iu_hw; F == im_iu_sw; F == im_iu_lic ->
 	case im:add_specification(im_specification:F()) of
