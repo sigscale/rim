@@ -411,6 +411,7 @@ install10([im_iu | T], Nodes, Acc) ->
 	end;
 %% @hidden
 install10([umts_rnc | T], Nodes, Acc) ->
+	CategoryName = category_name(atom_to_list(umts_rnc)),
 	case im:add_specification(im_specification:umts_rnc()) of
 		{ok, #specification{id = RncSpecId} = RncSpec} ->
 			Connectivity = rnc_connectivity(RncSpec),
@@ -431,6 +432,7 @@ install10([umts_rnc | T], Nodes, Acc) ->
 			{error, Reason}
 	end;
 install10([F | T], Nodes, Acc) ->
+	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{} = Spec} ->
 			install10(T, Nodes, Acc);
@@ -700,3 +702,25 @@ rnc_connectivity(#specification{id = RncId, href = RncHref,
 			class_type = "ResourceGraphSpecification",
 			description = "Topology of internal adjacency",
 			connection = lists:reverse(lists:foldl(Fcon, [], EndPointSpecNames))}.
+
+%% @hidden
+category_name("gsm_" ++ _) ->
+	"GSM";
+category_name("umts_" ++ _) ->
+	"UMTS";
+category_name("lte_" ++ _) ->
+	"LTE";
+category_name("nr_" ++ _) ->
+	"NR";
+category_name("network_slice" ++ _) ->
+	"5GC";
+category_name("ngc_" ++ _) ->
+	"5GC";
+category_name("epc" ++ _) ->
+	"EPC";
+category_name("core_" ++ _) ->
+	"Core";
+category_name("ims_" ++ _) ->
+	"IMS";
+category_name(_) ->
+	[].
