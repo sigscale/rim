@@ -59,6 +59,9 @@
 -export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0,
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 
+-export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
+		core_category/0, umts_category/0, gsm_category/0, ims_category/0]).
+
 -include("im.hrl").
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
@@ -6757,6 +6760,79 @@ mec_dnsr() ->
 			target_schema = #target_schema_ref{class_type = "DNSRule",
 					schema = ?PathCatalogSchema ++ "DNSRule"},
 			characteristic = Chars}.
+
+-spec ngc_category() -> category().
+%% @doc
+ngc_category() ->
+	#category{name = "5GC",
+			description = "5G Core Network (5GC)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec nr_category() -> category().
+%% @doc
+nr_category() ->
+	#category{name = "NR",
+			description = "5G New Radio",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec epc_category() -> category().
+%% @doc
+epc_category() ->
+	#category{name = "EPC",
+			description = "Evolved Packet Core (EPC)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec lte_category() -> category().
+%% @doc
+lte_category() ->
+	#category{name = "LTE",
+			description = "Evolved Universal Terrestrial Radio "
+					"Access Network (E-UTRAN)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec core_category() -> category().
+%% @doc
+core_category() ->
+	#category{name = "Core",
+			description = "Core Network (CN)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec umts_category() -> category().
+%% @doc
+umts_category() ->
+	#category{name = "UMTS",
+			description = "Universal Terrestrial Radio Access Network (UTRAN)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec gsm_category() -> category().
+%% @doc
+gsm_category() ->
+	#category{name = "GSM",
+			description = "GSM/EDGE Radio Access Network (GERAN) Network",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec ims_category() -> category().
+%% @doc
+ims_category() ->
+	#category{name = "IMS",
+			description = "IP Multimedia Subsystem (IMS)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
 
 %%----------------------------------------------------------------------
 %% internal functions
