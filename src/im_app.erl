@@ -424,6 +424,7 @@ install10([umts_rnc | T], Nodes, Acc) ->
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
+					ok = add_candidate(CategoryName, RncSpec),
 					install10(T, Nodes, Acc)
 			end;
 		{error, Reason} ->
@@ -435,6 +436,7 @@ install10([F | T], Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{} = Spec} ->
+			ok = add_candidate(CategoryName, Spec),
 			install10(T, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
@@ -724,3 +726,42 @@ category_name("ims_" ++ _) ->
 	"IMS";
 category_name(_) ->
 	[].
+
+%% @hidden
+add_candidate([], #specification{}) ->
+	ok;
+add_candidate(CategoryName, #specification{id = SpecId, href = SpecHref,
+		name = SpecName}) ->
+	case im:get_category_name(CategoryName) of
+		{ok, #category{id = CategoryId, href = CategoryHref,
+				name = CategoryName, candidate = C} = Category} ->
+			CategoryRef = #category_ref{id = CategoryId,
+					href = CategoryHref, name = CategoryName},
+			Candidate = #candidate{name = SpecName,
+					description = "candidate of " ++ SpecName, status = active,
+					class_type = "ResourceCandidate", category = [CategoryRef],
+					specification = #specification_ref{id = SpecId,
+					href = SpecHref, name = SpecName}},
+			case im:add_candidate(Candidate) of
+				{ok, #candidate{id = CandidateId, href = CandidateHref,
+						name = SpecName}} ->
+					CandidateRef = #candidate_ref{id = CandidateId,
+							href = CandidateHref, name = SpecName},
+					Ftrans = fun() ->
+							mnesia:write(category, Category#category{
+									candidate = C ++ [CandidateRef]}, write)
+					end,
+					case mnesia:transaction(Ftrans) of
+						{aborted, Reason} ->
+							{error, Reason};
+						{atomic, ok} ->
+							ok
+					end;
+				{error, Reason} ->
+					error_logger:warning_report(["Error adding resource candidate",
+							{candidate, SpecName}, {error, Reason}])
+			end;
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource category",
+					{category, CategoryName}, {error, Reason}])
+	end.
