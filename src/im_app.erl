@@ -266,6 +266,43 @@ install7(Nodes, Acc) ->
 	end.
 %% @hidden
 install8(Nodes, Acc) ->
+	CategoryFuns = [ngc_category, nr_category, epc_category, lte_category,
+		core_category, umts_category, gsm_category, ims_category],
+	install8(CategoryFuns, Nodes, Acc).
+%% @hidden
+install8([F | T], Nodes, Acc) ->
+	case im:add_category(im_specification:F()) of
+		{ok, #category{}} ->
+			install8(T, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM categories.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install8([], Nodes, Acc) ->
+	error_logger:info_msg("Added 3GPP NRM resource categories.~n"),
+	install9(Nodes, Acc).
+
+%% @hidden
+install9(Nodes, Acc) ->
+	CatalogFuns = [ng_catalog, lte_catalog, umts_catalog, gsm_catalog],
+	install9(CatalogFuns, Nodes, Acc).
+%% @hidden
+install9([F | T], Nodes, Acc) ->
+	case im:add_catalog(im_specification:F()) of
+		{ok, #catalog{}} ->
+			install9(T, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM catalogs.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install9([], Nodes, Acc) ->
+	error_logger:info_msg("Added 3GPP NRM resource catalogs.~n"),
+	install10(Nodes, Acc).
+
+%% @hidden
+install10(Nodes, Acc) ->
 	SpecFuns = [generic_me, generic_subnetwork,
 		gsm_cell, gsm_bts, gsm_bss, gsm_abis_link,
 		umts_nodeb, umts_cell_fdd, umts_cell_tdd_lcr, umts_cell_tdd_hcr,
@@ -297,9 +334,9 @@ install8(Nodes, Acc) ->
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet],
-	install8(SpecFuns, Nodes, Acc).
+	install10(SpecFuns, Nodes, Acc).
 %% @hidden
-install8([generic_subnetwork | T], Nodes, Acc) ->
+install10([generic_subnetwork | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:generic_subnetwork()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype, related = Srels} = IUSpec} ->
@@ -313,7 +350,7 @@ install8([generic_subnetwork | T], Nodes, Acc) ->
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install8(T, Nodes, Acc)
+					install10(T, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
@@ -321,7 +358,7 @@ install8([generic_subnetwork | T], Nodes, Acc) ->
 			{error, Reason}
 	end;
 %% @hidden
-install8([F | T], Nodes, Acc)
+install10([F | T], Nodes, Acc)
 		when F == im_iu_ne; F == im_iu_hw; F == im_iu_sw; F == im_iu_lic ->
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -336,7 +373,7 @@ install8([F | T], Nodes, Acc)
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install8(T, Nodes, Acc)
+					install10(T, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
@@ -344,7 +381,7 @@ install8([F | T], Nodes, Acc)
 			{error, Reason}
 	end;
 %% @hidden
-install8([im_iu | T], Nodes, Acc) ->
+install10([im_iu | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:im_iu()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype, related = ResRels} = IUSpec} ->
@@ -365,7 +402,7 @@ install8([im_iu | T], Nodes, Acc) ->
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install8(T, Nodes, Acc)
+					install10(T, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
@@ -373,7 +410,7 @@ install8([im_iu | T], Nodes, Acc) ->
 			{error, Reason}
 	end;
 %% @hidden
-install8([umts_rnc | T], Nodes, Acc) ->
+install10([umts_rnc | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:umts_rnc()) of
 		{ok, #specification{id = RncSpecId} = RncSpec} ->
 			Connectivity = rnc_connectivity(RncSpec),
@@ -386,131 +423,130 @@ install8([umts_rnc | T], Nodes, Acc) ->
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install8(T, Nodes, Acc)
+					install10(T, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install8([F | T], Nodes, Acc) ->
+install10([F | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:F()) of
-		{ok, #specification{}} ->
-			install8(T, Nodes, Acc);
+		{ok, #specification{} = Spec} ->
+			install10(T, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install8([], Nodes, Acc) ->
+install10([], Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource specifications.~n"),
-	install9(Nodes, Acc).
+	install11(Nodes, Acc).
 %% @hidden
-install9(Nodes, Acc) ->
+install11(Nodes, Acc) ->
 	case application:load(inets) of
 		ok ->
 			error_logger:info_msg("Loaded inets.~n"),
-			install10(Nodes, Acc);
+			install12(Nodes, Acc);
 		{error, {already_loaded, inets}} ->
-			install10(Nodes, Acc)
+			install12(Nodes, Acc)
 	end.
 %% @hidden
-install10(Nodes, Acc) ->
+install12(Nodes, Acc) ->
 	case application:get_env(inets, services) of
 		{ok, InetsServices} ->
-			install11(Nodes, Acc, InetsServices);
+			install13(Nodes, Acc, InetsServices);
 		undefined ->
 			error_logger:info_msg("Inets services not defined. "
 					"User table not created~n"),
-			install15(Nodes, Acc)
+			install17(Nodes, Acc)
 	end.
 %% @hidden
-install11(Nodes, Acc, InetsServices) ->
+install13(Nodes, Acc, InetsServices) ->
 	case lists:keyfind(httpd, 1, InetsServices) of
 		{httpd, HttpdInfo} ->
-			install12(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
+			install14(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
 		false ->
 			error_logger:info_msg("Httpd service not defined. "
 					"User table not created~n"),
-			install15(Nodes, Acc)
+			install17(Nodes, Acc)
 	end.
 %% @hidden
-install12(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
+install14(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
 	case lists:keyfind(auth_type, 1, DirectoryInfo) of
 		{auth_type, mnesia} ->
-			install13(Nodes, Acc);
+			install15(Nodes, Acc);
 		_ ->
 			error_logger:info_msg("Auth type not mnesia. "
 					"User table not created~n"),
-			install15(Nodes, Acc)
+			install17(Nodes, Acc)
 	end;
-install12(Nodes, Acc, false) ->
+install14(Nodes, Acc, false) ->
 	error_logger:info_msg("Auth directory not defined. "
 			"User table not created~n"),
-	install15(Nodes, Acc).
+	install17(Nodes, Acc).
 %% @hidden
-install13(Nodes, Acc) ->
+install15(Nodes, Acc) ->
 	case mnesia:create_table(httpd_user, [{type, bag}, {disc_copies, Nodes},
 			{attributes, record_info(fields, httpd_user)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_user table.~n"),
-			install14(Nodes, [httpd_user | Acc]);
+			install16(Nodes, [httpd_user | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, httpd_user}} ->
 			error_logger:info_msg("Found existing httpd_user table.~n"),
-			install14(Nodes, [httpd_user | Acc]);
+			install16(Nodes, [httpd_user | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
 			{error, Reason}
 	end.
 %% @hidden
-install14(Nodes, Acc) ->
+install16(Nodes, Acc) ->
 	case mnesia:create_table(httpd_group, [{type, bag}, {disc_copies, Nodes},
 			{attributes, record_info(fields, httpd_group)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_group table.~n"),
-			install15(Nodes, [httpd_group | Acc]);
+			install17(Nodes, [httpd_group | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, httpd_group}} ->
 			error_logger:info_msg("Found existing httpd_group table.~n"),
-			install15(Nodes, [httpd_group | Acc]);
+			install17(Nodes, [httpd_group | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
 			{error, Reason}
 	end.
 %% @hidden
-install15(Nodes, Acc) ->
+install17(Nodes, Acc) ->
 	case mnesia:create_table(pee_rule, [{disc_copies, Nodes},
 			{attributes, record_info(fields, pee_rule)}]) of
-%			{attributes, record_info(fields, pee_rule)}, {index, [id]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new pee rule table.~n"),
-			install16(Nodes, [pee_rule | Acc]);
+			install18(Nodes, [pee_rule | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, pee_rule}} ->
 			error_logger:info_msg("Found existing pee rule table.~n"),
-			install16(Nodes, [pee_rule | Acc]);
+			install18(Nodes, [pee_rule | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
 			{error, Reason}
 	end.
 %% @hidden
-install16(_Nodes, Tables) ->
+install18(_Nodes, Tables) ->
 	case mnesia:wait_for_tables(Tables, ?WAITFORTABLES) of
 		ok ->
-			install17(Tables, lists:member(httpd_user, Tables));
+			install19(Tables, lists:member(httpd_user, Tables));
 		{timeout, Tables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, Tables}]),
@@ -521,21 +557,21 @@ install16(_Nodes, Tables) ->
 			{error, Reason}
 	end.
 %% @hidden
-install17(Tables, true) ->
+install19(Tables, true) ->
 	case inets:start() of
 		ok ->
 			error_logger:info_msg("Started inets.~n"),
-			install18(Tables);
+			install20(Tables);
 		{error, {already_started, inets}} ->
-			install18(Tables);
+			install20(Tables);
 		{error, Reason} ->
 			error_logger:error_msg("Failed to start inets~n"),
 			{error, Reason}
 	end;
-install17(Tables, false) ->
+install19(Tables, false) ->
 	{ok, Tables}.
 %% @hidden
-install18(Tables) ->
+install20(Tables) ->
 	case im:get_user() of
 		{ok, []} ->
 			case im:add_user("admin", "admin", "en") of
