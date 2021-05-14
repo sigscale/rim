@@ -6843,9 +6843,9 @@ ng_catalog() ->
 	Fcategoryref = fun(Name, Acc) ->
 			case im:get_category_name(Name) of
 				{ok, #category{id = CategoryId, href = CategoryHref,
-						name = CategoryName}} ->
+						name = CategoryName, version = CategoryVersion}} ->
 					[#category_ref{id = CategoryId, href = CategoryHref,
-							name = CategoryName} | Acc];
+							name = CategoryName, version = CategoryVersion} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource category",
 							{category, Name}, {error, Reason}]),
@@ -6867,9 +6867,9 @@ lte_catalog() ->
 	Fcategoryref = fun(Name, Acc) ->
 			case im:get_category_name(Name) of
 				{ok, #category{id = CategoryId, href = CategoryHref,
-						name = CategoryName}} ->
+						name = CategoryName, version = CategoryVersion}} ->
 					[#category_ref{id = CategoryId, href = CategoryHref,
-							name = CategoryName} | Acc];
+							name = CategoryName, version = CategoryVersion} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource category",
 							{category, Name}, {error, Reason}]),
@@ -6890,9 +6890,9 @@ umts_catalog() ->
 	Fcategoryref = fun(Name, Acc) ->
 			case im:get_category_name(Name) of
 				{ok, #category{id = CategoryId, href = CategoryHref,
-						name = CategoryName}} ->
+						name = CategoryName, version = CategoryVersion}} ->
 					[#category_ref{id = CategoryId, href = CategoryHref,
-							name = CategoryName} | Acc];
+							name = CategoryName, version = CategoryVersion} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource category",
 							{category, Name}, {error, Reason}]),
@@ -6913,9 +6913,9 @@ gsm_catalog() ->
 	Fcategoryref = fun(Name, Acc) ->
 			case im:get_category_name(Name) of
 				{ok, #category{id = CategoryId, href = CategoryHref,
-						name = CategoryName}} ->
+						name = CategoryName, version = CategoryVersion}} ->
 					[#category_ref{id = CategoryId, href = CategoryHref,
-							name = CategoryName} | Acc];
+							name = CategoryName, version = CategoryVersion} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource category",
 							{category, Name}, {error, Reason}]),

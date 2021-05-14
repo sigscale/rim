@@ -1794,6 +1794,12 @@ is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
 		is_list(RelatedParty) ->
 	lists:all(fun is_party_ref/1, RelatedParty),
 	lists:all(fun is_category_ref/1, Category);
+is_catalog(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "category" := Category}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Category) ->
+	lists:all(fun is_category_ref/1, Category);
 is_catalog(_) ->
 	false.
 
@@ -1808,7 +1814,13 @@ is_category(#{"id" := Id, "href" := Href, "name" := Name,
 		is_boolean(Bool) ->
 	lists:all(fun is_party_ref/1, RelatedParty),
 	lists:all(fun is_candidate_ref/1, Candidate);
-is_category(_) ->
+is_category(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "resourceCandidate" := Candidate})
+		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Candidate) ->
+	lists:all(fun is_candidate_ref/1, Candidate);
+is_category(_C) ->
 	false.
 
 is_candidate(#{"id" := Id, "href" := Href, "name" := Name,
@@ -1818,6 +1830,15 @@ is_candidate(#{"id" := Id, "href" := Href, "name" := Name,
 		"resourceSpecification" := Specification}) when is_list(Id), is_list(Href),
 		is_list(Name), is_list(Description), is_list(Version),
 		is_list(ClassType), is_list(Schema), is_list(Category),
+		is_map(Specification) ->
+	lists:all(fun is_category_ref/1, Category),
+	is_specification_ref(Specification);
+is_candidate(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version,
+		"@type" := ClassType, "category" := Category,
+		"resourceSpecification" := Specification}) when is_list(Id), is_list(Href),
+		is_list(Name), is_list(Description), is_list(Version),
+		is_list(ClassType), is_list(Category),
 		is_map(Specification) ->
 	lists:all(fun is_category_ref/1, Category),
 	is_specification_ref(Specification);

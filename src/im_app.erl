@@ -731,22 +731,24 @@ category_name(_) ->
 add_candidate([], #specification{}) ->
 	ok;
 add_candidate(CategoryName, #specification{id = SpecId, href = SpecHref,
-		name = SpecName}) ->
+		name = SpecName, version = SpecVersion}) ->
 	case im:get_category_name(CategoryName) of
 		{ok, #category{id = CategoryId, href = CategoryHref,
-				name = CategoryName, candidate = C} = Category} ->
-			CategoryRef = #category_ref{id = CategoryId,
-					href = CategoryHref, name = CategoryName},
-			Candidate = #candidate{name = SpecName,
+				name = CategoryName, candidate = C,
+				version = CategoryVersion} = Category} ->
+			CategoryRef = #category_ref{id = CategoryId, href = CategoryHref,
+					name = CategoryName, version = CategoryVersion},
+			Candidate = #candidate{name = SpecName, version = "1.0",
 					description = "candidate of " ++ SpecName, status = active,
 					class_type = "ResourceCandidate", category = [CategoryRef],
 					specification = #specification_ref{id = SpecId,
-					href = SpecHref, name = SpecName}},
+					href = SpecHref, name = SpecName, version = SpecVersion}},
 			case im:add_candidate(Candidate) of
 				{ok, #candidate{id = CandidateId, href = CandidateHref,
-						name = SpecName}} ->
+						name = SpecName, version = CandidateVersion}} ->
 					CandidateRef = #candidate_ref{id = CandidateId,
-							href = CandidateHref, name = SpecName},
+							href = CandidateHref, name = SpecName,
+							version = CandidateVersion},
 					Ftrans = fun() ->
 							mnesia:write(category, Category#category{
 									candidate = C ++ [CandidateRef]}, write)
