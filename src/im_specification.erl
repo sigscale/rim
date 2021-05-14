@@ -61,6 +61,7 @@
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0]).
+-export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0]).
 
 -include("im.hrl").
 
@@ -6833,6 +6834,100 @@ ims_category() ->
 			class_type = "ResourceCategory",
 			status = active,
 			version = "1.0"}.
+
+-spec ng_catalog() -> catalog().
+%% @doc
+ng_catalog() ->
+%	CategoryNames = ["5GC", "NR", "Slice", "MEC"],
+	CategoryNames = ["5GC", "NR"],
+	Fcategoryref = fun(Name, Acc) ->
+			case im:get_category_name(Name) of
+				{ok, #category{id = CategoryId, href = CategoryHref,
+						name = CategoryName}} ->
+					[#category_ref{id = CategoryId, href = CategoryHref,
+							name = CategoryName} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource category",
+							{category, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	CategoryRefs = lists:foldr(Fcategoryref, [], CategoryNames),
+	#catalog{name = "5G",
+			description = "Catalog of 5G",
+			class_type = "ResourceCatalog",
+			status = active,
+			version = "1.0",
+			category = CategoryRefs}.
+
+-spec lte_catalog() -> catalog().
+%% @doc
+lte_catalog() ->
+	CategoryNames = ["EPC", "LTE", "IMS"],
+	Fcategoryref = fun(Name, Acc) ->
+			case im:get_category_name(Name) of
+				{ok, #category{id = CategoryId, href = CategoryHref,
+						name = CategoryName}} ->
+					[#category_ref{id = CategoryId, href = CategoryHref,
+							name = CategoryName} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource category",
+							{category, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	#catalog{name = "4G",
+			description = "Catalog of 4G",
+			class_type = "ResourceCatalog",
+			status = active,
+			version = "1.0",
+			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
+
+-spec umts_catalog() -> catalog().
+%% @doc
+umts_catalog() ->
+	CategoryNames = ["Core", "UMTS", "IMS"],
+	Fcategoryref = fun(Name, Acc) ->
+			case im:get_category_name(Name) of
+				{ok, #category{id = CategoryId, href = CategoryHref,
+						name = CategoryName}} ->
+					[#category_ref{id = CategoryId, href = CategoryHref,
+							name = CategoryName} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource category",
+							{category, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	#catalog{name = "3G",
+			description = "Catalog of 3G",
+			class_type = "ResourceCatalog",
+			status = active,
+			version = "1.0",
+			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
+
+-spec gsm_catalog() -> catalog().
+%% @doc
+gsm_catalog() ->
+	CategoryNames = ["Core", "GSM"],
+	Fcategoryref = fun(Name, Acc) ->
+			case im:get_category_name(Name) of
+				{ok, #category{id = CategoryId, href = CategoryHref,
+						name = CategoryName}} ->
+					[#category_ref{id = CategoryId, href = CategoryHref,
+							name = CategoryName} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource category",
+							{category, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	#catalog{name = "2G",
+			description = "Catalog of 2G",
+			class_type = "ResourceCatalog",
+			status = active,
+			version = "1.0",
+			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
 
 %%----------------------------------------------------------------------
 %% internal functions
