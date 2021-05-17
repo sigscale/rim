@@ -60,7 +60,8 @@
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
-		core_category/0, umts_category/0, gsm_category/0, ims_category/0]).
+		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
+		oda_category/0, api_category/0]).
 -export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0]).
 
 -include("im.hrl").
@@ -6831,6 +6832,24 @@ gsm_category() ->
 ims_category() ->
 	#category{name = "IMS",
 			description = "IP Multimedia Subsystem (IMS)",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec oda_category() -> category().
+%% @doc
+oda_category() ->
+	#category{name = "ODA",
+			description = "TM Forum ODA Components",
+			class_type = "ResourceCategory",
+			status = active,
+			version = "1.0"}.
+
+-spec api_category() -> category().
+%% @doc
+api_category() ->
+	#category{name = "API",
+			description = "Application Programming Interfaces",
 			class_type = "ResourceCategory",
 			status = active,
 			version = "1.0"}.

@@ -267,7 +267,8 @@ install7(Nodes, Acc) ->
 %% @hidden
 install8(Nodes, Acc) ->
 	CategoryFuns = [ngc_category, nr_category, epc_category, lte_category,
-		core_category, umts_category, gsm_category, ims_category],
+			core_category, umts_category, gsm_category, ims_category,
+			oda_category, api_category],
 	install8(CategoryFuns, Nodes, Acc).
 %% @hidden
 install8([F | T], Nodes, Acc) ->
