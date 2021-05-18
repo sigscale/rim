@@ -286,7 +286,8 @@ install8([], Nodes, Acc) ->
 
 %% @hidden
 install9(Nodes, Acc) ->
-	CatalogFuns = [ng_catalog, lte_catalog, umts_catalog, gsm_catalog],
+	CatalogFuns = [ng_catalog, lte_catalog, umts_catalog, gsm_catalog,
+			oda_catalog],
 	install9(CatalogFuns, Nodes, Acc).
 %% @hidden
 install9([F | T], Nodes, Acc) ->

@@ -62,7 +62,8 @@
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
 		oda_category/0, api_category/0]).
--export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0]).
+-export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0,
+		oda_catalog/0]).
 
 -include("im.hrl").
 
@@ -6943,6 +6944,29 @@ gsm_catalog() ->
 	end,
 	#catalog{name = "2G",
 			description = "Catalog of 2G",
+			class_type = "ResourceCatalog",
+			status = active,
+			version = "1.0",
+			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
+
+-spec oda_catalog() -> catalog().
+%% @doc
+oda_catalog() ->
+	CategoryNames = ["ODA"],
+	Fcategoryref = fun(Name, Acc) ->
+			case im:get_category_name(Name) of
+				{ok, #category{id = CategoryId, href = CategoryHref,
+						name = CategoryName, version = CategoryVersion}} ->
+					[#category_ref{id = CategoryId, href = CategoryHref,
+							name = CategoryName, version = CategoryVersion} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource category",
+							{category, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	#catalog{name = "ODA",
+			description = "Catalog of ODA",
 			class_type = "ResourceCatalog",
 			status = active,
 			version = "1.0",
