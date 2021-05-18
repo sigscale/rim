@@ -335,7 +335,8 @@ install10(Nodes, Acc) ->
 		huawei_uscdb, huawei_spsv3, huawei_mscsiosp, huawei_mscso,
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
-		network_slice, network_slice_subnet],
+		network_slice, network_slice_subnet,
+		oda_catalog_api],
 	install10(SpecFuns, Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], Nodes, Acc) ->
