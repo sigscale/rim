@@ -58,7 +58,7 @@
 		huawei_uscdb/0, huawei_spsv3/0, huawei_mscsiosp/0, huawei_mscso/0]).
 -export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0,
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
--export([oda_catalog_api/0, oda_inventory_api/0]).
+-export([oda_catalog_api/0, oda_catalog_spec/0, oda_inventory_api/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -6782,6 +6782,24 @@ oda_catalog_api() ->
 			target_schema = #target_schema_ref{class_type = "API",
 					schema = ?PathCatalogSchema ++ "/API"},
 			party = [PartyRef]}.
+
+-spec oda_catalog_spec() -> specification().
+%% @doc
+oda_catalog_spec() ->
+	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
+			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
+			ref_type = "Organization"},
+	#specification{name = "Component Catalog",
+			description = "Component catalog resource function specification",
+			class_type = "ResourceFunctionSpecification",
+			version = "0.1",
+			status = in_test,
+			category = "ODA",
+			target_schema = #target_schema_ref{class_type = "ResourceFunction",
+					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
+			party = [PartyRef],
+			connection_point
+					= specification_conn_point(["Component Catalog API"])}.
 
 -spec oda_inventory_api() -> specification().
 %% @doc
