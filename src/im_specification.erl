@@ -7043,3 +7043,19 @@ specification_rel(SpecificationNames) ->
 			end
 	end,
 	lists:reverse(lists:foldl(Fspecrel, [], SpecificationNames)).
+
+%% @hidden
+specification_conn_point(SpecificationNames) ->
+	Fspeccp = fun(Name, Acc) ->
+			case im:get_specification_name(Name) of
+				{ok, #specification{id = Sid, href = Shref,
+						name = Sname, class_type = Stype}} ->
+					[#specification_ref{id = Sid, href = Shref, name = Sname,
+							ref_type = Stype, class_type = "ConnectionPointRef"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource specification",
+							{specification, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	lists:foldr(Fspeccp, [], SpecificationNames).
