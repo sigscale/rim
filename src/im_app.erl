@@ -730,6 +730,8 @@ category_name("ims_" ++ _) ->
 	"IMS";
 category_name("oda_" ++ _) ->
 	"ODA";
+category_name("api_" ++ _) ->
+	"API";
 category_name(_) ->
 	[].
 
