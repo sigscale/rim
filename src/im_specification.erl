@@ -60,6 +60,7 @@
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 -export([oda_catalog_api/0, oda_catalog_spec/0, oda_inventory_api/0,
 		oda_inventory/0, oda_manager/0]).
+-export([api_tmf634/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -6858,6 +6859,24 @@ oda_manager() ->
 					schema = ?PathCatalogSchema ++ "/InstalledSoftware"},
 			party = [PartyRef],
 			related = specification_rel(RelNames)}.
+
+-spec api_tmf634() -> specification().
+%% @doc
+api_tmf634() ->
+	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
+			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
+			ref_type = "Organization"},
+	#specification{name = "TMF634",
+			description = "TMF634 resource catalog API specification",
+			class_type = "ApiSpecification",
+			base_type = "LogicalResource",
+			schema = "/resourceCatalogManagement/v4/schema/ApiSpecification",
+			version = "0.1",
+			status = in_test,
+			category = "API",
+			target_schema = #target_schema_ref{class_type = "API",
+					schema = ?PathCatalogSchema ++ "/API"},
+			party = [PartyRef]}.
 
 -spec ngc_category() -> category().
 %% @doc
