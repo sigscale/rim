@@ -284,6 +284,7 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/specification-oda-inventory.json \
 		$(abs_builddir)/specification-oda-catalog-api.json \
 		$(abs_builddir)/specification-oda-inventory-api.json \
+		$(abs_builddir)/specification-api-tmf634.json \
 		$(abs_builddir)/resource-oda-manager.json \
 		$(abs_builddir)/resource-oda-catalog.json \
 		$(abs_builddir)/resource-oda-inventory.json \
@@ -1108,6 +1109,8 @@ check_DATA = .validation_ok
 				-d specification-oda-catalog-api.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/ApiSpecification.json \
 				-d specification-oda-inventory-api.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/ApiSpecification.json \
+				-d specification-api-tmf634.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/InstalledSoftware.json \
 				-d resource-oda-manager.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/API.json \
