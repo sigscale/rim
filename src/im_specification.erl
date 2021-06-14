@@ -7107,7 +7107,7 @@ oda_catalog() ->
 			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
 
 -spec oda_catalog_api_res() -> resource().
-%% @doc
+%% @doc Component Catalog API.
 oda_catalog_api_res() ->
 	Name = "Component Catalog API",
 	case im:get_specification_name(Name) of
@@ -7117,8 +7117,6 @@ oda_catalog_api_res() ->
 					description = "Component catalog API",
 					category = "ODA",
 					class_type = "API",
-					base_type = "ResourceFunction",
-					schema = ?PathInventorySchema ++ "/NodeBFunction",
 					specification = #specification_ref{id = Id, href = Href,
 							name = Name, ref_type = Type, version = Version}};
 		{error, Reason} ->
@@ -7126,7 +7124,7 @@ oda_catalog_api_res() ->
 	end.
 
 -spec oda_catalog_res() -> resource().
-%% @doc
+%% @doc Component Catalog resource function.
 oda_catalog_res() ->
 	oda_catalog_res(im:get_specification_name("Component Catalog")).
 oda_catalog_res({ok, #specification{} = Spec}) ->
