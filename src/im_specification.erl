@@ -68,6 +68,8 @@
 -export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0,
 		oda_catalog/0]).
 
+-export([oda_catalog_api_res/0]).
+
 -include("im.hrl").
 
 -define(PathCatalogSchema, "/resourceCatalogManagement/v4/schema").
@@ -7103,6 +7105,25 @@ oda_catalog() ->
 			status = active,
 			version = "1.0",
 			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
+
+-spec oda_catalog_api_res() -> resource().
+%% @doc
+oda_catalog_api_res() ->
+	Name = "Component Catalog API",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Id, href = Href,
+				name = Name, class_type = Type, version = Version}} ->
+			#resource{name = Name,
+					description = "Component catalog API",
+					category = "ODA",
+					class_type = "API",
+					base_type = "ResourceFunction",
+					schema = ?PathInventorySchema ++ "/NodeBFunction",
+					specification = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version}};
+		{error, Reason} ->
+			throw({get_specification_name, Reason})
+	end.
 
 %%----------------------------------------------------------------------
 %% internal functions
