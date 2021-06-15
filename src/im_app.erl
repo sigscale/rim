@@ -283,7 +283,6 @@ install8([F | T], Nodes, Acc) ->
 install8([], Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource categories.~n"),
 	install9(Nodes, Acc).
-
 %% @hidden
 install9(Nodes, Acc) ->
 	CatalogFuns = [ng_catalog, lte_catalog, umts_catalog, gsm_catalog,
@@ -302,7 +301,6 @@ install9([F | T], Nodes, Acc) ->
 install9([], Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource catalogs.~n"),
 	install10(Nodes, Acc).
-
 %% @hidden
 install10(Nodes, Acc) ->
 	SpecFuns = [generic_me, generic_subnetwork,
@@ -361,7 +359,6 @@ install10([generic_subnetwork | T], Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-%% @hidden
 install10([F | T], Nodes, Acc)
 		when F == im_iu_ne; F == im_iu_hw; F == im_iu_sw; F == im_iu_lic ->
 	case im:add_specification(im_specification:F()) of
@@ -384,7 +381,6 @@ install10([F | T], Nodes, Acc)
 				{error, Reason}]),
 			{error, Reason}
 	end;
-%% @hidden
 install10([im_iu | T], Nodes, Acc) ->
 	case im:add_specification(im_specification:im_iu()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -413,7 +409,6 @@ install10([im_iu | T], Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-%% @hidden
 install10([umts_rnc | T], Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(umts_rnc)),
 	case im:add_specification(im_specification:umts_rnc()) of
