@@ -68,7 +68,8 @@
 -export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0,
 		oda_catalog/0]).
 
--export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0]).
+-export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0,
+		oda_inventory_res/0]).
 
 -include("im.hrl").
 
@@ -7163,6 +7164,29 @@ oda_inventory_api_res() ->
 		{error, Reason} ->
 			throw({get_specification_name, Reason})
 	end.
+
+-spec oda_inventory_res() -> resource().
+%% @doc Component Catalog resource function.
+oda_inventory_res() ->
+	oda_inventory_res(im:get_specification_name("Component Inventory")).
+oda_inventory_res({ok, #specification{} = Spec}) ->
+	oda_inventory_res(Spec, im:get_resource_name("Component Inventory API"));
+oda_inventory_res({error, Reason}) ->
+	throw({get_specification_name, Reason}).
+oda_inventory_res(#specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
+		href = CpHref, name = CpName, class_type = CpRefType}}) ->
+	#resource{name = "Component Inventory",
+			description = "Component inventory resource function",
+			category = "ODA",
+			class_type = "ResourceFunction",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = SName, ref_type = SType, version = SVersion},
+			connection_point = [#resource_ref{id = CpId, href = CpHref,
+					name = CpName, ref_type = CpRefType}]};
+oda_inventory_res(_, {error, Reason}) ->
+	throw({get_resource_name, Reason}).
 
 %%----------------------------------------------------------------------
 %% internal functions
