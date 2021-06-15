@@ -69,7 +69,7 @@
 		oda_catalog/0]).
 
 -export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0,
-		oda_inventory_res/0]).
+		oda_inventory_res/0, oda_manager_res/0]).
 
 -include("im.hrl").
 
@@ -7187,6 +7187,43 @@ oda_inventory_res(#specification{id = SId, href = SHref, name = SName,
 					name = CpName, ref_type = CpRefType}]};
 oda_inventory_res(_, {error, Reason}) ->
 	throw({get_resource_name, Reason}).
+
+-spec oda_manager_res() -> resource().
+%% @doc Component Catalog resource function.
+oda_manager_res() ->
+	oda_manager_res(im:get_specification_name("Component Inventory")).
+oda_manager_res({ok, #specification{} = Spec}) ->
+	ResRelNames = ["Component Catalog", "Component Inventory",
+			"Component Catalog API", "Component Inventory API"],
+	F = fun(ResName) ->
+			case im:get_resource_name(ResName) of
+				{ok, #resource{id = ResId, href = ResHref,
+						name = ResName, class_type = ResType}} ->
+					#resource_rel{id = ResId, href = ResHref, name = ResName,
+							ref_type = ResType, rel_type = "contains"};
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource",
+							{resource, ResName}, {error, Reason}]),
+					{error, Reason}
+			end
+	end,
+	oda_manager_res(Spec, lists:map(F, ResRelNames));
+oda_manager_res({error, Reason}) ->
+	throw({get_specification_name, Reason}).
+oda_manager_res(#specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}, [#resource_rel{} | _]
+		= ResRels) ->
+	#resource{name = "Component Manager",
+			description = "Component specification catalog "
+					"and instance inventory",
+			category = "ODA",
+			class_type = "InstalledSoftware",
+			base_type = "LogicalResource",
+			schema = ?PathInventorySchema ++ "/InstalledSoftware",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = SName, ref_type = SType, version = SVersion},
+			related = ResRels}.
 
 %%----------------------------------------------------------------------
 %% internal functions
