@@ -69,7 +69,8 @@
 		oda_catalog/0]).
 
 -export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0,
-		oda_inventory_res/0, oda_manager_res/0, api_tmf634_res/0]).
+		oda_inventory_res/0, oda_manager_res/0,
+		api_tmf634_res/0, api_tmf639_res/0]).
 
 -include("im.hrl").
 
@@ -7234,6 +7235,24 @@ api_tmf634_res() ->
 				name = Name, class_type = Type, version = Version}} ->
 			#resource{name = Name,
 					description = "TMF634 API",
+					category = "ODA",
+					class_type = "API",
+					version = "0.1",
+					specification = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version}};
+		{error, Reason} ->
+			throw({get_specification_name, Reason})
+	end.
+
+-spec api_tmf639_res() -> resource().
+%% @doc TMF634 API.
+api_tmf639_res() ->
+	Name = "TMF639",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Id, href = Href,
+				name = Name, class_type = Type, version = Version}} ->
+			#resource{name = Name,
+					description = "TMF639 API",
 					category = "ODA",
 					class_type = "API",
 					version = "0.1",

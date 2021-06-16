@@ -448,7 +448,7 @@ install10([], Nodes, Acc) ->
 %% @hidden
 install11(Nodes, Acc) ->
 	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
-			oda_inventory_res, oda_manager_res, api_tmf634_res],
+			oda_inventory_res, oda_manager_res, api_tmf634_res, api_tmf639_res],
 	install11(ResourceFuns, Nodes, Acc).
 install11([F | T], Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
