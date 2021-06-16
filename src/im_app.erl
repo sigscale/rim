@@ -447,80 +447,78 @@ install10([], Nodes, Acc) ->
 	install11(Nodes, Acc).
 %% @hidden
 install11(Nodes, Acc) ->
+	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
+			oda_inventory_res, oda_manager_res],
+	install11(ResourceFuns, Nodes, Acc).
+install11([F | T], Nodes, Acc) ->
+	case im:add_resource(im_specification:F()) of
+		{ok, #resource{}} ->
+			install11(T, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install11([], Nodes, Acc) ->
+	error_logger:info_msg("Added ODA Component resources.~n"),
+	install12(Nodes, Acc).
+%% @hidden
+install12(Nodes, Acc) ->
 	case application:load(inets) of
 		ok ->
 			error_logger:info_msg("Loaded inets.~n"),
-			install12(Nodes, Acc);
+			install13(Nodes, Acc);
 		{error, {already_loaded, inets}} ->
-			install12(Nodes, Acc)
+			install13(Nodes, Acc)
 	end.
 %% @hidden
-install12(Nodes, Acc) ->
+install13(Nodes, Acc) ->
 	case application:get_env(inets, services) of
 		{ok, InetsServices} ->
-			install13(Nodes, Acc, InetsServices);
+			install14(Nodes, Acc, InetsServices);
 		undefined ->
 			error_logger:info_msg("Inets services not defined. "
 					"User table not created~n"),
-			install17(Nodes, Acc)
+			install18(Nodes, Acc)
 	end.
 %% @hidden
-install13(Nodes, Acc, InetsServices) ->
+install14(Nodes, Acc, InetsServices) ->
 	case lists:keyfind(httpd, 1, InetsServices) of
 		{httpd, HttpdInfo} ->
-			install14(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
+			install15(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
 		false ->
 			error_logger:info_msg("Httpd service not defined. "
 					"User table not created~n"),
-			install17(Nodes, Acc)
+			install18(Nodes, Acc)
 	end.
 %% @hidden
-install14(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
+install15(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
 	case lists:keyfind(auth_type, 1, DirectoryInfo) of
 		{auth_type, mnesia} ->
-			install15(Nodes, Acc);
+			install16(Nodes, Acc);
 		_ ->
 			error_logger:info_msg("Auth type not mnesia. "
 					"User table not created~n"),
-			install17(Nodes, Acc)
+			install18(Nodes, Acc)
 	end;
-install14(Nodes, Acc, false) ->
+install15(Nodes, Acc, false) ->
 	error_logger:info_msg("Auth directory not defined. "
 			"User table not created~n"),
-	install17(Nodes, Acc).
+	install18(Nodes, Acc).
 %% @hidden
-install15(Nodes, Acc) ->
+install16(Nodes, Acc) ->
 	case mnesia:create_table(httpd_user, [{type, bag}, {disc_copies, Nodes},
 			{attributes, record_info(fields, httpd_user)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_user table.~n"),
-			install16(Nodes, [httpd_user | Acc]);
+			install17(Nodes, [httpd_user | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
 			{error, Reason};
 		{aborted, {already_exists, httpd_user}} ->
 			error_logger:info_msg("Found existing httpd_user table.~n"),
-			install16(Nodes, [httpd_user | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			{error, Reason}
-	end.
-%% @hidden
-install16(Nodes, Acc) ->
-	case mnesia:create_table(httpd_group, [{type, bag}, {disc_copies, Nodes},
-			{attributes, record_info(fields, httpd_group)}]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Created new httpd_group table.~n"),
-			install17(Nodes, [httpd_group | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
-			error_logger:error_report(["Mnesia not started on node",
-					{node, Node}]),
-			{error, Reason};
-		{aborted, {already_exists, httpd_group}} ->
-			error_logger:info_msg("Found existing httpd_group table.~n"),
-			install17(Nodes, [httpd_group | Acc]);
+			install17(Nodes, [httpd_user | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -528,11 +526,30 @@ install16(Nodes, Acc) ->
 	end.
 %% @hidden
 install17(Nodes, Acc) ->
+	case mnesia:create_table(httpd_group, [{type, bag}, {disc_copies, Nodes},
+			{attributes, record_info(fields, httpd_group)}]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Created new httpd_group table.~n"),
+			install18(Nodes, [httpd_group | Acc]);
+		{aborted, {not_active, _, Node} = Reason} ->
+			error_logger:error_report(["Mnesia not started on node",
+					{node, Node}]),
+			{error, Reason};
+		{aborted, {already_exists, httpd_group}} ->
+			error_logger:info_msg("Found existing httpd_group table.~n"),
+			install18(Nodes, [httpd_group | Acc]);
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			{error, Reason}
+	end.
+%% @hidden
+install18(Nodes, Acc) ->
 	case mnesia:create_table(pee_rule, [{disc_copies, Nodes},
 			{attributes, record_info(fields, pee_rule)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new pee rule table.~n"),
-			install18(Nodes, [pee_rule | Acc]);
+			install19(Nodes, [pee_rule | Acc]);
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
@@ -546,10 +563,10 @@ install17(Nodes, Acc) ->
 			{error, Reason}
 	end.
 %% @hidden
-install18(_Nodes, Tables) ->
+install19(_Nodes, Tables) ->
 	case mnesia:wait_for_tables(Tables, ?WAITFORTABLES) of
 		ok ->
-			install19(Tables, lists:member(httpd_user, Tables));
+			install20(Tables, lists:member(httpd_user, Tables));
 		{timeout, Tables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, Tables}]),
@@ -560,21 +577,21 @@ install18(_Nodes, Tables) ->
 			{error, Reason}
 	end.
 %% @hidden
-install19(Tables, true) ->
+install20(Tables, true) ->
 	case inets:start() of
 		ok ->
 			error_logger:info_msg("Started inets.~n"),
-			install20(Tables);
+			install21(Tables);
 		{error, {already_started, inets}} ->
-			install20(Tables);
+			install21(Tables);
 		{error, Reason} ->
 			error_logger:error_msg("Failed to start inets~n"),
 			{error, Reason}
 	end;
-install19(Tables, false) ->
+install20(Tables, false) ->
 	{ok, Tables}.
 %% @hidden
-install20(Tables) ->
+install21(Tables) ->
 	case im:get_user() of
 		{ok, []} ->
 			case im:add_user("admin", "admin", "en") of
