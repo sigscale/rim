@@ -291,7 +291,8 @@ examples_DATA = $(abs_builddir)/geran.xml \
 		$(abs_builddir)/resource-oda-inventory.json \
 		$(abs_builddir)/resource-oda-catalog-api.json \
 		$(abs_builddir)/resource-oda-inventory-api.json \
-		$(abs_builddir)/resource-api-tmf634.json
+		$(abs_builddir)/resource-api-tmf634.json \
+		$(abs_builddir)/resource-api-tmf639.json
 
 $(abs_builddir)/%.xml:	$(srcdir)/%.xml
 	if [ ! -e $@ ]; then \
@@ -1123,6 +1124,8 @@ check_DATA = .validation_ok
 				-d resource-oda-inventory-api.json; then exit 1; fi; \
 		if ! ajv validate -s $(top_builddir)/priv/schema/API.json \
 				-d resource-api-tmf634.json; then exit 1; fi; \
+		if ! ajv validate -s $(top_builddir)/priv/schema/API.json \
+				-d resource-api-tmf639.json; then exit 1; fi; \
 	else \
 		echo "ajv-cli needed to validate JSON"; \
 	fi
