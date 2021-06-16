@@ -69,7 +69,7 @@
 		oda_catalog/0]).
 
 -export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0,
-		oda_inventory_res/0, oda_manager_res/0]).
+		oda_inventory_res/0, oda_manager_res/0, api_tmf634_res/0]).
 
 -include("im.hrl").
 
@@ -7224,6 +7224,24 @@ oda_manager_res(#specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
 			related = ResRels}.
+
+-spec api_tmf634_res() -> resource().
+%% @doc TMF634 API.
+api_tmf634_res() ->
+	Name = "TMF634",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Id, href = Href,
+				name = Name, class_type = Type, version = Version}} ->
+			#resource{name = Name,
+					description = "TMF634 API",
+					category = "ODA",
+					class_type = "API",
+					version = "0.1",
+					specification = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version}};
+		{error, Reason} ->
+			throw({get_specification_name, Reason})
+	end.
 
 %%----------------------------------------------------------------------
 %% internal functions
