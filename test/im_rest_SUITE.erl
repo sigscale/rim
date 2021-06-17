@@ -1864,6 +1864,12 @@ is_resource(#{"id" := Id, "publicIdentifier" := PublicId, "name" := Name,
 		is_list(Version), is_list(ClassType), is_list(Schema),
 		is_list(RelatedParty), is_list(Char) ->
 	true = is_resource_spec(S);
+is_resource(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "category" := Category,
+		"version" := Version, "@type" := ClassType, "resourceSpecification" := S})
+		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Category) ->
+	true = is_resource_spec(S);
 is_resource(_) ->
 	false.
 
