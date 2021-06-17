@@ -1852,6 +1852,12 @@ is_specification(#{"id" := Id, "href" := Href, "name" := Name,
 		is_list(Version), is_list(ClassType), is_list(Chars) ->
 	true = is_target_ref(T),
 	lists:all(fun is_spec_char/1, Chars);
+is_specification(#{"id" := Id, "href" := Href, "name" := Name,
+		"description" := Description, "version" := Version, "@type" := ClassType,
+		"targetResourceSchema" := T}) when is_list(Id), is_list(Href),
+		is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType) ->
+	is_target_ref(T);
 is_specification(_S) ->
 	false.
 
