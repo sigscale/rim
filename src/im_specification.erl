@@ -7119,6 +7119,7 @@ oda_catalog_api_res() ->
 					description = "Component catalog API",
 					category = "ODA",
 					class_type = "API",
+					version = "0.1",
 					specification = #specification_ref{id = Id, href = Href,
 							name = Name, ref_type = Type, version = Version}};
 		{error, Reason} ->
