@@ -45,7 +45,7 @@
 			"resource": {
 				"id": "7afe4da36289",
 				"href": "/resourceInventoryManagement/v4/resource/7afe4da36289",
-				"name": "Component Catalog API",
+				"name": "TMF634",
 				"@referredType": "API"
 			},
 			"relationshipType": "contains"
@@ -54,7 +54,7 @@
 			"resource": {
 				"id": "243db7f6e71b",
 				"href": "/resourceInventoryManagement/v4/resource/243db7f6e71b",
-				"name": "Component Inventory API",
+				"name": "TMF639",
 				"@referredType": "API"
 			},
 			"relationshipType": "contains"

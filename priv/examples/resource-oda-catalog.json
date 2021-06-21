@@ -17,6 +17,7 @@
 	"resourceSpecification": {
 		"id": "e030a0e0be79",
 		"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
+		"name": "Component Catalog",
 		"@type": "ResourceFunctionSpecification"
 	},
 	"resourceRelationship": [],
@@ -24,7 +25,7 @@
 		{
 			"id": "7afe4da36289",
 			"href": "/resourceInventoryManagement/v4/resource/7afe4da36289",
-			"name": "Component Catalog API",
+			"name": "TMF634",
 			"@referredType": "API"
 		}
 	],

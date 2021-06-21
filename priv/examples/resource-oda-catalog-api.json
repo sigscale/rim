@@ -1,8 +1,8 @@
 {
 	"id": "7afe4da36289",
 	"href": "/resourceInventoryManagement/v4/resource/7afe4da36289",
-	"name": "Component Catalog API",
-	"description": "Component catalog API",
+	"name": "TMF634",
+	"description": "Component Catalog API",
 	"category": "ODA",
 	"@type": "API",
 	"version": "0.1",
@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "20a5d4787d97",
 		"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
-		"name": "Component Catalog API",
+		"name": "TMF634",
 		"@type": "ApiSpecification"
 	},
 	"resourceRelationship": [],

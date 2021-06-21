@@ -1,8 +1,8 @@
 {
 	"id": "243db7f6e71b",
 	"href": "/resourceInventoryManagement/v4/resource/243db7f6e71b",
-	"name": "Component Inventory API",
-	"description": "Component inventory API",
+	"name": "TMF639",
+	"description": "Component Inventory API",
 	"category": "ODA",
 	"@type": "API",
 	"version": "0.1",
@@ -17,7 +17,7 @@
 	"resourceSpecification": {
 		"id": "2f1fcba1d58f",
 		"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
-		"name": "Component Inventory API",
+		"name": "TMF639",
 		"@type": "ApiSpecification"
 	},
 	"resourceRelationship": [],
