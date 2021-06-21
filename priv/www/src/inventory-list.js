@@ -82,10 +82,6 @@ class inventoryList extends PolymerElement {
 									<dd>{{item.category}}</dd>
 								</template>
 								<template is="dom-if" if="{{item.type}}">
-									<dt><b>Class</b></dt>
-									<dd>{{item.type}}</dd>
-								</template>
-								<template is="dom-if" if="{{item.type}}">
 									<dt><b>Type</b></dt>
 									<dd>{{item.type}}</dd>
 								</template>
