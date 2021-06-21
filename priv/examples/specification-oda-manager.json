@@ -51,14 +51,14 @@
 		{
 			"id": "20a5d4787d97",
 			"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
-			"name": "Component Catalog API",
+			"name": "TMF634",
 			"@type": "ApiSpecification",
 			"minimumQuantity": 0
 		},
 		{
 			"id": "2f1fcba1d58f",
 			"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
-			"name": "Component Inventory API",
+			"name": "TMF639",
 			"@type": "ApiSpecification",
 			"minimumQuantity": 1
 		}
