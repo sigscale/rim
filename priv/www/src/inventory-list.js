@@ -136,13 +136,15 @@ class inventoryList extends PolymerElement {
 										<th>Id</th>
 										<th>Href</th>
 										<th>Name</th>
+										<th>Referred Type</th>
 										<th>Relationship Type</th>
 									</tr>
 									<template is="dom-repeat" items="{{item.resourceRelationship}}" as="rel">
 										<tr>
-											<td>{{rel.id}}</td>
-											<td>{{rel.href}}</td>
-											<td>{{rel.name}}</td>
+											<td>{{rel.resource.id}}</td>
+											<td>{{rel.resource.href}}</td>
+											<td>{{rel.resource.name}}</td>
+											<td>{{rel.resource['@referredType']}}</td>
 											<td>{{rel.relationshipType}}</td>
 										</tr>
 									</template>
