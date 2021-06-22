@@ -60,7 +60,6 @@
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 -export([oda_catalog_api/0, oda_catalog_spec/0, oda_inventory_api/0,
 		oda_inventory/0, oda_manager/0]).
--export([api_tmf634/0, api_tmf639/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -6776,7 +6775,7 @@ mec_dnsr() ->
 oda_catalog_api() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale", role = "Supplier",
 			href = ?PathPartySpec ++ "9f16f654223e", ref_type = "Organization"},
-	#specification{name = "Component Catalog API",
+	#specification{name = "TMF634",
 			description = "Component catalog API specification",
 			class_type = "ApiSpecification",
 			base_type = "LogicalResource",
@@ -6804,14 +6803,14 @@ oda_catalog_spec() ->
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
 			party = [PartyRef],
 			connection_point
-					= specification_conn_point(["Component Catalog API"])}.
+					= specification_conn_point(["TMF634"])}.
 
 -spec oda_inventory_api() -> specification().
 %% @doc
 oda_inventory_api() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale", role = "Supplier",
 			href = ?PathPartySpec ++ "9f16f654223e", ref_type = "Organization"},
-	#specification{name = "Component Inventory API",
+	#specification{name = "TMF639",
 			description = "Component inventory API specification",
 			class_type = "ApiSpecification",
 			base_type = "LogicalResource",
@@ -6839,7 +6838,7 @@ oda_inventory() ->
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
 			party = [PartyRef],
 			connection_point
-					= specification_conn_point(["Component Inventory API"])}.
+					= specification_conn_point(["TMF639"])}.
 
 -spec oda_manager() -> specification().
 %% @doc
@@ -6847,8 +6846,7 @@ oda_manager() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	RelNames = ["Component Catalog", "Component Inventory",
-			"Component Catalog API", "Component Inventory API"],
+	RelNames = ["Component Catalog", "Component Inventory", "TMF634", "TMF639"],
 	#specification{name = "Component Manager",
 			description
 					= "Software specification for component catalog and inventory",
@@ -6862,42 +6860,6 @@ oda_manager() ->
 					schema = ?PathCatalogSchema ++ "/InstalledSoftware"},
 			party = [PartyRef],
 			related = specification_rel(RelNames)}.
-
--spec api_tmf634() -> specification().
-%% @doc
-api_tmf634() ->
-	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
-			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
-			ref_type = "Organization"},
-	#specification{name = "TMF634",
-			description = "TMF634 resource catalog API specification",
-			class_type = "ApiSpecification",
-			base_type = "LogicalResource",
-			schema = "/resourceCatalogManagement/v4/schema/ApiSpecification",
-			version = "0.1",
-			status = in_test,
-			category = "API",
-			target_schema = #target_schema_ref{class_type = "API",
-					schema = ?PathCatalogSchema ++ "/API"},
-			party = [PartyRef]}.
-
--spec api_tmf639() -> specification().
-%% @doc
-api_tmf639() ->
-	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
-			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
-			ref_type = "Organization"},
-	#specification{name = "TMF639",
-			description = "TMF639 resource inventory API specification",
-			class_type = "ApiSpecification",
-			base_type = "LogicalResource",
-			schema = "/resourceCatalogManagement/v4/schema/ApiSpecification",
-			version = "0.1",
-			status = in_test,
-			category = "API",
-			target_schema = #target_schema_ref{class_type = "API",
-					schema = ?PathCatalogSchema ++ "/API"},
-			party = [PartyRef]}.
 
 -spec ngc_category() -> category().
 %% @doc
