@@ -336,9 +336,9 @@ install10(Nodes, Acc) ->
 		network_slice, network_slice_subnet,
 		oda_catalog_api, oda_catalog_spec, oda_inventory_api, oda_inventory,
 		oda_manager],
-	install10(SpecFuns, Nodes, Acc).
+	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
-install10([generic_subnetwork | T], Nodes, Acc) ->
+install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
 	case im:add_specification(im_specification:generic_subnetwork()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype, related = Srels} = IUSpec} ->
@@ -352,14 +352,14 @@ install10([generic_subnetwork | T], Nodes, Acc) ->
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install10(T, Nodes, Acc)
+					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([F | T], Nodes, Acc)
+install10([F | T], SpecAcc, Nodes, Acc)
 		when F == im_iu_ne; F == im_iu_hw; F == im_iu_sw; F == im_iu_lic ->
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -374,14 +374,14 @@ install10([F | T], Nodes, Acc)
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install10(T, Nodes, Acc)
+					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([im_iu | T], Nodes, Acc) ->
+install10([im_iu | T], SpecAcc, Nodes, Acc) ->
 	case im:add_specification(im_specification:im_iu()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype, related = ResRels} = IUSpec} ->
@@ -402,14 +402,14 @@ install10([im_iu | T], Nodes, Acc) ->
 				{aborted, Reason} ->
 					{error, Reason};
 				{atomic, ok} ->
-					install10(T, Nodes, Acc)
+					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([umts_rnc | T], Nodes, Acc) ->
+install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(umts_rnc)),
 	case im:add_specification(im_specification:umts_rnc()) of
 		{ok, #specification{id = RncSpecId} = RncSpec} ->
@@ -424,25 +424,55 @@ install10([umts_rnc | T], Nodes, Acc) ->
 					{error, Reason};
 				{atomic, ok} ->
 					ok = add_candidate(CategoryName, RncSpec),
-					install10(T, Nodes, Acc)
+					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([F | T], Nodes, Acc) ->
+install10([oda_manager = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
-		{ok, #specification{} = Spec} ->
-			ok = add_candidate(CategoryName, Spec),
-			install10(T, Nodes, Acc);
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype} = Spec} ->
+			ManagerRel = #specification_rel{id = Sid, href = Shref, name = Sname,
+					ref_type = Stype, rel_type = "contained"},
+			Fspecrel = fun(#specification{id = Cid, href = Chref, name = Cname,
+							class_type = Ctype} = ChildSpec) when Cname == "TMF634";
+							Cname == "TMF639"; Cname == "Component Catalog";
+							Cname == "Component Inventory" ->
+						ok = write_spec(ChildSpec#specification{related
+								= [ManagerRel]}),
+						#specification_rel{id = Cid, href = Chref, name = Cname,
+								ref_type = Ctype, rel_type = "contains"}
+			end,
+			NewSpec = Spec#specification{related = lists:map(Fspecrel, SpecAcc)},
+			ok = write_spec(NewSpec),
+			ok = add_candidate(CategoryName, NewSpec),
+			install10(T, SpecAcc, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([], Nodes, Acc) ->
+install10([F | T], SpecAcc, Nodes, Acc) ->
+	case im:add_specification(im_specification:F()) of
+		{ok, #specification{} = Spec} ->
+			case category_name(atom_to_list(F)) of
+				"ODA" ->
+					ok = add_candidate("ODA", Spec),
+					install10(T, [Spec | SpecAcc], Nodes, Acc);
+				CategoryName ->
+					ok = add_candidate(CategoryName, Spec),
+					install10(T, SpecAcc, Nodes, Acc)
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install10([], _SpecAcc, Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource specifications.~n"),
 	install11(Nodes, Acc).
 %% @hidden
@@ -786,4 +816,16 @@ add_candidate(CategoryName, #specification{id = SpecId, href = SpecHref,
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource category",
 					{category, CategoryName}, {error, Reason}])
+	end.
+
+%% @hidden
+write_spec(#specification{} = Spec) ->
+	Ftrans = fun() ->
+			mnesia:write(specification, Spec, write)
+	end,
+	case mnesia:transaction(Ftrans) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
 	end.

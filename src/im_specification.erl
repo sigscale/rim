@@ -6846,7 +6846,6 @@ oda_manager() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	RelNames = ["Component Catalog", "Component Inventory", "TMF634", "TMF639"],
 	#specification{name = "Component Manager",
 			description
 					= "Software specification for component catalog and inventory",
@@ -6858,8 +6857,7 @@ oda_manager() ->
 			category = "ODA",
 			target_schema = #target_schema_ref{class_type = "InstalledSoftware",
 					schema = ?PathCatalogSchema ++ "/InstalledSoftware"},
-			party = [PartyRef],
-			related = specification_rel(RelNames)}.
+			party = [PartyRef]}.
 
 -spec ngc_category() -> category().
 %% @doc
