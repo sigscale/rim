@@ -20,7 +20,17 @@
 		"name": "TMF634",
 		"@type": "ApiSpecification"
 	},
-	"resourceRelationship": [],
+	"resourceRelationship": [
+		{
+			"resource": {
+				"id": "02b1bd098f82",
+				"href": "/resourceInventoryManagement/v4/resource/02b1bd098f82",
+				"name": "Component Manager",
+				"@referredType": "InstalledSoftware"
+			},
+			"relationshipType": "contained"
+		}
+	],
 	"targetPlatform": "ODA Canvas",
 	"isDistributedCurrent": false,
 	"serialNumber": "",

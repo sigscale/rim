@@ -20,7 +20,17 @@
 		"name": "Component Catalog",
 		"@type": "ResourceFunctionSpecification"
 	},
-	"resourceRelationship": [],
+	"resourceRelationship": [
+		{
+			"resource": {
+				"id": "02b1bd098f82",
+				"href": "/resourceInventoryManagement/v4/resource/02b1bd098f82",
+				"name": "Component Manager",
+				"@referredType": "InstalledSoftware"
+			},
+			"relationshipType": "contained"
+		}
+	],
 	"connectionPoint": [
 		{
 			"id": "7afe4da36289",

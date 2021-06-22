@@ -28,7 +28,16 @@
 			}
 		}
 	],
-	"resourceSpecRelationship": [],
+	"resourceSpecRelationship": [
+		{
+			"id": "1df6e191c3b2",
+			"href": "/resourceCatalogManagement/v4/specification/1df6e191c3b2",
+			"name": "Component Manager",
+			"@type": "SoftwareSpecification",
+			"relationshipType": "contained",
+			"minimumQuantity": 1
+		}
+	],
 	"connectionPointSpecification": [
 		{
 			"id": "20a5d4787d97",
