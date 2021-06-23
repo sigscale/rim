@@ -36,7 +36,7 @@
 			"id": "e030a0e0be79",
 			"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
 			"name": "Component Catalog",
-			"@type": "ResourceFunctionSpecification",
+			"@referredType": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"minimumQuantity": 0
 		},
@@ -44,7 +44,7 @@
 			"id": "7213863ca330",
 			"href": "/resourceCatalogManagement/v4/specification/7213863ca330",
 			"name": "Component Inventory",
-			"@type": "ResourceFunctionSpecification",
+			"@referredType": "ResourceFunctionSpecification",
 			"relationshipType": "contains",
 			"minimumQuantity": 1
 		},
@@ -52,14 +52,14 @@
 			"id": "20a5d4787d97",
 			"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
 			"name": "TMF634",
-			"@type": "ApiSpecification",
+			"@referredType": "ApiSpecification",
 			"minimumQuantity": 0
 		},
 		{
 			"id": "2f1fcba1d58f",
 			"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
 			"name": "TMF639",
-			"@type": "ApiSpecification",
+			"@referredType": "ApiSpecification",
 			"minimumQuantity": 1
 		}
 	],
