@@ -7144,27 +7144,10 @@ oda_inventory_res(_, {error, Reason}) ->
 %% @doc Component Catalog resource function.
 oda_manager_res() ->
 	oda_manager_res(im:get_specification_name("Component Inventory")).
-oda_manager_res({ok, #specification{} = Spec}) ->
-	ResRelNames = ["Component Catalog", "Component Inventory",
-			"TMF634", "TMF639"],
-	F = fun(ResName) ->
-			case im:get_resource_name(ResName) of
-				{ok, #resource{id = ResId, href = ResHref,
-						name = ResName, class_type = ResType}} ->
-					#resource_rel{id = ResId, href = ResHref, name = ResName,
-							ref_type = ResType, rel_type = "contains"};
-				{error, Reason} ->
-					error_logger:warning_report(["Error reading resource",
-							{resource, ResName}, {error, Reason}]),
-					{error, Reason}
-			end
-	end,
-	oda_manager_res(Spec, lists:map(F, ResRelNames));
 oda_manager_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
-oda_manager_res(#specification{id = SId, href = SHref, name = SName,
-		class_type = SType, version = SVersion}, [#resource_rel{} | _]
-		= ResRels) ->
+	throw({get_specification_name, Reason});
+oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}}) ->
 	#resource{name = "Component Manager",
 			description = "Component specification catalog "
 					"and instance inventory",
@@ -7174,8 +7157,7 @@ oda_manager_res(#specification{id = SId, href = SHref, name = SName,
 			schema = ?PathInventorySchema ++ "/InstalledSoftware",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
-					name = SName, ref_type = SType, version = SVersion},
-			related = ResRels}.
+					name = SName, ref_type = SType, version = SVersion}}.
 
 %%----------------------------------------------------------------------
 %% internal functions

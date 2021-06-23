@@ -479,17 +479,41 @@ install10([], _SpecAcc, Nodes, Acc) ->
 install11(Nodes, Acc) ->
 	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
 			oda_inventory_res, oda_manager_res],
-	install11(ResourceFuns, Nodes, Acc).
-install11([F | T], Nodes, Acc) ->
+	install11(ResourceFuns, [], Nodes, Acc).
+%% @hidden
+install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
-		{ok, #resource{}} ->
-			install11(T, Nodes, Acc);
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType} = Res} ->
+			ManagerRel = #resource_rel{id = ResId, href = ResHref, name = ResName,
+					ref_type = ResType, rel_type = "contained"},
+			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
+							class_type = Ctype} = ChildRes) when Cname == "TMF634";
+							Cname == "TMF639"; Cname == "Component Catalog";
+							Cname == "Component Inventory" ->
+						ok = write_resource(ChildRes#resource{related
+								= [ManagerRel]}),
+						#resource_rel{id = Cid, href = Chref, name = Cname,
+								ref_type = Ctype, rel_type = "contains"}
+			end,
+			NewRes = Res#resource{related = lists:map(Fresrel, ResAcc)},
+			ok = write_resource(NewRes),
+			install11(T, ResAcc, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install11([], Nodes, Acc) ->
+install11([F | T], ResAcc, Nodes, Acc) ->
+	case im:add_resource(im_specification:F()) of
+		{ok, #resource{} = Res} ->
+			install11(T, [Res | ResAcc], Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install11([], _ResAcc, Nodes, Acc) ->
 	error_logger:info_msg("Added ODA Component resources.~n"),
 	install12(Nodes, Acc).
 %% @hidden
@@ -822,6 +846,18 @@ add_candidate(CategoryName, #specification{id = SpecId, href = SpecHref,
 write_spec(#specification{} = Spec) ->
 	Ftrans = fun() ->
 			mnesia:write(specification, Spec, write)
+	end,
+	case mnesia:transaction(Ftrans) of
+		{aborted, Reason} ->
+			{error, Reason};
+		{atomic, ok} ->
+			ok
+	end.
+
+%% @hidden
+write_resource(#resource{} = Res) ->
+	Ftrans = fun() ->
+			mnesia:write(resource, Res, write)
 	end,
 	case mnesia:transaction(Ftrans) of
 		{aborted, Reason} ->
