@@ -7080,10 +7080,12 @@ oda_catalog_api_res() ->
 %% @doc Component Catalog resource function.
 oda_catalog_res() ->
 	oda_catalog_res(im:get_specification_name("Component Catalog")).
+%% @hidden
 oda_catalog_res({ok, #specification{} = Spec}) ->
 	oda_catalog_res(Spec, im:get_resource_name("TMF634"));
 oda_catalog_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
+%% @hidden
 oda_catalog_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
 		href = CpHref, name = CpName, class_type = CpRefType}}) ->
@@ -7121,10 +7123,12 @@ oda_inventory_api_res() ->
 %% @doc Component Catalog resource function.
 oda_inventory_res() ->
 	oda_inventory_res(im:get_specification_name("Component Inventory")).
+%% @hidden
 oda_inventory_res({ok, #specification{} = Spec}) ->
 	oda_inventory_res(Spec, im:get_resource_name("TMF639"));
 oda_inventory_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
+%% @hidden
 oda_inventory_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
 		href = CpHref, name = CpName, class_type = CpRefType}}) ->
@@ -7144,6 +7148,7 @@ oda_inventory_res(_, {error, Reason}) ->
 %% @doc Component Catalog resource function.
 oda_manager_res() ->
 	oda_manager_res(im:get_specification_name("Component Inventory")).
+%% @hidden
 oda_manager_res({error, Reason}) ->
 	throw({get_specification_name, Reason});
 oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
