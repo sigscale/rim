@@ -53,6 +53,7 @@
 			"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
 			"name": "TMF634",
 			"@referredType": "ApiSpecification",
+			"relationshipType": "contains",
 			"minimumQuantity": 0
 		},
 		{
@@ -60,6 +61,7 @@
 			"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
 			"name": "TMF639",
 			"@referredType": "ApiSpecification",
+			"relationshipType": "contains",
 			"minimumQuantity": 1
 		}
 	],
