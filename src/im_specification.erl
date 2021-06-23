@@ -7066,7 +7066,7 @@ oda_catalog_api_res() ->
 		{ok, #specification{id = Id, href = Href,
 				name = Name, class_type = Type, version = Version}} ->
 			#resource{name = Name,
-					description = "Component Catalog API",
+					description = "Component catalog API",
 					category = "ODA",
 					class_type = "API",
 					version = "0.1",
@@ -7109,7 +7109,7 @@ oda_inventory_api_res() ->
 		{ok, #specification{id = Id, href = Href,
 				name = Name, class_type = Type, version = Version}} ->
 			#resource{name = Name,
-					description = "Component Inventory API",
+					description = "Component inventory API",
 					category = "ODA",
 					class_type = "API",
 					version = "0.1",
@@ -7147,7 +7147,7 @@ oda_inventory_res(_, {error, Reason}) ->
 -spec oda_manager_res() -> resource().
 %% @doc Component Catalog resource function.
 oda_manager_res() ->
-	oda_manager_res(im:get_specification_name("Component Inventory")).
+	oda_manager_res(im:get_specification_name("Component Manager")).
 %% @hidden
 oda_manager_res({error, Reason}) ->
 	throw({get_specification_name, Reason});
