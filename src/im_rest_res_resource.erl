@@ -346,7 +346,7 @@ resource([characteristic | T], #{"resourceCharacteristic" := ResChar} = M, Acc)
 		when is_list(ResChar) ->
 	resource(T, M, Acc#resource{characteristic = characteristic(ResChar)});
 resource([connectivity | T], #resource{connectivity = Graphs} = R, Acc)
-		when is_list(Graphs) ->
+		when is_list(Graphs), length(Graphs) > 0 ->
 	resource(T, R, Acc#{"connectivity" => resource_graph(Graphs)});
 resource([connectivity | T], #{"connectivity" := Graphs} = M, Acc)
 		when is_list(Graphs) ->
