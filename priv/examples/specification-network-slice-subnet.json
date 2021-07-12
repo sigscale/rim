@@ -350,15 +350,9 @@
 				{
 					"id": "16029108611684067",
 					"name": "N2",
-					"description": "N2 interface between (R)AN and AMF.",
+					"description": "N2 interface between AMF and N3IWF",
 					"associationType": "pointtoPoint",
 					"endpointSpecification": [
-						{
-							"id": "16029108611581731",
-							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581731",
-							"@referredType": "ResourceFunctionSpecification",
-							"name": "EP_N2"
-						},
 						{
 							"id": "16029108611704547",
 							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
@@ -370,21 +364,27 @@
 								"@referredType": "ResourceFunctionSpecification",
 								"name": "EP_N2"
 							}
+						},
+						{
+							"id": "16029108611581731",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581731",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "N3IWFFunction",
+							"connectionPointSpecification": {
+								"id": "1602913861583721",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602913861583721",
+								"@referredType": "ResourceFunctionSpecification",
+								"name": "EP_N2"
+							}
 						}
 					]
 				},
 				{
 					"id": "16029108611602403",
 					"name": "N3",
-					"description": "N3 interface between (R)AN and UPF.",
+					"description": "N3 interface between UPF and N3IWF",
 					"associationType": "pointtoPoint",
 					"endpointSpecification": [
-						{
-							"id": "16029108611684003",
-							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
-							"@referredType": "ResourceFunctionSpecification",
-							"name": "EP_N3"
-						},
 						{
 							"id": "1602910861147484",
 							"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
@@ -393,6 +393,18 @@
 							"connectionPointSpecification": {
 								"id": "16029108611684003",
 								"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
+								"@referredType": "ResourceFunctionSpecification",
+								"name": "EP_N3"
+							}
+						},
+						{
+							"id": "16029108611581731",
+							"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581731",
+							"@referredType": "ResourceFunctionSpecification",
+							"name": "N3IWFFunction",
+							"connectionPointSpecification": {
+								"id": "1602917861468532",
+								"href": "/resourceCatalogManagement/v4/resourceSpecification/1602917861468532",
 								"@referredType": "ResourceFunctionSpecification",
 								"name": "EP_N3"
 							}
