@@ -324,5 +324,511 @@
 			"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N22=1",
 			"@referredType": "EP_N22"
 		}
+	],
+	"connectivity": [
+		{
+			"id": "16429186165034",
+			"@type": "ResourceGraph",
+			"name": "Adjacency Graph",
+			"description": "Topology of internal adjacency",
+			"connection": [
+				{
+					"id": "16429186165035",
+					"name": "N2",
+					"description": "N2 interface between AMF and N3IWF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468021",
+									"href": "/resourceInventoryManagement/v4/resource/3597468021",
+									"@referredType": "EP_N2",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N2=1"
+								}
+							]
+						},
+						{
+							"id": "3597468046",
+							"href": "/resourceInventoryManagement/v4/resource/3597468046",
+							"@referredType": "N3IWFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "35974680351",
+									"href": "/resourceInventoryManagement/v4/resource/35974680351",
+									"@referredType": "EP_N2",
+									"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N2=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165035",
+					"name": "N3",
+					"description": "N3 interface between UPF and N3IWF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468045",
+							"href": "/resourceInventoryManagement/v4/resource/3597468045",
+							"@referredType": "UPFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468041",
+									"href": "/resourceInventoryManagement/v4/resource/3597468041",
+									"@referredType": "EP_N3",
+									"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N3=1"
+								}
+							]
+						},
+						{
+							"id": "3597468046",
+							"href": "/resourceInventoryManagement/v4/resource/3597468046",
+							"@referredType": "N3IWFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "35974681352",
+									"href": "/resourceInventoryManagement/v4/resource/35974681352",
+									"@referredType": "EP_N3",
+									"name": "SubNetwork=12,ManagedElement=1,N3IWFFunction=1,EP_N3=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165036",
+					"name": "N4",
+					"description": "N4 interface between SMF and UPF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468040",
+							"href": "/resourceInventoryManagement/v4/resource/3597468040",
+							"@referredType": "SMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468035",
+									"href": "/resourceInventoryManagement/v4/resource/3597468035",
+									"@referredType": "EP_N4",
+									"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N4=1"
+								}
+							]
+						},
+						{
+							"id": "3597468045",
+							"href": "/resourceInventoryManagement/v4/resource/3597468045",
+							"@referredType": "UPFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468136",
+									"href": "/resourceInventoryManagement/v4/resource/3597468036",
+									"@referredType": "EP_N4",
+									"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N4=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165037",
+					"name": "N6",
+					"description": "N6 interface between UPF and DN",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468045",
+							"href": "/resourceInventoryManagement/v4/resource/3597468045",
+							"@referredType": "UPFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468043",
+									"href": "/resourceInventoryManagement/v4/resource/3597468043",
+									"@referredType": "EP_N6",
+									"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N6=1"
+								}
+							]
+						},
+						{
+							"id": "35974681353",
+							"href": "/resourceInventoryManagement/v4/resource/35974681353",
+							"@referredType": "EP_N6",
+							"name": "EP_N6"
+						}
+					]
+				},
+				{
+					"id": "16429186165038",
+					"name": "N7",
+					"description": "N7 interface between SMF and PCF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468040",
+							"href": "/resourceInventoryManagement/v4/resource/3597468040",
+							"@referredType": "SMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468036",
+									"href": "/resourceInventoryManagement/v4/resource/3597468036",
+									"@referredType": "EP_N7",
+									"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N7=1"
+								}
+							]
+						},
+						{
+							"id": "3597468051",
+							"href": "/resourceInventoryManagement/v4/resource/3597468051",
+							"@referredType": "PCFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468132",
+									"href": "/resourceInventoryManagement/v4/resource/3597468132",
+									"@referredType": "EP_N7",
+									"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N7=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165039",
+					"name": "N8",
+					"description": "N8 interface between AMF and UDM",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468022",
+									"href": "/resourceInventoryManagement/v4/resource/3597468022",
+									"@referredType": "EP_N8",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N8=1"
+								}
+							]
+						},
+						{
+							"id": "3597468060",
+							"href": "/resourceInventoryManagement/v4/resource/3597468060",
+							"@referredType": "UDMFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468142",
+									"href": "/resourceInventoryManagement/v4/resource/3597468142",
+									"@referredType": "EP_N8",
+									"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N8=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165040",
+					"name": "N9",
+					"description": "N9 interface between two UPFs",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468045",
+							"href": "/resourceInventoryManagement/v4/resource/3597468045",
+							"@referredType": "UPFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468042",
+									"href": "/resourceInventoryManagement/v4/resource/3597468042",
+									"@referredType": "EP_N9",
+									"name": "SubNetwork=12,ManagedElement=1,UPFFunction=1,EP_N9=1"
+								}
+							]
+						},
+						{
+							"id": "3597468146",
+							"href": "/resourceInventoryManagement/v4/resource/3597468146",
+							"@referredType": "UPFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UPFFunction=2",
+							"connectionPoint": [
+								{
+									"id": "3597468143",
+									"href": "/resourceInventoryManagement/v4/resource/3597468143",
+									"@referredType": "EP_N9",
+									"name": "SubNetwork=12,ManagedElement=1,UPFFunction=2,EP_N9=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165041",
+					"name": "N10",
+					"description": "N10 interface between SMF and UDM",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468040",
+							"href": "/resourceInventoryManagement/v4/resource/3597468040",
+							"@referredType": "SMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468037",
+									"href": "/resourceInventoryManagement/v4/resource/3597468037",
+									"@referredType": "EP_N10",
+									"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N10=1"
+								}
+							]
+						},
+						{
+							"id": "3597468060",
+							"href": "/resourceInventoryManagement/v4/resource/3597468060",
+							"@referredType": "UDMFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468138",
+									"href": "/resourceInventoryManagement/v4/resource/3597468138",
+									"@referredType": "EP_N10",
+									"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N10=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165042",
+					"name": "N11",
+					"description": "N11 interface between AMF and SMF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468023",
+									"href": "/resourceInventoryManagement/v4/resource/3597468023",
+									"@referredType": "EP_N11",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N11=1"
+								}
+							]
+						},
+						{
+							"id": "3597468040",
+							"href": "/resourceInventoryManagement/v4/resource/3597468040",
+							"@referredType": "SMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468124",
+									"href": "/resourceInventoryManagement/v4/resource/3597468124",
+									"@referredType": "EP_N11",
+									"name": "SubNetwork=12,ManagedElement=1,SMFFunction=1,EP_N11=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165043",
+					"name": "N12",
+					"description": "N12 interface between AMF and AUSF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468024",
+									"href": "/resourceInventoryManagement/v4/resource/3597468024",
+									"@referredType": "EP_N12",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N12=1"
+								}
+							]
+						},
+						{
+							"id": "3597468057",
+							"href": "/resourceInventoryManagement/v4/resource/3597468057",
+							"@referredType": "AUSFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468125",
+									"href": "/resourceInventoryManagement/v4/resource/3597468125",
+									"@referredType": "EP_N12",
+									"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N12=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165044",
+					"name": "N13",
+					"description": "N13 interface between AUSF and UDM",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468057",
+							"href": "/resourceInventoryManagement/v4/resource/3597468057",
+							"@referredType": "AUSFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468056",
+									"href": "/resourceInventoryManagement/v4/resource/3597468056",
+									"@referredType": "EP_N13",
+									"name": "SubNetwork=12,ManagedElement=1,AUSFFunction=1,EP_N13=1"
+								}
+							]
+						},
+						{
+							"id": "3597468060",
+							"href": "/resourceInventoryManagement/v4/resource/3597468060",
+							"@referredType": "UDMFunction",
+							"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468157",
+									"href": "/resourceInventoryManagement/v4/resource/3597468157",
+									"@referredType": "EP_N13",
+									"name": "SubNetwork=12,ManagedElement=1,UDMFunction=1,EP_N13=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165045",
+					"name": "N14",
+					"description": "N14 interface between two AMFs",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468025",
+									"href": "/resourceInventoryManagement/v4/resource/3597468025",
+									"@referredType": "EP_N14",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N14=1"
+								}
+							]
+						},
+						{
+							"id": "3597468135",
+							"href": "/resourceInventoryManagement/v4/resource/3597468135",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=2",
+							"connectionPoint": [
+								{
+									"id": "3597468126",
+									"href": "/resourceInventoryManagement/v4/resource/3597468126",
+									"@referredType": "EP_N14",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=2,EP_N14=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165045",
+					"name": "N15",
+					"description": "N15 interface between AMF and PCF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468026",
+									"href": "/resourceInventoryManagement/v4/resource/3597468026",
+									"@referredType": "EP_N15",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N15=1"
+								}
+							]
+						},
+						{
+							"id": "3597468051",
+							"href": "/resourceInventoryManagement/v4/resource/3597468051",
+							"@referredType": "PCFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468127",
+									"href": "/resourceInventoryManagement/v4/resource/3597468127",
+									"@referredType": "EP_N15",
+									"name": "SubNetwork=12,ManagedElement=1,PCFFunction=1,EP_N15=1"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "16429186165046",
+					"name": "N22",
+					"description": "N22 interface between AMF and NSSF",
+					"associationType": "pointtoPoint",
+					"endpoint": [
+						{
+							"id": "3597468034",
+							"href": "/resourceInventoryManagement/v4/resource/3597468034",
+							"@referredType": "AMFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468029",
+									"href": "/resourceInventoryManagement/v4/resource/3597468029",
+									"@referredType": "EP_N22",
+									"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N22=1"
+								}
+							]
+						},
+						{
+							"id": "3597468074",
+							"href": "/resourceInventoryManagement/v4/resource/3597468074",
+							"@referredType": "NSSFFunction",
+							"name": "SubNetwork=12,ManagedElement=1,NSSFFunction=1",
+							"connectionPoint": [
+								{
+									"id": "3597468130",
+									"href": "/resourceInventoryManagement/v4/resource/3597468130",
+									"@referredType": "EP_N22",
+									"name": "SubNetwork=12,ManagedElement=1,NSSFFunction=1,EP_N22=1"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
 	]
 }
