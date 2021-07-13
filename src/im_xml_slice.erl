@@ -90,6 +90,36 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 	{Spec, NewCache} = get_specification_ref(ClassType, Cache),
 	{[_ | T2], _NewStack} = pop(startElement, QName, Stack),
 	NSSAttr = parse_ns_subnet_attr(T2, undefined, []),
+	ResNameSuffixes = ["AMFFunction=1", "AMFFunction=2", "SMFFunction=1",
+			"UPFFunction=1", "UPFFunction=2", "AUSFFunction=1", "NSSFFunction=1",
+			"UDMFunction=1", "PCFFunction=1",
+			"AMFFunction=1,EP_N2=1", "N3IWFFunction=1,EP_N2=1",
+			"UPFFunction=1,EP_N3=1", "N3IWFFunction=1,EP_N3=1",
+			"SMFFunction=1,EP_N4=1", "UPFFunction=1,EP_N4=1",
+			"UPFFunction=1,EP_N6=1",
+			"SMFFunction=1,EP_N7=1", "PCFFunction=1,EP_N7=1",
+			"AMFFunction=1,EP_N8=1", "UDMFunction=1,EP_N8=1",
+			"UPFFunction=1,EP_N9=1", "UPFFunction=2,EP_N9=1",
+			"SMFFunction=1,EP_N10=1", "UDMFunction=1,EP_N10=1",
+			"AMFFunction=1,EP_N11=1", "SMFFunction=1,EP_N11=1",
+			"AMFFunction=1,EP_N12=1", "AUSFFunction=1,EP_N12=1",
+			"AUSFFunction=1,EP_N13=1", "UDMFunction=1,EP_N13=1",
+			"AMFFunction=1,EP_N14=1", "AMFFunction=2,EP_N14=1",
+			"AMFFunction=1,EP_N15=1", "PCFFunction=1,EP_N15=1",
+			"AMFFunction=1,EP_N22=1", "NSSFFunction=1,EP_N22=1"],
+	Fresrel = fun(NameSuffix, Acc) ->
+			Name = "DC=sigscale.net,SubNetwork=12,ManagedElement=1," ++ NameSuffix,
+			case im:get_resource_name(Name) of
+				{ok, #resource{id = ResId, href = ResHref, name = ResName,
+						class_type = ResType}} ->
+					[#resource_rel{id = ResId, href = ResHref, name = ResName,
+							ref_type = ResType, rel_type = "contains"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource",
+							{resource, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
 	Resource = #resource{name = NSSDn,
 			description = "Network Slice Subnet",
 			category = "Slice",
@@ -97,7 +127,8 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 			base_type = "ResourceFunction",
 			schema = ?PathInventorySchema ++ "/NetworkSliceSubnet",
 			specification = Spec,
-			characteristic = NSSAttr},
+			characteristic = NSSAttr,
+			related = lists:foldl(Fresrel, [], ResNameSuffixes)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
