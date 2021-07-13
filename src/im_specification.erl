@@ -2293,7 +2293,7 @@ network_slice_subnet() ->
 			OperationalState, AdministrativeState, NsInfo, SliceProfileList],
 	SpecificationNames = ["AMFFunction", "SMFFunction", "UPFFunction",
 			"AUSFFunction", "NSSFFunction", "UDMFunction", "PCFFunction",
-			"EP_N2", "EP_N3", "EP_N4", "EP_N5", "EP_N6", "EP_N7", "EP_N8",
+			"EP_N2", "EP_N3", "EP_N4", "EP_N6", "EP_N7", "EP_N8",
 			"EP_N9", "EP_N10", "EP_N11", "EP_N12", "EP_N13", "EP_N14",
 			"EP_N15", "EP_N22"],
 	Fspecrel = fun(Name, Acc) ->
