@@ -107,8 +107,9 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 			"AMFFunction=1,EP_N14=1", "AMFFunction=2,EP_N14=1",
 			"AMFFunction=1,EP_N15=1", "PCFFunction=1,EP_N15=1",
 			"AMFFunction=1,EP_N22=1", "NSSFFunction=1,EP_N22=1"],
+	NamePrefix = "DC=sigscale.net,SubNetwork=12,ManagedElement=1,",
 	Fresrel = fun(NameSuffix, Acc) ->
-			Name = "DC=sigscale.net,SubNetwork=12,ManagedElement=1," ++ NameSuffix,
+			Name = NamePrefix ++ NameSuffix,
 			case im:get_resource_name(Name) of
 				{ok, #resource{id = ResId, href = ResHref, name = ResName,
 						class_type = ResType}} ->
@@ -120,6 +121,34 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 					Acc
 			end
 	end,
+	ResourceRels = lists:foldl(Fresrel, [], ResNameSuffixes),
+	CPNameSuffixes = ["AMFFunction=1,EP_N2=1", "N3IWFFunction=1,EP_N2=1",
+			"UPFFunction=1,EP_N3=1", "N3IWFFunction=1,EP_N3=1",
+			"SMFFunction=1,EP_N4=1", "UPFFunction=1,EP_N4=1",
+			"UPFFunction=1,EP_N6=1",
+			"SMFFunction=1,EP_N7=1", "PCFFunction=1,EP_N7=1",
+			"AMFFunction=1,EP_N8=1", "UDMFunction=1,EP_N8=1",
+			"UPFFunction=1,EP_N9=1", "UPFFunction=2,EP_N9=1",
+			"SMFFunction=1,EP_N10=1", "UDMFunction=1,EP_N10=1",
+			"AMFFunction=1,EP_N11=1", "SMFFunction=1,EP_N11=1",
+			"AMFFunction=1,EP_N12=1", "AUSFFunction=1,EP_N12=1",
+			"AUSFFunction=1,EP_N13=1", "UDMFunction=1,EP_N13=1",
+			"AMFFunction=1,EP_N14=1", "AMFFunction=2,EP_N14=1",
+			"AMFFunction=1,EP_N15=1", "PCFFunction=1,EP_N15=1",
+			"AMFFunction=1,EP_N22=1", "NSSFFunction=1,EP_N22=1"],
+	Fresconn = fun(NameSuffix, Acc) ->
+			Name = NamePrefix ++ NameSuffix,
+			case lists:keyfind(Name, #resource_rel.name, ResourceRels) of
+				#resource_rel{id = ResId, href = ResHref, name = ResName,
+						ref_type = RefType} ->
+					[#resource_ref{id = ResId, href = ResHref, name = ResName,
+							ref_type = RefType} | Acc];
+				false ->
+					error_logger:warning_report(["Error reading resource rel",
+							{resource_rel, Name}, {error, not_found}]),
+					Acc
+			end
+	end,
 	Resource = #resource{name = NSSDn,
 			description = "Network Slice Subnet",
 			category = "Slice",
@@ -128,7 +157,8 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 			schema = ?PathInventorySchema ++ "/NetworkSliceSubnet",
 			specification = Spec,
 			characteristic = NSSAttr,
-			related = lists:foldl(Fresrel, [], ResNameSuffixes)},
+			related = ResourceRels,
+			connection_point = lists:foldl(Fresconn, [], CPNameSuffixes)},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
