@@ -116,9 +116,7 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 					[#resource_rel{id = ResId, href = ResHref, name = ResName,
 							ref_type = ResType, rel_type = "contains"} | Acc];
 				{error, Reason} ->
-					error_logger:warning_report(["Error reading resource",
-							{resource, Name}, {error, Reason}]),
-					Acc
+					{error, Reason}
 			end
 	end,
 	ResourceRels = lists:foldl(Fresrel, [], ResNameSuffixes),
@@ -149,6 +147,47 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 					Acc
 			end
 	end,
+	ConnectivitySuffixes = [{"EP_N2=1", "AMFFunction=1", "N3IWFFunction=1"},
+			{"EP_N3=1", "UPFFunction=1", "N3IWFFunction=1"},
+			{"EP_N4=1", "SMFFunction=1", "UPFFunction=1"},
+			{"EP_N7=1", "SMFFunction=1", "PCFFunction=1"},
+			{"EP_N8=1", "AMFFunction=1", "UDMFunction=1"},
+			{"EP_N9=1", "UPFFunction=1", "UPFFunction=2"},
+			{"EP_N10=1", "SMFFunction=1", "UDMFunction=1"},
+			{"EP_N11=1", "AMFFunction=1", "SMFFunction=1"},
+			{"EP_N12=1", "AMFFunction=1", "AUSFFunction=1"},
+			{"EP_N13=1", "AUSFFunction=1", "UDMFunction=1"},
+			{"EP_N14=1", "AMFFunction=1", "AMFFunction=2"},
+			{"EP_N15=1", "AMFFunction=1", "PCFFunction=1"},
+			{"EP_N22=1", "AMFFunction=1", "NSSFFunction=1"}],
+	Fep = fun(CpName, EpName) ->
+			case lists:keyfind(CpName, #resource_rel.name, ResourceRels) of
+				#resource_rel{id = CpId, href = CpHref, name = CpName,
+						ref_type = CpType} ->
+					ConnectionPoint = [#resource_ref{id = CpId, href = CpHref,
+							name = CpName, ref_type = CpType}],
+					case lists:keyfind(EpName, #resource_rel.name, ResourceRels) of
+						#resource_rel{id = EpId, href = EpHref, name = EpName,
+								ref_type = EpType} ->
+							#endpoint_ref{id = EpId, href = EpHref, name = EpName,
+								ref_type = EpType, connection_point = ConnectionPoint};
+						false ->
+							{error, not_found}
+					end;
+				false ->
+					{error, not_found}
+			end
+	end,
+	Fcon = fun({CpSuffix, EpSuffix1, EpSuffix2}) ->
+			EpName1 = NamePrefix ++ EpSuffix1,
+			EP1 = Fep(EpName1 ++ "," ++ CpSuffix, EpName1),
+			EpName2 = NamePrefix ++ EpSuffix2,
+			EP2 = Fep(EpName2 ++ "," ++ CpSuffix, EpName2),
+			[_, ConName, _] = string:tokens(CpSuffix, "_="),
+			#connection{name = ConName, ass_type = "pointtoPoint",
+					endpoint = [EP1, EP2]}
+	end,
+	Connections = lists:map(Fcon, ConnectivitySuffixes),
 	Resource = #resource{name = NSSDn,
 			description = "Network Slice Subnet",
 			category = "Slice",
@@ -158,7 +197,10 @@ parse_ns_subnet({endElement, _Uri, "NetworkSliceSubnet", QName},
 			specification = Spec,
 			characteristic = NSSAttr,
 			related = ResourceRels,
-			connection_point = lists:foldl(Fresconn, [], CPNameSuffixes)},
+			connection_point = lists:foldl(Fresconn, [], CPNameSuffixes),
+			connectivity = [#resource_graph{
+             name = "Adjacency Graph",
+             connection = lists:reverse(Connections)}]},
 	case im:add_resource(Resource) of
 		{ok, #resource{} = _R} ->
 			[PrevState#state{spec_cache = [NewCache | PrevCache]} | T1];
