@@ -525,7 +525,7 @@
 			"id": "16429186165034",
 			"@type": "ResourceGraph",
 			"name": "Adjacency Graph",
-			"description": "Topology of internal adjacency",
+			"description": "Topology of network function adjacency.",
 			"connection": [
 				{
 					"id": "16429186165035",
