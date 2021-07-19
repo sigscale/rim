@@ -45,7 +45,7 @@ class inventoryList extends PolymerElement {
 							Relationship	
 						</paper-tab>
 						<paper-tab>
-							Specification
+							Connections	
 						</paper-tab>
 						<paper-tab>
 							Topology
@@ -110,6 +110,15 @@ class inventoryList extends PolymerElement {
 									<dd>{{item.lastModified}}</dd>
 								</template>
 							</dl>
+							<dl class="details">
+								<template is="dom-if" if="{{item.resourceSpecification}}">
+									<dt><b>Specification</b></dt>
+									<dd>{{item.resourceSpecification.id}}</dd>
+									<dd>{{item.resourceSpecification.name}}</dd>
+									<dd>{{item.resourceSpecification.href}}</dd>
+									<dd>{{item.resourceSpecification.version}}</dd>
+								</template>
+							</dl>
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.resourceChar}}">
@@ -144,7 +153,7 @@ class inventoryList extends PolymerElement {
 											<td>{{rel.resource.id}}</td>
 											<td>{{rel.resource.href}}</td>
 											<td>{{rel.resource.name}}</td>
-											<td>{{rel.resource['@referredType']}}</td>
+											<td>{{rel.resource[@referredType]}}</td>
 											<td>{{rel.relationshipType}}</td>
 										</tr>
 									</template>
@@ -152,22 +161,24 @@ class inventoryList extends PolymerElement {
 							</template>
 						</div>
 						<div>
-							<template is="dom-if" if="{{item.resourceSpecification}}">
-								<table class="details">
-									<tr>
-										<th>Id</th>
-										<th>Href</th>
-										<th>Name</th>
-										<th>Version</th>
-									</tr>
-									<tr>
-										<td>{{item.resourceSpecification.id}}</td>
-										<td>{{item.resourceSpecification.href}}</td>
-										<td>{{item.resourceSpecification.name}}</td>
-										<td>{{item.resourceSpecification.version}}</td>
-									</tr>
-								</table>
-							</template>
+							<dl class="details">
+								<template is="dom-if" if="{{item.id}}">
+									<dt><b>Id</b></dt>
+									<dd>{{item.id}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.href}}">
+									<dt><b>Href</b></dt>
+									<dd>{{item.href}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.name}}">
+									<dt><b>Name</b></dt>
+									<dd>{{item.name}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.referredType}}">
+									<dt><b>ReferredType</b></dt>
+									<dd>{{item.referredType}}</dd>
+								</template>
+							</dl>
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.connectivity}}">
@@ -514,6 +525,14 @@ class inventoryList extends PolymerElement {
 					}
 					if(request.response[index].resourceRelationship) {
 						newRecord.resourceRelationship = request.response[index].resourceRelationship;
+					}
+					if(request.response[index].connectionPoint) {
+						for(var indexCon in request.response[index].connectionPoint) {
+							newRecord.referredType = request.response[index].connectionPoint[indexCon]["@referredType"];
+							newRecord.href = request.response[index].connectionPoint[indexCon].href;
+							newRecord.id = request.response[index].connectionPoint[indexCon].id;
+							newRecord.name = request.response[index].connectionPoint[indexCon].name;
+						}
 					}
 					if(request.response[index].resourceSpecification) {
 						newRecord.resourceSpecification = request.response[index].resourceSpecification;
