@@ -6960,7 +6960,7 @@ ng_catalog() ->
 	end,
 	CategoryRefs = lists:foldr(Fcategoryref, [], CategoryNames),
 	#catalog{name = "5G",
-			description = "Catalog of 5G",
+			description = "Catalog for 5G",
 			class_type = "ResourceCatalog",
 			status = active,
 			version = "1.0",
@@ -6983,7 +6983,7 @@ lte_catalog() ->
 			end
 	end,
 	#catalog{name = "4G",
-			description = "Catalog of 4G",
+			description = "Catalog for 4G",
 			class_type = "ResourceCatalog",
 			status = active,
 			version = "1.0",
@@ -7006,7 +7006,7 @@ umts_catalog() ->
 			end
 	end,
 	#catalog{name = "3G",
-			description = "Catalog of 3G",
+			description = "Catalog for 3G",
 			class_type = "ResourceCatalog",
 			status = active,
 			version = "1.0",
@@ -7029,7 +7029,7 @@ gsm_catalog() ->
 			end
 	end,
 	#catalog{name = "2G",
-			description = "Catalog of 2G",
+			description = "Catalog for 2G",
 			class_type = "ResourceCatalog",
 			status = active,
 			version = "1.0",
@@ -7052,7 +7052,7 @@ oda_catalog() ->
 			end
 	end,
 	#catalog{name = "ODA",
-			description = "Catalog of ODA",
+			description = "Catalog for ODA components",
 			class_type = "ResourceCatalog",
 			status = active,
 			version = "1.0",
