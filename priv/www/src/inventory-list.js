@@ -42,10 +42,10 @@ class inventoryList extends PolymerElement {
 							Characteristics
 						</paper-tab>
 						<paper-tab>
-							Relationship	
+							Relationship
 						</paper-tab>
 						<paper-tab>
-							Connections	
+							Connections
 						</paper-tab>
 						<paper-tab>
 							Topology
@@ -150,10 +150,10 @@ class inventoryList extends PolymerElement {
 									</tr>
 									<template is="dom-repeat" items="{{item.resourceRelationship}}" as="rel">
 										<tr>
-											<td>{{rel.resource.id}}</td>
-											<td>{{rel.resource.href}}</td>
-											<td>{{rel.resource.name}}</td>
-											<td>{{rel.resource[@referredType]}}</td>
+											<td>{{rel.id}}</td>
+											<td>{{rel.href}}</td>
+											<td>{{rel.name}}</td>
+											<td>{{rel.referredType}}</td>
 											<td>{{rel.relationshipType}}</td>
 										</tr>
 									</template>
@@ -524,7 +524,17 @@ class inventoryList extends PolymerElement {
 						}
 					}
 					if(request.response[index].resourceRelationship) {
-						newRecord.resourceRelationship = request.response[index].resourceRelationship;
+						for(var indexRel in request.response[index].resourceRelationship) {
+							var relArray = new Array();
+							var relObj = new Object();
+							relObj.id = request.response[index].resourceRelationship[indexRel].resource.id
+							relObj.name = request.response[index].resourceRelationship[indexRel].resource.name
+							relObj.href = request.response[index].resourceRelationship[indexRel].resource.href;
+							relObj.referredType = request.response[index].resourceRelationship[indexRel].resource["@referredType"];
+							relObj.relationshipType = request.response[index].resourceRelationship[indexRel].relationshipType;
+							relArray.push(relObj);
+							newRecord.resourceRelationship = relArray;
+						}
 					}
 					if(request.response[index].connectionPoint) {
 						for(var indexCon in request.response[index].connectionPoint) {
