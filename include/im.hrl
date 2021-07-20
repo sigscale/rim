@@ -406,7 +406,8 @@
 		feature = [] :: [feature()] | '_' | '$22',
 		characteristic = [] :: [resource_char()] | '_' | '$23',
 		connectivity = [] :: [resource_graph()] | '_' | '$24',
-		connection_point = [] :: [resource_ref()] | '_' | '$25'}).
+		connection_point = [] :: [resource_ref()] | '_' | '$25',
+		attributes = #{} :: map() | '_' | '$26'}).
 -type resource() :: #resource{}.
 
 -record(connection_spec,
