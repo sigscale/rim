@@ -162,21 +162,21 @@ class inventoryList extends PolymerElement {
 						</div>
 						<div>
 							<dl class="details">
-								<template is="dom-if" if="{{item.id}}">
+								<template is="dom-if" if="{{item.conId}}">
 									<dt><b>Id</b></dt>
-									<dd>{{item.id}}</dd>
+									<dd>{{item.conId}}</dd>
 								</template>
-								<template is="dom-if" if="{{item.href}}">
+								<template is="dom-if" if="{{item.conHref}}">
 									<dt><b>Href</b></dt>
-									<dd>{{item.href}}</dd>
+									<dd>{{item.conHref}}</dd>
 								</template>
-								<template is="dom-if" if="{{item.name}}">
+								<template is="dom-if" if="{{item.conName}}">
 									<dt><b>Name</b></dt>
-									<dd>{{item.name}}</dd>
+									<dd>{{item.conName}}</dd>
 								</template>
-								<template is="dom-if" if="{{item.referredType}}">
+								<template is="dom-if" if="{{item.conReferredType}}">
 									<dt><b>ReferredType</b></dt>
-									<dd>{{item.referredType}}</dd>
+									<dd>{{item.conReferredType}}</dd>
 								</template>
 							</dl>
 						</div>
@@ -538,10 +538,10 @@ class inventoryList extends PolymerElement {
 					}
 					if(request.response[index].connectionPoint) {
 						for(var indexCon in request.response[index].connectionPoint) {
-							newRecord.referredType = request.response[index].connectionPoint[indexCon]["@referredType"];
-							newRecord.href = request.response[index].connectionPoint[indexCon].href;
-							newRecord.id = request.response[index].connectionPoint[indexCon].id;
-							newRecord.name = request.response[index].connectionPoint[indexCon].name;
+							newRecord.conReferredType = request.response[index].connectionPoint[indexCon]["@referredType"];
+							newRecord.conHref = request.response[index].connectionPoint[indexCon].href;
+							newRecord.conId = request.response[index].connectionPoint[indexCon].id;
+							newRecord.conName = request.response[index].connectionPoint[indexCon].name;
 						}
 					}
 					if(request.response[index].resourceSpecification) {
