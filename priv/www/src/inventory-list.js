@@ -111,13 +111,29 @@ class inventoryList extends PolymerElement {
 								</template>
 							</dl>
 							<dl class="details">
-								<template is="dom-if" if="{{item.resourceSpecification}}">
-									<dt><b>Specification</b></dt>
-									<dd>{{item.resourceSpecification.id}}</dd>
-									<dd>{{item.resourceSpecification.name}}</dd>
-									<dd>{{item.resourceSpecification.href}}</dd>
-									<dd>{{item.resourceSpecification.version}}</dd>
+								<dt><b>Specification</b></dt><dd></dd><br>
+								<dl class="details">
+								<template is="dom-if" if="{{item.specId}}">
+									<dt><b>Id</b></dt>
+									<dd>{{item.specId}}</dd>
 								</template>
+								<template is="dom-if" if="{{item.specRef}}">
+									<dt><b>ReferredType</b></dt>
+									<dd>{{item.specRef}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.specName}}">
+									<dt><b>Name</b></dt>
+									<dd>{{item.specName}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.specHref}}">
+									<dt><b>Href</b></dt>
+									<dd>{{item.specHref}}</dd>
+								</template>
+								<template is="dom-if" if="{{item.specVersion}}">
+									<dt><b>Version</b></dt>
+									<dd>{{item.specVersion}}</dd>
+								</template>
+								</dl>
 							</dl>
 						</div>
 						<div>
@@ -549,7 +565,12 @@ class inventoryList extends PolymerElement {
 						newRecord.connections = connectArray;
 					}
 					if(request.response[index].resourceSpecification) {
-						newRecord.resourceSpecification = request.response[index].resourceSpecification;
+						newRecord.specRef = request.response[index].resourceSpecification["@referredType"];
+						newRecord.specId = request.response[index].resourceSpecification.id;
+						newRecord.specName = request.response[index].resourceSpecification.name;
+						newRecord.specHref = request.response[index].resourceSpecification.href;
+						newRecord.specVersion = request.response[index].resourceSpecification.version;
+//						newRecord.resourceSpecification = request.response[index].resourceSpecification;
 					}
 					vaadinItems[index] = newRecord;
 				}
