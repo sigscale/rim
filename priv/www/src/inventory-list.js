@@ -161,24 +161,24 @@ class inventoryList extends PolymerElement {
 							</template>
 						</div>
 						<div>
-							<dl class="details">
-								<template is="dom-if" if="{{item.conId}}">
-									<dt><b>Id</b></dt>
-									<dd>{{item.conId}}</dd>
-								</template>
-								<template is="dom-if" if="{{item.conHref}}">
-									<dt><b>Href</b></dt>
-									<dd>{{item.conHref}}</dd>
-								</template>
-								<template is="dom-if" if="{{item.conName}}">
-									<dt><b>Name</b></dt>
-									<dd>{{item.conName}}</dd>
-								</template>
-								<template is="dom-if" if="{{item.conReferredType}}">
-									<dt><b>ReferredType</b></dt>
-									<dd>{{item.conReferredType}}</dd>
-								</template>
-							</dl>
+							<template is="dom-if" if="{{item.connections}}">
+								<table class="details">
+									<tr>
+										<th>Id</th>
+										<th>Href</th>
+										<th>Name</th>
+										<th>Referred Type</th>
+									</tr>
+									<template is="dom-repeat" items="{{item.connections}}" as="con">
+										<tr>
+											<td>{{con.conId}}</td>
+											<td>{{con.conHref}}</td>
+											<td>{{con.conName}}</td>
+											<td>{{con.conReferredType}}</td>
+										</tr>
+									</template>
+								</table>
+							</template>
 						</div>
 						<div>
 							<template is="dom-if" if="{{item.connectivity}}">
@@ -537,12 +537,16 @@ class inventoryList extends PolymerElement {
 						newRecord.resourceRelationship = relArray;
 					}
 					if(request.response[index].connectionPoint) {
+						var connectArray = new Array();
 						for(var indexCon in request.response[index].connectionPoint) {
-							newRecord.conReferredType = request.response[index].connectionPoint[indexCon]["@referredType"];
-							newRecord.conHref = request.response[index].connectionPoint[indexCon].href;
-							newRecord.conId = request.response[index].connectionPoint[indexCon].id;
-							newRecord.conName = request.response[index].connectionPoint[indexCon].name;
+							var connectObj = new Object();
+							connectObj.conReferredType = request.response[index].connectionPoint[indexCon]["@referredType"];
+							connectObj.conHref = request.response[index].connectionPoint[indexCon].href;
+							connectObj.conId = request.response[index].connectionPoint[indexCon].id;
+							connectObj.conName = request.response[index].connectionPoint[indexCon].name;
+							connectArray.push(connectObj);
 						}
+						newRecord.connections = connectArray;
 					}
 					if(request.response[index].resourceSpecification) {
 						newRecord.resourceSpecification = request.response[index].resourceSpecification;
