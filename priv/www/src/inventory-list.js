@@ -524,8 +524,8 @@ class inventoryList extends PolymerElement {
 						}
 					}
 					if(request.response[index].resourceRelationship) {
+						var relArray = new Array();
 						for(var indexRel in request.response[index].resourceRelationship) {
-							var relArray = new Array();
 							var relObj = new Object();
 							relObj.id = request.response[index].resourceRelationship[indexRel].resource.id
 							relObj.name = request.response[index].resourceRelationship[indexRel].resource.name
@@ -533,8 +533,8 @@ class inventoryList extends PolymerElement {
 							relObj.referredType = request.response[index].resourceRelationship[indexRel].resource["@referredType"];
 							relObj.relationshipType = request.response[index].resourceRelationship[indexRel].relationshipType;
 							relArray.push(relObj);
-							newRecord.resourceRelationship = relArray;
 						}
+						newRecord.resourceRelationship = relArray;
 					}
 					if(request.response[index].connectionPoint) {
 						for(var indexCon in request.response[index].connectionPoint) {
