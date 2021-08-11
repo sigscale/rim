@@ -35,6 +35,7 @@ beam_DATA = im_app.beam \
 			mod_im_rest_post.beam \
 			mod_im_rest_patch.beam \
 			mod_im_rest_delete.beam \
+			mod_oauth.beam \
 			im_rest.beam \
 			im_rest_res_user.beam \
 			im_rest_res_catalog.beam \

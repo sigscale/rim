@@ -17,6 +17,7 @@ modhtml = im_app.html \
 			im_server.html \
 			mod_im_rest_accepted_content.html \
 			mod_im_rest_get.html \
+			mod_oauth.html \
 			im_rest.html \
 			im_rest_res_user.html \
 			im_rest_res_catalog.html \
