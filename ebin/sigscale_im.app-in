@@ -50,6 +50,9 @@
 			{rest_page_timeout, 60000},
 			{tls_key, "%APP_PRIV%/key.pem"},
 			{tls_cert, "%APP_PRIV%/cert.pem"},
-			{tls_cacert, "%APP_PRIV%/CAcert.pem"}]},
+			{tls_cacert, "%APP_PRIV%/CAcert.pem"},
+			{oauth_issuer, undefined},
+			{oauth_audience, "sigscale"},
+			{oauth_key, undefined}]},
 	{mod, {im_app, []}}]}.
 

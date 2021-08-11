@@ -310,6 +310,17 @@ The {@link //sigscale_im. sigscale_im} application is configured using the follo
 	<dt>rest_page_timeout</dt>
 		<dd>Validity time for an `ETag' in a paginated query.</dd>
 </dl>
+
+=== HTTP Configuration ===
+The mod_oauth module may be configured with the following environment variables :
+<dl>
+	<dt>oauth_audience</dt>
+		<dd>Defines the recipient for who the JWT is intended: {string()}</dd>
+	<dt>oauth_issuer</dt>
+		<dd>Defines the issuer of the JWT: {string()}</dd>
+	<dt>oauth_key</dt>
+		<dd>Path of the file containing a publicKey in PEM format: {string()}</dd>
+</dl>
 The {@link //inets. inets} application's {@link //inets/httpd. httpd} server configuration includes these environment variables:
 <dl>
 	<dt>{port, integer()}</dt>
