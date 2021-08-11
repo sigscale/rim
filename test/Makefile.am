@@ -19,6 +19,7 @@ check_DATA = .dialyzer_ok .common_test_ok
 
 .common_test_ok:	$(addsuffix .beam, $(testmods)) sys.config
 	@if [ ! -d $(CERT_DIR) ]; then mkdir $(CERT_DIR); fi
+	@if [ ! -d im_rest_SUITE_data ]; then mkdir im_rest_SUITE_data; fi
 	@if [ ! -d log ]; then mkdir log; fi
 	@if [ ! -f ct.cfg ]; then cp $(top_srcdir)/test/ct.cfg .; fi
 	@if [ ! -f test.spec ]; then cp $(top_srcdir)/test/test.spec .; fi
@@ -32,6 +33,7 @@ check_DATA = .dialyzer_ok .common_test_ok
 		openssl req -newkey rsa:2048 -nodes \
 				-subj /C=CA/ST=Ontario/L=Toronto/O=Example/CN=$$(hostname)\/emailAddress=support@$$(hostname) \
 				-keyout key.pem -out cert.csr; \
+				chmod 400 key.pem; \
 		fi; \
 		if [ ! -f extensions ]; then \
 			echo "extendedKeyUsage = serverAuth" > extensions; \
@@ -41,6 +43,11 @@ check_DATA = .dialyzer_ok .common_test_ok
 			openssl x509 -req -CA CAcert.pem -CAkey CAkey.pem -CAcreateserial \
 					-extfile extensions -in cert.csr -out cert.pem; \
 		fi)
+	if [ ! -f im_rest_SUITE_data/key.pem ]; then \
+      openssl rsa -in $(CERT_DIR)/key.pem -out im_rest_SUITE_data/key.pem; \
+      chmod 400 im_rest_SUITE_data/key.pem; \
+   fi; \
+   NODENAME=`id -un`
 	ct_run -no_auto_compile -pa $(top_builddir)/ebin -logdir log -config ct.cfg -spec test.spec -dir . -erl_args -noshell -sname $(LOGNAME)-ct -config sys
 
 sys.config:	$(top_srcdir)/test/sys.config-in
