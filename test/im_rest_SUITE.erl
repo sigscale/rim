@@ -28,6 +28,7 @@
 
 -include("im.hrl").
 -include_lib("common_test/include/ct.hrl").
+-include_lib("public_key/include/public_key.hrl").
 
 -define(PathCatalog, "/resourceCatalogManagement/v4/").
 -define(PathInventory, "/resourceInventoryManagement/v4/").
@@ -103,12 +104,22 @@ end_per_suite(_Config) ->
 -spec init_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> Config :: [tuple()].
 %% Initiation before each test case.
 %%
+init_per_testcase(oauth_authentication, Config) ->
+	ok = set_inet_mod(),
+	application:stop(inets),
+	application:start(inets),
+	Config;
 init_per_testcase(_TestCase, Config) ->
 	Config.
 
 -spec end_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> any().
 %% Cleanup after each test case.
 %%
+end_per_testcase(oauth_authentication, Config) ->
+	ok = set_inet_mod(),
+	application:stop(inets),
+	application:start(inets),
+	Config;
 end_per_testcase(_TestCase, _Config) ->
 	ok.
 
@@ -128,7 +139,8 @@ all() ->
 			map_to_specification, specification_to_map, post_specification, get_specifications,
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
-			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users].
+			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
+			oauth_authentication].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1685,6 +1697,51 @@ advanced_query_catalog(Config) ->
 			"@baseType" := "Catalog"} | _] = ResourceMap,
 	length(FilteredCatalogs) == length(ResourceMap).
 
+oauth_authentication()->
+	[{userdata, [{doc, "Authenticate a JWT using oauth"}]}].
+
+oauth_authentication(Config)->
+	ID = "cornflakes",
+	Locale = "es",
+	{ok, _} = im:add_user(ID, "", Locale),
+	ok = application:set_env(im, oauth_issuer, "joe"),
+	ok = application:set_env(im, oauth_audience, "network-subscriber.sigscale-im"),
+	HostUrl = ?config(host_url, Config),
+	Accept = {"accept", "application/json"},
+	Header = "{\n"
+			++ "\t\"alg\": \"RS256\",\n"
+			++ "\t\"typ\": \"JWT\"\n"
+			++ "}",
+	Expiry = os:system_time(seconds) + 86400,
+	Payload = zj:encode(#{"iss" => "joe",
+			"exp" => Expiry,
+			"email" => "cornflakes",
+			"aud" => [
+					#{"network-subscriber.sigscale-im" => "account"}
+			],
+			"preferred_username" => "flakes"}),
+	EncodedHeader = encode_base64url(Header),
+	EncodedPayload = encode_base64url(Payload),
+	Path = ?config(data_dir, Config),
+	KeyPath = Path ++ "key.pem",
+	{ok, PrivBin} = file:read_file(KeyPath),
+	[RSAPrivEntry] = public_key:pem_decode(PrivBin),
+	Key = public_key:pem_entry_decode(RSAPrivEntry),
+	M = Key#'RSAPrivateKey'.modulus,
+	E = Key#'RSAPrivateKey'.publicExponent,
+	RSAPublicKey = #'RSAPublicKey'{modulus = M, publicExponent = E},
+	PemEntry = public_key:pem_entry_encode('RSAPublicKey', RSAPublicKey),
+	PemBin = public_key:pem_encode([PemEntry]),
+	file:write_file(Path ++ "pub.pem", PemBin),
+	Msg = list_to_binary(EncodedHeader ++ "." ++ EncodedPayload),
+	Signature = public_key:sign(Msg, sha256, Key),
+	EncodedSignature = encode_base64url(binary_to_list(Signature)),
+	AuthKey = "Bearer " ++ EncodedHeader ++ "." ++ EncodedPayload ++ "." ++ EncodedSignature,
+	Authentication = {"authorization", AuthKey},
+	Request = {HostUrl, [Accept, Authentication]},
+	{ok, Result} = httpc:request(get, Request, [], []),
+	{{"HTTP/1.1", 200, _}, _, _} = Result.
+
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
@@ -2056,3 +2113,43 @@ get_name(2) ->
 	"EPC";
 get_name(3) ->
 	"Core".
+
+-spec encode_base64url(Value) -> EncodedValue
+	when
+		Value :: string(),
+		EncodedValue :: list().
+%% @doc Encode a value using base64url encoding.
+encode_base64url(Value)
+		when is_list(Value) ->
+	EncodedValue = base64:encode_to_string(Value),
+	StrippedValue = string:strip(EncodedValue, both, $=),
+	sub_chars_en(StrippedValue, []).
+
+%% @hidden
+sub_chars_en([$/ | T], Acc) ->
+	sub_chars_en(T, [$_ | Acc]);
+sub_chars_en([$+ | T], Acc) ->
+	sub_chars_en(T, [$- | Acc]);
+sub_chars_en([H | T], Acc) ->
+	sub_chars_en(T, [H | Acc]);
+sub_chars_en([], Acc) ->
+	lists:reverse(Acc).
+
+set_inet_mod() ->
+	{ok, EnvObj} = application:get_env(inets, services),
+	[{httpd, Services}] = EnvObj,
+	NewModTuple = replace_mod(lists:keyfind(modules, 1, Services), []),
+	NewServices = lists:keyreplace(modules, 1, Services, NewModTuple),
+	ok = application:set_env(inets, services, [{httpd, NewServices}]).
+
+replace_mod({modules, Mods}, Acc) ->
+	replace_mod1(Mods, Acc).
+%% @hidden
+replace_mod1([mod_auth | T], Acc) ->
+	replace_mod1(T, [mod_oauth | Acc]);
+replace_mod1([mod_oauth | T], Acc) ->
+	replace_mod1(T, [mod_auth | Acc]);
+replace_mod1([H | T], Acc) ->
+	replace_mod1(T, [H | Acc]);
+replace_mod1([], Acc) ->
+	{modules, lists:reverse(Acc)}.
