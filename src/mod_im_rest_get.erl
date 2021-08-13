@@ -94,9 +94,13 @@ parse_query(Resource, ModData, {Path, []}) ->
 parse_query(Resource, ModData, {Path, "?" ++ Query}) ->
 	do_get(Resource, ModData, string:tokens(Path, "/"),
 		im_rest:parse_query(Query));
-parse_query(_R, _P, _Q) ->
+parse_query(Resource, ModData, {Path, Query}) when is_list(Path),
+		is_list(Query) ->
+	do_get(Resource, ModData, string:tokens(Path, "/"),
+		im_rest:parse_query(Query));
+parse_query(_R, #mod{data = Data} = _ModData, _Q) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",
-	{break, [{response, {404, Response}}]}.
+	{break, [{response, {404, Response}} | Data]}.
 
 %% @hidden
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
