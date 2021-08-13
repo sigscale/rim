@@ -64,8 +64,7 @@ do1(#mod{parsed_header = Headers, request_uri = Uri, data = Data} = ModData) ->
 						false ->
 							{proceed, Data};
 						{_, Resource} ->
-							Path = http_uri:decode(Uri),
-							content_type_available(Headers, Path, Resource, ModData)
+							content_type_available(Headers, Uri, Resource, ModData)
 					end;
 				_Response ->
 					{proceed,  Data}
@@ -93,11 +92,11 @@ parse_query(Resource, ModData, {Path, []}) ->
 	do_get(Resource, ModData, string:tokens(Path, "/"), []);
 parse_query(Resource, ModData, {Path, "?" ++ Query}) ->
 	do_get(Resource, ModData, string:tokens(Path, "/"),
-		im_rest:parse_query(Query));
+		im_rest:parse_query(http_uri:decode(Query)));
 parse_query(Resource, ModData, {Path, Query}) when is_list(Path),
 		is_list(Query) ->
 	do_get(Resource, ModData, string:tokens(Path, "/"),
-		im_rest:parse_query(Query));
+		im_rest:parse_query(http_uri:decode(Query)));
 parse_query(_R, #mod{data = Data} = _ModData, _Q) ->
 	Response = "<h2>HTTP Error 404 - Not Found</h2>",
 	{break, [{response, {404, Response}} | Data]}.
