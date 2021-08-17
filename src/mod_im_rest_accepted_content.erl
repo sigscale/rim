@@ -54,7 +54,7 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 		undefined ->
 			case proplists:get_value(response, Data) of
 				undefined ->
-					Path = http_uri:decode(Uri),
+					Path = uri_string:percent_decode(Uri),
 					case string:tokens(Path, "/?") of
 						["partyManagement", "v2", "individual"] ->
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);

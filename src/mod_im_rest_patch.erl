@@ -56,7 +56,7 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 				undefined ->
 					case proplists:get_value(response, Data) of
 						undefined ->
-							Path = http_uri:decode(Uri),
+							Path = uri_string:percent_decode(Uri),
 							{_, Resource} = lists:keyfind(resource, 1, Data),
 							{_, ContentType} = lists:keyfind(content_type, 1, Data),
 							content_type_available(Headers, ContentType, Body, Path,
