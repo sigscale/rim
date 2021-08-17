@@ -131,7 +131,7 @@ store1([{'Certificate', DerCert, _}]) ->
 		#'OTPCertificate'{tbsCertificate = TbsCert}  ->
 			SubPublicKeyInfo = TbsCert#'OTPTBSCertificate'.subjectPublicKeyInfo,
 			NewValue = SubPublicKeyInfo#'OTPSubjectPublicKeyInfo'.subjectPublicKey,
-			application:set_env(ocs, oauth_key, NewValue),
+			application:set_env(im, oauth_key, NewValue),
 			{ok, {oauth_key, NewValue}};
 		_ ->
 			{error, invalid_pem_entry}
@@ -139,7 +139,7 @@ store1([{'Certificate', DerCert, _}]) ->
 store1([#'RSAPublicKey'{} = RSAPubEntry]) ->
 	case public_key:pem_entry_decode(RSAPubEntry) of
 		#'RSAPublicKey'{} = RSAPublicKey ->
-			application:set_env(ocs, oauth_key, RSAPublicKey),
+			application:set_env(im, oauth_key, RSAPublicKey),
 			{ok, {oauth_key, RSAPublicKey}};
 		_ ->
 			{error, invalid_pem_entry}
