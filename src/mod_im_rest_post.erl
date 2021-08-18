@@ -86,6 +86,8 @@ content_type_available(Headers, Uri, Body, Resource, ModData) ->
 %% @hidden
 do_post(Resource, ModData, Body, ["partyManagement", "v2", "individual"]) ->
 	do_response(ModData, Resource:post_user(Body));
+do_post(Resource, ModData, Body, ["partyRoleManagement", "v4", "partyRole"]) ->
+	do_response(ModData, Resource:post_role(Body));
 do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v4", "resourceCatalog"]) ->
 	do_response(ModData, Resource:post_catalog(Body));
 do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v4", "resourceCategory"]) ->
