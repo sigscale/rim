@@ -29,10 +29,12 @@
 -include("im.hrl").
 -include_lib("common_test/include/ct.hrl").
 -include_lib("public_key/include/public_key.hrl").
+-include_lib("inets/include/mod_auth.hrl").
 
 -define(PathCatalog, "/resourceCatalogManagement/v4/").
 -define(PathInventory, "/resourceInventoryManagement/v4/").
 -define(PathParty, "/partyManagement/v2/").
+-define(PathRole, "/partyRoleManagement/v4/").
 
 %% support deprecated_time_unit()
 -define(SECOND, seconds).
@@ -140,6 +142,7 @@ all() ->
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
+			post_role,
 			oauth_authentication].
 
 %%---------------------------------------------------------------------
@@ -160,6 +163,36 @@ get_users(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers).
 
+post_role() ->
+	[{userdata, [{doc, "POST to Role collection"}]}].
+
+post_role(Config) ->
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
+	RoleName = "Global Pirates",
+	RoleType = "PartyRole",
+	StartDate = "2021-08-17T00:00Z",
+	EndDate = "2022-12-31T00:00Z",
+	RoleMap = #{"@type" => RoleType,
+		"name" => RoleName,
+		"validFor" => #{
+				"startDateTime" => StartDate,
+				"endDateTime" => EndDate
+		}
+	},
+	RequestBody = zj:encode(RoleMap),
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, #{"id" := RoleName, "name" := RoleName, "@type" := RoleType,
+			"href" := "/partyRoleManagement/v4/partyRole/" ++ RoleName,
+			"validFor" := #{"startDateTime" := StartDate,
+					"endDateTime" := EndDate}}} = zj:decode(ResponseBody).
 
 map_to_catalog() ->
 	[{userdata, [{doc, "Decode Catalog map()"}]}].
