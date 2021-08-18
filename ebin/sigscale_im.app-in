@@ -18,6 +18,7 @@
 			im_rest_res_specification,
 			im_rest_res_user,
 			im_rest_res_rules,
+			im_rest_res_role,
 			im_specification,
 			im_xml_cm_bulk,
 			im_xml_core,
