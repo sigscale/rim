@@ -34,6 +34,7 @@
                   mod_im_rest_post,
                   mod_im_rest_get,
                   mod_im_rest_patch,
+                  mod_im_rest_delete,
                   mod_get,
                   mod_disk_log]},
             {mime_types,
