@@ -142,7 +142,7 @@ all() ->
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
-			post_role, get_role,
+			post_role, get_role, delete_role,
 			oauth_authentication].
 
 %%---------------------------------------------------------------------
@@ -193,6 +193,27 @@ post_role(Config) ->
 			"href" := "/partyRoleManagement/v4/partyRole/" ++ RoleName,
 			"validFor" := #{"startDateTime" := StartDate,
 					"endDateTime" := EndDate}}} = zj:decode(ResponseBody).
+delete_role() ->
+   [{userdata, [{doc,"Delete role in rest interface"}]}].
+
+delete_role(Config) ->
+   Name = "Queen",
+	PartyRole = party_role(Name),
+	RequestBody = zj:encode(PartyRole),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()],
+			ContentType, RequestBody},
+	{ok, Result1} = httpc:request(post, Request1, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers1, _ResponseBody1} = Result1,
+	{_, Href} = lists:keyfind("location", 1, Headers1),
+	Request2 = {HostUrl ++ Href, [Accept, auth_header()]},
+   {ok, Result2} = httpc:request(delete, Request2, [], []),
+   {{"HTTP/1.1", 204, _NoContent}, _Headers2, []} = Result2,
+	{ok, {{"HTTP/1.1", 404, "Object Not Found"}, _Headers3, _ResponseBody3}}
+			= httpc:request(get, Request2, [], []).
 
 get_role() ->
 	[{userdata, [{doc, "Get the user collection."}]}].
