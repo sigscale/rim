@@ -142,7 +142,7 @@ all() ->
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
-			post_role,
+			post_role, get_role,
 			oauth_authentication].
 
 %%---------------------------------------------------------------------
@@ -193,6 +193,30 @@ post_role(Config) ->
 			"href" := "/partyRoleManagement/v4/partyRole/" ++ RoleName,
 			"validFor" := #{"startDateTime" := StartDate,
 					"endDateTime" := EndDate}}} = zj:decode(ResponseBody).
+
+get_role() ->
+	[{userdata, [{doc, "Get the user collection."}]}].
+
+get_role(Config) ->
+	PartyRole1 = party_role("SL_Pirates"),
+	RequestBody = zj:encode(PartyRole1),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()],
+			ContentType, RequestBody},
+	{ok, Result1} = httpc:request(post, Request1, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers1, _ResponseBody1} = Result1,
+	{_, Href} = lists:keyfind("location", 1, Headers1),
+	Request2 = {HostUrl ++ Href, [Accept, auth_header()]},
+	{ok, Result2} = httpc:request(get, Request2, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers2, ResponseBody2} = Result2,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers2),
+	ContentLength = integer_to_list(length(ResponseBody2)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers2),
+	{ok, PartyRole2} = zj:decode(ResponseBody2),
+	true = lists:all(fun is_role/1, [PartyRole2]).
 
 map_to_catalog() ->
 	[{userdata, [{doc, "Decode Catalog map()"}]}].
@@ -2186,3 +2210,26 @@ replace_mod1([H | T], Acc) ->
 	replace_mod1(T, [H | Acc]);
 replace_mod1([], Acc) ->
 	{modules, lists:reverse(Acc)}.
+
+%% @hidden
+party_role(RoleName) ->
+	RoleType = "PartyRole",
+	StartDate = "2021-08-17T00:00Z",
+	EndDate = "2022-12-31T00:00Z",
+	#{"@type" => RoleType,
+		"name" => RoleName,
+		"validFor" => #{
+				"startDateTime" => StartDate,
+				"endDateTime" => EndDate
+		}
+	}.
+
+%% @hidden
+is_role(#{"id" := Id, "href" := Href, "name" := Name,
+		"@type" := RoleType, "validFor" := #{"startDateTime" := SD,
+		"endDateTime" := ED}}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(RoleType),
+		is_list(SD), is_list(ED) ->
+	true;
+is_role(_) ->
+	false.
