@@ -58,17 +58,17 @@ post_role(RequestBody) ->
 				"validFor" := #{"startDateTime" := StartDate,
 				"endDateTime" := EndDate}} = Role} = zj:decode(RequestBody),
 		{Port, Address, Directory, _Group} = get_params(),
+		LM = {erlang:system_time(?MILLISECOND),
+				erlang:unique_integer([positive])},
 		UserData = [{type, Type}, {start_date, im_rest:iso8601(StartDate)},
-         	{end_date, im_rest:iso8601(EndDate)}],
+				{end_date, im_rest:iso8601(EndDate)}, {last_modified, LM}],
 		case mod_auth:add_user(Name, [], UserData, Address, Port, Directory) of
 			true ->
 				NewRole = Role#{"id" => Name,
 						"href" => "/partyRoleManagement/v4/partyRole/" ++ Name},
 				Body = zj:encode(NewRole),
 				Location = "/partyRoleManagement/v4/partyRole/" ++ Name,
-				LastModified= {erlang:system_time(?MILLISECOND),
-						erlang:unique_integer([positive])},
-				Headers = [{location, Location}, {etag, im_rest:etag(LastModified)}],
+				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
