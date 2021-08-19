@@ -23,7 +23,8 @@
 -module(im_rest_res_role).
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
 
--export([content_types_accepted/0, content_types_provided/0, post_role/1]).
+-export([content_types_accepted/0, content_types_provided/0, post_role/1,
+		get_role/2]).
 
 -include_lib("inets/include/mod_auth.hrl").
 -include("im.hrl").
@@ -77,6 +78,60 @@ post_role(RequestBody) ->
 		_:_Reason1 ->
 			{error, 400}
 	end.
+
+-spec get_role(Name, Query) -> Result
+	when
+		Name :: string(),
+		Query :: [{Key :: string(), Value :: string()}],
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+				| {error, ErrorCode :: integer()}.
+%% @doc Handle `GET' request on a `Individual' resource.
+%% 	Respond to `GET /partyRoleManagement/v4/partyRole/{Name}' request.
+get_role(Name, Query) ->
+	case lists:keytake("fields", 1, Query) of
+		{value, {_, L}, NewQuery} ->
+			get_role(Name, NewQuery, string:tokens(L, ","));
+		false ->
+			get_role(Name, Query, [])
+	end.
+%% @hidden
+get_role(Name, [] = _Query, _Filters) ->
+	{Port, Address, Dir, _Group} = get_params(),
+	case mod_auth:get_user(Name, Address, Port, Dir) of
+		{ok, #httpd_user{user_data = UserData} = RoleRec} ->
+			Headers1 = case lists:keyfind(last_modified, 1, UserData) of
+				{_, LastModified} ->
+					[{etag, im_rest:etag(LastModified)}];
+				false ->
+					[]
+			end,
+			Headers2 = [{content_type, "application/json"} | Headers1],
+			Body = zj:encode(role(RoleRec)),
+			{ok, Headers2, Body};
+		{error, _Reason} ->
+			{error, 404}
+	end;
+get_role(_, _, _) ->
+	{error, 400}.
+
+-spec role(Role) -> Role
+	when
+		Role :: #httpd_user{} | map().
+%% @doc CODEC for `Role'.
+role(#httpd_user{username = Name, user_data = Chars})
+		when is_list(Name), is_list(Chars) ->
+	F = fun(Key) ->
+			case lists:keyfind(Key, 1, Chars) of
+				{Key, Value} ->
+					Value;
+				false ->
+					[]
+			end
+	end,
+	#{"id" => Name, "name" => Name, "@type" => F(type),
+			"validFor" => #{"startDateTime" => im_rest:iso8601(F(start_date)),
+					"endDateTime" => im_rest:iso8601(F(end_date))},
+			"href" => "/partyRoleManagement/v4/partyRole/" ++ Name}.
 
 %%----------------------------------------------------------------------
 %%  internal functions
