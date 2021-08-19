@@ -24,7 +24,7 @@
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0, post_role/1,
-		get_role/2]).
+		delete_role/1, get_role/2]).
 
 -include_lib("inets/include/mod_auth.hrl").
 -include("im.hrl").
@@ -76,6 +76,22 @@ post_role(RequestBody) ->
 		end
 	catch
 		_:_Reason1 ->
+			{error, 400}
+	end.
+
+-spec delete_role(Name) -> Result
+	when
+		Name :: string(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+				| {error, ErrorCode :: integer()} .
+%% @doc Handle `DELETE' request on a `Role' resource.
+%% 	Respond to `DELETE /partyRoleManagement/v4/partyRole/{Name}' request.
+delete_role(Name) ->
+	{Port, Address, Directory, _Group} = get_params(),
+	case mod_auth:delete_user(Name, Address, Port, Directory) of
+		true ->
+			{ok, [], []};
+		{error, _Reason} ->
 			{error, 400}
 	end.
 
