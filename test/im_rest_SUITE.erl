@@ -142,8 +142,7 @@ all() ->
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
-			post_role, get_role, delete_role,
-			oauth_authentication].
+			post_role, delete_role, get_role, get_roles, oauth_authentication].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -193,6 +192,7 @@ post_role(Config) ->
 			"href" := "/partyRoleManagement/v4/partyRole/" ++ RoleName,
 			"validFor" := #{"startDateTime" := StartDate,
 					"endDateTime" := EndDate}}} = zj:decode(ResponseBody).
+
 delete_role() ->
    [{userdata, [{doc,"Delete role in rest interface"}]}].
 
@@ -238,6 +238,36 @@ get_role(Config) ->
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers2),
 	{ok, PartyRole2} = zj:decode(ResponseBody2),
 	true = lists:all(fun is_role/1, [PartyRole2]).
+
+get_roles() ->
+	[{userdata, [{doc, "Get the role collection."}]}].
+
+get_roles(Config) ->
+	PartyRole1 = party_role("USA_Pirates"),
+	PartyRole2 = party_role("CA_Pirates"),
+	RequestBody1 = zj:encode(PartyRole1),
+	RequestBody2 = zj:encode(PartyRole2),
+	HostUrl = ?config(host_url, Config),
+	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()],
+			ContentType, RequestBody1},
+	{ok, Result1} = httpc:request(post, Request1, [], []),
+	{{"HTTP/1.1", 201, Created}, _Headers1, _ResponseBody1} = Result1,
+	Request2 = {CollectionUrl, [Accept, auth_header()],
+			ContentType, RequestBody2},
+	{ok, Result2} = httpc:request(post, Request2, [], []),
+	{{"HTTP/1.1", 201, Created}, _Headers2, _ResponseBody2} = Result2,
+	Request3 = {CollectionUrl, [Accept, auth_header()]},
+	{ok, Result3} = httpc:request(get, Request3, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers3, ResponseBody3} = Result3,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers3),
+	ContentLength = integer_to_list(length(ResponseBody3)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers3),
+	{ok, PartyRoles} = zj:decode(ResponseBody3),
+	false = is_empty(PartyRoles),
+	true = lists:all(fun is_role/1, PartyRoles).
 
 map_to_catalog() ->
 	[{userdata, [{doc, "Decode Catalog map()"}]}].
