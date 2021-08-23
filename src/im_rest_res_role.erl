@@ -54,29 +54,30 @@ content_types_provided() ->
 %% @doc Handle `POST' request on `Role' collection.
 %% 	Respond to `POST /partyRoleManagement/v4/partyRole' request.
 post_role(RequestBody) ->
-	try
-		{ok, #{"name" := Name, "@type" := Type,
-				"validFor" := #{"startDateTime" := StartDate,
-				"endDateTime" := EndDate}} = Role} = zj:decode(RequestBody),
-		{Port, Address, Directory, _Group} = get_params(),
-		LM = {erlang:system_time(?MILLISECOND),
-				erlang:unique_integer([positive])},
-		UserData = [{type, Type}, {start_date, im_rest:iso8601(StartDate)},
-				{end_date, im_rest:iso8601(EndDate)}, {last_modified, LM}],
-		case mod_auth:add_user(Name, [], UserData, Address, Port, Directory) of
-			true ->
+	case get_params() of
+		{Port, Address, Directory, _Group} ->
+			try
+				{ok, #{"name" := Name, "@type" := Type,
+						"validFor" := #{"startDateTime" := StartDate,
+						"endDateTime" := EndDate}} = Role} = zj:decode(RequestBody),
+				LM = {erlang:system_time(?MILLISECOND),
+						erlang:unique_integer([positive])},
+				UserData = [{type, Type}, {start_date, im_rest:iso8601(StartDate)},
+						{end_date, im_rest:iso8601(EndDate)}, {last_modified, LM}],
+				true = mod_auth:add_user(Name, [],
+						UserData, Address, Port, Directory),
 				NewRole = Role#{"id" => Name,
 						"href" => "/partyRoleManagement/v4/partyRole/" ++ Name},
 				Body = zj:encode(NewRole),
 				Location = "/partyRoleManagement/v4/partyRole/" ++ Name,
 				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
-				{ok, Headers, Body};
-			{error, _Reason} ->
-				{error, 400}
-		end
-	catch
-		_:_Reason1 ->
-			{error, 400}
+				{ok, Headers, Body}
+			catch
+				_:_Reason1 ->
+					{error, 400}
+			end;
+		{error, _Reason} ->
+			{error, 500}
 	end.
 
 -spec delete_role(Name) -> Result
@@ -87,13 +88,16 @@ post_role(RequestBody) ->
 %% @doc Handle `DELETE' request on a `Role' resource.
 %% 	Respond to `DELETE /partyRoleManagement/v4/partyRole/{Name}' request.
 delete_role(Name) ->
-	{Port, Address, Directory, _Group} = get_params(),
+	delete_role(Name, get_params()).
+delete_role(Name, {Port, Address, Directory, _Group}) ->
 	case mod_auth:delete_user(Name, Address, Port, Directory) of
 		true ->
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
-	end.
+	end;
+delete_role(_Name, {error, Reason}) ->
+	{error, Reason}.
 
 -spec get_role(Name, Query) -> Result
 	when
@@ -104,15 +108,19 @@ delete_role(Name) ->
 %% @doc Handle `GET' request on a `Individual' resource.
 %% 	Respond to `GET /partyRoleManagement/v4/partyRole/{Name}' request.
 get_role(Name, Query) ->
+	get_role(Name, Query, get_params()).
+%% @hidden
+get_role(Name, Query, {_, _, _, _} = Params) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, L}, NewQuery} ->
-			get_role(Name, NewQuery, string:tokens(L, ","));
+			get_role(Name, NewQuery, Params, string:tokens(L, ","));
 		false ->
-			get_role(Name, Query, [])
-	end.
+			get_role(Name, Query, Params, [])
+	end;
+get_role(_Name, _Query, {error, Reason}) ->
+	{error, Reason}.
 %% @hidden
-get_role(Name, [] = _Query, _Filters) ->
-	{Port, Address, Dir, _Group} = get_params(),
+get_role(Name, [] = _Query, {Port, Address, Dir, _Group}, _Filters) ->
 	case mod_auth:get_user(Name, Address, Port, Dir) of
 		{ok, #httpd_user{user_data = UserData} = RoleRec} ->
 			Headers1 = case lists:keyfind(last_modified, 1, UserData) of
@@ -127,7 +135,7 @@ get_role(Name, [] = _Query, _Filters) ->
 		{error, _Reason} ->
 			{error, 404}
 	end;
-get_role(_, _, _) ->
+get_role(_, _, _, _) ->
 	{error, 400}.
 
 -spec get_roles(Query, Headers) -> Result
@@ -228,26 +236,47 @@ role(#httpd_user{username = Name, user_data = Chars})
 
 -spec get_params() -> Result
 	when
-		Result :: {Port, Address, Directory, Group},
-		Port :: integer(),
-		Address :: string(),
-		Directory :: string(),
-		Group :: string().
-%% @doc Get {@link //inets/httpd. httpd} configuration parameters.
-%% @private
+		Result :: {Port :: integer(), Address :: string(),
+				Directory :: string(), Group :: string()}
+				| {error, Reason :: term()}.
+%% @doc Returns configurations details for currently running
+%% {@link //inets. httpd} service.
+%% @hidden
 get_params() ->
-	{_, _, Info} = lists:keyfind(httpd, 1, inets:services_info()),
-	{_, Port} = lists:keyfind(port, 1, Info),
-	{_, Address} = lists:keyfind(bind_address, 1, Info),
-	{ok, EnvObj} = application:get_env(inets, services),
-	{httpd, HttpdObj} = lists:keyfind(httpd, 1, EnvObj),
-	{directory, {Directory, AuthObj}} = lists:keyfind(directory, 1, HttpdObj),
-	case lists:keyfind(require_group, 1, AuthObj) of
-		{require_group, [Group | _T]} ->
-			{Port, Address, Directory, Group};
-		false ->
-			exit(not_found)
-	end.
+	get_params(inets:services_info()).
+%% @hidden
+get_params({error, Reason}) ->
+	{error, Reason};
+get_params(ServicesInfo) ->
+	get_params1(lists:keyfind(httpd, 1, ServicesInfo)).
+%% @hidden
+get_params1({httpd, _, HttpdInfo}) ->
+	{_, Address} = lists:keyfind(bind_address, 1, HttpdInfo),
+	{_, Port} = lists:keyfind(port, 1, HttpdInfo),
+	get_params2(Address, Port, application:get_env(inets, services));
+get_params1(false) ->
+	{error, httpd_not_started}.
+%% @hidden
+get_params2(Address, Port, {ok, Services}) ->
+	get_params3(Address, Port, lists:keyfind(httpd, 1, Services));
+get_params2(_, _, undefined) ->
+	{error, inet_services_undefined}.
+%% @hidden
+get_params3(Address, Port, {httpd, Httpd}) ->
+	get_params4(Address, Port, lists:keyfind(directory, 1, Httpd));
+get_params3(_, _, false) ->
+	{error, httpd_service_undefined}.
+%% @hidden
+get_params4(Address, Port, {directory, {Directory, Auth}}) ->
+	get_params5(Address, Port, Directory,
+			lists:keyfind(require_group, 1, Auth));
+get_params4(_, _, false) ->
+	{error, httpd_directory_undefined}.
+%% @hidden
+get_params5(Address, Port, Directory, {require_group, [Group | _]}) ->
+	{Port, Address, Directory, Group};
+get_params5(_, _, _, false) ->
+	{error, httpd_group_undefined}.
 
 %% @hidden
 query_start(Query, Filters, RangeStart, RangeEnd) ->
