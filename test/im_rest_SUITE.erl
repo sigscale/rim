@@ -168,7 +168,7 @@ post_role() ->
 post_role(Config) ->
 	HostUrl = ?config(host_url, Config),
 	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
-	RoleName = "Global Pirates",
+	RoleName = "Global_Pirates",
 	RoleType = "PartyRole",
 	StartDate = "2021-08-17T00:00Z",
 	EndDate = "2022-12-31T00:00Z",
@@ -216,7 +216,7 @@ delete_role(Config) ->
 			= httpc:request(get, Request2, [], []).
 
 get_role() ->
-	[{userdata, [{doc, "Get the user collection."}]}].
+	[{userdata, [{doc, "Get a user."}]}].
 
 get_role(Config) ->
 	PartyRole1 = party_role("SL_Pirates"),

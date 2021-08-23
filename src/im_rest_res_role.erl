@@ -18,7 +18,7 @@
 %%% @doc This library module implements resource handling functions
 %%% 	for a REST server in the {@link //im. im} application.
 %%%
-%%% 	Handle `Individual' collection.
+%%% 	Handle `Role' collection.
 %%%
 -module(im_rest_res_role).
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
@@ -105,7 +105,7 @@ delete_role(_Name, {error, Reason}) ->
 		Query :: [{Key :: string(), Value :: string()}],
 		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
 				| {error, ErrorCode :: integer()}.
-%% @doc Handle `GET' request on a `Individual' resource.
+%% @doc Handle `GET' request on a `Role' resource.
 %% 	Respond to `GET /partyRoleManagement/v4/partyRole/{Name}' request.
 get_role(Name, Query) ->
 	get_role(Name, Query, get_params()).
