@@ -42,7 +42,8 @@ init([] = _Args) ->
 	ChildSpecs = [server(im_server, [self()]),
 			supervisor(im_rest_pagination_sup,
 			im_rest_pagination_sup, []),
-			supervisor(im_rest_hub_sup, im_rest_hub_sup, [])],
+			supervisor(im_rest_hub_sup, im_rest_hub_sup, []),
+			event(im_event)],
 	{ok, {{one_for_one, 10, 60}, ChildSpecs}}.
 
 %%----------------------------------------------------------------------
@@ -77,5 +78,18 @@ supervisor(StartMod, RegName, Args) ->
 server(StartMod, Args) ->
 	StartArgs = [{local, im}, StartMod, Args, []],
 	StartFunc = {gen_server, start_link, StartArgs},
+	{StartMod, StartFunc, permanent, 4000, worker, [StartMod]}.
+
+-spec event(StartMod) -> Result
+	when
+		StartMod :: atom(),
+		Result :: supervisor:child_spec().
+%% @doc Build a supervisor child specification for a
+%%    {@link //stdlib/gen_event. gen_event} behaviour.
+%% @private
+%%
+event(StartMod) ->
+	StartArgs = [{local, StartMod}],
+	StartFunc = {gen_event, start_link, StartArgs},
 	{StartMod, StartFunc, permanent, 4000, worker, [StartMod]}.
 

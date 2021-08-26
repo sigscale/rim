@@ -51,7 +51,8 @@ beam_DATA = im_app.beam \
 			im_rest_pagination_server.beam \
 			im_rest_res_role.beam \
 			im_rest_hub_sup.beam \
-			im_rest_hub_fsm.beam
+			im_rest_hub_fsm.beam \
+			im_event.beam
 
 %.beam:$(top_srcdir)/src/%.erl	$(top_srcdir)/include/im.hrl
 	$(ERLC) $(ERLCFLAGS) -I $(top_srcdir)/include -I $(top_builddir)/include $<
