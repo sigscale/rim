@@ -20,6 +20,7 @@
 			im_rest_res_rules,
 			im_rest_res_role,
 			im_rest_hub_sup,
+			im_rest_hub_fsm,
 			im_specification,
 			im_xml_cm_bulk,
 			im_xml_core,
