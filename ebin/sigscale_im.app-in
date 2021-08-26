@@ -59,6 +59,7 @@
 			{tls_cacert, "%APP_PRIV%/CAcert.pem"},
 			{oauth_issuer, undefined},
 			{oauth_audience, "sigscale"},
-			{oauth_key, undefined}]},
+			{oauth_key, undefined},
+			{hub_profile, hub}]},
 	{mod, {im_app, []}}]}.
 
