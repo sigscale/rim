@@ -41,7 +41,8 @@
 init([] = _Args) ->
 	ChildSpecs = [server(im_server, [self()]),
 			supervisor(im_rest_pagination_sup,
-			im_rest_pagination_sup, [])],
+			im_rest_pagination_sup, []),
+			supervisor(im_rest_hub_sup, im_rest_hub_sup, [])],
 	{ok, {{one_for_one, 10, 60}, ChildSpecs}}.
 
 %%----------------------------------------------------------------------
