@@ -142,7 +142,8 @@ all() ->
 			get_specification, map_to_resource, resource_to_map, post_resource, get_resources,
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
-			post_role, delete_role, get_role, get_roles, oauth_authentication].
+			post_role, delete_role, get_role, get_roles, oauth_authentication,
+			post_hub_role].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1849,6 +1850,27 @@ oauth_authentication(Config)->
 	Request = {HostUrl, [Accept, Authentication]},
 	{ok, Result} = httpc:request(get, Request, [], []),
 	{{"HTTP/1.1", 200, _}, _, _} = Result.
+
+post_hub_role() ->
+	[{userdata, [{doc, "Register hub listener for role"}]}].
+
+post_hub_role(Config) ->
+	HostUrl = ?config(host_url, Config),
+	PathHub = ?PathRole ++ "hub/",
+	CollectionUrl = HostUrl ++ PathHub,
+	Callback = "http://in.listener.com",
+	RequestBody = zj:encode(#{"callback" => Callback}),
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result} = httpc:request(post, Request, [], []),
+	{{"HTTP/1.1", 201, _Created}, Headers, ResponseBody} = Result,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{_, Location} = lists:keyfind("location", 1, Headers),
+	Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
+	{ok, #{"id" := Id, "callback" := Callback}} = zj:decode(ResponseBody).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
