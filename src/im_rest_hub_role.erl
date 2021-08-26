@@ -19,7 +19,7 @@
 -module(im_rest_hub_role).
 -copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
 
--export([content_types_accepted/0, content_types_provided/0]).
+-export([content_types_accepted/0, content_types_provided/0, post_hub/1]).
 
 -define(PathRoleHub, "/partyRoleManagement/v4/hub/").
 
@@ -41,6 +41,33 @@ content_types_accepted() ->
 %% @doc Provides list of resource representations available.
 content_types_provided() ->
 	["application/json"].
+
+-spec post_hub(ReqBody) -> Result
+	when
+		ReqBody :: list(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()}.
+%% Hub event to disk.
+%% @doc Respond to `POST /partyRoleManagement/v4/hub'
+post_hub(ReqBody) ->
+	try
+		{ok, #{"callback" := Callback} = Hub} = zj:decode(ReqBody),
+		case supervisor:start_child(im_rest_hub_sup,
+				[[], Callback, ?PathRoleHub]) of
+			{ok, _PageServer, Id} ->
+				Body = zj:encode(Hub#{"id" => Id}),
+				Headers = [{content_type, "application/json"},
+						{location, ?PathRoleHub ++ Id}],
+				{ok, Headers, Body};
+			{error, _Reason} ->
+				{error, 500}
+		end
+	catch
+		_:500 ->
+			{error, 500};
+		_:_ ->
+			{error, 400}
+	end.
 
 %%----------------------------------------------------------------------
 %%  The internal functions

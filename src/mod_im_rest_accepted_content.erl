@@ -62,6 +62,8 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 							check_content_type_header(Headers, Method, im_rest_res_user, Data);
 						["partyRoleManagement", "v4", "partyRole" | _] ->
 							check_content_type_header(Headers, Method, im_rest_res_role, Data);
+						["partyRoleManagement", "v4", "hub" | _] ->
+							check_content_type_header(Headers, Method, im_rest_hub_role, Data);
 						["resourceCatalogManagement", "v4", "resourceCatalog" | _] ->
                      check_content_type_header(Headers, Method, im_rest_res_catalog, Data);
 						["resourceCatalogManagement", "v4", "resourceCategory" | _] ->
