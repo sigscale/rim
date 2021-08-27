@@ -20,7 +20,7 @@
 -copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0, post_hub/1,
-		delete_hub/1, get_hubs/0]).
+		delete_hub/1, get_hubs/0, get_hub/1]).
 
 -define(PathRoleHub, "/partyRoleManagement/v4/hub/").
 
@@ -102,6 +102,28 @@ get_hubs([], Hubs) ->
 	Body = zj:encode(Hubs),
 	Headers = [{content_type, "application/json"}],
 	{ok, Headers, Body}.
+
+-spec get_hub(Id) -> Result
+	when
+		Id :: string(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+				| {error, ErrorCode :: integer()}.
+%% @doc Body producing function for
+%% 	`GET|HEAD /partyRoleManagement/v4/hub/{id}'
+get_hub(Id) ->
+	case global:whereis_name(Id) of
+		Fsm when is_pid(Fsm) ->
+			case gen_fsm:sync_send_all_state_event(Fsm, get) of
+				#{"id" := Id, "query" := []} = Hub ->
+					Body = zj:encode(Hub#{"query" => undefined}),
+					Headers = [{content_type, "application/json"}],
+					{ok, Headers, Body};
+				_ ->
+					{error, 404}
+			end;
+		undefined ->
+			{error, 404}
+	end.
 
 %%----------------------------------------------------------------------
 %%  The internal functions

@@ -116,6 +116,8 @@ do_get(Resource, #mod{parsed_header = Headers} = ModData,
 	do_response(ModData, Resource:get_roles(Query, Headers));
 do_get(Resource, ModData, ["partyRoleManagement", "v4", "hub"], []) ->
 	do_response(ModData, Resource:get_hubs());
+do_get(Resource, ModData, ["partyRoleManagement", "v4", "hub", Id], []) ->
+	do_response(ModData, Resource:get_hub(Id));
 do_get(Resource, #mod{parsed_header = Headers, method = Method} = ModData,
 		["resourceInventoryManagement", "v1", "logicalResource"], Query) ->
 	do_response(ModData, Resource:get_rules(Method, Query, Headers));
