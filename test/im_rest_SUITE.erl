@@ -17,7 +17,7 @@
 %%% Test suite for the REST API of the
 %%% {@link //sigscale_im. sigscale_im} application.
 -module(im_rest_SUITE).
--copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
+-copyright('Copyright (c) 2018-2021 SigScale Global Inc.').
 
 %% common_test required callbacks
 -export([suite/0, sequences/0, all/0]).
@@ -195,10 +195,10 @@ post_role(Config) ->
 					"endDateTime" := EndDate}}} = zj:decode(ResponseBody).
 
 delete_role() ->
-   [{userdata, [{doc,"Delete role in rest interface"}]}].
+	[{userdata, [{doc,"Delete a role by id"}]}].
 
 delete_role(Config) ->
-   Name = "Queen",
+	Name = "Queen",
 	PartyRole = party_role(Name),
 	RequestBody = zj:encode(PartyRole),
 	HostUrl = ?config(host_url, Config),
@@ -211,8 +211,8 @@ delete_role(Config) ->
 	{{"HTTP/1.1", 201, _Created}, Headers1, _ResponseBody1} = Result1,
 	{_, Href} = lists:keyfind("location", 1, Headers1),
 	Request2 = {HostUrl ++ Href, [Accept, auth_header()]},
-   {ok, Result2} = httpc:request(delete, Request2, [], []),
-   {{"HTTP/1.1", 204, _NoContent}, _Headers2, []} = Result2,
+	{ok, Result2} = httpc:request(delete, Request2, [], []),
+	{{"HTTP/1.1", 204, _NoContent}, _Headers2, []} = Result2,
 	{ok, {{"HTTP/1.1", 404, "Object Not Found"}, _Headers3, _ResponseBody3}}
 			= httpc:request(get, Request2, [], []).
 
@@ -1924,29 +1924,29 @@ get_role_hubs(Config) ->
 	true = lists:all(F, Hubs).
 
 get_role_hub() ->
-   [{userdata, [{doc, "Get role hub listener by identifier"}]}].
+	[{userdata, [{doc, "Get role hub listener by identifier"}]}].
 
 get_role_hub(Config) ->
-   HostUrl = ?config(host_url, Config),
+	HostUrl = ?config(host_url, Config),
 	PathHub = ?PathRole ++ "hub/",
-   CollectionUrl = HostUrl ++ PathHub,
-   Callback = "http://in.listener.com",
-   RequestBody = zj:encode(#{"callback" => Callback}),
-   ContentType = "application/json",
-   Accept = {"accept", "application/json"},
-   Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
-   {ok, Result1} = httpc:request(post, Request1, [], []),
-   {{_, 201, _}, Headers1, _} = Result1,
-   {_, Location} = lists:keyfind("location", 1, Headers1),
-   Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
-   Request2 = {CollectionUrl ++ Id, [Accept, auth_header()]},
-   {ok, Result2} = httpc:request(get, Request2, [], []),
-   {{"HTTP/1.1", 200, _OK}, Headers2, ResponseBody} = Result2,
-   {_, "application/json"} = lists:keyfind("content-type", 1, Headers2),
-   ContentLength = integer_to_list(length(ResponseBody)),
-   {_, ContentLength} = lists:keyfind("content-length", 1, Headers2),
+	CollectionUrl = HostUrl ++ PathHub,
+	Callback = "http://in.listener.com",
+	RequestBody = zj:encode(#{"callback" => Callback}),
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	{ok, Result1} = httpc:request(post, Request1, [], []),
+	{{_, 201, _}, Headers1, _} = Result1,
+	{_, Location} = lists:keyfind("location", 1, Headers1),
+	Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
+	Request2 = {CollectionUrl ++ Id, [Accept, auth_header()]},
+	{ok, Result2} = httpc:request(get, Request2, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers2, ResponseBody} = Result2,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers2),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers2),
 	Href = PathHub ++ Id,
-   {ok, #{"id" := Id, "href" := Href, "callback" := Callback,
+	{ok, #{"id" := Id, "href" := Href, "callback" := Callback,
 			"query" := undefined}} = zj:decode(ResponseBody).
 
 %%---------------------------------------------------------------------
