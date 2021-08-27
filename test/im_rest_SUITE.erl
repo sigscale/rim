@@ -143,7 +143,7 @@ all() ->
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
 			post_role, delete_role, get_role, get_roles, oauth_authentication,
-			post_hub_role, delete_hub_role].
+			post_hub_role, delete_hub_role, get_role_hubs].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1888,6 +1888,40 @@ delete_hub_role(Config) ->
 	{ok, #{"id" := Id, "callback" := Callback}} = zj:decode(ResponseBody),
 	Request1 = {HostUrl ++ PathHub ++ Id, [Accept, auth_header()]},
 	{ok, {{_, 204, _}, _, []}} = httpc:request(delete, Request1, [], []).
+
+get_role_hubs() ->
+	[{userdata, [{doc, "Get role hub listeners"}]}].
+
+get_role_hubs(Config) ->
+	HostUrl = ?config(host_url, Config),
+	PathHub = ?PathRole ++ "hub/",
+	CollectionUrl = HostUrl ++ PathHub,
+	Callback1 = "http://in.listener1.com",
+	Callback2 = "http://in.listener2.com",
+	RequestBody1 = zj:encode(#{"callback" => Callback1}),
+	RequestBody2 = zj:encode(#{"callback" => Callback2}),
+	ContentType = "application/json",
+	Accept = {"accept", "application/json"},
+	Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody1},
+	{ok, Result1} = httpc:request(post, Request1, [], []),
+	{{_, 201, _}, _, _} = Result1,
+	Request2 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody2},
+	{ok, Result2} = httpc:request(post, Request2, [], []),
+	{{_, 201, _}, _, _} = Result2,
+	Request3 = {CollectionUrl, [Accept, auth_header()]},
+	{ok, Result3} = httpc:request(get, Request3, [], []),
+	{{"HTTP/1.1", 200, _OK}, Headers, ResponseBody} = Result3,
+	{_, "application/json"} = lists:keyfind("content-type", 1, Headers),
+	ContentLength = integer_to_list(length(ResponseBody)),
+	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
+	{ok, Hubs} = zj:decode(ResponseBody),
+	true = length(Hubs) >= 2,
+	F = fun(#{"href" := ?PathRole ++ "hub/" ++ _}) ->
+				true;
+			(_) ->
+				false
+	end,
+	true = lists:all(F, Hubs).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
