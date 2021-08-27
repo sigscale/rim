@@ -143,7 +143,7 @@ all() ->
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
 			post_role, delete_role, get_role, get_roles, oauth_authentication,
-			post_hub_role, delete_hub_role, get_role_hubs].
+			post_hub_role, delete_hub_role, get_role_hubs, get_role_hub].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1922,6 +1922,32 @@ get_role_hubs(Config) ->
 				false
 	end,
 	true = lists:all(F, Hubs).
+
+get_role_hub() ->
+   [{userdata, [{doc, "Get role hub listener by identifier"}]}].
+
+get_role_hub(Config) ->
+   HostUrl = ?config(host_url, Config),
+	PathHub = ?PathRole ++ "hub/",
+   CollectionUrl = HostUrl ++ PathHub,
+   Callback = "http://in.listener.com",
+   RequestBody = zj:encode(#{"callback" => Callback}),
+   ContentType = "application/json",
+   Accept = {"accept", "application/json"},
+   Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+   {ok, Result1} = httpc:request(post, Request1, [], []),
+   {{_, 201, _}, Headers1, _} = Result1,
+   {_, Location} = lists:keyfind("location", 1, Headers1),
+   Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
+   Request2 = {CollectionUrl ++ Id, [Accept, auth_header()]},
+   {ok, Result2} = httpc:request(get, Request2, [], []),
+   {{"HTTP/1.1", 200, _OK}, Headers2, ResponseBody} = Result2,
+   {_, "application/json"} = lists:keyfind("content-type", 1, Headers2),
+   ContentLength = integer_to_list(length(ResponseBody)),
+   {_, ContentLength} = lists:keyfind("content-length", 1, Headers2),
+	Href = PathHub ++ Id,
+   {ok, #{"id" := Id, "href" := Href, "callback" := Callback,
+			"query" := undefined}} = zj:decode(ResponseBody).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
