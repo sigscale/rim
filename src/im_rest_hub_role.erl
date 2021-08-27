@@ -19,7 +19,8 @@
 -module(im_rest_hub_role).
 -copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
 
--export([content_types_accepted/0, content_types_provided/0, post_hub/1]).
+-export([content_types_accepted/0, content_types_provided/0, post_hub/1,
+		delete_hub/1]).
 
 -define(PathRoleHub, "/partyRoleManagement/v4/hub/").
 
@@ -68,6 +69,16 @@ post_hub(ReqBody) ->
 		_:_ ->
 			{error, 400}
 	end.
+
+-spec delete_hub(Id) -> Result
+	when
+		Id :: string(),
+		Result :: {ok, Headers :: [tuple()], Body :: iolist()}
+			| {error, ErrorCode :: integer()}.
+%% Delete hub by id.
+%% @doc Respond to `POST /partyRoleManagement/v4/hub/{id}'
+delete_hub(Id) ->
+	{gen_fsm:send_all_state_event({global, Id}, shutdown), [], []}.
 
 %%----------------------------------------------------------------------
 %%  The internal functions

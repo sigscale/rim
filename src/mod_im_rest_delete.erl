@@ -69,6 +69,8 @@ do(#mod{method = Method, request_uri = Uri, data = Data} = ModData) ->
 %% @hidden
 do_delete(Resource, ModData, ["partyRoleManagement", "v4", "partyRole", Identity]) ->
 	do_response(ModData, Resource:delete_role(Identity));
+do_delete(Resource, ModData, ["partyRoleManagement", "v4", "hub", Identity]) ->
+	do_response(ModData, Resource:delete_hub(Identity));
 do_delete(Resource, ModData, ["resourceInventoryManagement", "v1", "logicalResource", Identity]) ->
 	do_response(ModData, Resource:delete_rule(Identity));
 do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceCatalog", Identity]) ->
