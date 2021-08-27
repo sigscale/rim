@@ -190,9 +190,8 @@ handle_event(Reason, _StateName, State) ->
 %% @see //stdlib/gen_fsm:handle_sync_event/4
 %% @private
 %%
-handle_sync_event(get, _From, StateName,
-		#statedata{id = Id, href = Href,
-				query = Query, callback = Callback} = StateData) ->
+handle_sync_event(get, _From, StateName, #statedata{id = Id,
+		href = Href, query = Query, callback = Callback} = StateData) ->
 	Hub = #{"id" => Id, "href" => Href,
 			"query" => Query, "callback" => Callback},
 	{reply, Hub, StateName, StateData}.
