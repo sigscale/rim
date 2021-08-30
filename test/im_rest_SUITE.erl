@@ -1870,7 +1870,8 @@ post_hub_role(Config) ->
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, Location} = lists:keyfind("location", 1, Headers),
 	Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
-	{ok, #{"id" := Id, "callback" := Callback}} = zj:decode(ResponseBody).
+	{ok, #{"id" := Id, "callback" := Callback,
+			"query" := undefined}} = zj:decode(ResponseBody).
 
 delete_hub_role() ->
 	[{userdata, [{doc, "Unregister hub listener for role"}]}].

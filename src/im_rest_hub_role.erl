@@ -52,16 +52,14 @@ content_types_provided() ->
 %% @doc Respond to `POST /partyRoleManagement/v4/hub'
 post_hub(ReqBody) ->
 	try
-		{ok, #{"callback" := Callback} = Hub} = zj:decode(ReqBody),
-		case supervisor:start_child(im_rest_hub_sup,
-				[[], Callback, ?PathRoleHub]) of
-			{ok, _PageServer, Id} ->
-				Body = zj:encode(Hub#{"id" => Id}),
-				Headers = [{content_type, "application/json"},
-						{location, ?PathRoleHub ++ Id}],
-				{ok, Headers, Body};
-			{error, _Reason} ->
-				{error, 500}
+		case zj:decode(ReqBody) of
+			{ok, #{"callback" := Callback, "query" := Query} = Hub}
+					when is_list(Query) ->
+				post_hub(supervisor:start_child(im_rest_hub_sup,
+						[Query, Callback, ?PathRoleHub]), Hub);
+			{ok, #{"callback" := Callback} = Hub} ->
+				post_hub(supervisor:start_child(im_rest_hub_sup,
+						[[], Callback, ?PathRoleHub]), Hub#{"query" => undefined})
 		end
 	catch
 		_:500 ->
@@ -69,6 +67,13 @@ post_hub(ReqBody) ->
 		_:_ ->
 			{error, 400}
 	end.
+post_hub({ok, _PageServer, Id}, Hub) ->
+	Body = zj:encode(Hub#{"id" => Id}),
+	Headers = [{content_type, "application/json"},
+			{location, ?PathRoleHub ++ Id}],
+	{ok, Headers, Body};
+post_hub({error, _Reason}, _Hub) ->
+	{error, 500}.
 
 -spec delete_hub(Id) -> Result
 	when
