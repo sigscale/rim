@@ -25,9 +25,6 @@
 -behaviour(gen_event).
 -include("im.hrl").
 
-%% export the im_event API
--export([notify/3]).
-
 %% export the callbacks needed for gen_event behaviour
 -export([init/1, handle_call/2, handle_event/2, handle_info/2,
 			terminate/2, code_change/3]).
@@ -73,7 +70,6 @@ init([Fsm] = _Args) ->
 %% @private
 %%
 handle_event(_Event, State) ->
-	gen_fsm:send_event(Fsm, Event),
 	{ok, State}.
 
 -spec handle_call(Request, Fsm) -> Result
