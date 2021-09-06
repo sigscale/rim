@@ -15,6 +15,46 @@
 %%% See the License for the specific language governing permissions and
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @doc Handle received HTTP POST requests.
+%%%
+%%% 	This is an {@link //inets/httpd. httpd} callback module handling
+%%% 	HTTP POST operations. The HTTP resources are managed in modules named
+%%% 	`im_rest_res_*'.
+%%%
+%%% 	<h2><a name="callbacks">Resource Handler Functions</a></h2>
+%%% 	The resource handler modules should implement callback functions
+%%% 	in the pattern described in the example below.
+%%%
+%%% 	<h3 class="function">
+%%% 		<a>post_&lt;Collection&gt;/2</a>
+%%% 	</h3>
+%%% 	<div class="spec">
+%%% 		<p>
+%%% 			<tt>post_&lt;Collection&gt;([Id], RequestBody, [...]) -&gt; Result</tt>
+%%% 		</p>
+%%% 		<ul class="definitions">
+%%% 			<li><tt>Id = string()</tt></li>
+%%% 			<li><tt>RequestBody = string()</tt></li>
+%%% 			<li><tt>Result = {ok, Headers, ResponseBody}
+%%% 					| {error, StatusCode}
+%%% 					| {error, StatusCode, Problem}</tt></li>
+%%% 			<li><tt>ResponseBody = io_list()</tt></li>
+%%% 			<li><tt>StatusCode = 200..599</tt></li>
+%%% 			<li><tt>Problem = #{type := uri(), title := string(),
+%%% 					code := string(), cause => string(), detail => string(),
+%%% 					invalidParams => [#{param := string(), reason => string()}],
+%%% 					status => 200..599}</tt></li>
+%%% 		</ul>
+%%% 	</div>
+%%% 	Resource handlers for HTTP POST operations on REST Collections.
+%%%
+%%% 	Response `Headers' must include `content_type' if `ResponseBody' is
+%%% 	not en empty list. An optional `Problem' report may be provided in
+%%% 	error responses which shall be formatted by
+%%% 	{@link //im/im_rest:format_problem/2. format_problem/2} and included
+%%% 	in the response body.
+%%%
+%%% @end
 %%%
 -module(mod_im_rest_post).
 -copyright('Copyright (c) 2016 - 2020 SigScale Global Inc.').
@@ -27,8 +67,9 @@
 	ModData :: #mod{},
 	Result :: {proceed, OldData} | {proceed, NewData} | {break, NewData} | done,
 	OldData :: list(),
-	NewData :: [{response,{StatusCode,Body}}] | [{response,{response,Head,Body}}]
-			| [{response,{already_sent,StatusCode,Size}}],
+	NewData :: [{response, {StatusCode, Body}}]
+			| [{response, {response, Head, Body}}]
+			| [{response, {already_sent, StatusCode, Size}}],
 	StatusCode :: integer(),
 	Body :: iolist() | nobody | {Fun, Arg},
 	Head :: [HeaderOption],
@@ -46,7 +87,7 @@
 	Fun :: fun((Arg) -> sent| close | Body),
 	Arg :: [term()].
 %% @doc Erlang web server API callback function.
-do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
+do(#mod{method = Method, request_uri = Uri,
 		entity_body = Body, data = Data} = ModData) ->
 	case Method of
 		"POST" ->
@@ -58,29 +99,13 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 						undefined ->
 							{_, Resource} = lists:keyfind(resource, 1, Data),
 							Path = uri_string:percent_decode(Uri),
-							content_type_available(Headers, Path, Body, Resource, ModData);
+							do_post(Resource, ModData, Body, string:tokens(Path, "/"));
 						_Response ->
 							{proceed,  Data}
 					end
 			end;
 		_ ->
 			{proceed, Data}
-	end.
-
-%% @hidden
-content_type_available(Headers, Uri, Body, Resource, ModData) ->
-	case lists:keyfind("accept", 1, Headers) of
-		{_, RequestingType} ->
-			AvailableTypes = Resource:content_types_provided(),
-			case lists:member(RequestingType, AvailableTypes) of
-				true ->
-					do_post(Resource, ModData, Body, string:tokens(Uri, "/"));
-				false ->
-					Response = "<h2>HTTP Error 415 - Unsupported Media Type</h2>",
-					{break, [{response, {415, Response}}]}
-			end;
-		_ ->
-			do_post(Resource, ModData, Body, string:tokens(Uri, "/"))
 	end.
 
 %% @hidden
@@ -99,7 +124,7 @@ do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v4", "resourceCa
 do_post(Resource, ModData, Body, ["resourceCatalogManagement", "v4", "resourceSpecification"]) ->
 	do_response(ModData, Resource:post_specification(Body));
 do_post(Resource, ModData, Body, ["resourceInventoryManagement", "v4", "logicalResource"]) ->
-   do_response(ModData, Resource:add_rules(Body));
+	do_response(ModData, Resource:add_rules(Body));
 do_post(Resource, ModData, Body, ["resourceInventoryManagement", "v4", "resource"]) ->
 	do_response(ModData, Resource:post_resource(Body)).
 
@@ -109,16 +134,47 @@ do_response(#mod{data = Data} = ModData, {ok, Headers, ResponseBody}) ->
 	Accept = proplists:get_value(accept, Data),
 	NewHeaders = Headers ++ [{content_length, Size}, {content_type, Accept}],
 	send(ModData, 201, NewHeaders, ResponseBody),
-	{proceed,[{response,{already_sent,201, Size}}]};
-do_response(_ModData, {error, 400}) ->
-	Response = "<h2>HTTP Error 400 - Bad Request</h2>",
-	{break, [{response, {400, Response}}]};
-do_response(_ModData, {error, 404}) ->
-	Response = "<h2>HTTP Error 404 - Not Found</h2>",
-	{break, [{response, {404, Response}}]};
-do_response(_ModData, {error, 500}) ->
-	Response = "<h2>HTTP Error 500 - Server Error</h2>",
-	{break, [{response, {500, Response}}]}.
+	{proceed,[{response, {already_sent, 201, Size}} | Data]};
+do_response(#mod{parsed_header = RequestHeaders,
+		data = Data} = ModData, {error, 400}) ->
+	Problem = #{type => "https://datatracker.ietf.org"
+					"/doc/html/rfc7231#section-6.5.1",
+			title => "Bad Request",
+			detail => "The server cannot or will not process the request"
+					" due to something that is perceived to be a client error.",
+			code => "", status => 400},
+	{ContentType, ResponseBody}
+			= im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 400, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 400, Size}} | Data]};
+do_response(#mod{parsed_header = RequestHeaders,
+		data = Data} = ModData, {error, 404}) ->
+	Problem = #{type => "https://datatracker.ietf.org"
+					"/doc/html/rfc7231#section-6.5.4",
+			title => "Not Found",
+			detail => "No resource exists at the path provided",
+			code => "", status => 404},
+	{ContentType, ResponseBody}
+			= im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 404, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 404, Size}} | Data]};
+do_response(#mod{parsed_header = RequestHeaders,
+	   data = Data} = ModData, {error, 500}) ->
+	Problem = #{type => "https://datatracker.ietf.org"
+					"/doc/html/rfc7231#section-6.6.1",
+			title => "Internal Server Error",
+			detail => "The server encountered an unexpected condition that"
+					" prevented it from fulfilling the request.",
+			code => "", status => 500},
+	{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 500, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 500, Size}} | Data]}.
 
 %% @hidden
 send(#mod{socket = Socket, socket_type = SocketType} = Info,
