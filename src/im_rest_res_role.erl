@@ -54,30 +54,22 @@ content_types_provided() ->
 %% @doc Handle `POST' request on `Role' collection.
 %% 	Respond to `POST /partyRoleManagement/v4/partyRole' request.
 post_role(RequestBody) ->
-	case get_params() of
-		{Port, Address, Directory, _Group} ->
-			try
-				{ok, #{"name" := Name, "@type" := Type,
-						"validFor" := #{"startDateTime" := StartDate,
-						"endDateTime" := EndDate}} = Role} = zj:decode(RequestBody),
-				LM = {erlang:system_time(?MILLISECOND),
-						erlang:unique_integer([positive])},
-				UserData = [{type, Type}, {start_date, im_rest:iso8601(StartDate)},
-						{end_date, im_rest:iso8601(EndDate)}, {last_modified, LM}],
-				true = mod_auth:add_user(Name, [],
-						UserData, Address, Port, Directory),
+	try
+		{ok, #{"name" := Name} = Role} = zj:decode(RequestBody),
+		case im:add_user(Name, [], "en") of
+			{ok, LastModified} ->
 				NewRole = Role#{"id" => Name,
 						"href" => "/partyRoleManagement/v4/partyRole/" ++ Name},
 				Body = zj:encode(NewRole),
 				Location = "/partyRoleManagement/v4/partyRole/" ++ Name,
-				Headers = [{location, Location}, {etag, im_rest:etag(LM)}],
-				{ok, Headers, Body}
-			catch
-				_:_Reason1 ->
-					{error, 400}
-			end;
-		{error, _Reason} ->
-			{error, 500}
+				Headers = [{location, Location}, {etag, im_rest:etag(LastModified)}],
+				{ok, Headers, Body};
+			{error, _Reason} ->
+				{error, 400}
+		end
+	catch
+		_:_Reason1 ->
+			{error, 400}
 	end.
 
 -spec delete_role(Name) -> Result

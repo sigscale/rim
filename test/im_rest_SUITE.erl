@@ -171,14 +171,10 @@ post_role(Config) ->
 	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
 	RoleName = "Global_Pirates",
 	RoleType = "PartyRole",
-	StartDate = "2021-08-17T00:00Z",
-	EndDate = "2022-12-31T00:00Z",
+%	StartDate = "2021-08-17T00:00Z",
+%	EndDate = "2022-12-31T00:00Z",
 	RoleMap = #{"@type" => RoleType,
-		"name" => RoleName,
-		"validFor" => #{
-				"startDateTime" => StartDate,
-				"endDateTime" => EndDate
-		}
+			"name" => RoleName
 	},
 	RequestBody = zj:encode(RoleMap),
 	ContentType = "application/json",
@@ -190,9 +186,8 @@ post_role(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{ok, #{"id" := RoleName, "name" := RoleName, "@type" := RoleType,
-			"href" := "/partyRoleManagement/v4/partyRole/" ++ RoleName,
-			"validFor" := #{"startDateTime" := StartDate,
-					"endDateTime" := EndDate}}} = zj:decode(ResponseBody).
+			"href" := "/partyRoleManagement/v4/partyRole/" ++ RoleName}}
+			= zj:decode(ResponseBody).
 
 delete_role() ->
 	[{userdata, [{doc,"Delete a role by id"}]}].
@@ -217,7 +212,7 @@ delete_role(Config) ->
 			= httpc:request(get, Request2, [], []).
 
 get_role() ->
-	[{userdata, [{doc, "Get a user."}]}].
+	[{userdata, [{doc, "Get a role."}]}].
 
 get_role(Config) ->
 	PartyRole1 = party_role("SL_Pirates"),
@@ -2365,15 +2360,8 @@ replace_mod1([], Acc) ->
 %% @hidden
 party_role(RoleName) ->
 	RoleType = "PartyRole",
-	StartDate = "2021-08-17T00:00Z",
-	EndDate = "2022-12-31T00:00Z",
 	#{"@type" => RoleType,
-		"name" => RoleName,
-		"validFor" => #{
-				"startDateTime" => StartDate,
-				"endDateTime" => EndDate
-		}
-	}.
+		"name" => RoleName}.
 
 %% @hidden
 is_role(#{"id" := Id, "href" := Href, "name" := Name,
