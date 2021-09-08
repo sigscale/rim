@@ -171,8 +171,6 @@ post_role(Config) ->
 	CollectionUrl = HostUrl ++ ?PathRole ++ "partyRole",
 	RoleName = "Global_Pirates",
 	RoleType = "PartyRole",
-%	StartDate = "2021-08-17T00:00Z",
-%	EndDate = "2022-12-31T00:00Z",
 	RoleMap = #{"@type" => RoleType,
 			"name" => RoleName
 	},
@@ -2365,10 +2363,8 @@ party_role(RoleName) ->
 
 %% @hidden
 is_role(#{"id" := Id, "href" := Href, "name" := Name,
-		"@type" := RoleType, "validFor" := #{"startDateTime" := SD,
-		"endDateTime" := ED}}) when is_list(Id),
-		is_list(Href), is_list(Name), is_list(RoleType),
-		is_list(SD), is_list(ED) ->
+		"@type" := RoleType}) when is_list(Id),
+		is_list(Href), is_list(Name), is_list(RoleType) ->
 	true;
 is_role(_) ->
 	false.
