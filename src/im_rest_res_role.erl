@@ -203,19 +203,8 @@ get_roles1(Query, Filters, Headers) ->
 %% @doc CODEC for `Role'.
 role(#httpd_user{username = {Name, _, _, _}} = User) when is_list(Name) ->
 	role(User#httpd_user{username = Name});
-role(#httpd_user{username = Name, user_data = Chars})
-		when is_list(Name), is_list(Chars) ->
-	F = fun(Key) ->
-			case lists:keyfind(Key, 1, Chars) of
-				{Key, Value} ->
-					Value;
-				false ->
-					[]
-			end
-	end,
-	#{"id" => Name, "name" => Name, "@type" => F(type),
-			"validFor" => #{"startDateTime" => im_rest:iso8601(F(start_date)),
-					"endDateTime" => im_rest:iso8601(F(end_date))},
+role(#httpd_user{username = Name}) when is_list(Name) ->
+	#{"id" => Name, "name" => Name, "@type" => "PartyRole",
 			"href" => "/partyRoleManagement/v4/partyRole/" ++ Name}.
 
 %%----------------------------------------------------------------------
@@ -304,12 +293,7 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 		{error, Status} ->
 			{error, Status};
 		{Events, ContentRange} ->
-			F = fun(#httpd_user{password = []} = User) ->
-						{true, role(User)};
-					(_) ->
-						false
-			end,
-			Body = zj:encode(lists:filtermap(F, Events)),
+			Body = zj:encode(lists:map(fun role/1, Events)),
 			Headers = [{content_type, "application/json"},
 					{etag, Etag}, {accept_ranges, "items"},
 					{content_range, ContentRange}],
