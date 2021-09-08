@@ -79,17 +79,13 @@ post_role(RequestBody) ->
 				| {error, ErrorCode :: integer()} .
 %% @doc Handle `DELETE' request on a `Role' resource.
 %% 	Respond to `DELETE /partyRoleManagement/v4/partyRole/{Name}' request.
-delete_role(Name) ->
-	delete_role(Name, get_params()).
-delete_role(Name, {Port, Address, Directory, _Group}) ->
-	case mod_auth:delete_user(Name, Address, Port, Directory) of
-		true ->
+delete_role(Name) when is_list(Name) ->
+	case im:del_user(Name) of
+		ok ->
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
-	end;
-delete_role(_Name, {error, Reason}) ->
-	{error, Reason}.
+	end.
 
 -spec get_role(Name, Query) -> Result
 	when
