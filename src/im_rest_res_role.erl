@@ -96,34 +96,29 @@ delete_role(Name) when is_list(Name) ->
 %% @doc Handle `GET' request on a `Role' resource.
 %% 	Respond to `GET /partyRoleManagement/v4/partyRole/{Name}' request.
 get_role(Name, Query) ->
-	get_role(Name, Query, get_params()).
-%% @hidden
-get_role(Name, Query, {_, _, _, _} = Params) ->
 	case lists:keytake("fields", 1, Query) of
 		{value, {_, L}, NewQuery} ->
-			get_role(Name, NewQuery, Params, string:tokens(L, ","));
+			get_role(Name, NewQuery, string:tokens(L, ","));
 		false ->
-			get_role(Name, Query, Params, [])
-	end;
-get_role(_Name, _Query, {error, Reason}) ->
-	{error, Reason}.
+			get_role(Name, Query, [])
+	end.
 %% @hidden
-get_role(Name, [] = _Query, {Port, Address, Dir, _Group}, _Filters) ->
-	case mod_auth:get_user(Name, Address, Port, Dir) of
-		{ok, #httpd_user{user_data = UserData} = RoleRec} ->
-			Headers1 = case lists:keyfind(last_modified, 1, UserData) of
+get_role(Name, [] = _Query, _Filters) ->
+	case im:get_user(Name) of
+		{ok, #httpd_user{user_data = UserData} = UserRec} ->
+			Headers = case lists:keyfind(last_modified, 1, UserData) of
 				{_, LastModified} ->
-					[{etag, im_rest:etag(LastModified)}];
+					[{content_type, "application/json"},
+							{etag, im_rest:etag(LastModified)}];
 				false ->
-					[]
+					[{content_type, "application/json"}]
 			end,
-			Headers2 = [{content_type, "application/json"} | Headers1],
-			Body = zj:encode(role(RoleRec)),
-			{ok, Headers2, Body};
+			Body = zj:encode(role(UserRec)),
+			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
 	end;
-get_role(_, _, _, _) ->
+get_role(_, _, _) ->
 	{error, 400}.
 
 -spec get_roles(Query, Headers) -> Result
@@ -197,9 +192,10 @@ get_roles1(Query, Filters, Headers) ->
 			query_start(Query, Filters, undefined, undefined)
 	end.
 
--spec role(Role) -> Role
+-spec role(Role1) -> Role2
 	when
-		Role :: #httpd_user{} | map().
+		Role1 :: #httpd_user{},
+		Role2 ::  map().
 %% @doc CODEC for `Role'.
 role(#httpd_user{username = {Name, _, _, _}} = User) when is_list(Name) ->
 	role(User#httpd_user{username = Name});
