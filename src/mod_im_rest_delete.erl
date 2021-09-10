@@ -1,4 +1,4 @@
-%%% mod_ocs_rest_delete.erl
+%%% mod_im_rest_delete.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @copyright 2016 - 2017 SigScale Global Inc.
@@ -15,6 +15,45 @@
 %%% See the License for the specific language governing permissions and
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @doc Handle received HTTP DELETE requests.
+%%%
+%%% 	This is an {@link //inets/httpd. httpd} callback module handling
+%%% 	HTTP DELETE operations. The HTTP resources are managed in modules named
+%%% 	`im_rest_res_*'.
+%%%
+%%% 	<h2><a name="callbacks">Resource Handler Functions</a></h2>
+%%% 	The resource handler modules should implement callback functions
+%%% 	in the pattern described in the example below.
+%%%
+%%% 	<h3 class="function">
+%%% 		<a>delete_&lt;Resource&gt;/2</a>
+%%% 	</h3>
+%%% 	<div class="spec">
+%%% 		<p>
+%%% 			<tt>delete_&lt;Resource&gt;(Id) -&gt; Result</tt>
+%%% 		</p>
+%%% 		<ul class="definitions">
+%%% 			<li><tt>Id = string()</tt></li>
+%%% 			<li><tt>Result = {ok, Headers, ResponseBody}
+%%% 					| {error, StatusCode}
+%%% 					| {error, StatusCode, Problem}</tt></li>
+%%% 			<li><tt>ResponseBody = io_list()</tt></li>
+%%% 			<li><tt>StatusCode = 200..599</tt></li>
+%%% 			<li><tt>Problem = #{type := uri(), title := string(),
+%%% 					code := string(), cause => string(), detail => string(),
+%%% 					invalidParams => [#{param := string(), reason => string()}],
+%%% 					status => 200..599}</tt></li>
+%%% 		</ul>
+%%% 	</div>
+%%% 	Resource handlers for HTTP DELETE operations on REST Resources.
+%%%
+%%% 	Response `Headers' must include `content_type' if `ResponseBody' is
+%%% 	not en empty list. An optional `Problem' report may be provided in
+%%% 	error responses which shall be formatted by
+%%% 	{@link //im/im_rest:format_problem/2. format_problem/2} and included
+%%% 	in the response body.
+%%%
+%%% @end
 %%%
 -module(mod_im_rest_delete).
 -copyright('Copyright (c) 2016-2020 SigScale Global Inc.').
@@ -27,7 +66,8 @@
 	ModData :: #mod{},
 	Result :: {proceed, OldData} | {proceed, NewData} | {break, NewData} | done,
 	OldData :: list(),
-	NewData :: [{response,{StatusCode,Body}}] | [{response,{response,Head,Body}}]
+	NewData :: [{response, {StatusCode, Body}}]
+			| [{response, {response, Head, Body}}]
 			| [{response,{already_sent,StatusCode,Size}}],
 	StatusCode :: integer(),
 	Body :: iolist() | nobody | {Fun, Arg},
@@ -81,9 +121,17 @@ do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceCandid
 	do_response(ModData, Resource:delete_candidate(Identity));
 do_delete(Resource, ModData, ["resourceCatalogManagement", "v4", "resourceSpecification", Identity]) ->
 	do_response(ModData, Resource:delete_specification(Identity));
-do_delete(_Resource, #mod{data = Data} = _ModData, _) ->
-	Response = "<h2>HTTP Error 404 - Not Found</h2>",
-	{proceed, [{response, {404, Response}} | Data]}.
+do_delete(_Resource, #mod{parsed_header = RequestHeaders,
+		data = Data} = ModData, _) ->
+	Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4",
+			title => "Not Found",
+			detail => "No resource exists at the path provided",
+			code => "", status => 404},
+	{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 404, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 404, Size}} | Data]}.
 
 %% @hidden
 do_response(#mod{data = Data} = ModData, {ok, Headers, ResponseBody}) ->
@@ -91,15 +139,42 @@ do_response(#mod{data = Data} = ModData, {ok, Headers, ResponseBody}) ->
 	NewHeaders = Headers ++ [{content_length, Size}],
 	send(ModData, 204, NewHeaders, ResponseBody),
 	{proceed, [{response,{already_sent, 204, Size}} | Data]};
-do_response(#mod{data = Data} = _ModData, {error, 202}) ->
-	Response = "<h2>HTTP Error 202 - Accepted</h2>",
-	{proceed, [{response, {202, Response}} | Data]};
-do_response(#mod{data = Data} = _ModData, {error, 400}) ->
-	Response = "<h2>HTTP Error 400 - Bad Reques</h2>",
-	{proceed, [{response, {400, Response}} | Data]};
-do_response(#mod{data = Data} = _ModData, {error, 500}) ->
-	Response = "<h2>HTTP Error 500 - Server Error</h2>",
-	{proceed, [{response, {500, Response}} | Data]}.
+do_response(#mod{parsed_header = RequestHeaders,
+		data = Data} = ModData, {error, 202}) ->
+	Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.3.3",
+			title => "Accepted",
+			detail => "request has been accepted for processing,"
+					" but the processing has not been completed.",
+			code => "", status => 202},
+	{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 202, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 202, Size}} | Data]};
+do_response(#mod{parsed_header = RequestHeaders,
+		data = Data} = ModData, {error, 400}) ->
+	Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
+			title => "Bad Request",
+			detail => "The server cannot or will not process the request"
+					" due to something that is perceived to be a client error.",
+			code => "", status => 400},
+	{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 400, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 400, Size}} | Data]};
+do_response(#mod{parsed_header = RequestHeaders,
+		data = Data} = ModData, {error, 500}) ->
+	Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+			title => "Internal Server Error",
+			detail => "The server encountered an unexpected condition that"
+					" prevented it from fulfilling the request.",
+			code => "", status => 500},
+	{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+	Size = integer_to_list(iolist_size(ResponseBody)),
+	ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+	send(ModData, 500, ResponseHeaders, ResponseBody),
+	{proceed, [{response, {already_sent, 500, Size}} | Data]}.
 
 %% @hidden
 send(#mod{socket = Socket, socket_type = SocketType} = ModData,
