@@ -15,6 +15,47 @@
 %%% See the License for the specific language governing permissions and
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @doc Handle media type validation in HTTP requests.
+%%%
+%%% 	This is an {@link //inets/httpd. httpd} callback module handling
+%%% 	media type validation of HTTP operations. The HTTP resources are
+%%% 	managed in modules named `im_rest_res_*'.
+%%%
+%%% 	<h2><a name="callbacks">Resource Handler Functions</a></h2>
+%%% 	The resource handler modules should implement the following
+%%% 	callback functions.
+%%%
+%%% 	<h3 class="function">
+%%% 		<a>content_types_provided/0</a>
+%%% 	</h3>
+%%% 	<div class="spec">
+%%% 		<p>
+%%% 			<tt>content_types_provided() -&gt; ContentTypes</tt>
+%%% 		</p>
+%%% 		<ul class="definitions">
+%%% 			<li><tt>ContentTypes = [ContentType]</tt></li>
+%%% 			<li><tt>ContentType = string()</tt></li>
+%%% 		</ul>
+%%% 	</div>
+%%% 	Provides the list of possible media types in response bodies
+%%% 	provided by functions in the resource handler module.
+%%%
+%%% 	<h3 class="function">
+%%% 		<a>content_types_accepted/0</a>
+%%% 	</h3>
+%%% 	<div class="spec">
+%%% 		<p>
+%%% 			<tt>content_types_accepted() -&gt; ContentTypes</tt>
+%%% 		</p>
+%%% 		<ul class="definitions">
+%%% 			<li><tt>ContentTypes = [ContentType]</tt></li>
+%%% 			<li><tt>ContentType = string()</tt></li>
+%%% 		</ul>
+%%% 	</div>
+%%% 	Provides the list of possible media types accepted in bodies
+%%% 	provided to functions in the resource handler module.
+%%%
+%%% @end
 %%%
 -module(mod_im_rest_accepted_content).
 -copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
@@ -27,7 +68,8 @@
 	ModData :: #mod{},
 	Result :: {proceed, OldData} | {proceed, NewData} | {break, NewData} | done,
 	OldData :: list(),
-	NewData :: [{response,{StatusCode,Body}}] | [{response,{response,Head,Body}}]
+	NewData :: [{response, {StatusCode, Body}}]
+			| [{response, {response, Head,Body}}]
 			| [{response,{already_sent,StatusCode,Size}}],
 	StatusCode :: integer(),
 	Body :: iolist() | nobody | {Fun, Arg},
@@ -46,8 +88,7 @@
 	Fun :: fun((Arg) -> sent| close | Body),
 	Arg :: [term()].
 % % @doc Erlang web server API callback function.
-do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
-		data = Data} = _ModData) ->
+do(#mod{request_uri = Uri, data = Data} = ModData) ->
 	case proplists:get_value(status, Data) of
 		{_StatusCode, _PhraseArgs, _Reason} ->
 			{proceed, Data};
@@ -57,29 +98,29 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 					Path = uri_string:percent_decode(Uri),
 					case string:tokens(Path, "/?") of
 						["partyManagement", "v2", "individual"] ->
-							check_content_type_header(Headers, Method, im_rest_res_user, Data);
+							check_content_type_header(im_rest_res_user, ModData);
 						["partyManagement", "v2", "individual", _Id] ->
-							check_content_type_header(Headers, Method, im_rest_res_user, Data);
+							check_content_type_header(im_rest_res_user, ModData);
 						["partyRoleManagement", "v4", "partyRole" | _] ->
-							check_content_type_header(Headers, Method, im_rest_res_role, Data);
+							check_content_type_header(im_rest_res_role, ModData);
 						["partyRoleManagement", "v4", "hub" | _] ->
-							check_content_type_header(Headers, Method, im_rest_hub_role, Data);
+							check_content_type_header(im_rest_hub_role, ModData);
 						["resourceCatalogManagement", "v4", "resourceCatalog" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_catalog, Data);
+                     check_content_type_header(im_rest_res_catalog, ModData);
 						["resourceCatalogManagement", "v4", "resourceCategory" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_category, Data);
+                     check_content_type_header(im_rest_res_category, ModData);
 						["resourceCatalogManagement", "v4", "resourceCandidate" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_candidate, Data);
+                     check_content_type_header(im_rest_res_candidate, ModData);
 						["resourceCatalogManagement", "v4", "resourceSpecification" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_specification, Data);
+                     check_content_type_header(im_rest_res_specification, ModData);
 						["resourceInventoryManagement", "v4", "resource" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_resource, Data);
+                     check_content_type_header(im_rest_res_resource, ModData);
 						["resourceInventoryManagement", "v4", "logicalResource"] ->
-                     check_content_type_header(Headers, Method, im_rest_res_rules, Data);
+                     check_content_type_header(im_rest_res_rules, ModData);
 						["resourceInventoryManagement", "v4", "logicalResource" | _] ->
-                     check_content_type_header(Headers, Method, im_rest_res_rules, Data);
+                     check_content_type_header(im_rest_res_rules, ModData);
 						["im", "v1", "log", "http"] ->
-							check_content_type_header(Headers, Method, im_rest_res_http, Data);
+							check_content_type_header(im_rest_res_http, ModData);
 						_ ->
 							{proceed, Data}
 					end;
@@ -89,40 +130,86 @@ do(#mod{method = Method, parsed_header = Headers, request_uri = Uri,
 	end.
 
 %% @hidden
-check_content_type_header(Headers, Method, Module, Data) ->
-	case lists:keyfind("content-type", 1, Headers) of
+check_content_type_header(Module, #mod{method = Method,
+		parsed_header = RequestHeaders, data = Data} = ModData) ->
+	case lists:keyfind("content-type", 1, RequestHeaders) of
 		false when Method == "DELETE"; Method == "GET"; Method == "HEAD" ->
-			check_accept_header(Headers, Module, [{resource, Module} | Data]);
+			check_accept_header(Module,
+					ModData#mod{data = [{resource, Module} | Data]});
 		{_, []} when Method == "DELETE"; Method == "GET"; Method == "HEAD" ->
-			check_accept_header(Headers, Module, [{resource, Module} | Data]);
-		{_, ProvidedType} ->
+			check_accept_header(Module,
+					ModData#mod{data = [{resource, Module} | Data]});
+		{_, ContentType} ->
 			AcceptedTypes = Module:content_types_accepted(),
-			case lists:member(ProvidedType, AcceptedTypes) of
+			case lists:member(ContentType, AcceptedTypes) of
 				true ->
-					check_accept_header(Headers, Module, [{resource, Module},
-							{content_type,  ProvidedType} | Data]);
+					check_accept_header(Module,
+							ModData#mod{data = [{resource, Module},
+									{content_type,  ContentType} | Data]});
 				false ->
-					Response = "<h2>HTTP Error 415 - Unsupported Media Type</h2>",
-					{break, [{response, {415, Response}}]}
+					Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.13",
+							title => "Unsupported Media Type",
+							detail => "The client provided Content-Type which the"
+									" the server does not support.",
+							code => "", status => 415},
+					{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+					Size = integer_to_list(iolist_size(ResponseBody)),
+					ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+					send(ModData, 415, ResponseHeaders, ResponseBody),
+					{proceed, [{response, {already_sent, 415, Size}} | Data]}
 			end;
 		false ->
-			Response = "<h2>HTTP Error 400 - Bad Request</h2>",
-			{break, [{response, {400, Response}}]}
+			Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
+					title => "Bad Request",
+					detail => "The client failed to provide a Content-Type header",
+					code => "", status => 400},
+			{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+			Size = integer_to_list(iolist_size(ResponseBody)),
+			ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+			send(ModData, 415, ResponseHeaders, ResponseBody),
+			{proceed, [{response, {already_sent, 400, Size}} | Data]}
 	end.
 
 %% @hidden
-check_accept_header(Headers, Module, Data) ->
-	case lists:keyfind("accept", 1, Headers) of
-		{_, AcceptType} ->
-			Representations = Module:content_types_provided(),
-			case lists:member(AcceptType, Representations) of
-				true ->
-					{proceed, [{accept, AcceptType} | Data]};
+check_accept_header(Module,
+		#mod{parsed_header = RequestHeaders, data = Data} = ModData) ->
+	case lists:keyfind("accept", 1, RequestHeaders) of
+		{_, Accept} ->
+			AcceptTypes = string:tokens(Accept, ", "),
+			case lists:member("*/*", AcceptTypes) of
 				false ->
-					Response = "<h2>HTTP Error 415 - Unsupported Media Type</h2>",
-					{break, [{response, {415, Response}}]}
+					F1 = fun(Representation) ->
+							F2 = fun(AcceptType) ->
+									lists:prefix(Representation, AcceptType)
+							end,
+							lists:any(F2, AcceptTypes)
+					end,
+					case lists:any(F1, Module:content_types_provided()) of
+						true ->
+							{proceed, [{accept, AcceptTypes} | Data]};
+						false ->
+							Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.13",
+									title => "Unsupported Media Type",
+									detail => "The client provided an Accept header"
+											" which is missing the required content type.",
+									code => "", status => 415},
+							{ContentType, ResponseBody}
+									= im_rest:format_problem(Problem, RequestHeaders),
+							Size = integer_to_list(iolist_size(ResponseBody)),
+							ResponseHeaders = [{content_length, Size},
+									{content_type, ContentType}],
+							send(ModData, 415, ResponseHeaders, ResponseBody),
+							{proceed, [{response, {already_sent, 415, Size}} | Data]}
+					end;
+				true ->
+					{proceed, Data}
 			end;
 		false ->
 			{proceed, Data}
 	end.
 
+%% @hidden
+send(#mod{socket = Socket, socket_type = SocketType} = ModData,
+		StatusCode, Headers, ResponseBody) ->
+	httpd_response:send_header(ModData, StatusCode, Headers),
+	httpd_socket:deliver(SocketType, Socket, ResponseBody).
