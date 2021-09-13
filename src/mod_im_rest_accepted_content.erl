@@ -136,25 +136,29 @@ check_content_type_header(Module, #mod{method = Method,
 		false when Method == "DELETE"; Method == "GET"; Method == "HEAD" ->
 			check_accept_header(Module,
 					ModData#mod{data = [{resource, Module} | Data]});
-		{_, []} when Method == "DELETE"; Method == "GET"; Method == "HEAD" ->
+		{_Other, []} when Method == "DELETE"; Method == "GET"; Method == "HEAD" ->
 			check_accept_header(Module,
 					ModData#mod{data = [{resource, Module} | Data]});
-		{_, ContentType} ->
-			AcceptedTypes = Module:content_types_accepted(),
-			case lists:member(ContentType, AcceptedTypes) of
+		{_Other, RequestContentType} ->
+			F = fun(AcceptedType) ->
+					lists:prefix(AcceptedType, RequestContentType)
+			end,
+			case lists:any(F, Module:content_types_accepted()) of
 				true ->
 					check_accept_header(Module,
 							ModData#mod{data = [{resource, Module},
-									{content_type,  ContentType} | Data]});
+									{content_type,  RequestContentType} | Data]});
 				false ->
 					Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.13",
 							title => "Unsupported Media Type",
 							detail => "The client provided Content-Type which the"
 									" the server does not support.",
 							code => "", status => 415},
-					{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+					{ResponseContentType, ResponseBody}
+							= im_rest:format_problem(Problem, RequestHeaders),
 					Size = integer_to_list(iolist_size(ResponseBody)),
-					ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+					ResponseHeaders = [{content_length, Size},
+							{content_type, ResponseContentType}],
 					send(ModData, 415, ResponseHeaders, ResponseBody),
 					{proceed, [{response, {already_sent, 415, Size}} | Data]}
 			end;
@@ -163,9 +167,11 @@ check_content_type_header(Module, #mod{method = Method,
 					title => "Bad Request",
 					detail => "The client failed to provide a Content-Type header",
 					code => "", status => 400},
-			{ContentType, ResponseBody} = im_rest:format_problem(Problem, RequestHeaders),
+			{ResponseContentType, ResponseBody}
+					= im_rest:format_problem(Problem, RequestHeaders),
 			Size = integer_to_list(iolist_size(ResponseBody)),
-			ResponseHeaders = [{content_length, Size}, {content_type, ContentType}],
+			ResponseHeaders = [{content_length, Size},
+					{content_type, ResponseContentType}],
 			send(ModData, 415, ResponseHeaders, ResponseBody),
 			{proceed, [{response, {already_sent, 400, Size}} | Data]}
 	end.
@@ -174,7 +180,7 @@ check_content_type_header(Module, #mod{method = Method,
 check_accept_header(Module,
 		#mod{parsed_header = RequestHeaders, data = Data} = ModData) ->
 	case lists:keyfind("accept", 1, RequestHeaders) of
-		{_, Accept} ->
+		{_Other, Accept} ->
 			AcceptTypes = string:tokens(Accept, ", "),
 			case lists:member("*/*", AcceptTypes) of
 				false ->
