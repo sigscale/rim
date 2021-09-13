@@ -50,7 +50,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec get_categories(Method, Query, Headers) -> Result
 	when
@@ -231,7 +231,8 @@ post_category(RequestBody) ->
 		case im:add_category(category(CategoryMap)) of
 			{ok, #category{href = Href, last_modified = LM} = NewCategory} ->
 				Body = zj:encode(category(NewCategory)),
-				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
+				Headers = [{content_type, "application/json"},
+						{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

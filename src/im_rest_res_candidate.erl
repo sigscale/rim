@@ -50,7 +50,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec get_candidates(Method, Query, Headers) -> Result
 	when
@@ -167,7 +167,8 @@ post_candidate(RequestBody) ->
 		case im:add_candidate(candidate(CandidateMap)) of
 			{ok, #candidate{href = Href, last_modified = LM} = Candidate} ->
 				Body = zj:encode(candidate(Candidate)),
-				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
+				Headers = [{content_type, "application/json"},
+						{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

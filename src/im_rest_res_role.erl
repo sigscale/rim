@@ -44,7 +44,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec post_role(RequestBody) -> Result
 	when
@@ -62,7 +62,8 @@ post_role(RequestBody) ->
 						"href" => "/partyRoleManagement/v4/partyRole/" ++ Name},
 				Body = zj:encode(NewRole),
 				Location = "/partyRoleManagement/v4/partyRole/" ++ Name,
-				Headers = [{location, Location}, {etag, im_rest:etag(LastModified)}],
+				Headers = [{content_type, "application/json"},
+						{location, Location}, {etag, im_rest:etag(LastModified)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

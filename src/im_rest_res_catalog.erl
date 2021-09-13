@@ -50,7 +50,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec get_catalogs(Method, Query, Headers) -> Result
 	when
@@ -167,7 +167,8 @@ post_catalog(RequestBody) ->
 		case im:add_catalog(catalog(CatalogMap)) of
 			{ok, #catalog{href = Href, last_modified = LM} = Catalog} ->
 				Body = zj:encode(catalog(Catalog)),
-				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
+				Headers = [{content_type, "application/json"},
+						{location, Href}, {etag, im_rest:etag(LM)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}

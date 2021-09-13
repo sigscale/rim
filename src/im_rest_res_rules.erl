@@ -50,7 +50,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec delete_rule(Id) -> Result
 	when

@@ -45,7 +45,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec get_resources(Method, Query, Headers) -> Result
 	when
@@ -163,7 +163,8 @@ post_resource(RequestBody) ->
 		{ok, ResourceMap} = zj:decode(RequestBody),
 		case im:add_resource(resource(ResourceMap)) of
 			{ok, #resource{href = Href, last_modified = LM} = Resource} ->
-				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
+				Headers = [{content_type, "application/json"},
+						{location, Href}, {etag, im_rest:etag(LM)}],
 				Body = zj:encode(resource(Resource)),
 				{ok, Headers, Body};
 			{error, _Reason} ->

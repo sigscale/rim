@@ -41,7 +41,7 @@ content_types_accepted() ->
 		ContentTypes :: list().
 %% @doc Returns list of resource representations available.
 content_types_provided() ->
-	["application/json"].
+	["application/json", "application/problem+json"].
 
 -spec get_users(Query, Headers) -> Result
 	when
@@ -140,15 +140,15 @@ get_user(Id, [] = _Query, _Filters) ->
 			end,
 			NewChars = lists:filter(F, Chars),
 			NewUser = UserMap#{"characteristic" => NewChars},
-			Headers1 = case lists:keyfind(last_modified, 1, UserData) of
+			Headers = case lists:keyfind(last_modified, 1, UserData) of
 				{_, LastModified} ->
-					[{etag, im_rest:etag(LastModified)}];
+					[{content_type, "application/json"},
+							{etag, im_rest:etag(LastModified)}];
 				false ->
-					[]
+					[{content_type, "application/json"}]
 			end,
-			Headers2 = [{content_type, "application/json"} | Headers1],
 			Body = zj:encode(NewUser),
-			{ok, Headers2, Body};
+			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
 	end;
@@ -177,7 +177,8 @@ post_user(RequestBody) ->
 			{ok, LastModified} ->
 				Body = zj:encode(user(User)),
 				Location = "/partyManagement/v1/individual/" ++ Username,
-				Headers = [{location, Location}, {etag, im_rest:etag(LastModified)}],
+				Headers = [{content_type, "application/json"},
+						{location, Location}, {etag, im_rest:etag(LastModified)}],
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
