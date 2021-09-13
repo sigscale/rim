@@ -10,7 +10,7 @@
 %%%   {@link //sigscale_im. sigscale_im} application.
 %%%
 -module(im_xml_inventory).
--copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2021 SigScale Global Inc.').
 
 %% export the im private API
 -export([parse_iu/2, parse_tmaiu/2, parse_aiu/2]).

@@ -1,7 +1,7 @@
 %%% mod_im_rest_get.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018-2020 SigScale Global Inc.
+%%% @copyright 2018 - 2021 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -109,7 +109,7 @@
 %%% @end
 %%%
 -module(mod_im_rest_get).
--copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2021 SigScale Global Inc.').
 
 -export([do/1]).
 

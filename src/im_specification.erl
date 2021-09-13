@@ -1,7 +1,7 @@
 %%% im_specification.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018-2020 SigScale Global Inc.
+%%% @copyright 2018 - 2021 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 %%% 	{@link //sigcale_im. sigscale_im} application.
 %%%
 -module(im_specification).
--copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2021 SigScale Global Inc.').
 
 -export([gsm_bss/0, gsm_bts/0, gsm_cell/0]).
 -export([gsm_abis_link/0]).

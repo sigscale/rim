@@ -17,7 +17,7 @@
 %%% See the License for the specific language governing permissions and
 %%% limitations under the License.
 -module(im_xml_huawei).
--copyright('Copyright (c) 2018-2020 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2021 SigScale Global Inc.').
 
 %% export the im private API
 -export([import/2, parse_mo/2,
