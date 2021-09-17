@@ -43,6 +43,7 @@ init([] = _Args) ->
 			supervisor(im_rest_pagination_sup,
 			im_rest_pagination_sup, []),
 			supervisor(im_rest_hub_sup, im_rest_hub_sup, []),
+			supervisor(im_statistics_sup, im_statistics_sup, []),
 			event(im_event)],
 	{ok, {{one_for_one, 10, 60}, ChildSpecs}}.
 
