@@ -38,6 +38,7 @@
 -export([import/1, import/2]).
 -export([generate_password/0, generate_identity/0]).
 -export([merge/2, last/2]).
+-export([statistics/1]).
 
 -include("im.hrl").
 -include_lib("inets/include/mod_auth.hrl").
@@ -993,6 +994,40 @@ get_pee(RuleId, Input) when is_list(RuleId), is_list(Input) ->
 			{ok, mnesia:ets(F)};
 		{error, Reason} ->
 			{error, Reason}
+	end.
+
+-spec statistics(Item) -> Result
+	when
+		Item :: scheduler_utilization,
+		Result :: {ok, {Etag, Interval, Report}} | {error, Reason},
+		Etag :: string(),
+		Interval :: pos_integer(),
+		Report :: [ItemResult],
+		ItemResult :: {SchedulerId, Utilization},
+		SchedulerId :: pos_integer(),
+		Utilization :: non_neg_integer(),
+		Reason :: term().
+%% @doc Get system statistics.
+statistics(Item) ->
+	case catch gen_server:call(im_statistics, Item) of
+		{Etag, Interval, Report} ->
+			{ok, {Etag, Interval, Report}};
+		{error, Reason} ->
+			{error, Reason};
+		{'EXIT', {noproc,_}} ->
+			case catch supervisor:start_child(im_statistics_sup, []) of
+				{ok, Child} ->
+					case catch gen_server:call(Child, Item) of
+						{Etag, Interval, Report} ->
+							{ok, {Etag, Interval, Report}};
+						{error, Reason} ->
+							{error, Reason}
+					end;
+				{error, Reason} ->
+					{error, Reason};
+				{'EXIT', {noproc,_}} ->
+					{error, im_down}
+			end
 	end.
 
 %%----------------------------------------------------------------------
