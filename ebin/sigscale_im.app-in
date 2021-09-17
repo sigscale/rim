@@ -62,6 +62,7 @@
 			{oauth_issuer, undefined},
 			{oauth_audience, "sigscale"},
 			{oauth_key, undefined},
-			{hub_profile, hub}]},
+			{hub_profile, hub},
+			{statistics_interval, 60}]},
 	{mod, {im_app, []}}]}.
 
