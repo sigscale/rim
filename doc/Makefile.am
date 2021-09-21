@@ -36,7 +36,8 @@ modhtml = im_app.html \
 			im_event.html \
 			im_rest_hub_role.html \
 			im_statistics_sup.html \
-			im_statistics_server.html
+			im_statistics_server.html \
+			im_rest_res_health.html
 
 doc_DATA = overview.edoc $(modhtml) \
 		modules-frame.html overview-summary.html \

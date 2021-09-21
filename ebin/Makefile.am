@@ -55,7 +55,8 @@ beam_DATA = im_app.beam \
 			im_event.beam \
 			im_rest_hub_role.beam \
 			im_statistics_sup.beam \
-			im_statistics_server.beam
+			im_statistics_server.beam \
+			im_rest_res_health.beam
 
 %.beam:$(top_srcdir)/src/%.erl	$(top_srcdir)/include/im.hrl
 	$(ERLC) $(ERLCFLAGS) -I $(top_srcdir)/include -I $(top_builddir)/include $<

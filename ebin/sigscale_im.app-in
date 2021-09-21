@@ -25,6 +25,7 @@
 			im_rest_hub_role,
 			im_statistics_sup,
 			im_statistics_server,
+			im_rest_res_health,
 			im_specification,
 			im_xml_cm_bulk,
 			im_xml_core,
