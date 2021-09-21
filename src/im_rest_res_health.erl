@@ -26,7 +26,8 @@
 -module(im_rest_res_health).
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
 
--export([content_types_accepted/0, content_types_provided/0]).
+-export([content_types_accepted/0, content_types_provided/0,
+		get_health/2]).
 
 -spec content_types_accepted() -> ContentTypes
 	when
@@ -41,4 +42,106 @@ content_types_accepted() ->
 %% @doc Provides list of resource representations available.
 content_types_provided() ->
 	["application/health+json", "application/problem+json"].
+
+-spec get_health(Query, RequestHeaders) -> Result
+	when
+		Query :: [{Key :: string(), Value :: string()}],
+		RequestHeaders :: [tuple()],
+		Result :: {ok, ResponseHeaders, ResponseBody}
+				| {error, 503, ResponseHeaders, ResponseBody},
+		ResponseHeaders :: [tuple()],
+		ResponseBody :: iolist().
+%% @doc Body producing function for `GET /health'
+%% requests.
+get_health([] = _Query, _RequestHeaders) ->
+	try
+		Check1 = maps:merge(application([sigscale_im, inets]),
+				table_size([catalog, specification,
+						candidate, resource, category])),
+		case scheduler() of
+			{ok, Check2} ->
+				#{"checks" => maps:merge(Check1, Check2)};
+			{error, _Reason1} ->
+				#{"checks" => Check1}
+		end
+	of
+		#{"checks" := #{"application" := [#{"componentId" := sigscale_im,
+				"status" := "up"} | _]}} = Checks ->
+			Health = Checks#{"status" => "pass", "serviceId" => atom_to_list(node()),
+					"description" => "Health of SigScale IM"},
+			ResponseBody = zj:encode(Health),
+			ResponseHeaders = [{content_type, "application/health+json"}],
+			{ok, ResponseHeaders, ResponseBody};
+		Checks ->
+			Health = Checks#{"status" => "fail", "serviceId" => atom_to_list(node()),
+					"description" => "Health of SigScale IM"},
+			ResponseBody = zj:encode(Health),
+			ResponseHeaders = [{content_type, "application/health+json"}],
+			{error, 503, ResponseHeaders, ResponseBody}
+	catch
+		_:_Reason2 ->
+			{error, 500}
+	end.
+
+%%----------------------------------------------------------------------
+%%  internal functions
+%%----------------------------------------------------------------------
+
+-spec scheduler() -> Result
+	when
+		Result :: {ok, Check} | {error, Reason},
+		Check :: map(),
+		Reason :: term().
+%% @doc Check scheduler component.
+%% @hidden
+scheduler() ->
+	scheduler(im:statistics(scheduler_utilization)).
+scheduler({ok, {_Etag, _Interval, Report}}) ->
+	F = fun({SchedulerId, Utilization}) ->
+				#{"componentId" => integer_to_list(SchedulerId),
+						"observeredValue" => Utilization, "observedUnit" => "percent",
+						"componentType" => "system"}
+	end,
+	{ok, #{"scheduler:utilization" => lists:map(F, Report)}};
+scheduler({error, Reason}) ->
+	{error, Reason}.
+
+-spec application(Names) -> Check
+	when
+		Names :: [atom()],
+		Check :: map().
+%% @doc Check application component.
+%% @hidden
+application(Names) ->
+	application(Names, application:which_applications(), []).
+%% @hidden
+application([Name | T], Running, Acc) ->
+	Status = case lists:keymember(Name, 1, Running) of
+		true ->
+			"up";
+		false ->
+			"down"
+	end,
+	NewAcc = [#{"componentId" => Name, "componentType" => "component",
+			"status" => Status} | Acc],
+	application(T, Running, NewAcc);
+application([], _Running, Acc) ->
+	#{"application" => lists:reverse(Acc)}.
+
+-spec table_size(Names) -> Check
+	when
+		Names :: [atom()],
+		Check :: map().
+%% @doc Check table component size.
+%% @hidden
+table_size(Names) ->
+	table_size(Names, []).
+%% @hidden
+table_size([Name | T], Acc) ->
+	Size = mnesia:table_info(Name, size),
+	NewAcc = [#{"componentId" => Name, "componentType" => "component",
+			"observedUnit" => "rows", "observeredValue" => Size} | Acc],
+	table_size(T, NewAcc);
+table_size([], Acc) ->
+	#{"table:size" => Acc}.
 
