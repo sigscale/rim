@@ -27,7 +27,7 @@
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0,
-		get_health/2, get_applications/2]).
+		get_health/2, get_applications/2, get_application/2]).
 
 -spec content_types_accepted() -> ContentTypes
 	when
@@ -120,6 +120,40 @@ get_applications([] = _Query, _RequestHeaders) ->
 					{error, 503, ResponseHeaders, ResponseBody}
 			end
 	catch
+		_:_Reason ->
+			{error, 500}
+	end.
+
+-spec get_application(Id, RequestHeaders) -> Result
+	when
+		Id :: string(),
+		RequestHeaders :: [tuple()],
+		Result :: {ok, ResponseHeaders, ResponseBody}
+				| {error, 503, ResponseHeaders, ResponseBody},
+		ResponseHeaders :: [tuple()],
+		ResponseBody :: iolist().
+%% @doc Body producing function for `GET /health/application/{Id}'
+%% requests.
+get_application(Id, _RequestHeaders) ->
+	try
+		Running = application:which_applications(),
+		case lists:keymember(list_to_existing_atom(Id), 1, Running) of
+			true ->
+				Application = #{"status" => "up",
+						"serviceId" => Id},
+				ResponseBody = zj:encode(Application),
+				ResponseHeaders = [{content_type, "application/health+json"}],
+				{ok, ResponseHeaders, ResponseBody};
+			false ->
+				Application = #{"status" => "down",
+						"serviceId" => Id},
+				ResponseBody = zj:encode(Application),
+				ResponseHeaders = [{content_type, "application/health+json"}],
+				{error, 503, ResponseHeaders, ResponseBody}
+		end
+	catch
+		_:badarg ->
+			{error, 404};
 		_:_Reason ->
 			{error, 500}
 	end.
