@@ -27,7 +27,7 @@
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0,
-		get_health/2]).
+		get_health/2, get_applications/2]).
 
 -spec content_types_accepted() -> ContentTypes
 	when
@@ -80,6 +80,47 @@ get_health([] = _Query, _RequestHeaders) ->
 			{error, 503, ResponseHeaders, ResponseBody}
 	catch
 		_:_Reason2 ->
+			{error, 500}
+	end.
+
+-spec get_applications(Query, RequestHeaders) -> Result
+	when
+		Query :: [{Key :: string(), Value :: string()}],
+		RequestHeaders :: [tuple()],
+		Result :: {ok, ResponseHeaders, ResponseBody}
+				| {error, 503, ResponseHeaders, ResponseBody},
+		ResponseHeaders :: [tuple()],
+		ResponseBody :: iolist().
+%% @doc Body producing function for `GET /health/application'
+%% requests.
+get_applications([] = _Query, _RequestHeaders) ->
+	try
+		#{"checks" => application([sigscale_im, inets])}
+	of
+		#{"checks" := #{"application" :=  Applications}} = Checks ->
+			F = fun(#{"status" := "up"}) ->
+						false;
+					(#{"status" := "down"}) ->
+						true
+			end,
+			case lists:any(F, Applications) of
+				false ->
+					Application = Checks#{"status" => "pass",
+							"serviceId" => atom_to_list(node()),
+							"description" => "OTP applications"},
+					ResponseBody = zj:encode(Application),
+					ResponseHeaders = [{content_type, "application/health+json"}],
+					{ok, ResponseHeaders, ResponseBody};
+				true ->
+					Application = Checks#{"status" => "fail",
+							"serviceId" => atom_to_list(node()),
+							"description" => "OTP applications"},
+					ResponseBody = zj:encode(Application),
+					ResponseHeaders = [{content_type, "application/health+json"}],
+					{error, 503, ResponseHeaders, ResponseBody}
+			end
+	catch
+		_:_Reason ->
 			{error, 500}
 	end.
 
