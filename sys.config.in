@@ -19,6 +19,7 @@
                   [{auth_type, mnesia},
                   {auth_name, "im.sigscale.org"},
                   {require_group, ["staff"]}]}},
+            {directory, {"/partyRoleManagement", []}},
             {disk_log_format, internal},
             {transfer_disk_log, "log/http/transfer"},
             {security_disk_log, "log/http/security"},
