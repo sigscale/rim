@@ -399,6 +399,12 @@ specification([connection_point | T], #specification{connection_point = SpecRefs
 specification([connection_point | T], #{"connectionPointSpecification" := SpecRefs} = M, Acc)
 		when is_list(SpecRefs), length(SpecRefs) > 0 ->
 	specification(T, M, Acc#specification{connection_point = specification_refs(SpecRefs)});
+specification([attributes | T], #specification{attributes = Attributes} = R,
+		Acc) when is_map(Attributes) ->
+	specification(T, R, Acc#{"attributes" => Attributes});
+specification([attributes | T], #{"attributes" := Attributes} = M, Acc)
+		when is_map(Attributes) ->
+	specification(T, M, Acc#specification{attributes = Attributes});
 specification([_ | T], R, Acc) ->
 	specification(T, R, Acc);
 specification([], _, Acc) ->
