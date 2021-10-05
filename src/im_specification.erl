@@ -6785,7 +6785,18 @@ oda_catalog_api_spec() ->
 			category = "ODA",
 			target_schema = #target_schema_ref{class_type = "API",
 					schema = ?PathCatalogSchema ++ "/API"},
-			party = [PartyRef]}.
+			party = [PartyRef],
+			attributes = #{"apiProtocolType" => "REST",
+					"internalUrl" => "/resourceCatalogManagement/v4/",
+					"internalSchema" => "schema/resourceCatalogManagement.json",
+					"authenticationType" => "BASIC",
+					"allowedOperations" => ["POST", "PATCH", "GET", "DELETE"],
+					"allowedApiEntities" => ["resourceCatalog", "resourceCategory",
+							"resourceCandidate", "resourceSpecification"],
+					"responseTypeFormat" => "application/json",
+					"majorVersion" => "4",
+					"minorVersion" => "1",
+					"maintenanceVersion" => "0"}}.
 
 -spec oda_catalog_spec() -> specification().
 %% @doc
@@ -6820,7 +6831,17 @@ oda_inventory_api_spec() ->
 			category = "ODA",
 			target_schema = #target_schema_ref{class_type = "API",
 					schema = ?PathCatalogSchema ++ "/API"},
-			party = [PartyRef]}.
+			party = [PartyRef],
+			attributes = #{"apiProtocolType" => "REST",
+					"internalUrl" => "/resourceCatalogManagement/v4/",
+					"internalSchema" => "schema/resourceInventoryManagement.json",
+					"authenticationType" => "BASIC",
+					"allowedOperations" => ["POST", "PATCH", "GET", "DELETE"],
+					"allowedApiEntities" => ["resource", "logicalResource"],
+					"responseTypeFormat" => "application/json",
+					"majorVersion" => "4",
+					"minorVersion" => "0",
+					"maintenanceVersion" => "1"}}.
 
 -spec oda_inventory_spec() -> specification().
 %% @doc
@@ -6857,7 +6878,14 @@ oda_manager_spec() ->
 			category = "ODA",
 			target_schema = #target_schema_ref{class_type = "InstalledSoftware",
 					schema = ?PathCatalogSchema ++ "/InstalledSoftware"},
-			party = [PartyRef]}.
+			party = [PartyRef],
+			attributes = #{"releaseStatus" => "beta",
+					"majorVersion" => "2",
+					"minorVersion" => "0",
+					"maintenanceVersion" => "2",
+					"isDistributable" => true,
+					"installSize" => #{"amount" => 256.00,
+							"units" => "MB"}}}.
 
 -spec ngc_category() -> category().
 %% @doc
