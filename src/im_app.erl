@@ -334,8 +334,8 @@ install10(Nodes, Acc) ->
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet,
-		oda_catalog_api, oda_catalog_spec, oda_inventory_api, oda_inventory,
-		oda_manager],
+		oda_catalog_api_spec, oda_catalog_spec, oda_inventory_api_spec,
+		oda_inventory_spec, oda_manager_spec],
 	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
