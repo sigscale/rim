@@ -11,7 +11,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		version :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type category_ref() :: #category_ref{}.
 
 -record(candidate_ref,
@@ -22,7 +23,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		version :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type candidate_ref() :: #candidate_ref{}.
 
 -record(party_ref,
@@ -33,7 +35,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		role :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type party_ref() :: #party_ref{}.
 
 -record(specification_ref,
@@ -44,7 +47,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		version :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type specification_ref() :: #specification_ref{}.
 
 -record(specification_rel,
@@ -61,7 +65,8 @@
 		role :: string() | undefined | '_',
 		default :: non_neg_integer() | undefined | '_',
 		min :: non_neg_integer() | undefined | '_',
-		max :: non_neg_integer() | undefined | '_'}).
+		max :: non_neg_integer() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type specification_rel() :: #specification_rel{}.
 
 -record(spec_char_rel,
@@ -74,7 +79,8 @@
 		end_date :: pos_integer() | undefined | '_',
 		rel_type :: string() | undefined | '_',
 		res_id :: string() | undefined | '_',
-		res_href :: string() | undefined | '_'}).
+		res_href :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type spec_char_rel() :: #spec_char_rel{}.
 
 -record(resource_rel,
@@ -86,7 +92,8 @@
 		schema :: string() | undefined | '_',
 		version :: string() | undefined | '_',
 		ref_type :: string() | undefined | '_',
-		rel_type :: string() | undefined | '_'}).
+		rel_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_rel() :: #resource_rel{}.
 
 -record(resource_ref,
@@ -96,12 +103,14 @@
 		class_type :: string() | undefined | '_',
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_ref() :: #resource_ref{}.
 
 -record(res_char_rel,
 		{id :: string() | undefined | '_',
-		rel_type :: string() | undefined | '_'}).
+		rel_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type res_char_rel() :: #res_char_rel{}.
 
 -record(place_ref,
@@ -113,7 +122,8 @@
 		schema :: string() | undefined | '_',
 		version :: string() | undefined | '_',
 		role :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type place_ref() :: #place_ref{}.
 
 -record(target_schema_ref,
@@ -130,7 +140,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		version :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type constraint_ref() :: #constraint_ref{}.
 
 -record(feature_spec,
@@ -146,7 +157,8 @@
 		end_date :: pos_integer() | undefined | '_',
 		constraint = [] :: [constraint_ref()] | '_',
 		characteristic = [] :: [feature_spec_char()] | '_',
-		related = [] :: [feature_spec_rel()] | '_'}).
+		related = [] :: [feature_spec_rel()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type feature_spec() :: #feature_spec{}.
 
 -record(feat_char_rel,
@@ -160,7 +172,8 @@
 		end_date :: pos_integer() | undefined | '_',
 		rel_type :: string() | undefined | '_',
 		res_id :: string() | undefined | '_',
-		res_href :: string() | undefined | '_'}).
+		res_href :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type feat_char_rel() :: #feat_char_rel{}.
 
 -record(feature_spec_char,
@@ -182,7 +195,8 @@
 		value_type :: string() | undefined | '_',
 		value_schema :: string() | undefined | '_',
 		related = [] :: [feat_char_rel()] | '_',
-		char_value = [] :: [feat_char_value()] | '_'}).
+		char_value = [] :: [feat_char_value()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type feature_spec_char() :: #feature_spec_char{}.
 
 -record(feature_spec_rel,
@@ -195,7 +209,8 @@
 		res_href :: string() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
 		end_date :: pos_integer() | undefined | '_',
-		rel_type :: string() | undefined | '_'}).
+		rel_type :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type feature_spec_rel() :: #feature_spec_rel{}.
 
 -record(feature,
@@ -205,7 +220,8 @@
 		enabled = true :: boolean() | '_',
 		constraint = [] :: [constraint_ref()] | '_',
 		characteristic = [] :: [feature_char()] | '_',
-		related = [] :: [feature_rel()] | '_'}).
+		related = [] :: [feature_rel()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type feature() :: #feature{}.
 
 -record(feature_rel,
@@ -213,7 +229,8 @@
 		name :: string() | undefined | '_',
 		start_date :: pos_integer() | undefined | '_',
 		end_date :: pos_integer() | undefined | '_',
-		rel_type :: string() | undefined | '_'}).
+		rel_type :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type feature_rel() :: #feature_rel{}.
 
 -record(feat_char_value,
@@ -229,7 +246,8 @@
 		to :: term() | undefined | '_',
 		interval :: open | closed | closed_bottom | closed_top | undefined | '_',
 		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
-		value :: term() | undefined | '_'}).
+		value :: term() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type feat_char_value() :: #feat_char_value{}.
 
 -record(feature_char,
@@ -240,7 +258,8 @@
 		schema :: string() | undefined | '_',
 		value_type :: string() | undefined | '_',
 		value_schema :: string() | undefined | '_',
-		value :: term() | undefined | '_'}).
+		value :: term() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type feature_char() :: #feature_char{}.
 
 -record(attachment,
@@ -248,13 +267,15 @@
 		href :: string() | undefined | '_',
 		description :: string() | undefined | '_',
 		type :: string() | undefined | '_',
-		url :: string() | undefined | '_'}).
+		url :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type attachment() :: #attachment{}.
 
 -record(note,
 		{author :: string() | undefined | '_',
 		date :: pos_integer() | undefined | '_',
-		text :: string() | undefined | '_'}).
+		text :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type note() :: #note{}.
 
 -record(catalog,
@@ -271,7 +292,8 @@
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
 		status :: lifecycle_status() | undefined | '_' | '$12',
 		party = [] :: [party_ref()] | '_' | '$13',
-		category = [] :: [category_ref()] | '_' | '$14'}).
+		category = [] :: [category_ref()] | '_' | '$14',
+		attributes = #{} :: map() | '_' | '$15'}).
 -type catalog() :: #catalog{}.
 
 -record(category,
@@ -291,7 +313,8 @@
 		root = false :: boolean() | '_' | '$14',
 		party = [] :: [party_ref()] | '_' | '$15',
 		category = [] :: [category_ref()] | '_' | '$16',
-		candidate = [] :: [candidate_ref()] | '_' | '$17'}).
+		candidate = [] :: [candidate_ref()] | '_' | '$17',
+		attributes = #{} :: map() | '_' | '$18'}).
 -type category() :: #category{}.
 
 -record(candidate,
@@ -308,7 +331,8 @@
 		last_modified :: {TS :: pos_integer(), N :: pos_integer()} | undefined | '_' | '$11',
 		status :: lifecycle_status() | undefined | '_' | '$12',
 		category = [] :: [category_ref()]  | '_' | '$13',
-		specification :: specification_ref() | undefined | '_' | '$14'}).
+		specification :: specification_ref() | undefined | '_' | '$14',
+		attributes = #{} :: map() | '_' | '$15'}).
 -type candidate() :: #candidate{}.
 
 -record(specification,
@@ -339,7 +363,8 @@
 		characteristic = [] :: [specification_char()] | '_' | '$25',
 		related = [] :: [specification_rel()] | '_' | '$26',
 		connectivity = [] :: [resource_graph_spec()] | '_' | '$27',
-		connection_point = [] :: [specification_ref()] | '_' | '$28'}).
+		connection_point = [] :: [specification_ref()] | '_' | '$28',
+		attributes = #{} :: map() | '_' | '$29'}).
 -type specification() :: #specification{}.
 
 -record(spec_char_value,
@@ -355,7 +380,8 @@
 		to :: term() | undefined | '_',
 		interval :: open | closed | closed_bottom | closed_top | undefined | '_',
 		regex :: {CompiledRegEx :: re:mp(), OriginalRegEx :: string()} | undefined | '_',
-		value :: term() | undefined | '_'}).
+		value :: term() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type spec_char_value() :: #spec_char_value{}.
 
 -record(specification_char,
@@ -377,7 +403,8 @@
 		value_type :: string() | undefined | '_',
 		value_schema :: string() | undefined | '_',
 		related = [] :: [spec_char_rel()] | '_',
-		char_value = [] :: [spec_char_value()] | '_'}).
+		char_value = [] :: [spec_char_value()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type specification_char() :: #specification_char{}.
 
 -record(resource,
@@ -418,7 +445,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		ass_type :: string() | undefined | '_',
-		endpoint = [] :: [endpoint_spec_ref()] | '_'}).
+		endpoint = [] :: [endpoint_spec_ref()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type connection_spec() :: #connection_spec{}.
 
 -record(connection,
@@ -428,7 +456,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		ass_type :: string() | undefined | '_',
-		endpoint = [] :: [endpoint_ref()] | '_'}).
+		endpoint = [] :: [endpoint_ref()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type connection() :: #connection{}.
 
 -record(endpoint_spec_ref,
@@ -438,7 +467,8 @@
 		role :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		connection_point = [] :: [specification_ref()] | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+      attributes = #{} :: map() | '_'}).
 -type endpoint_spec_ref() :: #endpoint_spec_ref{}.
 
 -record(endpoint_ref,
@@ -450,7 +480,8 @@
 		schema :: string() | undefined | '_',
 		is_root :: boolean() | undefined | '_',
 		ref_type :: string() | undefined | '_',
-		connection_point = [] :: [resource_ref()] | '_'}).
+		connection_point = [] :: [resource_ref()] | '_',
+      attributes = #{} :: map() | '_'}).
 -type endpoint_ref() :: #endpoint_ref{}.
 
 -record(resource_graph_spec,
@@ -462,7 +493,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		related = [] :: [res_graph_spec_rel()] | '_',
-		connection = [] :: [connection_spec()] | '_'}).
+		connection = [] :: [connection_spec()] | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_graph_spec() :: #resource_graph_spec{}.
 
 -record(resource_graph,
@@ -473,7 +505,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		connection = [] :: [connection()] | undefined | '_',
-		related = [] :: [resource_graph_rel()] | undefined | '_'}).
+		related = [] :: [resource_graph_rel()] | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_graph() :: #resource_graph{}.
 
 -record(res_graph_spec_rel,
@@ -481,7 +514,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		rel_type :: string() | undefined | '_',
-		graph :: res_graph_spec_ref() | undefined | '_'}).
+		graph :: res_graph_spec_ref() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type res_graph_spec_rel() :: #res_graph_spec_rel{}.
 
 -record(res_graph_spec_ref,
@@ -491,7 +525,8 @@
 		class_type :: string() | undefined | '_',
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type res_graph_spec_ref() :: #res_graph_spec_ref{}.
 
 -record(resource_graph_rel,
@@ -499,7 +534,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		rel_type :: string() | undefined | '_',
-		graph :: resource_graph_ref() | undefined | '_'}).
+		graph :: resource_graph_ref() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_graph_rel() :: #resource_graph_rel{}.
 
 -record(resource_graph_ref,
@@ -508,7 +544,8 @@
 		class_type :: string() | undefined | '_',
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
-		ref_type :: string() | undefined | '_'}).
+		ref_type :: string() | undefined | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_graph_ref() :: #resource_graph_ref{}.
 
 -record(resource_char,
@@ -519,7 +556,8 @@
 		schema :: string() | undefined | '_',
 		value_type :: string() | undefined | '_',
 		value :: term() | undefined | '_',
-		related = [] :: [res_char_rel()] | '_'}).
+		related = [] :: [res_char_rel()] | '_',
+		attributes = #{} :: map() | '_'}).
 -type resource_char() :: #resource_char{}.
 
 -type rule() :: fun((Input :: term()) -> ets:match_spec()).
