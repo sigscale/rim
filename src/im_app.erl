@@ -431,7 +431,7 @@ install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([oda_manager = F | T], SpecAcc, Nodes, Acc) ->
+install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
