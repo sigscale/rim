@@ -59,7 +59,7 @@
 -export([mec_mehf/0, mec_mep/0, mec_mea/0, mec_meps/0, mec_meas/0, mec_rnis/0,
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 -export([oda_catalog_api_spec/0, oda_catalog_spec/0, oda_inventory_api_spec/0,
-		oda_inventory_spec/0, oda_manager_spec/0]).
+		oda_inventory_spec/0, oda_manager_spec/0, oda_erlang_spec/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -6883,6 +6883,31 @@ oda_manager_spec() ->
 					"majorVersion" => "2",
 					"minorVersion" => "0",
 					"maintenanceVersion" => "2",
+					"isDistributable" => true,
+					"installSize" => #{"amount" => 256.00,
+							"units" => "MB"}}}.
+
+-spec oda_erlang_spec() -> specification().
+%% @doc
+oda_erlang_spec() ->
+	PartyRef = #party_ref{id = "9f16q754823e", name = "Ericsson",
+			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
+			ref_type = "Organization"},
+	#specification{name = "Erlang",
+			description = "Software specification for Erlang",
+			class_type = "SoftwareSpecification",
+			base_type = "LogicalResource",
+			schema = "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
+			version = "0.1",
+			status = in_test,
+			category = "ODA",
+			target_schema = #target_schema_ref{class_type = "InstalledSoftware",
+					schema = ?PathCatalogSchema ++ "/InstalledSoftware"},
+			party = [PartyRef],
+			attributes = #{"releaseStatus" => "generalDeployment",
+					"majorVersion" => "24",
+					"minorVersion" => "0",
+					"maintenanceVersion" => "5",
 					"isDistributable" => true,
 					"installSize" => #{"amount" => 256.00,
 							"units" => "MB"}}}.
