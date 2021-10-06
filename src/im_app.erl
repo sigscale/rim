@@ -440,8 +440,8 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 					ref_type = Stype, rel_type = "contained"},
 			Fspecrel = fun(#specification{id = Cid, href = Chref, name = Cname,
 							class_type = Ctype} = ChildSpec) when Cname == "TMF634";
-							Cname == "TMF639"; Cname == "Component Catalog";
-							Cname == "Component Inventory" ->
+							Cname == "TMF639"; Cname == "Resource Catalog";
+							Cname == "Resource Inventory" ->
 						ok = write_spec(ChildSpec#specification{related
 								= [ManagerRel]}),
 						#specification_rel{id = Cid, href = Chref, name = Cname,
@@ -489,8 +489,8 @@ install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 					ref_type = ResType, rel_type = "contained"},
 			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
 							class_type = Ctype} = ChildRes) when Cname == "TMF634";
-							Cname == "TMF639"; Cname == "Component Catalog";
-							Cname == "Component Inventory" ->
+							Cname == "TMF639"; Cname == "Resource Catalog";
+							Cname == "Resource Inventory" ->
 						ok = write_resource(ChildRes#resource{related
 								= [ManagerRel]}),
 						#resource_rel{id = Cid, href = Chref, name = Cname,

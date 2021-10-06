@@ -6804,7 +6804,7 @@ oda_catalog_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	#specification{name = "Component Catalog",
+	#specification{name = "Resource Catalog",
 			description = "Component catalog resource function specification",
 			class_type = "ResourceFunctionSpecification",
 			version = "0.1",
@@ -6849,7 +6849,7 @@ oda_inventory_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	#specification{name = "Component Inventory",
+	#specification{name = "Resource Inventory",
 			description = "Component inventory resource function specification",
 			class_type = "ResourceFunctionSpecification",
 			version = "0.1",
@@ -6867,7 +6867,7 @@ oda_manager_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	#specification{name = "Component Manager",
+	#specification{name = "SigScale RIM",
 			description
 					= "Software specification for component catalog and inventory",
 			class_type = "SoftwareSpecification",
@@ -7107,7 +7107,7 @@ oda_catalog_api_res() ->
 -spec oda_catalog_res() -> resource().
 %% @doc Component Catalog resource function.
 oda_catalog_res() ->
-	oda_catalog_res(im:get_specification_name("Component Catalog")).
+	oda_catalog_res(im:get_specification_name("Resource Catalog")).
 %% @hidden
 oda_catalog_res({ok, #specification{} = Spec}) ->
 	oda_catalog_res(Spec, im:get_resource_name("TMF634"));
@@ -7117,7 +7117,7 @@ oda_catalog_res({error, Reason}) ->
 oda_catalog_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
 		href = CpHref, name = CpName, class_type = CpRefType}}) ->
-	#resource{name = "Component Catalog",
+	#resource{name = "Resource Catalog",
 			description = "Component catalog resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
@@ -7150,7 +7150,7 @@ oda_inventory_api_res() ->
 -spec oda_inventory_res() -> resource().
 %% @doc Component Catalog resource function.
 oda_inventory_res() ->
-	oda_inventory_res(im:get_specification_name("Component Inventory")).
+	oda_inventory_res(im:get_specification_name("Resource Inventory")).
 %% @hidden
 oda_inventory_res({ok, #specification{} = Spec}) ->
 	oda_inventory_res(Spec, im:get_resource_name("TMF639"));
@@ -7160,7 +7160,7 @@ oda_inventory_res({error, Reason}) ->
 oda_inventory_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
 		href = CpHref, name = CpName, class_type = CpRefType}}) ->
-	#resource{name = "Component Inventory",
+	#resource{name = "Resource Inventory",
 			description = "Component inventory resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
@@ -7175,13 +7175,13 @@ oda_inventory_res(_, {error, Reason}) ->
 -spec oda_manager_res() -> resource().
 %% @doc Component Catalog resource function.
 oda_manager_res() ->
-	oda_manager_res(im:get_specification_name("Component Manager")).
+	oda_manager_res(im:get_specification_name("SigScale RIM")).
 %% @hidden
 oda_manager_res({error, Reason}) ->
 	throw({get_specification_name, Reason});
 oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
-	#resource{name = "Component Manager",
+	#resource{name = "SigScale RIM",
 			description = "Component specification catalog "
 					"and instance inventory",
 			category = "ODA",
