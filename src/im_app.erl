@@ -440,15 +440,18 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 			ManagerRel = #specification_rel{id = Sid, href = Shref, name = Sname,
 					ref_type = Stype, rel_type = "contained"},
 			Fspecrel = fun(#specification{id = Cid, href = Chref, name = Cname,
-							class_type = Ctype} = ChildSpec) when Cname == "TMF634";
-							Cname == "TMF639"; Cname == "Resource Catalog";
+							class_type = Ctype} = ChildSpec)
+							when Cname == "Resource Catalog";
 							Cname == "Resource Inventory" ->
-						ok = write_spec(ChildSpec#specification{related
-								= [ManagerRel]}),
-						#specification_rel{id = Cid, href = Chref, name = Cname,
-								ref_type = Ctype, rel_type = "contains"}
+						ok = write_spec(ChildSpec#specification{
+								related = [ManagerRel]}),
+						{true, #specification_rel{id = Cid, href = Chref,
+								name = Cname, ref_type = Ctype, rel_type = "contains"}};
+					(_) ->
+						false
 			end,
-			NewSpec = Spec#specification{related = lists:map(Fspecrel, SpecAcc)},
+			NewSpec = Spec#specification{
+					related = lists:filtermap(Fspecrel, SpecAcc)},
 			ok = write_spec(NewSpec),
 			ok = add_candidate(CategoryName, NewSpec),
 			install10(T, SpecAcc, Nodes, Acc);
