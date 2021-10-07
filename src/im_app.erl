@@ -468,7 +468,7 @@ install10([oda_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 				#specification{} = ParentSpec ->
 					NewSpec = ParentSpec#specification{related = [InetsRel]},
 					ok = write_spec(NewSpec),
-					ok = add_candidate(CategoryName, NewSpec),
+					ok = add_candidate(CategoryName, Spec),
 					install10(T, [Spec | SpecAcc], Nodes, Acc);
 				false ->
 					error_logger:error_report(["Failed to find ODA"
