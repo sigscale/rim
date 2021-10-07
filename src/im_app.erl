@@ -335,7 +335,7 @@ install10(Nodes, Acc) ->
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet,
 		oda_catalog_api_spec, oda_catalog_spec, oda_inventory_api_spec,
-		oda_inventory_spec, oda_manager_spec, oda_erlang_spec],
+		oda_inventory_spec, oda_manager_spec, oda_erlang_spec, oda_inets_spec],
 	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
@@ -451,6 +451,29 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 			ok = write_spec(NewSpec),
 			ok = add_candidate(CategoryName, NewSpec),
 			install10(T, SpecAcc, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install10([oda_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
+	CategoryName = category_name(atom_to_list(F)),
+	case im:add_specification(im_specification:F()) of
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype} = Spec} ->
+			InetsRel = #specification_rel{id = Sid, href = Shref, name = Sname,
+					ref_type = Stype, rel_type = "contains"},
+			case lists:keyfind("Erlang", #specification.name, SpecAcc) of
+				#specification{} = ParentSpec ->
+					NewSpec = ParentSpec#specification{related = [InetsRel]},
+					ok = write_spec(NewSpec),
+					ok = add_candidate(CategoryName, NewSpec),
+					install10(T, [Spec | SpecAcc], Nodes, Acc);
+				false ->
+					error_logger:error_report(["Failed to find ODA"
+							" ERLANG specification.", {error, false}]),
+					false
+			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
