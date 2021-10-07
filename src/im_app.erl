@@ -334,9 +334,9 @@ install10(Nodes, Acc) ->
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet,
+		oda_erlang_spec, oda_inets_spec, oda_httpd_spec,
 		oda_catalog_api_spec, oda_catalog_spec, oda_inventory_api_spec,
-		oda_inventory_spec, oda_manager_spec,
-		oda_erlang_spec, oda_inets_spec, oda_httpd_spec],
+		oda_inventory_spec, oda_manager_spec],
 	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
@@ -447,6 +447,13 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 								related = [ManagerRel]}),
 						{true, #specification_rel{id = Cid, href = Chref,
 								name = Cname, ref_type = Ctype, rel_type = "contains"}};
+					(#specification{name = "Erlang", related = ResRel} = ParentSpec) ->
+						ManagerContainedRel
+								= ManagerRel#specification_rel{rel_type = "contains"},
+						NewParentSpec = ParentSpec#specification{
+								related = [ManagerContainedRel | ResRel]},
+						ok = write_spec(NewParentSpec),
+						false;
 					(_) ->
 						false
 			end,
@@ -467,12 +474,12 @@ install10([oda_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 				class_type = Stype} = Spec} ->
 			InetsRel = #specification_rel{id = Sid, href = Shref, name = Sname,
 					ref_type = Stype, rel_type = "contains"},
-			case lists:keyfind("Erlang", #specification.name, SpecAcc) of
-				#specification{} = ParentSpec ->
+			case lists:keytake("Erlang", #specification.name, SpecAcc) of
+				{value, #specification{} = ParentSpec, RestAcc} ->
 					NewSpec = ParentSpec#specification{related = [InetsRel]},
 					ok = write_spec(NewSpec),
 					ok = add_candidate(CategoryName, Spec),
-					install10(T, [Spec | SpecAcc], Nodes, Acc);
+					install10(T, [Spec, NewSpec | RestAcc], Nodes, Acc);
 				false ->
 					error_logger:error_report(["Failed to find ODA"
 							" ERLANG specification.", {error, false}]),
