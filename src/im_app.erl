@@ -518,6 +518,32 @@ install10([oda_httpd_spec = F | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
+install10([F | T], SpecAcc, Nodes, Acc) when F == oda_inventory_api_spec;
+		F == oda_catalog_api_spec ->
+	CategoryName = category_name(atom_to_list(F)),
+	case im:add_specification(im_specification:F()) of
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype} = Spec} ->
+			ApiConPoint = #specification_ref{id = Sid, href = Shref, name = Sname,
+					ref_type = Stype, class_type = "ConnectionPointRef"},
+			case lists:keytake("httpd", #specification.name, SpecAcc) of
+				{value, #specification{connection_point = ConPoints}
+							= ParentSpec, Rest} ->
+					NewParentSpec = ParentSpec#specification{
+							connection_point = [ApiConPoint | ConPoints]},
+					ok = write_spec(NewParentSpec),
+					ok = add_candidate(CategoryName, Spec),
+					install10(T, [Spec, NewParentSpec | Rest], Nodes, Acc);
+				false ->
+					error_logger:error_report(["Failed to find ODA"
+							" TMF API specification.", {error, false}]),
+					false
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
 install10([F | T], SpecAcc, Nodes, Acc) ->
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{} = Spec} ->
