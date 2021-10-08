@@ -6968,6 +6968,26 @@ oda_inets_spec() ->
 -spec oda_httpd_spec() -> specification().
 %% @doc
 oda_httpd_spec() ->
+	ServerName = #specification_char{name = "serverName",
+			description = "Domain Name System (DNS) name.",
+			value_type = "string"},
+	BindAddress = #specification_char{name = "bindAddress",
+			description = "IP address or name of the host to which the protocol handler is bound.",
+			value_type = "string"},
+	Port = #specification_char{name = "port",
+			description = "Address of the service within the System.",
+			value_type = "string"},
+	SocketType = #specification_char{name = "socketType",
+			description = "The communication properties visible to a user.",
+			value_type = "string"},
+	ServerRoot = #specification_char{name = "serverRoot",
+			description = "Root directory of the server.",
+			value_type = "string"},
+	DocumentRoot = #specification_char{name = "documentRoot",
+			description = "Document directory of the application.",
+			value_type = "string"},
+	Chars = [ServerName, BindAddress, Port,
+			SocketType, ServerRoot, DocumentRoot],
 	PartyRef = #party_ref{id = "9f16q754823e", name = "Ericsson",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
 			ref_type = "Organization"},
@@ -6979,6 +6999,7 @@ oda_httpd_spec() ->
 			category = "ODA",
 			target_schema = #target_schema_ref{class_type = "ResourceFunction",
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
+			characteristic = Chars,
 			party = [PartyRef]}.
 
 -spec ngc_category() -> category().
