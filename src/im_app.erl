@@ -576,15 +576,17 @@ install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 			ManagerRel = #resource_rel{id = ResId, href = ResHref, name = ResName,
 					ref_type = ResType, rel_type = "contained"},
 			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
-							class_type = Ctype} = ChildRes) when Cname == "TMF634";
-							Cname == "TMF639"; Cname == "Resource Catalog";
+							class_type = Ctype} = ChildRes) when
+							Cname == "Resource Catalog";
 							Cname == "Resource Inventory" ->
 						ok = write_resource(ChildRes#resource{related
 								= [ManagerRel]}),
-						#resource_rel{id = Cid, href = Chref, name = Cname,
-								ref_type = Ctype, rel_type = "contains"}
+						{true, #resource_rel{id = Cid, href = Chref, name = Cname,
+								ref_type = Ctype, rel_type = "contains"}};
+					(_) ->
+						false
 			end,
-			NewRes = Res#resource{related = lists:map(Fresrel, ResAcc)},
+			NewRes = Res#resource{related = lists:filtermap(Fresrel, ResAcc)},
 			ok = write_resource(NewRes),
 			install11(T, ResAcc, Nodes, Acc);
 		{error, Reason} ->
