@@ -7297,6 +7297,8 @@ oda_manager_res({error, Reason}) ->
 	throw({get_specification_name, Reason});
 oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
+	Chars = ["restPageSize", "restPageTimeout", "tlsKey", "tlsCert",
+			"tlsCacert", "oauthAudience", "oauthIssuer", "oauthKey"],
 	#resource{name = "SigScale RIM",
 			description = "Component specification catalog "
 					"and instance inventory",
@@ -7306,7 +7308,8 @@ oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 			schema = ?PathInventorySchema ++ "/InstalledSoftware",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
-					name = SName, ref_type = SType, version = SVersion}}.
+					name = SName, ref_type = SType, version = SVersion},
+			characteristic = lists:filtermap(fun get_chars/1, Chars)}.
 
 -spec oda_inets_res() -> resource().
 %% @doc Component Catalog resource function.
@@ -7410,3 +7413,36 @@ specification_conn_point(SpecificationNames) ->
 			end
 	end,
 	lists:foldr(Fspeccp, [], SpecificationNames).
+
+-spec get_chars(Char) -> Result
+	when
+		Char :: string(),
+		Result :: {true, #resource_char{}} | false.
+%% @doc used in lists:filtermap for ODA characteristics.
+get_chars("restPageSize" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, rest_page_size));
+get_chars("restPageTimeout" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, rest_page_timeout));
+get_chars("tlsKey" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, tls_key));
+get_chars("tlsCert" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, tls_cert));
+get_chars("tlsCacert" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, tls_cacert));
+get_chars("oauthAudience" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, oauth_audience));
+get_chars("oauthIssuer" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, oauth_issuer));
+get_chars("oauthKey" = Char) ->
+	get_chars(Char, application:get_env(sigscale_im, oauth_key)).
+%% @hidden
+get_chars(_Char, undefined) ->
+	false;
+get_chars(_Char, {ok, undefined}) ->
+	false;
+get_chars(Char, {ok, Size}) when
+		Char == "restPageSize"; Char == "restPageTimeout", is_integer(Size) ->
+	{true, #resource_char{name = Char, value = Size}};
+get_chars(Char, {ok, Size}) when is_list(Size) ->
+	{true, #resource_char{name = Char, value = Size}}.
+
