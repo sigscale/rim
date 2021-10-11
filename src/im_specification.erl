@@ -7309,7 +7309,7 @@ oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
-			characteristic = lists:filtermap(fun get_chars/1, Chars)}.
+			characteristic = lists:filtermap(fun get_rim_chars/1, Chars)}.
 
 -spec oda_inets_res() -> resource().
 %% @doc Component Catalog resource function.
@@ -7364,31 +7364,6 @@ oda_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 oda_httpd_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
 
-%% @hidden
-get_httpd_chars(undefined) ->
-	[];
-get_httpd_chars({ok, undefined}) ->
-	[];
-get_httpd_chars({ok, [{httpd, Config}]}) ->
-	Keys = [server_name, port, server_root, document_root],
-	F2 = fun(false) ->
-				false;
-			({_, undefined}) ->
-				false;
-			({server_name, Value}) when is_list(Value) ->
-				{true, #resource_char{name = "serverName", value = Value}};
-			({port, Value}) when is_integer(Value) ->
-				{true, #resource_char{name = "port", value = Value}};
-			({server_root, Value}) ->
-				{true, #resource_char{name = "serverRoot", value = Value}};
-			({document_root, Value}) ->
-				{true, #resource_char{name = "documentRoot", value = Value}}
-	end,
-	F1 = fun(Key) ->
-			F2(lists:keyfind(Key, 1, Config))
-	end,
-	lists:filtermap(F1, Keys).
-
 %%----------------------------------------------------------------------
 %% internal functions
 %%----------------------------------------------------------------------
@@ -7441,35 +7416,60 @@ specification_conn_point(SpecificationNames) ->
 	end,
 	lists:foldr(Fspeccp, [], SpecificationNames).
 
--spec get_chars(Char) -> Result
+-spec get_rim_chars(Char) -> Result
 	when
 		Char :: string(),
 		Result :: {true, #resource_char{}} | false.
 %% @doc used in lists:filtermap for ODA characteristics.
-get_chars("restPageSize" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, rest_page_size));
-get_chars("restPageTimeout" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, rest_page_timeout));
-get_chars("tlsKey" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, tls_key));
-get_chars("tlsCert" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, tls_cert));
-get_chars("tlsCacert" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, tls_cacert));
-get_chars("oauthAudience" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, oauth_audience));
-get_chars("oauthIssuer" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, oauth_issuer));
-get_chars("oauthKey" = Char) ->
-	get_chars(Char, application:get_env(sigscale_im, oauth_key)).
+get_rim_chars("restPageSize" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, rest_page_size));
+get_rim_chars("restPageTimeout" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, rest_page_timeout));
+get_rim_chars("tlsKey" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, tls_key));
+get_rim_chars("tlsCert" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, tls_cert));
+get_rim_chars("tlsCacert" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, tls_cacert));
+get_rim_chars("oauthAudience" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, oauth_audience));
+get_rim_chars("oauthIssuer" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, oauth_issuer));
+get_rim_chars("oauthKey" = Char) ->
+	get_rim_chars(Char, application:get_env(sigscale_im, oauth_key)).
 %% @hidden
-get_chars(_Char, undefined) ->
+get_rim_chars(_Char, undefined) ->
 	false;
-get_chars(_Char, {ok, undefined}) ->
+get_rim_chars(_Char, {ok, undefined}) ->
 	false;
-get_chars(Char, {ok, Size}) when
+get_rim_chars(Char, {ok, Size}) when
 		Char == "restPageSize"; Char == "restPageTimeout", is_integer(Size) ->
 	{true, #resource_char{name = Char, value = Size}};
-get_chars(Char, {ok, Size}) when is_list(Size) ->
+get_rim_chars(Char, {ok, Size}) when is_list(Size) ->
 	{true, #resource_char{name = Char, value = Size}}.
+
+%% @hidden
+get_httpd_chars(undefined) ->
+	[];
+get_httpd_chars({ok, undefined}) ->
+	[];
+get_httpd_chars({ok, [{httpd, Config}]}) ->
+	Keys = [server_name, port, server_root, document_root],
+	F2 = fun(false) ->
+				false;
+			({_, undefined}) ->
+				false;
+			({server_name, Value}) when is_list(Value) ->
+				{true, #resource_char{name = "serverName", value = Value}};
+			({port, Value}) when is_integer(Value) ->
+				{true, #resource_char{name = "port", value = Value}};
+			({server_root, Value}) ->
+				{true, #resource_char{name = "serverRoot", value = Value}};
+			({document_root, Value}) ->
+				{true, #resource_char{name = "documentRoot", value = Value}}
+	end,
+	F1 = fun(Key) ->
+			F2(lists:keyfind(Key, 1, Config))
+	end,
+	lists:filtermap(F1, Keys).
 
