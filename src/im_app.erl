@@ -566,7 +566,7 @@ install10([], _SpecAcc, Nodes, Acc) ->
 %% @hidden
 install11(Nodes, Acc) ->
 	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
-			oda_inventory_res, oda_manager_res, oda_inets_res],
+			oda_inventory_res, oda_manager_res, oda_inets_res, oda_erlang_res],
 	install11(ResourceFuns, [], Nodes, Acc).
 %% @hidden
 install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
@@ -588,7 +588,26 @@ install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 			end,
 			NewRes = Res#resource{related = lists:filtermap(Fresrel, ResAcc)},
 			ok = write_resource(NewRes),
-			install11(T, ResAcc, Nodes, Acc);
+			install11(T, [NewRes | ResAcc], Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install11([oda_erlang_res = F | T], ResAcc, Nodes, Acc) ->
+	case im:add_resource(im_specification:F()) of
+		{ok, #resource{} = Res} ->
+			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
+							class_type = Ctype}) when Cname == "SigScale RIM";
+							Cname == "inets" ->
+						{true, #resource_rel{id = Cid, href = Chref, name = Cname,
+								ref_type = Ctype, rel_type = "contains"}};
+					(_) ->
+						false
+			end,
+			NewRes = Res#resource{related = lists:filtermap(Fresrel, ResAcc)},
+			ok = write_resource(NewRes),
+			install11(T, [NewRes | ResAcc], Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
