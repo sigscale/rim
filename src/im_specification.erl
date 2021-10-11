@@ -69,7 +69,8 @@
 		oda_catalog/0]).
 
 -export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0,
-		oda_inventory_res/0, oda_manager_res/0, oda_inets_res/0]).
+		oda_inventory_res/0, oda_manager_res/0, oda_inets_res/0,
+		oda_erlang_res/0]).
 
 -include("im.hrl").
 
@@ -7322,6 +7323,23 @@ oda_inets_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
 oda_inets_res({error, Reason}) ->
+	throw({get_specification_name, Reason}).
+
+-spec oda_erlang_res() -> resource().
+%% @doc Component Catalog resource function.
+oda_erlang_res() ->
+	oda_erlang_res(im:get_specification_name("Erlang")).
+%% @hidden
+oda_erlang_res({ok, #specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}}) ->
+	#resource{name = "Erlang",
+			description = "Erlang resource function",
+			category = "ODA",
+			class_type = "ResourceFunction",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = SName, ref_type = SType, version = SVersion}};
+oda_erlang_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
 
 %%----------------------------------------------------------------------
