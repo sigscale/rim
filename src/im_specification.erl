@@ -7358,9 +7358,36 @@ oda_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 			class_type = "ResourceFunction",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
-					name = SName, ref_type = SType, version = SVersion}};
+					name = SName, ref_type = SType, version = SVersion},
+			characteristic = get_httpd_chars(
+					application:get_env(inets, services))};
 oda_httpd_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
+
+%% @hidden
+get_httpd_chars(undefined) ->
+	[];
+get_httpd_chars({ok, undefined}) ->
+	[];
+get_httpd_chars({ok, [{httpd, Config}]}) ->
+	Keys = [server_name, port, server_root, document_root],
+	F2 = fun(undefined) ->
+				false;
+			({_, undefined}) ->
+				false;
+			({server_name, Value}) when is_list(Value) ->
+				{true, #resource_char{name = "serverName", value = Value}};
+			({port, Value}) when is_integer(Value) ->
+				{true, #resource_char{name = "port", value = Value}};
+			({server_root, Value}) ->
+				{true, #resource_char{name = "serverRoot", value = Value}};
+			({document_root, Value}) ->
+				{true, #resource_char{name = "documentRoot", value = Value}}
+	end,
+	F1 = fun(Key) ->
+			F2(lists:keyfind(Key, 1, Config))
+	end,
+	lists:filtermap(F1, Keys).
 
 %%----------------------------------------------------------------------
 %% internal functions
