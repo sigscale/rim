@@ -438,7 +438,7 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = Spec} ->
 			ManagerRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "contained"},
+					ref_type = Stype, rel_type = "providedBy"},
 			Fspecrel = fun(#specification{id = Cid, href = Chref, name = Cname,
 							class_type = Ctype} = ChildSpec)
 							when Cname == "Resource Catalog";
@@ -446,10 +446,10 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 						ok = write_spec(ChildSpec#specification{
 								related = [ManagerRel]}),
 						{true, #specification_rel{id = Cid, href = Chref,
-								name = Cname, ref_type = Ctype, rel_type = "contains"}};
+								name = Cname, ref_type = Ctype, rel_type = "composedOf"}};
 					(#specification{name = "Erlang", related = ResRel} = ParentSpec) ->
 						ManagerContainedRel
-								= ManagerRel#specification_rel{rel_type = "contains"},
+								= ManagerRel#specification_rel{rel_type = "composedOf"},
 						NewParentSpec = ParentSpec#specification{
 								related = [ManagerContainedRel | ResRel]},
 						ok = write_spec(NewParentSpec),
@@ -473,7 +473,7 @@ install10([oda_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = Spec} ->
 			InetsRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			case lists:keytake("Erlang", #specification.name, SpecAcc) of
 				{value, #specification{} = ParentSpec, RestAcc} ->
 					NewSpec = ParentSpec#specification{related = [InetsRel]},
@@ -496,14 +496,14 @@ install10([oda_httpd_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = Spec} ->
 			HttpdRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			case lists:keyfind("inets", #specification.name, SpecAcc) of
 				#specification{id = Pid, href = Phref,
 						name = Pname, class_type = Ptype} = ParentSpec ->
 					NewParentSpec = ParentSpec#specification{related = [HttpdRel]},
 					ok = write_spec(NewParentSpec),
 					InetsRel = #specification_rel{id = Pid, href = Phref,
-							name = Pname, ref_type = Ptype, rel_type = "contained"},
+							name = Pname, ref_type = Ptype, rel_type = "providedBy"},
 					NewSpec = Spec#specification{related = [InetsRel]},
 					ok = write_spec(NewSpec),
 					ok = add_candidate(CategoryName, NewSpec),
@@ -593,7 +593,7 @@ install13([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType} = Res} ->
 			ManagerRel = #resource_rel{id = ResId, href = ResHref, name = ResName,
-					ref_type = ResType, rel_type = "contained"},
+					ref_type = ResType, rel_type = "providedBy"},
 			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
 							class_type = Ctype} = ChildRes) when
 							Cname == "Resource Catalog";
@@ -601,7 +601,7 @@ install13([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 						ok = write_resource(ChildRes#resource{related
 								= [ManagerRel]}),
 						{true, #resource_rel{id = Cid, href = Chref, name = Cname,
-								ref_type = Ctype, rel_type = "contains"}};
+								ref_type = Ctype, rel_type = "composedOf"}};
 					(_) ->
 						false
 			end,
@@ -620,7 +620,7 @@ install13([oda_erlang_res = F | T], ResAcc, Nodes, Acc) ->
 							class_type = Ctype}) when Cname == "SigScale RIM";
 							Cname == "inets" ->
 						{true, #resource_rel{id = Cid, href = Chref, name = Cname,
-								ref_type = Ctype, rel_type = "contains"}};
+								ref_type = Ctype, rel_type = "composedOf"}};
 					(_) ->
 						false
 			end,
