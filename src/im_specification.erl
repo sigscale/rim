@@ -7371,7 +7371,7 @@ get_httpd_chars({ok, undefined}) ->
 	[];
 get_httpd_chars({ok, [{httpd, Config}]}) ->
 	Keys = [server_name, port, server_root, document_root],
-	F2 = fun(undefined) ->
+	F2 = fun(false) ->
 				false;
 			({_, undefined}) ->
 				false;
