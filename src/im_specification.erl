@@ -69,7 +69,7 @@
 		oda_catalog/0]).
 
 -export([oda_catalog_api_res/0, oda_catalog_res/0, oda_inventory_api_res/0,
-		oda_inventory_res/0, oda_manager_res/0]).
+		oda_inventory_res/0, oda_manager_res/0, oda_inets_res/0]).
 
 -include("im.hrl").
 
@@ -7306,6 +7306,23 @@ oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}}.
+
+-spec oda_inets_res() -> resource().
+%% @doc Component Catalog resource function.
+oda_inets_res() ->
+	oda_inets_res(im:get_specification_name("inets")).
+%% @hidden
+oda_inets_res({ok, #specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}}) ->
+	#resource{name = "inets",
+			description = "Inets resource function",
+			category = "ODA",
+			class_type = "ResourceFunction",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = SName, ref_type = SType, version = SVersion}};
+oda_inets_res({error, Reason}) ->
+	throw({get_specification_name, Reason}).
 
 %%----------------------------------------------------------------------
 %% internal functions

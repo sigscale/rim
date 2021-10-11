@@ -566,7 +566,7 @@ install10([], _SpecAcc, Nodes, Acc) ->
 %% @hidden
 install11(Nodes, Acc) ->
 	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
-			oda_inventory_res, oda_manager_res],
+			oda_inventory_res, oda_manager_res, oda_inets_res],
 	install11(ResourceFuns, [], Nodes, Acc).
 %% @hidden
 install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
