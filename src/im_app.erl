@@ -566,7 +566,8 @@ install10([], _SpecAcc, Nodes, Acc) ->
 %% @hidden
 install11(Nodes, Acc) ->
 	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
-			oda_inventory_res, oda_manager_res, oda_inets_res, oda_erlang_res],
+			oda_inventory_res, oda_manager_res, oda_inets_res, oda_erlang_res,
+			oda_httpd_res],
 	install11(ResourceFuns, [], Nodes, Acc).
 %% @hidden
 install11([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
@@ -608,6 +609,43 @@ install11([oda_erlang_res = F | T], ResAcc, Nodes, Acc) ->
 			NewRes = Res#resource{related = lists:filtermap(Fresrel, ResAcc)},
 			ok = write_resource(NewRes),
 			install11(T, [NewRes | ResAcc], Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install11([oda_httpd_res = F | T], ResAcc, Nodes, Acc) ->
+	case im:add_resource(im_specification:F()) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType} = HttpdRes} ->
+			HttpdRel = #resource_rel{id = ResId, href = ResHref, name = ResName,
+					ref_type = ResType, rel_type = "composedOf"},
+			Fcon = fun(#resource{id = Cid, href = Chref,
+							name = Cname, class_type = Ctype})
+							when Cname == "TMF634"; Cname == "TMF639" ->
+						{true, #resource_ref{id = Cid, href = Chref, name = Cname,
+								class_type = "ConnectionPointRef", ref_type = Ctype}};
+					(_) ->
+						false
+			end,
+			case lists:keytake("inets", #resource.name, ResAcc) of
+				{value, #resource{id = InetsId, href = InetsHref, name = InetsName,
+						class_type = InetsType, related = Related}
+						= InetsRes, Rest} ->
+					NewInetRes = InetsRes#resource{related = [HttpdRel | Related]},
+					ok = write_resource(NewInetRes),
+					InetsRel = #resource_rel{id = InetsId, href = InetsHref,
+							name = InetsName, ref_type = InetsType,
+							rel_type = "providedBy"},
+					NewHttpdRes = HttpdRes#resource{related = [InetsRel],
+							connection_point = lists:filtermap(Fcon, ResAcc)},
+					ok = write_resource(NewHttpdRes),
+					install11(T, [NewHttpdRes, NewInetRes | Rest], Nodes, Acc);
+				false ->
+					error_logger:error_report(["Failed to find ODA"
+							" inets resource.", {error, false}]),
+					false
+			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
