@@ -6778,7 +6778,7 @@ oda_catalog_api_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale", role = "Supplier",
 			href = ?PathPartySpec ++ "9f16f654223e", ref_type = "Organization"},
 	#specification{name = "TMF634",
-			description = "Component catalog API specification",
+			description = "Resource Catalog management API (TMF634) specification",
 			class_type = "ApiSpecification",
 			base_type = "SoftwareResourceSpecification",
 			schema = "/resourceCatalogManagement/v4/schema/ApiSpecification",
@@ -6807,7 +6807,7 @@ oda_catalog_spec() ->
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
 	#specification{name = "Resource Catalog",
-			description = "Component catalog resource function specification",
+			description = "Resource Catalog resource function specification",
 			class_type = "ResourceFunctionSpecification",
 			version = "0.1",
 			status = in_test,
@@ -6824,7 +6824,7 @@ oda_inventory_api_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale", role = "Supplier",
 			href = ?PathPartySpec ++ "9f16f654223e", ref_type = "Organization"},
 	#specification{name = "TMF639",
-			description = "Component inventory API specification",
+			description = "Resource Inventory management API (TMF639) specification",
 			class_type = "ApiSpecification",
 			base_type = "SoftwareResourceSpecification",
 			schema = "/resourceCatalogManagement/v4/schema/ApiSpecification",
@@ -6852,7 +6852,7 @@ oda_inventory_spec() ->
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
 	#specification{name = "Resource Inventory",
-			description = "Component inventory resource function specification",
+			description = "Resource Inventory resource function specification",
 			class_type = "ResourceFunctionSpecification",
 			version = "0.1",
 			status = in_test,
@@ -6895,9 +6895,8 @@ oda_manager_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	#specification{name = "SigScale RIM",
-			description
-					= "Software specification for component catalog and inventory",
+	#specification{name = "sigscale_im",
+			description = "Erlang application sigscale_im software specification",
 			class_type = "SoftwareSpecification",
 			base_type = "SoftwareResourceSpecification",
 			schema = "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
@@ -6923,7 +6922,7 @@ oda_erlang_spec() ->
 			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
 			ref_type = "Organization"},
 	#specification{name = "Erlang",
-			description = "Software specification for Erlang",
+			description = "Erlang runtime environment software specification",
 			class_type = "SoftwareSpecification",
 			base_type = "SoftwareResourceSpecification",
 			schema = "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
@@ -6948,7 +6947,7 @@ oda_inets_spec() ->
 			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
 			ref_type = "Organization"},
 	#specification{name = "inets",
-			description = "Software specification for inets",
+			description = "Erlang application inets software specification",
 			class_type = "SoftwareSpecification",
 			base_type = "SoftwareResourceSpecification",
 			schema = "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
@@ -7203,14 +7202,14 @@ oda_catalog() ->
 			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
 
 -spec oda_catalog_api_res() -> resource().
-%% @doc Component Catalog API.
+%% @doc Resource Catalog API.
 oda_catalog_api_res() ->
 	Name = "TMF634",
 	case im:get_specification_name(Name) of
 		{ok, #specification{id = Id, href = Href,
 				name = Name, class_type = Type, version = Version}} ->
 			#resource{name = Name,
-					description = "Component catalog API",
+					description = "Resource Catalog management API (TMF634)",
 					category = "ODA",
 					class_type = "API",
 					version = "0.1",
@@ -7221,7 +7220,7 @@ oda_catalog_api_res() ->
 	end.
 
 -spec oda_catalog_res() -> resource().
-%% @doc Component Catalog resource function.
+%% @doc Inventory Catalog resource function.
 oda_catalog_res() ->
 	oda_catalog_res(im:get_specification_name("Resource Catalog")).
 %% @hidden
@@ -7234,7 +7233,7 @@ oda_catalog_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
 		href = CpHref, name = CpName, class_type = CpRefType}}) ->
 	#resource{name = "Resource Catalog",
-			description = "Component catalog resource function",
+			description = "Resource Catalog resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
 			version = "0.1",
@@ -7253,7 +7252,7 @@ oda_inventory_api_res() ->
 		{ok, #specification{id = Id, href = Href,
 				name = Name, class_type = Type, version = Version}} ->
 			#resource{name = Name,
-					description = "Component inventory API",
+					description = "Resource Inventory management API (TMF639)",
 					category = "ODA",
 					class_type = "API",
 					version = "0.1",
@@ -7264,7 +7263,7 @@ oda_inventory_api_res() ->
 	end.
 
 -spec oda_inventory_res() -> resource().
-%% @doc Component Catalog resource function.
+%% @doc Resource Inventory resource function.
 oda_inventory_res() ->
 	oda_inventory_res(im:get_specification_name("Resource Inventory")).
 %% @hidden
@@ -7277,7 +7276,7 @@ oda_inventory_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
 		href = CpHref, name = CpName, class_type = CpRefType}}) ->
 	#resource{name = "Resource Inventory",
-			description = "Component inventory resource function",
+			description = "Resource Inventory resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
 			version = "0.1",
@@ -7289,9 +7288,9 @@ oda_inventory_res(_, {error, Reason}) ->
 	throw({get_resource_name, Reason}).
 
 -spec oda_manager_res() -> resource().
-%% @doc Component Catalog resource function.
+%% @doc Erlang application for SigScale RIM (sigscale_im).
 oda_manager_res() ->
-	oda_manager_res(im:get_specification_name("SigScale RIM")).
+	oda_manager_res(im:get_specification_name("sigscale_im")).
 %% @hidden
 oda_manager_res({error, Reason}) ->
 	throw({get_specification_name, Reason});
@@ -7299,9 +7298,8 @@ oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	Chars = ["restPageSize", "restPageTimeout", "tlsKey", "tlsCert",
 			"tlsCacert", "oauthAudience", "oauthIssuer", "oauthKey"],
-	#resource{name = "SigScale RIM",
-			description = "Component specification catalog "
-					"and instance inventory",
+	#resource{name = "sigscale_im",
+			description = "Erlang application sigscale_im",
 			category = "ODA",
 			class_type = "InstalledSoftware",
 			base_type = "LogicalResource",
@@ -7312,14 +7310,14 @@ oda_manager_res({ok, #specification{id = SId, href = SHref, name = SName,
 			characteristic = lists:filtermap(fun get_rim_chars/1, Chars)}.
 
 -spec oda_inets_res() -> resource().
-%% @doc Component Catalog resource function.
+%% @doc Erlang inets application.
 oda_inets_res() ->
 	oda_inets_res(im:get_specification_name("inets")).
 %% @hidden
 oda_inets_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "inets",
-			description = "Inets resource function",
+			description = "Erlang application inets",
 			category = "ODA",
 			class_type = "InstalledSoftware",
 			version = "0.1",
@@ -7336,7 +7334,7 @@ oda_erlang_res() ->
 oda_erlang_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "Erlang",
-			description = "Erlang resource function",
+			description = "Erlang runtime environment",
 			category = "ODA",
 			class_type = "InstalledSoftware",
 			version = "0.1",
@@ -7346,14 +7344,14 @@ oda_erlang_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
 
 -spec oda_httpd_res() -> resource().
-%% @doc Component Catalog resource function.
+%% @doc Erlang httpd resource function.
 oda_httpd_res() ->
 	oda_httpd_res(im:get_specification_name("httpd")).
 %% @hidden
 oda_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "httpd",
-			description = "Httpd resource function",
+			description = "Erlang httpd resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
 			version = "0.1",
