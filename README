@@ -1,17 +1,21 @@
 # SigScale Resource Inventory Management (RIM)
 
-## Prerequisites
+## Install Prerequisites
 	sudo apt install erlang-dev erlang-snmp erlang-inets erlang-parsetools
-	sudo apt install nodejs npm
-	sudo npm install -g yarn
-	yarn add polymer-cli
+	curl -fsSL https://deb.nodesource.com/setup_16.x | sudo bash -
+	sudo apt install -y nodejs
+	curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+	echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+	sudo apt-get update && sudo apt-get install yarn
 
 ## Building
-	mkdir ../rim.build  (create build directory)
-	cd ../rim.build     (change working directory for build)
-	../rim/configure    (creates Makefiles)
-	make                        (builds entire package)
-	make check                  (run dialyzer and common_test)
+	cd ~/sigscale-im
+	aclocal; autoheader; autoconf; automake --add-missing	
+	mkdir ../im.build
+	cd ../im.build
+	../sigscale-im/configure
+	make
+	make check
 
 ## Installing
 	sudo make install         (installs embedded application in system)
