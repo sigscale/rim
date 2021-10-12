@@ -334,9 +334,9 @@ install10(Nodes, Acc) ->
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet,
-		oda_erlang_spec, oda_inets_spec, oda_httpd_spec,
-		oda_catalog_api_spec, oda_catalog_spec, oda_inventory_api_spec,
-		oda_inventory_spec, oda_manager_spec],
+		im_erlang_spec, im_inets_spec, im_httpd_spec,
+		im_catalog_api_spec, im_catalog_spec, im_inventory_api_spec,
+		im_inventory_spec, im_application_spec],
 	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
@@ -432,7 +432,7 @@ install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
+install10([im_application_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -467,7 +467,7 @@ install10([oda_manager_spec = F | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([oda_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
+install10([im_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -490,7 +490,7 @@ install10([oda_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([oda_httpd_spec = F | T], SpecAcc, Nodes, Acc) ->
+install10([im_httpd_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -518,8 +518,8 @@ install10([oda_httpd_spec = F | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([F | T], SpecAcc, Nodes, Acc) when F == oda_inventory_api_spec;
-		F == oda_catalog_api_spec ->
+install10([F | T], SpecAcc, Nodes, Acc) when F == im_inventory_api_spec;
+		F == im_catalog_api_spec ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
@@ -583,12 +583,12 @@ install12(Nodes, Acc) ->
 	end.
 %% @hidden
 install13(Nodes, Acc) ->
-	ResourceFuns = [oda_catalog_api_res, oda_catalog_res, oda_inventory_api_res,
-			oda_inventory_res, oda_manager_res, oda_inets_res, oda_erlang_res,
-			oda_httpd_res],
+	ResourceFuns = [im_catalog_api_res, oda_catalog_res, im_inventory_api_res,
+			im_inventory_res, im_application_res, im_inets_res, im_erlang_res,
+			im_httpd_res],
 	install13(ResourceFuns, [], Nodes, Acc).
 %% @hidden
-install13([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
+install13([im_application_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType} = Res} ->
@@ -613,7 +613,7 @@ install13([oda_manager_res = F | T], ResAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install13([oda_erlang_res = F | T], ResAcc, Nodes, Acc) ->
+install13([im_erlang_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
 		{ok, #resource{} = Res} ->
 			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
@@ -632,7 +632,7 @@ install13([oda_erlang_res = F | T], ResAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install13([oda_httpd_res = F | T], ResAcc, Nodes, Acc) ->
+install13([im_httpd_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType} = HttpdRes} ->
