@@ -7,10 +7,11 @@
 	curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
 	echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 	sudo apt-get update && sudo apt-get install yarn
+	sudo npm install -g polymer-cli
 
 ## Building
 	cd ~/sigscale-im
-	aclocal; autoheader; autoconf; automake --add-missing	
+	aclocal; autoheader; autoconf; automake --add-missing
 	mkdir ../im.build
 	cd ../im.build
 	../sigscale-im/configure
