@@ -1,26 +1,26 @@
 # SigScale Resource Inventory Management (RIM)
 
 ## Prerequisites
-	Install erlang(>18)
-	$ sudo apt install erlang-dev erlang-snmp erlang-inets erlang-parsetools
-	$ sudo apt install nodejs yarn
-	$ sudo yarn global add polymer-cli
+	sudo apt install erlang-dev erlang-snmp erlang-inets erlang-parsetools
+	sudo apt install nodejs npm
+	sudo npm install -g yarn
+	yarn add polymer-cli
 
 ## Building
-	$ mkdir ../rim.build  (create build directory)
-	$ cd ../rim.build     (change working directory for build)
-	$ ../rim/configure    (creates Makefiles)
-	$ make                        (builds entire package)
-	$ make check                  (run dialyzer and common_test)
+	mkdir ../rim.build  (create build directory)
+	cd ../rim.build     (change working directory for build)
+	../rim/configure    (creates Makefiles)
+	make                        (builds entire package)
+	make check                  (run dialyzer and common_test)
 
 ## Installing
-	$ sudo make install         (installs embedded application in system)
+	sudo make install         (installs embedded application in system)
 
 ## Cleaning
-	$ make clean                (removes files created with make)
-	$ make distclean            (removes files created with configure also)
+	make clean                (removes files created with make)
+	make distclean            (removes files created with configure also)
 
 ## Options
-	$ ../rim/configure --enable-debug
-	$ ../rim/configure --with-ssl=/opt/local
+	../rim/configure --enable-debug
+	../rim/configure --with-ssl=/opt/local
 
