@@ -583,7 +583,7 @@ install12(Nodes, Acc) ->
 	end.
 %% @hidden
 install13(Nodes, Acc) ->
-	ResourceFuns = [im_catalog_api_res, oda_catalog_res, im_inventory_api_res,
+	ResourceFuns = [im_catalog_api_res, im_catalog_res, im_inventory_api_res,
 			im_inventory_res, im_application_res, im_inets_res, im_erlang_res,
 			im_httpd_res],
 	install13(ResourceFuns, [], Nodes, Acc).
@@ -1143,7 +1143,7 @@ category_name("core_" ++ _) ->
 	"Core";
 category_name("ims_" ++ _) ->
 	"IMS";
-category_name("oda_" ++ _) ->
+category_name("im_" ++ _) ->
 	"ODA";
 category_name(_) ->
 	[].
