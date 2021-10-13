@@ -199,7 +199,7 @@ gsm_bts() ->
 		{ok, #specification{id = Sid, href = Shref,
 				name = SRelName, class_type = Stype}} ->
 			GsmCellRel = #specification_rel{id = Sid, href = Shref,
-					name = SRelName, ref_type = Stype, rel_type = "contains"},
+					name = SRelName, ref_type = Stype, rel_type = "composedOf"},
 			#specification{name = "BtsSiteMgr",
 					description = "GSM Base Transceiver Station (BTS)",
 					class_type = "ResourceFunctionSpecification",
@@ -234,7 +234,7 @@ gsm_bss() ->
 		{ok, #specification{id = Sid, href = Shref,
 				name = SRelName, class_type = Stype}} ->
 			BtsSiteMgrRel = #specification_rel{id = Sid, href = Shref,
-					name = SRelName, ref_type = Stype, rel_type = "contains"},
+					name = SRelName, ref_type = Stype, rel_type = "composedOf"},
 			#specification{name = "BssFunction",
 					description = "GSM Base Station Subsystem (BSS)",
 					class_type = "ResourceFunctionSpecification",
@@ -1085,7 +1085,7 @@ umts_rnc() ->
 				{ok, #specification{id = Sid, href = Shref,
 						name = Name, class_type = Stype}} ->
 					[#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"} | Acc];
+							ref_type = Stype, rel_type = "composedOf"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1169,7 +1169,7 @@ lte_enb() ->
 				{ok, #specification{id = Sid, href = Shref,
 						name = Name, class_type = Stype}} ->
 					[#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"} | Acc];
+							ref_type = Stype, rel_type = "composedOf"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1527,7 +1527,7 @@ nr_gnb_du() ->
 				{ok, #specification{id = Sid, href = Shref,
 						name = Name, class_type = Stype}} ->
 					[#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"} | Acc];
+							ref_type = Stype, rel_type = "composedOf"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1602,7 +1602,7 @@ nr_gnb_cu_cp() ->
 				{ok, #specification{id = Sid, href = Shref,
 						name = Name, class_type = Stype}} ->
 					[#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"} | Acc];
+							ref_type = Stype, rel_type = "composedOf"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -1673,7 +1673,7 @@ nr_gnb_cu_up() ->
 				{ok, #specification{id = Sid, href = Shref,
 						name = Name, class_type = Stype}} ->
 					[#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"} | Acc];
+							ref_type = Stype, rel_type = "composedOf"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),
@@ -2307,36 +2307,36 @@ network_slice_subnet() ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
 									default = 1, min = 1, max = 6,
-									rel_type = "contains"} | Acc];
+									rel_type = "composedOf"} | Acc];
 						"SMFFunction" ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
 									default = 1, min = 1, max = 6,
-									rel_type = "contains"} | Acc];
+									rel_type = "composedOf"} | Acc];
 						"UPFFunction" ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
 									default = 1, min = 1, max = 6,
-									rel_type = "contains"} | Acc];
+									rel_type = "composedOf"} | Acc];
 						"EP_N2" ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
 									default = 1, min = 1, max = 6,
-									rel_type = "contains"} | Acc];
+									rel_type = "composedOf"} | Acc];
 						"EP_N3" ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
 									default = 1, min = 1, max = 6,
-									rel_type = "contains"} | Acc];
+									rel_type = "composedOf"} | Acc];
 						"EP_N6" ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
 									default = 1, min = 1, max = 6,
-									rel_type = "contains"} | Acc];
+									rel_type = "composedOf"} | Acc];
 						_ ->
 							[#specification_rel{id = Sid, href = Shref,
 									name = Sname, ref_type = Stype,
-									rel_type = "contains"} | Acc]
+									rel_type = "composedOf"} | Acc]
 					end;
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
@@ -2472,7 +2472,7 @@ ngc_amf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2544,7 +2544,7 @@ ngc_smf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2607,7 +2607,7 @@ ngc_upf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2661,7 +2661,7 @@ ngc_n3iwf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2728,7 +2728,7 @@ ngc_pcf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2795,7 +2795,7 @@ ngc_ausf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2862,7 +2862,7 @@ ngc_udm() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -2919,7 +2919,7 @@ ngc_udr() ->
 		{ok, #specification{id = Sid, href = Shref, name = Name,
 				class_type = Stype}} ->
 			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
 					class_type = "ConnectionPointRef", ref_type = Stype},
 			#specification{name = "UDRFunction",
@@ -2974,7 +2974,7 @@ ngc_udsf() ->
 		{ok, #specification{id = Sid, href = Shref, name = Name,
 				class_type = Stype}} ->
 			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
 					class_type = "ConnectionPointRef", ref_type = Stype},
 			#specification{name = "UDSFFunction",
@@ -3043,7 +3043,7 @@ ngc_nrf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -3114,7 +3114,7 @@ ngc_nssf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -3177,7 +3177,7 @@ ngc_smsf() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -3221,7 +3221,7 @@ ngc_lmf() ->
 		{ok, #specification{id = Sid, href = Shref, name = Name,
 				class_type = Stype}} ->
 			EpNlsRel = #specification_rel{id = Sid, href = Shref, name = Name,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			EpNlsCP = #specification_ref{id = Sid, href = Shref, name = Name,
 					class_type = "ConnectionPointRef", ref_type = Stype},
 			#specification{name = "LMFFunction",
@@ -3276,7 +3276,7 @@ ngc_ngeir() ->
 		{ok, #specification{id = Sid, href = Shref, name = Name,
 				class_type = Stype}} ->
 			EpN17Rel = #specification_rel{id = Sid, href = Shref, name = Name,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			EpN17CP = #specification_ref{id = Sid, href = Shref, name = Name,
 					class_type = "ConnectionPointRef", ref_type = Stype},
 			#specification{name = "NGEIRFunction",
@@ -3328,7 +3328,7 @@ ngc_sepp() ->
 	Fspecrels = fun(#specification{id = Sid, href = Shref,
 				name = Name, class_type = Stype}) ->
 			#specification_rel{id = Sid, href = Shref, name = Name,
-							ref_type = Stype, rel_type = "contains"}
+							ref_type = Stype, rel_type = "composedOf"}
 	end,
 	ResSpecRels = lists:map(Fspecrels, ResSpecs),
 	Fspeccps = fun(#specification{id = CPid, href = CPhref,
@@ -3385,7 +3385,7 @@ ngc_nwdaf() ->
 		{ok, #specification{id = Sid, href = Shref, name = Name,
 				class_type = Stype}} ->
 			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
 					class_type = "ConnectionPointRef", ref_type = Stype},
 			#specification{name = "NWDAFFunction",
@@ -7373,7 +7373,7 @@ eprpeps_refs() ->
 		{ok, #specification{id = Sid, href = Shref, name = Name,
 				class_type = Stype}} ->
 			EpSbiXRel = #specification_rel{id = Sid, href = Shref, name = Name,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			EpSbiXCP = #specification_ref{id = Sid, href = Shref, name = Name,
 					class_type = "ConnectionPointRef", ref_type = Stype},
 			{EpSbiXRel, EpSbiXCP};
@@ -7389,7 +7389,7 @@ specification_rel(SpecificationNames) ->
 				{ok, #specification{id = Sid, href = Shref,
 						name = Sname, class_type = Stype}} ->
 					[#specification_rel{id = Sid, href = Shref, name = Sname,
-							ref_type = Stype, rel_type = "contains"} | Acc];
+							ref_type = Stype, rel_type = "composedOf"} | Acc];
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
 							{specification, Name}, {error, Reason}]),

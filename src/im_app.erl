@@ -344,7 +344,7 @@ install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype, related = Srels} = IUSpec} ->
 			MESpecRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			Ftrans = fun() ->
 					mnesia:write(specification, IUSpec#specification{
 							related = [MESpecRel] ++ Srels}, write)
@@ -366,7 +366,7 @@ install10([F | T], SpecAcc, Nodes, Acc)
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = IUSpec} ->
 			IUResRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			Ftrans = fun() ->
 					mnesia:write(specification,
 							IUSpec#specification{related = [IUResRel]}, write)
@@ -387,7 +387,7 @@ install10([im_iu | T], SpecAcc, Nodes, Acc) ->
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype, related = ResRels} = IUSpec} ->
 			IUResRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "contains"},
+					ref_type = Stype, rel_type = "composedOf"},
 			{#specification{} = TmaSpec, #specification{} = AntennaSpec}
 					= tma_antenna_spec(),
 			Ftrans = fun() ->
