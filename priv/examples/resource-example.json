@@ -26,7 +26,7 @@
 			"id": "16029108611645382",
 			"href": "/resourceInventoryManagement/v4/resource/16029108611645382",
 			"@referredType": "ConnectionPoint",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "SAP"
 		},
 		{
@@ -36,7 +36,7 @@
 				"@referredType": "ResourceFunction",
 				"name": "ContainedExample1"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -45,7 +45,7 @@
 				"@referredType": "ResourceFunction",
 				"name": "ContainedExample2"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectionPoint": [

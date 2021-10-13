@@ -41,7 +41,7 @@
 				"name": "SubNetwork=1,ManagedElement=1,BssFunction=1,BtsSiteMgr=1",
 				"@referredType": "BtsSiteMgr"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	]
 }

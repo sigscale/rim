@@ -40,7 +40,7 @@
 				"name": "SubNetwork=4,ManagedElement=1,EPDGFunction=1,EP_RP_EPS=1",
 				"@referredType": "EP_RP_EPS"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectionPoint": [

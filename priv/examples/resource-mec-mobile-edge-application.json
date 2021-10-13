@@ -48,7 +48,7 @@
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgeApplication=1,MobileEdgeApplicationService=1",
 				"@referredType": "MobileEdgeApplicationService"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectivity": []

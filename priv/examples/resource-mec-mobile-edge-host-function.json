@@ -44,7 +44,7 @@
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgePlatform=1",
 				"@referredType": "MobileEdgePlatform"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -53,7 +53,7 @@
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,MobileEdgeApplication=1",
 				"@referredType": "MobileEdgeApplication"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -62,7 +62,7 @@
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,TrafficRule=1",
 				"@referredType": "TrafficRule"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -71,7 +71,7 @@
 				"name": "SubNetwork=11,ManagedElement=1,MobileEdgeHostFunction=1,DNSRule=1",
 				"@referredType": "DNSRule"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectivity": []

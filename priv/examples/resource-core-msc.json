@@ -48,7 +48,7 @@
 				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,IucsLink=1",
 				"@referredType": "IucsLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -57,7 +57,7 @@
 				"name": "SubNetwork=2,ManagedElement=1,MscServerFunction=1,ALink=1",
 				"@referredType": "ALink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	]
 }

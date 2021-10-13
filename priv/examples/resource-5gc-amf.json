@@ -48,7 +48,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N2=1",
 				"@referredType": "EP_N2"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -57,7 +57,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N8=1",
 				"@referredType": "EP_N8"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -66,7 +66,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N11=1",
 				"@referredType": "EP_N11"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -75,7 +75,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N12=1",
 				"@referredType": "EP_N12"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -84,7 +84,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N14=1",
 				"@referredType": "EP_N14"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -93,7 +93,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N15=1",
 				"@referredType": "EP_N15"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -102,7 +102,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N17=1",
 				"@referredType": "EP_N17"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -111,7 +111,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N20=1",
 				"@referredType": "EP_N20"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -120,7 +120,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N22=1",
 				"@referredType": "EP_N22"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -129,7 +129,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_N26=1",
 				"@referredType": "EP_N26"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -138,7 +138,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLS=1",
 				"@referredType": "EP_NLS"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -147,7 +147,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_NLG=1",
 				"@referredType": "EP_NLG"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -156,7 +156,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,AMFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectionPoint": [

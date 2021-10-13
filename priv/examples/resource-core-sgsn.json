@@ -48,7 +48,7 @@
 				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,GbLink=1",
 				"@referredType": "GbLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -57,7 +57,7 @@
 				"name": "SubNetwork=2,ManagedElement=1,SgsnFunction=1,IupsLink=1",
 				"@referredType": "IupsLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	]
 }

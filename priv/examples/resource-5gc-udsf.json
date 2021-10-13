@@ -40,7 +40,7 @@
 				"name": "SubNetwork=12,ManagedElement=1,UDSFFunction=1,EP_SBI_X=1",
 				"@referredType": "EP_SBI_X"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectionPoint": [

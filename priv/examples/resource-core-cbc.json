@@ -40,7 +40,7 @@
 				"name": "SubNetwork=2,ManagedElement=1,CbcFunction=1,IubcLink=1",
 				"@referredType": "IubcLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	]
 }

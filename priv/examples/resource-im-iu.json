@@ -56,7 +56,7 @@
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=1",
 				"@referredType": "TmaInventoryUnit"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -65,7 +65,7 @@
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=2",
 				"@referredType": "AntennaInventoryUnit"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -74,7 +74,7 @@
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=3",
 				"@referredType": "AntennaInventoryUnit"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -83,7 +83,7 @@
 				"name": "SubNetwork=10,ManagedElement=2,InventoryUnit=1,InventoryUnit=4",
 				"@referredType": "AntennaInventoryUnit"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	]
 }

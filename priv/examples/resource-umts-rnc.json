@@ -48,7 +48,7 @@
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=1",
 				"@referredType": "UtranCellFDD"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -57,7 +57,7 @@
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=2",
 				"@referredType": "UtranCellFDD"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -66,7 +66,7 @@
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,UtranCell=3",
 				"@referredType": "UtranCellFDD"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -75,7 +75,7 @@
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=1",
 				"@referredType": "IubLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -84,7 +84,7 @@
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=2",
 				"@referredType": "IubLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		},
 		{
 			"resource": {
@@ -93,7 +93,7 @@
 				"name": "SubNetwork=3,ManagedElement=1,RncFunction=1,IubLink=3",
 				"@referredType": "IubLink"
 			},
-			"relationshipType": "contains"
+			"relationshipType": "composedOf"
 		}
 	],
 	"connectivity": [
