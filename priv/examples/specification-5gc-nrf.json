@@ -80,14 +80,14 @@
 			"id": "894623081735866",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735866",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N27"
 		},
 		{
 			"id": "894623081735867",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735867",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_SBI_X"
 		}
 	],

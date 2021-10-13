@@ -70,14 +70,14 @@
 			"id": "894623081735844",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735844",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "RNIService"
 		},
 		{
 			"id": "894623081735845",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735845",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "LocationService"
 		}
 	]

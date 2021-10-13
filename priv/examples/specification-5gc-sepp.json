@@ -56,14 +56,14 @@
 			"id": "894623081735879",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735879",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N32"
 		},
 		{
 			"id": "894623081735880",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735880",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_SBI_IPX"
 		}
 	],

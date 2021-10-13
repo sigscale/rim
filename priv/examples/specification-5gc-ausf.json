@@ -74,21 +74,21 @@
 			"id": "894623081735859",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735859",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N12"
 		},
 		{
 			"id": "894623081735860",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735860",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N13"
 		},
 		{
 			"id": "894623081735861",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735861",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_SBI_X"
 		}
 	],

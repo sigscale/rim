@@ -96,147 +96,147 @@
 			"id": "16029108611704547",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611704547",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "AMFFunction"
 		},
 		{
 			"id": "16029108611551283",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611551283",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "SMFFunction"
 		},
 		{
 			"id": "1602910861147484",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861147484",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "UPFFunction"
 		},
 		{
 			"id": "16029108611581827",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581827",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "AUSFFunction"
 		},
 		{
 			"id": "16029108611684227",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684227",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "NSSFFunction"
 		},
 		{
 			"id": "1602910861153931",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861153931",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "UDMFunction"
 		},
 		{
 			"id": "16029108611561347",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611561347",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "PCFFunction"
 		},
 		{
 			"id": "16029108617561349",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108617561349",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N2"
 		},
 		{
 			"id": "16029108611684003",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611684003",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N3"
 		},
 		{
 			"id": "16029108611571507",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571507",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N4"
 		},
 		{
 			"id": "16029108611632915",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611632915",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N6"
 		},
 		{
 			"id": "1602910861149579",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861149579",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N7"
 		},
 		{
 			"id": "16029108611643011",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611643011",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N8"
 		},
 		{
 			"id": "16029108611571603",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611571603",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N9"
 		},
 		{
 			"id": "16029108611602371",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602371",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N10"
 		},
 		{
 			"id": "16029108611602243",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611602243",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N11"
 		},
 		{
 			"id": "16029108611581859",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581859",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N12"
 		},
 		{
 			"id": "1602910861141164",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861141164",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N13"
 		},
 		{
 			"id": "16029108611541091",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611541091",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N14"
 		},
 		{
 			"id": "16029108611581923",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/16029108611581923",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N15"
 		},
 		{
 			"id": "1602910861144388",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/1602910861144388",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_N22"
 		}
 	],

@@ -98,21 +98,21 @@
 			"id": "894623081735831",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735831",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "InventoryUnit"
 		},
 		{
 			"id": "894623081735832",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735832",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "TmaInventoryUnit"
 		},
 		{
 			"id": "894623081735833",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735833",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "AntennaInventoryUnit"
 		}
 	]

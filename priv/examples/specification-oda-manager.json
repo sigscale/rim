@@ -37,7 +37,7 @@
 			"href": "/resourceCatalogManagement/v4/specification/e030a0e0be79",
 			"name": "Component Catalog",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"minimumQuantity": 0
 		},
 		{
@@ -45,7 +45,7 @@
 			"href": "/resourceCatalogManagement/v4/specification/7213863ca330",
 			"name": "Component Inventory",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"minimumQuantity": 1
 		},
 		{
@@ -53,7 +53,7 @@
 			"href": "/resourceCatalogManagement/v4/specification/20a5d4787d97",
 			"name": "TMF634",
 			"@referredType": "ApiSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"minimumQuantity": 0
 		},
 		{
@@ -61,7 +61,7 @@
 			"href": "/resourceCatalogManagement/v4/specification/2f1fcba1d58f",
 			"name": "TMF639",
 			"@referredType": "ApiSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"minimumQuantity": 1
 		}
 	],

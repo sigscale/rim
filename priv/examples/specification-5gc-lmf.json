@@ -56,7 +56,7 @@
 			"id": "894623081735862",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735862",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_NLS"
 		}
 	],

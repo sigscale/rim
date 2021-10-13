@@ -74,42 +74,42 @@
 			"id": "894623081735813",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735813",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "NRCellCU"
 		},
 		{
 			"id": "894623081735814",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735814",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_F1C"
 		},
 		{
 			"id": "894623081735815",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735815",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_E1"
 		},
 		{
 			"id": "894623081735816",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735816",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_XnC"
 		},
 		{
 			"id": "894623081735817",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735817",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_X2C"
 		},
 		{
 			"id": "894623081735818",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735818",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_NgC"
 		}
 	],

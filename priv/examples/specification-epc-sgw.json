@@ -62,7 +62,7 @@
 			"id": "894623081735812",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735812",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_RP_EPS"
 		}
 	],

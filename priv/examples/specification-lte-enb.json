@@ -113,63 +113,63 @@
 			"id": "894623081735801",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735801",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EUtranCellFDD"
 		},
 		{
 			"id": "894623081735802",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735802",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EUtranCellTDD"
 		},
 		{
 			"id": "984623185739841",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739841",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_RP_EPS"
 		},
 		{
 			"id": "984623185739842",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739842",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_X2C"
 		},
 		{
 			"id": "984623185739843",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739843",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_X2U"
 		},
 		{
 			"id": "984623185739844",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739844",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_NgC"
 		},
 		{
 			"id": "984623185739845",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739845",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_NgU"
 		},
 		{
 			"id": "984623185739846",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739846",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_XnC"
 		},
 		{
 			"id": "984623185739847",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/394623185739847",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_XnU"
 		}
 	],

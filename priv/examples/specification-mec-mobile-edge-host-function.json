@@ -49,28 +49,28 @@
 			"id": "894623081735839",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735839",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "MobileEdgePlatform"
 		},
 		{
 			"id": "894623081735840",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735840",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "MobileEdgeApplication"
 		},
 		{
 			"id": "894623081735841",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735841",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "TrafficRule"
 		},
 		{
 			"id": "894623081735842",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735842",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "DNSRule"
 		}
 	]

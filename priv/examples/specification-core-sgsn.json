@@ -109,14 +109,14 @@
 			"id": "894623081735806",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735806",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "GbLink"
 		},
 		{
 			"id": "894623081735807",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735807",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "IupsLink"
 		}
 	]

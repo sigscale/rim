@@ -80,28 +80,28 @@
 			"id": "894623081735825",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735825",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "NRCellDU"
 		},
 		{
 			"id": "894623081735826",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735826",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "NRSectorCarrier"
 		},
 		{
 			"id": "894623081735827",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735827",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_F1C"
 		},
 		{
 			"id": "894623081735828",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735828",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "EP_F1U"
 		}
 	],

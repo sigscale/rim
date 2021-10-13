@@ -115,7 +115,7 @@
 			"id": "894623081735836",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735836",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "InventoryUnitSw"
 		}
 	]

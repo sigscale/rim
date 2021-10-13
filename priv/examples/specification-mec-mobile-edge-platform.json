@@ -41,7 +41,7 @@
 			"id": "894623081735843",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735843",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "MobileEdgePlatformService"
 		}
 	]

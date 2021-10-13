@@ -106,28 +106,28 @@
 			"id": "894623081735601",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735601",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "UtranCellFDD"
 		},
 		{
 			"id": "894623081735602",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735602",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "UtranCellTDDLcr"
 		},
 		{
 			"id": "894623081735603",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735603",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "UtranCellTDDHcr"
 		},
 		{
 			"id": "894623081735604",
 			"href": "/resourceCatalogManagement/v4/resourceSpecification/894623081735604",
 			"@referredType": "ResourceFunctionSpecification",
-			"relationshipType": "contains",
+			"relationshipType": "composedOf",
 			"name": "IubLink"
 		}
 	],
