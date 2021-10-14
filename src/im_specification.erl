@@ -60,7 +60,8 @@
 		mec_ls/0, mec_tr/0, mec_dnsr/0]).
 -export([im_catalog_api_spec/0, im_catalog_spec/0, im_inventory_api_spec/0,
 		im_inventory_spec/0, im_application_spec/0, im_erlang_spec/0,
-		im_inets_spec/0, im_httpd_spec/0, im_erlang_node_spec/0]).
+		im_inets_spec/0, im_httpd_spec/0, im_erlang_node_spec/0,
+		im_kernel_spec/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -7017,6 +7018,31 @@ im_erlang_node_spec() ->
 			target_schema = #target_schema_ref{class_type = "ResourceFunction",
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
 			party = [PartyRef]}.
+
+-spec im_kernel_spec() -> specification().
+%% @doc
+im_kernel_spec() ->
+	PartyRef = #party_ref{id = "9f16q754823e", name = "Ericsson",
+			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
+			ref_type = "Organization"},
+	#specification{name = "kernel",
+			description = "Erlang kernel software specification",
+			class_type = "SoftwareSpecification",
+			base_type = "SoftwareResourceSpecification",
+			schema = "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
+			version = "0.1",
+			status = in_test,
+			category = "ODA",
+			target_schema = #target_schema_ref{class_type = "InstalledSoftware",
+					schema = ?PathCatalogSchema ++ "/InstalledSoftware"},
+			party = [PartyRef],
+			attributes = #{"releaseStatus" => "generalDeployment",
+					"majorVersion" => "8",
+					"minorVersion" => "0",
+					"maintenanceVersion" => "2",
+					"isDistributable" => true,
+					"installSize" => #{"amount" => 256.00,
+							"units" => "MB"}}}.
 
 -spec ngc_category() -> category().
 %% @doc
