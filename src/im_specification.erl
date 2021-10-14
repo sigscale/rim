@@ -71,7 +71,7 @@
 
 -export([im_catalog_api_res/0, im_catalog_res/0, im_inventory_api_res/0,
 		im_inventory_res/0, im_application_res/0, im_inets_res/0,
-		im_erlang_res/0, im_httpd_res/0]).
+		im_erlang_res/0, im_httpd_res/0, im_erlang_node_res/0]).
 
 -include("im.hrl").
 
@@ -7418,6 +7418,23 @@ im_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 			characteristic = get_httpd_chars(
 					application:get_env(inets, services))};
 im_httpd_res({error, Reason}) ->
+	throw({get_specification_name, Reason}).
+
+-spec im_erlang_node_res() -> resource().
+%% @doc Erlang node resource function.
+im_erlang_node_res() ->
+	im_erlang_node_res(im:get_specification_name(atom_to_list(node()))).
+%% @hidden
+im_erlang_node_res({ok, #specification{id = SId, href = SHref, name = Name,
+		class_type = SType, version = SVersion}}) ->
+	#resource{name = Name,
+			description = "Erlang node resource function",
+			category = "ODA",
+			class_type = "ResourceFunction",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = Name, ref_type = SType, version = SVersion}};
+im_erlang_node_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
 
 %%----------------------------------------------------------------------
