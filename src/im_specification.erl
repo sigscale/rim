@@ -72,7 +72,7 @@
 -export([im_catalog_api_res/0, im_catalog_res/0, im_inventory_api_res/0,
 		im_inventory_res/0, im_application_res/0, im_inets_res/0,
 		im_erlang_res/0, im_httpd_res/0, im_erlang_node_res/0,
-		im_kernel_res/0]).
+		im_kernel_res/0, im_net_kernel_res/0]).
 
 -include("im.hrl").
 
@@ -7453,6 +7453,23 @@ im_kernel_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
 im_kernel_res({error, Reason}) ->
+	throw({get_specification_name, Reason}).
+
+-spec im_net_kernel_res() -> resource().
+%% @doc Erlang net kernel resource function.
+im_net_kernel_res() ->
+	im_net_kernel_res(im:get_specification_name("net_kernel")).
+%% @hidden
+im_net_kernel_res({ok, #specification{id = SId, href = SHref, name = Name,
+		class_type = SType, version = SVersion}}) ->
+	#resource{name = Name,
+			description = "Erlang kernel resource function",
+			category = "ODA",
+			class_type = "ResourceFunction",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = Name, ref_type = SType, version = SVersion}};
+im_net_kernel_res({error, Reason}) ->
 	throw({get_specification_name, Reason}).
 
 %%----------------------------------------------------------------------
