@@ -7002,7 +7002,9 @@ im_httpd_spec() ->
 			target_schema = #target_schema_ref{class_type = "ResourceFunction",
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
 			characteristic = Chars,
-			party = [PartyRef]}.
+			party = [PartyRef],
+			connection_point
+					= specification_conn_point(["TMF634", "TMF639"])}.
 
 -spec im_erlang_node_spec() -> specification().
 %% @doc
