@@ -334,9 +334,9 @@ install10(Nodes, Acc) ->
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet,
-		im_erlang_spec, im_inets_spec, im_httpd_spec,
-		im_catalog_api_spec, im_catalog_spec, im_inventory_api_spec,
-		im_inventory_spec, im_application_spec],
+		im_erlang_spec, im_catalog_api_spec, im_inventory_api_spec,
+		im_net_kernel_spec, im_httpd_spec, im_catalog_spec, im_inventory_spec,
+		im_kernel_spec, im_inets_spec, im_application_spec, im_erlang_node_spec],
 	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
@@ -432,36 +432,20 @@ install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([im_application_spec = F | T], SpecAcc, Nodes, Acc) ->
+install10([im_kernel_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = Spec} ->
-			ManagerRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "providedBy"},
-			Fspecrel = fun(#specification{id = Cid, href = Chref, name = Cname,
-							class_type = Ctype} = ChildSpec)
-							when Cname == "Resource Catalog";
-							Cname == "Resource Inventory" ->
-						ok = write_spec(ChildSpec#specification{
-								related = [ManagerRel]}),
-						{true, #specification_rel{id = Cid, href = Chref,
-								name = Cname, ref_type = Ctype, rel_type = "composedOf"}};
-					(#specification{name = "Erlang", related = ResRel} = ParentSpec) ->
-						ManagerContainedRel
-								= ManagerRel#specification_rel{rel_type = "composedOf"},
-						NewParentSpec = ParentSpec#specification{
-								related = [ManagerContainedRel | ResRel]},
-						ok = write_spec(NewParentSpec),
-						false;
-					(_) ->
-						false
-			end,
-			NewSpec = Spec#specification{
-					related = lists:filtermap(Fspecrel, SpecAcc)},
-			ok = write_spec(NewSpec),
-			ok = add_candidate(CategoryName, NewSpec),
-			install10(T, SpecAcc, Nodes, Acc);
+			ok = add_candidate(CategoryName, Spec),
+			KernelRel = #specification_rel{id = Sid,
+					href = Shref, name = Sname, ref_type = Stype},
+			{ok, NewSpecAcc1} = write_rel_in(["Erlang"],
+					KernelRel#specification_rel{rel_type = "composedOf"}, SpecAcc),
+			{ok, NewSpecAcc2} = write_rel_in(["net_kernel"],
+					KernelRel#specification_rel{
+					rel_type = "providedBy"}, NewSpecAcc1),
+			install10(T, NewSpecAcc2, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
@@ -472,71 +456,67 @@ install10([im_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = Spec} ->
-			InetsRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "composedOf"},
-			case lists:keytake("Erlang", #specification.name, SpecAcc) of
-				{value, #specification{} = ParentSpec, RestAcc} ->
-					NewSpec = ParentSpec#specification{related = [InetsRel]},
-					ok = write_spec(NewSpec),
-					ok = add_candidate(CategoryName, Spec),
-					install10(T, [Spec, NewSpec | RestAcc], Nodes, Acc);
-				false ->
-					error_logger:error_report(["Failed to find ODA"
-							" ERLANG specification.", {error, false}]),
-					false
-			end;
+			ok = add_candidate(CategoryName, Spec),
+			InetsRel = #specification_rel{id = Sid,
+					href = Shref, name = Sname, ref_type = Stype},
+			{ok, NewSpecAcc1} = write_rel_in(["Erlang"],
+					InetsRel#specification_rel{rel_type = "composedOf"}, SpecAcc),
+			{ok, NewSpecAcc2} = write_rel_in(["httpd"], InetsRel#specification_rel{
+					rel_type = "providedBy"}, NewSpecAcc1),
+			install10(T, NewSpecAcc2, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
 			{error, Reason}
 	end;
-install10([im_httpd_spec = F | T], SpecAcc, Nodes, Acc) ->
+install10([im_application_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
 	case im:add_specification(im_specification:F()) of
 		{ok, #specification{id = Sid, href = Shref, name = Sname,
 				class_type = Stype} = Spec} ->
-			HttpdRel = #specification_rel{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, rel_type = "composedOf"},
-			case lists:keyfind("inets", #specification.name, SpecAcc) of
+			ok = add_candidate(CategoryName, Spec),
+			AppRel = #specification_rel{id = Sid,
+					href = Shref, name = Sname, ref_type = Stype},
+			{ok, NewSpecAcc1} = write_rel_in(["Erlang"], AppRel#specification_rel{
+					rel_type = "composedOf"}, SpecAcc),
+			{ok, NewSpecAcc2} = write_rel_in(["Resource Catalog",
+					"Resource Inventory"], AppRel#specification_rel{
+					rel_type = "providedBy"}, NewSpecAcc1),
+			install10(T, NewSpecAcc2, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
+				{error, Reason}]),
+			{error, Reason}
+	end;
+install10([im_erlang_node_spec = F | T], SpecAcc, Nodes, Acc) ->
+	CategoryName = category_name(atom_to_list(F)),
+	case im:add_specification(im_specification:F()) of
+		{ok, #specification{id = Sid, href = Shref, name = Sname,
+				class_type = Stype} = Spec} ->
+			ErlNodeRel = #specification_rel{id = Sid, href = Shref,
+					name = Sname, ref_type = Stype, rel_type = "composedOf"},
+			{ok, NewSpecAcc} = write_rel_in(["Erlang"], ErlNodeRel, SpecAcc),
+			Fspecrel = fun(#specification{id = Cid, href = Chref, name = Cname,
+							class_type = Ctype}) when Cname == "net_kernel";
+							Cname == "httpd"; Cname == "Resource Catalog";
+							Cname == "Resource Inventory" ->
+						{true, #specification_rel{id = Cid, href = Chref,
+								name = Cname, ref_type = Ctype,
+								rel_type = "composedOf"}};
+					(_) ->
+						false
+			end,
+			case lists:keyfind("Erlang", #specification.name, NewSpecAcc) of
 				#specification{id = Pid, href = Phref,
-						name = Pname, class_type = Ptype} = ParentSpec ->
-					NewParentSpec = ParentSpec#specification{related = [HttpdRel]},
-					ok = write_spec(NewParentSpec),
-					InetsRel = #specification_rel{id = Pid, href = Phref,
+						name = Pname, class_type = Ptype} ->
+					ParentRel = #specification_rel{id = Pid, href = Phref,
 							name = Pname, ref_type = Ptype, rel_type = "providedBy"},
-					NewSpec = Spec#specification{related = [InetsRel]},
+					ChildRels = lists:filtermap(Fspecrel, SpecAcc),
+					NewSpec = Spec#specification{related = [ParentRel | ChildRels]},
 					ok = write_spec(NewSpec),
 					ok = add_candidate(CategoryName, NewSpec),
-					install10(T, [NewSpec | SpecAcc], Nodes, Acc);
+					install10(T, [NewSpec | NewSpecAcc], Nodes, Acc);
 				false ->
-					error_logger:error_report(["Failed to find ODA"
-							" Inets specification.", {error, false}]),
-					false
-			end;
-		{error, Reason} ->
-			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
-				{error, Reason}]),
-			{error, Reason}
-	end;
-install10([F | T], SpecAcc, Nodes, Acc) when F == im_inventory_api_spec;
-		F == im_catalog_api_spec ->
-	CategoryName = category_name(atom_to_list(F)),
-	case im:add_specification(im_specification:F()) of
-		{ok, #specification{id = Sid, href = Shref, name = Sname,
-				class_type = Stype} = Spec} ->
-			ApiConPoint = #specification_ref{id = Sid, href = Shref, name = Sname,
-					ref_type = Stype, class_type = "ConnectionPointRef"},
-			case lists:keytake("httpd", #specification.name, SpecAcc) of
-				{value, #specification{connection_point = ConPoints}
-							= ParentSpec, Rest} ->
-					NewParentSpec = ParentSpec#specification{
-							connection_point = [ApiConPoint | ConPoints]},
-					ok = write_spec(NewParentSpec),
-					ok = add_candidate(CategoryName, Spec),
-					install10(T, [Spec, NewParentSpec | Rest], Nodes, Acc);
-				false ->
-					error_logger:error_report(["Failed to find ODA"
-							" TMF API specification.", {error, false}]),
 					false
 			end;
 		{error, Reason} ->
@@ -1212,3 +1192,16 @@ write_resource(#resource{} = Res) ->
 		{atomic, ok} ->
 			ok
 	end.
+
+%% @hidden
+write_rel_in([SpecName | T], Rel, SpecAcc) ->
+	case lists:keytake(SpecName, #specification.name, SpecAcc) of
+		{value, #specification{related = Rels} = Spec, RestAcc} ->
+			NewSpec = Spec#specification{related = [Rel | Rels]},
+			ok = write_spec(NewSpec),
+			write_rel_in(T, Rel, [NewSpec | RestAcc]);
+		false ->
+			false
+	end;
+write_rel_in([], _Rel, SpecAcc) ->
+	{ok, SpecAcc}.
