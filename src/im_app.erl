@@ -876,7 +876,8 @@ join(Nodes) when is_list(Nodes), is_atom(hd(Nodes))  ->
 	case mnesia:system_info(is_running) of
 		no ->
 			join1(Node);
-		_ ->
+		Running ->
+			error_logger:error_report(["mnesia running", {is_running, Running}]),
 			erlang:halt(1)
 	end.
 %% @hidden
@@ -884,9 +885,8 @@ join1(Node) ->
 	case net_kernel:connect_node(Node) of
 		true ->
 			join2(Node);
-		false ->
-			erlang:halt(1);
-		ignored ->
+		Connect ->
+			error_logger:error_report(["Failed to connect node", {result, Connect}]),
 			erlang:halt(1)
 	end.
 %% @hidden
@@ -904,7 +904,9 @@ join3(Node) ->
 	case application:start(mnesia) of
 		ok ->
 			join4(Node);
-		{error, _Reason} ->
+		{error, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
 			erlang:halt(1)
 	end.
 %% @hidden
@@ -912,7 +914,9 @@ join4(Node) ->
 	case mnesia:change_config(extra_db_nodes, [Node]) of
 		{ok, _Nodes} ->
 			join5(Node);
-		{error, _Reason} ->
+		{error, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
 			erlang:halt(1)
 	end.
 %% @hidden
@@ -928,10 +932,10 @@ join5(Node) ->
 	end.
 %% @hidden
 join6(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [client, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [catalog, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied client table from ~s.~n", [Node]),
-			join7(Node, [client | Acc]);
+			error_logger:info_msg("Copied catalog table from ~s.~n", [Node]),
+			join7(Node, [resource | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -939,10 +943,10 @@ join6(Node, Acc) ->
 	end.
 %% @hidden
 join7(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [service, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [category, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied service table from ~s.~n", [Node]),
-			join8(Node, [service | Acc]);
+			error_logger:info_msg("Copied category table from ~s.~n", [Node]),
+			join8(Node, [resource | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -950,10 +954,10 @@ join7(Node, Acc) ->
 	end.
 %% @hidden
 join8(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [offer, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [candidate, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied offer table from ~s.~n", [Node]),
-			join9(Node, [offer | Acc]);
+			error_logger:info_msg("Copied candidate table from ~s.~n", [Node]),
+			join9(Node, [resource | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -961,10 +965,10 @@ join8(Node, Acc) ->
 	end.
 %% @hidden
 join9(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [product, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [specification, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied product table from ~s.~n", [Node]),
-			join10(Node, [product | Acc]);
+			error_logger:info_msg("Copied specification table from ~s.~n", [Node]),
+			join10(Node, [resource | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -983,10 +987,10 @@ join10(Node, Acc) ->
 	end.
 %% @hidden
 join11(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [bucket, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [httpd_user, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied bucket table from ~s.~n", [Node]),
-			join12(Node, [bucket | Acc]);
+			error_logger:info_msg("Copied httpd_user table from ~s.~n", [Node]),
+			join12(Node, [httpd_user | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
@@ -994,50 +998,17 @@ join11(Node, Acc) ->
 	end.
 %% @hidden
 join12(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [httpd_user, node(), disc_copies]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Copied httpd_user table from ~s.~n", [Node]),
-			join13(Node, [httpd_user | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			erlang:halt(1)
-	end.
-%% @hidden
-join13(Node, Acc) ->
 	case rpc:call(Node, mnesia, add_table_copy, [httpd_group, node(), disc_copies]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Copied httpd_group table from ~s.~n", [Node]),
-			join14(Node, [httpd_group | Acc]);
+			join13(Node, [httpd_group | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
 			erlang:halt(1)
 	end.
 %% @hidden
-join14(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [session, node(), ram_copies]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Copied session table from ~s.~n", [Node]),
-			join15(Node, [session | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			erlang:halt(1)
-	end.
-%% @hidden
-join15(Node, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [nrf_ref, node(), ram_copies]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Copied nrf_ref table from ~s.~n", [Node]),
-			join16(Node, [nrf_ref | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			erlang:halt(1)
-	end.
-%% @hidden
-join16(_Node, Tables) ->
+join13(_Node, Tables) ->
 	case mnesia:wait_for_tables(lists:reverse(Tables), ?WAITFORTABLES) of
 		ok ->
 			{ok, Tables};
