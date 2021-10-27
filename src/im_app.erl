@@ -100,6 +100,10 @@ install() ->
 %% 	{@link //mnesia. mnesia} will be started on all nodes
 %% 	using the existing schema.
 %%
+%%		If any errors are encountered calls
+%%		{@link //erts/erlang:halt/1. erlang:halt(1)} which
+%%		causes an exit status of failure in the operating system shell.
+%%
 %% @private
 %%
 install(Nodes) when is_list(Nodes) ->
@@ -115,7 +119,7 @@ install(Nodes) when is_list(Nodes) ->
 					error_logger:error_report(["Failed to create schema",
 							mnesia:error_description(Reason),
 							{nodes, Nodes}, {error, Reason}]),
-					{error, Reason}
+					erlang:halt(1)
 			end;
 		_ ->
 			install2(Nodes)
@@ -129,7 +133,7 @@ install1([Node] = Nodes) when Node == node() ->
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 					{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install1(Nodes) ->
 	case rpc:multicall(Nodes, mnesia, start, [], 60000) of
@@ -147,13 +151,13 @@ install1(Nodes) ->
 				NotOKs ->
 					error_logger:error_report(["Failed to start mnesia"
 							" on all nodes", {nodes, Nodes}, {errors, NotOKs}]),
-					{error, NotOKs}
+					erlang:halt(1)
 			end;
 		{Results, BadNodes} ->
 			error_logger:error_report(["Failed to start mnesia"
 					" on all nodes", {nodes, Nodes}, {results, Results},
 					{badnodes, BadNodes}]),
-			{error, {Results, BadNodes}}
+			erlang:halt(1)
 	end.
 %% @hidden
 install2(Nodes) ->
@@ -163,11 +167,11 @@ install2(Nodes) ->
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason};
+			erlang:halt(1);
 		{timeout, Tables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, Tables}]),
-			{error, timeout}
+			erlang:halt(1)
 	end.
 %% @hidden
 install3(Nodes, Acc) ->
@@ -176,17 +180,17 @@ install3(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource catalog table.~n"),
 			install4(Nodes, [catalog | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, catalog}} ->
 			error_logger:info_msg("Found existing resource catalog table.~n"),
 			install4(Nodes, [catalog | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install4(Nodes, Acc) ->
@@ -195,17 +199,17 @@ install4(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource category table.~n"),
 			install5(Nodes, [category | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, category}} ->
 			error_logger:info_msg("Found existing resource category table.~n"),
 			install5(Nodes, [category | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install5(Nodes, Acc) ->
@@ -214,17 +218,17 @@ install5(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource candidate table.~n"),
 			install6(Nodes, [candidate | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node} = _Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, candidate}} ->
 			error_logger:info_msg("Found existing resource candidate table.~n"),
 			install6(Nodes, [candidate | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install6(Nodes, Acc) ->
@@ -233,17 +237,17 @@ install6(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource specification table.~n"),
 			install7(Nodes, [specification | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, specification}} ->
 			error_logger:info_msg("Found existing resource specification table.~n"),
 			install7(Nodes, [specification | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install7(Nodes, Acc) ->
@@ -252,17 +256,17 @@ install7(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource inventory table.~n"),
 			install8(Nodes, [resource | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, resource}} ->
 			error_logger:info_msg("Found existing resource inventory table.~n"),
 			install8(Nodes, [resource | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install8(Nodes, Acc) ->
@@ -278,7 +282,7 @@ install8([F | T], Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM categories.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install8([], Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource categories.~n"),
@@ -296,7 +300,7 @@ install9([F | T], Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM catalogs.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install9([], Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource catalogs.~n"),
@@ -350,15 +354,15 @@ install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
 							related = [MESpecRel] ++ Srels}, write)
 			end,
 			case mnesia:transaction(Ftrans) of
-				{aborted, Reason} ->
-					{error, Reason};
+				{aborted, _Reason} ->
+					erlang:halt(1);
 				{atomic, ok} ->
 					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([F | T], SpecAcc, Nodes, Acc)
 		when F == im_iu_ne; F == im_iu_hw; F == im_iu_sw; F == im_iu_lic ->
@@ -372,15 +376,15 @@ install10([F | T], SpecAcc, Nodes, Acc)
 							IUSpec#specification{related = [IUResRel]}, write)
 			end,
 			case mnesia:transaction(Ftrans) of
-				{aborted, Reason} ->
-					{error, Reason};
+				{aborted, _Reason} ->
+					erlang:halt(1);
 				{atomic, ok} ->
 					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([im_iu | T], SpecAcc, Nodes, Acc) ->
 	case im:add_specification(im_specification:im_iu()) of
@@ -400,15 +404,15 @@ install10([im_iu | T], SpecAcc, Nodes, Acc) ->
 							AntennaSpec#specification{related = [IUResRel]}, write)
 			end,
 			case mnesia:transaction(Ftrans) of
-				{aborted, Reason} ->
-					{error, Reason};
+				{aborted, _Reason} ->
+					erlang:halt(1);
 				{atomic, ok} ->
 					install10(T, SpecAcc, Nodes, Acc)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(umts_rnc)),
@@ -421,8 +425,8 @@ install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 							S#specification{connectivity = [Connectivity]}, write)
 			end,
 			case mnesia:transaction(Ftrans) of
-				{aborted, Reason} ->
-					{error, Reason};
+				{aborted, _Reason} ->
+					erlang:halt(1);
 				{atomic, ok} ->
 					ok = add_candidate(CategoryName, RncSpec),
 					install10(T, SpecAcc, Nodes, Acc)
@@ -430,7 +434,7 @@ install10([umts_rnc | T], SpecAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([im_kernel_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
@@ -449,7 +453,7 @@ install10([im_kernel_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([im_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
@@ -467,7 +471,7 @@ install10([im_inets_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([im_application_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
@@ -486,7 +490,7 @@ install10([im_application_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([im_erlang_node_spec = F | T], SpecAcc, Nodes, Acc) ->
 	CategoryName = category_name(atom_to_list(F)),
@@ -522,7 +526,7 @@ install10([im_erlang_node_spec = F | T], SpecAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([F | T], SpecAcc, Nodes, Acc) ->
 	case im:add_specification(im_specification:F()) of
@@ -538,7 +542,7 @@ install10([F | T], SpecAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install10([], _SpecAcc, Nodes, Acc) ->
 	error_logger:info_msg("Added 3GPP NRM resource specifications.~n"),
@@ -591,7 +595,7 @@ install13([im_application_res = F | T], ResAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install13([im_erlang_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
@@ -610,7 +614,7 @@ install13([im_erlang_res = F | T], ResAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install13([im_httpd_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
@@ -642,12 +646,12 @@ install13([im_httpd_res = F | T], ResAcc, Nodes, Acc) ->
 				false ->
 					error_logger:error_report(["Failed to find ODA"
 							" inets resource.", {error, false}]),
-					false
+					erlang:halt(1)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install13([F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
@@ -656,7 +660,7 @@ install13([F | T], ResAcc, Nodes, Acc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install13([], _ResAcc, Nodes, Acc) ->
 	error_logger:info_msg("Added ODA Component resources.~n"),
@@ -702,17 +706,17 @@ install17(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_user table.~n"),
 			install18(Nodes, [httpd_user | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, httpd_user}} ->
 			error_logger:info_msg("Found existing httpd_user table.~n"),
 			install18(Nodes, [httpd_user | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install18(Nodes, Acc) ->
@@ -721,17 +725,17 @@ install18(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new httpd_group table.~n"),
 			install19(Nodes, [httpd_group | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, httpd_group}} ->
 			error_logger:info_msg("Found existing httpd_group table.~n"),
 			install19(Nodes, [httpd_group | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install19(Nodes, Acc) ->
@@ -740,17 +744,17 @@ install19(Nodes, Acc) ->
 		{atomic, ok} ->
 			error_logger:info_msg("Created new pee rule table.~n"),
 			install20(Nodes, [pee_rule | Acc]);
-		{aborted, {not_active, _, Node} = Reason} ->
+		{aborted, {not_active, _, Node}} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
-			{error, Reason};
+			erlang:halt(1);
 		{aborted, {already_exists, pee_rule}} ->
 			error_logger:info_msg("Found existing pee rule table.~n"),
 			install20(Nodes, [pee_rule | Acc]);
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install20(_Nodes, Tables) ->
@@ -760,11 +764,11 @@ install20(_Nodes, Tables) ->
 		{timeout, Tables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, Tables}]),
-			{error, timeout};
+			erlang:halt(1);
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 					{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 install21(Tables, true) ->
@@ -774,9 +778,9 @@ install21(Tables, true) ->
 			install22(Tables);
 		{error, {already_started, inets}} ->
 			install22(Tables);
-		{error, Reason} ->
+		{error, _Reason} ->
 			error_logger:error_msg("Failed to start inets~n"),
-			{error, Reason}
+			erlang:halt(1)
 	end;
 install21(Tables, false) ->
 	{ok, Tables}.
@@ -790,11 +794,11 @@ install22(Tables) ->
 							{username, "admin"}, {password, "admin"},
 							{locale, "en"}]),
 					{ok, Tables};
-				{error, Reason} ->
+				{error, _Reason} ->
 					error_logger:error_report(["Failed to creat default user",
 							{username, "admin"}, {password, "admin"},
 							{locale, "en"}]),
-					{error, Reason}
+					erlang:halt(1)
 			end;
 		{ok, Users} ->
 			error_logger:info_report(["Found existing http users",
@@ -803,7 +807,7 @@ install22(Tables) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to list http users",
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 
 -spec start_phase(Phase, StartType, PhaseArgs) -> Result
@@ -855,13 +859,16 @@ config_change(_Changed, _New, _Removed) ->
 	when
 		Nodes :: [Node],
 		Node :: atom(),
-		Result :: {ok, Tables} | {error, Reason},
-		Tables :: [atom()],
-		Reason :: term().
+		Result :: {ok, Tables},
+		Tables :: [atom()].
 %% @doc Join an existing cluster.
 %%
 %% 	Tables will be copied from a randomly
 %% 	selected `Node' in the `Nodes' list.
+%%
+%%		If any errors are encountered calls
+%%		{@link //erts/erlang:halt/1. erlang:halt(1)} which
+%%		causes an exit status of failure in the operating system shell.
 %%
 join(Nodes) when is_list(Nodes), is_atom(hd(Nodes))  ->
 	N = rand:uniform(length(Nodes)),
@@ -870,7 +877,7 @@ join(Nodes) when is_list(Nodes), is_atom(hd(Nodes))  ->
 		no ->
 			join1(Node);
 		_ ->
-			{error, mnesia_running}
+			erlang:halt(1)
 	end.
 %% @hidden
 join1(Node) ->
@@ -878,9 +885,9 @@ join1(Node) ->
 		true ->
 			join2(Node);
 		false ->
-			{error, not_connected};
+			erlang:halt(1);
 		ignored ->
-			{error, not_alive}
+			erlang:halt(1)
 	end.
 %% @hidden
 join2(Node) ->
@@ -890,23 +897,23 @@ join2(Node) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join3(Node) ->
 	case application:start(mnesia) of
 		ok ->
 			join4(Node);
-		{error, Reason} ->
-			{error, Reason}
+		{error, _Reason} ->
+			erlang:halt(1)
 	end.
 %% @hidden
 join4(Node) ->
 	case mnesia:change_config(extra_db_nodes, [Node]) of
 		{ok, _Nodes} ->
 			join5(Node);
-		{error, Reason} ->
-			{error, Reason}
+		{error, _Reason} ->
+			erlang:halt(1)
 	end.
 %% @hidden
 join5(Node) ->
@@ -917,7 +924,7 @@ join5(Node) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join6(Node, Acc) ->
@@ -928,7 +935,7 @@ join6(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join7(Node, Acc) ->
@@ -939,7 +946,7 @@ join7(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join8(Node, Acc) ->
@@ -950,7 +957,7 @@ join8(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join9(Node, Acc) ->
@@ -961,7 +968,7 @@ join9(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join10(Node, Acc) ->
@@ -972,7 +979,7 @@ join10(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join11(Node, Acc) ->
@@ -983,7 +990,7 @@ join11(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join12(Node, Acc) ->
@@ -994,7 +1001,7 @@ join12(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join13(Node, Acc) ->
@@ -1005,7 +1012,7 @@ join13(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join14(Node, Acc) ->
@@ -1016,7 +1023,7 @@ join14(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join15(Node, Acc) ->
@@ -1027,7 +1034,7 @@ join15(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 %% @hidden
 join16(_Node, Tables) ->
@@ -1037,11 +1044,11 @@ join16(_Node, Tables) ->
 		{timeout, BadTables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, BadTables}]),
-			{error, timeout};
+			erlang:halt(1);
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 					{error, Reason}]),
-			{error, Reason}
+			erlang:halt(1)
 	end.
 
 %%----------------------------------------------------------------------
