@@ -679,14 +679,21 @@ install14(Nodes, Acc) ->
 install15(Nodes, Acc, InetsServices) ->
 	case lists:keyfind(httpd, 1, InetsServices) of
 		{httpd, HttpdInfo} ->
-			install16(Nodes, Acc, lists:keyfind(directory, 1, HttpdInfo));
+			F = fun({directory, _}) ->
+						true;
+					(_) ->
+						false
+			end,
+			install16(Nodes, Acc, lists:filter(F, HttpdInfo));
 		false ->
 			error_logger:info_msg("Httpd service not defined. "
 					"User table not created~n"),
 			install19(Nodes, Acc)
 	end.
 %% @hidden
-install16(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
+install16(Nodes, Acc, [{directory, {_Dir, []}} | T]) ->
+	install16(Nodes, Acc, T);
+install16(Nodes, Acc, [{directory, {_, DirectoryInfo}} | _]) ->
 	case lists:keyfind(auth_type, 1, DirectoryInfo) of
 		{auth_type, mnesia} ->
 			install17(Nodes, Acc);
@@ -695,7 +702,7 @@ install16(Nodes, Acc, {directory, {_, DirectoryInfo}}) ->
 					"User table not created~n"),
 			install19(Nodes, Acc)
 	end;
-install16(Nodes, Acc, false) ->
+install16(Nodes, Acc, []) ->
 	error_logger:info_msg("Auth directory not defined. "
 			"User table not created~n"),
 	install19(Nodes, Acc).
