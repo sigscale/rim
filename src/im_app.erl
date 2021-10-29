@@ -521,7 +521,7 @@ install10([im_erlang_node_spec = F | T], SpecAcc, Nodes, Acc) ->
 					ok = add_candidate(CategoryName, NewSpec),
 					install10(T, [NewSpec | NewSpecAcc], Nodes, Acc);
 				false ->
-					false
+					erlang:halt(1)
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add 3GPP NRM specifications.",
@@ -1058,7 +1058,8 @@ tma_antenna_spec() ->
 					Spec;
 				{error, Reason} ->
 					error_logger:warning_report(["Error reading resource specification",
-							{specification, SpecName}, {error, Reason}])
+							{specification, SpecName}, {error, Reason}]),
+					erlang:halt(1)
 			end
 	end,
 	{F("TmaInventoryUnit"), F("AntennaInventoryUnit")}.
@@ -1140,8 +1141,8 @@ add_candidate(CategoryName, #specification{id = SpecId, href = SpecHref,
 									candidate = C ++ [CandidateRef]}, write)
 					end,
 					case mnesia:transaction(Ftrans) of
-						{aborted, Reason} ->
-							{error, Reason};
+						{aborted, _Reason} ->
+							erlang:halt(1);
 						{atomic, ok} ->
 							ok
 					end;
@@ -1151,7 +1152,8 @@ add_candidate(CategoryName, #specification{id = SpecId, href = SpecHref,
 			end;
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource category",
-					{category, CategoryName}, {error, Reason}])
+					{category, CategoryName}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 %% @hidden
@@ -1172,8 +1174,8 @@ write_resource(#resource{} = Res) ->
 			mnesia:write(resource, Res, write)
 	end,
 	case mnesia:transaction(Ftrans) of
-		{aborted, Reason} ->
-			{error, Reason};
+		{aborted, _Reason} ->
+			erlang:halt(1);
 		{atomic, ok} ->
 			ok
 	end.
@@ -1186,7 +1188,7 @@ write_rel_in([SpecName | T], Rel, SpecAcc) ->
 			ok = write_spec(NewSpec),
 			write_rel_in(T, Rel, [NewSpec | RestAcc]);
 		false ->
-			false
+			erlang:halt(1)
 	end;
 write_rel_in([], _Rel, SpecAcc) ->
 	{ok, SpecAcc}.

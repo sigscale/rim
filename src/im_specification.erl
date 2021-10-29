@@ -214,7 +214,8 @@ gsm_bts() ->
 					related = [GsmCellRel]};
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
-					{specification, SRelName}, {error, Reason}])
+					{specification, SRelName}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec gsm_bss() -> specification().
@@ -249,7 +250,8 @@ gsm_bss() ->
 					related = [BtsSiteMgrRel]};
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
-					{specification, SRelName}, {error, Reason}])
+					{specification, SRelName}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec gsm_abis_link() -> specification().
@@ -2937,7 +2939,8 @@ ngc_udr() ->
 					connection_point = [EpSbiXCP]};
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
-					{specification, Name}, {error, Reason}])
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec ngc_udsf() -> specification().
@@ -2992,7 +2995,8 @@ ngc_udsf() ->
 					connection_point = [EpSbiXCP]};
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
-					{specification, Name}, {error, Reason}])
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec ngc_nrf() -> specification().
@@ -3239,7 +3243,8 @@ ngc_lmf() ->
 					connection_point = [EpNlsCP]};
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
-					{specification, Name}, {error, Reason}])
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec ngc_ngeir() -> specification().
@@ -3294,7 +3299,8 @@ ngc_ngeir() ->
 					connection_point = [EpN17CP]};
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
-					{specification, Name}, {error, Reason}])
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec ngc_sepp() -> specification().
@@ -7277,7 +7283,9 @@ im_catalog_api_res() ->
 					specification = #specification_ref{id = Id, href = Href,
 							name = Name, ref_type = Type, version = Version}};
 		{error, Reason} ->
-			throw({get_specification_name, Reason})
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec im_catalog_res() -> resource().
@@ -7288,7 +7296,9 @@ im_catalog_res() ->
 im_catalog_res({ok, #specification{} = Spec}) ->
 	im_catalog_res(Spec, im:get_resource_name("TMF634"));
 im_catalog_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 %% @hidden
 im_catalog_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
@@ -7303,7 +7313,8 @@ im_catalog_res(#specification{id = SId, href = SHref, name = SName,
 			connection_point = [#resource_ref{id = CpId, href = CpHref,
 					name = CpName, ref_type = CpRefType}]};
 im_catalog_res(_, {error, Reason}) ->
-	throw({get_resource_name, Reason}).
+	error_logger:warning_report(["Error reading resource", {error, Reason}]),
+	erlang:halt(1).
 
 -spec im_inventory_api_res() -> resource().
 %% @doc Component Inventory API.
@@ -7320,7 +7331,9 @@ im_inventory_api_res() ->
 					specification = #specification_ref{id = Id, href = Href,
 							name = Name, ref_type = Type, version = Version}};
 		{error, Reason} ->
-			throw({get_specification_name, Reason})
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
 	end.
 
 -spec im_inventory_res() -> resource().
@@ -7331,7 +7344,9 @@ im_inventory_res() ->
 im_inventory_res({ok, #specification{} = Spec}) ->
 	im_inventory_res(Spec, im:get_resource_name("TMF639"));
 im_inventory_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading specification resource",
+			{error, Reason}]),
+	erlang:halt(1).
 %% @hidden
 im_inventory_res(#specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
@@ -7346,7 +7361,9 @@ im_inventory_res(#specification{id = SId, href = SHref, name = SName,
 			connection_point = [#resource_ref{id = CpId, href = CpHref,
 					name = CpName, ref_type = CpRefType}]};
 im_inventory_res(_, {error, Reason}) ->
-	throw({get_resource_name, Reason}).
+	error_logger:warning_report(["Error reading resource",
+			{error, Reason}]),
+	erlang:halt(1).
 
 -spec im_application_res() -> resource().
 %% @doc Erlang application for SigScale RIM (sigscale_im).
@@ -7354,7 +7371,9 @@ im_application_res() ->
 	im_application_res(im:get_specification_name("sigscale_im")).
 %% @hidden
 im_application_res({error, Reason}) ->
-	throw({get_specification_name, Reason});
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1);
 im_application_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	Chars = ["restPageSize", "restPageTimeout", "tlsKey", "tlsCert",
@@ -7385,7 +7404,9 @@ im_inets_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
 im_inets_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 
 -spec im_erlang_res() -> resource().
 %% @doc Component Catalog resource function.
@@ -7402,7 +7423,9 @@ im_erlang_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
 im_erlang_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 
 -spec im_httpd_res() -> resource().
 %% @doc Erlang httpd resource function.
@@ -7421,7 +7444,9 @@ im_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 			characteristic = get_httpd_chars(
 					application:get_env(inets, services))};
 im_httpd_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 
 -spec im_erlang_node_res() -> resource().
 %% @doc Erlang node resource function.
@@ -7438,7 +7463,9 @@ im_erlang_node_res({ok, #specification{id = SId, href = SHref, name = Name,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = Name, ref_type = SType, version = SVersion}};
 im_erlang_node_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 
 -spec im_kernel_res() -> resource().
 %% @doc Erlang kernel resource function.
@@ -7455,7 +7482,9 @@ im_kernel_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
 im_kernel_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 
 -spec im_net_kernel_res() -> resource().
 %% @doc Erlang net kernel resource function.
@@ -7472,7 +7501,9 @@ im_net_kernel_res({ok, #specification{id = SId, href = SHref, name = Name,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = Name, ref_type = SType, version = SVersion}};
 im_net_kernel_res({error, Reason}) ->
-	throw({get_specification_name, Reason}).
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
 
 %%----------------------------------------------------------------------
 %% internal functions
