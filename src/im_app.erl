@@ -58,11 +58,11 @@ start(normal = _StartType, _Args) ->
 	Tables = [catalog, category, candidate, specification, resource],
 	case mnesia:wait_for_tables(Tables, 60000) of
 		ok ->
-			supervisor:start_link(im_sup, []);
+			start1();
 		{timeout, BadTabList} ->
 			case force(BadTabList) of
 				ok ->
-					supervisor:start_link(im_sup, []);
+					start1();
 				{error, Reason} ->
 					error_logger:error_report(["sigscale_im application failed to start",
 							{reason, Reason}, {module, ?MODULE}]),
@@ -71,6 +71,11 @@ start(normal = _StartType, _Args) ->
 		{error, Reason} ->
 			{error, Reason}
 	end.
+%% @hidden
+start1() ->
+	Options = [set, public, named_table, {write_concurrency, true}],
+	metrics = ets:new(metrics, Options),
+	supervisor:start_link(im_sup, []).
 
 %%----------------------------------------------------------------------
 %% The im_app private API
