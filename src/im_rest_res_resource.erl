@@ -143,6 +143,8 @@ get_resource(Id, [] = _Query, _Filters) ->
 			Headers = [{content_type, "application/json"},
 					{etag, im_rest:etag(LM)}],
 			Body = zj:encode(resource(Resource)),
+			ets:update_counter(metrics, resourceInventoryRead, 1,
+					{resourceInventoryRead, 0}),
 			{ok, Headers, Body};
 		{error, not_found} ->
 			{error, 404};
@@ -166,6 +168,8 @@ post_resource(RequestBody) ->
 				Headers = [{content_type, "application/json"},
 						{location, Href}, {etag, im_rest:etag(LM)}],
 				Body = zj:encode(resource(Resource)),
+				ets:update_counter(metrics, resourceInventoryCreate, 1,
+						{resourceInventoryCreate, 0}),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -184,6 +188,8 @@ post_resource(RequestBody) ->
 delete_resource(Id) ->
 	case im:del_resource(Id) of
 		ok ->
+			ets:update_counter(metrics, resourceInventoryDelete, 1,
+					{resourceInventoryDelete, 0}),
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
@@ -1271,6 +1277,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 			Headers = [{content_type, "application/json"},
 				{etag, Etag}, {accept_ranges, "items"},
 				{content_range, ContentRange}],
+			ets:update_counter(metrics, resourceInventoryRead, 1,
+					{resourceInventoryRead, 0}),
 			{ok, Headers, Body}
 	end.
 
