@@ -147,6 +147,8 @@ get_specification(Id, [] = _Query, _Filters) ->
 			Headers = [{content_type, "application/json"},
 					{etag, im_rest:etag(LastModified)}],
 			Body = zj:encode(specification(Specification)),
+			ets:update_counter(metrics, resourceSpecificationRead, 1,
+					{resourceSpecificationRead, 0}),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
@@ -203,6 +205,8 @@ patch_specification(Id, Etag, "application/merge-patch+json", ReqBody) ->
 					Headers = [{content_type, "application/json"},
 							{location, ?PathSpecification ++ Id},
 							{etag, im_rest:etag(LM1)}],
+					ets:update_counter(metrics, resourceSpecificationChange, 1,
+							{resourceSpecificationChange, 0}),
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->
 					{error, Status};
@@ -231,6 +235,8 @@ post_specification(RequestBody) ->
 			{ok, #specification{href = Href, last_modified = LM} = NewSpecification} ->
 				Body = zj:encode(specification(NewSpecification)),
 				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
+				ets:update_counter(metrics, resourceSpecificationCreate, 1,
+						{resourceSpecificationCreate, 0}),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -249,6 +255,8 @@ post_specification(RequestBody) ->
 delete_specification(Id) ->
 	case im:del_specification(Id) of
 		ok ->
+			ets:update_counter(metrics, resourceSpecificationDelete, 1,
+					{resourceSpecificationDelete, 0}),
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
@@ -1819,6 +1827,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 			Headers = [{content_type, "application/json"},
 				{etag, Etag}, {accept_ranges, "items"},
 				{content_range, ContentRange}],
+			ets:update_counter(metrics, resourceSpecificationRead, 1,
+					{resourceSpecificationRead, 0}),
 			{ok, Headers, Body}
 	end.
 

@@ -148,6 +148,8 @@ get_candidate(Id, [] = _Query, _Filters) ->
 			Headers = [{content_type, "application/json"},
 					{etag, im_rest:etag(LastModified)}],
 			Body = zj:encode(candidate(Candidate)),
+			ets:update_counter(metrics, resourceCandidateRead, 1,
+					{resourceCandidateRead, 0}),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
@@ -169,6 +171,8 @@ post_candidate(RequestBody) ->
 				Body = zj:encode(candidate(Candidate)),
 				Headers = [{content_type, "application/json"},
 						{location, Href}, {etag, im_rest:etag(LM)}],
+				ets:update_counter(metrics, resourceCandidateCreate, 1,
+						{resourceCandidateCreate, 0}),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -227,6 +231,8 @@ patch_candidate(Id, Etag, "application/merge-patch+json", ReqBody) ->
 					Headers = [{content_type, "application/json"},
 							{location, ?PathCandidate ++ Id},
 							{etag, im_rest:etag(LM1)}],
+					ets:update_counter(metrics, resourceCandidateChange, 1,
+							{resourceCandidateChange, 0}),
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->
 					{error, Status};
@@ -251,6 +257,8 @@ patch_candidate(_, _, "application/json", _) ->
 delete_candidate(Id) ->
 	case im:del_candidate(Id) of
 		ok ->
+			ets:update_counter(metrics, resourceCandidateDelete, 1,
+					{resourceCandidateDelete, 0}),
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
@@ -429,6 +437,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 			Headers = [{content_type, "application/json"},
 					{etag, Etag}, {accept_ranges, "items"},
 					{content_range, ContentRange}],
+			ets:update_counter(metrics, resourceCandidateRead, 1,
+					{resourceCandidateRead, 0}),
 			{ok, Headers, Body}
 	end.
 

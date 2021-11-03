@@ -148,6 +148,8 @@ get_category(Id, [] = _Query, _Filters) ->
 			Headers = [{content_type, "application/json"},
 					{etag, im_rest:etag(LastModified)}],
 			Body = zj:encode(category(Category)),
+			ets:update_counter(metrics, resourceCategoryRead, 1,
+					{resourceCategoryRead, 0}),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
@@ -204,6 +206,8 @@ patch_category(Id, Etag, "application/merge-patch+json", ReqBody) ->
 					Headers = [{content_type, "application/json"},
 							{location, ?PathCategory ++ Id},
 							{etag, im_rest:etag(LM1)}],
+					ets:update_counter(metrics, resourceCategoryChange, 1,
+							{resourceCategoryChange, 0}),
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->
 					{error, Status};
@@ -233,6 +237,8 @@ post_category(RequestBody) ->
 				Body = zj:encode(category(NewCategory)),
 				Headers = [{content_type, "application/json"},
 						{location, Href}, {etag, im_rest:etag(LM)}],
+				ets:update_counter(metrics, resourceCategoryCreate, 1,
+						{resourceCategoryCreate, 0}),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -251,6 +257,8 @@ post_category(RequestBody) ->
 delete_category(Id) ->
 	case im:del_category(Id) of
 		ok ->
+			ets:update_counter(metrics, resourceCategoryDelete, 1,
+					{resourceCategoryDelete, 0}),
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
@@ -447,6 +455,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 			Headers = [{content_type, "application/json"},
 				{etag, Etag}, {accept_ranges, "items"},
 				{content_range, ContentRange}],
+			ets:update_counter(metrics, resourceCategoryRead, 1,
+					{resourceCategoryRead, 0}),
 			{ok, Headers, Body}
 	end.
 

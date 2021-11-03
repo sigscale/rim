@@ -148,6 +148,8 @@ get_catalog(Id, [] = _Query, _Filters) ->
 			Headers = [{content_type, "application/json"},
 					{etag, im_rest:etag(LastModified)}],
 			Body = zj:encode(catalog(Catalog)),
+			ets:update_counter(metrics, resourceCatalogRead, 1,
+					{resourceCatalogRead, 0}),
 			{ok, Headers, Body};
 		{error, _Reason} ->
 			{error, 404}
@@ -169,6 +171,8 @@ post_catalog(RequestBody) ->
 				Body = zj:encode(catalog(Catalog)),
 				Headers = [{content_type, "application/json"},
 						{location, Href}, {etag, im_rest:etag(LM)}],
+				ets:update_counter(metrics, resourceCatalogCreate, 1,
+						{resourceCatalogCreate, 0}),
 				{ok, Headers, Body};
 			{error, _Reason} ->
 				{error, 400}
@@ -227,6 +231,8 @@ patch_catalog(Id, Etag, "application/merge-patch+json", ReqBody) ->
 					Headers = [{content_type, "application/json"},
 							{location, ?PathCatalog ++ Id},
 							{etag, im_rest:etag(LM1)}],
+					ets:update_counter(metrics, resourceCatalogChange, 1,
+							{resourceCatalogChange, 0}),
 					{ok, Headers, Body};
 				{aborted, Status} when is_integer(Status) ->
 					{error, Status};
@@ -251,6 +257,8 @@ patch_catalog(_, _, "application/json", _) ->
 delete_catalog(Id) ->
 	case im:del_catalog(Id) of
 		ok ->
+			ets:update_counter(metrics, resourceCatalogDelete, 1,
+					{resourceCatalogDelete, 0}),
 			{ok, [], []};
 		{error, _Reason} ->
 			{error, 400}
@@ -429,6 +437,8 @@ query_page(PageServer, Etag, _Query, _Filters, Start, End) ->
 			Headers = [{content_type, "application/json"},
 					{etag, Etag}, {accept_ranges, "items"},
 					{content_range, ContentRange}],
+			ets:update_counter(metrics, resourceCatalogRead, 1,
+					{resourceCatalogRead, 0}),
 			{ok, Headers, Body}
 	end.
 
