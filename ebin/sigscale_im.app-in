@@ -26,6 +26,7 @@
 			im_statistics_sup,
 			im_statistics_server,
 			im_rest_res_health,
+			im_rest_res_prometheus,
 			im_specification,
 			im_xml_cm_bulk,
 			im_xml_core,
