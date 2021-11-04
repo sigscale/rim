@@ -244,6 +244,8 @@ do_get(Resource, #mod{parsed_header = Headers} = ModData,
 do_get(Resource, #mod{parsed_header = Headers} = ModData,
 		["health", "application", Id], _Query) ->
    do_response(ModData, Resource:get_application(Id, Headers));
+do_get(Resource, #mod{parsed_header = Headers} = ModData, ["metrics"], Query) ->
+   do_response(ModData, Resource:get_metrics(Query, Headers));
 do_get(_, #mod{parsed_header = RequestHeaders, data = Data} = ModData, _, _) ->
 	Problem = #{type => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4",
 			title => "Not Found",

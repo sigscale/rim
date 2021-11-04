@@ -125,6 +125,8 @@ do(#mod{request_uri = Uri, data = Data} = ModData) ->
 							check_content_type_header(im_rest_res_health, ModData);
 						["health", "application" | _] ->
 							check_content_type_header(im_rest_res_health, ModData);
+						["metrics"] ->
+							check_content_type_header(im_rest_res_prometheus, ModData);
 						_ ->
 							{proceed, Data}
 					end;
