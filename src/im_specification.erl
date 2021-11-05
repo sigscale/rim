@@ -7293,16 +7293,8 @@ im_catalog_api_res() ->
 im_catalog_res() ->
 	im_catalog_res(im:get_specification_name("Resource Catalog")).
 %% @hidden
-im_catalog_res({ok, #specification{} = Spec}) ->
-	im_catalog_res(Spec, im:get_resource_name("TMF634"));
-im_catalog_res({error, Reason}) ->
-	error_logger:warning_report(["Error reading resource specification",
-			{error, Reason}]),
-	erlang:halt(1).
-%% @hidden
-im_catalog_res(#specification{id = SId, href = SHref, name = SName,
-		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
-		href = CpHref, name = CpName, class_type = CpRefType}}) ->
+im_catalog_res({ok, #specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}}) ->
 	#resource{name = "Resource Catalog",
 			description = "Resource Catalog resource function",
 			category = "ODA",
@@ -7310,10 +7302,10 @@ im_catalog_res(#specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
-			connection_point = [#resource_ref{id = CpId, href = CpHref,
-					name = CpName, ref_type = CpRefType}]};
-im_catalog_res(_, {error, Reason}) ->
-	error_logger:warning_report(["Error reading resource", {error, Reason}]),
+			connection_point = resource_conn_point(["TMF634"])};
+im_catalog_res({error, Reason}) ->
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
 	erlang:halt(1).
 
 -spec im_inventory_api_res() -> resource().
@@ -7341,16 +7333,8 @@ im_inventory_api_res() ->
 im_inventory_res() ->
 	im_inventory_res(im:get_specification_name("Resource Inventory")).
 %% @hidden
-im_inventory_res({ok, #specification{} = Spec}) ->
-	im_inventory_res(Spec, im:get_resource_name("TMF639"));
-im_inventory_res({error, Reason}) ->
-	error_logger:warning_report(["Error reading specification resource",
-			{error, Reason}]),
-	erlang:halt(1).
-%% @hidden
-im_inventory_res(#specification{id = SId, href = SHref, name = SName,
-		class_type = SType, version = SVersion}, {ok, #resource{id = CpId,
-		href = CpHref, name = CpName, class_type = CpRefType}}) ->
+im_inventory_res({ok, #specification{id = SId, href = SHref, name = SName,
+		class_type = SType, version = SVersion}}) ->
 	#resource{name = "Resource Inventory",
 			description = "Resource Inventory resource function",
 			category = "ODA",
@@ -7358,10 +7342,9 @@ im_inventory_res(#specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
-			connection_point = [#resource_ref{id = CpId, href = CpHref,
-					name = CpName, ref_type = CpRefType}]};
-im_inventory_res(_, {error, Reason}) ->
-	error_logger:warning_report(["Error reading resource",
+			connection_point = resource_conn_point(["TMF639"])};
+im_inventory_res({error, Reason}) ->
+	error_logger:warning_report(["Error reading specification resource",
 			{error, Reason}]),
 	erlang:halt(1).
 
@@ -7442,7 +7425,8 @@ im_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
 			characteristic = get_httpd_chars(
-					application:get_env(inets, services))};
+					application:get_env(inets, services)),
+			connection_point = resource_conn_point(["TMF634", "TMF639"])};
 im_httpd_res({error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
@@ -7556,6 +7540,23 @@ specification_conn_point(SpecificationNames) ->
 			end
 	end,
 	lists:foldr(Fspeccp, [], SpecificationNames).
+
+%% @hidden
+resource_conn_point(ResourceNames) ->
+	Fspeccp = fun(Name, Acc) ->
+			case im:get_resource_name(Name) of
+				{ok, #resource{id = Rid, href = Rhref,
+						name = Rname, class_type = Rtype}} ->
+					[#resource_ref{id = Rid, href = Rhref,
+							name = Rname, ref_type = Rtype,
+							class_type = "ConnectionPointRef"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource inventory",
+							{resource, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	lists:foldr(Fspeccp, [], ResourceNames).
 
 -spec get_rim_chars(Char) -> Result
 	when
