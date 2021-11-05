@@ -572,85 +572,90 @@ install12(Nodes, Acc) ->
 	end.
 %% @hidden
 install13(Nodes, Acc) ->
-	ResourceFuns = [im_catalog_api_res, im_catalog_res, im_inventory_api_res,
-			im_inventory_res, im_application_res, im_inets_res, im_erlang_res,
-			im_httpd_res],
+	ResourceFuns = [im_erlang_res, im_catalog_api_res, im_inventory_api_res,
+			im_net_kernel_res, im_httpd_res, im_catalog_res, im_inventory_res,
+			im_kernel_res, im_inets_res, im_application_res, im_erlang_node_res],
 	install13(ResourceFuns, [], Nodes, Acc).
+%% @hidden
+install13([im_kernel_res = F | T], ResAcc, Nodes, Acc) ->
+	case im:add_resource(im_specification:F()) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType}} ->
+			KernelRel = #resource_rel{id = ResId,
+					href = ResHref, name = ResName, ref_type = ResType},
+			{ok, NewResAcc1} = write_res_rel_in(["Erlang"],
+					KernelRel#resource_rel{rel_type = "composedOf"}, ResAcc),
+			{ok, NewResAcc2} = write_res_rel_in(["net_kernel"],
+					KernelRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
+			install13(T, NewResAcc2, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+%% @hidden
+install13([im_inets_res = F | T], ResAcc, Nodes, Acc) ->
+	case im:add_resource(im_specification:F()) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType}} ->
+			InetsRel = #resource_rel{id = ResId,
+					href = ResHref, name = ResName, ref_type = ResType},
+			{ok, NewResAcc1} = write_res_rel_in(["Erlang"],
+					InetsRel#resource_rel{rel_type = "composedOf"}, ResAcc),
+			{ok, NewResAcc2} = write_res_rel_in(["httpd"],
+					InetsRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
+			install13(T, NewResAcc2, Nodes, Acc);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
 %% @hidden
 install13([im_application_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
-				class_type = ResType} = Res} ->
-			ManagerRel = #resource_rel{id = ResId, href = ResHref, name = ResName,
-					ref_type = ResType, rel_type = "providedBy"},
-			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
-							class_type = Ctype} = ChildRes) when
-							Cname == "Resource Catalog";
-							Cname == "Resource Inventory" ->
-						ok = write_resource(ChildRes#resource{related
-								= [ManagerRel]}),
-						{true, #resource_rel{id = Cid, href = Chref, name = Cname,
-								ref_type = Ctype, rel_type = "composedOf"}};
-					(_) ->
-						false
-			end,
-			NewRes = Res#resource{related = lists:filtermap(Fresrel, ResAcc)},
-			ok = write_resource(NewRes),
-			install13(T, [NewRes | ResAcc], Nodes, Acc);
+				class_type = ResType}} ->
+			AppRel = #resource_rel{id = ResId, href = ResHref,
+					name = ResName, ref_type = ResType},
+			{ok, NewResAcc1} = write_res_rel_in(["Erlang"],
+					AppRel#resource_rel{rel_type = "composedOf"}, ResAcc),
+			{ok, NewResAcc2} = write_res_rel_in(["Resource Catalog",
+					"Resource Inventory"],
+					AppRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
+			install13(T, NewResAcc2, Nodes, Acc);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
 			erlang:halt(1)
 	end;
-install13([im_erlang_res = F | T], ResAcc, Nodes, Acc) ->
-	case im:add_resource(im_specification:F()) of
-		{ok, #resource{} = Res} ->
-			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
-							class_type = Ctype}) when Cname == "SigScale RIM";
-							Cname == "inets" ->
-						{true, #resource_rel{id = Cid, href = Chref, name = Cname,
-								ref_type = Ctype, rel_type = "composedOf"}};
-					(_) ->
-						false
-			end,
-			NewRes = Res#resource{related = lists:filtermap(Fresrel, ResAcc)},
-			ok = write_resource(NewRes),
-			install13(T, [NewRes | ResAcc], Nodes, Acc);
-		{error, Reason} ->
-			error_logger:error_report(["Failed to add ODA Component resources.",
-				{error, Reason}]),
-			erlang:halt(1)
-	end;
-install13([im_httpd_res = F | T], ResAcc, Nodes, Acc) ->
+%% @hidden
+install13([im_erlang_node_res = F | T], ResAcc, Nodes, Acc) ->
 	case im:add_resource(im_specification:F()) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
-				class_type = ResType} = HttpdRes} ->
-			HttpdRel = #resource_rel{id = ResId, href = ResHref, name = ResName,
-					ref_type = ResType, rel_type = "composedOf"},
-			Fcon = fun(#resource{id = Cid, href = Chref,
-							name = Cname, class_type = Ctype})
-							when Cname == "TMF634"; Cname == "TMF639" ->
-						{true, #resource_ref{id = Cid, href = Chref, name = Cname,
-								class_type = "ConnectionPointRef", ref_type = Ctype}};
+				class_type = ResType} = Res} ->
+			ErlNodeRel = #resource_rel{id = ResId, href = ResHref,
+					name = ResName, ref_type = ResType, rel_type = "composedOf"},
+			{ok, NewResAcc} = write_res_rel_in(["Erlang"], ErlNodeRel, ResAcc),
+			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
+							class_type = Ctype}) when Cname == "net_kernel";
+							Cname == "httpd"; Cname == "Resource Catalog";
+							Cname == "Resource Inventory" ->
+						{true, #resource_rel{id = Cid, href = Chref,
+								name = Cname, ref_type = Ctype,
+								rel_type = "composedOf"}};
 					(_) ->
 						false
 			end,
-			case lists:keytake("inets", #resource.name, ResAcc) of
-				{value, #resource{id = InetsId, href = InetsHref, name = InetsName,
-						class_type = InetsType, related = Related}
-						= InetsRes, Rest} ->
-					NewInetRes = InetsRes#resource{related = [HttpdRel | Related]},
-					ok = write_resource(NewInetRes),
-					InetsRel = #resource_rel{id = InetsId, href = InetsHref,
-							name = InetsName, ref_type = InetsType,
-							rel_type = "providedBy"},
-					NewHttpdRes = HttpdRes#resource{related = [InetsRel],
-							connection_point = lists:filtermap(Fcon, ResAcc)},
-					ok = write_resource(NewHttpdRes),
-					install13(T, [NewHttpdRes, NewInetRes | Rest], Nodes, Acc);
+			case lists:keyfind("Erlang", #resource.name, NewResAcc) of
+				#resource{id = Pid, href = Phref,
+						name = Pname, class_type = Ptype} ->
+					ParentRel = #resource_rel{id = Pid, href = Phref,
+							name = Pname, ref_type = Ptype, rel_type = "providedBy"},
+					ChildRels = lists:filtermap(Fresrel, ResAcc),
+					NewRes = Res#resource{related = [ParentRel | ChildRels]},
+					ok = write_resource(NewRes),
+					install13(T, [NewRes | NewResAcc], Nodes, Acc);
 				false ->
-					error_logger:error_report(["Failed to find ODA"
-							" inets resource.", {error, false}]),
 					erlang:halt(1)
 			end;
 		{error, Reason} ->
@@ -1197,3 +1202,16 @@ write_rel_in([SpecName | T], Rel, SpecAcc) ->
 	end;
 write_rel_in([], _Rel, SpecAcc) ->
 	{ok, SpecAcc}.
+
+%% @hidden
+write_res_rel_in([ResName | T], Rel, ResAcc) ->
+	case lists:keytake(ResName, #resource.name, ResAcc) of
+		{value, #resource{related = Rels} = Res, RestAcc} ->
+			NewRes = Res#resource{related = [Rel | Rels]},
+			ok = write_resource(NewRes),
+			write_res_rel_in(T, Rel, [NewRes | RestAcc]);
+		false ->
+			erlang:halt(1)
+	end;
+write_res_rel_in([], _Rel, ResAcc) ->
+	{ok, ResAcc}.
