@@ -7018,8 +7018,8 @@ im_erlang_node_spec() ->
 	PartyRef = #party_ref{id = "9f16q754823e", name = "Ericsson",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
 			ref_type = "Organization"},
-	#specification{name = atom_to_list(node()),
-			description = "Erlang resource function specification",
+	#specification{name = "Erlang Runtime",
+			description = "Erlang runtime environment resource function specification",
 			class_type = "ResourceFunctionSpecification",
 			version = "0.1",
 			status = in_test,
@@ -7435,7 +7435,7 @@ im_httpd_res({error, Reason}) ->
 -spec im_erlang_node_res() -> resource().
 %% @doc Erlang node resource function.
 im_erlang_node_res() ->
-	im_erlang_node_res(im:get_specification_name(atom_to_list(node()))).
+	im_erlang_node_res(im:get_specification_name("Erlang Runtime")).
 %% @hidden
 im_erlang_node_res({ok, #specification{id = SId, href = SHref, name = Name,
 		class_type = SType, version = SVersion}}) ->
