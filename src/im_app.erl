@@ -573,8 +573,9 @@ install12(Nodes, Acc) ->
 %% @hidden
 install13(Nodes, Acc) ->
 	ResourceFuns = [im_erlang_res, im_catalog_api_res, im_inventory_api_res,
-			im_net_kernel_res, im_httpd_res, im_catalog_res, im_inventory_res,
-			im_kernel_res, im_inets_res, im_application_res, im_erlang_node_res],
+			im_rpc_res, im_net_kernel_res, im_httpd_res, im_catalog_res,
+			im_inventory_res, im_kernel_res, im_inets_res,
+			im_application_res, im_erlang_node_res],
 	install13(ResourceFuns, [], Nodes, Acc).
 %% @hidden
 install13([im_kernel_res = F | T], ResAcc, Nodes, Acc) ->
