@@ -72,7 +72,7 @@
 -export([im_catalog_api_res/0, im_catalog_res/0, im_inventory_api_res/0,
 		im_inventory_res/0, im_application_res/0, im_inets_res/0,
 		im_erlang_res/0, im_httpd_res/0, im_erlang_node_res/0,
-		im_kernel_res/0, im_net_kernel_res/0]).
+		im_kernel_res/0, im_net_kernel_res/0, im_rpc_res/0]).
 
 -include("im.hrl").
 
@@ -7502,11 +7502,32 @@ im_net_kernel_res({ok, #specification{id = SId, href = SHref, name = Name,
 			class_type = "ResourceFunction",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
-					name = Name, ref_type = SType, version = SVersion}};
+					name = Name, ref_type = SType, version = SVersion},
+			connection_point = resource_conn_point(["RPC"])};
 im_net_kernel_res({error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
+
+-spec im_rpc_res() -> resource().
+%% @doc Remote procedure call API resource.
+im_rpc_res() ->
+	Name = "RPC",
+	case im:get_specification_name(Name) of
+		{ok, #specification{id = Id, href = Href,
+				name = Name, class_type = Type, version = Version}} ->
+			#resource{name = Name,
+					description = "Remote procedure call API",
+					category = "ODA",
+					class_type = "API",
+					version = "0.1",
+					specification = #specification_ref{id = Id, href = Href,
+							name = Name, ref_type = Type, version = Version}};
+		{error, Reason} ->
+			error_logger:warning_report(["Error reading resource specification",
+					{specification, Name}, {error, Reason}]),
+			erlang:halt(1)
+	end.
 
 %%----------------------------------------------------------------------
 %% internal functions
