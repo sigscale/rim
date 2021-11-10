@@ -61,7 +61,7 @@
 -export([im_catalog_api_spec/0, im_catalog_spec/0, im_inventory_api_spec/0,
 		im_inventory_spec/0, im_application_spec/0, im_erlang_spec/0,
 		im_inets_spec/0, im_httpd_spec/0, im_erlang_node_spec/0,
-		im_kernel_spec/0, im_net_kernel_spec/0]).
+		im_kernel_spec/0, im_net_kernel_spec/0, im_rpc_spec/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -7067,6 +7067,25 @@ im_net_kernel_spec() ->
 			category = "ODA",
 			target_schema = #target_schema_ref{class_type = "ResourceFunction",
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
+			party = [PartyRef],
+			connection_point = specification_conn_point(["RPC"])}.
+
+-spec im_rpc_spec() -> specification().
+%% @doc
+im_rpc_spec() ->
+	PartyRef = #party_ref{id = "9f16q754823e", name = "Ericsson",
+			role = "Supplier", href = ?PathPartySpec ++ "9f16q754823e",
+			ref_type = "Organization"},
+	#specification{name = "RPC",
+			description = "Remote procedure call service specification",
+			class_type = "ApiSpecification",
+			base_type = "SoftwareResourceSpecification",
+			schema = "/resourceCatalogManagement/v4/schema/ApiSpecification",
+			version = "0.1",
+			status = in_test,
+			category = "ODA",
+			target_schema = #target_schema_ref{class_type = "API",
+					schema = ?PathCatalogSchema ++ "/API"},
 			party = [PartyRef]}.
 
 -spec ngc_category() -> category().
