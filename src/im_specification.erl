@@ -7461,7 +7461,7 @@ im_kernel_res({ok, #specification{id = SId, href = SHref, name = SName,
 	#resource{name = "kernel",
 			description = "Erlang kernel resource function",
 			category = "ODA",
-			class_type = "ResourceFunction",
+			class_type = "InstalledSoftware",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
