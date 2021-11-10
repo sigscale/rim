@@ -343,7 +343,7 @@ install10(Nodes, Acc) ->
 		mec_rnis, mec_ls, mec_tr, mec_dnsr,
 		mec_meas, mec_meps, mec_mea, mec_mep, mec_mehf,
 		network_slice, network_slice_subnet,
-		im_erlang_spec, im_catalog_api_spec, im_inventory_api_spec,
+		im_erlang_spec, im_catalog_api_spec, im_inventory_api_spec, im_rpc_spec,
 		im_net_kernel_spec, im_httpd_spec, im_catalog_spec, im_inventory_spec,
 		im_kernel_spec, im_inets_spec, im_application_spec, im_erlang_node_spec],
 	install10(SpecFuns, [], Nodes, Acc).
