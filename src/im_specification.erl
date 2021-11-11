@@ -7475,15 +7475,15 @@ im_httpd_res({error, Reason}) ->
 im_erlang_node_res() ->
 	im_erlang_node_res(im:get_specification_name("Erlang Runtime")).
 %% @hidden
-im_erlang_node_res({ok, #specification{id = SId, href = SHref, name = Name,
+im_erlang_node_res({ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
-	#resource{name = Name,
+	#resource{name = atom_to_list(node()),
 			description = "Erlang node resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
-					name = Name, ref_type = SType, version = SVersion}};
+					name = SName, ref_type = SType, version = SVersion}};
 im_erlang_node_res({error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
