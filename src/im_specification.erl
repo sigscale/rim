@@ -61,7 +61,8 @@
 -export([im_catalog_api_spec/0, im_catalog_spec/0, im_inventory_api_spec/0,
 		im_inventory_spec/0, im_application_spec/0, im_erlang_spec/0,
 		im_inets_spec/0, im_httpd_spec/0, im_erlang_node_spec/0,
-		im_kernel_spec/0, im_net_kernel_spec/0, im_rpc_spec/0]).
+		im_kernel_spec/0, im_net_kernel_spec/0, im_rpc_spec/0,
+		sigscale_rim_spec/0]).
 
 -export([ngc_category/0, nr_category/0, epc_category/0, lte_category/0,
 		core_category/0, umts_category/0, gsm_category/0, ims_category/0,
@@ -7087,6 +7088,24 @@ im_rpc_spec() ->
 			target_schema = #target_schema_ref{class_type = "API",
 					schema = ?PathCatalogSchema ++ "/API"},
 			party = [PartyRef]}.
+
+-spec sigscale_rim_spec() -> specification().
+%% @doc
+sigscale_rim_spec() ->
+	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
+			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
+			ref_type = "Organization"},
+	#specification{name = "SigScale RIM",
+			description = "SigScale RIM resource function specification",
+			class_type = "ResourceFunctionSpecification",
+			version = "0.1",
+			status = in_test,
+			category = "ODA",
+			target_schema = #target_schema_ref{class_type = "ResourceFunction",
+					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
+			party = [PartyRef],
+			connection_point = specification_conn_point(["RPC"]),
+			related = specification_rel(["Erlang Runtime"])}.
 
 -spec ngc_category() -> category().
 %% @doc
