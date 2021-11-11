@@ -345,7 +345,8 @@ install10(Nodes, Acc) ->
 		network_slice, network_slice_subnet,
 		im_erlang_spec, im_catalog_api_spec, im_inventory_api_spec, im_rpc_spec,
 		im_net_kernel_spec, im_httpd_spec, im_catalog_spec, im_inventory_spec,
-		im_kernel_spec, im_inets_spec, im_application_spec, im_erlang_node_spec],
+		im_kernel_spec, im_inets_spec, im_application_spec, im_erlang_node_spec,
+		sigscale_rim_spec],
 	install10(SpecFuns, [], Nodes, Acc).
 %% @hidden
 install10([generic_subnetwork | T], SpecAcc, Nodes, Acc) ->
@@ -1121,6 +1122,8 @@ category_name("core_" ++ _) ->
 category_name("ims_" ++ _) ->
 	"IMS";
 category_name("im_" ++ _) ->
+	"ODA";
+category_name("sigscale_" ++ _) ->
 	"ODA";
 category_name(_) ->
 	[].
