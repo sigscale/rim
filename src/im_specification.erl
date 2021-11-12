@@ -73,7 +73,7 @@
 -export([im_catalog_api_res/0, im_catalog_res/0, im_inventory_api_res/0,
 		im_inventory_res/0, im_application_res/0, im_inets_res/0,
 		im_erlang_res/0, im_httpd_res/0, im_erlang_node_res/0,
-		im_kernel_res/0, im_net_kernel_res/0, im_rpc_res/0]).
+		im_kernel_res/0, im_net_kernel_res/0, im_rpc_res/0, sigscale_rim_res/0]).
 
 -include("im.hrl").
 
@@ -7548,6 +7548,26 @@ im_rpc_res() ->
 			erlang:halt(1)
 	end.
 
+-spec sigscale_rim_res() -> resource().
+%% @doc SigScale RIM resource function.
+sigscale_rim_res() ->
+	sigscale_rim_res(im:get_specification_name("SigScale RIM")).
+%% @hidden
+sigscale_rim_res({ok, #specification{id = SId, href = SHref, name = Name,
+		class_type = SType, version = SVersion}}) ->
+	#resource{name = Name,
+			description = "Erlang kernel resource function",
+			category = "ODA",
+			class_type = "ResourceFunction",
+			version = "0.1",
+			specification = #specification_ref{id = SId, href = SHref,
+					name = Name, ref_type = SType, version = SVersion},
+			related = resource_rel([atom_to_list(node())])};
+sigscale_rim_res({error, Reason}) ->
+	error_logger:warning_report(["Error reading resource specification",
+			{error, Reason}]),
+	erlang:halt(1).
+
 %%----------------------------------------------------------------------
 %% internal functions
 %%----------------------------------------------------------------------
@@ -7674,3 +7694,18 @@ get_httpd_chars({ok, [{httpd, Config}]}) ->
 	end,
 	lists:filtermap(F1, Keys).
 
+%% @hidden
+resource_rel(ResourceNames) ->
+	Fresrel = fun(Name, Acc) ->
+			case im:get_resource_name(Name) of
+				{ok, #resource{id = Rid, href = Rhref,
+						name = Rname, class_type = Rtype}} ->
+					[#resource_rel{id = Rid, href = Rhref, name = Rname,
+							ref_type = Rtype, rel_type = "composedOf"} | Acc];
+				{error, Reason} ->
+					error_logger:warning_report(["Error reading resource",
+							{resource, Name}, {error, Reason}]),
+					Acc
+			end
+	end,
+	lists:reverse(lists:foldl(Fresrel, [], ResourceNames)).
