@@ -7104,7 +7104,6 @@ sigscale_rim_spec() ->
 			target_schema = #target_schema_ref{class_type = "ResourceFunction",
 					schema = ?PathCatalogSchema ++ "/ResourceFunction"},
 			party = [PartyRef],
-			connection_point = specification_conn_point(["RPC"]),
 			related = specification_rel(["Erlang Runtime"])}.
 
 -spec ngc_category() -> category().
