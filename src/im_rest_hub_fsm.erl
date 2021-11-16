@@ -139,7 +139,7 @@ init([Id, Query, Callback, Uri, Authorization] = _Args) ->
 register(timeout, State) ->
 	case gen_event:add_sup_handler(im_event, im_event, [self()]) of
 		ok ->
-			{next_state, registered, State};
+			{next_state, register, State};
 		{'EXIT', Reason} ->
 			{stop, Reason, State}
 	end.
