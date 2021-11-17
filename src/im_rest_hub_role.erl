@@ -54,12 +54,12 @@ post_hub(ReqBody) ->
 	try
 		case zj:decode(ReqBody) of
 			{ok, #{"callback" := Callback, "query" := Query} = Hub}
-					when is_list(Query) ->
+					when is_list(Query), is_list(Query) ->
 				post_hub(supervisor:start_child(im_rest_hub_sup,
 						[Query, Callback, ?PathRoleHub]), Hub);
 			{ok, #{"callback" := Callback} = Hub} ->
 				post_hub(supervisor:start_child(im_rest_hub_sup,
-						[[], Callback, ?PathRoleHub]), Hub#{"query" => undefined})
+						[Callback, ?PathRoleHub]), Hub)
 		end
 	catch
 		_:500 ->
@@ -67,6 +67,7 @@ post_hub(ReqBody) ->
 		_:_ ->
 			{error, 400}
 	end.
+%% @hidden
 post_hub({ok, _PageServer, Id}, Hub) ->
 	Body = zj:encode(Hub#{"id" => Id}),
 	Headers = [{content_type, "application/json"},
@@ -96,8 +97,6 @@ get_hubs() ->
 %% @hidden
 get_hubs([{_, Pid, _, _} | T], Acc) ->
 	case gen_fsm:sync_send_all_state_event(Pid, get) of
-		#{"href" := ?PathRoleHub ++ _, "query" := []} = Hub ->
-			get_hubs(T, [Hub#{"query" => undefined} | Acc]);
 		#{"href" := ?PathRoleHub ++ _} = Hub ->
 			get_hubs(T, [Hub | Acc]);
 		_Hub ->
@@ -119,8 +118,8 @@ get_hub(Id) ->
 	case global:whereis_name(Id) of
 		Fsm when is_pid(Fsm) ->
 			case gen_fsm:sync_send_all_state_event(Fsm, get) of
-				#{"id" := Id, "query" := []} = Hub ->
-					Body = zj:encode(Hub#{"query" => undefined}),
+				#{"id" := Id} = Hub ->
+					Body = zj:encode(Hub),
 					Headers = [{content_type, "application/json"}],
 					{ok, Headers, Body};
 				_ ->

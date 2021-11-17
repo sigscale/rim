@@ -22,7 +22,7 @@
 -behaviour(gen_fsm).
 
 %% export the public API
--export([start_link/3, start_link/4]).
+-export([start_link/2, start_link/3]).
 
 %% export the private API
 -export([handle_async/2]).
@@ -36,14 +36,12 @@
 -record(statedata,
 		{id :: string(),
 		profile :: atom(),
-		module :: atom(),
-		function :: atom(),
-		query :: string(),
+		query :: string() | undefined,
 		callback :: string(),
 		href :: string(),
 		authorization :: string() | undefined,
 		args :: list() | undefined,
-		sync = true :: boolean()}).
+		sync = true :: boolean() | undefined}).
 -type statedata() :: #statedata{}.
 
 %% support deprecated_time_unit()
@@ -54,9 +52,27 @@
 %%  The im_rest_hub_fsm API
 %%----------------------------------------------------------------------
 
+-spec start_link(Callback, Uri) -> Result
+	when
+		Callback :: string(),
+		Uri :: string(),
+		Result :: {ok, PageServer} | {error, Reason},
+		PageServer :: pid(),
+		Reason :: term().
+%% @doc Start a hub fsm
+start_link(Callback, Uri) ->
+	{Id, _} = unique(),
+	case gen_fsm:start_link({global, Id}, ?MODULE,
+			[Id, Callback, Uri], []) of
+		{ok, Child} ->
+			{ok, Child, Id};
+		{error, Reason} ->
+			{error, Reason}
+	end.
+
 -spec start_link(Query, Callback, Uri) -> Result
 	when
-		Query :: null | string(),
+		Query :: string(),
 		Callback :: string(),
 		Uri :: string(),
 		Result :: {ok, PageServer} | {error, Reason},
@@ -66,27 +82,7 @@
 start_link(Query, Callback, Uri) ->
 	{Id, _} = unique(),
 	case gen_fsm:start_link({global, Id}, ?MODULE,
-			[Id, Query, Callback, Uri], []) of
-		{ok, Child} ->
-			{ok, Child, Id};
-		{error, Reason} ->
-			{error, Reason}
-	end.
-
--spec start_link(Query, Callback, Uri, Authorization) -> Result
-	when
-		Query :: null | string(),
-		Callback :: string(),
-		Uri :: string(),
-		Authorization :: string(),
-		Result :: {ok, PageServer} | {error, Reason},
-		PageServer :: pid(),
-		Reason :: term().
-%% @doc Start a hub fsm
-start_link(Query, Callback, Uri, Authorization) ->
-	{Id, _} = unique(),
-	case gen_fsm:start_link({global, Id}, ?MODULE,
-			[Id, Query, Callback, Uri, Authorization], []) of
+			[Id, Callback, Uri, Query], []) of
 		{ok, Child} ->
 			{ok, Child, Id};
 		{error, Reason} ->
@@ -110,17 +106,17 @@ start_link(Query, Callback, Uri, Authorization) ->
 %% @see //stdlib/gen_fsm:init/1
 %% @private
 %%
-init([Id, Query, Callback, Uri] = _Args) ->
+init([Id, Callback, Uri] = _Args) ->
 	process_flag(trap_exit, true),
 	{ok, Profile} = application:get_env(hub_profile),
 	State = #statedata{id = Id, href = Uri ++ Id,
-			profile = Profile, query = Query, callback = Callback},
+			profile = Profile, callback = Callback},
 	{ok, register, State, 0};
-init([Id, Query, Callback, Uri, Authorization] = _Args) ->
+init([Id, Callback, Uri, Query] = _Args) ->
 	process_flag(trap_exit, true),
 	{ok, Profile} = application:get_env(hub_profile),
-	State = #statedata{id = Id, href = Uri ++ Id, profile = Profile,
-			query = Query, callback = Callback, authorization = Authorization},
+	State = #statedata{id = Id, href = Uri ++ Id,
+			profile = Profile, callback = Callback, query = Query},
 	{ok, register, State, 0}.
 
 -spec register(Event1, State) -> Result
@@ -191,9 +187,16 @@ handle_event(Reason, _StateName, State) ->
 %% @private
 %%
 handle_sync_event(get, _From, StateName, #statedata{id = Id,
-		href = Href, query = Query, callback = Callback} = StateData) ->
+		href = Href, callback = Callback, query = undefined} = StateData) ->
+	Hub = #{"id" => Id, "href" => Href, "callback" => Callback},
+	handle_sync_event1(Hub, StateName, StateData);
+handle_sync_event(get, _From, StateName, #statedata{id = Id,
+		href = Href, callback = Callback, query = Query} = StateData) ->
 	Hub = #{"id" => Id, "href" => Href,
-			"query" => Query, "callback" => Callback},
+			"callback" => Callback, "query" => Query},
+	handle_sync_event1(Hub, StateName, StateData).
+%% @hidden
+handle_sync_event1(Hub, StateName, StateData) ->
 	{reply, Hub, StateName, StateData}.
 
 -spec handle_info(Info, StateName, StateData) -> Result
@@ -230,6 +233,11 @@ terminate(Reason, _StateName, _StateData)
 	ok;
 terminate({shutdown, Reason}, StateName, StateData) ->
 	terminate(Reason, StateName, StateData);
+terminate(Reason, StateName,
+		#statedata{id = Id, query = undefined, callback = Callback}) ->
+	error_logger:warning_report(["Notification subscription cancelled",
+			{reason, Reason}, {pid, self()},
+			{state, StateName}, {id, Id}, {callback, Callback}]);
 terminate(Reason, StateName,
 		#statedata{id = Id, query = Query, callback = Callback}) ->
 	error_logger:warning_report(["Notification subscription cancelled",
