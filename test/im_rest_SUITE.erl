@@ -1863,8 +1863,7 @@ post_hub_role(Config) ->
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers),
 	{_, Location} = lists:keyfind("location", 1, Headers),
 	Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
-	{ok, #{"id" := Id, "callback" := Callback,
-			"query" := undefined}} = zj:decode(ResponseBody).
+	{ok, #{"id" := Id, "callback" := Callback}} = zj:decode(ResponseBody).
 
 delete_hub_role() ->
 	[{userdata, [{doc, "Unregister hub listener for role"}]}].
@@ -1928,11 +1927,13 @@ get_role_hub(Config) ->
 	RequestBody = zj:encode(#{"callback" => Callback}),
 	ContentType = "application/json",
 	Accept = {"accept", "application/json"},
-	Request1 = {CollectionUrl, [Accept, auth_header()], ContentType, RequestBody},
+	Request1 = {CollectionUrl,
+			[Accept, auth_header()], ContentType, RequestBody},
 	{ok, Result1} = httpc:request(post, Request1, [], []),
 	{{_, 201, _}, Headers1, _} = Result1,
 	{_, Location} = lists:keyfind("location", 1, Headers1),
-	Id = string:substr(Location, string:rstr(Location, PathHub) + length(PathHub)),
+	Id = string:substr(Location,
+			string:rstr(Location, PathHub) + length(PathHub)),
 	Request2 = {CollectionUrl ++ Id, [Accept, auth_header()]},
 	{ok, Result2} = httpc:request(get, Request2, [], []),
 	{{"HTTP/1.1", 200, _OK}, Headers2, ResponseBody} = Result2,
@@ -1940,8 +1941,8 @@ get_role_hub(Config) ->
 	ContentLength = integer_to_list(length(ResponseBody)),
 	{_, ContentLength} = lists:keyfind("content-length", 1, Headers2),
 	Href = PathHub ++ Id,
-	{ok, #{"id" := Id, "href" := Href, "callback" := Callback,
-			"query" := undefined}} = zj:decode(ResponseBody).
+	{ok, #{"id" := Id, "href" := Href,
+			"callback" := Callback}} = zj:decode(ResponseBody).
 
 %%---------------------------------------------------------------------
 %%  Internal functions
