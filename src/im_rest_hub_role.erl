@@ -15,6 +15,7 @@
 %%% See the License for the specific language governing permissions and
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @doc Handle subscriptions for `PartyRole' hub.
 %%%
 -module(im_rest_hub_role).
 -copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
