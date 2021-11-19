@@ -131,8 +131,7 @@ do_post(Resource, ModData, Body, ["resourceInventoryManagement", "v4", "resource
 %% @hidden
 do_response(#mod{data = Data} = ModData, {ok, Headers, ResponseBody}) ->
 	Size = integer_to_list(iolist_size(ResponseBody)),
-	Accept = proplists:get_value(accept, Data),
-	NewHeaders = Headers ++ [{content_length, Size}, {content_type, Accept}],
+	NewHeaders = Headers ++ [{content_length, Size}],
 	send(ModData, 201, NewHeaders, ResponseBody),
 	{proceed,[{response, {already_sent, 201, Size}} | Data]};
 do_response(#mod{parsed_header = RequestHeaders,
