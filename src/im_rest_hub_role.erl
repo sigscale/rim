@@ -68,8 +68,8 @@ post_hub(ReqBody) ->
 			{error, 400}
 	end.
 %% @hidden
-post_hub({ok, _PageServer, Id}, Hub) ->
-	Body = zj:encode(Hub#{"id" => Id}),
+post_hub({ok, _HubFsm, Id}, Hub) ->
+	Body = zj:encode(Hub#{"id" => Id, "href" => ?PathRoleHub ++ Id}),
 	Headers = [{content_type, "application/json"},
 			{location, ?PathRoleHub ++ Id}],
 	{ok, Headers, Body};
