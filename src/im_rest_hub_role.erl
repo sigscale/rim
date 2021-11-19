@@ -62,9 +62,9 @@ post_hub(ReqBody) ->
 						[Callback, ?PathRoleHub]), Hub)
 		end
 	catch
-		_:500 ->
+		_Error:500:_Stack ->
 			{error, 500};
-		_:_ ->
+		_Error:_Reason:_Stack ->
 			{error, 400}
 	end.
 %% @hidden
