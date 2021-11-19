@@ -20,6 +20,7 @@
 -copyright('Copyright (c) 2021 SigScale Global Inc.').
 
 -behaviour(gen_fsm).
+-include("im.hrl").
 
 %% export the public API
 -export([start_link/2, start_link/3]).
@@ -27,7 +28,7 @@
 %% export the private API
 -export([handle_async/2]).
 %% export the im_rest_hub_fsm states
--export([register/2]).
+-export([register/2, registered/2]).
 
 %% export the callbacks needed for gen_fsm behaviour
 -export([init/1, handle_event/3, handle_sync_event/4,
@@ -135,9 +136,67 @@ init([Id, Callback, Uri, Query] = _Args) ->
 register(timeout, State) ->
 	case gen_event:add_sup_handler(im_event, im_event, [self()]) of
 		ok ->
-			{next_state, register, State};
+			{next_state, registered, State};
 		{'EXIT', Reason} ->
 			{stop, Reason, State}
+	end.
+
+-spec registered(Event, State) -> Result
+	when
+		Event :: {Type, Resource},
+		Type :: atom(),
+		Resource :: #resource{},
+		State :: statedata(),
+		Result :: {next_state, NextStateName, NewStateData}
+			| {next_state, NextStateName, NewStateData, timeout}
+			| {next_state, NextStateName, NewStateData, hibernate}
+			| {stop, Reason, NewStateData},
+		NextStateName :: atom(),
+		NewStateData :: statedata(),
+		Reason :: normal | term().
+%% @doc Handle event received in `registered' state.
+%% @private
+registered({EventType, Resource} = _Event, #statedata{sync = Sync,
+		profile = Profile, callback = Callback,
+		authorization = Authorization} = StateData) ->
+	Options = case Sync of
+		true ->
+			[{sync, true}];
+		false ->
+			MFA = {?MODULE, handle_async, [self()]},
+			[{sync, false}, {receiver, MFA}]
+	end,
+	Headers = case Authorization of
+		undefined ->
+			[{"accept", "application/json"}];
+		Authorization ->
+			[{"accept", "application/json"},
+					{"authorization", Authorization}]
+	end,
+	{EventId, TS} = unique(),
+	EventTime = fm_rest:iso8601(TS),
+	ResMap = #{"eventId" => EventId, "eventTime" => EventTime,
+			"eventType" => EventType,
+			"event" => #{"alarm" => fm_rest_res_alarm:alarm(Resource)}},
+	Body = zj:encode(ResMap),
+	Request = {Callback, Headers, "application/json", Body},
+	case httpc:request(post, Request, [], Options, Profile) of
+		{ok, RequestId} when is_reference(RequestId), Sync == false  ->
+			{next_state, registered, StateData};
+		{ok, {{_HttpVersion, StatusCode, _ReasonPhrase}, _Headers, _Body}}
+				when StatusCode >= 200, StatusCode  < 300 ->
+			{next_state, registered, StateData#statedata{sync = false}};
+		{ok, {{_HttpVersion, StatusCode, Reason}, _Headers, _Body}} ->
+			error_logger:warning_report(["Notification delivery failed",
+					{module, ?MODULE}, {fsm, self()},
+					{status, StatusCode}, {reason, Reason}]),
+			{stop, {shutdown, StatusCode}, StateData};
+		{error, {failed_connect, _} = Reason} ->
+			error_logger:warning_report(["Notification delivery failed",
+					{module, ?MODULE}, {fsm, self()}, {error, Reason}]),
+			{stop, {shutdown, Reason}, StateData};
+		{error, Reason} ->
+			{stop, Reason, StateData}
 	end.
 
 -spec handle_event(Event, StateName, State) -> Result
