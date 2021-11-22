@@ -1,4 +1,4 @@
-%%% im_rest_hub_role.erl
+%%% im_rest_res_hub_role.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @copyright 2020 - 2021 SigScale Global Inc.
@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc Handle subscriptions for `PartyRole' hub.
 %%%
--module(im_rest_hub_role).
+-module(im_rest_res_hub_role).
 -copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0, post_hub/1,

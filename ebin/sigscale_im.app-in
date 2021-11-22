@@ -22,7 +22,7 @@
 			im_rest_hub_sup,
 			im_rest_hub_fsm,
 			im_event,
-			im_rest_hub_role,
+			im_rest_res_hub_role,
 			im_statistics_sup,
 			im_statistics_server,
 			im_rest_res_health,

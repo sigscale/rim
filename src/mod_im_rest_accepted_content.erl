@@ -104,7 +104,7 @@ do(#mod{request_uri = Uri, data = Data} = ModData) ->
 						["partyRoleManagement", "v4", "partyRole" | _] ->
 							check_content_type_header(im_rest_res_role, ModData);
 						["partyRoleManagement", "v4", "hub" | _] ->
-							check_content_type_header(im_rest_hub_role, ModData);
+							check_content_type_header(im_rest_res_hub_role, ModData);
 						["resourceCatalogManagement", "v4", "resourceCatalog" | _] ->
                      check_content_type_header(im_rest_res_catalog, ModData);
 						["resourceCatalogManagement", "v4", "resourceCategory" | _] ->

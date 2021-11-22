@@ -53,7 +53,7 @@ beam_DATA = im_app.beam \
 			im_rest_hub_sup.beam \
 			im_rest_hub_fsm.beam \
 			im_event.beam \
-			im_rest_hub_role.beam \
+			im_rest_res_hub_role.beam \
 			im_statistics_sup.beam \
 			im_statistics_server.beam \
 			im_rest_res_health.beam \
