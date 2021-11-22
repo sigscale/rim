@@ -234,7 +234,8 @@ post_specification(RequestBody) ->
 		case im:add_specification(specification(SpecificationMap)) of
 			{ok, #specification{href = Href, last_modified = LM} = NewSpecification} ->
 				Body = zj:encode(specification(NewSpecification)),
-				Headers = [{location, Href}, {etag, im_rest:etag(LM)}],
+				Headers = [{location, Href}, {etag, im_rest:etag(LM)},
+						{content_type, "application/json"}],
 				ets:update_counter(metrics, resourceSpecificationCreate, 1,
 						{resourceSpecificationCreate, 0}),
 				{ok, Headers, Body};
