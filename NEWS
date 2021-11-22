@@ -1,12 +1,18 @@
+November 22, 2021
+---------------
+	- Health API
+	- Party Role Management API
+	- REST error responses now include problem reports
+
 November 9, 2020
 ---------------
-	- display resource connectivity topology in modal
-	- connectivity in example specification
+	- Display resource connectivity topology in modal
+	- Connectivity in example specification
 
 November 5, 2020
 ----------------
-	- update APIs for v4
-	- support all attributes
-	- resource graphs
-	- resource specification graphs
+	- Update APIs for v4
+	- Support all attributes
+	- Resource graphs
+	- Resource specification graphs
 

@@ -1,3 +1,223 @@
+2021-11-22  Kusal Fernando <kusal@sigscale.org>
+
+	* party role management doen't need basic auth
+	* introduce new error format
+	* add resource for SigScale RIM
+	* specification for SigScale RIM
+	* add resource for rpc api
+	* add specification for rpc api
+	* rearrage the relationships in installed resources
+	* add connection points in httpd resource
+	* REST API for get metrics
+	* new module for prometheus exporter
+	* update metrics in tmf639 resource inventory handler
+	* update metrics in tmf634 resource handlers
+	* ets table to collect statistics
+	* more than one directory property may be provided in httpd configuration
+	* erlang:halt is called instead of crashing
+	* add connection points for httpd specification
+	* resource for net kernel
+	* resource for erlang kernel
+	* resource for erlang node
+	* specification for net_kernel
+	* specification for kernel
+	* specification for erlang node
+	* rename contains relationship types as composedOf for example resources
+	* rename contains relationship types as composedOf for example specifications
+	* rename contains relationship types as composedOf for added specifications
+	* install polymer
+	* modernize install of nodejs, npm, yarn
+	* update yarn install instructions
+	* rename and describe self referential entities
+	* add refined resource relationship types
+	* add characteristics for httpd resource
+	* add characteristics for SigScale IM resource
+	* load sigscale_im app before get environment variables
+	* add resource for httpd
+	* add resource for erlang
+	* add resource for inets
+	* add characteristics for httpd specification
+	* add characteristics for sigscale rim specification
+	* add connection points for httpd
+	* add candidate for correct specification
+	* add specification for httpd
+	* add specification for oda inets
+	* specification for inets
+	* specification for Erlang
+	* adding attributes for ApiSpecifications and SoftwareSpecification
+	* add attributes field to all of the required records
+	* POST partyRole without basic auth
+	* include edoc directory in installation package
+	* REST API to get health of a specific application
+	* REST API to get only health of the applications
+	* REST API to get overall health of the application
+	* new REST module for health check
+	* erlang api for health check
+	* register health supervisor under main supervisor
+	* environmental variable for statistics interval
+	* supervisor and server modules for health check
+	* update supervision.png for health check
+	* port join/1 from ocs
+	* REST accepted content error response bodies for rfc7807, tmf630 and html
+	* REST delete error response bodies for rfc7807, tmf630 and html
+	* REST PATCH error response bodies for rfc7807, tmf630 and html
+	* GET REST error response bodies for rfc7807, tmf630 and html
+	* use existing get user by name erlang api for role
+	* partyRole resource has id, href, name and type only
+	* use existing delete user erlang api for role
+	* use existing add user erlang api for role
+	* POST REST error response bodies for rfc7807, tmf630 and html
+	* function to format a problem report in an accepted content type
+	* finalize the party role subscription
+	* REST api to get party role hub listener by id
+	* test: get registered role hub listener by id
+	* REST api to get all party role hub listeners
+	* test: get all registered hub listeners of role
+	* REST api to delete party role hub by id
+	* test: delete party role hub by id
+	* REST api to register a hub listener for role
+	* environment variable for hub profile
+	* test: register hub listener
+	* register gen_event module for hub
+	* register fsm module for hub
+	* supervisor module for hub
+	* update supervision hierarchy for hub
+	* error handling in get_params function
+	* REST API handling for get all the roles
+	* test: get all the roles using REST API
+	* REST handling for deleting a role by name
+	* test: delete a role by name in REST API
+	* REST API for getting role by name
+	* test: REST handling of getting role by name
+	* handle party role management POST request
+	* test: party role management POST request
+	* replace deprecated http_uri with uri_string
+	* decode percent encoding after httpd_util:split_path()
+	* percentage encode advanced query format
+	* support new httpd_util:split_path() result
+	* mod_oauth module for JWT authentication
+	* add inets application environment variables
+	* create ssl certificates
+	* test: JSON web tokens authentication
+	* add field to resource record in order to handle polymorphic attributes
+	* add connectionpint into dom-repeat
+	* connections come under adjacency graph
+	* build connectivity in network slice subnet when importing xml
+	* build connection points in network slice subnet when importing xml
+	* add missing connection points in network slice subnet example resource
+	* build resource rel in network slice subnet when importing xml
+	* add required managed functions to build connectivity
+	* add connectivity for resource example of network slice subnet
+	* add resource rel and connection points in Network Slice Subnet example
+	* add contained relationship in oda resources
+	* add contained relationship in oda specifications
+	* add contained relationship in example resources and specs
+	* add refrence type in relationship
+	* remove redundant tmf api specs
+	* remove redundant example resources
+	* remove class from general tab
+	* test: characteristics are empty in oda specifications
+	* test: oda component resources have limited record fields
+	* add resource for TMF639
+	* add resource for TMF634
+	* add oda component into resource inventory
+	* resource for Component Manager
+	* resource for Component Inventory
+	* resource for Component Inventory API
+	* resource for Component Catalog
+	* resource for Component Catalog API
+	* add candidates for api specifications
+	* add specification for tmf639 api
+	* add specification for tmf634 api
+	* create example specification for tmf639 api
+	* create example specification for tmf634 api
+	* add candidates for oda specifications
+	* add specification for oda manager
+	* add specification for oda inventory
+	* add specification for oda catalog
+	* add specification for oda inventory api
+	* add specification for oda catalog api
+	* add oda catalog
+	* add categories for ODA and API
+	* add version to the refs
+	* add candidates for specifications
+	* get category name by fun name
+	* add categories and catalogs into the database
+	* add missing connection point class type
+	* make status input as dropdown
+	* query based on id and name of category, candidate and catalog
+	* connection_point should be resource_ref type
+	* remove unnecessary polymorphism from test cases
+	* unique bindings for topology graph modals
+	* add EP_RP_EPS under ENBFunction
+	* disable polymer app-layout scrollbar
+	* reset grid size to zero on filter change
+	* include scroll effects for waterfall
+	* pee rules use logical resource
+	* adjust column sizes and flexible growth ratios
+	* after parsing query and range error is 500
+	* vertex resource/specification name in topology graph
+	* no lint for removed nr schemas
+	* add resourceSpecRelationship in mec domain
+	* add resourceSpecRelationship in subnetwork
+	* add resourceSpecRelationship in im_specification.erl under im domain
+	* add resourceSpecRelationship in im_specification.erl under 5gc domain
+	* add resourceSpecRelationship, connectionPointSpecification in im_specification.erl under epc domain
+	* add resourceSpecRelationship, connectionPointSpecification in im_specification.erl under 5gc domain
+	* add resourceSpecRelationship, connectionPointSpecification in im_specification.erl under nr domain
+	* add resourceSpecRelationship in lte domain of im_specification
+	* add resourceSpecRelationship in gsm domain of im_specification
+	* add resource relationship, connectivity specification of rnc in im_specification module
+	* add resourceSpecRelationship & connectionPointSpecification in 5gc domain
+	* add resourceSpecRelationship in mec domain
+	* add resourceSpecRelationship in im domain
+	* add resourceSpecRelationship & connectionPointSpecification in nr
+	* add resourceSpecRelationship & connectionPointSpecification in epc
+	* add resourceSpecRelationship in core domain
+	* add resourceSpecRelationship in enb example spec
+	* add resourceSpecRelationship in required resource functions of gsm
+	* remove unnecessary polymorphism in generic
+	* remove unnecessary generic specs
+	* remove unnecessary polymorphism in vendor specific domain
+	* remove unnecessary polymorphism in slice
+	* remove unnecessary polymorphism in 5gc
+	* remove unnecessary polymorphism in mec
+	* remove unnecessary polymorphism in im
+	* remove unnecessary polymorphism in epcn3ai
+	* remove unnecessary polymorphism nr
+	* remove unnecessary polymorphism in pee
+	* remove unnecessary polymorphism in ims
+	* remove unnecessary polymorphism in epc
+	* remove unnecessary polymorphism in core
+	* remove unnecessary polymorphism in lte
+	* remove unnecessary polymorphism in gsm
+	* remove unnecessary polymorphism in umts
+	* relative httpd directories
+	* generic examples
+	* show specification in exapnded view
+	* Implement Polymer <paper-tabs> with <iron-pages>
+	* add specification topology module
+	* open complete graph seperatly
+	* quantities in slice subnet example relationships
+	* fit graph improvements
+	* handle resize on vaadin-grid row details for topology
+	* borders and padding for row details tables
+	* notify resize on tab selection in row details
+	* style for row details tables shouldn't effect grid header
+	* redorder ready clause
+	* display row detail charteristics, features, relationships and connections in tables
+	* reorder styles sensibly
+	* handle resize events to fit topology graph
+	* simply graph name
+	* avoid data binding conflict
+	* correct class for vertex style
+	* svg width and height in css
+	* implement connectivity specification topology graph
+	* div around svg for iron-pages
+	* depend on paper-tabs
+	* use tabs to switch sections of specification details
+	* correct clean of generated js
+
 2020-10-08  Vance Shipley <vances@sigscale.org>
 
 	* connection points and connectivity in example network slice subnet specification
