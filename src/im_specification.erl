@@ -70,10 +70,10 @@
 -export([ng_catalog/0, lte_catalog/0, umts_catalog/0, gsm_catalog/0,
 		oda_catalog/0]).
 
--export([im_catalog_api_res/0, im_catalog_res/0, im_inventory_api_res/0,
-		im_inventory_res/0, im_application_res/0, im_inets_res/0,
-		im_erlang_res/0, im_httpd_res/0, im_erlang_node_res/0,
-		im_kernel_res/0, im_net_kernel_res/0, im_rpc_res/0, sigscale_rim_res/0]).
+-export([im_catalog_api_res/1, im_catalog_res/1, im_inventory_api_res/1,
+		im_inventory_res/1, im_application_res/1, im_inets_res/1,
+		im_erlang_res/1, im_httpd_res/1, im_erlang_node_res/1,
+		im_kernel_res/1, im_net_kernel_res/1, im_rpc_res/1, sigscale_rim_res/0]).
 
 -include("im.hrl").
 
@@ -7305,9 +7305,12 @@ oda_catalog() ->
 			version = "1.0",
 			category = lists:foldr(Fcategoryref, [], CategoryNames)}.
 
--spec im_catalog_api_res() -> resource().
+-spec im_catalog_api_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Resource Catalog API.
-im_catalog_api_res() ->
+im_catalog_api_res(_Node) ->
 	Name = "TMF634",
 	case im:get_specification_name(Name) of
 		{ok, #specification{id = Id, href = Href,
@@ -7325,12 +7328,15 @@ im_catalog_api_res() ->
 			erlang:halt(1)
 	end.
 
--spec im_catalog_res() -> resource().
+-spec im_catalog_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Inventory Catalog resource function.
-im_catalog_res() ->
-	im_catalog_res(im:get_specification_name("Resource Catalog")).
+im_catalog_res(_Node) ->
+	im_catalog_res(_Node, im:get_specification_name("Resource Catalog")).
 %% @hidden
-im_catalog_res({ok, #specification{id = SId, href = SHref, name = SName,
+im_catalog_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "Resource Catalog",
 			description = "Resource Catalog resource function",
@@ -7340,14 +7346,17 @@ im_catalog_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
 			connection_point = resource_conn_point(["TMF634"])};
-im_catalog_res({error, Reason}) ->
+im_catalog_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_inventory_api_res() -> resource().
+-spec im_inventory_api_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Component Inventory API.
-im_inventory_api_res() ->
+im_inventory_api_res(_Node) ->
 	Name = "TMF639",
 	case im:get_specification_name(Name) of
 		{ok, #specification{id = Id, href = Href,
@@ -7365,13 +7374,16 @@ im_inventory_api_res() ->
 			erlang:halt(1)
 	end.
 
--spec im_inventory_res() -> resource().
+-spec im_inventory_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Resource Inventory resource function.
-im_inventory_res() ->
-	im_inventory_res(im:get_specification_name("Resource Inventory")).
+im_inventory_res(_Node) ->
+	im_inventory_res(_Node, im:get_specification_name("Resource Inventory")).
 %% @hidden
-im_inventory_res({ok, #specification{id = SId, href = SHref, name = SName,
-		class_type = SType, version = SVersion}}) ->
+im_inventory_res(_Node, {ok, #specification{id = SId,
+		href = SHref, name = SName, class_type = SType, version = SVersion}}) ->
 	#resource{name = "Resource Inventory",
 			description = "Resource Inventory resource function",
 			category = "ODA",
@@ -7380,22 +7392,25 @@ im_inventory_res({ok, #specification{id = SId, href = SHref, name = SName,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion},
 			connection_point = resource_conn_point(["TMF639"])};
-im_inventory_res({error, Reason}) ->
+im_inventory_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading specification resource",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_application_res() -> resource().
+-spec im_application_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Erlang application for SigScale RIM (sigscale_im).
-im_application_res() ->
-	im_application_res(im:get_specification_name("sigscale_im")).
+im_application_res(_Node) ->
+	im_application_res(_Node, im:get_specification_name("sigscale_im")).
 %% @hidden
-im_application_res({error, Reason}) ->
+im_application_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1);
-im_application_res({ok, #specification{id = SId, href = SHref, name = SName,
-		class_type = SType, version = SVersion}}) ->
+im_application_res(_Node, {ok, #specification{id = SId, href = SHref,
+		name = SName, class_type = SType, version = SVersion}}) ->
 	Chars = ["restPageSize", "restPageTimeout", "tlsKey", "tlsCert",
 			"tlsCacert", "oauthAudience", "oauthIssuer", "oauthKey"],
 	#resource{name = "sigscale_im",
@@ -7409,12 +7424,15 @@ im_application_res({ok, #specification{id = SId, href = SHref, name = SName,
 					name = SName, ref_type = SType, version = SVersion},
 			characteristic = lists:filtermap(fun get_rim_chars/1, Chars)}.
 
--spec im_inets_res() -> resource().
+-spec im_inets_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Erlang inets application.
-im_inets_res() ->
-	im_inets_res(im:get_specification_name("inets")).
+im_inets_res(_Node) ->
+	im_inets_res(_Node, im:get_specification_name("inets")).
 %% @hidden
-im_inets_res({ok, #specification{id = SId, href = SHref, name = SName,
+im_inets_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "inets",
 			description = "Erlang application inets",
@@ -7423,17 +7441,20 @@ im_inets_res({ok, #specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
-im_inets_res({error, Reason}) ->
+im_inets_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_erlang_res() -> resource().
+-spec im_erlang_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Component Catalog resource function.
-im_erlang_res() ->
-	im_erlang_res(im:get_specification_name("Erlang")).
+im_erlang_res(_Node) ->
+	im_erlang_res(_Node, im:get_specification_name("Erlang")).
 %% @hidden
-im_erlang_res({ok, #specification{id = SId, href = SHref, name = SName,
+im_erlang_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "Erlang",
 			description = "Erlang runtime environment",
@@ -7442,17 +7463,20 @@ im_erlang_res({ok, #specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
-im_erlang_res({error, Reason}) ->
+im_erlang_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_httpd_res() -> resource().
+-spec im_httpd_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Erlang httpd resource function.
-im_httpd_res() ->
-	im_httpd_res(im:get_specification_name("httpd")).
+im_httpd_res(_Node) ->
+	im_httpd_res(_Node, im:get_specification_name("httpd")).
 %% @hidden
-im_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
+im_httpd_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "httpd",
 			description = "Erlang httpd resource function",
@@ -7464,36 +7488,42 @@ im_httpd_res({ok, #specification{id = SId, href = SHref, name = SName,
 			characteristic = get_httpd_chars(
 					application:get_env(inets, services)),
 			connection_point = resource_conn_point(["TMF634", "TMF639"])};
-im_httpd_res({error, Reason}) ->
+im_httpd_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_erlang_node_res() -> resource().
+-spec im_erlang_node_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Erlang node resource function.
-im_erlang_node_res() ->
-	im_erlang_node_res(im:get_specification_name("Erlang Runtime")).
+im_erlang_node_res(Node) when is_atom(Node) ->
+	im_erlang_node_res(Node, im:get_specification_name("Erlang Runtime")).
 %% @hidden
-im_erlang_node_res({ok, #specification{id = SId, href = SHref, name = SName,
-		class_type = SType, version = SVersion}}) ->
-	#resource{name = atom_to_list(node()),
+im_erlang_node_res(Node, {ok, #specification{id = SId,
+		href = SHref, name = SName, class_type = SType, version = SVersion}}) ->
+	#resource{name = atom_to_list(Node),
 			description = "Erlang node resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
-im_erlang_node_res({error, Reason}) ->
+im_erlang_node_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_kernel_res() -> resource().
+-spec im_kernel_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Erlang kernel resource function.
-im_kernel_res() ->
-	im_kernel_res(im:get_specification_name("kernel")).
+im_kernel_res(_Node) ->
+	im_kernel_res(_Node, im:get_specification_name("kernel")).
 %% @hidden
-im_kernel_res({ok, #specification{id = SId, href = SHref, name = SName,
+im_kernel_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = "kernel",
 			description = "Erlang kernel resource function",
@@ -7502,18 +7532,21 @@ im_kernel_res({ok, #specification{id = SId, href = SHref, name = SName,
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
 					name = SName, ref_type = SType, version = SVersion}};
-im_kernel_res({error, Reason}) ->
+im_kernel_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_net_kernel_res() -> resource().
+-spec im_net_kernel_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Erlang net kernel resource function.
-im_net_kernel_res() ->
-	im_net_kernel_res(im:get_specification_name("net_kernel")).
+im_net_kernel_res(_Node) ->
+	im_net_kernel_res(_Node, im:get_specification_name("net_kernel")).
 %% @hidden
-im_net_kernel_res({ok, #specification{id = SId, href = SHref, name = Name,
-		class_type = SType, version = SVersion}}) ->
+im_net_kernel_res(_Node, {ok, #specification{id = SId,
+		href = SHref, name = Name, class_type = SType, version = SVersion}}) ->
 	#resource{name = Name,
 			description = "Erlang kernel resource function",
 			category = "ODA",
@@ -7522,14 +7555,17 @@ im_net_kernel_res({ok, #specification{id = SId, href = SHref, name = Name,
 			specification = #specification_ref{id = SId, href = SHref,
 					name = Name, ref_type = SType, version = SVersion},
 			connection_point = resource_conn_point(["RPC"])};
-im_net_kernel_res({error, Reason}) ->
+im_net_kernel_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
 	erlang:halt(1).
 
--spec im_rpc_res() -> resource().
+-spec im_rpc_res(Node) -> Resource
+	when
+		Node :: atom(),
+		Resource :: resource().
 %% @doc Remote procedure call API resource.
-im_rpc_res() ->
+im_rpc_res(_Node) ->
 	Name = "RPC",
 	case im:get_specification_name(Name) of
 		{ok, #specification{id = Id, href = Href,
@@ -7555,13 +7591,12 @@ sigscale_rim_res() ->
 sigscale_rim_res({ok, #specification{id = SId, href = SHref, name = Name,
 		class_type = SType, version = SVersion}}) ->
 	#resource{name = Name,
-			description = "Erlang kernel resource function",
+			description = "SigScale RIM resource function",
 			category = "ODA",
 			class_type = "ResourceFunction",
 			version = "0.1",
 			specification = #specification_ref{id = SId, href = SHref,
-					name = Name, ref_type = SType, version = SVersion},
-			related = resource_rel([atom_to_list(node())])};
+					name = Name, ref_type = SType, version = SVersion}};
 sigscale_rim_res({error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
