@@ -7728,18 +7728,3 @@ get_httpd_chars({ok, [{httpd, Config}]}) ->
 	end,
 	lists:filtermap(F1, Keys).
 
-%% @hidden
-resource_rel(ResourceNames) ->
-	Fresrel = fun(Name, Acc) ->
-			case im:get_resource_name(Name) of
-				{ok, #resource{id = Rid, href = Rhref,
-						name = Rname, class_type = Rtype}} ->
-					[#resource_rel{id = Rid, href = Rhref, name = Rname,
-							ref_type = Rtype, rel_type = "composedOf"} | Acc];
-				{error, Reason} ->
-					error_logger:warning_report(["Error reading resource",
-							{resource, Name}, {error, Reason}]),
-					Acc
-			end
-	end,
-	lists:reverse(lists:foldl(Fresrel, [], ResourceNames)).
