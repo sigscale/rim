@@ -571,16 +571,128 @@ install12(Nodes, Acc) ->
 		{error, {already_loaded, sigscale_im}} ->
 			install13(Nodes, Acc)
 	end.
+
+
 %% @hidden
-install13(Nodes, Acc) ->
+install13(Nodes, Tables) ->
+	case application:get_env(inets, services) of
+		{ok, InetsServices} ->
+			install14(Nodes, Tables, InetsServices);
+		undefined ->
+			error_logger:info_msg("Inets services not defined. "
+					"User table not created~n"),
+			install20(Tables)
+	end.
+%% @hidden
+install14(Nodes, Tables, InetsServices) ->
+	case lists:keyfind(httpd, 1, InetsServices) of
+		{httpd, HttpdInfo} ->
+			F = fun({directory, _}) ->
+						true;
+					(_) ->
+						false
+			end,
+			install15(Nodes, Tables, lists:filter(F, HttpdInfo));
+		false ->
+			error_logger:info_msg("Httpd service not defined. "
+					"User table not created~n"),
+			install20(Tables)
+	end.
+%% @hidden
+install15(Nodes, Tables, [{directory, {_Dir, []}} | T]) ->
+	install15(Nodes, Tables, T);
+install15(Nodes, Tables, [{directory, {_, DirectoryInfo}} | _]) ->
+	case lists:keyfind(auth_type, 1, DirectoryInfo) of
+		{auth_type, mnesia} ->
+			install16(Nodes, Tables);
+		_ ->
+			error_logger:info_msg("Auth type not mnesia. "
+					"User table not created~n"),
+			install20(Tables)
+	end;
+install15(_Nodes, Tables, []) ->
+	error_logger:info_msg("Auth directory not defined. "
+			"User table not created~n"),
+	install20(Tables).
+%% @hidden
+install16(Nodes, Acc) ->
+	case mnesia:create_table(httpd_user, [{type, bag}, {disc_copies, Nodes},
+			{attributes, record_info(fields, httpd_user)}]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Created new httpd_user table.~n"),
+			install17(Nodes, [httpd_user | Acc]);
+		{aborted, {not_active, _, Node}} ->
+			error_logger:error_report(["Mnesia not started on node",
+					{node, Node}]),
+			erlang:halt(1);
+		{aborted, {already_exists, httpd_user}} ->
+			error_logger:info_msg("Found existing httpd_user table.~n"),
+			install17(Nodes, [httpd_user | Acc]);
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			erlang:halt(1)
+	end.
+%% @hidden
+install17(Nodes, Acc) ->
+	case mnesia:create_table(httpd_group, [{type, bag}, {disc_copies, Nodes},
+			{attributes, record_info(fields, httpd_group)}]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Created new httpd_group table.~n"),
+			install18(Nodes, [httpd_group | Acc]);
+		{aborted, {not_active, _, Node}} ->
+			error_logger:error_report(["Mnesia not started on node",
+					{node, Node}]),
+			erlang:halt(1);
+		{aborted, {already_exists, httpd_group}} ->
+			error_logger:info_msg("Found existing httpd_group table.~n"),
+			install18(Nodes, [httpd_group | Acc]);
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			erlang:halt(1)
+	end.
+%% @hidden
+install18(Nodes, Acc) ->
+	case mnesia:create_table(pee_rule, [{disc_copies, Nodes},
+			{attributes, record_info(fields, pee_rule)}]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Created new pee rule table.~n"),
+			install19(Nodes, [pee_rule | Acc], []);
+		{aborted, {not_active, _, Node}} ->
+			error_logger:error_report(["Mnesia not started on node",
+					{node, Node}]),
+			erlang:halt(1);
+		{aborted, {already_exists, pee_rule}} ->
+			error_logger:info_msg("Found existing pee rule table.~n"),
+			install19(Nodes, [pee_rule | Acc], []);
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			erlang:halt(1)
+	end.
+
+%% @hidden
+install19([], Tables, ErlNodeRelAcc) ->
+	Res = im_specification:sigscale_rim_res(),
+	case im:add_resource(Res#resource{related = ErlNodeRelAcc}) of
+		{ok, #resource{}} ->
+			install20(Tables);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add SigScale RIM resource.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+install19(Nodes, Acc, ErlNodeRelAcc) ->
 	ResourceFuns = [im_erlang_res, im_catalog_api_res, im_inventory_api_res,
 			im_rpc_res, im_net_kernel_res, im_httpd_res, im_catalog_res,
 			im_inventory_res, im_kernel_res, im_inets_res,
-			im_application_res, im_erlang_node_res, sigscale_rim_res],
-	install13(ResourceFuns, [], Nodes, Acc).
+			im_application_res, im_erlang_node_res],
+	install19(ResourceFuns, Nodes, Acc, ErlNodeRelAcc, []).
 %% @hidden
-install13([im_kernel_res = F | T], ResAcc, Nodes, Acc) ->
-	case im:add_resource(im_specification:F()) of
+install19([im_kernel_res = F | T],
+		[Node | _] = Nodes, Acc, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType}} ->
 			KernelRel = #resource_rel{id = ResId,
@@ -589,15 +701,16 @@ install13([im_kernel_res = F | T], ResAcc, Nodes, Acc) ->
 					KernelRel#resource_rel{rel_type = "composedOf"}, ResAcc),
 			{ok, NewResAcc2} = write_res_rel_in(["net_kernel"],
 					KernelRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
-			install13(T, NewResAcc2, Nodes, Acc);
+			install19(T, Nodes, Acc, ErlNodeRelAcc, NewResAcc2);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
 			erlang:halt(1)
 	end;
 %% @hidden
-install13([im_inets_res = F | T], ResAcc, Nodes, Acc) ->
-	case im:add_resource(im_specification:F()) of
+install19([im_inets_res = F | T],
+		[Node | _] = Nodes, Acc, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType}} ->
 			InetsRel = #resource_rel{id = ResId,
@@ -606,15 +719,16 @@ install13([im_inets_res = F | T], ResAcc, Nodes, Acc) ->
 					InetsRel#resource_rel{rel_type = "composedOf"}, ResAcc),
 			{ok, NewResAcc2} = write_res_rel_in(["httpd"],
 					InetsRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
-			install13(T, NewResAcc2, Nodes, Acc);
+			install19(T, Nodes, Acc, ErlNodeRelAcc, NewResAcc2);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
 			erlang:halt(1)
 	end;
 %% @hidden
-install13([im_application_res = F | T], ResAcc, Nodes, Acc) ->
-	case im:add_resource(im_specification:F()) of
+install19([im_application_res = F | T],
+		[Node | _] = Nodes, Acc, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType}} ->
 			AppRel = #resource_rel{id = ResId, href = ResHref,
@@ -624,15 +738,16 @@ install13([im_application_res = F | T], ResAcc, Nodes, Acc) ->
 			{ok, NewResAcc2} = write_res_rel_in(["Resource Catalog",
 					"Resource Inventory"],
 					AppRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
-			install13(T, NewResAcc2, Nodes, Acc);
+			install19(T, Nodes, Acc, ErlNodeRelAcc, NewResAcc2);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
 			erlang:halt(1)
 	end;
 %% @hidden
-install13([im_erlang_node_res = F | T], ResAcc, Nodes, Acc) ->
-	case im:add_resource(im_specification:F()) of
+install19([im_erlang_node_res = F | T],
+		[Node | _] = Nodes, Acc, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
 		{ok, #resource{id = ResId, href = ResHref, name = ResName,
 				class_type = ResType} = Res} ->
 			ErlNodeRel = #resource_rel{id = ResId, href = ResHref,
@@ -656,8 +771,10 @@ install13([im_erlang_node_res = F | T], ResAcc, Nodes, Acc) ->
 					ChildRels = lists:filtermap(Fresrel, ResAcc),
 					NewRes = Res#resource{related = [ParentRel | ChildRels]},
 					ok = write_resource(NewRes),
-					install13(T, [NewRes | NewResAcc], Nodes, Acc);
+					install19(T, Nodes, Acc,
+							[ErlNodeRel | ErlNodeRelAcc], [NewRes | NewResAcc]);
 				false ->
+					error_logger:error_report(["Failed to find Erlang resource."]),
 					erlang:halt(1)
 			end;
 		{error, Reason} ->
@@ -665,118 +782,20 @@ install13([im_erlang_node_res = F | T], ResAcc, Nodes, Acc) ->
 				{error, Reason}]),
 			erlang:halt(1)
 	end;
-install13([F | T], ResAcc, Nodes, Acc) ->
-	case im:add_resource(im_specification:F()) of
+install19([F | T], [Node | _] = Nodes, Acc, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
 		{ok, #resource{} = Res} ->
-			install13(T, [Res | ResAcc], Nodes, Acc);
+			install19(T, Nodes, Acc, ErlNodeRelAcc, [Res | ResAcc]);
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
 			erlang:halt(1)
 	end;
-install13([], _ResAcc, Nodes, Acc) ->
+install19([], [_Node | Nodes], Acc, ErlNodeRelAcc, _ResAcc) ->
 	error_logger:info_msg("Added ODA Component resources.~n"),
-	install14(Nodes, Acc).
+	install19(Nodes, Acc, ErlNodeRelAcc).
 %% @hidden
-install14(Nodes, Acc) ->
-	case application:get_env(inets, services) of
-		{ok, InetsServices} ->
-			install15(Nodes, Acc, InetsServices);
-		undefined ->
-			error_logger:info_msg("Inets services not defined. "
-					"User table not created~n"),
-			install19(Nodes, Acc)
-	end.
-%% @hidden
-install15(Nodes, Acc, InetsServices) ->
-	case lists:keyfind(httpd, 1, InetsServices) of
-		{httpd, HttpdInfo} ->
-			F = fun({directory, _}) ->
-						true;
-					(_) ->
-						false
-			end,
-			install16(Nodes, Acc, lists:filter(F, HttpdInfo));
-		false ->
-			error_logger:info_msg("Httpd service not defined. "
-					"User table not created~n"),
-			install19(Nodes, Acc)
-	end.
-%% @hidden
-install16(Nodes, Acc, [{directory, {_Dir, []}} | T]) ->
-	install16(Nodes, Acc, T);
-install16(Nodes, Acc, [{directory, {_, DirectoryInfo}} | _]) ->
-	case lists:keyfind(auth_type, 1, DirectoryInfo) of
-		{auth_type, mnesia} ->
-			install17(Nodes, Acc);
-		_ ->
-			error_logger:info_msg("Auth type not mnesia. "
-					"User table not created~n"),
-			install19(Nodes, Acc)
-	end;
-install16(Nodes, Acc, []) ->
-	error_logger:info_msg("Auth directory not defined. "
-			"User table not created~n"),
-	install19(Nodes, Acc).
-%% @hidden
-install17(Nodes, Acc) ->
-	case mnesia:create_table(httpd_user, [{type, bag}, {disc_copies, Nodes},
-			{attributes, record_info(fields, httpd_user)}]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Created new httpd_user table.~n"),
-			install18(Nodes, [httpd_user | Acc]);
-		{aborted, {not_active, _, Node}} ->
-			error_logger:error_report(["Mnesia not started on node",
-					{node, Node}]),
-			erlang:halt(1);
-		{aborted, {already_exists, httpd_user}} ->
-			error_logger:info_msg("Found existing httpd_user table.~n"),
-			install18(Nodes, [httpd_user | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			erlang:halt(1)
-	end.
-%% @hidden
-install18(Nodes, Acc) ->
-	case mnesia:create_table(httpd_group, [{type, bag}, {disc_copies, Nodes},
-			{attributes, record_info(fields, httpd_group)}]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Created new httpd_group table.~n"),
-			install19(Nodes, [httpd_group | Acc]);
-		{aborted, {not_active, _, Node}} ->
-			error_logger:error_report(["Mnesia not started on node",
-					{node, Node}]),
-			erlang:halt(1);
-		{aborted, {already_exists, httpd_group}} ->
-			error_logger:info_msg("Found existing httpd_group table.~n"),
-			install19(Nodes, [httpd_group | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			erlang:halt(1)
-	end.
-%% @hidden
-install19(Nodes, Acc) ->
-	case mnesia:create_table(pee_rule, [{disc_copies, Nodes},
-			{attributes, record_info(fields, pee_rule)}]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Created new pee rule table.~n"),
-			install20(Nodes, [pee_rule | Acc]);
-		{aborted, {not_active, _, Node}} ->
-			error_logger:error_report(["Mnesia not started on node",
-					{node, Node}]),
-			erlang:halt(1);
-		{aborted, {already_exists, pee_rule}} ->
-			error_logger:info_msg("Found existing pee rule table.~n"),
-			install20(Nodes, [pee_rule | Acc]);
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			erlang:halt(1)
-	end.
-%% @hidden
-install20(_Nodes, Tables) ->
+install20(Tables) ->
 	case mnesia:wait_for_tables(Tables, ?WAITFORTABLES) of
 		ok ->
 			install21(Tables, lists:member(httpd_user, Tables));
@@ -1219,3 +1238,4 @@ write_res_rel_in([ResName | T], Rel, ResAcc) ->
 	end;
 write_res_rel_in([], _Rel, ResAcc) ->
 	{ok, ResAcc}.
+
