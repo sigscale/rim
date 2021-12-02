@@ -671,7 +671,6 @@ install18(Nodes, Acc) ->
 				{error, Reason}]),
 			erlang:halt(1)
 	end.
-
 %% @hidden
 install19([], Tables, ErlNodeRelAcc) ->
 	Res = im_specification:sigscale_rim_res(),
@@ -1049,6 +1048,7 @@ join12(Node, Acc) ->
 join13(_Node, Tables) ->
 	case mnesia:wait_for_tables(lists:reverse(Tables), ?WAITFORTABLES) of
 		ok ->
+			ok = new_erl_node(),
 			{ok, Tables};
 		{timeout, BadTables} ->
 			error_logger:error_report(["Timeout waiting for tables",
@@ -1238,4 +1238,125 @@ write_res_rel_in([ResName | T], Rel, ResAcc) ->
 	end;
 write_res_rel_in([], _Rel, ResAcc) ->
 	{ok, ResAcc}.
+
+-spec new_erl_node() -> Result
+	when
+		Result :: ok.
+%% @doc Add new set of copy of example resources into the table
+%% 	and update `SigScale RIM' resource function.
+%% @hidden
+new_erl_node() ->
+	ResourceFuns = [im_erlang_res, im_catalog_api_res, im_inventory_api_res,
+			im_rpc_res, im_net_kernel_res, im_httpd_res, im_catalog_res,
+			im_inventory_res, im_kernel_res, im_inets_res,
+			im_application_res, im_erlang_node_res],
+	new_erl_node(ResourceFuns, node(), [], []).
+%% @hidden
+new_erl_node([im_kernel_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType}} ->
+			KernelRel = #resource_rel{id = ResId,
+					href = ResHref, name = ResName, ref_type = ResType},
+			{ok, NewResAcc1} = write_res_rel_in(["Erlang"],
+					KernelRel#resource_rel{rel_type = "composedOf"}, ResAcc),
+			{ok, NewResAcc2} = write_res_rel_in(["net_kernel"],
+					KernelRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
+			new_erl_node(T, Node, ErlNodeRelAcc, NewResAcc2);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add kernel resource.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+%% @hidden
+new_erl_node([im_inets_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType}} ->
+			InetsRel = #resource_rel{id = ResId,
+					href = ResHref, name = ResName, ref_type = ResType},
+			{ok, NewResAcc1} = write_res_rel_in(["Erlang"],
+					InetsRel#resource_rel{rel_type = "composedOf"}, ResAcc),
+			{ok, NewResAcc2} = write_res_rel_in(["httpd"],
+					InetsRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
+			new_erl_node(T, Node, ErlNodeRelAcc, NewResAcc2);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+%% @hidden
+new_erl_node([im_application_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType}} ->
+			AppRel = #resource_rel{id = ResId, href = ResHref,
+					name = ResName, ref_type = ResType},
+			{ok, NewResAcc1} = write_res_rel_in(["Erlang"],
+					AppRel#resource_rel{rel_type = "composedOf"}, ResAcc),
+			{ok, NewResAcc2} = write_res_rel_in(["Resource Catalog",
+					"Resource Inventory"],
+					AppRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
+			new_erl_node(T, Node, ErlNodeRelAcc, NewResAcc2);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add sigscale_im resource.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+%% @hidden
+new_erl_node([im_erlang_node_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
+		{ok, #resource{id = ResId, href = ResHref, name = ResName,
+				class_type = ResType} = Res} ->
+			ErlNodeRel = #resource_rel{id = ResId, href = ResHref,
+					name = ResName, ref_type = ResType, rel_type = "composedOf"},
+			{ok, NewResAcc} = write_res_rel_in(["Erlang"], ErlNodeRel, ResAcc),
+			Fresrel = fun(#resource{id = Cid, href = Chref, name = Cname,
+							class_type = Ctype}) when Cname == "net_kernel";
+							Cname == "httpd"; Cname == "Resource Catalog";
+							Cname == "Resource Inventory" ->
+						{true, #resource_rel{id = Cid, href = Chref,
+								name = Cname, ref_type = Ctype,
+								rel_type = "composedOf"}};
+					(_) ->
+						false
+			end,
+			case lists:keyfind("Erlang", #resource.name, NewResAcc) of
+				#resource{id = Pid, href = Phref,
+						name = Pname, class_type = Ptype} ->
+					ParentRel = #resource_rel{id = Pid, href = Phref,
+							name = Pname, ref_type = Ptype, rel_type = "providedBy"},
+					ChildRels = lists:filtermap(Fresrel, ResAcc),
+					NewRes = Res#resource{related = [ParentRel | ChildRels]},
+					ok = write_resource(NewRes),
+					new_erl_node(T, Node,
+							[ErlNodeRel | ErlNodeRelAcc], [NewRes | NewResAcc]);
+				false ->
+					error_logger:error_report(["Failed to find Erlang resource."]),
+					erlang:halt(1)
+			end;
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+new_erl_node([F | T], Node, ErlNodeRelAcc, ResAcc) ->
+	case im:add_resource(im_specification:F(Node)) of
+		{ok, #resource{} = Res} ->
+			new_erl_node(T, Node, ErlNodeRelAcc, [Res | ResAcc]);
+		{error, Reason} ->
+			error_logger:error_report(["Failed to add ODA Component resources.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end;
+new_erl_node([], _Node, [ErlNodeRel], _ResAcc) ->
+	case im:get_resource_name("SigScale RIM") of
+		{ok, #resource{related = Rels} = Res} ->
+			error_logger:info_msg("Added ODA Component resources.~n"),
+			write_resource(Res#resource{related = [ErlNodeRel | Rels]});
+		{error, Reason} ->
+			error_logger:error_report(["Failed to get SigScale RIM resource.",
+				{error, Reason}]),
+			erlang:halt(1)
+	end.
 
