@@ -216,7 +216,7 @@ gsm_bts() ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, SRelName}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec gsm_bss() -> specification().
@@ -252,7 +252,7 @@ gsm_bss() ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, SRelName}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec gsm_abis_link() -> specification().
@@ -2941,7 +2941,7 @@ ngc_udr() ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec ngc_udsf() -> specification().
@@ -2997,7 +2997,7 @@ ngc_udsf() ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec ngc_nrf() -> specification().
@@ -3245,7 +3245,7 @@ ngc_lmf() ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec ngc_ngeir() -> specification().
@@ -3301,7 +3301,7 @@ ngc_ngeir() ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec ngc_sepp() -> specification().
@@ -7325,7 +7325,7 @@ im_catalog_api_res(_Node) ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec im_catalog_res(Node) -> Resource
@@ -7349,7 +7349,7 @@ im_catalog_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 im_catalog_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_inventory_api_res(Node) -> Resource
 	when
@@ -7371,7 +7371,7 @@ im_inventory_api_res(_Node) ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec im_inventory_res(Node) -> Resource
@@ -7395,7 +7395,7 @@ im_inventory_res(_Node, {ok, #specification{id = SId,
 im_inventory_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading specification resource",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_application_res(Node) -> Resource
 	when
@@ -7408,7 +7408,7 @@ im_application_res(_Node) ->
 im_application_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1);
+	{error, Reason};
 im_application_res(_Node, {ok, #specification{id = SId, href = SHref,
 		name = SName, class_type = SType, version = SVersion}}) ->
 	Chars = ["restPageSize", "restPageTimeout", "tlsKey", "tlsCert",
@@ -7444,7 +7444,7 @@ im_inets_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 im_inets_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_erlang_res(Node) -> Resource
 	when
@@ -7466,7 +7466,7 @@ im_erlang_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 im_erlang_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_httpd_res(Node) -> Resource
 	when
@@ -7491,7 +7491,7 @@ im_httpd_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 im_httpd_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_erlang_node_res(Node) -> Resource
 	when
@@ -7513,7 +7513,7 @@ im_erlang_node_res(Node, {ok, #specification{id = SId,
 im_erlang_node_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_kernel_res(Node) -> Resource
 	when
@@ -7535,7 +7535,7 @@ im_kernel_res(_Node, {ok, #specification{id = SId, href = SHref, name = SName,
 im_kernel_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_net_kernel_res(Node) -> Resource
 	when
@@ -7558,7 +7558,7 @@ im_net_kernel_res(_Node, {ok, #specification{id = SId,
 im_net_kernel_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 -spec im_rpc_res(Node) -> Resource
 	when
@@ -7580,7 +7580,7 @@ im_rpc_res(_Node) ->
 		{error, Reason} ->
 			error_logger:warning_report(["Error reading resource specification",
 					{specification, Name}, {error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 -spec sigscale_rim_res() -> resource().
@@ -7600,7 +7600,7 @@ sigscale_rim_res({ok, #specification{id = SId, href = SHref, name = Name,
 sigscale_rim_res({error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
 			{error, Reason}]),
-	init:stop(1).
+	{error, Reason}.
 
 %%----------------------------------------------------------------------
 %% internal functions
