@@ -4,6 +4,8 @@
 
 SUBDIRS = src include ebin doc priv test
 
+script_SCRIPTS = scripts/install_tables
+
 .PHONY: release
 release: $(PACKAGE_VERSION).tar.gz
 
