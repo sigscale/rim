@@ -262,7 +262,12 @@ install7(Nodes, Exist, Acc) ->
 			{attributes, record_info(fields, resource)}, {index, [name]}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new resource inventory table.~n"),
-			install8(Nodes, Exist, Tables);
+			case Exist of
+				true ->
+					install16(Nodes, Exist, Tables);
+				false ->
+					install8(Nodes, Exist, Tables)
+			end;
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
@@ -663,7 +668,12 @@ install18(Nodes, Exist, Acc) ->
 			{attributes, record_info(fields, pee_rule)}]) of
 		{atomic, ok} ->
 			error_logger:info_msg("Created new pee rule table.~n"),
-			install19(Nodes, [pee_rule | Acc], []);
+			case Exist of
+				true ->
+					install20([pee_rule | Acc]);
+				false ->
+					install19(Nodes, [pee_rule | Acc], [])
+			end;
 		{aborted, {not_active, _, Node} = Reason} ->
 			error_logger:error_report(["Mnesia not started on node",
 					{node, Node}]),
