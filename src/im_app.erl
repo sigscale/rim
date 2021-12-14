@@ -1381,7 +1381,7 @@ new_erl_node([F | T], Node, ErlNodeRelAcc, ResAcc) ->
 new_erl_node([], _Node, [ErlNodeRel], _ResAcc) ->
 	case im:get_resource_name("SigScale RIM") of
 		{ok, #resource{related = Rels} = Res} ->
-			error_logger:info_msg("Added ODA Component resources.~n"),
+			error_logger:info_msg("Added SigScale RIM ODA Component resource.~n"),
 			write_resource(Res#resource{related = [ErlNodeRel | Rels]});
 		{error, Reason} ->
 			error_logger:error_report(["Failed to get SigScale RIM resource.",
