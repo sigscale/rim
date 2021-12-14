@@ -1062,8 +1062,19 @@ join12(Node, Acc) ->
 			init:stop(1)
 	end.
 %% @hidden
+join13(Node, Acc) ->
+	case rpc:call(Node, mnesia, add_table_copy, [pee_rule, node(), disc_copies]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Copied pee_rule table from ~s.~n", [Node]),
+			join14(Node, [pee_rule | Acc]);
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			init:stop(1)
+	end.
+%% @hidden
 %join13(_Node, Tables, Exist) ->
-join13(_Node, Tables) ->
+join14(_Node, Tables) ->
 	case mnesia:wait_for_tables(lists:reverse(Tables), ?WAITFORTABLES) of
 		ok ->
 			ok = new_erl_node(),
