@@ -913,16 +913,13 @@ config_change(_Changed, _New, _Removed) ->
 	when
 		Nodes :: [Node],
 		Node :: atom(),
-		Result :: {ok, Tables},
-		Tables :: [atom()].
+		Result :: {ok, Tables} | {error, Reason},
+		Tables :: [atom()],
+		Reason :: term().
 %% @doc Join an existing cluster.
 %%
 %% 	Tables will be copied from a randomly
 %% 	selected `Node' in the `Nodes' list.
-%%
-%%		If any errors are encountered calls
-%%		{@link //erts/init:stop/1. init:stop(1)} which
-%%		causes an exit status of failure in the operating system shell.
 %%
 join(Nodes) when is_list(Nodes), is_atom(hd(Nodes))  ->
 	N = rand:uniform(length(Nodes)),
@@ -932,7 +929,7 @@ join(Nodes) when is_list(Nodes), is_atom(hd(Nodes))  ->
 			join1(Node);
 		Running ->
 			error_logger:error_report(["mnesia running", {is_running, Running}]),
-			init:stop(1)
+			{error, Running}
 	end.
 %% @hidden
 join1(Node) ->
@@ -941,7 +938,7 @@ join1(Node) ->
 			join2(Node);
 		Connect ->
 			error_logger:error_report(["Failed to connect node", {result, Connect}]),
-			init:stop(1)
+			{error, Connect}
 	end.
 %% @hidden
 join2(Node) ->
@@ -953,7 +950,7 @@ join2(Node) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join3(Node) ->
@@ -963,7 +960,7 @@ join3(Node) ->
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join4(Node) ->
@@ -973,7 +970,7 @@ join4(Node) ->
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join5(Node) ->
@@ -986,7 +983,7 @@ join5(Node) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join6(Node, Acc) ->
@@ -999,7 +996,7 @@ join6(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join7(Node, Acc) ->
@@ -1013,7 +1010,7 @@ join7(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join8(Node, Acc) ->
@@ -1027,7 +1024,7 @@ join8(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join9(Node, Acc) ->
@@ -1041,7 +1038,7 @@ join9(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join10(Node, Acc) ->
@@ -1055,7 +1052,7 @@ join10(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join11(Node, Acc) ->
@@ -1069,7 +1066,7 @@ join11(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join12(Node, Acc) ->
@@ -1083,7 +1080,7 @@ join12(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join13(Node, Acc) ->
@@ -1097,7 +1094,7 @@ join13(Node, Acc) ->
 		{aborted, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 %% @hidden
 join14(_Node, Tables) ->
@@ -1108,11 +1105,11 @@ join14(_Node, Tables) ->
 		{timeout, BadTables} ->
 			error_logger:error_report(["Timeout waiting for tables",
 					{tables, BadTables}]),
-			init:stop(1);
+			{error, BadTables};
 		{error, Reason} ->
 			error_logger:error_report([mnesia:error_description(Reason),
 					{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
 %%----------------------------------------------------------------------
@@ -1321,7 +1318,7 @@ new_erl_node([im_kernel_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add kernel resource.",
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end;
 %% @hidden
 new_erl_node([im_inets_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
@@ -1338,7 +1335,7 @@ new_erl_node([im_inets_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end;
 %% @hidden
 new_erl_node([im_application_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
@@ -1356,7 +1353,7 @@ new_erl_node([im_application_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add sigscale_im resource.",
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end;
 %% @hidden
 new_erl_node([im_erlang_node_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
@@ -1388,12 +1385,12 @@ new_erl_node([im_erlang_node_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
 							[ErlNodeRel | ErlNodeRelAcc], [NewRes | NewResAcc]);
 				false ->
 					error_logger:error_report(["Failed to find Erlang resource."]),
-					init:stop(1)
+					{error, false}
 			end;
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end;
 new_erl_node([F | T], Node, ErlNodeRelAcc, ResAcc) ->
 	case im:add_resource(im_specification:F(Node)) of
@@ -1402,7 +1399,7 @@ new_erl_node([F | T], Node, ErlNodeRelAcc, ResAcc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to add ODA Component resources.",
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end;
 new_erl_node([], _Node, [ErlNodeRel], _ResAcc) ->
 	case im:get_resource_name("SigScale RIM") of
@@ -1412,6 +1409,6 @@ new_erl_node([], _Node, [ErlNodeRel], _ResAcc) ->
 		{error, Reason} ->
 			error_logger:error_report(["Failed to get SigScale RIM resource.",
 				{error, Reason}]),
-			init:stop(1)
+			{error, Reason}
 	end.
 
