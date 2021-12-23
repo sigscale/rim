@@ -4,7 +4,8 @@
 
 SUBDIRS = src include ebin doc priv test
 
-script_SCRIPTS = scripts/install_tables
+script_SCRIPTS = scripts/install_tables.escript \
+		scripts/join_cluster.escript
 
 .PHONY: release
 release: $(PACKAGE_VERSION).tar.gz
