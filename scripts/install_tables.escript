@@ -1,13 +1,12 @@
 #!/usr/bin/env escript
 %% vim: syntax=erlang
-%%! -sname im-kusal -config sys
 
 main([]) ->
 	case catch mnesia:system_info(db_nodes) of
 		[] ->
 			case im_app:install() of
 				{ok, Tables} ->
-					{ok, Tables};
+					io:fwrite("~p~n", [Tables]);
 				{error, Reason} ->
 					io:fwrite("error: ~w~n", [Reason]),
 					erlang:halt(1)
