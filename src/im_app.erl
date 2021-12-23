@@ -1088,38 +1088,27 @@ join10(Node, Nodes, Exist, Acc) ->
 	end.
 %% @hidden
 join11(Node, Nodes, Exist, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [httpd_user, node(), disc_copies]) of
-		{atomic, ok} ->
-			error_logger:info_msg("Copied httpd_user table from ~s.~n", [Node]),
-			join12(Node, Nodes, Exist, [httpd_user | Acc]);
-		{aborted, {already_exists, httpd_user, _}} ->
-			error_logger:info_msg("Found existing httpd_user table on ~s.~n", [Node]),
-			join12(Node, Nodes, Exist, [httpd_user | Acc]);
-		{aborted, {no_exists, {httpd_user, _}}} ->
-			case create_table(httpd_user, Nodes) of
-				ok ->
-					join12(Node, Nodes, Exist, [httpd_user | Acc]);
-				{error, Reason} ->
-					{error, Reason}
-			end;
-		{aborted, Reason} ->
-			error_logger:error_report([mnesia:error_description(Reason),
-				{error, Reason}]),
-			{error, Reason}
+	case is_mod_auth_mnesia() of
+		true ->
+			join12(Node, Nodes, Exist, Acc);
+		false ->
+			error_logger:info_msg("Httpd service not defined. "
+					"User table not created~n"),
+			join14(Node, Nodes, Exist, Acc)
 	end.
 %% @hidden
 join12(Node, Nodes, Exist, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [httpd_group, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [httpd_user, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied httpd_group table from ~s.~n", [Node]),
-			join13(Node, Nodes, Exist, [httpd_group | Acc]);
-		{aborted, {already_exists, httpd_group, _}} ->
-			error_logger:info_msg("Found existing httpd_group table on ~s.~n", [Node]),
-			join13(Node, Nodes, Exist, [httpd_group | Acc]);
-		{aborted, {no_exists, {httpd_group, _}}} ->
-			case create_table(httpd_group, Nodes) of
+			error_logger:info_msg("Copied httpd_user table from ~s.~n", [Node]),
+			join13(Node, Nodes, Exist, [httpd_user | Acc]);
+		{aborted, {already_exists, httpd_user, _}} ->
+			error_logger:info_msg("Found existing httpd_user table on ~s.~n", [Node]),
+			join13(Node, Nodes, Exist, [httpd_user | Acc]);
+		{aborted, {no_exists, {httpd_user, _}}} ->
+			case create_table(httpd_user, Nodes) of
 				ok ->
-					join13(Node, Nodes, Exist, [httpd_group | Acc]);
+					join13(Node, Nodes, Exist, [httpd_user | Acc]);
 				{error, Reason} ->
 					{error, Reason}
 			end;
@@ -1130,17 +1119,17 @@ join12(Node, Nodes, Exist, Acc) ->
 	end.
 %% @hidden
 join13(Node, Nodes, Exist, Acc) ->
-	case rpc:call(Node, mnesia, add_table_copy, [pee_rule, node(), disc_copies]) of
+	case rpc:call(Node, mnesia, add_table_copy, [httpd_group, node(), disc_copies]) of
 		{atomic, ok} ->
-			error_logger:info_msg("Copied pee_rule table from ~s.~n", [Node]),
-			join14(Node, Nodes, Exist, [pee_rule | Acc]);
-		{aborted, {already_exists, pee_rule, _}} ->
-			error_logger:info_msg("Found existing pee_rule table on ~s.~n", [Node]),
-			join14(Node, Nodes, Exist, [pee_rule | Acc]);
-		{aborted, {no_exists, {pee_rule, _}}} ->
-			case create_table(pee_rule, Nodes) of
+			error_logger:info_msg("Copied httpd_group table from ~s.~n", [Node]),
+			join14(Node, Nodes, Exist, [httpd_group | Acc]);
+		{aborted, {already_exists, httpd_group, _}} ->
+			error_logger:info_msg("Found existing httpd_group table on ~s.~n", [Node]),
+			join14(Node, Nodes, Exist, [httpd_group | Acc]);
+		{aborted, {no_exists, {httpd_group, _}}} ->
+			case create_table(httpd_group, Nodes) of
 				ok ->
-					join14(Node, Nodes, Exist, [pee_rule | Acc]);
+					join14(Node, Nodes, Exist, [httpd_group | Acc]);
 				{error, Reason} ->
 					{error, Reason}
 			end;
@@ -1150,7 +1139,28 @@ join13(Node, Nodes, Exist, Acc) ->
 			{error, Reason}
 	end.
 %% @hidden
-join14(_Node, _Nodes, Exist, Tables) ->
+join14(Node, Nodes, Exist, Acc) ->
+	case rpc:call(Node, mnesia, add_table_copy, [pee_rule, node(), disc_copies]) of
+		{atomic, ok} ->
+			error_logger:info_msg("Copied pee_rule table from ~s.~n", [Node]),
+			join15(Node, Nodes, Exist, [pee_rule | Acc]);
+		{aborted, {already_exists, pee_rule, _}} ->
+			error_logger:info_msg("Found existing pee_rule table on ~s.~n", [Node]),
+			join15(Node, Nodes, Exist, [pee_rule | Acc]);
+		{aborted, {no_exists, {pee_rule, _}}} ->
+			case create_table(pee_rule, Nodes) of
+				ok ->
+					join15(Node, Nodes, Exist, [pee_rule | Acc]);
+				{error, Reason} ->
+					{error, Reason}
+			end;
+		{aborted, Reason} ->
+			error_logger:error_report([mnesia:error_description(Reason),
+				{error, Reason}]),
+			{error, Reason}
+	end.
+%% @hidden
+join15(_Node, _Nodes, Exist, Tables) ->
 	case mnesia:wait_for_tables(lists:reverse(Tables), ?WAITFORTABLES) of
 		ok when Exist == false ->
 			{new_erl_node(), Tables};
@@ -1511,4 +1521,40 @@ create_table1(_Table, {aborted, {not_active, _, Node} = Reason}) ->
 create_table1(_Table, {aborted, Reason}) ->
 	error_logger:error_report([mnesia:error_description(Reason), {error, Reason}]),
 	{error, Reason}.
+
+-spec is_mod_auth_mnesia() -> boolean().
+%% @doc Check if inets mod_auth uses mmnesia tables.
+%% @hidden
+is_mod_auth_mnesia() ->
+	case application:get_env(inets, services) of
+		{ok, InetsServices} ->
+			is_mod_auth_mnesia1(InetsServices);
+		undefined ->
+			false
+	end.
+%% @hidden
+is_mod_auth_mnesia1(InetsServices) ->
+	case lists:keyfind(httpd, 1, InetsServices) of
+		{httpd, HttpdInfo} ->
+			F = fun({directory, _}) ->
+						true;
+					(_) ->
+						false
+			end,
+			is_mod_auth_mnesia2(lists:filter(F, HttpdInfo));
+		false ->
+			ok
+	end.
+%% @hidden
+is_mod_auth_mnesia2([{directory, {_Dir, []}} | T]) ->
+	is_mod_auth_mnesia2(T);
+is_mod_auth_mnesia2([{directory, {_, DirectoryInfo}} | T]) ->
+	case lists:keyfind(auth_type, 1, DirectoryInfo) of
+		{auth_type, mnesia} ->
+			true;
+		_ ->
+			is_mod_auth_mnesia2(T)
+	end;
+is_mod_auth_mnesia2([]) ->
+	false.
 
