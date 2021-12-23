@@ -1397,19 +1397,22 @@ create_table(category, Nodes) when is_list(Nodes) ->
 	create_table1(category, mnesia:create_table(category, [{disc_copies, Nodes},
 			{attributes, record_info(fields, category)}]));
 create_table(candidate, Nodes) when is_list(Nodes) ->
-	create_table1(candidate, mnesia:create_table(candidate, [{disc_copies, Nodes},
+	create_table1(candidate, mnesia:create_table(candidate,
+			[{disc_copies, Nodes},
 			{attributes, record_info(fields, candidate)}]));
 create_table(specification, Nodes) when is_list(Nodes) ->
 	create_table1(specification, mnesia:create_table(specification,
-			[{disc_copies, Nodes}, {attributes, record_info(fields, specification)}]));
+			[{disc_copies, Nodes},
+			{attributes, record_info(fields, specification)}]));
 create_table(resource, Nodes) when is_list(Nodes) ->
 	create_table1(resource, mnesia:create_table(resource, [{disc_copies, Nodes},
 			{attributes, record_info(fields, resource)}]));
 create_table(httpd_user, Nodes) when is_list(Nodes) ->
-	create_table1(httpd_user, mnesia:create_table(httpd_user, [{disc_copies, Nodes},
-			{attributes, record_info(fields, httpd_user)}]));
+	create_table1(httpd_user, mnesia:create_table(httpd_user, [{type, bag},
+			{disc_copies, Nodes}, {attributes, record_info(fields, httpd_user)}]));
 create_table(httpd_group, Nodes) when is_list(Nodes) ->
-	create_table1(httpd_group, mnesia:create_table(httpd_group, [{disc_copies, Nodes},
+	create_table1(httpd_group, mnesia:create_table(httpd_group, [{type, bag},
+			{disc_copies, Nodes},
 			{attributes, record_info(fields, httpd_group)}]));
 create_table(pee_rule, Nodes) when is_list(Nodes) ->
 	create_table1(pee_rule, mnesia:create_table(pee_rule, [{disc_copies, Nodes},
