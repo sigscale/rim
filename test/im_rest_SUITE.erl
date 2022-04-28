@@ -143,7 +143,8 @@ all() ->
 			get_resource, geoaxis, query_category, advanced_query_category, query_candidate,
 			advanced_query_candidate, query_catalog, advanced_query_catalog, get_users,
 			post_role, delete_role, get_role, get_roles, oauth_authentication,
-			post_hub_role, delete_hub_role, get_role_hubs, get_role_hub].
+			post_hub_role, delete_hub_role, get_role_hubs, get_role_hub,
+			resource_with_management_entity].
 
 %%---------------------------------------------------------------------
 %%  Test cases
@@ -1944,9 +1945,92 @@ get_role_hub(Config) ->
 	{ok, #{"id" := Id, "href" := Href,
 			"callback" := Callback}} = zj:decode(ResponseBody).
 
+resource_with_management_entity() ->
+	[{userdata, [{doc, "Resource with management entity"}]}].
+
+resource_with_management_entity(_Config) ->
+	Id = random_string(12),
+	Href = ?PathInventory ++ "resource/" ++ Id,
+	Schema = ?PathInventory ++ "schema/resourceInventoryManagement#"
+			"/definitions/resource",
+	SpecId = random_string(10),
+	SpecHref = ?PathCatalog ++ "resource/" ++ SpecId,
+	MethodSpec = ?PathCatalog ++
+			"schema/resourceCatalogManagement#/definitions/ManagementMethodSpec",
+	Method = #management_method{name = random_string(7),
+			description = random_string(10), specification = MethodSpec,
+			http_version = "1.1", base_url = "/fooResource/v1/",
+			type = "ManagementMethodHTTP", base_type = "ManagementMethodEntity"},
+	Info = #management_info{name = random_string(7),
+			description = random_string(10),
+			specification = "http://sdo.example.org/v1/fooSpec",
+			type = "ResourceStateInfo", base_type = "ManagementInfo"},
+	InfoDetails = #management_info{name = random_string(7),
+			description = random_string(10), resource = ["foo", "bar"],
+			specification = "http://sdo.example.org/v1/spec",
+			management_info = Info, type = "ManagementMethodDetailHTTP",
+			base_type = "ManagementInfoDetails"},
+	Management = #entity_management{method = [Method], info = [InfoDetails]},
+	Domain = #management_domain{type = random_string(7),
+			base_type = random_string(10), schema_location = random_string(10)},
+	ResourceRecord = #resource{id = random_string(12), href = Href,
+			name = random_string(10), description = random_string(25),
+			category = random_string(5), class_type = "LogicalResource",
+			schema = Schema, base_type = "Resource",
+			version = "1.0", state = "Active",
+			specification = #specification_ref{id = SpecId,
+					href = SpecHref, name = random_string(7), version = "1.1"},
+			management = Management#entity_management{domain = Domain}},
+	ResObj = im_rest_res_resource:resource(ResourceRecord),
+	true = is_resource_with_management_entity(ResObj),
+	#resource{management = Management} = im_rest_res_resource:resource(ResObj).
+
 %%---------------------------------------------------------------------
 %%  Internal functions
 %%---------------------------------------------------------------------
+
+is_resource_with_management_entity(#{"id" := Id, "href" := Href,
+		"name" := Name, "description" := Description, "category" := Category,
+		"version" := Version, "@type" := ClassType,
+		"entityManagement" := Management})
+		when is_list(Id), is_list(Href), is_list(Name), is_list(Description),
+		is_list(Version), is_list(ClassType), is_list(Category) ->
+	true = is_entity_management(Management);
+is_resource_with_management_entity(_) ->
+	false.
+
+is_entity_management(#{"managementMethod" := [Method | _],
+		"managementInfo" := [Info | _]}) when is_map(Method), is_map(Info) ->
+	true = is_management_method(Method),
+	true = is_management_info_details(Info);
+is_entity_management(_) ->
+	false.
+
+is_management_method(#{"name" := Name, "description" := Description,
+		"specification" := Spec, "@type" := Type, "@baseType" := BaseType,
+		"httpVersion" := Version, "baseURL" := BaseUrl})
+		when is_list(Name), is_list(Description), is_list(Spec),
+		is_list(Type), is_list(BaseType), is_list(Version), is_list(BaseUrl) ->
+	true;
+is_management_method(_) ->
+	false.
+
+is_management_info_details(#{"name" := Name, "description" := Description,
+		"specification" := Spec, "@type" := Type, "@baseType" := BaseType,
+		"managementInfo" := ManagementInfo, "resources" := Resources})
+		when is_list(Name), is_list(Description), is_list(Spec), is_list(Type),
+		is_list(BaseType), is_map(ManagementInfo), is_list(Resources) ->
+	true = is_management_info(ManagementInfo);
+is_management_info_details(_) ->
+	false.
+
+is_management_info(#{"name" := Name, "description" := Description,
+		"specification" := Spec, "@type" := Type, "@baseType" := BaseType})
+		when is_list(Name), is_list(Description), is_list(Spec),
+		is_list(Type), is_list(BaseType) ->
+	true;
+is_management_info(_) ->
+	false.
 
 is_empty([]) ->
 	true;
