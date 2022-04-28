@@ -434,7 +434,8 @@
 		characteristic = [] :: [resource_char()] | '_' | '$23',
 		connectivity = [] :: [resource_graph()] | '_' | '$24',
 		connection_point = [] :: [resource_ref()] | '_' | '$25',
-		attributes = #{} :: map() | '_' | '$26'}).
+		attributes = #{} :: map() | '_' | '$26',
+		management :: entity_management() | undefined | '_' | '$27'}).
 -type resource() :: #resource{}.
 
 -record(connection_spec,
@@ -566,4 +567,38 @@
 		description :: string() | undefined,
 		rule :: rule() | string() | undefined}).
 -type pee_rule() :: #pee_rule{}.
+
+-record(entity_management,
+		{domain = [] :: [management_domain()] | '_',
+		method = [] :: [management_method()] | '_',
+		info = [] :: [management_info()] | '_'}).
+-type entity_management() :: #entity_management{}.
+
+-record(management_domain,
+		{type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema_location :: string() | undefined | '_'}).
+-type management_domain() :: #management_domain{}.
+
+-record(management_method,
+		{name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		specification :: string() | undefined | '_',
+		http_version :: string() | undefined | '_',
+		base_url :: string() | undefined | '_',
+		type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema_location :: string() | undefined | '_'}).
+-type management_method() :: #management_method{}.
+
+-record(management_info,
+		{name :: string() | undefined | '_',
+		description :: string() | undefined | '_',
+		specification :: string() | undefined | '_',
+		resource :: list() | undefined | '_',
+		management_info :: management_info() | undefined | '_',
+		type :: string() | undefined | '_',
+		base_type :: string() | undefined | '_',
+		schema_location :: string() | undefined | '_'}).
+-type management_info() :: #management_info{}.
 
