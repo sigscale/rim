@@ -656,6 +656,15 @@ resource_ref([ref_type | T],
 resource_ref([ref_type | T], #{"@referredType" := RefType} = M, Acc)
 		when is_list(RefType) ->
 	resource_ref(T, M, Acc#resource_ref{ref_type = RefType});
+resource_ref([management | T],
+		#resource_ref{management = Management} = R, Acc)
+		when is_record(Management, entity_management) ->
+	resource_ref(T, R,
+			Acc#{"entityManagement" => entity_management(Management)});
+resource_ref([management | T], #{"entityManagement" := Management} = M, Acc)
+		when is_map(Management) ->
+	resource_ref(T, M,
+			Acc#resource_ref{management = entity_management(Management)});
 resource_ref([_ | T], R, Acc) ->
 	resource_ref(T, R, Acc);
 resource_ref([], _, Acc) ->

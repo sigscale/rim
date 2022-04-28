@@ -104,7 +104,8 @@
 		base_type :: string() | undefined | '_',
 		schema :: string() | undefined | '_',
 		ref_type :: string() | undefined | '_',
-		attributes = #{} :: map() | '_'}).
+		attributes = #{} :: map() | '_',
+		management :: entity_management() | undefined | '_'}).
 -type resource_ref() :: #resource_ref{}.
 
 -record(res_char_rel,
