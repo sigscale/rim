@@ -1365,8 +1365,8 @@ management_info([management_info | T], #{"managementInfo" := Info} = M, Acc)
 management_info([resource | T],
 		#management_info{resource = Resource} = R, Acc)
 		when is_list(Resource), length(Resource) > 0 ->
-	management_info(T, R, Acc#{"resources" => Resource});
-management_info([resource | T], #{"resources" := Resource} = M, Acc)
+	management_info(T, R, Acc#{"resource" => Resource});
+management_info([resource | T], #{"resource" := Resource} = M, Acc)
 		when is_list(Resource) ->
 	management_info(T, M, Acc#management_info{resource = Resource});
 management_info([type | T], #management_info{type = Type} = R,

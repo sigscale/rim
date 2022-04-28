@@ -1969,7 +1969,7 @@ resource_with_management_entity(_Config) ->
 			description = random_string(10), resource = ["foo", "bar"],
 			specification = "http://sdo.example.org/v1/spec",
 			management_info = Info, type = "ManagementMethodDetailHTTP",
-			base_type = "ManagementInfoDetails"},
+			base_type = "ManagementInfoDetail"},
 	Management = #entity_management{method = [Method], info = [InfoDetails]},
 	Domain = #management_domain{type = random_string(7),
 			base_type = random_string(10), schema_location = random_string(10)},
@@ -2017,7 +2017,7 @@ is_management_method(_) ->
 
 is_management_info_details(#{"name" := Name, "description" := Description,
 		"specification" := Spec, "@type" := Type, "@baseType" := BaseType,
-		"managementInfo" := ManagementInfo, "resources" := Resources})
+		"managementInfo" := ManagementInfo, "resource" := Resources})
 		when is_list(Name), is_list(Description), is_list(Spec), is_list(Type),
 		is_list(BaseType), is_map(ManagementInfo), is_list(Resources) ->
 	true = is_management_info(ManagementInfo);
