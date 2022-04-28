@@ -364,6 +364,12 @@ resource([connection_point | T], #resource{connection_point = Conns} = R, Acc)
 resource([connection_point | T], #{"connectionPoint" := Conns} = M, Acc)
 		when is_list(Conns) ->
 	resource(T, M, Acc#resource{connection_point = resource_ref(Conns)});
+resource([management | T], #resource{management = Management} = R, Acc)
+		when is_record(Management, entity_management) ->
+	resource(T, R, Acc#{"entityManagement" => entity_management(Management)});
+resource([management | T], #{"entityManagement" := Management} = M, Acc)
+		when is_map(Management) ->
+	resource(T, M, Acc#resource{management = entity_management(Management)});
 resource([_ | T], R, Acc) ->
 	resource(T, R, Acc);
 resource([], _, Acc) ->
@@ -1210,6 +1216,182 @@ feature_rel([rel_type | T], #{"relationshipType" := RelType} = M, Acc)
 feature_rel([_ | T], R, Acc) ->
 	feature_rel(T, R, Acc);
 feature_rel([], _, Acc) ->
+	Acc.
+
+-spec entity_management(Management) -> Management
+	when
+		Management :: entity_management() | map().
+%% @doc CODEC for `EntityManagement'.
+entity_management(#entity_management{} = R) ->
+	Fields = record_info(fields, entity_management),
+	entity_management(Fields, R, #{});
+entity_management(#{} = M) ->
+	Fields = record_info(fields, entity_management),
+	entity_management(Fields, M, #entity_management{}).
+%% @hidden
+entity_management([method | T], #entity_management{method
+		= [#management_method{} | _] = Methods} = R, Acc) ->
+	entity_management(T, R,
+			Acc#{"managementMethod" => management_method(Methods)});
+entity_management([method | T], #{"managementMethod" := Methods} = M, Acc)
+		when is_list(Methods) ->
+	entity_management(T, M,
+			Acc#entity_management{method = management_method(Methods)});
+entity_management([info | T], #entity_management{info
+		= [#management_info{} | _] = Info} = R, Acc) ->
+	entity_management(T, R, Acc#{"managementInfo" => management_info(Info)});
+entity_management([info | T], #{"managementInfo" := Info} = M, Acc)
+		when is_list(Info) ->
+	entity_management(T, M, Acc#entity_management{info = management_info(Info)});
+entity_management([_ | T], R, Acc) ->
+	entity_management(T, R, Acc);
+entity_management([], _, Acc) ->
+	Acc.
+
+-spec management_method(Method) -> Method
+	when
+		Method :: [management_method()] | [map()].
+%% @doc CODEC for `ManagementMethod'.
+management_method([#management_method{} | _] = List) ->
+	Fields = record_info(fields, management_method),
+	[management_method(Fields, R, #{}) || R <- List];
+management_method([#{} | _] = List) ->
+	Fields = record_info(fields, management_method),
+	[management_method(Fields, M, #management_method{}) || M <- List];
+management_method([]) ->
+	[].
+%% @hidden
+management_method([name | T], #management_method{name = Name} = R, Acc)
+		when is_list(Name) ->
+	management_method(T, R, Acc#{"name" => Name});
+management_method([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	management_method(T, M, Acc#management_method{name = Name});
+management_method([description | T],
+		#management_method{description = Description} = R, Acc)
+		when is_list(Description) ->
+	management_method(T, R, Acc#{"description" => Description});
+management_method([description | T], #{"description" := Description} = M, Acc)
+		when is_list(Description) ->
+	management_method(T, M, Acc#management_method{description = Description});
+management_method([specification | T],
+		#management_method{specification = Spec} = R, Acc) when is_list(Spec) ->
+	management_method(T, R, Acc#{"specification" => Spec});
+management_method([specification | T], #{"specification" := Spec} = M, Acc)
+		when is_list(Spec) ->
+	management_method(T, M, Acc#management_method{specification = Spec});
+management_method([http_version | T],
+		#management_method{http_version = Version} = R, Acc)
+		when is_list(Version) ->
+	management_method(T, R, Acc#{"httpVersion" => Version});
+management_method([http_version | T], #{"httpVersion" := Version} = M, Acc)
+		when is_list(Version) ->
+	management_method(T, M, Acc#management_method{http_version = Version});
+management_method([base_url | T], #management_method{base_url = Url} = R, Acc)
+		when is_list(Url) ->
+	management_method(T, R, Acc#{"baseURL" => Url});
+management_method([base_url | T], #{"baseURL" := Url} = M, Acc)
+		when is_list(Url) ->
+	management_method(T, M, Acc#management_method{base_url = Url});
+management_method([type | T], #management_method{type = Type} = R,
+		Acc) when is_list(Type) ->
+	management_method(T, R, Acc#{"@type" => Type});
+management_method([type | T], #{"@type" := Type} = M, Acc) when is_list(Type) ->
+	management_method(T, M, Acc#management_method{type = Type});
+management_method([base_type | T], #management_method{base_type = BaseType} = R,
+		Acc) when is_list(BaseType) ->
+	management_method(T, R, Acc#{"@baseType" => BaseType});
+management_method([base_type | T], #{"@baseType" := BaseType} = M, Acc)
+		when is_list(BaseType) ->
+	management_method(T, M, Acc#management_method{base_type = BaseType});
+management_method([schema_location | T],
+		#management_method{schema_location = SchemaLocation} = R, Acc)
+		when is_list(SchemaLocation) ->
+	management_method(T, R, Acc#{"@schemaLocation" => SchemaLocation});
+management_method([schema_location | T],
+		#{"@schemaLocation" := SchemaLocation} = M, Acc)
+		when is_list(SchemaLocation) ->
+	management_method(T, M,
+			Acc#management_method{schema_location = SchemaLocation});
+management_method([_ | T], R, Acc) ->
+	management_method(T, R, Acc);
+management_method([], _, Acc) ->
+	Acc.
+
+-spec management_info(Info) -> Info
+	when
+		Info :: [management_info()] | [map()].
+%% @doc CODEC for `ManagementInfo'.
+management_info([#management_info{} | _] = List) ->
+	Fields = record_info(fields, management_info),
+	[management_info(Fields, R, #{}) || R <- List];
+management_info([#{} | _] = List) ->
+	Fields = record_info(fields, management_info),
+	[management_info(Fields, M, #management_info{}) || M <- List];
+management_info([]) ->
+	[].
+%% @hidden
+management_info([name | T], #management_info{name = Name} = R, Acc)
+		when is_list(Name) ->
+	management_info(T, R, Acc#{"name" => Name});
+management_info([name | T], #{"name" := Name} = M, Acc)
+		when is_list(Name) ->
+	management_info(T, M, Acc#management_info{name = Name});
+management_info([description | T],
+		#management_info{description = Description} = R, Acc)
+		when is_list(Description) ->
+	management_info(T, R, Acc#{"description" => Description});
+management_info([description | T], #{"description" := Description} = M, Acc)
+		when is_list(Description) ->
+	management_info(T, M, Acc#management_info{description = Description});
+management_info([specification | T],
+		#management_info{specification = Spec} = R, Acc) when is_list(Spec) ->
+	management_info(T, R, Acc#{"specification" => Spec});
+management_info([specification | T], #{"specification" := Spec} = M, Acc)
+		when is_list(Spec) ->
+	management_info(T, M, Acc#management_info{specification = Spec});
+management_info([management_info | T],
+		#management_info{management_info = Info} = R, Acc)
+		when is_record(Info, management_info) ->
+	Fields = record_info(fields, management_info),
+	management_info(T, R,
+			Acc#{"managementInfo" => management_info(Fields, Info, #{})});
+management_info([management_info | T], #{"managementInfo" := Info} = M, Acc)
+		when is_map(Info) ->
+	Fields = record_info(fields, management_info),
+	R = #management_info{},
+	management_info(T, M, Acc#management_info{
+			management_info = management_info(Fields, Info, R)});
+management_info([resource | T],
+		#management_info{resource = Resource} = R, Acc)
+		when is_list(Resource), length(Resource) > 0 ->
+	management_info(T, R, Acc#{"resources" => Resource});
+management_info([resource | T], #{"resources" := Resource} = M, Acc)
+		when is_list(Resource) ->
+	management_info(T, M, Acc#management_info{resource = Resource});
+management_info([type | T], #management_info{type = Type} = R,
+		Acc) when is_list(Type) ->
+	management_info(T, R, Acc#{"@type" => Type});
+management_info([type | T], #{"@type" := Type} = M, Acc) when is_list(Type) ->
+	management_info(T, M, Acc#management_info{type = Type});
+management_info([base_type | T], #management_info{base_type = BaseType} = R,
+		Acc) when is_list(BaseType) ->
+	management_info(T, R, Acc#{"@baseType" => BaseType});
+management_info([base_type | T], #{"@baseType" := BaseType} = M, Acc)
+		when is_list(BaseType) ->
+	management_info(T, M, Acc#management_info{base_type = BaseType});
+management_info([schema_location | T],
+		#management_info{schema_location = SchemaLocation} = R, Acc)
+		when is_list(SchemaLocation) ->
+	management_info(T, R, Acc#{"@schemaLocation" => SchemaLocation});
+management_info([schema_location | T],
+		#{"@schemaLocation" := SchemaLocation} = M, Acc)
+		when is_list(SchemaLocation) ->
+	management_info(T, M,
+			Acc#management_info{schema_location = SchemaLocation});
+management_info([_ | T], R, Acc) ->
+	management_info(T, R, Acc);
+management_info([], _, Acc) ->
 	Acc.
 
 %%----------------------------------------------------------------------
