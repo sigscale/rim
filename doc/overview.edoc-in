@@ -54,12 +54,16 @@ are used:
    </thead>
    <tbody>
       <tr id="mt">
-         <td id="mt">TMF632</td>
-         <td id="mt">Party Management</td>
+         <td id="mt">TMF634</td>
+         <td id="mt">Resource Catalog Management</td>
       </tr>
       <tr id="mt">
          <td id="mt">TMF639</td>
-         <td id="mt">Resource Inventory</td>
+         <td id="mt">Resource Inventory Management</td>
+      </tr>
+      <tr id="mt">
+         <td id="mt">TMF632</td>
+         <td id="mt">Party Management</td>
       </tr>
    </tbody>
 </table></p>
