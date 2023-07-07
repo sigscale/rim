@@ -527,7 +527,8 @@ class specificationList extends PolymerElement {
 			graph.selectAll('*').remove();
 			_connectivityGraph(connectivity, graph, width, height);
 		}
-		if (event.path[0].localName == 'iron-pages') {
+		if (event.composed
+				&& event.composedPath()[0].localName == 'iron-pages') {
 			grid.notifyResize();
 		}
 	}
