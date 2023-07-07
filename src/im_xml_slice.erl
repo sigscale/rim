@@ -10,7 +10,7 @@
 %%%   {@link //sigscale_im. sigscale_im} application.
 %%%
 -module(im_xml_slice).
--copyright('Copyright (c) 2018 - 2021 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
 
 %% export the im private API
 -export([parse_network_slice/2, parse_ns_subnet/2]).

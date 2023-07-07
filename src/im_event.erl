@@ -1,7 +1,7 @@
 %%% im_event.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2020 - 2021 SigScale Global Inc.
+%%% @copyright 2020 - 2023 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 %%% 	{@link //sigscale_im. sigscale_im} application.
 %%%
 -module(im_event).
--copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
+-copyright('Copyright (c) 2020 - 2023 SigScale Global Inc.').
 
 -behaviour(gen_event).
 -include("im.hrl").

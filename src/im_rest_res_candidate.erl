@@ -1,7 +1,7 @@
 %%% im_rest_res_candidate.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2020 - 2021 SigScale Global Inc.
+%%% @copyright 2020 - 2023 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 %%% 	Handle `ResourceCandidate' collection.
 %%%
 -module(im_rest_res_candidate).
--copyright('Copyright (c) 2020 - 2021 SigScale Global Inc.').
+-copyright('Copyright (c) 2020 - 2023 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_candidates/3, get_candidate/2, post_candidate/1,
