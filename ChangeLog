@@ -1,3 +1,42 @@
+2023-07-07  Vance Shipley  <vances@sigscale.org>
+
+	* add author names
+	* update copyright
+	* modernize getting event path
+	* add tmf634 to api table in overview.edoc
+	* management extension to resource reference
+	* should not use plural
+	* codec for entity management
+	* test: resource with entity management field
+	* record definition for entity management
+	* print ok and list of tables
+	* stop mnesia cleanly in install_tables.escript
+	* add join_cluster escript to Makefile
+	* rename; remove using predefined node
+	* httpd_user and httpd_group are bag type
+	* refactor im_app:join/1 to reuse copy table function
+	* escript for join cluster
+	* copy httpd_user and httpd_group tables if auth type is mnesia only
+	* add any missing tables in join/1
+	* join accepts only one node
+	* example resources should not add when join already initialized node
+	* replace init:stop/1 with error reason
+	* join should not failed on previously joined node
+	* copy pee_rule table in join
+	* adding missing tables on already initialized system
+	* use error, reason instead of init:stop/1
+	* escript to install tables
+	* replace erlang:halt/1 with init:stop/1
+	* run install on already initialized node should skip already created tables and add any missing tables
+	* example resources for new erlang node and update sigscale rim resource function
+	* add set of resources for each node; add relationship for erlang nodes under sigscale rim
+	* remove unused function
+	* parameterize adding example resources
+	* handle multiple httpd directories
+	* update copyright year
+	* add content type in response headers
+	* rename im_rest_hub_role as im_rest_res_hub_role
+
 2021-11-22  Kusal Fernando <kusal@sigscale.org>
 
 	* party role management doen't need basic auth

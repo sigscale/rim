@@ -1,3 +1,11 @@
+July 7, 2023
+------------
+	- Fix resize in row detail of grid web components
+	- Entity management extensions
+	- Script for joining a  cluster
+	- Sscriptto install tables
+	- Example resources from self reflection
+
 November 22, 2021
 ---------------
 	- Health API
