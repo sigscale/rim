@@ -1,0 +1,32 @@
+#!/bin/false
+# Not a shell script!
+
+## Prepare new build directory
+mkdir -p shell/lib
+echo "ERL_LIBS=lib erl -sname im -config sys -run c erlangrc ." > shell/im.sh
+chmod +x shell/im.sh
+echo "\
+application:start(sasl).
+application:start(crypto).     
+application:start(mnesia).
+application:start(inets). 
+application:start(sigscale_im)." > shell/.erlang
+
+## Make edoc available
+mkdir -p ~/public_html/rim
+ln -st ~/public_html/rim ../../rim.build/doc
+ln -st ~/public_html/rim ../../rim.build/test/log
+mv ~/public_html/rim/log ~/public_html/rim/test
+
+## Configure project
+ERLANG_INSTALL_LIB_DIR=`pwd`/shell/lib ERL_LIBS=`pwd`/shell/lib ../rim/configure
+
+## Install in shell/lib
+ERL_LIBS=`pwd`/shell/lib make install
+
+## Validate, verify and test
+ERL_LIBS=`pwd`/shell/lib make check
+
+## Scrub it clean to start over
+ERL_LIBS=`pwd`/shell/lib make distclean; rm -rf *.tar.gz *.boot *.script *.rel doc ebin include priv src test shell/lib/sigscale_im-*
+
