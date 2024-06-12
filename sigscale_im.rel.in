@@ -9,5 +9,6 @@
 	{asn1, "@ERLANG_LIB_VER_asn1@"},
 	{ssl, "@ERLANG_LIB_VER_ssl@"},
 	{xmerl, "@ERLANG_LIB_VER_xmerl@"},
+	{parsetools, "@ERLANG_LIB_VER_parsetools@"},
 	{zj, "@ERLANG_LIB_VER_zj@"},
 	{@PACKAGE@, "@VERSION@"}]}.
