@@ -1,5 +1,6 @@
 June 13, 2024
 -------------
+	- Rename erlang application from' sigscale_im' to 'im'
 	- Modernize release name
 	- Enable systemd support
 

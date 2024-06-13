@@ -1,5 +1,8 @@
 2024-06-13  Vance Shipley  <vances@sigscale.org>
 
+	* update copyright date
+	* rename application from sigscale_im to im
+	* define env dir for systemd
 	* systemd support
 	* modernize release package name
 	* require parsetools
