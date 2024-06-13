@@ -44,7 +44,7 @@ content_types_provided() ->
 %% @doc Body producing function for `GET /im/v1/log/http'
 %% requests.
 get_http() ->
-	{ok, MaxItems} = application:get_env(sigscale_im, rest_page_size),
+	{ok, MaxItems} = application:get_env(im, rest_page_size),
 	Log = im:httpd_logname(transfer),
 	read_http_log(Log, MaxItems).
 

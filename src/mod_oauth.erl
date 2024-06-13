@@ -242,7 +242,7 @@ validate_cert(EncodedHeader, EncodedPayLoad, EncodedSignature) ->
 validate_cert1(EncodedHeader, EncodedPayLoad, DecodedSignature)
 		when is_binary(DecodedSignature), DecodedSignature =/= <<>> ->
 	try
-		{ok, Value} = application:get_env(sigscale_im, oauth_key),
+		{ok, Value} = application:get_env(im, oauth_key),
 		{ok, {_, RSAPublicKey}} = store({oauth_key, Value}, []),
 		Msg = iolist_to_binary([string:strip(EncodedHeader, left), <<".">>, EncodedPayLoad]),
 		public_key:verify(Msg, sha256, DecodedSignature, RSAPublicKey)

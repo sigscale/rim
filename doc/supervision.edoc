@@ -1,6 +1,5 @@
 @doc This {@link //stdlib/supervisor. supervisor} behaviour callback
-	module implements a supervisor in the
-	{@link //sigscale_im. sigscale_im} application.
+	module implements a supervisor in the {@link //im. im} application.
 
 The supervision heirachy is depicted in
 <a href="supervision.png">Figure 1-1</a> as a directed graph starting

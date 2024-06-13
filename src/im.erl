@@ -16,7 +16,7 @@
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This library module implements the public API for the
-%%%   {@link //sigscale_im. sigscale_im} application.
+%%%   {@link //im. im} application.
 %%%
 -module(im).
 -copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
@@ -297,7 +297,7 @@ query(Table, Cont, Size, Sort, MatchSpec) ->
 %%		The result list will be sorted by the record elements listed in `Sort', in order.
 query(Cont, undefined, Table, Sort, MatchSpec, CountOnly)
 		when is_atom(Table), is_list(Sort), is_boolean(CountOnly) ->
-	{ok, Size} = application:get_env(sigscale_im, rest_page_size),
+	{ok, Size} = application:get_env(im, rest_page_size),
 	query1(Cont, Size, Table, Sort, MatchSpec, CountOnly);
 query(Cont, Size, Table, Sort, MatchSpec, CountOnly)
 		when is_atom(Table), is_integer(Size),

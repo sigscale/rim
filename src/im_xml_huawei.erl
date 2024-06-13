@@ -7,7 +7,7 @@
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This library module implements the public API for the
-%%%   {@link //sigscale_im. sigscale_im} application.
+%%%   {@link //im. im} application.
 %%%
 %%%     http://www.apache.org/licenses/LICENSE-2.0
 %%%

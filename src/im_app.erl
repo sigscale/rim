@@ -16,7 +16,7 @@
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This {@link //stdlib/application. application} behaviour callback
-%%% 	module starts and stops the {@link //sigcale_im. sigscale_im} application.
+%%% 	module starts and stops the {@link //im. im} application.
 %%%
 -module(im_app).
 -copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
@@ -64,7 +64,7 @@ start(normal = _StartType, _Args) ->
 				ok ->
 					start1();
 				{error, Reason} ->
-					error_logger:error_report(["sigscale_im application failed to start",
+					error_logger:error_report(["im application failed to start",
 							{reason, Reason}, {module, ?MODULE}]),
 					{error, Reason}
 			end;
@@ -99,7 +99,7 @@ install() ->
 		Reason :: term().
 %% @doc Initialize SigScale Inventory Management (IM) tables.
 %% 	`Nodes' is a list of the nodes where
-%% 	{@link //sigscale_im. sigscale_im} tables will be replicated.
+%% 	{@link //im. im} tables will be replicated.
 %%
 %% 	If {@link //mnesia. mnesia} is not running an attempt
 %% 	will be made to create a schema on all available nodes.
@@ -577,11 +577,11 @@ install11(Nodes, Exist, Acc) ->
 	end.
 %% @hidden
 install12(Nodes, Exist, Acc) ->
-	case application:load(sigscale_im) of
+	case application:load(im) of
 		ok ->
-			error_logger:info_msg("Loaded sigscale_im.~n"),
+			error_logger:info_msg("Loaded im.~n"),
 			install13(Nodes, Exist, Acc);
-		{error, {already_loaded, sigscale_im}} ->
+		{error, {already_loaded, im}} ->
 			install13(Nodes, Exist, Acc)
 	end.
 %% @hidden
@@ -1321,7 +1321,7 @@ new_erl_node([im_application_res = F | T], Node, ErlNodeRelAcc, ResAcc) ->
 					AppRel#resource_rel{rel_type = "providedBy"}, NewResAcc1),
 			new_erl_node(T, Node, ErlNodeRelAcc, NewResAcc2);
 		{error, Reason} ->
-			error_logger:error_report(["Failed to add sigscale_im resource.",
+			error_logger:error_report(["Failed to add im resource.",
 				{error, Reason}]),
 			{error, Reason}
 	end;

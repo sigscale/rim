@@ -55,7 +55,7 @@ content_types_provided() ->
 %% requests.
 get_health([] = _Query, _RequestHeaders) ->
 	try
-		Check1 = maps:merge(application([sigscale_im, inets]),
+		Check1 = maps:merge(application([im, inets]),
 				table_size([catalog, specification,
 						candidate, resource, category])),
 		case scheduler() of
@@ -65,7 +65,7 @@ get_health([] = _Query, _RequestHeaders) ->
 				#{"checks" => Check1}
 		end
 	of
-		#{"checks" := #{"application" := [#{"componentId" := sigscale_im,
+		#{"checks" := #{"application" := [#{"componentId" := im,
 				"status" := "up"} | _]}} = Checks ->
 			Health = Checks#{"status" => "pass", "serviceId" => atom_to_list(node()),
 					"description" => "Health of SigScale IM"},
@@ -95,7 +95,7 @@ get_health([] = _Query, _RequestHeaders) ->
 %% requests.
 get_applications([] = _Query, _RequestHeaders) ->
 	try
-		#{"checks" => application([sigscale_im, inets])}
+		#{"checks" => application([im, inets])}
 	of
 		#{"checks" := #{"application" :=  Applications}} = Checks ->
 			F = fun(#{"status" := "up"}) ->

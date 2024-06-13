@@ -8,9 +8,9 @@
 ==Installation==
 Before starting the application for the first time, {@link //mnesia/mnesia. mnesia}
 should be initialized. Create a schema and start mnesia on all nodes
-where the application {@link //sigscale_im. sigscale_im} application will run.
+where the application {@link //im. im} application will run.
 
-The following command will initialize {@link //sigscale_im. sigscale_im}
+The following command will initialize {@link //im. im}
 on the current node and create a default REST user
 "admin" with password "admin".
 
@@ -307,7 +307,7 @@ Content-Length: 552
 </pre></p>
 
 ==Configuration==
-The {@link //sigscale_im. sigscale_im} application is configured using the following environment variables:
+The {@link //im. im} application is configured using the following environment variables:
 <dl>
 	<dt>rest_page_size</dt>
 		<dd>Maximum number of items to return for a REST collection.</dd>
@@ -350,7 +350,7 @@ The {@link //inets. inets} application's {@link //inets/httpd. httpd} server con
 
 ===Example sys.config===
 ```
-[{sigscale_im,
+[{im,
       [{rest_page_size, 1000},
 		{rest_page_timeout, 60000},
 		{tls_key, "ssl/key.pem"},
@@ -390,7 +390,7 @@ The {@link //inets. inets} application's {@link //inets/httpd. httpd} server con
             {port, 8080},
             {socket_type, ip_comm},
             {server_root, "./"},
-            {alias, {"/doc", "lib/sigscale_im-%VERSION%/doc"}},
-            {document_root, "lib/sigscale_im-%VERSION%/priv/www"}]}]}]}].
+            {alias, {"/doc", "lib/im-%VERSION%/doc"}},
+            {document_root, "lib/im-%VERSION%/priv/www"}]}]}]}].
 '''
 

@@ -4,8 +4,8 @@
 ## Process this file with automake to produce Makefile.in
 
 appdir = $(beamdir)
-app_DATA = sigscale_im.app
-EXTRA_DIST = sigscale_im.app
+app_DATA = im.app
+EXTRA_DIST = im.app
 
 beam_DATA = im_app.beam \
 			im_sup.beam \

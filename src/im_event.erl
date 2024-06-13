@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This {@link //stdlib/gen_event. gen_event} behaviour callback
 %%% 	module implements an event handler of the
-%%% 	{@link //sigscale_im. sigscale_im} application.
+%%% 	{@link //im. im} application.
 %%%
 -module(im_event).
 -copyright('Copyright (c) 2020 - 2023 SigScale Global Inc.').

@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This {@link //stdlib/gen_server. gen_server} behaviour callback
 %%% 	module implements a service access point (SAP) for the public API of the
-%%% 	{@link //sigscale_im. sigscale_im} application.
+%%% 	{@link //im. im} application.
 %%%
 -module(im_server).
 -copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').

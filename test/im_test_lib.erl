@@ -34,7 +34,7 @@ initialize_db() ->
 
 start() ->
 	start([crypto, inets, asn1, public_key, ssl, xmerl, compiler,
-		syntax_tools, sigscale_im]).
+		syntax_tools, im]).
 
 start([H | T]) ->
 	case application:start(H) of
@@ -49,5 +49,5 @@ start([]) ->
 	ok.
 
 stop() ->
-	application:stop(sigscale_im).
+	application:stop(im).
 

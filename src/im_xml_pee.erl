@@ -7,7 +7,7 @@
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This library module implements the public API for the
-%%%   {@link //sigscale_im. sigscale_im} application.
+%%%   {@link //im. im} application.
 %%%
 -module(im_xml_pee).
 -copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').

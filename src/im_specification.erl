@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% @doc This library module is used to create sample specifications for
 %%% 	3GPP resource functions in the
-%%% 	{@link //sigcale_im. sigscale_im} application.
+%%% 	{@link //im. im} application.
 %%%
 -module(im_specification).
 -copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
@@ -6904,8 +6904,8 @@ im_application_spec() ->
 	PartyRef = #party_ref{id = "9f16f654223e", name = "SigScale",
 			role = "Supplier", href = ?PathPartySpec ++ "9f16f654223e",
 			ref_type = "Organization"},
-	#specification{name = "sigscale_im",
-			description = "Erlang application sigscale_im software specification",
+	#specification{name = "im",
+			description = "Erlang application im software specification",
 			class_type = "SoftwareSpecification",
 			base_type = "SoftwareResourceSpecification",
 			schema = "/resourceCatalogManagement/v4/schema/SoftwareSpecification",
@@ -7401,9 +7401,9 @@ im_inventory_res(_Node, {error, Reason}) ->
 	when
 		Node :: atom(),
 		Resource :: resource().
-%% @doc Erlang application for SigScale RIM (sigscale_im).
+%% @doc Erlang application for SigScale RIM (im).
 im_application_res(_Node) ->
-	im_application_res(_Node, im:get_specification_name("sigscale_im")).
+	im_application_res(_Node, im:get_specification_name("im")).
 %% @hidden
 im_application_res(_Node, {error, Reason}) ->
 	error_logger:warning_report(["Error reading resource specification",
@@ -7413,8 +7413,8 @@ im_application_res(_Node, {ok, #specification{id = SId, href = SHref,
 		name = SName, class_type = SType, version = SVersion}}) ->
 	Chars = ["restPageSize", "restPageTimeout", "tlsKey", "tlsCert",
 			"tlsCacert", "oauthAudience", "oauthIssuer", "oauthKey"],
-	#resource{name = "sigscale_im",
-			description = "Erlang application sigscale_im",
+	#resource{name = "im",
+			description = "Erlang application im",
 			category = "ODA",
 			class_type = "InstalledSoftware",
 			base_type = "LogicalResource",
@@ -7677,21 +7677,21 @@ resource_conn_point(ResourceNames) ->
 		Result :: {true, #resource_char{}} | false.
 %% @doc used in lists:filtermap for ODA characteristics.
 get_rim_chars("restPageSize" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, rest_page_size));
+	get_rim_chars(Char, application:get_env(im, rest_page_size));
 get_rim_chars("restPageTimeout" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, rest_page_timeout));
+	get_rim_chars(Char, application:get_env(im, rest_page_timeout));
 get_rim_chars("tlsKey" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, tls_key));
+	get_rim_chars(Char, application:get_env(im, tls_key));
 get_rim_chars("tlsCert" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, tls_cert));
+	get_rim_chars(Char, application:get_env(im, tls_cert));
 get_rim_chars("tlsCacert" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, tls_cacert));
+	get_rim_chars(Char, application:get_env(im, tls_cacert));
 get_rim_chars("oauthAudience" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, oauth_audience));
+	get_rim_chars(Char, application:get_env(im, oauth_audience));
 get_rim_chars("oauthIssuer" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, oauth_issuer));
+	get_rim_chars(Char, application:get_env(im, oauth_issuer));
 get_rim_chars("oauthKey" = Char) ->
-	get_rim_chars(Char, application:get_env(sigscale_im, oauth_key)).
+	get_rim_chars(Char, application:get_env(im, oauth_key)).
 %% @hidden
 get_rim_chars(_Char, undefined) ->
 	false;

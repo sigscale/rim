@@ -15,7 +15,7 @@
 %%% limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Test suite for the REST API of the
-%%% {@link //sigscale_im. sigscale_im} application.
+%%% {@link //im. im} application.
 -module(im_rest_SUITE).
 -copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
 
@@ -100,7 +100,7 @@ init_per_suite(Config) ->
 %% Cleanup after the whole suite.
 %%
 end_per_suite(_Config) ->
-	ok = application:stop(sigscale_im),
+	ok = application:stop(im),
 	ok = application:stop(mnesia).
 
 -spec init_per_testcase(TestCase :: atom(), Config :: [tuple()]) -> Config :: [tuple()].
