@@ -4,6 +4,11 @@
 
 SUBDIRS = src include ebin doc priv test
 
+if HAVE_SYSTEMD
+systemdsystemunit_DATA = scripts/im.service
+env_DATA = scripts/im
+endif
+
 script_SCRIPTS = scripts/install_tables.escript \
 		scripts/join_cluster.escript
 

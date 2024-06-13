@@ -18,6 +18,20 @@ AM_INIT_AUTOMAKE([-Wno-portability])
 ##
 AC_ARG_ENABLE([debug],
 		[AS_HELP_STRING([--enable-debug], [enable debugging (default is no)])])
+PKG_PROG_PKG_CONFIG
+AC_ARG_WITH([systemdsystemunitdir],
+		[AS_HELP_STRING([--with-systemdsystemunitdir=DIR], [Directory for systemd service files])],,
+		[with_systemdsystemunitdir=auto])
+AS_IF([test "x$with_systemdsystemunitdir" = "xyes" -o "x$with_systemdsystemunitdir" = "xauto"],
+		[def_systemdsystemunitdir=$($PKG_CONFIG --variable=systemdsystemunitdir systemd)
+		AS_IF([test "x$def_systemdsystemunitdir" = "x"],
+				[AS_IF([test "x$with_systemdsystemunitdir" = "xyes"],
+						[AC_MSG_ERROR([systemd support requested but pkg-config unable to query systemd package])],
+						[with_systemdsystemunitdir=no])],
+				[with_systemdsystemunitdir="$def_systemdsystemunitdir"])])
+AS_IF([test "x$with_systemdsystemunitdir" != "xno"],
+		[AC_SUBST([systemdsystemunitdir], [$with_systemdsystemunitdir])])
+AM_CONDITIONAL([HAVE_SYSTEMD], [test "x$with_systemdsystemunitdir" != "xno"])
 
 
 ##
@@ -104,5 +118,6 @@ AC_ERLANG_CHECK_LIB([zj], [], [AC_MSG_ERROR([zj was not found!])])
 AC_OUTPUT([Makefile src/Makefile include/Makefile ebin/Makefile
 		doc/Makefile priv/Makefile priv/schema/Makefile
 		priv/examples/Makefile priv/www/Makefile priv/www/package.json
-		test/Makefile sys.config sigscale_im.rel])
+		test/Makefile sys.config $PACKAGE_NAME.rel
+		scripts/im scripts/im.service])
 

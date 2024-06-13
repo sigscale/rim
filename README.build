@@ -1,32 +1,30 @@
 #!/bin/false
 # Not a shell script!
 
-## Prepare new build directory
-mkdir -p shell/lib
-echo "ERL_LIBS=lib erl -sname im -config sys -run c erlangrc ." > shell/im.sh
-chmod +x shell/im.sh
-echo "\
-application:start(sasl).
-application:start(crypto).     
-application:start(mnesia).
-application:start(inets). 
-application:start(sigscale_im)." > shell/.erlang
+# Instructions for building in an adjacent directory
+# of the source directory (i.e. ../im.build)
 
-## Make edoc available
-mkdir -p ~/public_html/rim
-ln -st ~/public_html/rim ../../rim.build/doc
-ln -st ~/public_html/rim ../../rim.build/test/log
-mv ~/public_html/rim/log ~/public_html/rim/test
+## Configure new build directory
+mkdir -p shell/lib
+ZJ=$(basename $(ls -d ../zj-*)) 
+mkdir -p shell/lib/$ZJ/ebin
+cp -r ../$ZJ/ebin shell/lib/$ZJ/
+
+## Make documentation and test reports available
+mkdir -p ~/public_html/im
+ln -st ~/public_html/im ../../im.build/doc
+ln -st ~/public_html/im ../../im.build/test/log
+mv ~/public_html/im/log ~/public_html/im/test
 
 ## Configure project
-ERLANG_INSTALL_LIB_DIR=`pwd`/shell/lib ERL_LIBS=`pwd`/shell/lib ../rim/configure
+ERLANG_INSTALL_LIB_DIR=$PWD/shell/lib ERL_LIBS=$PWD/shell/lib ../sigscale-im/configure --with-systemdsystemunitdir=no
 
 ## Install in shell/lib
-ERL_LIBS=`pwd`/shell/lib make install
+ERL_LIBS=$PWD/shell/lib make install
 
 ## Validate, verify and test
-ERL_LIBS=`pwd`/shell/lib make check
+ERL_LIBS=$PWD/shell/lib make check
 
-## Scrub it clean to start over
-ERL_LIBS=`pwd`/shell/lib make distclean; rm -rf *.tar.gz *.boot *.script *.rel doc ebin include priv src test shell/lib/sigscale_im-*
+## Scrub it clean
+ERL_LIBS=$PWD/shell/lib make distclean; rm -rf *.boot *.rel *.script *.tar.gz Makefile config.* im.rel doc ebin src include priv test stamp-h1 sys.config shell/lib/im-*
 

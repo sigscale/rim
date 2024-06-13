@@ -1,0 +1,23 @@
+[Unit]
+Description=Resource Inventory Management (RIM)
+Documentation="https://github.com/sigscale/rim"
+After=epmd.service epmd.socket
+
+[Service]
+User=otp
+Group=otp
+WorkingDirectory=/home/otp
+RuntimeDirectory=im
+RuntimeDirectoryMode=0750
+EnvironmentFile=/etc/default/im
+LimitNOFILE=4096
+ExecStart=@ERLANG_ROOT_DIR@/bin/run_erl -daemon /run/cse/ log \
+                'ERL_LIBS=lib exec ${ROOTDIR}/bin/start_erl ${ROOTDIR} releases \
+                ${START_ERL_DATA} -boot_var OTPHOME . +K true +A 32 +Bi -sname ${NODENAME}'
+GuessMainPID=no
+Type=forking
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
