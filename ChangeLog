@@ -1,3 +1,10 @@
+2024-06-13  Vance Shipley  <vances@sigscale.org>
+
+	* systemd support
+	* modernize release package name
+	* require parsetools
+	* build instructions
+
 2023-07-07  Vance Shipley  <vances@sigscale.org>
 
 	* add author names
