@@ -10,7 +10,7 @@
 %%%   {@link //im. im} application.
 %%%
 -module(im_xml_cm_bulk).
--copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2024 SigScale Global Inc.').
 
 %% export the im public API
 -export([import/2]).

@@ -10,7 +10,7 @@
 %%%   {@link //im. im} application.
 %%%
 -module(im_xml_geran).
--copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2024 SigScale Global Inc.').
 
 %% export the im private API
 -export([parse_bss/2, parse_bts/2, parse_gsm_cell/2, parse_gsm_rel/2]).

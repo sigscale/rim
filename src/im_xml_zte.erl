@@ -10,7 +10,7 @@
 %%%   {@link //im. im} application.
 %%%
 -module(im_xml_zte).
--copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2024 SigScale Global Inc.').
 
 %% export the im private API
 -export([parse_vsdata/2]).

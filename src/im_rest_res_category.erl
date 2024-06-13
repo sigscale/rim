@@ -1,7 +1,7 @@
 %%% im_rest_res_category.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2018 - 2023 SigScale Global Inc.
+%%% @copyright 2018 - 2024 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 %%% 	Handle `ResourceCategory' collection.
 %%%
 -module(im_rest_res_category).
--copyright('Copyright (c) 2018 - 2023 SigScale Global Inc.').
+-copyright('Copyright (c) 2018 - 2024 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_categories/3, get_category/2, post_category/1, delete_category/1,

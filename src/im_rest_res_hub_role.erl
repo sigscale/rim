@@ -1,7 +1,7 @@
 %%% im_rest_res_hub_role.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2020 - 2023 SigScale Global Inc.
+%%% @copyright 2020 - 2024 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 %%% @doc Handle subscriptions for `PartyRole' hub.
 %%%
 -module(im_rest_res_hub_role).
--copyright('Copyright (c) 2020 - 2023 SigScale Global Inc.').
+-copyright('Copyright (c) 2020 - 2024 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0, post_hub/1,
 		delete_hub/1, get_hubs/0, get_hub/1]).

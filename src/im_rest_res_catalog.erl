@@ -1,7 +1,7 @@
 %%% im_rest_res_catalog.erl
 %%% vim: ts=3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% @copyright 2020 - 2023 SigScale Global Inc.
+%%% @copyright 2020 - 2024 SigScale Global Inc.
 %%% @end
 %%% Licensed under the Apache License, Version 2.0 (the "License");
 %%% you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 %%% 	Handle `ResourceCatalog' collection.
 %%%
 -module(im_rest_res_catalog).
--copyright('Copyright (c) 2020 - 2023 SigScale Global Inc.').
+-copyright('Copyright (c) 2020 - 2024 SigScale Global Inc.').
 
 -export([content_types_accepted/0, content_types_provided/0]).
 -export([get_catalogs/3, get_catalog/2, post_catalog/1, delete_catalog/1,
