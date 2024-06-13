@@ -1,5 +1,5 @@
 {application, %APP_NAME%,
-	[{description, "SigScale Inventory Management (IM)"},
+	[{description, "SigScale RIM (Resoource Inventory Management)"},
 	{vsn, "%APP_VERSION%"},
 	{modules,
 			[im_app,
