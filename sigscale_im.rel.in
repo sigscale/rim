@@ -1,4 +1,4 @@
-{release, {"@PACKAGE@", "@VERSION@"}, {erts, "@ERLANG_ERTS_VER@"},
+{release, {"SigScale RIM", "@PACKAGE@-@VERSION@"}, {erts, "@ERLANG_ERTS_VER@"},
 	[{kernel, "@ERLANG_LIB_VER_kernel@"},
 	{stdlib, "@ERLANG_LIB_VER_stdlib@"},
 	{mnesia, "@ERLANG_LIB_VER_mnesia@"},
